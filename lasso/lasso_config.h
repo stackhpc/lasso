@@ -37,20 +37,20 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #define HAVE_UNISTD_H 1
 
-/* Release version as a decimal */
-#define LASSO_VERSION_DECIMAL 401
+/* Support for variadic macros */
+#define HAVE_VARIADIC_MACROS 1
 
 /* Major version number */
 #define LASSO_VERSION_MAJOR 0
 
 /* Minor version number */
-#define LASSO_VERSION_MINOR 4
+#define LASSO_VERSION_MINOR 6
 
 /* Release version number */
-#define LASSO_VERSION_SUBMINOR 1
+#define LASSO_VERSION_SUBMINOR 2
 
-/* Windows version of the lasso version */
-#define LASSO_WINDOWS_VERSION 0,4,1,0
+/* Define if ID-WSF support is enabled */
+/* #undef LASSO_WSF_ENABLED */
 
 /* Define to 1 if your C compiler doesn't accept -c and -o together. */
 /* #undef NO_MINUS_C_MINUS_O */
@@ -65,13 +65,13 @@
 #define PACKAGE_NAME "Liberty Alliance Single Sign On"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "Liberty Alliance Single Sign On 0.4.1"
+#define PACKAGE_STRING "Liberty Alliance Single Sign On 0.6.2"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "liberty-alliance-single-sign-on"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "0.4.1"
+#define PACKAGE_VERSION "0.6.2"
 
 /* Define to 1 if the C compiler supports function prototypes. */
 #define PROTOTYPES 1
@@ -80,7 +80,7 @@
 #define STDC_HEADERS 1
 
 /* Version number of package */
-#define VERSION "0.4.1"
+#define VERSION "0.6.2"
 
 /* Define like PROTOTYPES; this can be used by system headers. */
 #define __PROTOTYPES 1

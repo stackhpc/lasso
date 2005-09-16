@@ -1,12 +1,11 @@
-/* $Id: lib_idp_entry.h,v 1.2 2004/07/22 06:59:03 eraviart Exp $ 
+/* $Id: lib_idp_entry.h,v 1.7 2005/01/22 15:57:55 eraviart Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,35 +32,38 @@ extern "C" {
 #include <lasso/xml/xml.h>
 
 #define LASSO_TYPE_LIB_IDP_ENTRY (lasso_lib_idp_entry_get_type())
-#define LASSO_LIB_IDP_ENTRY(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_LIB_IDP_ENTRY, LassoLibIDPEntry))
-#define LASSO_LIB_IDP_ENTRY_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_LIB_IDP_ENTRY, LassoLibIDPEntryClass))
-#define LASSO_IS_LIB_IDP_ENTRY(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_LIB_IDP_ENTRY))
-#define LASSO_IS_LIB_IDP_ENTRY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_LIB_IDP_ENTRY))
-#define LASSO_LIB_IDP_ENTRY_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_LIB_IDP_ENTRY, LassoLibIDPEntryClass)) 
+#define LASSO_LIB_IDP_ENTRY(obj) \
+	(G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_LIB_IDP_ENTRY, LassoLibIDPEntry))
+#define LASSO_LIB_IDP_ENTRY_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_LIB_IDP_ENTRY, LassoLibIDPEntryClass))
+#define LASSO_IS_LIB_IDP_ENTRY(obj) \
+	(G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_LIB_IDP_ENTRY))
+#define LASSO_IS_LIB_IDP_ENTRY_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_LIB_IDP_ENTRY))
+#define LASSO_LIB_IDP_ENTRY_GET_CLASS(o) \
+	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_LIB_IDP_ENTRY, LassoLibIDPEntryClass)) 
 
 typedef struct _LassoLibIDPEntry LassoLibIDPEntry;
 typedef struct _LassoLibIDPEntryClass LassoLibIDPEntryClass;
 
 struct _LassoLibIDPEntry{
-  LassoNode parent;
-  /*< private >*/
+	LassoNode parent;
+
+	/*< public >*/
+	/* <xs:element ref="ProviderID"/> */
+	char *ProviderID;
+	/* <xs:element name="ProviderName" type="xs:string" minOccurs="0"/> */
+	char *ProviderName;
+	/* <xs:element name="Loc" type="xs:anyURI"/> */
+	char *Loc;
 };
 
 struct _LassoLibIDPEntryClass {
-  LassoNodeClass parent;
+	LassoNodeClass parent;
 };
 
 LASSO_EXPORT GType lasso_lib_idp_entry_get_type(void);
 LASSO_EXPORT LassoNode* lasso_lib_idp_entry_new(void);
-
-LASSO_EXPORT void lasso_lib_idp_entry_set_providerID   (LassoLibIDPEntry *node,
-							const xmlChar *providerID);
-
-LASSO_EXPORT void lasso_lib_idp_entry_set_providerName (LassoLibIDPEntry *node,
-							const xmlChar *providerName);
-
-LASSO_EXPORT void lasso_lib_idp_entry_set_loc          (LassoLibIDPEntry *node,
-							const xmlChar *loc);
 
 #ifdef __cplusplus
 }

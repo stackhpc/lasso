@@ -1,12 +1,11 @@
-/* $Id: saml_subject_confirmation.c,v 1.4 2004/08/13 15:16:13 fpeters Exp $
+/* $Id: saml_subject_confirmation.c,v 1.17 2005/01/22 15:57:55 eraviart Exp $
  *
  * Lasso - A free implementation of the Samlerty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,102 +25,86 @@
 #include <lasso/xml/saml_subject_confirmation.h>
 
 /*
-The schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
-
-<element name="SubjectConfirmation" type="saml:SubjectConfirmationType"/>
-<complexType name="SubjectConfirmationType">
-  <sequence>
-    <element ref="saml:ConfirmationMethod" maxOccurs="unbounded"/>
-    <element ref="saml:SubjectConfirmationData" minOccurs="0"/>
-    <element ref="ds:KeyInfo" minOccurs="0"/>
-  </sequence>
-</complexType>
-
-<element name="SubjectConfirmationData" type="anyType"/>
-<element name="ConfirmationMethod" type="anyURI"/>
-*/
+ * Schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
+ * 
+ * <element name="SubjectConfirmation" type="saml:SubjectConfirmationType"/>
+ * <complexType name="SubjectConfirmationType">
+ *   <sequence>
+ *     <element ref="saml:ConfirmationMethod" maxOccurs="unbounded"/>
+ *     <element ref="saml:SubjectConfirmationData" minOccurs="0"/>
+ *     <element ref="ds:KeyInfo" minOccurs="0"/>
+ *   </sequence>
+ * </complexType>
+ * 
+ * <element name="SubjectConfirmationData" type="anyType"/>
+ * <element name="ConfirmationMethod" type="anyURI"/>
+ */
 
 /*****************************************************************************/
-/* public methods                                                            */
+/* private methods                                                           */
 /*****************************************************************************/
 
-void
-lasso_saml_subject_confirmation_add_confirmationMethod(LassoSamlSubjectConfirmation *node,
-						       const xmlChar *confirmationMethod)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_SAML_SUBJECT_CONFIRMATION(node));
-  g_assert(confirmationMethod != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->new_child(LASSO_NODE (node),
-		   "ConfirmationMethod", confirmationMethod, TRUE);
-}
-
-void
-lasso_saml_subject_confirmation_set_subjectConfirmationMethod(LassoSamlSubjectConfirmation *node,
-							      const xmlChar *subjectConfirmationMethod)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_SAML_SUBJECT_CONFIRMATION(node));
-  g_assert(subjectConfirmationMethod != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->new_child(LASSO_NODE (node),
-		   "SubjectConfirmationMethod", subjectConfirmationMethod,
-		   FALSE);
-}
+static struct XmlSnippet schema_snippets[] = {
+	{ "ConfirmationMethod", SNIPPET_LIST_CONTENT,
+		G_STRUCT_OFFSET(LassoSamlSubjectConfirmation, ConfirmationMethod) },
+	{ "SubjectConfirmationData", SNIPPET_CONTENT,
+		G_STRUCT_OFFSET(LassoSamlSubjectConfirmation, SubjectConfirmationData) },
+	{ NULL, 0, 0}
+};
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
 static void
-lasso_saml_subject_confirmation_instance_init(LassoSamlSubjectConfirmation *node)
+instance_init(LassoSamlSubjectConfirmation *node)
 {
-  LassoNodeClass *class = LASSO_NODE_GET_CLASS(LASSO_NODE(node));
-
-  class->set_ns(LASSO_NODE(node), lassoSamlAssertionHRef,
-		lassoSamlAssertionPrefix);
-  class->set_name(LASSO_NODE(node), "SubjectConfirmation");
 }
 
 static void
-lasso_saml_subject_confirmation_class_init(LassoSamlSubjectConfirmationClass *klass)
+class_init(LassoSamlSubjectConfirmationClass *klass)
 {
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
+
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "SubjectConfirmation");
+	lasso_node_class_set_ns(nclass, LASSO_SAML_ASSERTION_HREF, LASSO_SAML_ASSERTION_PREFIX);
+	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
 
-GType lasso_saml_subject_confirmation_get_type() {
-  static GType this_type = 0;
+GType
+lasso_saml_subject_confirmation_get_type()
+{
+	static GType this_type = 0;
 
-  if (!this_type) {
-    static const GTypeInfo this_info = {
-      sizeof (LassoSamlSubjectConfirmationClass),
-      NULL,
-      NULL,
-      (GClassInitFunc) lasso_saml_subject_confirmation_class_init,
-      NULL,
-      NULL,
-      sizeof(LassoSamlSubjectConfirmation),
-      0,
-      (GInstanceInitFunc) lasso_saml_subject_confirmation_instance_init,
-    };
-    
-    this_type = g_type_register_static(LASSO_TYPE_NODE,
-				       "LassoSamlSubjectConfirmation",
-				       &this_info, 0);
-  }
-  return this_type;
+	if (!this_type) {
+		static const GTypeInfo this_info = {
+			sizeof (LassoSamlSubjectConfirmationClass),
+			NULL,
+			NULL,
+			(GClassInitFunc) class_init,
+			NULL,
+			NULL,
+			sizeof(LassoSamlSubjectConfirmation),
+			0,
+			(GInstanceInitFunc) instance_init,
+		};
+
+		this_type = g_type_register_static(LASSO_TYPE_NODE,
+				"LassoSamlSubjectConfirmation", &this_info, 0);
+	}
+	return this_type;
 }
 
 /**
  * lasso_saml_subject_confirmation_new:
  * 
- * Creates a new <saml:SubjectConfirmation> node object.
+ * Creates a new #LassoSamlSubjectConfirmation object.
  * 
- * Return value: the new @LassoSamlSubjectConfirmation
+ * Return value: a newly created #LassoSamlSubjectConfirmation object
  **/
-LassoNode* lasso_saml_subject_confirmation_new()
+LassoSamlSubjectConfirmation*
+lasso_saml_subject_confirmation_new()
 {
-  return LASSO_NODE(g_object_new(LASSO_TYPE_SAML_SUBJECT_CONFIRMATION, NULL));
+	return g_object_new(LASSO_TYPE_SAML_SUBJECT_CONFIRMATION, NULL);
 }

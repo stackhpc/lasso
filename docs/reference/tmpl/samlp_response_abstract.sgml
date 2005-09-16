@@ -1,0 +1,32 @@
+<!-- ##### SECTION Title ##### -->
+LassoSamlpResponseAbstract
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT LassoSamlpResponseAbstract ##### -->
+<para>
+
+</para>
+
+@ResponseID: 
+@InResponseTo: 
+@MajorVersion: 
+@MinorVersion: 
+@IssueInstant: 
+@Recipient: 
+@sign_type: 
+@sign_method: 
+@private_key_file: 
+@certificate_file: 
+

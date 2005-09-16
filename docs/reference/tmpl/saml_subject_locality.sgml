@@ -1,0 +1,32 @@
+<!-- ##### SECTION Title ##### -->
+LassoSamlSubjectLocality
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT LassoSamlSubjectLocality ##### -->
+<para>
+
+</para>
+
+@IPAddress: 
+@DNSAddress: 
+
+<!-- ##### FUNCTION lasso_saml_subject_locality_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+

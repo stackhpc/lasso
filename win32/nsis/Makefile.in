@@ -35,15 +35,18 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 host_triplet = @host@
 subdir = win32/nsis
-DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
+DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
+	$(srcdir)/jlasso-lite.nsi.in $(srcdir)/lasso-deps.nsi.in \
+	$(srcdir)/lasso-full.nsi.in $(srcdir)/lasso-lite.nsi.in \
+	$(srcdir)/python.nsi.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/macros/check.m4 \
-	$(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(mkdir_p)
 CONFIG_HEADER = $(top_builddir)/lasso/lasso_config.h
-CONFIG_CLEAN_FILES =
+CONFIG_CLEAN_FILES = jlasso-lite.nsi lasso-deps.nsi lasso-full.nsi \
+	lasso-lite.nsi python.nsi
 SOURCES =
 DIST_SOURCES =
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -81,6 +84,7 @@ DARWIN_TRUE = @DARWIN_TRUE@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
 DLLTOOL = @DLLTOOL@
+DLL_FILENAME = @DLL_FILENAME@
 ECHO = @ECHO@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
@@ -97,9 +101,14 @@ GTK_DOC_CFLAGS = @GTK_DOC_CFLAGS@
 GTK_DOC_ENABLED_FALSE = @GTK_DOC_ENABLED_FALSE@
 GTK_DOC_ENABLED_TRUE = @GTK_DOC_ENABLED_TRUE@
 GTK_DOC_LIBS = @GTK_DOC_LIBS@
+HAVE_INKSCAPE_FALSE = @HAVE_INKSCAPE_FALSE@
+HAVE_INKSCAPE_TRUE = @HAVE_INKSCAPE_TRUE@
 HAVE_REST2HTML_FALSE = @HAVE_REST2HTML_FALSE@
 HAVE_REST2HTML_TRUE = @HAVE_REST2HTML_TRUE@
+HAVE_XSLTPROC_FALSE = @HAVE_XSLTPROC_FALSE@
+HAVE_XSLTPROC_TRUE = @HAVE_XSLTPROC_TRUE@
 HTML_DIR = @HTML_DIR@
+INKSCAPE = @INKSCAPE@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
@@ -119,8 +128,10 @@ LASSO_CORE_LIBS = @LASSO_CORE_LIBS@
 LASSO_DEFINES = @LASSO_DEFINES@
 LASSO_DOCDIR = @LASSO_DOCDIR@
 LASSO_LIBS = @LASSO_LIBS@
+LASSO_PUB_CFLAGS = @LASSO_PUB_CFLAGS@
 LASSO_STATIC_BINARIES = @LASSO_STATIC_BINARIES@
 LASSO_VERSION_INFO = @LASSO_VERSION_INFO@
+LASSO_WSF_SUPPORT = @LASSO_WSF_SUPPORT@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
@@ -143,10 +154,17 @@ PACKAGE_STRING = @PACKAGE_STRING@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
+PERL = @PERL@
+PERLINSTALLSITEARCH = @PERLINSTALLSITEARCH@
+PERLMAN3DIR = @PERLMAN3DIR@
+PERL_ENABLED_FALSE = @PERL_ENABLED_FALSE@
+PERL_ENABLED_TRUE = @PERL_ENABLED_TRUE@
+PERL_VERSION = @PERL_VERSION@
 PHP = @PHP@
 PHP_CONFIG = @PHP_CONFIG@
 PHP_ENABLED_FALSE = @PHP_ENABLED_FALSE@
 PHP_ENABLED_TRUE = @PHP_ENABLED_TRUE@
+PHP_EXTENSION_DIR = @PHP_EXTENSION_DIR@
 PHP_INCLUDES = @PHP_INCLUDES@
 PHP_LDFLAGS = @PHP_LDFLAGS@
 PHP_LIBS = @PHP_LIBS@
@@ -175,9 +193,15 @@ SWIG = @SWIG@
 SWIG_PYTHON_ARGS = @SWIG_PYTHON_ARGS@
 TAR = @TAR@
 U = @U@
+UPCASED_DLL_FILENAME = @UPCASED_DLL_FILENAME@
 VERSION = @VERSION@
+VERSION_UNDERSCORED = @VERSION_UNDERSCORED@
+WINDOWS_VERSION = @WINDOWS_VERSION@
 WITH_TESTS_FALSE = @WITH_TESTS_FALSE@
 WITH_TESTS_TRUE = @WITH_TESTS_TRUE@
+WSF_ENABLED_FALSE = @WSF_ENABLED_FALSE@
+WSF_ENABLED_TRUE = @WSF_ENABLED_TRUE@
+XSLTPROC = @XSLTPROC@
 ac_ct_AR = @ac_ct_AR@
 ac_ct_AS = @ac_ct_AS@
 ac_ct_CC = @ac_ct_CC@
@@ -188,6 +212,7 @@ ac_ct_OBJDUMP = @ac_ct_OBJDUMP@
 ac_ct_RANLIB = @ac_ct_RANLIB@
 ac_ct_RC = @ac_ct_RC@
 ac_ct_STRIP = @ac_ct_STRIP@
+ac_pt_PKG_CONFIG = @ac_pt_PKG_CONFIG@
 am__fastdepCC_FALSE = @am__fastdepCC_FALSE@
 am__fastdepCC_TRUE = @am__fastdepCC_TRUE@
 am__fastdepCXX_FALSE = @am__fastdepCXX_FALSE@
@@ -225,7 +250,9 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-EXTRA_DIST = lasso-deps.nsi lasso-full.nsi jlasso-lite.nsi lasso-lite.nsi lasso.ico
+EXTRA_DIST = lasso-deps.nsi.in lasso-full.nsi.in jlasso-lite.nsi.in lasso-lite.nsi.in lasso.ico \
+              lasso-deps.nsi lasso-full.nsi jlasso-lite.nsi lasso-lite.nsi
+
 all: all-am
 
 .SUFFIXES:
@@ -258,6 +285,16 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
+jlasso-lite.nsi: $(top_builddir)/config.status $(srcdir)/jlasso-lite.nsi.in
+	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+lasso-deps.nsi: $(top_builddir)/config.status $(srcdir)/lasso-deps.nsi.in
+	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+lasso-full.nsi: $(top_builddir)/config.status $(srcdir)/lasso-full.nsi.in
+	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+lasso-lite.nsi: $(top_builddir)/config.status $(srcdir)/lasso-lite.nsi.in
+	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+python.nsi: $(top_builddir)/config.status $(srcdir)/python.nsi.in
+	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 mostlyclean-libtool:
 	-rm -f *.lo

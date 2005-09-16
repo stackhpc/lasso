@@ -1,98 +1,224 @@
-<!doctype book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
-<!ENTITY LassoLibAssertion SYSTEM "sgml/lib_assertion.sgml">
-<!ENTITY LassoLibAuthnRequest SYSTEM "sgml/lib_authn_request.sgml">
-<!ENTITY lasso-LassoLibAuthnRequestEnvelope SYSTEM "sgml/lib_authn_request_envelope.sgml">
-<!ENTITY LassoLibAuthnResponse SYSTEM "sgml/lib_authn_response.sgml">
-<!ENTITY lasso-LassoLibAuthnResponseEnvelope SYSTEM "sgml/lib_authn_response_envelope.sgml">
-<!ENTITY LassoLibIDPEntries SYSTEM "sgml/lib_idp_entries.sgml">
-<!ENTITY LassoLibIDPEntry SYSTEM "sgml/lib_idp_entry.sgml">
-<!ENTITY LassoLibIDPList SYSTEM "sgml/lib_idp_list.sgml">
-<!ENTITY LassoLibRequestAuthnContext SYSTEM "sgml/lib_request_authn_context.sgml">
-<!ENTITY LassoLibScoping SYSTEM "sgml/lib_scoping.sgml">
-<!ENTITY LassoSamlAdvice SYSTEM "sgml/saml_advice.sgml">
-<!ENTITY LassoSamlAssertion SYSTEM "sgml/saml_assertion.sgml">
-<!ENTITY LassoSamlAudienceRestrictionCondition SYSTEM "sgml/saml_audience_restriction_condition.sgml">
-<!ENTITY LassoSamlAuthenticationStatement SYSTEM "sgml/saml_authentication_statement.sgml">
-<!ENTITY LassoSamlAuthorityBinding SYSTEM "sgml/saml_authority_binding.sgml">
-<!ENTITY LassoSamlConditionAbstract SYSTEM "sgml/saml_condition_abstract.sgml">
-<!ENTITY LassoSamlConditions SYSTEM "sgml/saml_conditions.sgml">
-<!ENTITY LassoSamlNameIdentifier SYSTEM "sgml/saml_name_identifier.sgml">
-<!ENTITY LassoSamlStatementAbstract SYSTEM "sgml/saml_statement_abstract.sgml">
-<!ENTITY LassoSamlSubject SYSTEM "sgml/saml_subject.sgml">
-<!ENTITY LassoSamlSubjectConfirmation SYSTEM "sgml/saml_subject_confirmation.sgml">
-<!ENTITY LassoSamlSubjectLocality SYSTEM "sgml/saml_subject_locality.sgml">
-<!ENTITY LassoSamlSubjectStatementAbstract SYSTEM "sgml/saml_subject_statement_abstract.sgml">
-<!ENTITY LassoSamlpRequestAbstract SYSTEM "sgml/samlp_request_abstract.sgml">
-<!ENTITY LassoSamlpResponse SYSTEM "sgml/samlp_response.sgml">
-<!ENTITY LassoSamlpResponseAbstract SYSTEM "sgml/samlp_response_abstract.sgml">
-<!ENTITY LassoSamlpStatus SYSTEM "sgml/samlp_status.sgml">
-<!ENTITY LassoSamlpStatusCode SYSTEM "sgml/samlp_status_code.sgml">
-<!ENTITY LassoNode SYSTEM "sgml/xml.sgml">
-<!ENTITY LassoLibLogoutRequest SYSTEM "sgml/lib_logout_request.sgml">
-<!ENTITY LassoLibFederationTerminationNotification SYSTEM "sgml/lib_federation_termination_notification.sgml">
-<!ENTITY LassoLibIDPProvidedNameIdentifier SYSTEM "sgml/lib_idp_provided_name_identifier.sgml">
-<!ENTITY LassoLibLogoutResponse SYSTEM "sgml/lib_logout_response.sgml">
-<!ENTITY LassoLibNameIdentifierMappingRequest SYSTEM "sgml/lib_name_identifier_mapping_request.sgml">
-<!ENTITY LassoLibNameIdentifierMappingResponse SYSTEM "sgml/lib_name_identifier_mapping_response.sgml">
-<!ENTITY LassoLibOLDProvidedNameIdentifier SYSTEM "sgml/lib_old_provided_name_identifier.sgml">
-<!ENTITY LassoLibRegisterNameIdentifierRequest SYSTEM "sgml/lib_register_name_identifier_request.sgml">
-<!ENTITY LassoLibRegisterNameIdentifierResponse SYSTEM "sgml/lib_register_name_identifier_response.sgml">
-<!ENTITY lasso-LassoLibSPProvidedNameIdentifier SYSTEM "sgml/lib_sp_provided_name_identifier.sgml">
-<!ENTITY LassoLibStatusResponse SYSTEM "sgml/lib_status_response.sgml">
-<!ENTITY LassoLibSubject SYSTEM "sgml/lib_subject.sgml">
-<!ENTITY LassoSamlpRequest SYSTEM "sgml/samlp_request.sgml">
-<!ENTITY LassoLibAuthnContext SYSTEM "sgml/lib_authn_context.sgml">
-<!ENTITY LassoLibAuthenticationStatement SYSTEM "sgml/lib_authentication_statement.sgml">
-<!ENTITY LassoSoapEnvBody SYSTEM "sgml/soap-env_body.sgml">
-<!ENTITY LassoSoapEnvEnvelope SYSTEM "sgml/soap-env_envelope.sgml">
-<!ENTITY lasso-export SYSTEM "sgml/export.sgml">
-<!ENTITY lasso-lasso SYSTEM "sgml/lasso.sgml">
-<!ENTITY lasso-version SYSTEM "sgml/version.sgml">
-<!ENTITY LassoArtifact SYSTEM "sgml/artifact.sgml">
-<!ENTITY LassoAssertion SYSTEM "sgml/assertion.sgml">
-<!ENTITY LassoAuthenticationStatement SYSTEM "sgml/authentication_statement.sgml">
-<!ENTITY LassoAuthnRequest SYSTEM "sgml/authn_request.sgml">
-<!ENTITY lasso-LassoAuthnRequestEnvelope SYSTEM "sgml/authn_request_envelope.sgml">
-<!ENTITY LassoAuthnResponse SYSTEM "sgml/authn_response.sgml">
-<!ENTITY lasso-LassoAuthnResponseEnvelope SYSTEM "sgml/authn_response_envelope.sgml">
-<!ENTITY LassoFederationTerminationNotification SYSTEM "sgml/federation_termination_notification.sgml">
-<!ENTITY LassoFederation SYSTEM "sgml/federation.sgml">
-<!ENTITY LassoLecp SYSTEM "sgml/lecp.sgml">
-<!ENTITY LassoLogoutRequest SYSTEM "sgml/logout_request.sgml">
-<!ENTITY LassoLogoutResponse SYSTEM "sgml/logout_response.sgml">
-<!ENTITY LassoNameIdentifierMappingRequest SYSTEM "sgml/name_identifier_mapping_request.sgml">
-<!ENTITY LassoNameIdentifierMappingResponse SYSTEM "sgml/name_identifier_mapping_response.sgml">
-<!ENTITY LassoProvider SYSTEM "sgml/provider.sgml">
-<!ENTITY LassoRegisterNameIdentifierRequest SYSTEM "sgml/register_name_identifier_request.sgml">
-<!ENTITY LassoRegisterNameIdentifierResponse SYSTEM "sgml/register_name_identifier_response.sgml">
-<!ENTITY LassoRequest SYSTEM "sgml/request.sgml">
-<!ENTITY LassoResponse SYSTEM "sgml/response.sgml">
-<!ENTITY LassoDefederation SYSTEM "sgml/defederation.sgml">
-<!ENTITY LassoIdentity SYSTEM "sgml/identity.sgml">
-<!ENTITY LassoLogin SYSTEM "sgml/login.sgml">
-<!ENTITY LassoLogout SYSTEM "sgml/logout.sgml">
-<!ENTITY LassoProfile SYSTEM "sgml/profile.sgml">
-<!ENTITY LassoServer SYSTEM "sgml/server.sgml">
-<!ENTITY LassoSession SYSTEM "sgml/session.sgml">
-<!ENTITY lasso-tools SYSTEM "sgml/tools.sgml">
+<?xml version="1.0"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY LassoLibAssertion SYSTEM "sgml/lib_assertion.xml">
+<!ENTITY LassoLibAuthnRequest SYSTEM "sgml/lib_authn_request.xml">
+<!ENTITY LassoLibAuthnRequestEnvelope SYSTEM "sgml/lib_authn_request_envelope.xml">
+<!ENTITY LassoLibAuthnResponse SYSTEM "sgml/lib_authn_response.xml">
+<!ENTITY LassoLibAuthnResponseEnvelope SYSTEM "sgml/lib_authn_response_envelope.xml">
+<!ENTITY LassoLibIDPEntries SYSTEM "sgml/lib_idp_entries.xml">
+<!ENTITY LassoLibIDPEntry SYSTEM "sgml/lib_idp_entry.xml">
+<!ENTITY LassoLibIDPList SYSTEM "sgml/lib_idp_list.xml">
+<!ENTITY LassoLibRequestAuthnContext SYSTEM "sgml/lib_request_authn_context.xml">
+<!ENTITY LassoLibScoping SYSTEM "sgml/lib_scoping.xml">
+<!ENTITY LassoSamlAdvice SYSTEM "sgml/saml_advice.xml">
+<!ENTITY LassoSamlAssertion SYSTEM "sgml/saml_assertion.xml">
+<!ENTITY LassoSamlAudienceRestrictionCondition SYSTEM "sgml/saml_audience_restriction_condition.xml">
+<!ENTITY LassoSamlAuthenticationStatement SYSTEM "sgml/saml_authentication_statement.xml">
+<!ENTITY LassoSamlAuthorityBinding SYSTEM "sgml/saml_authority_binding.xml">
+<!ENTITY LassoSamlConditionAbstract SYSTEM "sgml/saml_condition_abstract.xml">
+<!ENTITY LassoSamlConditions SYSTEM "sgml/saml_conditions.xml">
+<!ENTITY LassoSamlNameIdentifier SYSTEM "sgml/saml_name_identifier.xml">
+<!ENTITY LassoSamlStatementAbstract SYSTEM "sgml/saml_statement_abstract.xml">
+<!ENTITY LassoSamlSubject SYSTEM "sgml/saml_subject.xml">
+<!ENTITY LassoSamlSubjectConfirmation SYSTEM "sgml/saml_subject_confirmation.xml">
+<!ENTITY LassoSamlSubjectLocality SYSTEM "sgml/saml_subject_locality.xml">
+<!ENTITY LassoSamlSubjectStatementAbstract SYSTEM "sgml/saml_subject_statement_abstract.xml">
+<!ENTITY LassoSamlpRequestAbstract SYSTEM "sgml/samlp_request_abstract.xml">
+<!ENTITY LassoSamlpResponse SYSTEM "sgml/samlp_response.xml">
+<!ENTITY LassoSamlpResponseAbstract SYSTEM "sgml/samlp_response_abstract.xml">
+<!ENTITY LassoSamlpStatus SYSTEM "sgml/samlp_status.xml">
+<!ENTITY LassoSamlpStatusCode SYSTEM "sgml/samlp_status_code.xml">
+<!ENTITY LassoNode SYSTEM "sgml/node.xml">
+<!ENTITY LassoLibLogoutRequest SYSTEM "sgml/lib_logout_request.xml">
+<!ENTITY LassoLibFederationTerminationNotification SYSTEM "sgml/lib_federation_termination_notification.xml">
+<!ENTITY LassoLibLogoutResponse SYSTEM "sgml/lib_logout_response.xml">
+<!ENTITY LassoLibNameIdentifierMappingRequest SYSTEM "sgml/lib_name_identifier_mapping_request.xml">
+<!ENTITY LassoLibNameIdentifierMappingResponse SYSTEM "sgml/lib_name_identifier_mapping_response.xml">
+<!ENTITY LassoLibRegisterNameIdentifierRequest SYSTEM "sgml/lib_register_name_identifier_request.xml">
+<!ENTITY LassoLibRegisterNameIdentifierResponse SYSTEM "sgml/lib_register_name_identifier_response.xml">
+<!ENTITY LassoLibStatusResponse SYSTEM "sgml/lib_status_response.xml">
+<!ENTITY LassoLibSubject SYSTEM "sgml/lib_subject.xml">
+<!ENTITY LassoSamlpRequest SYSTEM "sgml/samlp_request.xml">
+<!ENTITY LassoLibAuthnContext SYSTEM "sgml/lib_authn_context.xml">
+<!ENTITY LassoLibAuthenticationStatement SYSTEM "sgml/lib_authentication_statement.xml">
+<!ENTITY lasso-lasso SYSTEM "sgml/lasso.xml">
+<!ENTITY LassoFederation SYSTEM "sgml/federation.xml">
+<!ENTITY LassoLecp SYSTEM "sgml/lecp.xml">
+<!ENTITY LassoProvider SYSTEM "sgml/provider.xml">
+<!ENTITY LassoDefederation SYSTEM "sgml/defederation.xml">
+<!ENTITY LassoNameRegistration SYSTEM "sgml/name_registration.xml">
+<!ENTITY LassoNameIdentifierMapping SYSTEM "sgml/name_identifier_mapping.xml">
+<!ENTITY LassoIdentity SYSTEM "sgml/identity.xml">
+<!ENTITY LassoLogin SYSTEM "sgml/login.xml">
+<!ENTITY LassoLogout SYSTEM "sgml/logout.xml">
+<!ENTITY LassoProfile SYSTEM "sgml/profile.xml">
+<!ENTITY LassoServer SYSTEM "sgml/server.xml">
+<!ENTITY LassoSession SYSTEM "sgml/session.xml">
+<!ENTITY LassoStrings SYSTEM "sgml/strings.xml">
+
+<!ENTITY version SYSTEM "version.xml">
 ]>
 <book id="index">
   <bookinfo>
-    <title>Lasso API Reference</title>
+    <title>Lasso Reference Manual</title>
+    <releaseinfo>for Lasso &version;</releaseinfo>
+    
+    <legalnotice>
+      <para>
+        Permission is granted to copy, distribute and/or modify this document
+        under the terms of the GNU General Public License as published by the
+        Free Software Foundation; either version 2 of the License, or (at your
+        option) any later version.
+      </para>
+    </legalnotice>
+
+    <copyright>
+      <year>2004, 2005</year>
+      <holder>Entr'ouvert</holder>
+    </copyright>
+
   </bookinfo>
 
-  <chapter>
-    <title>Lasso</title>
+  <chapter id="lasso">
+    <title>Lasso &amp; Liberty Alliance Overview</title>
+    <para>
+Lasso is a library which provides all the necessary functions for sites to
+implement <ulink url="http://www.projectliberty.org">Liberty Alliance</ulink>
+specifications.  It defines processes for federated identities, single sign-on
+and related protocols.
+    </para>
+
+    <para>
+Founded in 2001 by Sun in order to propose an alternative to the
+Microsoft Passport project, the consortium Liberty Alliance aims to
+promote an infrastructure of standards allowing the management of
+federated identities between several services or systems.
+    </para>
+
+    <para>
+
+A federated identity (or network identity) of an individual or a legal entity
+on Internet gather at the same time:
+
+<itemizedlist>
+  <listitem>
+   Its identification (name, co-ordinates, preferences, history...);
+  </listitem>
+  <listitem>
+   Its authentication (which guarantees the validity of an identity);
+  </listitem>
+  <listitem>
+   Its authorisations (access rights to information, access rights to
+   services).
+  </listitem>
+</itemizedlist>
+</para>
+
+<para>
+Liberty standards aims to give more coherence to a network identity
+which is scattered (numerous logins and passwords) today. This identity
+becomes frequently delicate to manage, both for customers and businesses.
+</para>
+ 
+<para>
+The Liberty Alliance specifications define three types of actors:
+
+<itemizedlist>
+  <listitem>
+    The user, person or entity who can acquire an identity;
+  </listitem>
+  <listitem>
+    The identity provider which creates and manages the identity of
+    the users, and authenticates them to the service providers;
+  </listitem>
+  <listitem>
+    The service provider who provides services to the users once that
+    they have authenticated to an identity provider.
+  </listitem>
+</itemizedlist>
+</para>
+
+<para>
+One calls circle of trust a grouping of identity providers and service
+providers which agreed to share (to federate) the identity of their users.
+</para>
+
+    <para>
+Contrary to most other implementations of Liberty Alliance, Lasso is not a
+full-fedged system but a simple C library, with complete bindings for Java,
+Perl, PHP and Python.  The integration work should largely be facilitated.
+An existing site should be able to integrate it in a few days of
+development, without calling into question its architecture.  Lasso is a
+library written in C Language.
+    </para>
+
+<para>
+Lasso is built on top of <ulink url="http://www.xmlsoft.org">libxml2</ulink>,
+<ulink url="http://www.aleksey.com/xmlsec/">XMLSec</ulink> and
+<ulink url="http://www.openssl.org">OpenSSL</ulink> and is licensed under
+the <ulink url="http://lasso.entrouvert.org/license">GNU General Public License</ulink>
+(with an <ulink url="http://lasso.entrouvert.org/license#openssl">OpenSSL exception</ulink>).
+    </para>
+
+  </chapter>
+
+  
+  <chapter id="architecture">
+    <title>Lasso Architecture</title>
+    &LassoProvider;
+    &LassoServer;
+    &LassoIdentity;
+    &LassoSession;
+    &LassoFederation;
+  </chapter>
+    
+  <chapter id="idff">
+    <title>Identity Federation Framework</title>
+
+    &LassoProfile;
+    &LassoLogin;
+    &LassoLecp;
+    &LassoLogout;
+    &LassoDefederation;
+    &LassoNameRegistration;
+    &LassoNameIdentifierMapping;
+
+  </chapter>
+
+  <chapter id="idwsf">
+    <title>Identity Web Services Framework</title>
+
+    <para>
+    </para>
+
+  </chapter>
+
+  <chapter id="xml">
+    <title>Schemas</title>
+
+    &LassoNode;
     &LassoLibAssertion;
+    &LassoLibAuthenticationStatement;
+    &LassoLibAuthnContext;
     &LassoLibAuthnRequest;
-    &lasso-LassoLibAuthnRequestEnvelope;
+    &LassoLibAuthnRequestEnvelope;
     &LassoLibAuthnResponse;
-    &lasso-LassoLibAuthnResponseEnvelope;
+    &LassoLibAuthnResponseEnvelope;
+    &LassoLibFederationTerminationNotification;
     &LassoLibIDPEntries;
     &LassoLibIDPEntry;
     &LassoLibIDPList;
+    &LassoLibLogoutRequest;
+    &LassoLibLogoutResponse;
+    &LassoLibNameIdentifierMappingRequest;
+    &LassoLibNameIdentifierMappingResponse;
+    &LassoLibRegisterNameIdentifierRequest;
+    &LassoLibRegisterNameIdentifierResponse;
     &LassoLibRequestAuthnContext;
     &LassoLibScoping;
+    &LassoLibStatusResponse;
+    &LassoLibSubject;
     &LassoSamlAdvice;
     &LassoSamlAssertion;
     &LassoSamlAudienceRestrictionCondition;
@@ -101,63 +227,24 @@
     &LassoSamlConditionAbstract;
     &LassoSamlConditions;
     &LassoSamlNameIdentifier;
-    &LassoSamlStatementAbstract;
-    &LassoSamlSubject;
-    &LassoSamlSubjectConfirmation;
-    &LassoSamlSubjectLocality;
-    &LassoSamlSubjectStatementAbstract;
+    &LassoSamlpRequest;
     &LassoSamlpRequestAbstract;
     &LassoSamlpResponse;
     &LassoSamlpResponseAbstract;
     &LassoSamlpStatus;
     &LassoSamlpStatusCode;
-    &LassoNode;
-    &LassoLibLogoutRequest;
-    &LassoLibFederationTerminationNotification;
-    &LassoLibIDPProvidedNameIdentifier;
-    &LassoLibLogoutResponse;
-    &LassoLibNameIdentifierMappingRequest;
-    &LassoLibNameIdentifierMappingResponse;
-    &LassoLibOLDProvidedNameIdentifier;
-    &LassoLibRegisterNameIdentifierRequest;
-    &LassoLibRegisterNameIdentifierResponse;
-    &lasso-LassoLibSPProvidedNameIdentifier;
-    &LassoLibStatusResponse;
-    &LassoLibSubject;
-    &LassoSamlpRequest;
-    &LassoLibAuthnContext;
-    &LassoLibAuthenticationStatement;
-    &LassoSoapEnvBody;
-    &LassoSoapEnvEnvelope;
-    &lasso-export;
-    &lasso-lasso;
-    &lasso-version;
-    &LassoArtifact;
-    &LassoAssertion;
-    &LassoAuthenticationStatement;
-    &LassoAuthnRequest;
-    &lasso-LassoAuthnRequestEnvelope;
-    &LassoAuthnResponse;
-    &lasso-LassoAuthnResponseEnvelope;
-    &LassoFederationTerminationNotification;
-    &LassoFederation;
-    &LassoLecp;
-    &LassoLogoutRequest;
-    &LassoLogoutResponse;
-    &LassoNameIdentifierMappingRequest;
-    &LassoNameIdentifierMappingResponse;
-    &LassoProvider;
-    &LassoRegisterNameIdentifierRequest;
-    &LassoRegisterNameIdentifierResponse;
-    &LassoRequest;
-    &LassoResponse;
-    &LassoDefederation;
-    &LassoIdentity;
-    &LassoLogin;
-    &LassoLogout;
-    &LassoProfile;
-    &LassoServer;
-    &LassoSession;
-    &lasso-tools;
+    &LassoSamlStatementAbstract;
+    &LassoSamlSubject;
+    &LassoSamlSubjectConfirmation;
+    &LassoSamlSubjectLocality;
+    &LassoSamlSubjectStatementAbstract;
   </chapter>
+
+  <chapter id="misc">
+    <title>Misc</title>
+
+    &lasso-lasso;
+    &LassoStrings;
+  </chapter>
+
 </book>

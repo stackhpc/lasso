@@ -29,10 +29,12 @@ version=`ls src/.libs/lib*.so.* | \
 major=`ls src/.libs/lib*.so.* | \
  awk '{if (match($$0,/\.so\.[0-9]+$$/)) print substr($$0,RSTART+4)}'`
 
+phpapiver=$(shell php-config --phpapi)
+
 config.status: configure
 	dh_testdir
 	# Add here commands to configure the package.
-	CFLAGS="$(CFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --enable-tests=no --disable-java --disable-gtk-doc
+	CFLAGS="$(CFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --enable-tests=no --disable-java --disable-gtk-doc --disable-perl --disable-csharp
 
 
 build: build-stamp
@@ -68,13 +70,11 @@ install: build
 	dh_installdirs
 
 	# Add here commands to install the package into debian/tmp
-	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp \
-		GACUTIL="/usr/bin/gacutil -root $(CURDIR)/debian/tmp/usr/lib"
+	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
 
 
 # Build architecture-independent files here.
 binary-indep: build install
-# We have nothing to do by default.
 
 # Build architecture-dependent files here.
 binary-arch: build install
@@ -92,7 +92,7 @@ binary-arch: build install
 	dh_makeshlibs -a -V
 	dh_installdeb
 	dh_shlibdeps -a
-	dh_makenetlibs -L liblasso-cil -r
+	echo "php:Depends=phpapi-$(phpapiver)" >> debian/php4-lasso.substvars
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb

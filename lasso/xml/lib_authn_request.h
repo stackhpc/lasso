@@ -1,12 +1,11 @@
-/* $Id: lib_authn_request.h,v 1.4 2004/07/22 06:59:02 eraviart Exp $ 
+/* $Id: lib_authn_request.h,v 1.13 2005/01/22 15:57:55 eraviart Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,59 +34,56 @@ extern "C" {
 #include <lasso/xml/lib_scoping.h>
 
 #define LASSO_TYPE_LIB_AUTHN_REQUEST (lasso_lib_authn_request_get_type())
-#define LASSO_LIB_AUTHN_REQUEST(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_LIB_AUTHN_REQUEST, LassoLibAuthnRequest))
-#define LASSO_LIB_AUTHN_REQUEST_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_LIB_AUTHN_REQUEST, LassoLibAuthnRequestClass))
-#define LASSO_IS_LIB_AUTHN_REQUEST(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_LIB_AUTHN_REQUEST))
-#define LASSO_IS_LIB_AUTHN_REQUEST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_LIB_AUTHN_REQUEST))
-#define LASSO_LIB_AUTHN_REQUEST_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_LIB_AUTHN_REQUEST, LassoLibAuthnRequestClass)) 
+#define LASSO_LIB_AUTHN_REQUEST(obj) \
+	(G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_LIB_AUTHN_REQUEST, LassoLibAuthnRequest))
+#define LASSO_LIB_AUTHN_REQUEST_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_LIB_AUTHN_REQUEST, LassoLibAuthnRequestClass))
+#define LASSO_IS_LIB_AUTHN_REQUEST(obj) \
+	(G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_LIB_AUTHN_REQUEST))
+#define LASSO_IS_LIB_AUTHN_REQUEST_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_LIB_AUTHN_REQUEST))
+#define LASSO_LIB_AUTHN_REQUEST_GET_CLASS(o) \
+	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_LIB_AUTHN_REQUEST, LassoLibAuthnRequestClass)) 
 
 typedef struct _LassoLibAuthnRequest LassoLibAuthnRequest;
 typedef struct _LassoLibAuthnRequestClass LassoLibAuthnRequestClass;
 
 struct _LassoLibAuthnRequest {
-  LassoSamlpRequestAbstract parent;
-  /*< private >*/
+	LassoSamlpRequestAbstract parent;
+
+	/*< public >*/
+	/* <xs:element ref="Extension" minOccurs="0" maxOccurs="unbounded"/> */
+	GList *Extension;
+	/* <xs:element ref="ProviderID"/> */
+	char *ProviderID;
+	/* <xs:element ref="AffiliationID" minOccurs="0"/> */
+	char *AffiliationID;
+	/* <xs:element ref="NameIDPolicy" minOccurs="0"/> */
+	char *NameIDPolicy;
+	/* <xs:element name="ForceAuthn" type="xs:boolean" minOccurs="0"/> */
+	gboolean ForceAuthn;
+	/* <xs:element name="IsPassive" type="xs:boolean "minOccurs="0"/> */
+	gboolean IsPassive;
+	/* <xs:element ref="ProtocolProfile" minOccurs="0"/> */
+	char *ProtocolProfile;
+	/* <xs:element name="AssertionConsumerServiceID" type="xs:string" minOccurs="0"/> */
+	char *AssertionConsumerServiceID;
+	/* <xs:element ref="RequestAuthnContext" minOccurs="0"/> */
+	LassoLibRequestAuthnContext *RequestAuthnContext;
+	/* <xs:element ref="RelayState" minOccurs="0"/> */
+	char *RelayState;
+	/* <xs:element ref="Scoping" minOccurs="0 "/> */
+	LassoLibScoping *Scoping;
+	/* <xs:attribute ref="consent" use="optional"/> */
+	char *consent;
 };
 
 struct _LassoLibAuthnRequestClass {
-  LassoSamlpRequestAbstractClass parent;
+	LassoSamlpRequestAbstractClass parent;
 };
 
 LASSO_EXPORT GType lasso_lib_authn_request_get_type(void);
-LASSO_EXPORT LassoNode* lasso_lib_authn_request_new(void);
-
-LASSO_EXPORT void lasso_lib_authn_request_set_affiliationID              (LassoLibAuthnRequest *,
-									  const xmlChar *);
-  
-LASSO_EXPORT void lasso_lib_authn_request_set_assertionConsumerServiceID (LassoLibAuthnRequest *,
-									  const xmlChar *);
-
-LASSO_EXPORT void lasso_lib_authn_request_set_consent                    (LassoLibAuthnRequest *,
-									  const xmlChar *);
-
-LASSO_EXPORT void lasso_lib_authn_request_set_forceAuthn                 (LassoLibAuthnRequest *,
-									  gboolean);
-
-LASSO_EXPORT void lasso_lib_authn_request_set_isPassive                  (LassoLibAuthnRequest *,
-									  gboolean);
-
-LASSO_EXPORT void lasso_lib_authn_request_set_nameIDPolicy               (LassoLibAuthnRequest *node,
-									  const xmlChar   *nameIDPolicy);
-
-LASSO_EXPORT void lasso_lib_authn_request_set_protocolProfile            (LassoLibAuthnRequest *,
-									  const xmlChar *);
-
-LASSO_EXPORT void lasso_lib_authn_request_set_providerID                 (LassoLibAuthnRequest *,
-									  const xmlChar *);
-
-LASSO_EXPORT void lasso_lib_authn_request_set_relayState                 (LassoLibAuthnRequest *,
-									  const xmlChar *);
-
-LASSO_EXPORT void lasso_lib_authn_request_set_requestAuthnContext        (LassoLibAuthnRequest *,
-									  LassoLibRequestAuthnContext *);
-
-LASSO_EXPORT void lasso_lib_authn_request_set_scoping                    (LassoLibAuthnRequest *node,
-									  LassoLibScoping *scoping);
+LASSO_EXPORT LassoLibAuthnRequest* lasso_lib_authn_request_new(void);
 
 #ifdef __cplusplus
 }

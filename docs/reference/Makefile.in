@@ -35,15 +35,15 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 host_triplet = @host@
 subdir = docs/reference
-DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
+DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
+	$(srcdir)/version.xml.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/macros/check.m4 \
-	$(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(mkdir_p)
 CONFIG_HEADER = $(top_builddir)/lasso/lasso_config.h
-CONFIG_CLEAN_FILES =
+CONFIG_CLEAN_FILES = version.xml
 SOURCES =
 DIST_SOURCES =
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -81,6 +81,7 @@ DARWIN_TRUE = @DARWIN_TRUE@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
 DLLTOOL = @DLLTOOL@
+DLL_FILENAME = @DLL_FILENAME@
 ECHO = @ECHO@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
@@ -97,9 +98,14 @@ GTK_DOC_CFLAGS = @GTK_DOC_CFLAGS@
 GTK_DOC_ENABLED_FALSE = @GTK_DOC_ENABLED_FALSE@
 GTK_DOC_ENABLED_TRUE = @GTK_DOC_ENABLED_TRUE@
 GTK_DOC_LIBS = @GTK_DOC_LIBS@
+HAVE_INKSCAPE_FALSE = @HAVE_INKSCAPE_FALSE@
+HAVE_INKSCAPE_TRUE = @HAVE_INKSCAPE_TRUE@
 HAVE_REST2HTML_FALSE = @HAVE_REST2HTML_FALSE@
 HAVE_REST2HTML_TRUE = @HAVE_REST2HTML_TRUE@
+HAVE_XSLTPROC_FALSE = @HAVE_XSLTPROC_FALSE@
+HAVE_XSLTPROC_TRUE = @HAVE_XSLTPROC_TRUE@
 HTML_DIR = @HTML_DIR@
+INKSCAPE = @INKSCAPE@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
@@ -119,8 +125,10 @@ LASSO_CORE_LIBS = @LASSO_CORE_LIBS@
 LASSO_DEFINES = @LASSO_DEFINES@
 LASSO_DOCDIR = @LASSO_DOCDIR@
 LASSO_LIBS = @LASSO_LIBS@
+LASSO_PUB_CFLAGS = @LASSO_PUB_CFLAGS@
 LASSO_STATIC_BINARIES = @LASSO_STATIC_BINARIES@
 LASSO_VERSION_INFO = @LASSO_VERSION_INFO@
+LASSO_WSF_SUPPORT = @LASSO_WSF_SUPPORT@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
@@ -143,10 +151,17 @@ PACKAGE_STRING = @PACKAGE_STRING@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
+PERL = @PERL@
+PERLINSTALLSITEARCH = @PERLINSTALLSITEARCH@
+PERLMAN3DIR = @PERLMAN3DIR@
+PERL_ENABLED_FALSE = @PERL_ENABLED_FALSE@
+PERL_ENABLED_TRUE = @PERL_ENABLED_TRUE@
+PERL_VERSION = @PERL_VERSION@
 PHP = @PHP@
 PHP_CONFIG = @PHP_CONFIG@
 PHP_ENABLED_FALSE = @PHP_ENABLED_FALSE@
 PHP_ENABLED_TRUE = @PHP_ENABLED_TRUE@
+PHP_EXTENSION_DIR = @PHP_EXTENSION_DIR@
 PHP_INCLUDES = @PHP_INCLUDES@
 PHP_LDFLAGS = @PHP_LDFLAGS@
 PHP_LIBS = @PHP_LIBS@
@@ -175,9 +190,15 @@ SWIG = @SWIG@
 SWIG_PYTHON_ARGS = @SWIG_PYTHON_ARGS@
 TAR = @TAR@
 U = @U@
+UPCASED_DLL_FILENAME = @UPCASED_DLL_FILENAME@
 VERSION = @VERSION@
+VERSION_UNDERSCORED = @VERSION_UNDERSCORED@
+WINDOWS_VERSION = @WINDOWS_VERSION@
 WITH_TESTS_FALSE = @WITH_TESTS_FALSE@
 WITH_TESTS_TRUE = @WITH_TESTS_TRUE@
+WSF_ENABLED_FALSE = @WSF_ENABLED_FALSE@
+WSF_ENABLED_TRUE = @WSF_ENABLED_TRUE@
+XSLTPROC = @XSLTPROC@
 ac_ct_AR = @ac_ct_AR@
 ac_ct_AS = @ac_ct_AS@
 ac_ct_CC = @ac_ct_CC@
@@ -188,6 +209,7 @@ ac_ct_OBJDUMP = @ac_ct_OBJDUMP@
 ac_ct_RANLIB = @ac_ct_RANLIB@
 ac_ct_RC = @ac_ct_RC@
 ac_ct_STRIP = @ac_ct_STRIP@
+ac_pt_PKG_CONFIG = @ac_pt_PKG_CONFIG@
 am__fastdepCC_FALSE = @am__fastdepCC_FALSE@
 am__fastdepCC_TRUE = @am__fastdepCC_TRUE@
 am__fastdepCXX_FALSE = @am__fastdepCXX_FALSE@
@@ -225,28 +247,22 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-TOP = $(top_srcdir)
-DOC_MAIN_SGML_FILE = lasso.sgml
-SOURCE_DIR = $(TOP)/lasso
-INCLUDE_DIR = $(TOP)/lasso
 EXTRA_DIST = \
 	lasso-sections.txt \
 	lasso.sgml \
-	lasso.types 
+	lasso.types \
+	version.xml.in
 
 
-# Extra options to pass to gtkdoc-scangobj.
-SCANOBJ_OPTIONS = 
-
-#
 # We need to pre-process original source files
 # because gtkdoc does not understand some C features
 #
 DOC_SOURCE_DIR = ./code
 DOC_SOURCE_FILES = \
-	$(shell find $(SOURCE_DIR) -name '*.c' -print ) \
-	$(shell find $(INCLUDE_DIR) -name '*.h' -print )
+	$(shell find $(top_srcdir)/lasso -name '*.c' -print ) \
+	$(shell find $(top_srcdir)/lasso -name '*.h' -print | grep -v private)
 
+IGNORE_HFILES = lasso_config.h
 SCANOBJ_FILES = lasso.hierarchy	lasso.signals lasso.interfaces lasso.prerequisites lasso.args
 
 # CFLAGS and LDFLAGS for compiling scan program.
@@ -292,6 +308,8 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
+version.xml: $(top_builddir)/config.status $(srcdir)/version.xml.in
+	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -336,6 +354,9 @@ distdir: $(DISTFILES)
 	    || exit 1; \
 	  fi; \
 	done
+	$(MAKE) $(AM_MAKEFLAGS) \
+	  top_distdir="$(top_distdir)" distdir="$(distdir)" \
+	  dist-hook
 check-am: all-am
 check: check-am
 all-am: Makefile
@@ -426,10 +447,10 @@ all: docs
 
 docs: sgml html clean-sources
 
-html: sgml $(DOC_MAIN_SGML_FILE) lasso-index
+html: sgml lasso.sgml lasso-index
 	@echo '*** Building HTML ***'
 	test -d html || mkdir html
-	cd html && gtkdoc-mkhtml lasso ../build/$(DOC_MAIN_SGML_FILE)
+	cd html && gtkdoc-mkhtml lasso ../build/lasso.sgml
 
 #
 # Prepeare sgml files from sources for each library. We are also
@@ -439,12 +460,14 @@ html: sgml $(DOC_MAIN_SGML_FILE) lasso-index
 #
 sgml: templates
 	@echo '*** Building SGML ***'
+	cp $(srcdir)/*.sgml version.xml build/
 	cd build && gtkdoc-mkdb --module=lasso \
-		    --main-sgml-file=$(DOC_MAIN_SGML_FILE) \
+		    --main-sgml-file=lasso.sgml \
+		    --sgml-mode \
+		    --output-format=xml \
 		    --tmpl-dir=../tmpl/ \
 		    --source-dir=../$(DOC_SOURCE_DIR)/lasso \
 		    --output-dir=../sgml/
-	cp $(srcdir)/lasso.sgml build/
 	(for i in `find sgml -name "*.sgml" -print` ; do \
 	    cat $$i | \
 		sed 's!\(&lt;dsig:\)\([^/]*\)\(\/&gt;\)!<ulink URL=\"http://www.w3.org/TR/xmldsig-core/#sec-\2\">\1\2\3</ulink>!g' | \
@@ -455,9 +478,16 @@ sgml: templates
 	done);
 	rm -f build/sgml && $(LN_S) ../sgml build/sgml
 
+# don't rebuild templates if tmpl is not in srcdir
 templates: scan
 	@echo '*** Building TMPL ***'
-	cd build && gtkdoc-mktmpl --module=lasso --output-dir=../tmpl/
+	if test $(top_builddir) != $(top_srcdir); then \
+		cp -R $(srcdir)/tmpl/ . ; \
+		chmod +w tmpl/ ; \
+		chmod +w tmpl/*.sgml ; \
+	else \
+		(cd build && gtkdoc-mktmpl --module=lasso --output-dir=../tmpl/) ; \
+	fi
 
 scan: doc_sources
 	test -d build || mkdir build
@@ -471,7 +501,10 @@ scan: doc_sources
 			test -f $$i || touch $$i ; \
 		done \
 	fi
-	gtkdoc-scan --module=lasso --source-dir=$(DOC_SOURCE_DIR)/lasso/ --output-dir=build/
+	gtkdoc-scan --module=lasso \
+		--source-dir=$(DOC_SOURCE_DIR)/lasso/ \
+		--output-dir=build/ \
+		--ignore-headers="$(IGNORE_HFILES)"
 
 #
 # Prepare source files by coping them to "code" folder and 
@@ -480,7 +513,7 @@ scan: doc_sources
 doc_sources: $(DOC_SOURCE_FILES)
 	@echo '*** Prepare sources ***'
 	(for i in $(DOC_SOURCE_FILES) ; do \
-	    folder_name=`echo $$i | sed 's#$(TOP)/##' | sed 's#/[^/]*$$##'`; \
+	    folder_name=`echo $$i | sed 's#$(top_srcdir)/##' | sed 's#/[^/]*$$##'`; \
 	    file_name=`echo $$i | sed 's#.*/##'`; \
 	    test -d $(DOC_SOURCE_DIR)/$$folder_name || mkdir -p $(DOC_SOURCE_DIR)/$$folder_name; \
 	    cat $$i | \
@@ -505,13 +538,10 @@ lasso-index: scan
 		sed 's#<NAME>\([^<]*\)</NAME>#<listitem><para><link linkend=\"\1\">\1</link></para></listitem>#g' > \
 		sgml/lasso-index.sgml
 
-#dist-hook:
-#	@cp -p $(srcdir)/html/*.html $(srcdir)/images/*.png $(srcdir)/*.sgml $(distdir)
-
 clean-local: clean-sources
 	-rm -rf $(DOC_SOURCE_DIR)
 	-rm -rf .libs
-	-rm -rf tmpl
+	-if test $(top_builddir) != $(top_srcdir); then rm -f tmpl/*.sgml ; fi
 	-rm -rf sgml
 	-rm -rf html
 	-rm -rf build
@@ -523,6 +553,19 @@ clean-sources:
 
 maintainer-clean-local: clean
 	-rm -rf `find sgml -name "*.sgml" -print`
+
+@GTK_DOC_ENABLED_TRUE@dist-check-gtkdoc:
+@GTK_DOC_ENABLED_FALSE@dist-check-gtkdoc:
+@GTK_DOC_ENABLED_FALSE@	@echo "*** gtk-doc must be installed and enabled in order to make dist"
+@GTK_DOC_ENABLED_FALSE@	@false
+
+dist-hook: dist-check-gtkdoc dist-hook-local
+	mkdir $(distdir)/tmpl
+	mkdir $(distdir)/html
+	-cp $(srcdir)/tmpl/*.sgml $(distdir)/tmpl
+	-cp $(srcdir)/html/* $(distdir)/html
+
+.PHONY : dist-hook-local
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

@@ -1,0 +1,249 @@
+<!-- ##### ENUM LassoMessageType ##### -->
+<para>
+
+</para>
+
+@LASSO_MESSAGE_TYPE_NONE: 
+@LASSO_MESSAGE_TYPE_AUTHN_REQUEST: 
+@LASSO_MESSAGE_TYPE_AUTHN_RESPONSE: 
+@LASSO_MESSAGE_TYPE_REQUEST: 
+@LASSO_MESSAGE_TYPE_RESPONSE: 
+@LASSO_MESSAGE_TYPE_ARTIFACT: 
+
+<!-- ##### ENUM lassoCheckVersionMode ##### -->
+<para>
+
+</para>
+
+@LASSO_CHECK_VERSION_EXACT: 
+@LASSO_CHECK_VERSIONABI_COMPATIBLE: 
+
+<!-- ##### ENUM lassoHttpMethod ##### -->
+<para>
+
+</para>
+
+@LASSO_HTTP_METHOD_NONE: 
+@LASSO_HTTP_METHOD_ANY: Any method will do, select one automatically
+@LASSO_HTTP_METHOD_IDP_INITIATED: 
+@LASSO_HTTP_METHOD_GET: HTTP-GET implementation (for image tags in Single Logout)
+@LASSO_HTTP_METHOD_POST: use an HTML form to post message between service and
+  identity providers
+@LASSO_HTTP_METHOD_REDIRECT: use HTTP 302 redirects to post message between
+  service and identity providers
+@LASSO_HTTP_METHOD_SOAP: use a SOAP call to post message between service and
+  identity providers
+
+<!-- ##### ENUM lassoLoginProtocolProfile ##### -->
+<para>
+
+</para>
+
+@LASSO_LOGIN_PROTOCOL_PROFILE_BRWS_ART: 
+@LASSO_LOGIN_PROTOCOL_PROFILE_BRWS_POST: 
+
+<!-- ##### ENUM lassoMdProtocolType ##### -->
+<para>
+
+</para>
+
+@LASSO_MD_PROTOCOL_TYPE_FEDERATION_TERMINATION: Federation Termination
+  Notification
+@LASSO_MD_PROTOCOL_TYPE_NAME_IDENTIFIER_MAPPING: Name Identifier Mapping
+@LASSO_MD_PROTOCOL_TYPE_REGISTER_NAME_IDENTIFIER: Name Registration
+@LASSO_MD_PROTOCOL_TYPE_SINGLE_LOGOUT: Single Logout
+@LASSO_MD_PROTOCOL_TYPE_SINGLE_SIGN_ON: Single Sign-On and Federation
+
+<!-- ##### ENUM lassoMessageType ##### -->
+<para>
+
+</para>
+
+@LASSO_MESSAGE_TYPE_NONE: 
+@LASSO_MESSAGE_TYPE_AUTHN_REQUEST: 
+@LASSO_MESSAGE_TYPE_AUTHN_RESPONSE: 
+@LASSO_MESSAGE_TYPE_REQUEST: 
+@LASSO_MESSAGE_TYPE_RESPONSE: 
+@LASSO_MESSAGE_TYPE_ARTIFACT: 
+
+<!-- ##### ENUM lassoRequestType ##### -->
+<para>
+
+</para>
+
+@LASSO_REQUEST_TYPE_INVALID: 
+@LASSO_REQUEST_TYPE_LOGIN: 
+@LASSO_REQUEST_TYPE_LOGOUT: 
+@LASSO_REQUEST_TYPE_DEFEDERATION: 
+@LASSO_REQUEST_TYPE_NAME_REGISTRATION: 
+@LASSO_REQUEST_TYPE_NAME_IDENTIFIER_MAPPING: 
+@LASSO_REQUEST_TYPE_LECP: 
+
+<!-- ##### ENUM lassoSignatureMethod ##### -->
+<para>
+
+</para>
+
+@LASSO_SIGNATURE_METHOD_RSA_SHA1: 
+@LASSO_SIGNATURE_METHOD_DSA_SHA1: 
+
+<!-- ##### ENUM lassoSignatureType ##### -->
+<para>
+
+</para>
+
+@LASSO_SIGNATURE_TYPE_NONE: 
+@LASSO_SIGNATURE_TYPE_SIMPLE: 
+@LASSO_SIGNATURE_TYPE_WITHX509: 
+
+<!-- ##### MACRO lasso_check_version_exact ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION lasso_check_version_ext ##### -->
+<para>
+
+</para>
+
+@major: 
+@minor: 
+@subminor: 
+@mode: 
+@Returns: 
+
+<!-- ##### FUNCTION lasso_federation_set_local_name_identifier ##### -->
+<para>
+
+</para>
+
+@federation: 
+@name_identifier: 
+
+<!-- ##### FUNCTION lasso_federation_set_remote_name_identifier ##### -->
+<para>
+
+</para>
+
+@federation: 
+@name_identifier: 
+
+<!-- ##### FUNCTION lasso_identity_add_federation ##### -->
+<para>
+
+</para>
+
+@identity: 
+@federation: 
+@Returns: 
+
+<!-- ##### FUNCTION lasso_identity_remove_federation ##### -->
+<para>
+
+</para>
+
+@identity: 
+@providerID: 
+@Returns: 
+@remote_providerID: 
+
+<!-- ##### FUNCTION lasso_node_verify_signature ##### -->
+<para>
+
+</para>
+
+@node: 
+@public_key_file: 
+@ca_cert_chain_file: 
+@Returns: 
+
+<!-- ##### FUNCTION lasso_profile_set_response_status ##### -->
+<para>
+
+</para>
+
+@profile: 
+@statusCodeValue: 
+@ctx: 
+
+<!-- ##### FUNCTION lasso_provider_get_base64_succint_id ##### -->
+<para>
+
+</para>
+
+@provider: 
+@Returns: 
+
+<!-- ##### FUNCTION lasso_provider_load_metadata ##### -->
+<para>
+
+</para>
+
+@provider: 
+@metadata: 
+@Returns: 
+
+<!-- ##### FUNCTION lasso_provider_verify_signature ##### -->
+<para>
+
+</para>
+
+@provider: 
+@message: 
+@id_attr_name: 
+@format: 
+@Returns: 
+
+<!-- ##### FUNCTION lasso_saml_audience_restriction_condition_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION lasso_server_get_first_providerID ##### -->
+<para>
+
+</para>
+
+@server: 
+@Returns: 
+
+<!-- ##### FUNCTION lasso_server_get_providerID_from_hash ##### -->
+<para>
+
+</para>
+
+@server: 
+@b64_hash: 
+@Returns: 
+
+<!-- ##### FUNCTION lasso_session_add_assertion ##### -->
+<para>
+
+</para>
+
+@session: 
+@providerID: 
+@assertion: 
+@Returns: 
+
+<!-- ##### FUNCTION lasso_session_get_assertion ##### -->
+<para>
+
+</para>
+
+@session: 
+@providerID: 
+@Returns: 
+
+<!-- ##### FUNCTION lasso_session_remove_assertion ##### -->
+<para>
+
+</para>
+
+@session: 
+@providerID: 
+@Returns: 
+

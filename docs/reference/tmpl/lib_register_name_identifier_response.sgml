@@ -1,0 +1,43 @@
+<!-- ##### SECTION Title ##### -->
+LassoLibRegisterNameIdentifierResponse
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT LassoLibRegisterNameIdentifierResponse ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION lasso_lib_register_name_identifier_response_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION lasso_lib_register_name_identifier_response_new_full ##### -->
+<para>
+
+</para>
+
+@providerID: 
+@statusCodeValue: 
+@request: 
+@sign_type: 
+@sign_method: 
+@Returns: 
+
+
