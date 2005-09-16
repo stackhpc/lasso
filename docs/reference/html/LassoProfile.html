@@ -1,0 +1,138 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>LassoProfile</title><meta name="generator" content="DocBook XSL Stylesheets V1.68.1"><link rel="start" href="index.html" title="Lasso Reference Manual"><link rel="up" href="idff.html" title="Identity Federation Framework"><link rel="prev" href="idff.html" title="Identity Federation Framework"><link rel="next" href="LassoLogin.html" title="LassoLogin"><meta name="generator" content="GTK-Doc V1.3 (XML mode)"><link rel="stylesheet" href="style.css" type="text/css"><link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview"><link rel="chapter" href="architecture.html" title="Lasso Architecture"><link rel="chapter" href="idff.html" title="Identity Federation Framework"><link rel="chapter" href="idwsf.html" title="Identity Web Services Framework"><link rel="chapter" href="xml.html" title="Schemas"><link rel="chapter" href="misc.html" title="Misc"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="idff.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="idff.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">Lasso Reference Manual</th><td><a accesskey="n" href="LassoLogin.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="LassoProfile"></a><div class="titlepage"></div><div class="refnamediv"><table width="100%"><tr><td valign="top"><h2><span class="refentrytitle">LassoProfile</span></h2><p>LassoProfile &#8212; Base class for all ID-FF profiles</p></td><td valign="top" align="right"></td></tr></table></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+#include &lt;lasso/lasso.h&gt;
+
+
+enum        <a href="LassoProfile.html#LassoRequestType">LassoRequestType</a>;
+            <a href="LassoProfile.html#LassoProfile-struct">LassoProfile</a>;
+<a href="LassoIdentity.html" title="LassoIdentity">LassoIdentity</a>* <a href="LassoProfile.html#lasso-profile-get-identity">lasso_profile_get_identity</a>   (<a href="LassoProfile.html" title="LassoProfile">LassoProfile</a> *profile);
+<a href="LassoSession.html" title="LassoSession">LassoSession</a>* <a href="LassoProfile.html#lasso-profile-get-session">lasso_profile_get_session</a>     (<a href="LassoProfile.html" title="LassoProfile">LassoProfile</a> *profile);
+<GTKDOCLINK HREF="gboolean">gboolean</GTKDOCLINK>    <a href="LassoProfile.html#lasso-profile-is-identity-dirty">lasso_profile_is_identity_dirty</a> (<a href="LassoProfile.html" title="LassoProfile">LassoProfile</a> *profile);
+<GTKDOCLINK HREF="gboolean">gboolean</GTKDOCLINK>    <a href="LassoProfile.html#lasso-profile-is-session-dirty">lasso_profile_is_session_dirty</a>  (<a href="LassoProfile.html" title="LassoProfile">LassoProfile</a> *profile);
+<GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        <a href="LassoProfile.html#lasso-profile-set-identity-from-dump">lasso_profile_set_identity_from_dump</a>
+                                            (<a href="LassoProfile.html" title="LassoProfile">LassoProfile</a> *profile,
+                                             const <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *dump);
+<GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        <a href="LassoProfile.html#lasso-profile-set-session-from-dump">lasso_profile_set_session_from_dump</a>
+                                            (<a href="LassoProfile.html" title="LassoProfile">LassoProfile</a> *profile,
+                                             const <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *dump);
+<a href="LassoProfile.html#LassoRequestType">LassoRequestType</a> <a href="LassoProfile.html#lasso-profile-get-request-type-from-soap-msg">lasso_profile_get_request_type_from_soap_msg</a>
+                                            (const <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *soap);
+<GTKDOCLINK HREF="gboolean">gboolean</GTKDOCLINK>    <a href="LassoProfile.html#lasso-profile-is-liberty-query">lasso_profile_is_liberty_query</a>  (const <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *query);
+<a href="LassoSamlNameIdentifier.html" title="LassoSamlNameIdentifier">LassoSamlNameIdentifier</a>* <a href="LassoProfile.html#lasso-profile-get-nameIdentifier">lasso_profile_get_nameIdentifier</a>
+                                            (<a href="LassoProfile.html" title="LassoProfile">LassoProfile</a> *profile);
+
+</pre></div><div class="refsect1" lang="en"><a name="id2542040"></a><h2>Object Hierarchy</h2><pre class="synopsis">
+
+  <GTKDOCLINK HREF="GObject">GObject</GTKDOCLINK>
+   +----<a href="LassoNode.html" title="LassoNode">LassoNode</a>
+         +----LassoProfile
+               +----<a href="LassoDefederation.html" title="LassoDefederation">LassoDefederation</a>
+               +----<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a>
+               +----<a href="LassoLogout.html" title="LassoLogout">LassoLogout</a>
+</pre></div><div class="refsect1" lang="en"><a name="id2542092"></a><h2>Description</h2><p>
+
+</p></div><div class="refsect1" lang="en"><a name="id2542102"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2542108"></a><h3><a name="LassoRequestType"></a>enum LassoRequestType</h3><a class="indexterm" name="id2542119"></a><pre class="programlisting">typedef enum {
+	LASSO_REQUEST_TYPE_INVALID = 0,
+	LASSO_REQUEST_TYPE_LOGIN = 1,
+	LASSO_REQUEST_TYPE_LOGOUT = 2,
+	LASSO_REQUEST_TYPE_DEFEDERATION = 3,
+	LASSO_REQUEST_TYPE_NAME_REGISTRATION = 4,
+	LASSO_REQUEST_TYPE_NAME_IDENTIFIER_MAPPING = 5,
+	LASSO_REQUEST_TYPE_LECP = 6,
+	LASSO_REQUEST_TYPE_DISCO_QUERY = 7,
+	LASSO_REQUEST_TYPE_DISCO_MODIFY = 8,
+	LASSO_REQUEST_TYPE_DST_QUERY = 9,
+	LASSO_REQUEST_TYPE_DST_MODIFY = 10,
+	LASSO_REQUEST_TYPE_SASL_REQUEST = 11,
+} LassoRequestType;
+</pre><p>
+Request types (known for SOAP endpoints)</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><code class="literal">LASSO_REQUEST_TYPE_INVALID</code></span></td><td> invalid
+</td></tr><tr><td><span class="term"><code class="literal">LASSO_REQUEST_TYPE_LOGIN</code></span></td><td> Single Sign On and Federation
+</td></tr><tr><td><span class="term"><code class="literal">LASSO_REQUEST_TYPE_LOGOUT</code></span></td><td> Single Logout
+</td></tr><tr><td><span class="term"><code class="literal">LASSO_REQUEST_TYPE_DEFEDERATION</code></span></td><td> Federation Termination
+</td></tr><tr><td><span class="term"><code class="literal">LASSO_REQUEST_TYPE_NAME_REGISTRATION</code></span></td><td> Name Registration
+</td></tr><tr><td><span class="term"><code class="literal">LASSO_REQUEST_TYPE_NAME_IDENTIFIER_MAPPING</code></span></td><td> Name Identifier Mapping
+</td></tr><tr><td><span class="term"><code class="literal">LASSO_REQUEST_TYPE_LECP</code></span></td><td> Liberty-Enabled Client / Proxy
+</td></tr><tr><td><span class="term"><code class="literal">LASSO_REQUEST_TYPE_DISCO_QUERY</code></span></td><td>
+</td></tr><tr><td><span class="term"><code class="literal">LASSO_REQUEST_TYPE_DISCO_MODIFY</code></span></td><td>
+</td></tr><tr><td><span class="term"><code class="literal">LASSO_REQUEST_TYPE_DST_QUERY</code></span></td><td>
+</td></tr><tr><td><span class="term"><code class="literal">LASSO_REQUEST_TYPE_DST_MODIFY</code></span></td><td>
+</td></tr><tr><td><span class="term"><code class="literal">LASSO_REQUEST_TYPE_SASL_REQUEST</code></span></td><td>
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2542329"></a><h3><a name="LassoProfile-struct"></a>LassoProfile</h3><a class="indexterm" name="id2542340"></a><pre class="programlisting">typedef struct {
+	LassoServer *server;
+
+	LassoSamlpRequestAbstract *request;
+	LassoSamlpResponseAbstract *response;
+
+	LassoSamlNameIdentifier *nameIdentifier;
+
+	gchar *remote_providerID;
+
+	gchar *msg_url;
+	gchar *msg_body;
+	gchar *msg_relayState;
+} LassoProfile;
+</pre><p>
+
+</p></div><hr><div class="refsect2" lang="en"><a name="id2542359"></a><h3><a name="lasso-profile-get-identity"></a>lasso_profile_get_identity ()</h3><a class="indexterm" name="id2542371"></a><pre class="programlisting"><a href="LassoIdentity.html" title="LassoIdentity">LassoIdentity</a>* lasso_profile_get_identity   (<a href="LassoProfile.html" title="LassoProfile">LassoProfile</a> *profile);</pre><p>
+Gets the identity bound to <em class="parameter"><code>profile</code></em>.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>profile</code></em> :</span></td><td> a <a href="LassoProfile.html" title="LassoProfile"><span class="type">LassoProfile</span></a>
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> the identity or NULL if it none was found.  The <a href="LassoIdentity.html" title="LassoIdentity"><span class="type">LassoIdentity</span></a>
+     object is internally allocated and must not be freed by the caller.
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2542455"></a><h3><a name="lasso-profile-get-session"></a>lasso_profile_get_session ()</h3><a class="indexterm" name="id2542467"></a><pre class="programlisting"><a href="LassoSession.html" title="LassoSession">LassoSession</a>* lasso_profile_get_session     (<a href="LassoProfile.html" title="LassoProfile">LassoProfile</a> *profile);</pre><p>
+Gets the session bound to <em class="parameter"><code>profile</code></em>.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>profile</code></em> :</span></td><td> a <a href="LassoProfile.html" title="LassoProfile"><span class="type">LassoProfile</span></a>
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> the session or NULL if it none was found.  The <a href="LassoSession.html" title="LassoSession"><span class="type">LassoSession</span></a>
+     object is internally allocated and must not be freed by the caller.
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2542551"></a><h3><a name="lasso-profile-is-identity-dirty"></a>lasso_profile_is_identity_dirty ()</h3><a class="indexterm" name="id2542563"></a><pre class="programlisting"><GTKDOCLINK HREF="gboolean">gboolean</GTKDOCLINK>    lasso_profile_is_identity_dirty (<a href="LassoProfile.html" title="LassoProfile">LassoProfile</a> *profile);</pre><p>
+Checks whether identity has been modified (and should therefore be saved).</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>profile</code></em> :</span></td><td> a <a href="LassoProfile.html" title="LassoProfile"><span class="type">LassoProfile</span></a>
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <code class="literal">TRUE</code> if identity has changed
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2542638"></a><h3><a name="lasso-profile-is-session-dirty"></a>lasso_profile_is_session_dirty ()</h3><a class="indexterm" name="id2542650"></a><pre class="programlisting"><GTKDOCLINK HREF="gboolean">gboolean</GTKDOCLINK>    lasso_profile_is_session_dirty  (<a href="LassoProfile.html" title="LassoProfile">LassoProfile</a> *profile);</pre><p>
+Checks whether session has been modified (and should therefore be saved).</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>profile</code></em> :</span></td><td> a <a href="LassoProfile.html" title="LassoProfile"><span class="type">LassoProfile</span></a>
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <code class="literal">TRUE</code> if session has changed
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2542726"></a><h3><a name="lasso-profile-set-identity-from-dump"></a>lasso_profile_set_identity_from_dump ()</h3><a class="indexterm" name="id2542738"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_profile_set_identity_from_dump
+                                            (<a href="LassoProfile.html" title="LassoProfile">LassoProfile</a> *profile,
+                                             const <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *dump);</pre><p>
+Builds a new <a href="LassoIdentity.html" title="LassoIdentity"><span class="type">LassoIdentity</span></a> object from XML dump and binds it to <em class="parameter"><code>profile</code></em>.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>profile</code></em> :</span></td><td> a <a href="LassoProfile.html" title="LassoProfile"><span class="type">LassoProfile</span></a>
+</td></tr><tr><td><span class="term"><em class="parameter"><code>dump</code></em> :</span></td><td> XML identity dump
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> 0 on success; or a negative value otherwise.
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2542844"></a><h3><a name="lasso-profile-set-session-from-dump"></a>lasso_profile_set_session_from_dump ()</h3><a class="indexterm" name="id2542857"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_profile_set_session_from_dump
+                                            (<a href="LassoProfile.html" title="LassoProfile">LassoProfile</a> *profile,
+                                             const <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *dump);</pre><p>
+Builds a new <a href="LassoSession.html" title="LassoSession"><span class="type">LassoSession</span></a> object from XML dump and binds it to <em class="parameter"><code>profile</code></em>.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>profile</code></em> :</span></td><td> a <a href="LassoProfile.html" title="LassoProfile"><span class="type">LassoProfile</span></a>
+</td></tr><tr><td><span class="term"><em class="parameter"><code>dump</code></em> :</span></td><td> XML session dump
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> 0 on success; or a negative value otherwise.
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2542963"></a><h3><a name="lasso-profile-get-request-type-from-soap-msg"></a>lasso_profile_get_request_type_from_soap_msg ()</h3><a class="indexterm" name="id2542975"></a><pre class="programlisting"><a href="LassoProfile.html#LassoRequestType">LassoRequestType</a> lasso_profile_get_request_type_from_soap_msg
+                                            (const <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *soap);</pre><p>
+Looks up and return the type of the request in a SOAP message.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>soap</code></em> :</span></td><td> the SOAP message
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> the type of request
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2543039"></a><h3><a name="lasso-profile-is-liberty-query"></a>lasso_profile_is_liberty_query ()</h3><a class="indexterm" name="id2543051"></a><pre class="programlisting"><GTKDOCLINK HREF="gboolean">gboolean</GTKDOCLINK>    lasso_profile_is_liberty_query  (const <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *query);</pre><p>
+Tests the query string to know if the URL is called as the result of a
+Liberty redirect (action initiated elsewhere) or not.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>query</code></em> :</span></td><td> HTTP query string
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> TRUE if lasso query, FALSE otherwise
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2543114"></a><h3><a name="lasso-profile-get-nameIdentifier"></a>lasso_profile_get_nameIdentifier ()</h3><a class="indexterm" name="id2543125"></a><pre class="programlisting"><a href="LassoSamlNameIdentifier.html" title="LassoSamlNameIdentifier">LassoSamlNameIdentifier</a>* lasso_profile_get_nameIdentifier
+                                            (<a href="LassoProfile.html" title="LassoProfile">LassoProfile</a> *profile);</pre><p>
+Looks up appropriate federation in object and gets the service provider name
+identifier.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>profile</code></em> :</span></td><td> a <GTKDOCLINK HREF="LassoProifle"><span class="type">LassoProifle</span></GTKDOCLINK>
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> the name identifier or NULL if none was found.  The
+    <a href="LassoSamlNameIdentifier.html" title="LassoSamlNameIdentifier"><span class="type">LassoSamlNameIdentifier</span></a> object is internally allocated and must not be
+    freed by the caller.
+</td></tr></tbody></table></div></div></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="idff.html"><b>&lt;&lt; Identity Federation Framework</b></a></td><td align="right"><a accesskey="n" href="LassoLogin.html"><b>LassoLogin &gt;&gt;</b></a></td></tr></table></body></html>

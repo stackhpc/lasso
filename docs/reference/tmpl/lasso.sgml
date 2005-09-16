@@ -1,0 +1,53 @@
+<!-- ##### SECTION Title ##### -->
+Initialization functions
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION lasso_init ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION lasso_shutdown ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION lasso_check_version ##### -->
+<para>
+
+</para>
+
+@major: 
+@minor: 
+@subminor: 
+@mode: 
+@Returns: 
+
+
+<!-- ##### ENUM LassoCheckVersionMode ##### -->
+<para>
+
+</para>
+
+@LASSO_CHECK_VERSION_EXACT: 
+@LASSO_CHECK_VERSIONABI_COMPATIBLE: 
+@LASSO_CHECK_VERSION_NUMERIC: 
+

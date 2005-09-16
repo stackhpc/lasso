@@ -1,0 +1,33 @@
+<!-- ##### SECTION Title ##### -->
+LassoSamlAttributeDesignator
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT LassoSamlAttributeDesignator ##### -->
+<para>
+
+</para>
+
+@parent: 
+@AttributeName: 
+@AttributeNamespace: 
+
+<!-- ##### FUNCTION lasso_saml_attribute_designator_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+

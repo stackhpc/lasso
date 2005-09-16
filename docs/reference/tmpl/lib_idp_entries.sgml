@@ -1,0 +1,31 @@
+<!-- ##### SECTION Title ##### -->
+LassoLibIDPEntries
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT LassoLibIDPEntries ##### -->
+<para>
+
+</para>
+
+@IDPEntry: 
+
+<!-- ##### FUNCTION lasso_lib_idp_entries_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+

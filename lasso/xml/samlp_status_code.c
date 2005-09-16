@@ -1,12 +1,11 @@
-/* $Id: samlp_status_code.c,v 1.4 2004/08/13 15:16:13 fpeters Exp $
+/* $Id: samlp_status_code.c,v 1.17 2005/01/22 15:57:55 eraviart Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,76 +25,82 @@
 #include <lasso/xml/samlp_status_code.h>
 
 /*
-Schema fragment (oasis-sstc-saml-schema-protocol-1.0.xsd):
-
-<element name="StatusCode" type="samlp:StatusCodeType"/>
-<complexType name="StatusCodeType">
-  <sequence>
-    <element ref="samlp:StatusCode" minOccurs="0"/>
-  </sequence>
-  <attribute name="Value" type="QName" use="required"/>
-</complexType>
-*/
+ * Schema fragment (oasis-sstc-saml-schema-protocol-1.0.xsd):
+ * 
+ * <element name="StatusCode" type="samlp:StatusCodeType"/>
+ * <complexType name="StatusCodeType">
+ *   <sequence>
+ *     <element ref="samlp:StatusCode" minOccurs="0"/>
+ *   </sequence>
+ *   <attribute name="Value" type="QName" use="required"/>
+ * </complexType>
+ */
 
 /*****************************************************************************/
-/* public methods                                                            */
+/* private methods                                                           */
 /*****************************************************************************/
 
-void
-lasso_samlp_status_code_set_value(LassoSamlpStatusCode *node,
-				  const xmlChar *value)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_SAMLP_STATUS_CODE(node));
-  g_assert(value != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->set_prop(LASSO_NODE (node), "Value", value);
-}
+static struct XmlSnippet schema_snippets[] = {
+	{ "StatusCode", SNIPPET_NODE, G_STRUCT_OFFSET(LassoSamlpStatusCode, StatusCode) },
+	{ "Value", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoSamlpStatusCode, Value) },
+	{ NULL, 0, 0}
+};
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-lasso_samlp_status_code_instance_init(LassoSamlpStatusCode *node)
-{
-  LassoNodeClass *class = LASSO_NODE_GET_CLASS(LASSO_NODE(node));
 
-  class->set_ns(LASSO_NODE(node), lassoSamlProtocolHRef,
-		lassoSamlProtocolPrefix);
-  class->set_name(LASSO_NODE(node), "StatusCode");
+static void
+instance_init(LassoSamlpStatusCode *node)
+{
 }
 
 static void
-lasso_samlp_status_code_class_init(LassoSamlpStatusCodeClass *klass)
+class_init(LassoSamlpStatusCodeClass *klass)
 {
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
+
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "StatusCode");
+	lasso_node_class_set_ns(nclass, LASSO_SAML_PROTOCOL_HREF, LASSO_SAML_PROTOCOL_PREFIX);
+	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
 
-GType lasso_samlp_status_code_get_type() {
-  static GType this_type = 0;
+GType
+lasso_samlp_status_code_get_type()
+{
+	static GType this_type = 0;
 
-  if (!this_type) {
-    static const GTypeInfo this_info = {
-      sizeof (LassoSamlpStatusCodeClass),
-      NULL,
-      NULL,
-      (GClassInitFunc) lasso_samlp_status_code_class_init,
-      NULL,
-      NULL,
-      sizeof(LassoSamlpStatusCode),
-      0,
-      (GInstanceInitFunc) lasso_samlp_status_code_instance_init,
-    };
-    
-    this_type = g_type_register_static(LASSO_TYPE_NODE,
-				       "LassoSamlpStatusCode",
-				       &this_info, 0);
-  }
-  return this_type;
+	if (!this_type) {
+		static const GTypeInfo this_info = {
+			sizeof (LassoSamlpStatusCodeClass),
+			NULL,
+			NULL,
+			(GClassInitFunc) class_init,
+			NULL,
+			NULL,
+			sizeof(LassoSamlpStatusCode),
+			0,
+			(GInstanceInitFunc) instance_init,
+		};
+
+		this_type = g_type_register_static(LASSO_TYPE_NODE,
+				"LassoSamlpStatusCode",
+				&this_info, 0);
+	}
+	return this_type;
 }
 
-LassoNode* lasso_samlp_status_code_new()
+/**
+ * lasso_samlp_status_code_new:
+ *
+ * Creates a new #LassoSamlpStatusCode object.
+ *
+ * Return value: a newly created #LassoSamlpStatusCode object
+ **/
+LassoSamlpStatusCode*
+lasso_samlp_status_code_new()
 {
-  return LASSO_NODE(g_object_new(LASSO_TYPE_SAMLP_STATUS_CODE, NULL));
+	return g_object_new(LASSO_TYPE_SAMLP_STATUS_CODE, NULL);
 }

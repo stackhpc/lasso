@@ -1,12 +1,11 @@
-/* $Id: lib_name_identifier_mapping_response.h,v 1.2 2004/07/22 06:59:03 eraviart Exp $ 
+/* $Id: lib_name_identifier_mapping_response.h,v 1.13 2005/01/22 15:57:55 eraviart Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,40 +30,56 @@ extern "C" {
 #endif /* __cplusplus */ 
 
 #include <lasso/xml/samlp_response_abstract.h>
-#include <lasso/xml/saml_name_identifier.h>
 #include <lasso/xml/samlp_status.h>
+#include <lasso/xml/saml_name_identifier.h>
+#include <lasso/xml/lib_name_identifier_mapping_request.h>
 
-#define LASSO_TYPE_LIB_NAME_IDENTIFIER_MAPPING_RESPONSE (lasso_lib_name_identifier_mapping_response_get_type())
-#define LASSO_LIB_NAME_IDENTIFIER_MAPPING_RESPONSE(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_LIB_NAME_IDENTIFIER_MAPPING_RESPONSE, LassoLibNameIdentifierMappingResponse))
-#define LASSO_LIB_NAME_IDENTIFIER_MAPPING_RESPONSE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_LIB_NAME_IDENTIFIER_MAPPING_RESPONSE, LassoLibNameIdentifierMappingResponseClass))
-#define LASSO_IS_LIB_NAME_IDENTIFIER_MAPPING_RESPONSE(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_LIB_NAME_IDENTIFIER_MAPPING_RESPONSE))
-#define LASSO_IS_LIB_NAME_IDENTIFIER_MAPPING_RESPONSE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_LIB_NAME_IDENTIFIER_MAPPING_RESPONSE))
-#define LASSO_LIB_NAME_IDENTIFIER_MAPPING_RESPONSE_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_LIB_NAME_IDENTIFIER_MAPPING_RESPONSE, LassoLibNameIdentifierMappingResponseClass)) 
+#define LASSO_TYPE_LIB_NAME_IDENTIFIER_MAPPING_RESPONSE \
+	(lasso_lib_name_identifier_mapping_response_get_type())
+#define LASSO_LIB_NAME_IDENTIFIER_MAPPING_RESPONSE(obj) \
+	(G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_LIB_NAME_IDENTIFIER_MAPPING_RESPONSE, \
+				    LassoLibNameIdentifierMappingResponse))
+#define LASSO_LIB_NAME_IDENTIFIER_MAPPING_RESPONSE_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_LIB_NAME_IDENTIFIER_MAPPING_RESPONSE, \
+				 LassoLibNameIdentifierMappingResponseClass))
+#define LASSO_IS_LIB_NAME_IDENTIFIER_MAPPING_RESPONSE(obj) \
+	(G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_LIB_NAME_IDENTIFIER_MAPPING_RESPONSE))
+#define LASSO_IS_LIB_NAME_IDENTIFIER_MAPPING_RESPONSE_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_LIB_NAME_IDENTIFIER_MAPPING_RESPONSE))
+#define LASSO_LIB_NAME_IDENTIFIER_MAPPING_RESPONSE_GET_CLASS(o) \
+	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_LIB_NAME_IDENTIFIER_MAPPING_RESPONSE, \
+				    LassoLibNameIdentifierMappingResponseClass)) 
 
 typedef struct _LassoLibNameIdentifierMappingResponse LassoLibNameIdentifierMappingResponse;
-typedef struct _LassoLibNameIdentifierMappingResponseClass LassoLibNameIdentifierMappingResponseClass;
+typedef struct _LassoLibNameIdentifierMappingResponseClass \
+	LassoLibNameIdentifierMappingResponseClass;
 
 struct _LassoLibNameIdentifierMappingResponse {
-  LassoSamlpResponseAbstract parent;
-  /*< private >*/
+	LassoSamlpResponseAbstract parent;
+
+	/*< public >*/
+	/* <xs:element ref="Extension" minOccurs="0" maxOccurs="unbounded"/> */
+	GList *Extension;
+	/* <xs:element ref="ProviderID"/> */
+	char *ProviderID;
+	/* <xs:element ref="samlp:Status"/> */
+	LassoSamlpStatus *Status;
+	/* <xs:element ref="saml:NameIdentifier" minOccurs="0"/> */
+	LassoSamlNameIdentifier *NameIdentifier;
 };
 
 struct _LassoLibNameIdentifierMappingResponseClass {
-  LassoSamlpResponseAbstractClass parent;
+	LassoSamlpResponseAbstractClass parent;
 };
 
 LASSO_EXPORT GType lasso_lib_name_identifier_mapping_response_get_type(void);
-LASSO_EXPORT LassoNode* lasso_lib_name_identifier_mapping_response_new(void);
+LASSO_EXPORT LassoSamlpResponseAbstract* lasso_lib_name_identifier_mapping_response_new(void);
 
-LASSO_EXPORT void lasso_lib_name_identifier_mapping_response_set_nameIdentifier (LassoLibNameIdentifierMappingResponse *node,
-										 LassoSamlNameIdentifier *nameIdentifier);
+LASSO_EXPORT LassoSamlpResponseAbstract* lasso_lib_name_identifier_mapping_response_new_full(
+		char *provideRID, const char *statusCodeValue,
+		LassoLibNameIdentifierMappingRequest *request,
+		LassoSignatureType sign_type, LassoSignatureMethod sign_method);
 
-LASSO_EXPORT void lasso_lib_name_identifier_mapping_response_set_providerID     (LassoLibNameIdentifierMappingResponse *node,
-										 const xmlChar *providerID);
-
-LASSO_EXPORT void lasso_lib_name_identifier_mapping_response_set_status         (LassoLibNameIdentifierMappingResponse *node,
-										 LassoSamlpStatus *status);
-	 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

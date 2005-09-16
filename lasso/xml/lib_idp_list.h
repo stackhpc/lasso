@@ -1,12 +1,11 @@
-/* $Id: lib_idp_list.h,v 1.2 2004/07/22 06:59:03 eraviart Exp $ 
+/* $Id: lib_idp_list.h,v 1.6 2005/01/22 15:57:55 eraviart Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,32 +33,35 @@ extern "C" {
 #include <lasso/xml/lib_idp_entries.h>
 
 #define LASSO_TYPE_LIB_IDP_LIST (lasso_lib_idp_list_get_type())
-#define LASSO_LIB_IDP_LIST(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_LIB_IDP_LIST, LassoLibIDPList))
-#define LASSO_LIB_IDP_LIST_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_LIB_IDP_LIST, LassoLibIDPListClass))
+#define LASSO_LIB_IDP_LIST(obj) \
+	(G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_LIB_IDP_LIST, LassoLibIDPList))
+#define LASSO_LIB_IDP_LIST_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_LIB_IDP_LIST, LassoLibIDPListClass))
 #define LASSO_IS_LIB_IDP_LIST(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_LIB_IDP_LIST))
-#define LASSO_IS_LIB_IDP_LIST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_LIB_IDP_LIST))
-#define LASSO_LIB_IDP_LIST_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_LIB_IDP_LIST, LassoLibIDPListClass)) 
+#define LASSO_IS_LIB_IDP_LIST_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_LIB_IDP_LIST))
+#define LASSO_LIB_IDP_LIST_GET_CLASS(o) \
+	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_LIB_IDP_LIST, LassoLibIDPListClass)) 
 
 typedef struct _LassoLibIDPList LassoLibIDPList;
 typedef struct _LassoLibIDPListClass LassoLibIDPListClass;
 
 struct _LassoLibIDPList {
-  LassoNode parent;
-  /*< private >*/
+	LassoNode parent;
+
+	/*< public >*/
+	/* <xs:element ref="IDPEntries"/> */
+	LassoLibIDPEntries *IDPEntries;
+	/* <xs:element ref="GetComplete" minOccurs="0"/> */
+	char *GetComplete;
 };
 
 struct _LassoLibIDPListClass {
-  LassoNodeClass parent;
+	LassoNodeClass parent;
 };
 
 LASSO_EXPORT GType lasso_lib_idp_list_get_type(void);
 LASSO_EXPORT LassoNode* lasso_lib_idp_list_new(void);
-
-LASSO_EXPORT void lasso_lib_idp_list_set_getComplete (LassoLibIDPList *node,
-						      const xmlChar *getComplete);
-
-LASSO_EXPORT void lasso_lib_idp_list_set_idpEntries  (LassoLibIDPList *node,
-						      LassoLibIDPEntries *idpEntries);
 
 #ifdef __cplusplus
 }

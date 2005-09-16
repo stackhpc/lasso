@@ -1,0 +1,94 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>LassoDefederation</title><meta name="generator" content="DocBook XSL Stylesheets V1.68.1"><link rel="start" href="index.html" title="Lasso Reference Manual"><link rel="up" href="idff.html" title="Identity Federation Framework"><link rel="prev" href="LassoLogout.html" title="LassoLogout"><link rel="next" href="lasso-LassoNameRegistration.html" title="LassoNameRegistration"><meta name="generator" content="GTK-Doc V1.3 (XML mode)"><link rel="stylesheet" href="style.css" type="text/css"><link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview"><link rel="chapter" href="architecture.html" title="Lasso Architecture"><link rel="chapter" href="idff.html" title="Identity Federation Framework"><link rel="chapter" href="idwsf.html" title="Identity Web Services Framework"><link rel="chapter" href="xml.html" title="Schemas"><link rel="chapter" href="misc.html" title="Misc"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="LassoLogout.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="idff.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">Lasso Reference Manual</th><td><a accesskey="n" href="lasso-LassoNameRegistration.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="LassoDefederation"></a><div class="titlepage"></div><div class="refnamediv"><table width="100%"><tr><td valign="top"><h2><span class="refentrytitle">LassoDefederation</span></h2><p>LassoDefederation &#8212; Federation Termination Notification Profile</p></td><td valign="top" align="right"></td></tr></table></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+#include &lt;lasso/lasso.h&gt;
+
+
+            <a href="LassoDefederation.html#LassoDefederation-struct">LassoDefederation</a>;
+<a href="LassoDefederation.html" title="LassoDefederation">LassoDefederation</a>* <a href="LassoDefederation.html#lasso-defederation-new">lasso_defederation_new</a>   (<a href="LassoServer.html" title="LassoServer">LassoServer</a> *server);
+<GTKDOCLINK HREF="void">void</GTKDOCLINK>        <a href="LassoDefederation.html#lasso-defederation-destroy">lasso_defederation_destroy</a>      (<a href="LassoDefederation.html" title="LassoDefederation">LassoDefederation</a> *defederation);
+<GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        <a href="LassoDefederation.html#lasso-defederation-build-notification-msg">lasso_defederation_build_notification_msg</a>
+                                            (<a href="LassoDefederation.html" title="LassoDefederation">LassoDefederation</a> *defederation);
+<GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        <a href="LassoDefederation.html#lasso-defederation-init-notification">lasso_defederation_init_notification</a>
+                                            (<a href="LassoDefederation.html" title="LassoDefederation">LassoDefederation</a> *defederation,
+                                             <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *remote_providerID,
+                                             <a href="LassoProvider.html#LassoHttpMethod">LassoHttpMethod</a> http_method);
+<GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        <a href="LassoDefederation.html#lasso-defederation-process-notification-msg">lasso_defederation_process_notification_msg</a>
+                                            (<a href="LassoDefederation.html" title="LassoDefederation">LassoDefederation</a> *defederation,
+                                             <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *notification_msg);
+<GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        <a href="LassoDefederation.html#lasso-defederation-validate-notification">lasso_defederation_validate_notification</a>
+                                            (<a href="LassoDefederation.html" title="LassoDefederation">LassoDefederation</a> *defederation);
+
+</pre></div><div class="refsect1" lang="en"><a name="id2557929"></a><h2>Object Hierarchy</h2><pre class="synopsis">
+
+  <GTKDOCLINK HREF="GObject">GObject</GTKDOCLINK>
+   +----<a href="LassoNode.html" title="LassoNode">LassoNode</a>
+         +----<a href="LassoProfile.html" title="LassoProfile">LassoProfile</a>
+               +----LassoDefederation
+</pre></div><div class="refsect1" lang="en"><a name="id2557963"></a><h2>Description</h2><p>
+
+</p></div><div class="refsect1" lang="en"><a name="id2557973"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2557979"></a><h3><a name="LassoDefederation-struct"></a>LassoDefederation</h3><a class="indexterm" name="id2557990"></a><pre class="programlisting">typedef struct _LassoDefederation LassoDefederation;</pre><p>
+
+</p></div><hr><div class="refsect2" lang="en"><a name="id2558006"></a><h3><a name="lasso-defederation-new"></a>lasso_defederation_new ()</h3><a class="indexterm" name="id2558017"></a><pre class="programlisting"><a href="LassoDefederation.html" title="LassoDefederation">LassoDefederation</a>* lasso_defederation_new   (<a href="LassoServer.html" title="LassoServer">LassoServer</a> *server);</pre><p>
+Creates a new <a href="LassoDefederation.html" title="LassoDefederation"><span class="type">LassoDefederation</span></a>.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>server</code></em> :</span></td><td> the <a href="LassoServer.html" title="LassoServer"><span class="type">LassoServer</span></a>
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a newly created <a href="LassoDefederation.html" title="LassoDefederation"><span class="type">LassoDefederation</span></a> object; or NULL if an error
+    occured
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2558103"></a><h3><a name="lasso-defederation-destroy"></a>lasso_defederation_destroy ()</h3><a class="indexterm" name="id2558115"></a><pre class="programlisting"><GTKDOCLINK HREF="void">void</GTKDOCLINK>        lasso_defederation_destroy      (<a href="LassoDefederation.html" title="LassoDefederation">LassoDefederation</a> *defederation);</pre><p>
+Destroys a <a href="LassoDefederation.html" title="LassoDefederation"><span class="type">LassoDefederation</span></a> object.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>defederation</code></em> :</span></td><td> a <a href="LassoDefederation.html" title="LassoDefederation"><span class="type">LassoDefederation</span></a>
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2558181"></a><h3><a name="lasso-defederation-build-notification-msg"></a>lasso_defederation_build_notification_msg ()</h3><a class="indexterm" name="id2558194"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_defederation_build_notification_msg
+                                            (<a href="LassoDefederation.html" title="LassoDefederation">LassoDefederation</a> *defederation);</pre><p>
+Builds the federation termination notification message.
+</p><p>
+It gets the federation termination notification protocol profile and:
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+  if it is a SOAP method, then it builds the federation termination
+  notification SOAP message, optionally signs the notification node, sets
+  <em class="parameter"><code>msg_body</code></em>, gets the SoapEndpoint url and sets <em class="parameter"><code>msg_url</code></em> of the federation
+  termination object.
+</p></li><li><p>
+  if it is a HTTP-Redirect method, then it builds the federation termination
+  notification QUERY message (optionally signs the notification message),
+  builds the federation termination notification url with federation
+  termination service url, sets <em class="parameter"><code>msg_url</code></em> in the federation termination
+  object, sets <em class="parameter"><code>msg_body</code></em> to NULL.
+</p></li></ul></div><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>defederation</code></em> :</span></td><td> a <a href="LassoDefederation.html" title="LassoDefederation"><span class="type">LassoDefederation</span></a>
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> 0 on success; or a negative value otherwise.
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2558313"></a><h3><a name="lasso-defederation-init-notification"></a>lasso_defederation_init_notification ()</h3><a class="indexterm" name="id2558325"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_defederation_init_notification
+                                            (<a href="LassoDefederation.html" title="LassoDefederation">LassoDefederation</a> *defederation,
+                                             <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *remote_providerID,
+                                             <a href="LassoProvider.html#LassoHttpMethod">LassoHttpMethod</a> http_method);</pre><p>
+Sets a new federation termination notification to the remote provider id
+with the provider id of the requester (from the server object) and the name
+identifier of the federated principal.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>defederation</code></em> :</span></td><td> a <a href="LassoDefederation.html" title="LassoDefederation"><span class="type">LassoDefederation</span></a>
+</td></tr><tr><td><span class="term"><em class="parameter"><code>remote_providerID</code></em> :</span></td><td> the provider id of the federation termination notified
+    provider.
+</td></tr><tr><td><span class="term"><em class="parameter"><code>http_method</code></em> :</span></td><td> the HTTP method to send the message.
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> 0 on success; or a negative value otherwise.
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2558444"></a><h3><a name="lasso-defederation-process-notification-msg"></a>lasso_defederation_process_notification_msg ()</h3><a class="indexterm" name="id2558457"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_defederation_process_notification_msg
+                                            (<a href="LassoDefederation.html" title="LassoDefederation">LassoDefederation</a> *defederation,
+                                             <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *notification_msg);</pre><p>
+Processes a lib:FederationTerminationNotification message.  Rebuilds a
+request object from the message and optionally verifies its signature.
+</p><p>
+Set the msg_nameIdentifier attribute with the NameIdentifier content of the
+notification object and optionally set the msg_relayState attribute with the
+RelayState content of the notification object.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>defederation</code></em> :</span></td><td> the federation termination object
+</td></tr><tr><td><span class="term"><em class="parameter"><code>notification_msg</code></em> :</span></td><td> the federation termination notification message
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> 0 on success; or a negative value otherwise.
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2558550"></a><h3><a name="lasso-defederation-validate-notification"></a>lasso_defederation_validate_notification ()</h3><a class="indexterm" name="id2558563"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_defederation_validate_notification
+                                            (<a href="LassoDefederation.html" title="LassoDefederation">LassoDefederation</a> *defederation);</pre><p>
+Checks notification with regards to message status and principal
+federations; update them accordingly.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>defederation</code></em> :</span></td><td> a <a href="LassoDefederation.html" title="LassoDefederation"><span class="type">LassoDefederation</span></a>
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> 0 on success; or a negative value otherwise.
+</td></tr></tbody></table></div></div></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="LassoLogout.html"><b>&lt;&lt; LassoLogout</b></a></td><td align="right"><a accesskey="n" href="lasso-LassoNameRegistration.html"><b>LassoNameRegistration &gt;&gt;</b></a></td></tr></table></body></html>

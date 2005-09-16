@@ -1,12 +1,11 @@
-/* $Id: saml_subject.h,v 1.2 2004/07/22 06:59:03 eraviart Exp $ 
+/* $Id: saml_subject.h,v 1.6 2005/01/22 15:57:55 eraviart Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,32 +34,33 @@ extern "C" {
 #include <lasso/xml/saml_subject_confirmation.h>
 
 #define LASSO_TYPE_SAML_SUBJECT (lasso_saml_subject_get_type())
-#define LASSO_SAML_SUBJECT(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_SAML_SUBJECT, LassoSamlSubject))
-#define LASSO_SAML_SUBJECT_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_SAML_SUBJECT, LassoSamlSubjectClass))
+#define LASSO_SAML_SUBJECT(obj) \
+	(G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_SAML_SUBJECT, LassoSamlSubject))
+#define LASSO_SAML_SUBJECT_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_SAML_SUBJECT, LassoSamlSubjectClass))
 #define LASSO_IS_SAML_SUBJECT(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_SAML_SUBJECT))
-#define LASSO_IS_SAML_SUBJECT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_SAML_SUBJECT))
-#define LASSO_SAML_SUBJECT_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_SAML_SUBJECT, LassoSamlSubjectClass)) 
+#define LASSO_IS_SAML_SUBJECT_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_SAML_SUBJECT))
+#define LASSO_SAML_SUBJECT_GET_CLASS(o) \
+	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_SAML_SUBJECT, LassoSamlSubjectClass)) 
 
 typedef struct _LassoSamlSubject LassoSamlSubject;
 typedef struct _LassoSamlSubjectClass LassoSamlSubjectClass;
 
 struct _LassoSamlSubject {
-  LassoNode parent;
-  /*< private >*/
+	LassoNode parent;
+
+	/*< public >*/
+	LassoSamlNameIdentifier *NameIdentifier;
+	LassoSamlSubjectConfirmation *SubjectConfirmation;
 };
 
 struct _LassoSamlSubjectClass {
-  LassoNodeClass parent;
+	LassoNodeClass parent;
 };
 
 LASSO_EXPORT GType lasso_saml_subject_get_type(void);
 LASSO_EXPORT LassoNode* lasso_saml_subject_new(void);
-
-LASSO_EXPORT void lasso_saml_subject_set_nameIdentifier      (LassoSamlSubject *node,
-							      LassoSamlNameIdentifier *nameIdentifier);
-
-LASSO_EXPORT void lasso_saml_subject_set_subjectConfirmation (LassoSamlSubject *node,
-							      LassoSamlSubjectConfirmation *subjectConfirmation);
 
 #ifdef __cplusplus
 }

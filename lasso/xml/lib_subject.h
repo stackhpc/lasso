@@ -1,12 +1,11 @@
-/* $Id: lib_subject.h,v 1.5 2004/08/22 16:22:01 valos Exp $ 
+/* $Id: lib_subject.h,v 1.10 2005/01/22 15:57:55 eraviart Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,34 +30,37 @@ extern "C" {
 #endif /* __cplusplus */ 
 
 #include <lasso/xml/saml_subject.h>
-#include <lasso/xml/lib_idp_provided_name_identifier.h>
+#include <lasso/xml/saml_name_identifier.h>
 
 #define LASSO_TYPE_LIB_SUBJECT (lasso_lib_subject_get_type())
-#define LASSO_LIB_SUBJECT(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_LIB_SUBJECT, LassoLibSubject))
-#define LASSO_LIB_SUBJECT_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_LIB_SUBJECT, LassoLibSubjectClass))
+#define LASSO_LIB_SUBJECT(obj) \
+	(G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_LIB_SUBJECT, LassoLibSubject))
+#define LASSO_LIB_SUBJECT_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_LIB_SUBJECT, LassoLibSubjectClass))
 #define LASSO_IS_LIB_SUBJECT(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_LIB_SUBJECT))
-#define LASSO_IS_LIB_SUBJECT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_LIB_SUBJECT))
-#define LASSO_LIB_SUBJECT_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_LIB_SUBJECT, LassoLibSubjectClass)) 
+#define LASSO_IS_LIB_SUBJECT_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_LIB_SUBJECT))
+#define LASSO_LIB_SUBJECT_GET_CLASS(o) \
+	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_LIB_SUBJECT, LassoLibSubjectClass)) 
 
 typedef struct _LassoLibSubject LassoLibSubject;
 typedef struct _LassoLibSubjectClass LassoLibSubjectClass;
 
 struct _LassoLibSubject {
-  LassoSamlSubject parent;
-  /*< private >*/
-  gboolean use_xsitype;
+	LassoSamlSubject parent;
+
+	/*< public >*/
+	/* <xs:element ref="IDPProvidedNameIdentifier"/> */
+	LassoSamlNameIdentifier *IDPProvidedNameIdentifier;
 };
 
 struct _LassoLibSubjectClass {
-  LassoSamlSubjectClass parent;
+	LassoSamlSubjectClass parent;
 };
 
 LASSO_EXPORT GType lasso_lib_subject_get_type(void);
+LASSO_EXPORT LassoLibSubject* lasso_lib_subject_new(void);
 
-LASSO_EXPORT LassoNode* lasso_lib_subject_new(gboolean use_xsitype);
-
-LASSO_EXPORT void lasso_lib_subject_set_idpProvidedNameIdentifier(LassoLibSubject *node,
-								  LassoLibIDPProvidedNameIdentifier *idpProvidedNameIdentifier);
 
 #ifdef __cplusplus
 }

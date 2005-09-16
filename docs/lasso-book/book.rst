@@ -4,8 +4,8 @@ Building Liberty Services with Lasso
 
 :Author: Frederic Peters
 :Contact: fpeters@entrouvert.com
-:date: $Date: 2004/08/26 13:55:08 $
-:Copyright: Copyright © 2004 Entr'ouvert
+:date: $Date: 2005/01/22 15:57:54 $
+:Copyright: Copyright © 2004, 2005 Entr'ouvert
 
 .. contents:: Table of Contents
 .. section-numbering::

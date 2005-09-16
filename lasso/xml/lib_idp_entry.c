@@ -1,12 +1,11 @@
-/* $Id: lib_idp_entry.c,v 1.4 2004/08/13 15:16:13 fpeters Exp $
+/* $Id: lib_idp_entry.c,v 1.16 2005/01/22 15:57:55 eraviart Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,138 +25,87 @@
 #include <lasso/xml/lib_idp_entry.h>
 
 /*
-Schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
-
-<xs:element name="IDPEntry">
-  <xs:complexType>
-    <xs:sequence>
-      <xs:element ref="ProviderID"/>
-      <xs:element name="ProviderName" type="xs:string" minOccurs="0"/>
-      <xs:element name="Loc" type="xs:anyURI"/>
-    </xs:sequence>
-  </xs:complexType>
-</xs:element>
-*/
+ * Schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
+ * 
+ * <xs:element name="IDPEntry">
+ *   <xs:complexType>
+ *     <xs:sequence>
+ *       <xs:element ref="ProviderID"/>
+ *       <xs:element name="ProviderName" type="xs:string" minOccurs="0"/>
+ *       <xs:element name="Loc" type="xs:anyURI"/>
+ *     </xs:sequence>
+ *   </xs:complexType>
+ * </xs:element>
+ */
 
 /*****************************************************************************/
-/* public methods                                                            */
+/* private methods                                                           */
 /*****************************************************************************/
 
-/**
- * lasso_lib_idp_entry_set_providerID:
- * @node: the pointer to <lib:IDPEntry/> node object
- * @providerID: the value of "ProviderID" element
- * 
- * Sets the "ProviderID" element [required].
- *
- * It's the identity provider's unique identifier.
- **/
-void
-lasso_lib_idp_entry_set_providerID(LassoLibIDPEntry *node,
-				   const xmlChar *providerID)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_LIB_IDP_ENTRY(node));
-  g_assert(providerID != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->new_child(LASSO_NODE (node), "ProviderID", providerID, FALSE);
-}
-
-/**
- * lasso_lib_idp_entry_set_providerName:
- * @node: the pointer to <lib:IDPEntry/> node object
- * @providerName: the value of "ProviderName" element
- * 
- * Sets the "ProviderName" element [optional].
- *
- * It's the identity provider's human-readable name.
- **/
-void
-lasso_lib_idp_entry_set_providerName(LassoLibIDPEntry *node,
-				     const xmlChar *providerName)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_LIB_IDP_ENTRY(node));
-  g_assert(providerName != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->new_child(LASSO_NODE (node), "ProviderName", providerName, FALSE);
-}
-
-/**
- * lasso_lib_idp_entry_set_loc:
- * @node: the pointer to <lib:IDPEntry/> node object
- * @loc: the value of "Loc" element
- * 
- * Sets the "Loc" element [optional].
- *
- * It's the identity provider's URI, to which authentication requests may be
- * sent. If present, this MUST be set to the value of the identity provider's
- * <SingleSignOnService> element, obtained from their metadata
- * ([LibertyMetadata]).
- **/
-void
-lasso_lib_idp_entry_set_loc(LassoLibIDPEntry *node,
-			    const xmlChar *loc)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_LIB_IDP_ENTRY(node));
-  g_assert(loc != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->new_child(LASSO_NODE (node), "Loc", loc, FALSE);
-}
+static struct XmlSnippet schema_snippets[] = {
+	{ "ProviderID", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoLibIDPEntry, ProviderID) },
+	{ "ProviderName", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoLibIDPEntry, ProviderName) },
+	{ "Loc", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoLibIDPEntry, Loc) },
+	{ NULL, 0, 0}
+};
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
 static void
-lasso_lib_idp_entry_instance_init(LassoLibIDPEntry *node)
+instance_init(LassoLibIDPEntry *node)
 {
-  LassoNodeClass *class = LASSO_NODE_GET_CLASS(LASSO_NODE(node));
-
-  class->set_ns(LASSO_NODE(node), lassoLibHRef, lassoLibPrefix);
-  class->set_name(LASSO_NODE(node), "IDPEntry");
+	node->ProviderID = NULL;
+	node->ProviderName = NULL;
+	node->Loc = NULL;
 }
 
 static void
-lasso_lib_idp_entry_class_init(LassoLibIDPEntryClass *klass)
+class_init(LassoLibIDPEntryClass *klass)
 {
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
+
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "IDPEntry");
+	lasso_node_class_set_ns(nclass, LASSO_LIB_HREF, LASSO_LIB_PREFIX);
+	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
 
-GType lasso_lib_idp_entry_get_type() {
-  static GType this_type = 0;
+GType
+lasso_lib_idp_entry_get_type()
+{
+	static GType this_type = 0;
 
-  if (!this_type) {
-    static const GTypeInfo this_info = {
-      sizeof (LassoLibIDPEntryClass),
-      NULL,
-      NULL,
-      (GClassInitFunc) lasso_lib_idp_entry_class_init,
-      NULL,
-      NULL,
-      sizeof(LassoLibIDPEntry),
-      0,
-      (GInstanceInitFunc) lasso_lib_idp_entry_instance_init,
-    };
-    
-    this_type = g_type_register_static(LASSO_TYPE_NODE,
-				       "LassoLibIDPEntry",
-				       &this_info, 0);
-  }
-  return this_type;
+	if (!this_type) {
+		static const GTypeInfo this_info = {
+			sizeof (LassoLibIDPEntryClass),
+			NULL,
+			NULL,
+			(GClassInitFunc) class_init,
+			NULL,
+			NULL,
+			sizeof(LassoLibIDPEntry),
+			0,
+			(GInstanceInitFunc) instance_init,
+		};
+
+		this_type = g_type_register_static(LASSO_TYPE_NODE,
+				"LassoLibIDPEntry", &this_info, 0);
+	}
+	return this_type;
 }
 
 /**
  * lasso_lib_idp_entry_new:
  *
- * Creates a new <lib:IDPEntry/> node object.
+ * Creates a new #LassoLibIDPEntry object.
  * 
- * Return value: the new @LassoLibIDPEntry
+ * Return value: a newly created @LassoLibIDPEntry object
  **/
-LassoNode* lasso_lib_idp_entry_new()
+LassoNode*
+lasso_lib_idp_entry_new()
 {
-  return LASSO_NODE(g_object_new(LASSO_TYPE_LIB_IDP_ENTRY, NULL));
+	return g_object_new(LASSO_TYPE_LIB_IDP_ENTRY, NULL);
 }
+

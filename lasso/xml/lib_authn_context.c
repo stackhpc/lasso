@@ -1,12 +1,11 @@
-/* $Id: lib_authn_context.c,v 1.4 2004/08/13 15:16:13 fpeters Exp $ 
+/* $Id: lib_authn_context.c,v 1.14 2005/01/22 15:57:55 eraviart Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,104 +25,98 @@
 #include <lasso/xml/lib_authn_context.h>
 
 /*
-The Schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
-
-<xs:element name="AuthnContext">
-  <xs:complexType>
-    <xs:sequence>
-      <xs:element name="AuthnContextClassRef" type="xs:anyURI" minOccurs="0"/>
-      <xs:choice>
-        <xs:element ref="ac:AuthenticationContextStatement"/>
-        <xs:element name="AuthnContextStatementRef" type="xs:anyURI"/>
-      </xs:choice>
-    </xs:sequence>
-  </xs:complexType>
-</xs:element>
-
-From schema liberty-authentication-context-v1.2.xsd:
-<xs:element name="AuthenticationContextStatement" type="AuthenticationContextStatementType">
-  <xs:annotation>
-    <xs:documentation>
-      A particular assertion on an identity
-      provider's part with respect to the authentication
-      context associated with an authentication assertion. 
-    </xs:documentation>
-  </xs:annotation>
-</xs:element>
-*/
+ * Schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
+ * 
+ * <xs:element name="AuthnContext">
+ *   <xs:complexType>
+ *     <xs:sequence>
+ *       <xs:element name="AuthnContextClassRef" type="xs:anyURI" minOccurs="0"/>
+ *       <xs:choice>
+ *         <xs:element ref="ac:AuthenticationContextStatement"/>
+ *         <xs:element name="AuthnContextStatementRef" type="xs:anyURI"/>
+ *       </xs:choice>
+ *     </xs:sequence>
+ *   </xs:complexType>
+ * </xs:element>
+ * 
+ * From schema liberty-authentication-context-v1.2.xsd:
+ * <xs:element name="AuthenticationContextStatement" type="AuthenticationContextStatementType">
+ *   <xs:annotation>
+ *     <xs:documentation>
+ *       A particular assertion on an identity
+ *       provider's part with respect to the authentication
+ *       context associated with an authentication assertion. 
+ *     </xs:documentation>
+ *   </xs:annotation>
+ * </xs:element>
+ */
 
 /*****************************************************************************/
-/* public methods                                                            */
+/* private methods                                                           */
 /*****************************************************************************/
 
-void
-lasso_lib_authn_context_set_authnContextClassRef(LassoLibAuthnContext *node,
-						 const xmlChar *authnContextClassRef)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_LIB_AUTHN_CONTEXT(node));
-  g_assert(authnContextClassRef != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->new_child(LASSO_NODE (node), "AuthnContextClassRef",
-		   authnContextClassRef, FALSE);
-}
-
-void
-lasso_lib_authn_context_set_authnContextStatementRef(LassoLibAuthnContext *node,
-						     const xmlChar *authnContextStatementRef)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_LIB_AUTHN_CONTEXT(node));
-  g_assert(authnContextStatementRef != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->new_child(LASSO_NODE (node), "AuthnContextStatementRef",
-		   authnContextStatementRef, FALSE);
-}
+static struct XmlSnippet schema_snippets[] = {
+	{ "AuthnContextClassRef", SNIPPET_CONTENT,
+		G_STRUCT_OFFSET(LassoLibAuthnContext, AuthnContextClassRef) },
+	{ "AuthnContextStatementRef", SNIPPET_CONTENT,
+		G_STRUCT_OFFSET(LassoLibAuthnContext, AuthnContextStatementRef) },
+	{ NULL, 0, 0 }
+};
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
 static void
-lasso_lib_authn_context_instance_init(LassoLibAuthnContext *node)
+instance_init(LassoLibAuthnContext *node)
 {
-  LassoNodeClass *class = LASSO_NODE_GET_CLASS(LASSO_NODE(node));
-
-  class->set_ns(LASSO_NODE(node), lassoLibHRef, lassoLibPrefix);
-  class->set_name(LASSO_NODE(node), "AuthnContext");
+	node->AuthnContextClassRef = NULL;
+	node->AuthnContextStatementRef = NULL;
 }
 
 static void
-lasso_lib_authn_context_class_init(LassoLibAuthnContextClass *klass)
+class_init(LassoLibAuthnContextClass *klass)
 {
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
+
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "AuthnContext");
+	lasso_node_class_set_ns(nclass, LASSO_LIB_HREF, LASSO_LIB_PREFIX);
+	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
 
-GType lasso_lib_authn_context_get_type() {
-  static GType this_type = 0;
+GType
+lasso_lib_authn_context_get_type()
+{
+	static GType this_type = 0;
 
-  if (!this_type) {
-    static const GTypeInfo this_info = {
-      sizeof (LassoLibAuthnContextClass),
-      NULL,
-      NULL,
-      (GClassInitFunc) lasso_lib_authn_context_class_init,
-      NULL,
-      NULL,
-      sizeof(LassoLibAuthnContext),
-      0,
-      (GInstanceInitFunc) lasso_lib_authn_context_instance_init,
-    };
-    
-    this_type = g_type_register_static(LASSO_TYPE_NODE,
-				       "LassoLibAuthnContext",
-				       &this_info, 0);
-  }
-  return this_type;
+	if (!this_type) {
+		static const GTypeInfo this_info = {
+			sizeof (LassoLibAuthnContextClass),
+			NULL,
+			NULL,
+			(GClassInitFunc) class_init,
+			NULL,
+			NULL,
+			sizeof(LassoLibAuthnContext),
+			0,
+			(GInstanceInitFunc) instance_init,
+		};
+
+		this_type = g_type_register_static(LASSO_TYPE_NODE,
+				"LassoLibAuthnContext", &this_info, 0);
+	}
+	return this_type;
 }
 
-LassoNode* lasso_lib_authn_context_new() {
-  return LASSO_NODE(g_object_new(LASSO_TYPE_LIB_AUTHN_CONTEXT,
-				 NULL));
+/**
+ * lasso_lib_authn_context_new:
+ *
+ * Creates a new #LassoLibAuthnContext object.
+ *
+ * Return value: a newly created #LassoLibAuthnContext object
+ **/
+LassoNode*
+lasso_lib_authn_context_new() {
+	return g_object_new(LASSO_TYPE_LIB_AUTHN_CONTEXT, NULL);
 }

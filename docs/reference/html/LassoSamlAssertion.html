@@ -1,0 +1,49 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>LassoSamlAssertion</title><meta name="generator" content="DocBook XSL Stylesheets V1.68.1"><link rel="start" href="index.html" title="Lasso Reference Manual"><link rel="up" href="xml.html" title="Schemas"><link rel="prev" href="LassoSamlAdvice.html" title="LassoSamlAdvice"><link rel="next" href="LassoSamlAudienceRestrictionCondition.html" title="LassoSamlAudienceRestrictionCondition"><meta name="generator" content="GTK-Doc V1.3 (XML mode)"><link rel="stylesheet" href="style.css" type="text/css"><link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview"><link rel="chapter" href="architecture.html" title="Lasso Architecture"><link rel="chapter" href="idff.html" title="Identity Federation Framework"><link rel="chapter" href="idwsf.html" title="Identity Web Services Framework"><link rel="chapter" href="xml.html" title="Schemas"><link rel="chapter" href="misc.html" title="Misc"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="LassoSamlAdvice.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="xml.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">Lasso Reference Manual</th><td><a accesskey="n" href="LassoSamlAudienceRestrictionCondition.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="LassoSamlAssertion"></a><div class="titlepage"></div><div class="refnamediv"><table width="100%"><tr><td valign="top"><h2><span class="refentrytitle">LassoSamlAssertion</span></h2><p>LassoSamlAssertion &#8212; </p></td><td valign="top" align="right"></td></tr></table></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+#include &lt;lasso/lasso.h&gt;
+
+
+            <a href="LassoSamlAssertion.html#LassoSamlAssertion-struct">LassoSamlAssertion</a>;
+<a href="LassoSamlAssertion.html" title="LassoSamlAssertion">LassoSamlAssertion</a>* <a href="LassoSamlAssertion.html#lasso-saml-assertion-new">lasso_saml_assertion_new</a>
+                                            (void);
+
+</pre></div><div class="refsect1" lang="en"><a name="id2583630"></a><h2>Object Hierarchy</h2><pre class="synopsis">
+
+  <GTKDOCLINK HREF="GObject">GObject</GTKDOCLINK>
+   +----<a href="LassoNode.html" title="LassoNode">LassoNode</a>
+         +----LassoSamlAssertion
+               +----<a href="LassoLibAssertion.html" title="LassoLibAssertion">LassoLibAssertion</a>
+</pre></div><div class="refsect1" lang="en"><a name="id2583664"></a><h2>Description</h2><p>
+
+</p></div><div class="refsect1" lang="en"><a name="id2583674"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2583679"></a><h3><a name="LassoSamlAssertion-struct"></a>LassoSamlAssertion</h3><a class="indexterm" name="id2583691"></a><pre class="programlisting">typedef struct {
+	/* &lt;element ref="saml:Conditions" minOccurs="0"/&gt; */
+	LassoSamlConditions *Conditions;
+	/* &lt;element ref="saml:Advice" minOccurs="0"/&gt; */
+	LassoSamlAdvice *Advice;
+	void *Statement; /* XXX LassoSamlStatement missing from lasso */
+	LassoSamlSubjectStatement *SubjectStatement;
+	LassoSamlAuthenticationStatement *AuthenticationStatement;
+	void *AuthorizationDecisionStatement;
+		/* XXX LassoSamlAuthorizationDecisionStatement missing from lasso*/
+	LassoSamlAttributeStatement *AttributeStatement;
+
+	int MajorVersion;
+	int MinorVersion;
+	char *AssertionID;
+	char *Issuer;
+	char *IssueInstant;
+
+	/* ds:Signature stuff */
+	LassoSignatureType sign_type;
+	LassoSignatureMethod sign_method;
+	char *private_key_file;
+	char *certificate_file;
+} LassoSamlAssertion;
+</pre><p>
+
+</p></div><hr><div class="refsect2" lang="en"><a name="id2583732"></a><h3><a name="lasso-saml-assertion-new"></a>lasso_saml_assertion_new ()</h3><a class="indexterm" name="id2583743"></a><pre class="programlisting"><a href="LassoSamlAssertion.html" title="LassoSamlAssertion">LassoSamlAssertion</a>* lasso_saml_assertion_new
+                                            (void);</pre><p>
+Creates a new <a href="LassoSamlAssertion.html" title="LassoSamlAssertion"><span class="type">LassoSamlAssertion</span></a> object.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a newly created <a href="LassoSamlAssertion.html" title="LassoSamlAssertion"><span class="type">LassoSamlAssertion</span></a> object
+</td></tr></tbody></table></div></div></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="LassoSamlAdvice.html"><b>&lt;&lt; LassoSamlAdvice</b></a></td><td align="right"><a accesskey="n" href="LassoSamlAudienceRestrictionCondition.html"><b>LassoSamlAudienceRestrictionCondition &gt;&gt;</b></a></td></tr></table></body></html>

@@ -1,12 +1,11 @@
-/* $Id: lib_logout_response.c,v 1.4 2004/07/22 06:59:03 eraviart Exp $ 
+/* $Id: lib_logout_response.c,v 1.14 2005/01/22 15:57:55 eraviart Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,54 +25,105 @@
 #include <lasso/xml/lib_logout_response.h>
 
 /*
-The Schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
+ * Schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
+ * 
+ * <xs:element name="LogoutResponse" type="StatusResponseType"/>
+ */
 
-<xs:element name="LogoutResponse" type="StatusResponseType"/>
 
-*/
+/*****************************************************************************/
+/* private methods                                                           */
+/*****************************************************************************/
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
 static void
-lasso_lib_logout_response_instance_init(LassoLibLogoutResponse *node)
+instance_init(LassoLibLogoutResponse *node)
 {
-  LassoNodeClass *class = LASSO_NODE_GET_CLASS(LASSO_NODE(node));
-
-  /* namespace herited from lib:StatusResponse */
-  class->set_name(LASSO_NODE(node), "LogoutResponse");
 }
 
 static void
-lasso_lib_logout_response_class_init(LassoLibLogoutResponseClass *klass)
+class_init(LassoLibLogoutResponseClass *klass)
 {
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
+
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "LogoutResponse");
 }
 
-GType lasso_lib_logout_response_get_type() {
-  static GType logout_response_type = 0;
+GType
+lasso_lib_logout_response_get_type()
+{
+	static GType logout_response_type = 0;
 
-  if (!logout_response_type) {
-    static const GTypeInfo logout_response_info = {
-      sizeof (LassoLibLogoutResponseClass),
-      NULL,
-      NULL,
-      (GClassInitFunc) lasso_lib_logout_response_class_init,
-      NULL,
-      NULL,
-      sizeof(LassoLibLogoutResponse),
-      0,
-      (GInstanceInitFunc) lasso_lib_logout_response_instance_init,
-    };
-    
-    logout_response_type = g_type_register_static(LASSO_TYPE_LIB_STATUS_RESPONSE,
-						 "LassoLibLogoutResponse",
-						 &logout_response_info, 0);
-  }
-  return logout_response_type;
+	if (!logout_response_type) {
+		static const GTypeInfo logout_response_info = {
+			sizeof (LassoLibLogoutResponseClass),
+			NULL,
+			NULL,
+			(GClassInitFunc) class_init,
+			NULL,
+			NULL,
+			sizeof(LassoLibLogoutResponse),
+			0,
+			(GInstanceInitFunc) instance_init,
+		};
+
+		logout_response_type = g_type_register_static(LASSO_TYPE_LIB_STATUS_RESPONSE,
+				"LassoLibLogoutResponse", &logout_response_info, 0);
+	}
+	return logout_response_type;
 }
 
-LassoNode* lasso_lib_logout_response_new()
+/**
+ * lasso_lib_logout_response_new:
+ *
+ * Creates a new #LassoLibLogoutResponse object.
+ *
+ * Return value: a newly created #LassoLibLogoutResponse object
+ **/
+LassoSamlpResponseAbstract*
+lasso_lib_logout_response_new()
 {
-  return LASSO_NODE(g_object_new(LASSO_TYPE_LIB_LOGOUT_RESPONSE, NULL));
+	return g_object_new(LASSO_TYPE_LIB_LOGOUT_RESPONSE, NULL);
+}
+
+
+/**
+ * lasso_lib_logout_response_new_full:
+ * @providerID:
+ * @statusCodeValue:
+ * @request: the request this is a response to
+ * @sign_type:
+ * @sign_method:
+ *
+ * Creates a new #LassoLibLogoutResponse object and initializes it with the
+ * parameters.
+ *
+ * Return value: a newly created #LassoLibLogoutResponse object
+ **/
+LassoSamlpResponseAbstract*
+lasso_lib_logout_response_new_full(char *providerID, const char *statusCodeValue,
+		LassoLibLogoutRequest *request,
+		LassoSignatureType sign_type, LassoSignatureMethod sign_method)
+{
+	LassoLibStatusResponse *response;
+
+	response = g_object_new(LASSO_TYPE_LIB_LOGOUT_RESPONSE, NULL);
+	lasso_samlp_response_abstract_fill(
+			LASSO_SAMLP_RESPONSE_ABSTRACT(response),
+			LASSO_SAMLP_REQUEST_ABSTRACT(request)->RequestID,
+			request->ProviderID);
+	LASSO_SAMLP_RESPONSE_ABSTRACT(response)->sign_type = sign_type;
+	LASSO_SAMLP_RESPONSE_ABSTRACT(response)->sign_method = sign_method;
+
+	response->ProviderID = g_strdup(providerID);
+	response->RelayState = g_strdup(request->RelayState);
+	response->Status = lasso_samlp_status_new();
+	response->Status->StatusCode = lasso_samlp_status_code_new();
+	response->Status->StatusCode->Value = g_strdup(statusCodeValue);
+
+	return LASSO_SAMLP_RESPONSE_ABSTRACT(response);
 }

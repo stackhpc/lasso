@@ -1,0 +1,32 @@
+<!-- ##### SECTION Title ##### -->
+LassoSamlAdvice
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT LassoSamlAdvice ##### -->
+<para>
+
+</para>
+
+@AssertionIDReference: 
+@Assertion: 
+
+<!-- ##### FUNCTION lasso_saml_advice_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+

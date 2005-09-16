@@ -14,7 +14,7 @@
 
 @SET_MAKE@
 
-SOURCES = $(tests_SOURCES)
+SOURCES = $(m2_SOURCES) $(perfs_SOURCES) $(tests_SOURCES)
 
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
@@ -37,23 +37,36 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 host_triplet = @host@
-@WITH_TESTS_TRUE@noinst_PROGRAMS = tests$(EXEEXT)
+@WITH_TESTS_TRUE@noinst_PROGRAMS = tests$(EXEEXT) perfs$(EXEEXT) \
+@WITH_TESTS_TRUE@	m2$(EXEEXT)
 subdir = tests
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/macros/check.m4 \
-	$(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(mkdir_p)
 CONFIG_HEADER = $(top_builddir)/lasso/lasso_config.h
 CONFIG_CLEAN_FILES =
 PROGRAMS = $(noinst_PROGRAMS)
-am__tests_SOURCES_DIST = tests.c login_tests.c basic_tests.c
-@WITH_TESTS_TRUE@am_tests_OBJECTS = tests.$(OBJEXT) \
-@WITH_TESTS_TRUE@	login_tests.$(OBJEXT) basic_tests.$(OBJEXT)
-tests_OBJECTS = $(am_tests_OBJECTS)
+am__m2_SOURCES_DIST = m2.c
+@WITH_TESTS_TRUE@am_m2_OBJECTS = m2.$(OBJEXT)
+m2_OBJECTS = $(am_m2_OBJECTS)
 am__DEPENDENCIES_1 =
+@WITH_TESTS_TRUE@m2_DEPENDENCIES = $(top_builddir)/lasso/liblasso.la \
+@WITH_TESTS_TRUE@	$(am__DEPENDENCIES_1)
+am__perfs_SOURCES_DIST = perfs.c
+@WITH_TESTS_TRUE@am_perfs_OBJECTS = perfs.$(OBJEXT)
+perfs_OBJECTS = $(am_perfs_OBJECTS)
+@WITH_TESTS_TRUE@perfs_DEPENDENCIES =  \
+@WITH_TESTS_TRUE@	$(top_builddir)/lasso/liblasso.la \
+@WITH_TESTS_TRUE@	$(am__DEPENDENCIES_1)
+am__tests_SOURCES_DIST = tests.c login_tests.c basic_tests.c \
+	random_tests.c
+@WITH_TESTS_TRUE@am_tests_OBJECTS = tests.$(OBJEXT) \
+@WITH_TESTS_TRUE@	login_tests.$(OBJEXT) basic_tests.$(OBJEXT) \
+@WITH_TESTS_TRUE@	random_tests.$(OBJEXT)
+tests_OBJECTS = $(am_tests_OBJECTS)
 @WITH_TESTS_TRUE@tests_DEPENDENCIES =  \
 @WITH_TESTS_TRUE@	$(top_builddir)/lasso/liblasso.la \
 @WITH_TESTS_TRUE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
@@ -61,7 +74,9 @@ DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)/lasso
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 @AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/basic_tests.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/login_tests.Po ./$(DEPDIR)/tests.Po
+@AMDEP_TRUE@	./$(DEPDIR)/login_tests.Po ./$(DEPDIR)/m2.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/perfs.Po ./$(DEPDIR)/random_tests.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/tests.Po
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) \
@@ -70,8 +85,9 @@ LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) \
 CCLD = $(CC)
 LINK = $(LIBTOOL) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(tests_SOURCES)
-DIST_SOURCES = $(am__tests_SOURCES_DIST)
+SOURCES = $(m2_SOURCES) $(perfs_SOURCES) $(tests_SOURCES)
+DIST_SOURCES = $(am__m2_SOURCES_DIST) $(am__perfs_SOURCES_DIST) \
+	$(am__tests_SOURCES_DIST)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
 	install-exec-recursive install-info-recursive \
@@ -116,6 +132,7 @@ DARWIN_TRUE = @DARWIN_TRUE@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
 DLLTOOL = @DLLTOOL@
+DLL_FILENAME = @DLL_FILENAME@
 ECHO = @ECHO@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
@@ -132,9 +149,14 @@ GTK_DOC_CFLAGS = @GTK_DOC_CFLAGS@
 GTK_DOC_ENABLED_FALSE = @GTK_DOC_ENABLED_FALSE@
 GTK_DOC_ENABLED_TRUE = @GTK_DOC_ENABLED_TRUE@
 GTK_DOC_LIBS = @GTK_DOC_LIBS@
+HAVE_INKSCAPE_FALSE = @HAVE_INKSCAPE_FALSE@
+HAVE_INKSCAPE_TRUE = @HAVE_INKSCAPE_TRUE@
 HAVE_REST2HTML_FALSE = @HAVE_REST2HTML_FALSE@
 HAVE_REST2HTML_TRUE = @HAVE_REST2HTML_TRUE@
+HAVE_XSLTPROC_FALSE = @HAVE_XSLTPROC_FALSE@
+HAVE_XSLTPROC_TRUE = @HAVE_XSLTPROC_TRUE@
 HTML_DIR = @HTML_DIR@
+INKSCAPE = @INKSCAPE@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
@@ -154,8 +176,10 @@ LASSO_CORE_LIBS = @LASSO_CORE_LIBS@
 LASSO_DEFINES = @LASSO_DEFINES@
 LASSO_DOCDIR = @LASSO_DOCDIR@
 LASSO_LIBS = @LASSO_LIBS@
+LASSO_PUB_CFLAGS = @LASSO_PUB_CFLAGS@
 LASSO_STATIC_BINARIES = @LASSO_STATIC_BINARIES@
 LASSO_VERSION_INFO = @LASSO_VERSION_INFO@
+LASSO_WSF_SUPPORT = @LASSO_WSF_SUPPORT@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
@@ -178,10 +202,17 @@ PACKAGE_STRING = @PACKAGE_STRING@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
+PERL = @PERL@
+PERLINSTALLSITEARCH = @PERLINSTALLSITEARCH@
+PERLMAN3DIR = @PERLMAN3DIR@
+PERL_ENABLED_FALSE = @PERL_ENABLED_FALSE@
+PERL_ENABLED_TRUE = @PERL_ENABLED_TRUE@
+PERL_VERSION = @PERL_VERSION@
 PHP = @PHP@
 PHP_CONFIG = @PHP_CONFIG@
 PHP_ENABLED_FALSE = @PHP_ENABLED_FALSE@
 PHP_ENABLED_TRUE = @PHP_ENABLED_TRUE@
+PHP_EXTENSION_DIR = @PHP_EXTENSION_DIR@
 PHP_INCLUDES = @PHP_INCLUDES@
 PHP_LDFLAGS = @PHP_LDFLAGS@
 PHP_LIBS = @PHP_LIBS@
@@ -210,9 +241,15 @@ SWIG = @SWIG@
 SWIG_PYTHON_ARGS = @SWIG_PYTHON_ARGS@
 TAR = @TAR@
 U = @U@
+UPCASED_DLL_FILENAME = @UPCASED_DLL_FILENAME@
 VERSION = @VERSION@
+VERSION_UNDERSCORED = @VERSION_UNDERSCORED@
+WINDOWS_VERSION = @WINDOWS_VERSION@
 WITH_TESTS_FALSE = @WITH_TESTS_FALSE@
 WITH_TESTS_TRUE = @WITH_TESTS_TRUE@
+WSF_ENABLED_FALSE = @WSF_ENABLED_FALSE@
+WSF_ENABLED_TRUE = @WSF_ENABLED_TRUE@
+XSLTPROC = @XSLTPROC@
 ac_ct_AR = @ac_ct_AR@
 ac_ct_AS = @ac_ct_AS@
 ac_ct_CC = @ac_ct_CC@
@@ -223,6 +260,7 @@ ac_ct_OBJDUMP = @ac_ct_OBJDUMP@
 ac_ct_RANLIB = @ac_ct_RANLIB@
 ac_ct_RC = @ac_ct_RC@
 ac_ct_STRIP = @ac_ct_STRIP@
+ac_pt_PKG_CONFIG = @ac_pt_PKG_CONFIG@
 am__fastdepCC_FALSE = @am__fastdepCC_FALSE@
 am__fastdepCC_TRUE = @am__fastdepCC_TRUE@
 am__fastdepCXX_FALSE = @am__fastdepCXX_FALSE@
@@ -266,17 +304,20 @@ target_alias = @target_alias@
 @WITH_TESTS_TRUE@	-I$(top_srcdir) \
 @WITH_TESTS_TRUE@	-I$(top_srcdir)/lasso \
 @WITH_TESTS_TRUE@	-DTESTSDATADIR=\"$(srcdir)/data/\" \
-@WITH_TESTS_TRUE@	$(LASSO_DEFINES) \
 @WITH_TESTS_TRUE@	$(LASSO_CFLAGS) \
 @WITH_TESTS_TRUE@	$(CHECK_CFLAGS)
 
-@WITH_TESTS_TRUE@tests_SOURCES = tests.c login_tests.c basic_tests.c
+@WITH_TESTS_TRUE@tests_SOURCES = tests.c login_tests.c basic_tests.c random_tests.c
 @WITH_TESTS_TRUE@tests_LDADD = \
 @WITH_TESTS_TRUE@	$(top_builddir)/lasso/liblasso.la \
 @WITH_TESTS_TRUE@	$(LASSO_LIBS) \
 @WITH_TESTS_TRUE@	$(CHECK_LIBS)
 
-EXTRA_DIST = tests.c login_tests.c basic_tests.c
+@WITH_TESTS_TRUE@perfs_SOURCES = perfs.c
+@WITH_TESTS_TRUE@perfs_LDADD = $(top_builddir)/lasso/liblasso.la $(LASSO_LIBS)
+@WITH_TESTS_TRUE@m2_SOURCES = m2.c
+@WITH_TESTS_TRUE@m2_LDADD = $(top_builddir)/lasso/liblasso.la $(LASSO_LIBS)
+EXTRA_DIST = tests.c login_tests.c basic_tests.c random_tests.c
 SUBDIRS = data
 CLEANFILES = result.xml
 all: all-recursive
@@ -319,6 +360,12 @@ clean-noinstPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
+m2$(EXEEXT): $(m2_OBJECTS) $(m2_DEPENDENCIES) 
+	@rm -f m2$(EXEEXT)
+	$(LINK) $(m2_LDFLAGS) $(m2_OBJECTS) $(m2_LDADD) $(LIBS)
+perfs$(EXEEXT): $(perfs_OBJECTS) $(perfs_DEPENDENCIES) 
+	@rm -f perfs$(EXEEXT)
+	$(LINK) $(perfs_LDFLAGS) $(perfs_OBJECTS) $(perfs_LDADD) $(LIBS)
 tests$(EXEEXT): $(tests_OBJECTS) $(tests_DEPENDENCIES) 
 	@rm -f tests$(EXEEXT)
 	$(LINK) $(tests_LDFLAGS) $(tests_OBJECTS) $(tests_LDADD) $(LIBS)
@@ -331,6 +378,9 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/basic_tests.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/login_tests.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/m2.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/perfs.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/random_tests.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tests.Po@am__quote@
 
 .c.o:

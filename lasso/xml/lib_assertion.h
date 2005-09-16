@@ -1,12 +1,11 @@
-/* $Id: lib_assertion.h,v 1.5 2004/08/22 16:22:01 valos Exp $ 
+/* $Id: lib_assertion.h,v 1.10 2005/01/22 15:57:55 eraviart Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,34 +31,38 @@ extern "C" {
 
 #include <lasso/xml/saml_assertion.h>
 
-#include <lasso/xml/lib_authentication_statement.h>
-
 #define LASSO_TYPE_LIB_ASSERTION (lasso_lib_assertion_get_type())
-#define LASSO_LIB_ASSERTION(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_LIB_ASSERTION, LassoLibAssertion))
-#define LASSO_LIB_ASSERTION_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_LIB_ASSERTION, LassoLibAssertionClass))
-#define LASSO_IS_LIB_ASSERTION(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_LIB_ASSERTION))
-#define LASSO_IS_LIB_ASSERTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_LIB_ASSERTION))
-#define LASSO_LIB_ASSERTION_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_LIB_ASSERTION, LassoLibAssertionClass)) 
+#define LASSO_LIB_ASSERTION(obj) \
+	(G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_LIB_ASSERTION, LassoLibAssertion))
+#define LASSO_LIB_ASSERTION_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_LIB_ASSERTION, LassoLibAssertionClass))
+#define LASSO_IS_LIB_ASSERTION(obj) \
+	(G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_LIB_ASSERTION))
+#define LASSO_IS_LIB_ASSERTION_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_LIB_ASSERTION))
+#define LASSO_LIB_ASSERTION_GET_CLASS(o) \
+	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_LIB_ASSERTION, LassoLibAssertionClass)) 
 
 typedef struct _LassoLibAssertion LassoLibAssertion;
 typedef struct _LassoLibAssertionClass LassoLibAssertionClass;
 
 struct _LassoLibAssertion {
-  LassoSamlAssertion parent;
-  /*< private >*/
-  gboolean use_xsitype;
+	LassoSamlAssertion parent;
+
+	/*< public >*/
+	char *InResponseTo;
 };
 
 struct _LassoLibAssertionClass {
-  LassoSamlAssertionClass parent;
+	LassoSamlAssertionClass parent;
 };
 
 LASSO_EXPORT GType lasso_lib_assertion_get_type        (void);
 
-LASSO_EXPORT LassoNode* lasso_lib_assertion_new        (gboolean use_xsitype);
-
-LASSO_EXPORT void lasso_lib_assertion_set_inResponseTo (LassoLibAssertion *,
-							const xmlChar *);
+LASSO_EXPORT LassoLibAssertion* lasso_lib_assertion_new(void);
+LASSO_EXPORT LassoLibAssertion* lasso_lib_assertion_new_full(
+		const char *issuer, const char *requestID, const char *audience,
+		const char *notBefore, const char *notOnOrAfter);
 
 #ifdef __cplusplus
 }
