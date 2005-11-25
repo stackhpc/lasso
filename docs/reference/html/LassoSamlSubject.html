@@ -1,4 +1,41 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>LassoSamlSubject</title><meta name="generator" content="DocBook XSL Stylesheets V1.68.1"><link rel="start" href="index.html" title="Lasso Reference Manual"><link rel="up" href="xml.html" title="Schemas"><link rel="prev" href="LassoSamlStatementAbstract.html" title="LassoSamlStatementAbstract"><link rel="next" href="LassoSamlSubjectConfirmation.html" title="LassoSamlSubjectConfirmation"><meta name="generator" content="GTK-Doc V1.3 (XML mode)"><link rel="stylesheet" href="style.css" type="text/css"><link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview"><link rel="chapter" href="architecture.html" title="Lasso Architecture"><link rel="chapter" href="idff.html" title="Identity Federation Framework"><link rel="chapter" href="idwsf.html" title="Identity Web Services Framework"><link rel="chapter" href="xml.html" title="Schemas"><link rel="chapter" href="misc.html" title="Misc"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="LassoSamlStatementAbstract.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="xml.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">Lasso Reference Manual</th><td><a accesskey="n" href="LassoSamlSubjectConfirmation.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="LassoSamlSubject"></a><div class="titlepage"></div><div class="refnamediv"><table width="100%"><tr><td valign="top"><h2><span class="refentrytitle">LassoSamlSubject</span></h2><p>LassoSamlSubject &#8212; </p></td><td valign="top" align="right"></td></tr></table></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>LassoSamlSubject</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.68.1">
+<link rel="start" href="index.html" title="Lasso Reference Manual">
+<link rel="up" href="xml.html" title="Schemas">
+<link rel="prev" href="LassoSamlStatementAbstract.html" title="LassoSamlStatementAbstract">
+<link rel="next" href="LassoSamlSubjectConfirmation.html" title="LassoSamlSubjectConfirmation">
+<meta name="generator" content="GTK-Doc V1.4 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
+<link rel="chapter" href="architecture.html" title="Lasso Architecture">
+<link rel="chapter" href="idff.html" title="Identity Federation Framework">
+<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework">
+<link rel="chapter" href="xml.html" title="Schemas">
+<link rel="chapter" href="misc.html" title="Misc">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="LassoSamlStatementAbstract.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="xml.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Lasso Reference Manual</th>
+<td><a accesskey="n" href="LassoSamlSubjectConfirmation.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry" lang="en">
+<a name="LassoSamlSubject"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle">LassoSamlSubject</span></h2>
+<p>LassoSamlSubject &#8212; </p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<h2>Synopsis</h2>
+<pre class="synopsis">
 
 #include &lt;lasso/lasso.h&gt;
 
@@ -6,22 +43,63 @@
             <a href="LassoSamlSubject.html#LassoSamlSubject-struct">LassoSamlSubject</a>;
 <a href="LassoNode.html" title="LassoNode">LassoNode</a>*  <a href="LassoSamlSubject.html#lasso-saml-subject-new">lasso_saml_subject_new</a>          (void);
 
-</pre></div><div class="refsect1" lang="en"><a name="id2588800"></a><h2>Object Hierarchy</h2><pre class="synopsis">
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="id2579658"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
 
   <GTKDOCLINK HREF="GObject">GObject</GTKDOCLINK>
    +----<a href="LassoNode.html" title="LassoNode">LassoNode</a>
          +----LassoSamlSubject
                +----<a href="LassoLibSubject.html" title="LassoLibSubject">LassoLibSubject</a>
-</pre></div><div class="refsect1" lang="en"><a name="id2588834"></a><h2>Description</h2><p>
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="id2579693"></a><h2>Description</h2>
+<p>
 
-</p></div><div class="refsect1" lang="en"><a name="id2588844"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2588849"></a><h3><a name="LassoSamlSubject-struct"></a>LassoSamlSubject</h3><a class="indexterm" name="id2589198"></a><pre class="programlisting">typedef struct {
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="id2579702"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="id2579708"></a><h3>
+<a name="LassoSamlSubject-struct"></a>LassoSamlSubject</h3>
+<a class="indexterm" name="id2579719"></a><pre class="programlisting">typedef struct {
 	LassoSamlNameIdentifier *NameIdentifier;
 	LassoSamlSubjectConfirmation *SubjectConfirmation;
 } LassoSamlSubject;
-</pre><p>
+</pre>
+<p>
 
-</p></div><hr><div class="refsect2" lang="en"><a name="id2589214"></a><h3><a name="lasso-saml-subject-new"></a>lasso_saml_subject_new ()</h3><a class="indexterm" name="id2589224"></a><pre class="programlisting"><a href="LassoNode.html" title="LassoNode">LassoNode</a>*  lasso_saml_subject_new          (void);</pre><p>
-Creates a new <a href="LassoSamlSubject.html" title="LassoSamlSubject"><span class="type">LassoSamlSubject</span></a> object.</p><p>
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2579736"></a><h3>
+<a name="lasso-saml-subject-new"></a>lasso_saml_subject_new ()</h3>
+<a class="indexterm" name="id2579746"></a><pre class="programlisting"><a href="LassoNode.html" title="LassoNode">LassoNode</a>*  lasso_saml_subject_new          (void);</pre>
+<p>
+Creates a new <a href="LassoSamlSubject.html" title="LassoSamlSubject"><span class="type">LassoSamlSubject</span></a> object.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a newly created <a href="LassoSamlSubject.html" title="LassoSamlSubject"><span class="type">LassoSamlSubject</span></a> object
-</td></tr></tbody></table></div></div></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="LassoSamlStatementAbstract.html"><b>&lt;&lt; LassoSamlStatementAbstract</b></a></td><td align="right"><a accesskey="n" href="LassoSamlSubjectConfirmation.html"><b>LassoSamlSubjectConfirmation &gt;&gt;</b></a></td></tr></table></body></html>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> a newly created <a href="LassoSamlSubject.html" title="LassoSamlSubject"><span class="type">LassoSamlSubject</span></a> object
+</td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+</div>
+<table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle">
+<td align="left"><a accesskey="p" href="LassoSamlStatementAbstract.html"><b>&lt;&lt;&#160;LassoSamlStatementAbstract</b></a></td>
+<td align="right"><a accesskey="n" href="LassoSamlSubjectConfirmation.html"><b>LassoSamlSubjectConfirmation&#160;&gt;&gt;</b></a></td>
+</tr></table>
+</body>
+</html>

@@ -102,6 +102,7 @@ public interface lassoConstants {
   public final static int SIGNATURE_METHOD_DSA_SHA1 = lassoJNI.get_SIGNATURE_METHOD_DSA_SHA1();
 
   public final static int ERROR_UNDEFINED = lassoJNI.get_ERROR_UNDEFINED();
+  public final static int ERROR_UNIMPLEMENTED = lassoJNI.get_ERROR_UNIMPLEMENTED();
   public final static int XML_ERROR_NODE_NOT_FOUND = lassoJNI.get_XML_ERROR_NODE_NOT_FOUND();
   public final static int XML_ERROR_NODE_CONTENT_NOT_FOUND = lassoJNI.get_XML_ERROR_NODE_CONTENT_NOT_FOUND();
   public final static int XML_ERROR_ATTR_NOT_FOUND = lassoJNI.get_XML_ERROR_ATTR_NOT_FOUND();
@@ -149,11 +150,12 @@ public interface lassoConstants {
   public final static int LASSO_PARAM_ERROR_CHECK_FAILED = lassoJNI.get_LASSO_PARAM_ERROR_CHECK_FAILED();
   public final static int LOGIN_ERROR_FEDERATION_NOT_FOUND = lassoJNI.get_LOGIN_ERROR_FEDERATION_NOT_FOUND();
   public final static int LOGIN_ERROR_CONSENT_NOT_OBTAINED = lassoJNI.get_LOGIN_ERROR_CONSENT_NOT_OBTAINED();
-  public final static int LASSO_LOGIN_ERROR_INVALID_NAMEIDPOLICY = lassoJNI.get_LASSO_LOGIN_ERROR_INVALID_NAMEIDPOLICY();
-  public final static int LASSO_LOGIN_ERROR_REQUEST_DENIED = lassoJNI.get_LASSO_LOGIN_ERROR_REQUEST_DENIED();
+  public final static int LOGIN_ERROR_INVALID_NAMEIDPOLICY = lassoJNI.get_LOGIN_ERROR_INVALID_NAMEIDPOLICY();
+  public final static int LOGIN_ERROR_REQUEST_DENIED = lassoJNI.get_LOGIN_ERROR_REQUEST_DENIED();
   public final static int LOGIN_ERROR_INVALID_SIGNATURE = lassoJNI.get_LOGIN_ERROR_INVALID_SIGNATURE();
   public final static int LOGIN_ERROR_UNSIGNED_AUTHN_REQUEST = lassoJNI.get_LOGIN_ERROR_UNSIGNED_AUTHN_REQUEST();
   public final static int LOGIN_ERROR_STATUS_NOT_SUCCESS = lassoJNI.get_LOGIN_ERROR_STATUS_NOT_SUCCESS();
+  public final static int LOGIN_ERROR_UNKNOWN_PRINCIPAL = lassoJNI.get_LOGIN_ERROR_UNKNOWN_PRINCIPAL();
   public final static int DEFEDERATION_ERROR_MISSING_NAME_IDENTIFIER = lassoJNI.get_DEFEDERATION_ERROR_MISSING_NAME_IDENTIFIER();
   // CheckVersionMode 
   public final static int CHECK_VERSION_EXACT = lassoJNI.get_CHECK_VERSION_EXACT();

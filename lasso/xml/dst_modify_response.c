@@ -1,4 +1,4 @@
-/* $Id: dst_modify_response.c,v 1.6 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: dst_modify_response.c,v 1.9 2005/09/11 09:08:30 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -74,11 +74,30 @@ get_xmlNode(LassoNode *node, gboolean lasso_dump)
 	xmlNs *ns;
 
 	xmlnode = parent_class->get_xmlNode(node, lasso_dump);
-	ns = xmlNewNs(xmlnode, LASSO_DST_MODIFY_RESPONSE(node)->hrefServiceType,
-			LASSO_DST_MODIFY_RESPONSE(node)->prefixServiceType);
+	ns = xmlNewNs(xmlnode, (xmlChar*)LASSO_DST_MODIFY_RESPONSE(node)->hrefServiceType,
+			(xmlChar*)LASSO_DST_MODIFY_RESPONSE(node)->prefixServiceType);
 	insure_namespace(xmlnode, ns);
 
 	return xmlnode;
+}
+
+static int
+init_from_xml(LassoNode *node, xmlNode *xmlnode)
+{
+	int rc;
+	LassoDstModifyResponse *response = LASSO_DST_MODIFY_RESPONSE(node);
+
+	rc = parent_class->init_from_xml(node, xmlnode);
+	if (rc) return rc;
+
+	response->hrefServiceType = g_strdup((char*)xmlnode->ns->href);
+	response->prefixServiceType = lasso_get_prefix_for_dst_service_href(
+			response->hrefServiceType);
+	if (response->prefixServiceType == NULL) {
+		/* XXX: what to do here ? */
+	}
+
+	return 0;
 }
 
 /*****************************************************************************/
@@ -95,13 +114,14 @@ instance_init(LassoDstModifyResponse *node)
 static void
 class_init(LassoDstModifyResponseClass *klass)
 {
-	LassoNodeClass *nodeClass = LASSO_NODE_CLASS(klass);
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
 
 	parent_class = g_type_class_peek_parent(klass);
-	nodeClass->get_xmlNode = get_xmlNode;
-	nodeClass->node_data = g_new0(LassoNodeClassData, 1);
-	lasso_node_class_set_nodename(nodeClass, "ModifyResponse");
-	lasso_node_class_add_snippets(nodeClass, schema_snippets);
+	nclass->get_xmlNode = get_xmlNode;
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	nclass->init_from_xml = init_from_xml;
+	lasso_node_class_set_nodename(nclass, "ModifyResponse");
+	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
 
 GType

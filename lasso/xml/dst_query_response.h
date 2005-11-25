@@ -1,4 +1,4 @@
-/* $Id: dst_query_response.h,v 1.8 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: dst_query_response.h,v 1.9 2005/08/25 14:23:08 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -60,6 +60,7 @@ struct _LassoDstQueryResponse {
 	char *itemIDRef;
 	char *timeStamp;
 
+	/*< private >*/
 	char *prefixServiceType;
 	char *hrefServiceType;
 };

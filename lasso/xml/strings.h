@@ -1,4 +1,4 @@
-/* $Id: strings.h,v 1.49 2005/05/10 16:47:15 nclapies Exp $ 
+/* $Id: strings.h,v 1.50 2005/09/19 14:12:45 nclapies Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -176,6 +176,9 @@
 
 #define LASSO_SA_HREF "urn:liberty:sa:2004-04"
 #define LASSO_SA_PREFIX "sa"
+
+#define LASSO_SEC_HREF "urn:liberty:sec:2003-08"
+#define LASSO_SEC_PREFIX "sec"
 
 #define LASSO_SA_SASL_SERVICE_NAME "idwsf"
 

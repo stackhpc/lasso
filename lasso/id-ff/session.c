@@ -1,4 +1,4 @@
-/* $Id: session.c,v 1.51 2005/02/04 15:12:25 fpeters Exp $
+/* $Id: session.c,v 1.57 2005/08/14 12:00:16 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -102,6 +102,12 @@ lasso_session_get_assertion(LassoSession *session, gchar *providerID)
 	return g_hash_table_lookup(session->assertions, providerID);
 }
 
+static void
+add_assertion_to_list(gchar *key, LassoLibAssertion *value, GList **list)
+{
+	*list = g_list_append(*list, value);
+}
+
 
 /**
  * lasso_session_get_assertions
@@ -117,9 +123,15 @@ GList*
 lasso_session_get_assertions(LassoSession *session, const char *provider_id)
 {
 	GList *r = NULL;
-	LassoSamlAssertion *assertion = g_hash_table_lookup(session->assertions, provider_id);
-	if (assertion)
-		r = g_list_append(r, g_object_ref(assertion));
+	LassoSamlAssertion *assertion;
+
+	if (provider_id == NULL) {
+		g_hash_table_foreach(session->assertions, (GHFunc)add_assertion_to_list, &r);
+	} else {
+		assertion = g_hash_table_lookup(session->assertions, provider_id);
+		if (assertion)
+			r = g_list_append(r, g_object_ref(assertion));
+	}
 	return r;
 }
 
@@ -168,9 +180,9 @@ lasso_session_get_provider_index(LassoSession *session, gint index)
 	if (length == 0)
 		return NULL;
 
-	if (session->private_data->providerIDs == NULL ||
-			g_list_length(session->private_data->providerIDs) != length)
+	if (session->private_data->providerIDs == NULL) {
 		g_hash_table_foreach(session->assertions, (GHFunc)add_providerID, session);
+	}
 
 	element = g_list_nth(session->private_data->providerIDs, index);
 	if (element == NULL)
@@ -178,6 +190,25 @@ lasso_session_get_provider_index(LassoSession *session, gint index)
 
 	return g_strdup(element->data);
 }
+
+
+/**
+ * lasso_session_init_provider_ids:
+ * @session: a #LassoSession
+ *
+ * Initializes internal assertions providers list, used to iterate in logout
+ * process.
+ **/
+void
+lasso_session_init_provider_ids(LassoSession *session)
+{
+	if (session->private_data->providerIDs) {
+		g_list_free(session->private_data->providerIDs);
+		session->private_data->providerIDs = NULL;
+	}
+	g_hash_table_foreach(session->assertions, (GHFunc)add_providerID, session);
+}
+
 
 /**
  * lasso_session_is_empty:
@@ -250,8 +281,8 @@ static void
 add_assertion_childnode(gchar *key, LassoLibAssertion *value, xmlNode *xmlnode)
 {
 	xmlNode *t;
-	t = xmlNewTextChild(xmlnode, NULL, "Assertion", NULL);
-	xmlSetProp(t, "RemoteProviderID", key);
+	t = xmlNewTextChild(xmlnode, NULL, (xmlChar*)"Assertion", NULL);
+	xmlSetProp(t, (xmlChar*)"RemoteProviderID", (xmlChar*)key);
 	xmlAddChild(t, lasso_node_get_xmlNode(LASSO_NODE(value), TRUE));
 }
 
@@ -259,8 +290,8 @@ static void
 add_status_childnode(gchar *key, LassoSamlpStatus *value, xmlNode *xmlnode)
 {
 	xmlNode *t;
-	t = xmlNewTextChild(xmlnode, NULL, "Status", NULL);
-	xmlSetProp(t, "RemoteProviderID", key);
+	t = xmlNewTextChild(xmlnode, NULL, (xmlChar*)"Status", NULL);
+	xmlSetProp(t, (xmlChar*)"RemoteProviderID", (xmlChar*)key);
 	xmlAddChild(t, lasso_node_get_xmlNode(LASSO_NODE(value), TRUE));
 }
 
@@ -270,9 +301,9 @@ get_xmlNode(LassoNode *node, gboolean lasso_dump)
 	xmlNode *xmlnode;
 	LassoSession *session = LASSO_SESSION(node);
 
-	xmlnode = xmlNewNode(NULL, "Session");
-	xmlSetNs(xmlnode, xmlNewNs(xmlnode, LASSO_LASSO_HREF, NULL));
-	xmlSetProp(xmlnode, "Version", "2");
+	xmlnode = xmlNewNode(NULL, (xmlChar*)"Session");
+	xmlSetNs(xmlnode, xmlNewNs(xmlnode, (xmlChar*)LASSO_LASSO_HREF, NULL));
+	xmlSetProp(xmlnode, (xmlChar*)"Version", (xmlChar*)"2");
 
 	if (g_hash_table_size(session->assertions))
 		g_hash_table_foreach(session->assertions,
@@ -297,7 +328,7 @@ init_from_xml(LassoNode *node, xmlNode *xmlnode)
 			continue;
 		}
 
-		if (strcmp(t->name, "Assertion") == 0) {
+		if (strcmp((char*)t->name, "Assertion") == 0) {
 			n = t->children;
 			while (n && n->type != XML_ELEMENT_NODE) n = n->next;
 			
@@ -305,10 +336,11 @@ init_from_xml(LassoNode *node, xmlNode *xmlnode)
 				LassoLibAssertion *assertion;
 				assertion = LASSO_LIB_ASSERTION(lasso_node_new_from_xmlNode(n));
 				g_hash_table_insert(session->assertions,
-						xmlGetProp(t, "RemoteProviderID"), assertion);
+						xmlGetProp(t, (xmlChar*)"RemoteProviderID"),
+						assertion);
 			}
 		}
-		if (strcmp(t->name, "Status") == 0) {
+		if (strcmp((char*)t->name, "Status") == 0) {
 			n = t->children;
 			while (n && n->type != XML_ELEMENT_NODE) n = n->next;
 			
@@ -316,7 +348,8 @@ init_from_xml(LassoNode *node, xmlNode *xmlnode)
 				LassoSamlpStatus *status;
 				status = LASSO_SAMLP_STATUS(lasso_node_new_from_xmlNode(n));
 				g_hash_table_insert(session->private_data->status,
-						xmlGetProp(t, "RemoteProviderID"), status);
+						xmlGetProp(t, (xmlChar*)"RemoteProviderID"),
+						status);
 			}
 		}
 		t = t->next;
@@ -445,16 +478,23 @@ lasso_session_new_from_dump(const gchar *dump)
 {
 	LassoSession *session;
 	xmlDoc *doc;
+	xmlNode *rootElement;
 
 	if (dump == NULL)
 		return NULL;
 
-	session = lasso_session_new();
 	doc = xmlParseMemory(dump, strlen(dump));
 	if (doc == NULL)
 		return NULL;
 
-	init_from_xml(LASSO_NODE(session), xmlDocGetRootElement(doc));
+	rootElement = xmlDocGetRootElement(doc);
+	if (strcmp((char*)rootElement->name, "Session") != 0) {
+		xmlFreeDoc(doc);
+		return NULL;
+	}
+
+	session = lasso_session_new();
+	init_from_xml(LASSO_NODE(session), rootElement);
 	xmlFreeDoc(doc);
 
 	return session;

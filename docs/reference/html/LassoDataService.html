@@ -1,0 +1,434 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>LassoDataService</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.68.1">
+<link rel="start" href="index.html" title="Lasso Reference Manual">
+<link rel="up" href="idwsf.html" title="Identity Web Services Framework">
+<link rel="prev" href="LassoDiscovery.html" title="LassoDiscovery">
+<link rel="next" href="xml.html" title="Schemas">
+<meta name="generator" content="GTK-Doc V1.4 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
+<link rel="chapter" href="architecture.html" title="Lasso Architecture">
+<link rel="chapter" href="idff.html" title="Identity Federation Framework">
+<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework">
+<link rel="chapter" href="xml.html" title="Schemas">
+<link rel="chapter" href="misc.html" title="Misc">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="LassoDiscovery.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="idwsf.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Lasso Reference Manual</th>
+<td><a accesskey="n" href="xml.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry" lang="en">
+<a name="LassoDataService"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle">LassoDataService</span></h2>
+<p>LassoDataService &#8212; ID-WSF Data Service Profile</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<h2>Synopsis</h2>
+<pre class="synopsis">
+
+#include &lt;lasso/lasso.h&gt;
+
+
+            <a href="LassoDataService.html#LassoDataService-struct">LassoDataService</a>;
+<a href="LassoDataService.html" title="LassoDataService">LassoDataService</a>* <a href="LassoDataService.html#lasso-data-service-new">lasso_data_service_new</a>    (<a href="LassoServer.html" title="LassoServer">LassoServer</a> *server);
+<GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        <a href="LassoDataService.html#lasso-data-service-init-query">lasso_data_service_init_query</a>   (<a href="LassoDataService.html" title="LassoDataService">LassoDataService</a> *service,
+                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *select,
+                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *item_id);
+<GTKDOCLINK HREF="LassoDstQueryItem">LassoDstQueryItem</GTKDOCLINK>* <a href="LassoDataService.html#lasso-data-service-add-query-item">lasso_data_service_add_query_item</a>
+                                            (<a href="LassoDataService.html" title="LassoDataService">LassoDataService</a> *service,
+                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *select,
+                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *item_id);
+<GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        <a href="LassoDataService.html#lasso-data-service-process-query-msg">lasso_data_service_process_query_msg</a>
+                                            (<a href="LassoDataService.html" title="LassoDataService">LassoDataService</a> *service,
+                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *message);
+<GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        <a href="LassoDataService.html#lasso-data-service-build-response-msg">lasso_data_service_build_response_msg</a>
+                                            (<a href="LassoDataService.html" title="LassoDataService">LassoDataService</a> *service);
+<GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        <a href="LassoDataService.html#lasso-data-service-process-query-response-msg">lasso_data_service_process_query_response_msg</a>
+                                            (<a href="LassoDataService.html" title="LassoDataService">LassoDataService</a> *service,
+                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *message);
+<GTKDOCLINK HREF="xmlNode">xmlNode</GTKDOCLINK>*    <a href="LassoDataService.html#lasso-data-service-get-answer">lasso_data_service_get_answer</a>   (<a href="LassoDataService.html" title="LassoDataService">LassoDataService</a> *service,
+                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *select);
+<GTKDOCLINK HREF="xmlNode">xmlNode</GTKDOCLINK>*    <a href="LassoDataService.html#lasso-data-service-get-answer-for-item-id">lasso_data_service_get_answer_for_item_id</a>
+                                            (<a href="LassoDataService.html" title="LassoDataService">LassoDataService</a> *service,
+                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *item_id);
+
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="id2553630"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+
+  <GTKDOCLINK HREF="GObject">GObject</GTKDOCLINK>
+   +----<a href="LassoNode.html" title="LassoNode">LassoNode</a>
+         +----<GTKDOCLINK HREF="LassoWsfProfile">LassoWsfProfile</GTKDOCLINK>
+               +----LassoDataService
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="id2553664"></a><h2>Description</h2>
+<p>
+XXX
+</p>
+<p>
+Following up on <a href="LassoDiscovery.html" title="LassoDiscovery"><span class="type">LassoDiscovery</span></a> first example, it created a <em class="parameter"><code>service</code></em> object,
+this is a <a href="LassoDataService.html" title="LassoDataService"><span class="type">LassoDataService</span></a> instance.  This example continues from that step
+and retrieves the name of the principal:
+</p>
+<div class="informalexample"><pre class="programlisting">
+char *soap_answer;            /* SOAP answer from data service */
+xmlNode *principal_name;      /* libxml2 xmlNode with the principal name */
+
+service = lasso_discovery_get_service(discovery);
+lasso_data_service_init_query(service, "/pp:PP/pp:InformalName", NULL);
+lasso_data_service_build_request_msg(service);
+
+/*
+ * service must perform SOAP call to LASSO_WSF_PROFILE(service)-&gt;msg_url
+ * the SOAP message is LASSO_WSF_PROFILE(service)-&gt;msg_body.  The answer
+ * is stored in char* soap_answer;
+ */
+
+lasso_data_service_process_query_response_msg(service, soap_answer);
+principal_name = lasso_data_service_get_answer(service, "/pp:PP/pp:InformalName");
+
+/*
+ * app should probably then use xmlNodeGetContent libxml2 function to get
+ * access to node content.
+ */
+</pre></div>
+</div>
+<div class="refsect1" lang="en">
+<a name="id2553708"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="id2553714"></a><h3>
+<a name="LassoDataService-struct"></a>LassoDataService</h3>
+<a class="indexterm" name="id2553739"></a><pre class="programlisting">typedef struct {
+	LassoDiscoResourceID *resource_id;
+	LassoDiscoEncryptedResourceID *encrypted_resource_id;
+	xmlNode *resource_data;
+	
+	gchar *provider_id;
+	gchar *abstract_description;
+} LassoDataService;
+</pre>
+<p>
+
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2553758"></a><h3>
+<a name="lasso-data-service-new"></a>lasso_data_service_new ()</h3>
+<a class="indexterm" name="id2553768"></a><pre class="programlisting"><a href="LassoDataService.html" title="LassoDataService">LassoDataService</a>* lasso_data_service_new    (<a href="LassoServer.html" title="LassoServer">LassoServer</a> *server);</pre>
+<p>
+Creates a new <a href="LassoDataService.html" title="LassoDataService"><span class="type">LassoDataService</span></a>.</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>server</code></em>&#160;:</span></td>
+<td> the <a href="LassoServer.html" title="LassoServer"><span class="type">LassoServer</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> a newly created <a href="LassoDataService.html" title="LassoDataService"><span class="type">LassoDataService</span></a> object; or NULL if an
+     error occured.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2553853"></a><h3>
+<a name="lasso-data-service-init-query"></a>lasso_data_service_init_query ()</h3>
+<a class="indexterm" name="id2553865"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_data_service_init_query   (<a href="LassoDataService.html" title="LassoDataService">LassoDataService</a> *service,
+                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *select,
+                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *item_id);</pre>
+<p>
+Initializes a new dst:Query request, asking for element <em class="parameter"><code>select</code></em> (with
+optional itemID set to <em class="parameter"><code>item_id</code></em>).  <em class="parameter"><code>item_id</code></em> may be NULL only if the query
+won't contain other query items.
+</p>
+<p>
+If both <em class="parameter"><code>select</code></em> and <em class="parameter"><code>item_id</code></em> are NULL, only a skeleton request is created
+and calls to <a href="LassoDataService.html#lasso-data-service-add-query-item"><code class="function">lasso_data_service_add_query_item()</code></a> will need to be done.</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>service</code></em>&#160;:</span></td>
+<td> a <a href="LassoDataService.html" title="LassoDataService"><span class="type">LassoDataService</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>select</code></em>&#160;:</span></td>
+<td> resource selection string (typically a XPath query)
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>item_id</code></em>&#160;:</span></td>
+<td> query item identifier (optional)
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2554026"></a><h3>
+<a name="lasso-data-service-add-query-item"></a>lasso_data_service_add_query_item ()</h3>
+<a class="indexterm" name="id2554039"></a><pre class="programlisting"><GTKDOCLINK HREF="LassoDstQueryItem">LassoDstQueryItem</GTKDOCLINK>* lasso_data_service_add_query_item
+                                            (<a href="LassoDataService.html" title="LassoDataService">LassoDataService</a> *service,
+                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *select,
+                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *item_id);</pre>
+<p>
+Adds a dst:QueryItem to the current dst:Query request.</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>service</code></em>&#160;:</span></td>
+<td> a <a href="LassoDataService.html" title="LassoDataService"><span class="type">LassoDataService</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>select</code></em>&#160;:</span></td>
+<td> resource selection string (typically a XPath query)
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>item_id</code></em>&#160;:</span></td>
+<td> query item identifier
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> a newly created <GTKDOCLINK HREF="LassoDstQueryItem"><span class="type">LassoDstQueryItem</span></GTKDOCLINK> with the query item that
+      has been created.  Note that it is internally allocated and shouldn't
+      be freed by the caller.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2554163"></a><h3>
+<a name="lasso-data-service-process-query-msg"></a>lasso_data_service_process_query_msg ()</h3>
+<a class="indexterm" name="id2554175"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_data_service_process_query_msg
+                                            (<a href="LassoDataService.html" title="LassoDataService">LassoDataService</a> *service,
+                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *message);</pre>
+<p>
+Processes a dst:Query message.  Rebuilds a request object from the message
+and extracts ResourceID.</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>service</code></em>&#160;:</span></td>
+<td> a <a href="LassoDataService.html" title="LassoDataService"><span class="type">LassoDataService</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>message</code></em>&#160;:</span></td>
+<td> the dst query message
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2554268"></a><h3>
+<a name="lasso-data-service-build-response-msg"></a>lasso_data_service_build_response_msg ()</h3>
+<a class="indexterm" name="id2554280"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_data_service_build_response_msg
+                                            (<a href="LassoDataService.html" title="LassoDataService">LassoDataService</a> *service);</pre>
+<p>
+Builds a dst:QueryResponse message.</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>service</code></em>&#160;:</span></td>
+<td> a <a href="LassoDataService.html" title="LassoDataService"><span class="type">LassoDataService</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2554351"></a><h3>
+<a name="lasso-data-service-process-query-response-msg"></a>lasso_data_service_process_query_response_msg ()</h3>
+<a class="indexterm" name="id2554362"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_data_service_process_query_response_msg
+                                            (<a href="LassoDataService.html" title="LassoDataService">LassoDataService</a> *service,
+                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *message);</pre>
+<p>
+Processes a dst:Query message.  Rebuilds a request object from the message
+and extracts ResourcedID.</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>service</code></em>&#160;:</span></td>
+<td> a <a href="LassoDataService.html" title="LassoDataService"><span class="type">LassoDataService</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>message</code></em>&#160;:</span></td>
+<td> the dst query response message
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2554456"></a><h3>
+<a name="lasso-data-service-get-answer"></a>lasso_data_service_get_answer ()</h3>
+<a class="indexterm" name="id2554468"></a><pre class="programlisting"><GTKDOCLINK HREF="xmlNode">xmlNode</GTKDOCLINK>*    lasso_data_service_get_answer   (<a href="LassoDataService.html" title="LassoDataService">LassoDataService</a> *service,
+                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *select);</pre>
+<p>
+Returns the answer for the specified <em class="parameter"><code>select</code></em> request.</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>service</code></em>&#160;:</span></td>
+<td> a <a href="LassoDataService.html" title="LassoDataService"><span class="type">LassoDataService</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>select</code></em>&#160;:</span></td>
+<td> resource selection string (typically a XPath query)
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> the node (libxml2 xmlNode*); or NULL if it was not found.
+     This xmlnode must be freed by caller.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2554567"></a><h3>
+<a name="lasso-data-service-get-answer-for-item-id"></a>lasso_data_service_get_answer_for_item_id ()</h3>
+<a class="indexterm" name="id2554579"></a><pre class="programlisting"><GTKDOCLINK HREF="xmlNode">xmlNode</GTKDOCLINK>*    lasso_data_service_get_answer_for_item_id
+                                            (<a href="LassoDataService.html" title="LassoDataService">LassoDataService</a> *service,
+                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *item_id);</pre>
+<p>
+Returns the answer for the specified <em class="parameter"><code>item_id</code></em> query item.</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>service</code></em>&#160;:</span></td>
+<td> a <a href="LassoDataService.html" title="LassoDataService"><span class="type">LassoDataService</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>item_id</code></em>&#160;:</span></td>
+<td> query item identifier
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> the node (libxml2 xmlNode*); or NULL if it was not found.
+     This xmlnode must be freed by caller.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle">
+<td align="left"><a accesskey="p" href="LassoDiscovery.html"><b>&lt;&lt;&#160;LassoDiscovery</b></a></td>
+<td align="right"><a accesskey="n" href="xml.html"><b>Schemas&#160;&gt;&gt;</b></a></td>
+</tr></table>
+</body>
+</html>

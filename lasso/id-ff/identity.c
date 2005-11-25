@@ -1,4 +1,4 @@
-/* $Id: identity.c,v 1.46 2005/02/04 15:12:25 fpeters Exp $
+/* $Id: identity.c,v 1.55 2005/09/16 13:30:34 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -22,11 +22,14 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <lasso/lasso_config.h>
 #include <lasso/id-ff/identity.h>
+#include <lasso/id-wsf/identity.h>
 #include <lasso/id-ff/identityprivate.h>
 
 struct _LassoIdentityPrivate
 {
+	GList *resource_offerings;
 	gboolean dispose_has_run;
 };
 
@@ -108,6 +111,109 @@ lasso_identity_destroy(LassoIdentity *identity)
 	lasso_node_destroy(LASSO_NODE(identity));
 }
 
+#ifdef LASSO_WSF_ENABLED
+gint
+lasso_identity_add_resource_offering(LassoIdentity *identity,
+		LassoDiscoResourceOffering *offering)
+{
+	/* XXX: add proper entry id to offering */
+	int entry_id = 1;
+	char entry_id_s[20];
+	GList *iter;
+	LassoDiscoResourceOffering *t;
+	
+	g_snprintf(entry_id_s, 18, "%d", entry_id);
+	iter = identity->private_data->resource_offerings;
+	while (iter) {
+		t = iter->data;
+		iter = g_list_next(iter);
+		if (strcmp(t->entryID, entry_id_s) == 0) {
+			entry_id++;
+			g_snprintf(entry_id_s, 18, "%d", entry_id);
+			iter = identity->private_data->resource_offerings; /* rewind */
+		}
+	}
+		
+	offering->entryID = g_strdup(entry_id_s);
+	identity->private_data->resource_offerings = g_list_append(
+			identity->private_data->resource_offerings, g_object_ref(offering));
+	identity->is_dirty = TRUE;
+
+	return 0;
+}
+
+/**
+ * lasso_identity_remove_resource_offering:
+ * @identity: a #LassoIdentity
+ * @entryID: the resource offering entry ID
+ *
+ * Remove resource offering about identity with @entryID
+ *
+ * Return value: TRUE on success; FALSE if the offering was not found.
+ **/
+gboolean
+lasso_identity_remove_resource_offering(LassoIdentity *identity, const char *entryID)
+{
+	GList *iter;
+	LassoDiscoResourceOffering *t;
+	
+	iter = identity->private_data->resource_offerings;
+	while (iter) {
+		t = iter->data;
+		iter = g_list_next(iter);
+		if (strcmp(t->entryID, entryID) == 0) {
+			identity->private_data->resource_offerings = g_list_remove(
+					identity->private_data->resource_offerings, t);
+			lasso_node_destroy(LASSO_NODE(t));
+			identity->is_dirty = TRUE;
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
+
+
+GList*
+lasso_identity_get_offerings(LassoIdentity *identity, const char *service_type)
+{
+	GList *iter;
+	LassoDiscoResourceOffering *t;
+	GList *result = NULL;
+	
+	iter = identity->private_data->resource_offerings;
+	while (iter) {
+		t = iter->data;
+		iter = g_list_next(iter);
+		if (service_type == NULL || strcmp(
+					t->ServiceInstance->ServiceType, service_type) == 0) {
+			result = g_list_append(result, g_object_ref(t));
+		}
+	}
+
+	return result;
+}
+
+LassoDiscoResourceOffering* lasso_identity_get_resource_offering(
+		LassoIdentity *identity, const char *entryID)
+{
+	GList *iter;
+	LassoDiscoResourceOffering *t;
+
+	iter = identity->private_data->resource_offerings;
+	while (iter) {
+		t = iter->data;
+		iter = g_list_next(iter);
+		if (strcmp(t->entryID, entryID) == 0) {
+			return t;
+		}
+	}
+
+	return NULL;
+}
+
+#endif
+
+
 /*****************************************************************************/
 /* private methods                                                           */
 /*****************************************************************************/
@@ -120,19 +226,32 @@ add_federation_childnode(gchar *key, LassoFederation *value, xmlNode *xmlnode)
 	xmlAddChild(xmlnode, lasso_node_get_xmlNode(LASSO_NODE(value), TRUE));
 }
 
+#ifdef LASSO_WSF_ENABLED
+static void
+add_resource_offering_childnode(LassoNode *value, xmlNode *xmlnode)
+{
+	xmlAddChild(xmlnode, lasso_node_get_xmlNode(LASSO_NODE(value), TRUE));
+}
+
+#endif
+
 static xmlNode*
 get_xmlNode(LassoNode *node, gboolean lasso_dump)
 {
 	xmlNode *xmlnode;
 	LassoIdentity *identity = LASSO_IDENTITY(node);
 
-	xmlnode = xmlNewNode(NULL, "Identity");
-	xmlSetNs(xmlnode, xmlNewNs(xmlnode, LASSO_LASSO_HREF, NULL));
-	xmlSetProp(xmlnode, "Version", "2");
+	xmlnode = xmlNewNode(NULL, (xmlChar*)"Identity");
+	xmlSetNs(xmlnode, xmlNewNs(xmlnode, (xmlChar*)LASSO_LASSO_HREF, NULL));
+	xmlSetProp(xmlnode, (xmlChar*)"Version", (xmlChar*)"2");
 
 	if (g_hash_table_size(identity->federations))
 		g_hash_table_foreach(identity->federations,
 				(GHFunc)add_federation_childnode, xmlnode);
+#ifdef LASSO_WSF_ENABLED
+	g_list_foreach(identity->private_data->resource_offerings,
+			(GFunc)add_resource_offering_childnode, xmlnode);
+#endif
 
 	return xmlnode;
 }
@@ -150,13 +269,22 @@ init_from_xml(LassoNode *node, xmlNode *xmlnode)
 			continue;
 		}
 
-		if (strcmp(t->name, "Federation") == 0) {
+		if (strcmp((char*)t->name, "Federation") == 0) {
 			LassoFederation *federation;
 			federation = LASSO_FEDERATION(lasso_node_new_from_xmlNode(t));
 			g_hash_table_insert(
 					identity->federations,
 					g_strdup(federation->remote_providerID), federation);
 		}
+
+#ifdef LASSO_WSF_ENABLED
+		if (strcmp((char*)t->name, "ResourceOffering") == 0) {
+			LassoDiscoResourceOffering *offering;
+			offering = LASSO_DISCO_RESOURCE_OFFERING(lasso_node_new_from_xmlNode(t));
+			identity->private_data->resource_offerings = g_list_append(
+					identity->private_data->resource_offerings, offering);
+		}
+#endif
 
 		t = t->next;
 	}
@@ -201,7 +329,7 @@ finalize(GObject *object)
 static void
 instance_init(LassoIdentity *identity)
 {
-	identity->private_data = g_new(LassoIdentityPrivate, 1);
+	identity->private_data = g_new0(LassoIdentityPrivate, 1);
 	identity->private_data->dispose_has_run = FALSE;
 
 	identity->federations = g_hash_table_new_full(g_str_hash, g_str_equal,
@@ -272,16 +400,22 @@ lasso_identity_new_from_dump(const gchar *dump)
 {
 	LassoIdentity *identity;
 	xmlDoc *doc;
+	xmlNode *rootElement;
 
 	if (dump == NULL)
 		return NULL;
 
-	identity = lasso_identity_new();
 	doc = xmlParseMemory(dump, strlen(dump));
 	if (doc == NULL)
 		return NULL;
 
-	init_from_xml(LASSO_NODE(identity), xmlDocGetRootElement(doc));
+	rootElement = xmlDocGetRootElement(doc);
+	if (strcmp((char*)rootElement->name, "Identity") != 0) {
+		xmlFreeDoc(doc);
+		return NULL;
+	}
+	identity = lasso_identity_new();
+	init_from_xml(LASSO_NODE(identity), rootElement);
 	xmlFreeDoc(doc);
 
 	return identity;

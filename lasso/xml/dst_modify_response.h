@@ -1,4 +1,4 @@
-/* $Id: dst_modify_response.h,v 1.5 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: dst_modify_response.h,v 1.6 2005/08/25 14:23:08 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -58,6 +58,7 @@ struct _LassoDstModifyResponse {
 	char *itemIDRef;
 	char *timeStamp;
 
+	/*< private >*/
 	char *prefixServiceType;
 	char *hrefServiceType;
 };

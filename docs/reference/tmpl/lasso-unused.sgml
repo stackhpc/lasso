@@ -1,3 +1,27 @@
+<!-- ##### SECTION ../tmpl//profile_service.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ../tmpl//profile_service.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ../tmpl//profile_service.sgml:Short_Description ##### -->
+ID-WSF Data Services Template Profile
+
+
+<!-- ##### SECTION ../tmpl//profile_service.sgml:Stability_Level ##### -->
+
+
+
+<!-- ##### SECTION ../tmpl//profile_service.sgml:Title ##### -->
+LassoProfileService
+
+
 <!-- ##### ENUM LassoMessageType ##### -->
 <para>
 
@@ -9,6 +33,16 @@
 @LASSO_MESSAGE_TYPE_REQUEST: 
 @LASSO_MESSAGE_TYPE_RESPONSE: 
 @LASSO_MESSAGE_TYPE_ARTIFACT: 
+
+<!-- ##### STRUCT LassoProfileService ##### -->
+<para>
+
+</para>
+
+@parent: 
+@resource_id: 
+@encrypted_resource_id: 
+@resource_data: 
 
 <!-- ##### ENUM lassoCheckVersionMode ##### -->
 <para>
@@ -156,6 +190,69 @@
 @node: 
 @public_key_file: 
 @ca_cert_chain_file: 
+@Returns: 
+
+<!-- ##### FUNCTION lasso_profile_service_add_query_item ##### -->
+<para>
+
+</para>
+
+@service: 
+@select: 
+@item_id: 
+@Returns: 
+
+<!-- ##### FUNCTION lasso_profile_service_build_response_msg ##### -->
+<para>
+
+</para>
+
+@service: 
+@Returns: 
+
+<!-- ##### FUNCTION lasso_profile_service_get_answer ##### -->
+<para>
+
+</para>
+
+@service: 
+@select: 
+@Returns: 
+
+<!-- ##### FUNCTION lasso_profile_service_init_query ##### -->
+<para>
+
+</para>
+
+@service: 
+@select: 
+@item_id: 
+@Returns: 
+
+<!-- ##### FUNCTION lasso_profile_service_new ##### -->
+<para>
+
+</para>
+
+@server: 
+@Returns: 
+
+<!-- ##### FUNCTION lasso_profile_service_process_query_msg ##### -->
+<para>
+
+</para>
+
+@service: 
+@message: 
+@Returns: 
+
+<!-- ##### FUNCTION lasso_profile_service_process_query_response_msg ##### -->
+<para>
+
+</para>
+
+@service: 
+@message: 
 @Returns: 
 
 <!-- ##### FUNCTION lasso_profile_set_response_status ##### -->

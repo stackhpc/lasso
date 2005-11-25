@@ -320,7 +320,7 @@ EXTRA_DIST = extract_types.py extract_symbols.py
 # Just make damn sure the ABI stays the same between
 # upgrades.
 # Obviously if you don't, fixing the situation up again can be painful. 
-@MINGW_FALSE@liblasso_la_LDFLAGS = -no-undefined -version-info @LASSO_VERSION_INFO@ \
+@MINGW_FALSE@liblasso_la_LDFLAGS = -no-undefined -version-info @LASSO_VERSION_INFO@  \
 @MINGW_FALSE@	-export-symbols symbols.sym
 
 # Just make damn sure the ABI stays the same between

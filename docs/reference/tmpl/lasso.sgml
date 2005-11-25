@@ -14,6 +14,9 @@ Initialization functions
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### FUNCTION lasso_init ##### -->
 <para>
 
@@ -50,4 +53,13 @@ Initialization functions
 @LASSO_CHECK_VERSION_EXACT: 
 @LASSO_CHECK_VERSIONABI_COMPATIBLE: 
 @LASSO_CHECK_VERSION_NUMERIC: 
+
+<!-- ##### FUNCTION lasso_register_dst_service ##### -->
+<para>
+
+</para>
+
+@prefix: 
+@href: 
+
 

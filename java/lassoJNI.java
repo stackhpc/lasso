@@ -93,6 +93,7 @@ class lassoJNI {
   public final static native int get_SIGNATURE_METHOD_RSA_SHA1();
   public final static native int get_SIGNATURE_METHOD_DSA_SHA1();
   public final static native int get_ERROR_UNDEFINED();
+  public final static native int get_ERROR_UNIMPLEMENTED();
   public final static native int get_XML_ERROR_NODE_NOT_FOUND();
   public final static native int get_XML_ERROR_NODE_CONTENT_NOT_FOUND();
   public final static native int get_XML_ERROR_ATTR_NOT_FOUND();
@@ -140,11 +141,12 @@ class lassoJNI {
   public final static native int get_LASSO_PARAM_ERROR_CHECK_FAILED();
   public final static native int get_LOGIN_ERROR_FEDERATION_NOT_FOUND();
   public final static native int get_LOGIN_ERROR_CONSENT_NOT_OBTAINED();
-  public final static native int get_LASSO_LOGIN_ERROR_INVALID_NAMEIDPOLICY();
-  public final static native int get_LASSO_LOGIN_ERROR_REQUEST_DENIED();
+  public final static native int get_LOGIN_ERROR_INVALID_NAMEIDPOLICY();
+  public final static native int get_LOGIN_ERROR_REQUEST_DENIED();
   public final static native int get_LOGIN_ERROR_INVALID_SIGNATURE();
   public final static native int get_LOGIN_ERROR_UNSIGNED_AUTHN_REQUEST();
   public final static native int get_LOGIN_ERROR_STATUS_NOT_SUCCESS();
+  public final static native int get_LOGIN_ERROR_UNKNOWN_PRINCIPAL();
   public final static native int get_DEFEDERATION_ERROR_MISSING_NAME_IDENTIFIER();
   public final static native int init();
   public final static native int shutdown();
@@ -152,6 +154,7 @@ class lassoJNI {
   public final static native int get_CHECK_VERSIONABI_COMPATIBLE();
   public final static native int get_CHECK_VERSION_NUMERIC();
   public final static native int checkVersion(int jarg1, int jarg2, int jarg3, int jarg4);
+  public final static native void registerDstService(String jarg1, String jarg2);
 
   static {
     try {
@@ -706,6 +709,8 @@ class lassoJNI {
   public final static native String get_Server_providerId(long jarg1);
   public final static native void set_Server_publicKey(long jarg1, String jarg2);
   public final static native String get_Server_publicKey(long jarg1);
+  public final static native void set_Server_role(long jarg1, int jarg2);
+  public final static native int get_Server_role(long jarg1);
   public final static native long get_Server_providerIds(long jarg1);
   public final static native long new_Server(String jarg1, String jarg2, String jarg3, String jarg4);
   public final static native void delete_Server(long jarg1);

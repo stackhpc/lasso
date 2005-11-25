@@ -1,4 +1,41 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>LassoProvider</title><meta name="generator" content="DocBook XSL Stylesheets V1.68.1"><link rel="start" href="index.html" title="Lasso Reference Manual"><link rel="up" href="architecture.html" title="Lasso Architecture"><link rel="prev" href="architecture.html" title="Lasso Architecture"><link rel="next" href="LassoServer.html" title="LassoServer"><meta name="generator" content="GTK-Doc V1.3 (XML mode)"><link rel="stylesheet" href="style.css" type="text/css"><link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview"><link rel="chapter" href="architecture.html" title="Lasso Architecture"><link rel="chapter" href="idff.html" title="Identity Federation Framework"><link rel="chapter" href="idwsf.html" title="Identity Web Services Framework"><link rel="chapter" href="xml.html" title="Schemas"><link rel="chapter" href="misc.html" title="Misc"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="architecture.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="architecture.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">Lasso Reference Manual</th><td><a accesskey="n" href="LassoServer.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="LassoProvider"></a><div class="titlepage"></div><div class="refnamediv"><table width="100%"><tr><td valign="top"><h2><span class="refentrytitle">LassoProvider</span></h2><p>LassoProvider &#8212; Service or identity provider</p></td><td valign="top" align="right"></td></tr></table></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>LassoProvider</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.68.1">
+<link rel="start" href="index.html" title="Lasso Reference Manual">
+<link rel="up" href="architecture.html" title="Lasso Architecture">
+<link rel="prev" href="architecture.html" title="Lasso Architecture">
+<link rel="next" href="LassoServer.html" title="LassoServer">
+<meta name="generator" content="GTK-Doc V1.4 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
+<link rel="chapter" href="architecture.html" title="Lasso Architecture">
+<link rel="chapter" href="idff.html" title="Identity Federation Framework">
+<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework">
+<link rel="chapter" href="xml.html" title="Schemas">
+<link rel="chapter" href="misc.html" title="Misc">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="architecture.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="architecture.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Lasso Reference Manual</th>
+<td><a accesskey="n" href="LassoServer.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry" lang="en">
+<a name="LassoProvider"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle">LassoProvider</span></h2>
+<p>LassoProvider &#8212; Service or identity provider</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<h2>Synopsis</h2>
+<pre class="synopsis">
 
 #include &lt;lasso/lasso.h&gt;
 
@@ -38,15 +75,30 @@ enum        <a href="LassoProvider.html#LassoMdProtocolType">LassoMdProtocolType
                                              const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *protocol_profile);
 <GTKDOCLINK HREF="xmlNode">xmlNode</GTKDOCLINK>*    <a href="LassoProvider.html#lasso-provider-get-organization">lasso_provider_get_organization</a> (<a href="LassoProvider.html" title="LassoProvider">LassoProvider</a> *provider);
 
-</pre></div><div class="refsect1" lang="en"><a name="id2530905"></a><h2>Object Hierarchy</h2><pre class="synopsis">
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="id2515628"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
 
   <GTKDOCLINK HREF="GObject">GObject</GTKDOCLINK>
    +----<a href="LassoNode.html" title="LassoNode">LassoNode</a>
          +----LassoProvider
                +----<a href="LassoServer.html" title="LassoServer">LassoServer</a>
-</pre></div><div class="refsect1" lang="en"><a name="id2530941"></a><h2>Description</h2><p>
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="id2515664"></a><h2>Description</h2>
+<p>
 It holds all the data about a provider.
-</p></div><div class="refsect1" lang="en"><a name="id2530952"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2530957"></a><h3><a name="LassoProvider-struct"></a>LassoProvider</h3><a class="indexterm" name="id2530969"></a><pre class="programlisting">typedef struct {
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="id2515674"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="id2515680"></a><h3>
+<a name="LassoProvider-struct"></a>LassoProvider</h3>
+<a class="indexterm" name="id2515691"></a><pre class="programlisting">typedef struct {
 	gchar *ProviderID;
 	LassoProviderRole role;
 
@@ -54,20 +106,55 @@ It holds all the data about a provider.
 	gchar *public_key;
 	gchar *ca_cert_chain;
 } LassoProvider;
-</pre><p>
+</pre>
+<p>
 
-</p></div><hr><div class="refsect2" lang="en"><a name="id2530986"></a><h3><a name="LassoProviderRole"></a>enum LassoProviderRole</h3><a class="indexterm" name="id2530997"></a><pre class="programlisting">typedef enum {
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2515708"></a><h3>
+<a name="LassoProviderRole"></a>enum LassoProviderRole</h3>
+<a class="indexterm" name="id2515718"></a><pre class="programlisting">typedef enum {
 	LASSO_PROVIDER_ROLE_NONE = 0,
 	LASSO_PROVIDER_ROLE_SP,
 	LASSO_PROVIDER_ROLE_IDP
 } LassoProviderRole;
-</pre><p>
-Provider Role.</p><p>
+</pre>
+<p>
+Provider Role.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><code class="literal">LASSO_PROVIDER_ROLE_NONE</code></span></td><td>
-</td></tr><tr><td><span class="term"><code class="literal">LASSO_PROVIDER_ROLE_SP</code></span></td><td> service provider
-</td></tr><tr><td><span class="term"><code class="literal">LASSO_PROVIDER_ROLE_IDP</code></span></td><td> identity provider
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2531066"></a><h3><a name="LassoHttpMethod"></a>enum LassoHttpMethod</h3><a class="indexterm" name="id2531077"></a><pre class="programlisting">typedef enum {
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><code class="literal">LASSO_PROVIDER_ROLE_NONE</code></span></td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><code class="literal">LASSO_PROVIDER_ROLE_SP</code></span></td>
+<td> service provider
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><code class="literal">LASSO_PROVIDER_ROLE_IDP</code></span></td>
+<td> identity provider
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2515787"></a><h3>
+<a name="LassoHttpMethod"></a>enum LassoHttpMethod</h3>
+<a class="indexterm" name="id2515798"></a><pre class="programlisting">typedef enum {
 	LASSO_HTTP_METHOD_NONE = -1,
 	LASSO_HTTP_METHOD_ANY,
 	LASSO_HTTP_METHOD_IDP_INITIATED,
@@ -76,122 +163,511 @@ Provider Role.</p><p>
 	LASSO_HTTP_METHOD_REDIRECT,
 	LASSO_HTTP_METHOD_SOAP
 } LassoHttpMethod;
-</pre><p>
-Method.</p><p>
+</pre>
+<p>
+Method.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><code class="literal">LASSO_HTTP_METHOD_NONE</code></span></td><td>
-</td></tr><tr><td><span class="term"><code class="literal">LASSO_HTTP_METHOD_ANY</code></span></td><td> any method will do
-</td></tr><tr><td><span class="term"><code class="literal">LASSO_HTTP_METHOD_IDP_INITIATED</code></span></td><td> not a method, for IdP initiated profile
-</td></tr><tr><td><span class="term"><code class="literal">LASSO_HTTP_METHOD_GET</code></span></td><td> HTTP GET
-</td></tr><tr><td><span class="term"><code class="literal">LASSO_HTTP_METHOD_POST</code></span></td><td> Browser POST
-</td></tr><tr><td><span class="term"><code class="literal">LASSO_HTTP_METHOD_REDIRECT</code></span></td><td> HTTP-Redirect based
-</td></tr><tr><td><span class="term"><code class="literal">LASSO_HTTP_METHOD_SOAP</code></span></td><td> SOAP/HTTP based
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2531207"></a><h3><a name="LassoMdProtocolType"></a>enum LassoMdProtocolType</h3><a class="indexterm" name="id2531218"></a><pre class="programlisting">typedef enum {
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><code class="literal">LASSO_HTTP_METHOD_NONE</code></span></td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><code class="literal">LASSO_HTTP_METHOD_ANY</code></span></td>
+<td> any method will do
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><code class="literal">LASSO_HTTP_METHOD_IDP_INITIATED</code></span></td>
+<td> not a method, for IdP initiated profile
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><code class="literal">LASSO_HTTP_METHOD_GET</code></span></td>
+<td> HTTP GET
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><code class="literal">LASSO_HTTP_METHOD_POST</code></span></td>
+<td> Browser POST
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><code class="literal">LASSO_HTTP_METHOD_REDIRECT</code></span></td>
+<td> HTTP-Redirect based
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><code class="literal">LASSO_HTTP_METHOD_SOAP</code></span></td>
+<td> SOAP/HTTP based
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2515929"></a><h3>
+<a name="LassoMdProtocolType"></a>enum LassoMdProtocolType</h3>
+<a class="indexterm" name="id2515939"></a><pre class="programlisting">typedef enum {
 	LASSO_MD_PROTOCOL_TYPE_FEDERATION_TERMINATION = 0,
 	LASSO_MD_PROTOCOL_TYPE_NAME_IDENTIFIER_MAPPING,
 	LASSO_MD_PROTOCOL_TYPE_REGISTER_NAME_IDENTIFIER,
 	LASSO_MD_PROTOCOL_TYPE_SINGLE_LOGOUT,
 	LASSO_MD_PROTOCOL_TYPE_SINGLE_SIGN_ON
 } LassoMdProtocolType;
-</pre><p>
-Liberty Metadata Type.</p><p>
+</pre>
+<p>
+Liberty Metadata Type.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><code class="literal">LASSO_MD_PROTOCOL_TYPE_FEDERATION_TERMINATION</code></span></td><td> Federation Termination Notification
-</td></tr><tr><td><span class="term"><code class="literal">LASSO_MD_PROTOCOL_TYPE_NAME_IDENTIFIER_MAPPING</code></span></td><td> Name Identifier Mapping
-</td></tr><tr><td><span class="term"><code class="literal">LASSO_MD_PROTOCOL_TYPE_REGISTER_NAME_IDENTIFIER</code></span></td><td> Name Registration
-</td></tr><tr><td><span class="term"><code class="literal">LASSO_MD_PROTOCOL_TYPE_SINGLE_LOGOUT</code></span></td><td> Single Logout
-</td></tr><tr><td><span class="term"><code class="literal">LASSO_MD_PROTOCOL_TYPE_SINGLE_SIGN_ON</code></span></td><td> Single Sign-On and Federation
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2531323"></a><h3><a name="lasso-provider-new"></a>lasso_provider_new ()</h3><a class="indexterm" name="id2531334"></a><pre class="programlisting"><a href="LassoProvider.html" title="LassoProvider">LassoProvider</a>* lasso_provider_new           (<a href="LassoProvider.html#LassoProviderRole">LassoProviderRole</a> role,
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><code class="literal">LASSO_MD_PROTOCOL_TYPE_FEDERATION_TERMINATION</code></span></td>
+<td> Federation Termination Notification
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><code class="literal">LASSO_MD_PROTOCOL_TYPE_NAME_IDENTIFIER_MAPPING</code></span></td>
+<td> Name Identifier Mapping
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><code class="literal">LASSO_MD_PROTOCOL_TYPE_REGISTER_NAME_IDENTIFIER</code></span></td>
+<td> Name Registration
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><code class="literal">LASSO_MD_PROTOCOL_TYPE_SINGLE_LOGOUT</code></span></td>
+<td> Single Logout
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><code class="literal">LASSO_MD_PROTOCOL_TYPE_SINGLE_SIGN_ON</code></span></td>
+<td> Single Sign-On and Federation
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2516044"></a><h3>
+<a name="lasso-provider-new"></a>lasso_provider_new ()</h3>
+<a class="indexterm" name="id2516054"></a><pre class="programlisting"><a href="LassoProvider.html" title="LassoProvider">LassoProvider</a>* lasso_provider_new           (<a href="LassoProvider.html#LassoProviderRole">LassoProviderRole</a> role,
                                              const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *metadata,
                                              const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *public_key,
-                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *ca_cert_chain);</pre><p>
-Creates a new <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a>.</p><p>
+                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *ca_cert_chain);</pre>
+<p>
+Creates a new <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a>.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>role</code></em> :</span></td><td> provider role, identity provider or service provider
-</td></tr><tr><td><span class="term"><em class="parameter"><code>metadata</code></em> :</span></td><td> path to the provider metadata file
-</td></tr><tr><td><span class="term"><em class="parameter"><code>public_key</code></em> :</span></td><td> path to the provider public key file (may be a certificate) or NULL
-</td></tr><tr><td><span class="term"><em class="parameter"><code>ca_cert_chain</code></em> :</span></td><td> path to the provider CA certificate chain file or NULL
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a newly created <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a>; or NULL if an error occured
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2531482"></a><h3><a name="lasso-provider-new-from-dump"></a>lasso_provider_new_from_dump ()</h3><a class="indexterm" name="id2531494"></a><pre class="programlisting"><a href="LassoProvider.html" title="LassoProvider">LassoProvider</a>* lasso_provider_new_from_dump (const <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *dump);</pre><p>
-Restores the <em class="parameter"><code>dump</code></em> to a new <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a>.</p><p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>role</code></em>&#160;:</span></td>
+<td> provider role, identity provider or service provider
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>metadata</code></em>&#160;:</span></td>
+<td> path to the provider metadata file
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>public_key</code></em>&#160;:</span></td>
+<td> path to the provider public key file (may be a certificate) or NULL
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>ca_cert_chain</code></em>&#160;:</span></td>
+<td> path to the provider CA certificate chain file or NULL
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> a newly created <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a>; or NULL if an error occured
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2516204"></a><h3>
+<a name="lasso-provider-new-from-dump"></a>lasso_provider_new_from_dump ()</h3>
+<a class="indexterm" name="id2516214"></a><pre class="programlisting"><a href="LassoProvider.html" title="LassoProvider">LassoProvider</a>* lasso_provider_new_from_dump (const <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *dump);</pre>
+<p>
+Restores the <em class="parameter"><code>dump</code></em> to a new <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a>.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>dump</code></em> :</span></td><td> XML provider dump
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a newly created <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a>; or NULL if an error occured.
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2531577"></a><h3><a name="lasso-provider-accept-http-method"></a>lasso_provider_accept_http_method ()</h3><a class="indexterm" name="id2531588"></a><pre class="programlisting"><GTKDOCLINK HREF="gboolean">gboolean</GTKDOCLINK>    lasso_provider_accept_http_method
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>dump</code></em>&#160;:</span></td>
+<td> XML provider dump
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> a newly created <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a>; or NULL if an error occured.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2516297"></a><h3>
+<a name="lasso-provider-accept-http-method"></a>lasso_provider_accept_http_method ()</h3>
+<a class="indexterm" name="id2516308"></a><pre class="programlisting"><GTKDOCLINK HREF="gboolean">gboolean</GTKDOCLINK>    lasso_provider_accept_http_method
                                             (<a href="LassoProvider.html" title="LassoProvider">LassoProvider</a> *provider,
                                              <a href="LassoProvider.html" title="LassoProvider">LassoProvider</a> *remote_provider,
                                              <a href="LassoProvider.html#LassoMdProtocolType">LassoMdProtocolType</a> protocol_type,
                                              <a href="LassoProvider.html#LassoHttpMethod">LassoHttpMethod</a> http_method,
-                                             <GTKDOCLINK HREF="gboolean">gboolean</GTKDOCLINK> initiate_profile);</pre><p>
+                                             <GTKDOCLINK HREF="gboolean">gboolean</GTKDOCLINK> initiate_profile);</pre>
+<p>
 Gets if <em class="parameter"><code>http_method</code></em> is an appropriate method for the <em class="parameter"><code>protocol_type</code></em> profile
-between <em class="parameter"><code>provider</code></em> and <em class="parameter"><code>remote_provider</code></em>.</p><p>
+between <em class="parameter"><code>provider</code></em> and <em class="parameter"><code>remote_provider</code></em>.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>provider</code></em> :</span></td><td> a <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a>
-</td></tr><tr><td><span class="term"><em class="parameter"><code>remote_provider</code></em> :</span></td><td> a <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a> depicting the remote provider
-</td></tr><tr><td><span class="term"><em class="parameter"><code>protocol_type</code></em> :</span></td><td> a Liberty profile type
-</td></tr><tr><td><span class="term"><em class="parameter"><code>http_method</code></em> :</span></td><td> an HTTP method
-</td></tr><tr><td><span class="term"><em class="parameter"><code>initiate_profile</code></em> :</span></td><td> whether <em class="parameter"><code>provider</code></em> initiates the profile
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <code class="literal">TRUE</code> if it is appropriate
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2531791"></a><h3><a name="lasso-provider-get-assertion-consumer-service-url"></a>lasso_provider_get_assertion_consumer_service_url ()</h3><a class="indexterm" name="id2531805"></a><pre class="programlisting"><GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK>*      lasso_provider_get_assertion_consumer_service_url
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>provider</code></em>&#160;:</span></td>
+<td> a <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>remote_provider</code></em>&#160;:</span></td>
+<td> a <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a> depicting the remote provider
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>protocol_type</code></em>&#160;:</span></td>
+<td> a Liberty profile type
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>http_method</code></em>&#160;:</span></td>
+<td> an HTTP method
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>initiate_profile</code></em>&#160;:</span></td>
+<td> whether <em class="parameter"><code>provider</code></em> initiates the profile
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> <code class="literal">TRUE</code> if it is appropriate
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2516510"></a><h3>
+<a name="lasso-provider-get-assertion-consumer-service-url"></a>lasso_provider_get_assertion_consumer_service_url ()</h3>
+<a class="indexterm" name="id2516523"></a><pre class="programlisting"><GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK>*      lasso_provider_get_assertion_consumer_service_url
                                             (<a href="LassoProvider.html" title="LassoProvider">LassoProvider</a> *provider,
-                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *service_id);</pre><p>
+                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *service_id);</pre>
+<p>
 Extracts the AssertionConsumerServiceURL from the provider metadata
-descriptor.</p><p>
+descriptor.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>provider</code></em> :</span></td><td> a <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a>
-</td></tr><tr><td><span class="term"><em class="parameter"><code>service_id</code></em> :</span></td><td> the AssertionConsumerServiceID, NULL for default
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> the element value, NULL if the element was not found.  This
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>provider</code></em>&#160;:</span></td>
+<td> a <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>service_id</code></em>&#160;:</span></td>
+<td> the AssertionConsumerServiceID, NULL for default
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> the element value, NULL if the element was not found.  This
      string must be freed by the caller.
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2531899"></a><h3><a name="lasso-provider-get-base64-succinct-id"></a>lasso_provider_get_base64_succinct_id ()</h3><a class="indexterm" name="id2531911"></a><pre class="programlisting"><GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK>*      lasso_provider_get_base64_succinct_id
-                                            (<a href="LassoProvider.html" title="LassoProvider">LassoProvider</a> *provider);</pre><p>
-Computes and returns the base64-encoded provider succinct ID.</p><p>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2516617"></a><h3>
+<a name="lasso-provider-get-base64-succinct-id"></a>lasso_provider_get_base64_succinct_id ()</h3>
+<a class="indexterm" name="id2516628"></a><pre class="programlisting"><GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK>*      lasso_provider_get_base64_succinct_id
+                                            (<a href="LassoProvider.html" title="LassoProvider">LassoProvider</a> *provider);</pre>
+<p>
+Computes and returns the base64-encoded provider succinct ID.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>provider</code></em> :</span></td><td> a <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a>
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> the provider succinct ID.  This string must be freed by the
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>provider</code></em>&#160;:</span></td>
+<td> a <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> the provider succinct ID.  This string must be freed by the
      caller.
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2531983"></a><h3><a name="lasso-provider-get-first-http-method"></a>lasso_provider_get_first_http_method ()</h3><a class="indexterm" name="id2531995"></a><pre class="programlisting"><a href="LassoProvider.html#LassoHttpMethod">LassoHttpMethod</a> lasso_provider_get_first_http_method
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2516700"></a><h3>
+<a name="lasso-provider-get-first-http-method"></a>lasso_provider_get_first_http_method ()</h3>
+<a class="indexterm" name="id2516711"></a><pre class="programlisting"><a href="LassoProvider.html#LassoHttpMethod">LassoHttpMethod</a> lasso_provider_get_first_http_method
                                             (<a href="LassoProvider.html" title="LassoProvider">LassoProvider</a> *provider,
                                              <a href="LassoProvider.html" title="LassoProvider">LassoProvider</a> *remote_provider,
-                                             <a href="LassoProvider.html#LassoMdProtocolType">LassoMdProtocolType</a> protocol_type);</pre><p>
+                                             <a href="LassoProvider.html#LassoMdProtocolType">LassoMdProtocolType</a> protocol_type);</pre>
+<p>
 Looks up and returns a <a href="LassoProvider.html#LassoHttpMethod"><span class="type">LassoHttpMethod</span></a> appropriate for performing the
-<em class="parameter"><code>protocol_type</code></em> between <em class="parameter"><code>provider</code></em> and <em class="parameter"><code>remote_provider</code></em>.</p><p>
+<em class="parameter"><code>protocol_type</code></em> between <em class="parameter"><code>provider</code></em> and <em class="parameter"><code>remote_provider</code></em>.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>provider</code></em> :</span></td><td> a <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a>
-</td></tr><tr><td><span class="term"><em class="parameter"><code>remote_provider</code></em> :</span></td><td> a <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a> depicting the remote provider
-</td></tr><tr><td><span class="term"><em class="parameter"><code>protocol_type</code></em> :</span></td><td> a Liberty profile
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> the <a href="LassoProvider.html#LassoHttpMethod"><span class="type">LassoHttpMethod</span></a>
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2532153"></a><h3><a name="lasso-provider-get-metadata-list"></a>lasso_provider_get_metadata_list ()</h3><a class="indexterm" name="id2532164"></a><pre class="programlisting"><GTKDOCLINK HREF="GList">GList</GTKDOCLINK>*      lasso_provider_get_metadata_list
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>provider</code></em>&#160;:</span></td>
+<td> a <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>remote_provider</code></em>&#160;:</span></td>
+<td> a <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a> depicting the remote provider
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>protocol_type</code></em>&#160;:</span></td>
+<td> a Liberty profile
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> the <a href="LassoProvider.html#LassoHttpMethod"><span class="type">LassoHttpMethod</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2516869"></a><h3>
+<a name="lasso-provider-get-metadata-list"></a>lasso_provider_get_metadata_list ()</h3>
+<a class="indexterm" name="id2516880"></a><pre class="programlisting"><GTKDOCLINK HREF="GList">GList</GTKDOCLINK>*      lasso_provider_get_metadata_list
                                             (<a href="LassoProvider.html" title="LassoProvider">LassoProvider</a> *provider,
-                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *name);</pre><p>
-Extracts zero to many elements from the provider metadata descriptor.</p><p>
+                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *name);</pre>
+<p>
+Extracts zero to many elements from the provider metadata descriptor.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>provider</code></em> :</span></td><td> a <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a>
-</td></tr><tr><td><span class="term"><em class="parameter"><code>name</code></em> :</span></td><td> the element name
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a <GTKDOCLINK HREF="GList"><span class="type">GList</span></GTKDOCLINK> with the elements.  This GList is internally
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>provider</code></em>&#160;:</span></td>
+<td> a <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>name</code></em>&#160;:</span></td>
+<td> the element name
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> a <GTKDOCLINK HREF="GList"><span class="type">GList</span></GTKDOCLINK> with the elements.  This GList is internally
      allocated and points to internally allocated strings.  It must
      not be freed, modified or stored.
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2532266"></a><h3><a name="lasso-provider-get-metadata-one"></a>lasso_provider_get_metadata_one ()</h3><a class="indexterm" name="id2532278"></a><pre class="programlisting"><GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK>*      lasso_provider_get_metadata_one (<a href="LassoProvider.html" title="LassoProvider">LassoProvider</a> *provider,
-                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *name);</pre><p>
-Extracts the element <em class="parameter"><code>name</code></em> from the provider metadata descriptor.</p><p>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2516982"></a><h3>
+<a name="lasso-provider-get-metadata-one"></a>lasso_provider_get_metadata_one ()</h3>
+<a class="indexterm" name="id2516993"></a><pre class="programlisting"><GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK>*      lasso_provider_get_metadata_one (<a href="LassoProvider.html" title="LassoProvider">LassoProvider</a> *provider,
+                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *name);</pre>
+<p>
+Extracts the element <em class="parameter"><code>name</code></em> from the provider metadata descriptor.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>provider</code></em> :</span></td><td> a <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a>
-</td></tr><tr><td><span class="term"><em class="parameter"><code>name</code></em> :</span></td><td> the element name
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> the element value, NULL if the element was not found.  This
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>provider</code></em>&#160;:</span></td>
+<td> a <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>name</code></em>&#160;:</span></td>
+<td> the element name
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> the element value, NULL if the element was not found.  This
      string must be freed by the caller.
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2532377"></a><h3><a name="lasso-provider-has-protocol-profile"></a>lasso_provider_has_protocol_profile ()</h3><a class="indexterm" name="id2532389"></a><pre class="programlisting"><GTKDOCLINK HREF="gboolean">gboolean</GTKDOCLINK>    lasso_provider_has_protocol_profile
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2517092"></a><h3>
+<a name="lasso-provider-has-protocol-profile"></a>lasso_provider_has_protocol_profile ()</h3>
+<a class="indexterm" name="id2517104"></a><pre class="programlisting"><GTKDOCLINK HREF="gboolean">gboolean</GTKDOCLINK>    lasso_provider_has_protocol_profile
                                             (<a href="LassoProvider.html" title="LassoProvider">LassoProvider</a> *provider,
                                              <a href="LassoProvider.html#LassoMdProtocolType">LassoMdProtocolType</a> protocol_type,
-                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *protocol_profile);</pre><p>
-Gets if <em class="parameter"><code>provider</code></em> supports <em class="parameter"><code>protocol_profile</code></em>.</p><p>
+                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *protocol_profile);</pre>
+<p>
+Gets if <em class="parameter"><code>provider</code></em> supports <em class="parameter"><code>protocol_profile</code></em>.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>provider</code></em> :</span></td><td> a <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a>
-</td></tr><tr><td><span class="term"><em class="parameter"><code>protocol_type</code></em> :</span></td><td> a Liberty profile type
-</td></tr><tr><td><span class="term"><em class="parameter"><code>protocol_profile</code></em> :</span></td><td> a fully-qualified Liberty profile
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <code class="literal">TRUE</code> if it is supported
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2532520"></a><h3><a name="lasso-provider-get-organization"></a>lasso_provider_get_organization ()</h3><a class="indexterm" name="id2532532"></a><pre class="programlisting"><GTKDOCLINK HREF="xmlNode">xmlNode</GTKDOCLINK>*    lasso_provider_get_organization (<a href="LassoProvider.html" title="LassoProvider">LassoProvider</a> *provider);</pre><p>
-Returns the provider metadata &lt;Organization&gt; XML node.</p><p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>provider</code></em>&#160;:</span></td>
+<td> a <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>protocol_type</code></em>&#160;:</span></td>
+<td> a Liberty profile type
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>protocol_profile</code></em>&#160;:</span></td>
+<td> a fully-qualified Liberty profile
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> <code class="literal">TRUE</code> if it is supported
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2517235"></a><h3>
+<a name="lasso-provider-get-organization"></a>lasso_provider_get_organization ()</h3>
+<a class="indexterm" name="id2517246"></a><pre class="programlisting"><GTKDOCLINK HREF="xmlNode">xmlNode</GTKDOCLINK>*    lasso_provider_get_organization (<a href="LassoProvider.html" title="LassoProvider">LassoProvider</a> *provider);</pre>
+<p>
+Returns the provider metadata &lt;Organization&gt; XML node.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>provider</code></em> :</span></td><td> a <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a>
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> the &lt;Organization/&gt; node (libxml2 xmlNode*); or NULL if it is
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>provider</code></em>&#160;:</span></td>
+<td> a <a href="LassoProvider.html" title="LassoProvider"><span class="type">LassoProvider</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> the &lt;Organization/&gt; node (libxml2 xmlNode*); or NULL if it is
      not found.  This xmlnode must be freed by the caller.
-</td></tr></tbody></table></div></div></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="architecture.html"><b>&lt;&lt; Lasso Architecture</b></a></td><td align="right"><a accesskey="n" href="LassoServer.html"><b>LassoServer &gt;&gt;</b></a></td></tr></table></body></html>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle">
+<td align="left"><a accesskey="p" href="architecture.html"><b>&lt;&lt;&#160;Lasso Architecture</b></a></td>
+<td align="right"><a accesskey="n" href="LassoServer.html"><b>LassoServer&#160;&gt;&gt;</b></a></td>
+</tr></table>
+</body>
+</html>

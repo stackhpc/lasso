@@ -1715,6 +1715,50 @@ SWIG_Check_int(PyObject* obj)
 }
 
 
+/* returns SWIG_OLDOBJ if the input is a raw char*, SWIG_PYSTR if is a PyString */
+SWIGINTERN int
+SWIG_AsCharPtrAndSize(PyObject *obj, char** cptr, size_t* psize)
+{
+  static swig_type_info* pchar_info = 0;
+  char* vptr = 0;
+  if (!pchar_info) pchar_info = SWIG_TypeQuery("char *");
+  if (SWIG_ConvertPtr(obj, (void**)&vptr, pchar_info, 0) != -1) {
+    if (cptr) *cptr = vptr;
+    if (psize) *psize = vptr ? (strlen(vptr) + 1) : 0;
+    return SWIG_OLDOBJ;
+  } else {
+    PyErr_Clear();
+    if (PyString_Check(obj)) {
+      if (cptr) {
+	*cptr = PyString_AS_STRING(obj);
+	if (psize) {
+	  *psize = PyString_GET_SIZE(obj) + 1;
+	}
+      }
+      return SWIG_PYSTR;
+    }
+  }
+  if (cptr) {
+    SWIG_type_error("char *", obj);
+  }
+  return 0;
+}
+
+
+SWIGINTERNSHORT int
+SWIG_AsCharPtr(PyObject *obj, char **val)
+{
+  if (SWIG_AsCharPtrAndSize(obj, val, (size_t*)(0))) {
+    return 1;
+  }
+  if (val) {
+    PyErr_Clear();
+    SWIG_type_error("char *", obj);
+  }
+  return 0;
+}
+
+
 
 static void add_key_to_array(char *key, gpointer pointer, GPtrArray *array)
 {
@@ -1827,6 +1871,10 @@ static char* get_xml_string(xmlNode *xmlnode)
 	xmlOutputBufferPtr buf;
 	char *xmlString;
 
+	if (xmlnode == NULL) {
+		return NULL;
+	}
+
 	buf = xmlAllocOutputBuffer(NULL);
 	if (buf == NULL)
 		xmlString = NULL;
@@ -1841,6 +1889,19 @@ static char* get_xml_string(xmlNode *xmlnode)
 	}
 	xmlFreeNode(xmlnode);
 	return xmlString;
+}
+
+static xmlNode *get_string_xml(const char *string) {
+	xmlDoc *doc;
+	xmlNode *node;
+
+	doc = xmlReadDoc(string, NULL, NULL, XML_PARSE_NONET);
+	node = xmlDocGetRootElement(doc);
+	if (node != NULL)
+		node = xmlCopyNode(node, 1);
+	xmlFreeDoc(doc);
+
+	return node;
 }
 
 static void set_node(gpointer *nodePointer, gpointer value)
@@ -1933,6 +1994,25 @@ static void set_xml_list(GList **xmlListPointer, GPtrArray *xmlArray) {
 	}
 }
 
+static void set_xml_string(xmlNode **xmlnode, const char* string)
+{
+	xmlDoc *doc;
+	xmlNode *node;
+
+	doc = xmlReadDoc(string, NULL, NULL, XML_PARSE_NONET);
+	node = xmlDocGetRootElement(doc);
+	if (node != NULL)
+		node = xmlCopyNode(node, 1);
+	xmlFreeDoc(doc);
+
+	if (*xmlnode)
+		xmlFreeNode(*xmlnode);
+
+	*xmlnode = node;
+}
+
+
+
 
 
 
@@ -1998,50 +2078,6 @@ void delete_LassoNodeList(GPtrArray *self) {
 
 
 typedef GPtrArray LassoStringList;
-
-
-/* returns SWIG_OLDOBJ if the input is a raw char*, SWIG_PYSTR if is a PyString */
-SWIGINTERN int
-SWIG_AsCharPtrAndSize(PyObject *obj, char** cptr, size_t* psize)
-{
-  static swig_type_info* pchar_info = 0;
-  char* vptr = 0;
-  if (!pchar_info) pchar_info = SWIG_TypeQuery("char *");
-  if (SWIG_ConvertPtr(obj, (void**)&vptr, pchar_info, 0) != -1) {
-    if (cptr) *cptr = vptr;
-    if (psize) *psize = vptr ? (strlen(vptr) + 1) : 0;
-    return SWIG_OLDOBJ;
-  } else {
-    PyErr_Clear();
-    if (PyString_Check(obj)) {
-      if (cptr) {
-	*cptr = PyString_AS_STRING(obj);
-	if (psize) {
-	  *psize = PyString_GET_SIZE(obj) + 1;
-	}
-      }
-      return SWIG_PYSTR;
-    }
-  }
-  if (cptr) {
-    SWIG_type_error("char *", obj);
-  }
-  return 0;
-}
-
-
-SWIGINTERNSHORT int
-SWIG_AsCharPtr(PyObject *obj, char **val)
-{
-  if (SWIG_AsCharPtrAndSize(obj, val, (size_t*)(0))) {
-    return 1;
-  }
-  if (val) {
-    PyErr_Clear();
-    SWIG_type_error("char *", obj);
-  }
-  return 0;
-}
 
 static void LassoStringList_append(LassoStringList *self,char *item){
 			if (item != NULL)
@@ -3395,6 +3431,12 @@ SWIGINTERNSHORT PyObject*
 #define LassoServer_set_public_key(self, value) set_string(&LASSO_PROVIDER(self)->public_key, (value))
 #define LassoServer_public_key_set(self, value) set_string(&LASSO_PROVIDER(self)->public_key, (value))
 
+/* role */
+#define LassoServer_get_role(self) LASSO_PROVIDER(self)->role
+#define LassoServer_role_get(self) LASSO_PROVIDER(self)->role
+#define LassoServer_set_role(self, value) LASSO_PROVIDER(self)->role = value
+#define LassoServer_role_set(self, value) LASSO_PROVIDER(self)->role = value
+
 /* Attributes implementations */
 
 /* providerIds */
@@ -3491,6 +3533,24 @@ LassoStringList *LassoIdentity_providerIds_get(LassoIdentity *self) {
 
 #define LassoIdentity_dump lasso_identity_dump
 #define LassoIdentity_getFederation lasso_identity_get_federation
+
+#ifdef LASSO_WSF_ENABLED
+#define LassoIdentity_addResourceOffering lasso_identity_add_resource_offering
+#define LassoIdentity_removeResourceOffering lasso_identity_remove_resource_offering
+
+LassoNodeList *LassoIdentity_getOfferings(LassoIdentity *self, const char *service_type) {
+	GPtrArray *array = NULL;
+	GList *list;
+
+	list = lasso_identity_get_offerings(self, service_type);
+	if (list) {
+		array = get_node_list(list);
+		g_list_foreach(list, (GFunc) free_node_list_item, NULL);
+		g_list_free(list);
+	}
+	return array;
+}
+#endif
 
 
 
@@ -4218,6 +4278,29 @@ static PyObject *_wrap_checkVersion(PyObject *self, PyObject *args) {
     {
         resultobj = SWIG_From_int((int)(result)); 
     }
+    return resultobj;
+    fail:
+    return NULL;
+}
+
+
+static PyObject *_wrap_registerDstService(PyObject *self, PyObject *args) {
+    PyObject *resultobj;
+    char *arg1 = (char *) 0 ;
+    char *arg2 = (char *) 0 ;
+    PyObject * obj0 = 0 ;
+    PyObject * obj1 = 0 ;
+    
+    if(!PyArg_ParseTuple(args,(char *)"OO:registerDstService",&obj0,&obj1)) goto fail;
+    if (!SWIG_AsCharPtr(obj0, (char**)&arg1)) {
+        SWIG_arg_fail(1);SWIG_fail;
+    }
+    if (!SWIG_AsCharPtr(obj1, (char**)&arg2)) {
+        SWIG_arg_fail(2);SWIG_fail;
+    }
+    lasso_register_dst_service((char const *)arg1,(char const *)arg2);
+    
+    Py_INCREF(Py_None); resultobj = Py_None;
     return resultobj;
     fail:
     return NULL;
@@ -17158,6 +17241,47 @@ static PyObject *_wrap_Server_publicKey_get(PyObject *self, PyObject *args) {
 }
 
 
+static PyObject *_wrap_Server_role_set(PyObject *self, PyObject *args) {
+    PyObject *resultobj;
+    LassoServer *arg1 = (LassoServer *) 0 ;
+    LassoProviderRole arg2 ;
+    PyObject * obj0 = 0 ;
+    PyObject * obj1 = 0 ;
+    
+    if(!PyArg_ParseTuple(args,(char *)"OO:Server_role_set",&obj0,&obj1)) goto fail;
+    SWIG_Python_ConvertPtr(obj0, (void **)&arg1, SWIGTYPE_p_LassoServer, SWIG_POINTER_EXCEPTION | 0);
+    if (SWIG_arg_fail(1)) SWIG_fail;
+    {
+        arg2 = (LassoProviderRole)(SWIG_As_int(obj1)); 
+        if (SWIG_arg_fail(2)) SWIG_fail;
+    }
+    LassoServer_role_set(arg1,(LassoProviderRole )arg2);
+    
+    Py_INCREF(Py_None); resultobj = Py_None;
+    return resultobj;
+    fail:
+    return NULL;
+}
+
+
+static PyObject *_wrap_Server_role_get(PyObject *self, PyObject *args) {
+    PyObject *resultobj;
+    LassoServer *arg1 = (LassoServer *) 0 ;
+    LassoProviderRole result;
+    PyObject * obj0 = 0 ;
+    
+    if(!PyArg_ParseTuple(args,(char *)"O:Server_role_get",&obj0)) goto fail;
+    SWIG_Python_ConvertPtr(obj0, (void **)&arg1, SWIGTYPE_p_LassoServer, SWIG_POINTER_EXCEPTION | 0);
+    if (SWIG_arg_fail(1)) SWIG_fail;
+    result = (LassoProviderRole)LassoServer_role_get(arg1);
+    
+    resultobj = SWIG_From_int((result));
+    return resultobj;
+    fail:
+    return NULL;
+}
+
+
 static PyObject *_wrap_Server_providerIds_get(PyObject *self, PyObject *args) {
     PyObject *resultobj;
     LassoServer *arg1 = (LassoServer *) 0 ;
@@ -23045,6 +23169,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"init", _wrap_init, METH_VARARGS, NULL},
 	 { (char *)"shutdown", _wrap_shutdown, METH_VARARGS, NULL},
 	 { (char *)"checkVersion", _wrap_checkVersion, METH_VARARGS, NULL},
+	 { (char *)"registerDstService", _wrap_registerDstService, METH_VARARGS, NULL},
 	 { (char *)"new_Node", _wrap_new_Node, METH_VARARGS, NULL},
 	 { (char *)"delete_Node", _wrap_delete_Node, METH_VARARGS, NULL},
 	 { (char *)"Node_dump", _wrap_Node_dump, METH_VARARGS, NULL},
@@ -23619,6 +23744,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Server_providerId_get", _wrap_Server_providerId_get, METH_VARARGS, NULL},
 	 { (char *)"Server_publicKey_set", _wrap_Server_publicKey_set, METH_VARARGS, NULL},
 	 { (char *)"Server_publicKey_get", _wrap_Server_publicKey_get, METH_VARARGS, NULL},
+	 { (char *)"Server_role_set", _wrap_Server_role_set, METH_VARARGS, NULL},
+	 { (char *)"Server_role_get", _wrap_Server_role_get, METH_VARARGS, NULL},
 	 { (char *)"Server_providerIds_get", _wrap_Server_providerIds_get, METH_VARARGS, NULL},
 	 { (char *)"new_Server", _wrap_new_Server, METH_VARARGS, NULL},
 	 { (char *)"delete_Server", _wrap_delete_Server, METH_VARARGS, NULL},
@@ -24587,6 +24714,9 @@ SWIGEXPORT(void) SWIG_init(void) {
         PyDict_SetItemString(d,"ERROR_UNDEFINED", SWIG_From_int((int)(-1))); 
     }
     {
+        PyDict_SetItemString(d,"ERROR_UNIMPLEMENTED", SWIG_From_int((int)(-2))); 
+    }
+    {
         PyDict_SetItemString(d,"XML_ERROR_NODE_NOT_FOUND", SWIG_From_int((int)(-10))); 
     }
     {
@@ -24728,10 +24858,10 @@ SWIGEXPORT(void) SWIG_init(void) {
         PyDict_SetItemString(d,"LOGIN_ERROR_CONSENT_NOT_OBTAINED", SWIG_From_int((int)(602))); 
     }
     {
-        PyDict_SetItemString(d,"LASSO_LOGIN_ERROR_INVALID_NAMEIDPOLICY", SWIG_From_int((int)(-603))); 
+        PyDict_SetItemString(d,"LOGIN_ERROR_INVALID_NAMEIDPOLICY", SWIG_From_int((int)(-603))); 
     }
     {
-        PyDict_SetItemString(d,"LASSO_LOGIN_ERROR_REQUEST_DENIED", SWIG_From_int((int)(604))); 
+        PyDict_SetItemString(d,"LOGIN_ERROR_REQUEST_DENIED", SWIG_From_int((int)(604))); 
     }
     {
         PyDict_SetItemString(d,"LOGIN_ERROR_INVALID_SIGNATURE", SWIG_From_int((int)(605))); 
@@ -24741,6 +24871,9 @@ SWIGEXPORT(void) SWIG_init(void) {
     }
     {
         PyDict_SetItemString(d,"LOGIN_ERROR_STATUS_NOT_SUCCESS", SWIG_From_int((int)(607))); 
+    }
+    {
+        PyDict_SetItemString(d,"LOGIN_ERROR_UNKNOWN_PRINCIPAL", SWIG_From_int((int)(608))); 
     }
     {
         PyDict_SetItemString(d,"DEFEDERATION_ERROR_MISSING_NAME_IDENTIFIER", SWIG_From_int((int)(-700))); 

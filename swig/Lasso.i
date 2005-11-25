@@ -1,6 +1,6 @@
 /* -*- Mode: c; c-basic-offset: 8 -*-
  *
- * $Id: Lasso.i,v 1.196 2005/05/10 16:47:15 nclapies Exp $
+ * $Id: Lasso.i,v 1.208 2005/09/16 13:30:34 fpeters Exp $
  *
  * SWIG bindings for Lasso Library
  *
@@ -108,6 +108,13 @@
 %}
 
 #define %nonewobject %feature("new","")
+
+/*
+ * In Windows, function free() segfaults when used for strings allocated 
+ * using Glib.
+ */
+
+%typemap(newfree) char * "g_free($1);";
 
 
 /***********************************************************************
@@ -285,8 +292,13 @@ static void build_exception_msg(int errorCode, char *errorMsg) {
 	errorCode = $action
 	if (errorCode) {
 		char errorMsg[256];
+		int swig_error = SWIG_RuntimeError;
+		if (errorCode == LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ || 
+				errorCode == LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ) {
+			swig_error = SWIG_ValueError;
+		}
 		build_exception_msg(errorCode, errorMsg);
-		SWIG_exception(SWIG_UnknownError, errorMsg);
+		SWIG_exception(swig_error, errorMsg);
 	}
 }
 %enddef
@@ -951,6 +963,7 @@ typedef enum {
 /* undefined */
 #ifndef SWIGPHP4
 %rename(ERROR_UNDEFINED) LASSO_ERROR_UNDEFINED;
+%rename(ERROR_UNIMPLEMENTED) LASSO_ERROR_UNIMPLEMENTED;
 #endif
 
 /* generic XML */
@@ -1025,11 +1038,12 @@ typedef enum {
 #ifndef SWIGPHP4
 %rename(LOGIN_ERROR_FEDERATION_NOT_FOUND) LASSO_LOGIN_ERROR_FEDERATION_NOT_FOUND;
 %rename(LOGIN_ERROR_CONSENT_NOT_OBTAINED) LASSO_LOGIN_ERROR_CONSENT_NOT_OBTAINED;
-%rename(LASSO_LOGIN_ERROR_INVALID_NAMEIDPOLICY) LASSO_LOGIN_ERROR_INVALID_NAMEIDPOLICY;
-%rename(LOGIN_ERROR_REQUEST_DENIE) LASSO_LOGIN_ERROR_REQUEST_DENIE;
+%rename(LOGIN_ERROR_INVALID_NAMEIDPOLICY) LASSO_LOGIN_ERROR_INVALID_NAMEIDPOLICY;
+%rename(LOGIN_ERROR_REQUEST_DENIED) LASSO_LOGIN_ERROR_REQUEST_DENIED;
 %rename(LOGIN_ERROR_INVALID_SIGNATURE) LASSO_LOGIN_ERROR_INVALID_SIGNATURE;
 %rename(LOGIN_ERROR_UNSIGNED_AUTHN_REQUEST) LASSO_LOGIN_ERROR_UNSIGNED_AUTHN_REQUEST;
 %rename(LOGIN_ERROR_STATUS_NOT_SUCCESS) LASSO_LOGIN_ERROR_STATUS_NOT_SUCCESS;
+%rename(LOGIN_ERROR_UNKNOWN_PRINCIPAL) LASSO_LOGIN_ERROR_UNKNOWN_PRINCIPAL;
 #endif
 
 /* Federation Termination Notification */
@@ -1088,6 +1102,11 @@ typedef enum {
 #endif
 int lasso_check_version(int major, int minor, int subminor,
 		LassoCheckVersionMode mode = LASSO_CHECK_VERSION_NUMERIC);
+
+#ifndef SWIGPHP4
+%rename(registerDstService) lasso_register_dst_service;
+#endif
+void lasso_register_dst_service(const char *prefix, const char *href);
 
 
 /***********************************************************************
@@ -1208,6 +1227,10 @@ static char* get_xml_string(xmlNode *xmlnode)
 	xmlOutputBufferPtr buf;
 	char *xmlString;
 
+	if (xmlnode == NULL) {
+		return NULL;
+	}
+
 	buf = xmlAllocOutputBuffer(NULL);
 	if (buf == NULL)
 		xmlString = NULL;
@@ -1222,6 +1245,19 @@ static char* get_xml_string(xmlNode *xmlnode)
 	}
 	xmlFreeNode(xmlnode);
 	return xmlString;
+}
+
+static xmlNode *get_string_xml(const char *string) {
+	xmlDoc *doc;
+	xmlNode *node;
+
+	doc = xmlReadDoc(string, NULL, NULL, XML_PARSE_NONET);
+	node = xmlDocGetRootElement(doc);
+	if (node != NULL)
+		node = xmlCopyNode(node, 1);
+	xmlFreeDoc(doc);
+
+	return node;
 }
 
 static void set_node(gpointer *nodePointer, gpointer value)
@@ -1313,6 +1349,25 @@ static void set_xml_list(GList **xmlListPointer, GPtrArray *xmlArray) {
 		}
 	}
 }
+
+static void set_xml_string(xmlNode **xmlnode, const char* string)
+{
+	xmlDoc *doc;
+	xmlNode *node;
+
+	doc = xmlReadDoc(string, NULL, NULL, XML_PARSE_NONET);
+	node = xmlDocGetRootElement(doc);
+	if (node != NULL)
+		node = xmlCopyNode(node, 1);
+	xmlFreeDoc(doc);
+
+	if (*xmlnode)
+		xmlFreeNode(*xmlnode);
+
+	*xmlnode = node;
+}
+
+
 
 %}
 
@@ -4937,6 +4992,8 @@ typedef struct {
 #endif
 	char *public_key;
 
+	LassoProviderRole role;
+
 	/* Attributes */
 
 	%immutable providerIds;
@@ -5028,6 +5085,12 @@ typedef struct {
 #define LassoServer_public_key_get(self) LASSO_PROVIDER(self)->public_key
 #define LassoServer_set_public_key(self, value) set_string(&LASSO_PROVIDER(self)->public_key, (value))
 #define LassoServer_public_key_set(self, value) set_string(&LASSO_PROVIDER(self)->public_key, (value))
+
+/* role */
+#define LassoServer_get_role(self) LASSO_PROVIDER(self)->role
+#define LassoServer_role_get(self) LASSO_PROVIDER(self)->role
+#define LassoServer_set_role(self, value) LASSO_PROVIDER(self)->role = value
+#define LassoServer_role_set(self, value) LASSO_PROVIDER(self)->role = value
 
 /* Attributes implementations */
 
@@ -5191,6 +5254,17 @@ typedef struct {
 	char *dump();
 
 	LassoFederation *getFederation(char *providerId);
+
+#ifdef LASSO_WSF_ENABLED
+	THROW_ERROR
+	int addResourceOffering(LassoDiscoResourceOffering *offering);
+	END_THROW_ERROR
+
+	gboolean removeResourceOffering(const char *entry_id);
+
+	%newobject getOfferings;
+	LassoNodeList *getOfferings(const char *service_type = NULL);
+#endif
 }
 
 %{
@@ -5219,6 +5293,24 @@ LassoStringList *LassoIdentity_providerIds_get(LassoIdentity *self) {
 
 #define LassoIdentity_dump lasso_identity_dump
 #define LassoIdentity_getFederation lasso_identity_get_federation
+
+#ifdef LASSO_WSF_ENABLED
+#define LassoIdentity_addResourceOffering lasso_identity_add_resource_offering
+#define LassoIdentity_removeResourceOffering lasso_identity_remove_resource_offering
+
+LassoNodeList *LassoIdentity_getOfferings(LassoIdentity *self, const char *service_type) {
+	GPtrArray *array = NULL;
+	GList *list;
+
+	list = lasso_identity_get_offerings(self, service_type);
+	if (list) {
+		array = get_node_list(list);
+		g_list_foreach(list, (GFunc) free_node_list_item, NULL);
+		g_list_free(list);
+	}
+	return array;
+}
+#endif
 
 %}
 

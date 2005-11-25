@@ -1,4 +1,4 @@
-/* $Id: logout.c,v 1.192 2005/05/12 16:26:49 fpeters Exp $
+/* $Id: logout.c,v 1.200 2005/08/24 15:19:31 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -160,9 +160,30 @@ lasso_logout_build_response_msg(LassoLogout *logout)
 
 	profile = LASSO_PROFILE(logout);
 
-	/* get the provider */
-	provider = g_hash_table_lookup(profile->server->providers, profile->remote_providerID);
-	if (provider == NULL) {
+	if (profile->response == NULL) {
+		if (profile->http_request_method == LASSO_HTTP_METHOD_SOAP) {
+			profile->response = lasso_lib_logout_response_new_full(
+					LASSO_PROVIDER(profile->server)->ProviderID,
+					LASSO_SAML_STATUS_CODE_REQUEST_DENIED,
+					LASSO_LIB_LOGOUT_REQUEST(profile->request),
+					profile->server->certificate ? 
+					LASSO_SIGNATURE_TYPE_WITHX509 : LASSO_SIGNATURE_TYPE_SIMPLE,
+					LASSO_SIGNATURE_METHOD_RSA_SHA1);
+		}
+		if (profile->http_request_method == LASSO_HTTP_METHOD_REDIRECT) {
+			profile->response = lasso_lib_logout_response_new_full(
+					LASSO_PROVIDER(profile->server)->ProviderID,
+					LASSO_SAML_STATUS_CODE_REQUEST_DENIED,
+					LASSO_LIB_LOGOUT_REQUEST(profile->request),
+					LASSO_SIGNATURE_TYPE_NONE,
+					0);
+		}
+	}
+
+	if (profile->remote_providerID == NULL || profile->response == NULL) {
+		/* no remote provider id set or no response set, this means
+		 * this function got called before validate_request, probably
+		 * because there were no active session */
 		return critical_error(LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND);
 	}
 
@@ -176,6 +197,13 @@ lasso_logout_build_response_msg(LassoLogout *logout)
 	}
 
 	if (profile->http_request_method == LASSO_HTTP_METHOD_REDIRECT) {
+		/* get the provider */
+		provider = g_hash_table_lookup(profile->server->providers,
+				profile->remote_providerID);
+		if (provider == NULL) {
+			return critical_error(LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND);
+		}
+
 		url = lasso_provider_get_metadata_one(provider, "SingleLogoutServiceReturnURL");
 		if (url == NULL) {
 			return critical_error(LASSO_PROFILE_ERROR_UNKNOWN_PROFILE_URL);
@@ -338,28 +366,46 @@ lasso_logout_init_request(LassoLogout *logout, char *remote_providerID,
 		return critical_error(LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND);
 	}
 
-	/* before setting profile->request, verify if it is already set */
-	if (LASSO_IS_LIB_LOGOUT_REQUEST(profile->request) == TRUE) {
-		lasso_node_destroy(LASSO_NODE(profile->request));
-		profile->request = NULL;
-	}
-
-	/* build a new request object from single logout protocol profile */
-
 	/* get / verify http method */
 	if (http_method == LASSO_HTTP_METHOD_ANY) {
 		http_method = lasso_provider_get_first_http_method(
 				LASSO_PROVIDER(profile->server),
 				remote_provider,
 				LASSO_MD_PROTOCOL_TYPE_SINGLE_LOGOUT);
+		/* XXX: check it found a valid http method */
 	} else {
 		if (lasso_provider_accept_http_method(LASSO_PROVIDER(profile->server),
 					remote_provider,
 					LASSO_MD_PROTOCOL_TYPE_SINGLE_LOGOUT,
 					http_method,
 					TRUE) == FALSE) {
+			if (http_method == LASSO_HTTP_METHOD_REDIRECT) {
+				/* it was probably used as last resort, and
+				 * failed, since the remote provider doesn't
+				 * support any logout.  remove assertion
+				 * unconditionnaly. */
+				lasso_session_remove_assertion(profile->session,
+						profile->remote_providerID);
+				if (logout->initial_remote_providerID && logout->initial_request) {
+					g_free(profile->remote_providerID);
+					profile->remote_providerID = g_strdup(
+							logout->initial_remote_providerID);
+					profile->response = lasso_lib_logout_response_new_full(
+						LASSO_PROVIDER(profile->server)->ProviderID,
+						LASSO_SAML_STATUS_CODE_SUCCESS,
+						LASSO_LIB_LOGOUT_REQUEST(logout->initial_request),
+						LASSO_SIGNATURE_TYPE_NONE,
+						0);
+				}
+			}
 			return LASSO_PROFILE_ERROR_UNSUPPORTED_PROFILE;
 		}
+	}
+
+	/* before setting profile->request, verify it is not already set */
+	if (LASSO_IS_LIB_LOGOUT_REQUEST(profile->request) == TRUE) {
+		lasso_node_destroy(LASSO_NODE(profile->request));
+		profile->request = NULL;
 	}
 
 	/* build a new request object from http method */
@@ -644,6 +690,7 @@ lasso_logout_process_response_msg(LassoLogout *logout, gchar *response_msg)
 gint lasso_logout_reset_providerID_index(LassoLogout *logout)
 {
 	g_return_val_if_fail(LASSO_IS_LOGOUT(logout), -1);
+	lasso_session_init_provider_ids(LASSO_PROFILE(logout)->session);
 	logout->providerID_index = 0;
 	return 0;
 }
@@ -795,7 +842,7 @@ lasso_logout_validate_request(LassoLogout *logout)
 		}
 	}
 
-	/* authentication is ok, federation is ok, propagation support is ok, remove federation */
+	/* authentication is ok, federation is ok, propagation support is ok, remove assertion */
 	lasso_session_remove_assertion(profile->session, profile->remote_providerID);
 
 	/* if at IDP and nb sp logged > 1, then backup remote provider id,
@@ -868,8 +915,8 @@ get_xmlNode(LassoNode *node, gboolean lasso_dump)
 	xmlNode *xmlnode;
 
 	xmlnode = parent_class->get_xmlNode(node, lasso_dump);
-	xmlNodeSetName(xmlnode, "Logout");
-	xmlSetProp(xmlnode, "LogoutDumpVersion", "2");
+	xmlNodeSetName(xmlnode, (xmlChar*)"Logout");
+	xmlSetProp(xmlnode, (xmlChar*)"LogoutDumpVersion", (xmlChar*)"2");
 
 	return xmlnode;
 }

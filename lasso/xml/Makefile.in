@@ -91,14 +91,14 @@ am__liblasso_xml_la_SOURCES_DIST = tools.c xml.c lib_assertion.c \
 	is_parameter.c is_redirect_request.c is_select.c is_text.c \
 	is_user_interaction.c sa_credentials.c sa_parameter.c \
 	sa_password_transforms.c sa_transform.c sa_sasl_request.c \
-	sa_sasl_response.c soap_binding_consent.c \
-	soap_binding_correlation.c soap_binding_processing_context.c \
-	soap_binding_provider.c soap_binding_usage_directive.c \
-	soap_binding_ext_credential.c \
+	sa_sasl_response.c sec_resource_access_statement.c \
+	soap_binding_consent.c soap_binding_correlation.c \
+	soap_binding_processing_context.c soap_binding_provider.c \
+	soap_binding_usage_directive.c soap_binding_ext_credential.c \
 	soap_binding_ext_credentials_context.c \
 	soap_binding_ext_service_instance_update.c \
-	soap_binding_ext_timeout.c soap_body.c soap_envelope.c \
-	soap_header.c utility_status.c wsse_security.c
+	soap_binding_ext_timeout.c soap_body.c soap_fault.c \
+	soap_envelope.c soap_header.c utility_status.c wsse_security.c
 @WSF_ENABLED_TRUE@am__objects_1 = disco_authenticate_requester.lo \
 @WSF_ENABLED_TRUE@	disco_authenticate_session_context.lo \
 @WSF_ENABLED_TRUE@	disco_authorize_requester.lo \
@@ -128,7 +128,9 @@ am__liblasso_xml_la_SOURCES_DIST = tools.c xml.c lib_assertion.c \
 @WSF_ENABLED_TRUE@	is_user_interaction.lo sa_credentials.lo \
 @WSF_ENABLED_TRUE@	sa_parameter.lo sa_password_transforms.lo \
 @WSF_ENABLED_TRUE@	sa_transform.lo sa_sasl_request.lo \
-@WSF_ENABLED_TRUE@	sa_sasl_response.lo soap_binding_consent.lo \
+@WSF_ENABLED_TRUE@	sa_sasl_response.lo \
+@WSF_ENABLED_TRUE@	sec_resource_access_statement.lo \
+@WSF_ENABLED_TRUE@	soap_binding_consent.lo \
 @WSF_ENABLED_TRUE@	soap_binding_correlation.lo \
 @WSF_ENABLED_TRUE@	soap_binding_processing_context.lo \
 @WSF_ENABLED_TRUE@	soap_binding_provider.lo \
@@ -137,8 +139,9 @@ am__liblasso_xml_la_SOURCES_DIST = tools.c xml.c lib_assertion.c \
 @WSF_ENABLED_TRUE@	soap_binding_ext_credentials_context.lo \
 @WSF_ENABLED_TRUE@	soap_binding_ext_service_instance_update.lo \
 @WSF_ENABLED_TRUE@	soap_binding_ext_timeout.lo soap_body.lo \
-@WSF_ENABLED_TRUE@	soap_envelope.lo soap_header.lo \
-@WSF_ENABLED_TRUE@	utility_status.lo wsse_security.lo
+@WSF_ENABLED_TRUE@	soap_fault.lo soap_envelope.lo \
+@WSF_ENABLED_TRUE@	soap_header.lo utility_status.lo \
+@WSF_ENABLED_TRUE@	wsse_security.lo
 am_liblasso_xml_la_OBJECTS = tools.lo xml.lo lib_assertion.lo \
 	lib_authentication_statement.lo lib_authn_context.lo \
 	lib_authn_request.lo lib_authn_request_envelope.lo \
@@ -256,6 +259,7 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	./$(DEPDIR)/samlp_response_abstract.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/samlp_status.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/samlp_status_code.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/sec_resource_access_statement.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/soap_binding_consent.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/soap_binding_correlation.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/soap_binding_ext_credential.Plo \
@@ -267,6 +271,7 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	./$(DEPDIR)/soap_binding_usage_directive.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/soap_body.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/soap_envelope.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/soap_fault.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/soap_header.Plo ./$(DEPDIR)/tools.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/utility_status.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/wsse_security.Plo ./$(DEPDIR)/xml.Plo
@@ -321,14 +326,14 @@ am__liblassoinclude_HEADERS_DIST = strings.h xml.h lib_assertion.h \
 	is_parameter.h is_redirect_request.h is_select.h is_text.h \
 	is_user_interaction.h sa_credentials.h sa_parameter.h \
 	sa_password_transforms.h sa_transform.h sa_sasl_request.h \
-	sa_sasl_response.h soap_binding_consent.h \
-	soap_binding_correlation.h soap_binding_processing_context.h \
-	soap_binding_provider.h soap_binding_usage_directive.h \
-	soap_binding_ext_credential.h \
+	sa_sasl_response.h sec_resource_access_statement.h \
+	soap_binding_consent.h soap_binding_correlation.h \
+	soap_binding_processing_context.h soap_binding_provider.h \
+	soap_binding_usage_directive.h soap_binding_ext_credential.h \
 	soap_binding_ext_credentials_context.h \
 	soap_binding_ext_service_instance_update.h \
-	soap_binding_ext_timeout.h soap_body.h soap_envelope.h \
-	soap_header.h utility_status.h wsse_security.h
+	soap_binding_ext_timeout.h soap_body.h soap_fault.h \
+	soap_envelope.h soap_header.h utility_status.h wsse_security.h
 am__installdirs = "$(DESTDIR)$(liblassoincludedir)"
 liblassoincludeHEADERS_INSTALL = $(INSTALL_HEADER)
 HEADERS = $(liblassoinclude_HEADERS)
@@ -590,6 +595,7 @@ noinst_LTLIBRARIES = liblasso-xml.la
 @WSF_ENABLED_TRUE@	sa_transform.c \
 @WSF_ENABLED_TRUE@	sa_sasl_request.c \
 @WSF_ENABLED_TRUE@	sa_sasl_response.c \
+@WSF_ENABLED_TRUE@	sec_resource_access_statement.c \
 @WSF_ENABLED_TRUE@	soap_binding_consent.c \
 @WSF_ENABLED_TRUE@	soap_binding_correlation.c \
 @WSF_ENABLED_TRUE@	soap_binding_processing_context.c \
@@ -600,6 +606,7 @@ noinst_LTLIBRARIES = liblasso-xml.la
 @WSF_ENABLED_TRUE@	soap_binding_ext_service_instance_update.c \
 @WSF_ENABLED_TRUE@	soap_binding_ext_timeout.c \
 @WSF_ENABLED_TRUE@	soap_body.c \
+@WSF_ENABLED_TRUE@	soap_fault.c \
 @WSF_ENABLED_TRUE@	soap_envelope.c \
 @WSF_ENABLED_TRUE@	soap_header.c \
 @WSF_ENABLED_TRUE@	utility_status.c \
@@ -652,6 +659,7 @@ noinst_LTLIBRARIES = liblasso-xml.la
 @WSF_ENABLED_TRUE@	sa_transform.h \
 @WSF_ENABLED_TRUE@	sa_sasl_request.h \
 @WSF_ENABLED_TRUE@	sa_sasl_response.h \
+@WSF_ENABLED_TRUE@	sec_resource_access_statement.h \
 @WSF_ENABLED_TRUE@	soap_binding_consent.h \
 @WSF_ENABLED_TRUE@	soap_binding_correlation.h \
 @WSF_ENABLED_TRUE@	soap_binding_processing_context.h \
@@ -662,6 +670,7 @@ noinst_LTLIBRARIES = liblasso-xml.la
 @WSF_ENABLED_TRUE@	soap_binding_ext_service_instance_update.h \
 @WSF_ENABLED_TRUE@	soap_binding_ext_timeout.h \
 @WSF_ENABLED_TRUE@	soap_body.h \
+@WSF_ENABLED_TRUE@	soap_fault.h \
 @WSF_ENABLED_TRUE@	soap_envelope.h \
 @WSF_ENABLED_TRUE@	soap_header.h \
 @WSF_ENABLED_TRUE@	utility_status.h \
@@ -913,6 +922,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/samlp_response_abstract.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/samlp_status.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/samlp_status_code.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sec_resource_access_statement.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/soap_binding_consent.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/soap_binding_correlation.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/soap_binding_ext_credential.Plo@am__quote@
@@ -924,6 +934,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/soap_binding_usage_directive.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/soap_body.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/soap_envelope.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/soap_fault.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/soap_header.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tools.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/utility_status.Plo@am__quote@

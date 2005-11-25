@@ -122,6 +122,7 @@ SAML_AUTHENTICATION_METHOD_LIBERTY = _lasso.SAML_AUTHENTICATION_METHOD_LIBERTY
 SIGNATURE_METHOD_RSA_SHA1 = _lasso.SIGNATURE_METHOD_RSA_SHA1
 SIGNATURE_METHOD_DSA_SHA1 = _lasso.SIGNATURE_METHOD_DSA_SHA1
 ERROR_UNDEFINED = _lasso.ERROR_UNDEFINED
+ERROR_UNIMPLEMENTED = _lasso.ERROR_UNIMPLEMENTED
 XML_ERROR_NODE_NOT_FOUND = _lasso.XML_ERROR_NODE_NOT_FOUND
 XML_ERROR_NODE_CONTENT_NOT_FOUND = _lasso.XML_ERROR_NODE_CONTENT_NOT_FOUND
 XML_ERROR_ATTR_NOT_FOUND = _lasso.XML_ERROR_ATTR_NOT_FOUND
@@ -169,11 +170,12 @@ PARAM_ERROR_INVALID_VALUE = _lasso.PARAM_ERROR_INVALID_VALUE
 LASSO_PARAM_ERROR_CHECK_FAILED = _lasso.LASSO_PARAM_ERROR_CHECK_FAILED
 LOGIN_ERROR_FEDERATION_NOT_FOUND = _lasso.LOGIN_ERROR_FEDERATION_NOT_FOUND
 LOGIN_ERROR_CONSENT_NOT_OBTAINED = _lasso.LOGIN_ERROR_CONSENT_NOT_OBTAINED
-LASSO_LOGIN_ERROR_INVALID_NAMEIDPOLICY = _lasso.LASSO_LOGIN_ERROR_INVALID_NAMEIDPOLICY
-LASSO_LOGIN_ERROR_REQUEST_DENIED = _lasso.LASSO_LOGIN_ERROR_REQUEST_DENIED
+LOGIN_ERROR_INVALID_NAMEIDPOLICY = _lasso.LOGIN_ERROR_INVALID_NAMEIDPOLICY
+LOGIN_ERROR_REQUEST_DENIED = _lasso.LOGIN_ERROR_REQUEST_DENIED
 LOGIN_ERROR_INVALID_SIGNATURE = _lasso.LOGIN_ERROR_INVALID_SIGNATURE
 LOGIN_ERROR_UNSIGNED_AUTHN_REQUEST = _lasso.LOGIN_ERROR_UNSIGNED_AUTHN_REQUEST
 LOGIN_ERROR_STATUS_NOT_SUCCESS = _lasso.LOGIN_ERROR_STATUS_NOT_SUCCESS
+LOGIN_ERROR_UNKNOWN_PRINCIPAL = _lasso.LOGIN_ERROR_UNKNOWN_PRINCIPAL
 DEFEDERATION_ERROR_MISSING_NAME_IDENTIFIER = _lasso.DEFEDERATION_ERROR_MISSING_NAME_IDENTIFIER
 
 init = _lasso.init
@@ -184,6 +186,8 @@ CHECK_VERSIONABI_COMPATIBLE = _lasso.CHECK_VERSIONABI_COMPATIBLE
 CHECK_VERSION_NUMERIC = _lasso.CHECK_VERSION_NUMERIC
 
 checkVersion = _lasso.checkVersion
+
+registerDstService = _lasso.registerDstService
 class Node(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, Node, name, value)
@@ -1731,6 +1735,9 @@ class Server(_object):
     __swig_setmethods__["publicKey"] = _lasso.Server_publicKey_set
     __swig_getmethods__["publicKey"] = _lasso.Server_publicKey_get
     if _newclass:publicKey = property(_lasso.Server_publicKey_get, _lasso.Server_publicKey_set)
+    __swig_setmethods__["role"] = _lasso.Server_role_set
+    __swig_getmethods__["role"] = _lasso.Server_role_get
+    if _newclass:role = property(_lasso.Server_role_get, _lasso.Server_role_set)
     __swig_getmethods__["providerIds"] = _lasso.Server_providerIds_get
     if _newclass:providerIds = property(_lasso.Server_providerIds_get)
     def __init__(self, *args):

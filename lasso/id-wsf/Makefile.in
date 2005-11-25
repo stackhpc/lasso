@@ -51,19 +51,22 @@ CONFIG_CLEAN_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 liblasso_id_wsf_la_LIBADD =
 am__liblasso_id_wsf_la_SOURCES_DIST = authentication.c discovery.c \
-	interaction_profile_service.c profile_service.c wsf_profile.c
+	interaction_profile_service.c personal_profile_service.c \
+	data_service.c wsf_profile.c
 @WSF_ENABLED_TRUE@am__objects_1 = authentication.lo discovery.lo \
 @WSF_ENABLED_TRUE@	interaction_profile_service.lo \
-@WSF_ENABLED_TRUE@	profile_service.lo wsf_profile.lo
+@WSF_ENABLED_TRUE@	personal_profile_service.lo data_service.lo \
+@WSF_ENABLED_TRUE@	wsf_profile.lo
 am_liblasso_id_wsf_la_OBJECTS = $(am__objects_1)
 liblasso_id_wsf_la_OBJECTS = $(am_liblasso_id_wsf_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)/lasso
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 @AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/authentication.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/data_service.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/discovery.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/interaction_profile_service.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/profile_service.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/personal_profile_service.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/wsf_profile.Plo
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
@@ -76,7 +79,8 @@ LINK = $(LIBTOOL) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 SOURCES = $(liblasso_id_wsf_la_SOURCES)
 DIST_SOURCES = $(am__liblasso_id_wsf_la_SOURCES_DIST)
 am__liblassoinclude_HEADERS_DIST = authentication.h discovery.h \
-	interaction_profile_service.h profile_service.h wsf_profile.h
+	identity.h interaction_profile_service.h \
+	personal_profile_service.h data_service.h wsf_profile.h
 am__installdirs = "$(DESTDIR)$(liblassoincludedir)"
 liblassoincludeHEADERS_INSTALL = $(INSTALL_HEADER)
 HEADERS = $(liblassoinclude_HEADERS)
@@ -290,23 +294,31 @@ INCLUDES = \
 	$(LASSO_CORE_CFLAGS) \
 	-DG_LOG_DOMAIN=\"lasso\"
 
+lasso_private_h_sources = \
+	data_service_private.h \
+	wsf_profile_private.h
+
 @WSF_ENABLED_TRUE@noinst_LTLIBRARIES = liblasso-id-wsf.la
 @WSF_ENABLED_TRUE@WSF_C_FILES = \
 @WSF_ENABLED_TRUE@	authentication.c \
 @WSF_ENABLED_TRUE@	discovery.c \
 @WSF_ENABLED_TRUE@	interaction_profile_service.c \
-@WSF_ENABLED_TRUE@	profile_service.c \
+@WSF_ENABLED_TRUE@	personal_profile_service.c \
+@WSF_ENABLED_TRUE@	data_service.c \
 @WSF_ENABLED_TRUE@	wsf_profile.c	
 
 @WSF_ENABLED_TRUE@WSF_H_FILES = \
 @WSF_ENABLED_TRUE@	authentication.h \
 @WSF_ENABLED_TRUE@	discovery.h \
+@WSF_ENABLED_TRUE@	identity.h \
 @WSF_ENABLED_TRUE@	interaction_profile_service.h \
-@WSF_ENABLED_TRUE@	profile_service.h \
+@WSF_ENABLED_TRUE@	personal_profile_service.h \
+@WSF_ENABLED_TRUE@	data_service.h \
 @WSF_ENABLED_TRUE@	wsf_profile.h
 
 liblasso_id_wsf_la_SOURCES = $(WSF_C_FILES)
 liblassoinclude_HEADERS = $(WSF_H_FILES)
+EXTRA_DIST = $(lasso_private_h_sources)
 all: all-am
 
 .SUFFIXES:
@@ -359,9 +371,10 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/authentication.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/data_service.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/discovery.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/interaction_profile_service.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/profile_service.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/personal_profile_service.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/wsf_profile.Plo@am__quote@
 
 .c.o:

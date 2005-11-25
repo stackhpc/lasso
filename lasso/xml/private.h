@@ -1,4 +1,4 @@
-/* $Id: private.h,v 1.16 2005/04/25 10:43:48 fpeters Exp $ 
+/* $Id: private.h,v 1.17 2005/07/08 10:19:49 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -100,8 +100,7 @@ LassoPemFileType lasso_get_pem_file_type(const char *file);
 xmlSecKey* lasso_get_public_key_from_pem_cert_file(const char *file);
 xmlSecKeysMngr* lasso_load_certs_from_pem_certs_chain_file (const char *file);
 
-xmlChar* lasso_query_sign(xmlChar *query,
-		LassoSignatureMethod sign_method, const char *private_key_file);
+char* lasso_query_sign(char *query, LassoSignatureMethod sign_method, const char *private_key_file);
 
 int lasso_query_verify_signature(const char *query, const xmlSecKey *public_key);
 

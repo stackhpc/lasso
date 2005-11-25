@@ -61,7 +61,7 @@ liblasso_la_LIBADD = \
 # Just make damn sure the ABI stays the same between
 # upgrades.
 # Obviously if you don't, fixing the situation up again can be painful. 
-liblasso_la_LDFLAGS = -no-undefined -version-info @LASSO_VERSION_INFO@ \
+liblasso_la_LDFLAGS = -no-undefined -version-info @LASSO_VERSION_INFO@  \
 	-export-symbols symbols.sym
 endif
 

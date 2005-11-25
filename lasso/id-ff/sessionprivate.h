@@ -1,4 +1,4 @@
-/* $Id: sessionprivate.h,v 1.2 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: sessionprivate.h,v 1.3 2005/08/14 12:00:16 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -45,6 +45,8 @@ LassoSamlpStatus* lasso_session_get_status(
 
 gint lasso_session_remove_status(LassoSession *session, gchar *providerID);
 gint lasso_session_remove_assertion(LassoSession *session, gchar *providerID);
+
+void lasso_session_init_provider_ids(LassoSession *session);
 
 #ifdef __cplusplus
 }

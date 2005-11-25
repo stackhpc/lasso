@@ -15,10 +15,13 @@
       <sub name="LassoLecp" link="LassoLecp.html"/>
       <sub name="LassoLogout" link="LassoLogout.html"/>
       <sub name="LassoDefederation" link="LassoDefederation.html"/>
-      <sub name="LassoNameRegistration" link="lasso-LassoNameRegistration.html"/>
-      <sub name="LassoNameIdentifierMapping" link="lasso-LassoNameIdentifierMapping.html"/>
+      <sub name="LassoNameRegistration" link="LassoNameRegistration.html"/>
+      <sub name="LassoNameIdentifierMapping" link="LassoNameIdentifierMapping.html"/>
     </sub>
-    <sub name="Identity Web Services Framework" link="idwsf.html"/>
+    <sub name="Identity Web Services Framework" link="idwsf.html">
+      <sub name="LassoDiscovery" link="LassoDiscovery.html"/>
+      <sub name="LassoDataService" link="LassoDataService.html"/>
+    </sub>
     <sub name="Schemas" link="xml.html">
       <sub name="LassoNode" link="LassoNode.html"/>
       <sub name="LassoLibAssertion" link="LassoLibAssertion.html"/>
@@ -177,25 +180,49 @@
     <function name="lasso_defederation_init_notification ()" link="LassoDefederation.html#lasso-defederation-init-notification"/>
     <function name="lasso_defederation_process_notification_msg ()" link="LassoDefederation.html#lasso-defederation-process-notification-msg"/>
     <function name="lasso_defederation_validate_notification ()" link="LassoDefederation.html#lasso-defederation-validate-notification"/>
-    <function name="LassoNameRegistration" link="lasso-LassoNameRegistration.html#LassoNameRegistration"/>
-    <function name="lasso_name_registration_new ()" link="lasso-LassoNameRegistration.html#lasso-name-registration-new"/>
-    <function name="lasso_name_registration_destroy ()" link="lasso-LassoNameRegistration.html#lasso-name-registration-destroy"/>
-    <function name="lasso_name_registration_new_from_dump ()" link="lasso-LassoNameRegistration.html#lasso-name-registration-new-from-dump"/>
-    <function name="lasso_name_registration_build_request_msg ()" link="lasso-LassoNameRegistration.html#lasso-name-registration-build-request-msg"/>
-    <function name="lasso_name_registration_build_response_msg ()" link="lasso-LassoNameRegistration.html#lasso-name-registration-build-response-msg"/>
-    <function name="lasso_name_registration_init_request ()" link="lasso-LassoNameRegistration.html#lasso-name-registration-init-request"/>
-    <function name="lasso_name_registration_process_request_msg ()" link="lasso-LassoNameRegistration.html#lasso-name-registration-process-request-msg"/>
-    <function name="lasso_name_registration_process_response_msg ()" link="lasso-LassoNameRegistration.html#lasso-name-registration-process-response-msg"/>
-    <function name="lasso_name_registration_validate_request ()" link="lasso-LassoNameRegistration.html#lasso-name-registration-validate-request"/>
-    <function name="LassoNameIdentifierMapping" link="lasso-LassoNameIdentifierMapping.html#LassoNameIdentifierMapping"/>
-    <function name="lasso_name_identifier_mapping_new ()" link="lasso-LassoNameIdentifierMapping.html#lasso-name-identifier-mapping-new"/>
-    <function name="lasso_name_identifier_mapping_destroy ()" link="lasso-LassoNameIdentifierMapping.html#lasso-name-identifier-mapping-destroy"/>
-    <function name="lasso_name_identifier_mapping_build_request_msg ()" link="lasso-LassoNameIdentifierMapping.html#lasso-name-identifier-mapping-build-request-msg"/>
-    <function name="lasso_name_identifier_mapping_build_response_msg ()" link="lasso-LassoNameIdentifierMapping.html#lasso-name-identifier-mapping-build-response-msg"/>
-    <function name="lasso_name_identifier_mapping_init_request ()" link="lasso-LassoNameIdentifierMapping.html#lasso-name-identifier-mapping-init-request"/>
-    <function name="lasso_name_identifier_mapping_process_request_msg ()" link="lasso-LassoNameIdentifierMapping.html#lasso-name-identifier-mapping-process-request-msg"/>
-    <function name="lasso_name_identifier_mapping_process_response_msg ()" link="lasso-LassoNameIdentifierMapping.html#lasso-name-identifier-mapping-process-response-msg"/>
-    <function name="lasso_name_identifier_mapping_validate_request ()" link="lasso-LassoNameIdentifierMapping.html#lasso-name-identifier-mapping-validate-request"/>
+    <function name="LassoNameRegistration" link="LassoNameRegistration.html#LassoNameRegistration-struct"/>
+    <function name="lasso_name_registration_new ()" link="LassoNameRegistration.html#lasso-name-registration-new"/>
+    <function name="lasso_name_registration_destroy ()" link="LassoNameRegistration.html#lasso-name-registration-destroy"/>
+    <function name="lasso_name_registration_new_from_dump ()" link="LassoNameRegistration.html#lasso-name-registration-new-from-dump"/>
+    <function name="lasso_name_registration_build_request_msg ()" link="LassoNameRegistration.html#lasso-name-registration-build-request-msg"/>
+    <function name="lasso_name_registration_build_response_msg ()" link="LassoNameRegistration.html#lasso-name-registration-build-response-msg"/>
+    <function name="lasso_name_registration_init_request ()" link="LassoNameRegistration.html#lasso-name-registration-init-request"/>
+    <function name="lasso_name_registration_process_request_msg ()" link="LassoNameRegistration.html#lasso-name-registration-process-request-msg"/>
+    <function name="lasso_name_registration_process_response_msg ()" link="LassoNameRegistration.html#lasso-name-registration-process-response-msg"/>
+    <function name="lasso_name_registration_validate_request ()" link="LassoNameRegistration.html#lasso-name-registration-validate-request"/>
+    <function name="LassoNameIdentifierMapping" link="LassoNameIdentifierMapping.html#LassoNameIdentifierMapping-struct"/>
+    <function name="lasso_name_identifier_mapping_new ()" link="LassoNameIdentifierMapping.html#lasso-name-identifier-mapping-new"/>
+    <function name="lasso_name_identifier_mapping_destroy ()" link="LassoNameIdentifierMapping.html#lasso-name-identifier-mapping-destroy"/>
+    <function name="lasso_name_identifier_mapping_build_request_msg ()" link="LassoNameIdentifierMapping.html#lasso-name-identifier-mapping-build-request-msg"/>
+    <function name="lasso_name_identifier_mapping_build_response_msg ()" link="LassoNameIdentifierMapping.html#lasso-name-identifier-mapping-build-response-msg"/>
+    <function name="lasso_name_identifier_mapping_init_request ()" link="LassoNameIdentifierMapping.html#lasso-name-identifier-mapping-init-request"/>
+    <function name="lasso_name_identifier_mapping_process_request_msg ()" link="LassoNameIdentifierMapping.html#lasso-name-identifier-mapping-process-request-msg"/>
+    <function name="lasso_name_identifier_mapping_process_response_msg ()" link="LassoNameIdentifierMapping.html#lasso-name-identifier-mapping-process-response-msg"/>
+    <function name="lasso_name_identifier_mapping_validate_request ()" link="LassoNameIdentifierMapping.html#lasso-name-identifier-mapping-validate-request"/>
+    <function name="LassoDiscovery" link="LassoDiscovery.html#LassoDiscovery-struct"/>
+    <function name="lasso_discovery_new ()" link="LassoDiscovery.html#lasso-discovery-new"/>
+    <function name="lasso_discovery_destroy ()" link="LassoDiscovery.html#lasso-discovery-destroy"/>
+    <function name="lasso_discovery_add_requested_service_type ()" link="LassoDiscovery.html#lasso-discovery-add-requested-service-type"/>
+    <function name="lasso_discovery_build_modify_response_msg ()" link="LassoDiscovery.html#lasso-discovery-build-modify-response-msg"/>
+    <function name="lasso_discovery_build_response_msg ()" link="LassoDiscovery.html#lasso-discovery-build-response-msg"/>
+    <function name="lasso_discovery_get_service ()" link="LassoDiscovery.html#lasso-discovery-get-service"/>
+    <function name="lasso_discovery_get_services ()" link="LassoDiscovery.html#lasso-discovery-get-services"/>
+    <function name="lasso_discovery_init_insert ()" link="LassoDiscovery.html#lasso-discovery-init-insert"/>
+    <function name="lasso_discovery_init_query ()" link="LassoDiscovery.html#lasso-discovery-init-query"/>
+    <function name="lasso_discovery_init_remove ()" link="LassoDiscovery.html#lasso-discovery-init-remove"/>
+    <function name="lasso_discovery_process_modify_msg ()" link="LassoDiscovery.html#lasso-discovery-process-modify-msg"/>
+    <function name="lasso_discovery_process_modify_response_msg ()" link="LassoDiscovery.html#lasso-discovery-process-modify-response-msg"/>
+    <function name="lasso_discovery_process_query_msg ()" link="LassoDiscovery.html#lasso-discovery-process-query-msg"/>
+    <function name="lasso_discovery_process_query_response_msg ()" link="LassoDiscovery.html#lasso-discovery-process-query-response-msg"/>
+    <function name="LassoDataService" link="LassoDataService.html#LassoDataService-struct"/>
+    <function name="lasso_data_service_new ()" link="LassoDataService.html#lasso-data-service-new"/>
+    <function name="lasso_data_service_init_query ()" link="LassoDataService.html#lasso-data-service-init-query"/>
+    <function name="lasso_data_service_add_query_item ()" link="LassoDataService.html#lasso-data-service-add-query-item"/>
+    <function name="lasso_data_service_process_query_msg ()" link="LassoDataService.html#lasso-data-service-process-query-msg"/>
+    <function name="lasso_data_service_build_response_msg ()" link="LassoDataService.html#lasso-data-service-build-response-msg"/>
+    <function name="lasso_data_service_process_query_response_msg ()" link="LassoDataService.html#lasso-data-service-process-query-response-msg"/>
+    <function name="lasso_data_service_get_answer ()" link="LassoDataService.html#lasso-data-service-get-answer"/>
+    <function name="lasso_data_service_get_answer_for_item_id ()" link="LassoDataService.html#lasso-data-service-get-answer-for-item-id"/>
     <function name="LassoNode" link="LassoNode.html#LassoNode-struct"/>
     <function name="enum LassoSignatureType" link="LassoNode.html#LassoSignatureType"/>
     <function name="enum LassoSignatureMethod" link="LassoNode.html#LassoSignatureMethod"/>
@@ -301,6 +328,7 @@
     <function name="lasso_shutdown ()" link="lasso-lasso.html#lasso-shutdown"/>
     <function name="lasso_check_version ()" link="lasso-lasso.html#lasso-check-version"/>
     <function name="enum LassoCheckVersionMode" link="lasso-lasso.html#LassoCheckVersionMode"/>
+    <function name="lasso_register_dst_service ()" link="lasso-lasso.html#lasso-register-dst-service"/>
     <function name="LASSO_LIB_NAME_IDENTIFIER_FORMAT_FEDERATED" link="lasso-strings.html#LASSO-LIB-NAME-IDENTIFIER-FORMAT-FEDERATED:CAPS"/>
     <function name="LASSO_LIB_NAME_IDENTIFIER_FORMAT_ONE_TIME" link="lasso-strings.html#LASSO-LIB-NAME-IDENTIFIER-FORMAT-ONE-TIME:CAPS"/>
     <function name="LASSO_LIB_NAME_IDENTIFIER_FORMAT_ENCRYPTED" link="lasso-strings.html#LASSO-LIB-NAME-IDENTIFIER-FORMAT-ENCRYPTED:CAPS"/>

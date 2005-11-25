@@ -1,4 +1,4 @@
-/* $Id: defederation.h,v 1.12 2005/01/22 15:57:54 eraviart Exp $ 
+/* $Id: defederation.h,v 1.13 2005/08/25 07:41:58 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -48,12 +48,12 @@ typedef struct _LassoDefederationClass LassoDefederationClass;
 
 struct _LassoDefederation {
 	LassoProfile parent;
+	/*< private >*/
+	void *private_data;  /* reserved for future use */
 };
 
 struct _LassoDefederationClass {
 	LassoProfileClass parent;
-	/*< private >*/
-	void *private_data;  /* reserved for future use */
 };
 
 LASSO_EXPORT GType lasso_defederation_get_type(void);
