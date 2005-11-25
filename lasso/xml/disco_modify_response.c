@@ -1,4 +1,4 @@
-/* $Id: disco_modify_response.c,v 1.8 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: disco_modify_response.c,v 1.9 2005/07/30 22:36:53 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -86,7 +86,7 @@ get_xmlNode(LassoNode *node, gboolean lasso_dump)
 	xmlNs *ns;
 
 	xmlnode = parent_class->get_xmlNode(node, lasso_dump);
-	ns = xmlNewNs(xmlnode, LASSO_DISCO_HREF, LASSO_DISCO_PREFIX);
+	ns = xmlNewNs(xmlnode, (xmlChar*)LASSO_DISCO_HREF, (xmlChar*)LASSO_DISCO_PREFIX);
 	insure_namespace(xmlnode, ns);
 
 	return xmlnode;

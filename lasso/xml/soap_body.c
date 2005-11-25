@@ -1,4 +1,4 @@
-/* $Id: soap_body.c,v 1.2 2005/03/18 09:09:49 nclapies Exp $ 
+/* $Id: soap_body.c,v 1.3 2005/09/19 14:16:34 nclapies Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -48,6 +48,7 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "", SNIPPET_LIST_NODES, G_STRUCT_OFFSET(LassoSoapBody, any) },
+	{ "id", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoSoapBody, id) },
 	{ NULL, 0, 0}
 };
 
@@ -59,6 +60,7 @@ static void
 instance_init(LassoSoapBody *node)
 {
 	node->any = NULL;
+	node->id = NULL;
 }
 
 static void

@@ -14,12 +14,14 @@ Name Registration
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### STRUCT LassoNameRegistration ##### -->
 <para>
 
 </para>
 
-@parent: 
 @oldNameIdentifier: 
 
 <!-- ##### FUNCTION lasso_name_registration_new ##### -->

@@ -17,12 +17,9 @@ else
 _lasso_la_LDFLAGS = -no-undefined -module -avoid-version
 endif
 endif
-lasso_wrap.c lasso.py: $(top_srcdir)/swig/Lasso.i $(top_srcdir)/swig/Lasso-wsf.i \
-		$(top_srcdir)/swig/inheritance.h
+SWIG_I_FILES=$(shell find $(top_srcdir)/swig/ -name '*.[ih]')
+lasso_wrap.c lasso.py: $(SWIG_I_FILES)
 	$(SWIG) -v -python -module lasso -o lasso_wrap.c $(top_srcdir)/swig/Lasso.i
-	cp lasso_wrap.c lasso_wrap.c.bak
-	sed -e 's/free(result)/g_free(result)/' \
-			< lasso_wrap.c.bak > lasso_wrap.c
 	cp lasso_wrap.c lasso_wrap.c.bak
 	sed -e 's/^  int res = 0;$$//' \
 			< lasso_wrap.c.bak > lasso_wrap.c
@@ -33,7 +30,6 @@ lasso_wrap.c lasso.py: $(top_srcdir)/swig/Lasso.i $(top_srcdir)/swig/Lasso-wsf.i
 	grep -q "int res =" lasso_wrap.c || \
 		sed -e 's/if (obj == Py_True) /int res = 0; if (obj == Py_True) /' \
 			< lasso_wrap.c.bak > lasso_wrap.c
-			
 
 SWIG_OUTPUTS = lasso_wrap.c lasso.py
 

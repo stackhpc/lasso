@@ -1,4 +1,4 @@
-/* $Id: disco_credentials.c,v 1.5 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: disco_credentials.c,v 1.6 2005/09/19 14:15:38 nclapies Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -42,7 +42,7 @@
 /*****************************************************************************/
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "any", SNIPPET_LIST_NODES, G_STRUCT_OFFSET(LassoDiscoCredentials, any) },
+	{ "", SNIPPET_LIST_NODES, G_STRUCT_OFFSET(LassoDiscoCredentials, any) },
 	{ NULL, 0, 0}
 };
 

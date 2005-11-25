@@ -12,6 +12,9 @@
 /* Define to 1 if you have the <jni.h> header file. */
 #undef HAVE_JNI_H
 
+/* Define to 1 if you have the `sasl2' library (-lsasl2). */
+#undef HAVE_LIBSASL2
+
 /* Define to 1 if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H
 

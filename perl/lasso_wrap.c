@@ -1319,6 +1319,10 @@ static char* get_xml_string(xmlNode *xmlnode)
 	xmlOutputBufferPtr buf;
 	char *xmlString;
 
+	if (xmlnode == NULL) {
+		return NULL;
+	}
+
 	buf = xmlAllocOutputBuffer(NULL);
 	if (buf == NULL)
 		xmlString = NULL;
@@ -1333,6 +1337,19 @@ static char* get_xml_string(xmlNode *xmlnode)
 	}
 	xmlFreeNode(xmlnode);
 	return xmlString;
+}
+
+static xmlNode *get_string_xml(const char *string) {
+	xmlDoc *doc;
+	xmlNode *node;
+
+	doc = xmlReadDoc(string, NULL, NULL, XML_PARSE_NONET);
+	node = xmlDocGetRootElement(doc);
+	if (node != NULL)
+		node = xmlCopyNode(node, 1);
+	xmlFreeDoc(doc);
+
+	return node;
 }
 
 static void set_node(gpointer *nodePointer, gpointer value)
@@ -1424,6 +1441,25 @@ static void set_xml_list(GList **xmlListPointer, GPtrArray *xmlArray) {
 		}
 	}
 }
+
+static void set_xml_string(xmlNode **xmlnode, const char* string)
+{
+	xmlDoc *doc;
+	xmlNode *node;
+
+	doc = xmlReadDoc(string, NULL, NULL, XML_PARSE_NONET);
+	node = xmlDocGetRootElement(doc);
+	if (node != NULL)
+		node = xmlCopyNode(node, 1);
+	xmlFreeDoc(doc);
+
+	if (*xmlnode)
+		xmlFreeNode(*xmlnode);
+
+	*xmlnode = node;
+}
+
+
 
 
 
@@ -2788,6 +2824,12 @@ static void LassoStringList_setItem(LassoStringList *self,int index,char *item){
 #define LassoServer_set_public_key(self, value) set_string(&LASSO_PROVIDER(self)->public_key, (value))
 #define LassoServer_public_key_set(self, value) set_string(&LASSO_PROVIDER(self)->public_key, (value))
 
+/* role */
+#define LassoServer_get_role(self) LASSO_PROVIDER(self)->role
+#define LassoServer_role_get(self) LASSO_PROVIDER(self)->role
+#define LassoServer_set_role(self, value) LASSO_PROVIDER(self)->role = value
+#define LassoServer_role_set(self, value) LASSO_PROVIDER(self)->role = value
+
 /* Attributes implementations */
 
 /* providerIds */
@@ -2884,6 +2926,24 @@ LassoStringList *LassoIdentity_providerIds_get(LassoIdentity *self) {
 
 #define LassoIdentity_dump lasso_identity_dump
 #define LassoIdentity_getFederation lasso_identity_get_federation
+
+#ifdef LASSO_WSF_ENABLED
+#define LassoIdentity_addResourceOffering lasso_identity_add_resource_offering
+#define LassoIdentity_removeResourceOffering lasso_identity_remove_resource_offering
+
+LassoNodeList *LassoIdentity_getOfferings(LassoIdentity *self, const char *service_type) {
+	GPtrArray *array = NULL;
+	GList *list;
+
+	list = lasso_identity_get_offerings(self, service_type);
+	if (list) {
+		array = get_node_list(list);
+		g_list_foreach(list, (GFunc) free_node_list_item, NULL);
+		g_list_free(list);
+	}
+	return array;
+}
+#endif
 
 
 
@@ -3635,6 +3695,31 @@ XS(_wrap_checkVersion) {
 }
 
 
+XS(_wrap_registerDstService) {
+    {
+        char *arg1 = (char *) 0 ;
+        char *arg2 = (char *) 0 ;
+        int argvi = 0;
+        dXSARGS;
+        
+        if ((items < 2) || (items > 2)) {
+            SWIG_croak("Usage: registerDstService(prefix,href);");
+        }
+        if (!SvOK((SV*) ST(0))) arg1 = 0;
+        else arg1 = (char *) SvPV(ST(0), PL_na);
+        if (!SvOK((SV*) ST(1))) arg2 = 0;
+        else arg2 = (char *) SvPV(ST(1), PL_na);
+        lasso_register_dst_service((char const *)arg1,(char const *)arg2);
+        
+        
+        XSRETURN(argvi);
+        fail:
+        ;
+    }
+    croak(Nullch);
+}
+
+
 XS(_wrap_new_Node) {
     {
         LassoNode *result;
@@ -3787,7 +3872,7 @@ XS(_wrap_Node_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -4530,7 +4615,7 @@ XS(_wrap_SamlAdvice_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -5454,7 +5539,7 @@ XS(_wrap_SamlAssertion_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -5708,7 +5793,7 @@ XS(_wrap_SamlAttribute_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -5918,7 +6003,7 @@ XS(_wrap_SamlAttributeDesignator_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -6112,7 +6197,7 @@ XS(_wrap_SamlAttributeStatement_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -6248,7 +6333,7 @@ XS(_wrap_SamlAttributeValue_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -6384,7 +6469,7 @@ XS(_wrap_SamlAudienceRestrictionCondition_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -6710,7 +6795,7 @@ XS(_wrap_SamlAuthenticationStatement_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -6986,7 +7071,7 @@ XS(_wrap_SamlAuthorityBinding_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -7018,7 +7103,7 @@ XS(_wrap_SamlConditionAbstract_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -7344,7 +7429,7 @@ XS(_wrap_SamlConditions_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -7620,7 +7705,7 @@ XS(_wrap_SamlNameIdentifier_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -7652,7 +7737,7 @@ XS(_wrap_SamlStatementAbstract_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -7846,7 +7931,7 @@ XS(_wrap_SamlSubject_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -8048,7 +8133,7 @@ XS(_wrap_SamlSubjectConfirmation_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -8258,7 +8343,7 @@ XS(_wrap_SamlSubjectLocality_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -8394,7 +8479,7 @@ XS(_wrap_SamlSubjectStatement_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -8484,7 +8569,7 @@ XS(_wrap_SamlSubjectStatementAbstract_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -9148,7 +9233,7 @@ XS(_wrap_SamlpRequest_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -10488,7 +10573,7 @@ XS(_wrap_SamlpRequestAbstract_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -11262,7 +11347,7 @@ XS(_wrap_SamlpResponse_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -12756,7 +12841,7 @@ XS(_wrap_SamlpResponseAbstract_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -12958,7 +13043,7 @@ XS(_wrap_SamlpStatus_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -13160,7 +13245,7 @@ XS(_wrap_SamlpStatusCode_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -14085,7 +14170,7 @@ XS(_wrap_LibAssertion_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -15369,7 +15454,7 @@ XS(_wrap_LibAuthnRequest_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -15770,7 +15855,7 @@ XS(_wrap_LibAuthnResponse_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -16722,7 +16807,7 @@ XS(_wrap_LibFederationTerminationNotification_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -17806,7 +17891,7 @@ XS(_wrap_LibLogoutRequest_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -18161,7 +18246,7 @@ XS(_wrap_LibLogoutResponse_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -19175,7 +19260,7 @@ XS(_wrap_LibRegisterNameIdentifierRequest_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -19530,7 +19615,7 @@ XS(_wrap_LibRegisterNameIdentifierResponse_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -19790,7 +19875,7 @@ XS(_wrap_LibRequestAuthnContext_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -20116,7 +20201,7 @@ XS(_wrap_LibStatusResponse_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -20547,7 +20632,7 @@ XS(_wrap_Provider_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -20627,7 +20712,7 @@ XS(_wrap_Provider_getAssertionConsumerServiceUrl) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -20659,7 +20744,7 @@ XS(_wrap_Provider_getBase64SuccinctId) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -20691,7 +20776,7 @@ XS(_wrap_Provider_getOrganization) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -20767,7 +20852,7 @@ XS(_wrap_Provider_getMetadataOne) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -21302,6 +21387,60 @@ XS(_wrap_Server_publicKey_get) {
 }
 
 
+XS(_wrap_Server_role_set) {
+    {
+        LassoServer *arg1 = (LassoServer *) 0 ;
+        LassoProviderRole arg2 ;
+        int argvi = 0;
+        dXSARGS;
+        
+        if ((items < 2) || (items > 2)) {
+            SWIG_croak("Usage: Server_role_set(self,role);");
+        }
+        {
+            if (SWIG_ConvertPtr(ST(0), (void **) &arg1, SWIGTYPE_p_LassoServer,0) < 0) {
+                SWIG_croak("Type error in argument 1 of Server_role_set. Expected _p_LassoServer");
+            }
+        }
+        arg2 = (LassoProviderRole) SvIV(ST(1));
+        LassoServer_role_set(arg1,(LassoProviderRole )arg2);
+        
+        
+        XSRETURN(argvi);
+        fail:
+        ;
+    }
+    croak(Nullch);
+}
+
+
+XS(_wrap_Server_role_get) {
+    {
+        LassoServer *arg1 = (LassoServer *) 0 ;
+        LassoProviderRole result;
+        int argvi = 0;
+        dXSARGS;
+        
+        if ((items < 1) || (items > 1)) {
+            SWIG_croak("Usage: Server_role_get(self);");
+        }
+        {
+            if (SWIG_ConvertPtr(ST(0), (void **) &arg1, SWIGTYPE_p_LassoServer,0) < 0) {
+                SWIG_croak("Type error in argument 1 of Server_role_get. Expected _p_LassoServer");
+            }
+        }
+        result = (LassoProviderRole)LassoServer_role_get(arg1);
+        
+        ST(argvi) = sv_newmortal();
+        sv_setiv(ST(argvi++), (IV) result);
+        XSRETURN(argvi);
+        fail:
+        ;
+    }
+    croak(Nullch);
+}
+
+
 XS(_wrap_Server_providerIds_get) {
     {
         LassoServer *arg1 = (LassoServer *) 0 ;
@@ -21490,7 +21629,7 @@ XS(_wrap_Server_getAssertionConsumerServiceUrl) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -21522,7 +21661,7 @@ XS(_wrap_Server_getBase64SuccinctId) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -21554,7 +21693,7 @@ XS(_wrap_Server_getOrganization) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -21630,7 +21769,7 @@ XS(_wrap_Server_getMetadataOne) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -21713,8 +21852,13 @@ XS(_wrap_Server_addProvider) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -21750,7 +21894,7 @@ XS(_wrap_Server_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -22043,7 +22187,7 @@ XS(_wrap_Federation_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -22266,7 +22410,7 @@ XS(_wrap_Identity_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -22452,7 +22596,7 @@ XS(_wrap_Session_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -23255,8 +23399,13 @@ XS(_wrap_Defederation_setIdentityFromDump) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -23293,8 +23442,13 @@ XS(_wrap_Defederation_setSessionFromDump) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -23328,8 +23482,13 @@ XS(_wrap_Defederation_buildNotificationMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -23372,8 +23531,13 @@ XS(_wrap_Defederation_initNotification) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -23410,8 +23574,13 @@ XS(_wrap_Defederation_processNotificationMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -23445,8 +23614,13 @@ XS(_wrap_Defederation_validateNotification) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -24263,8 +24437,13 @@ XS(_wrap_Login_setIdentityFromDump) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -24301,8 +24480,13 @@ XS(_wrap_Login_setSessionFromDump) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -24336,8 +24520,13 @@ XS(_wrap_Login_acceptSso) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -24373,8 +24562,13 @@ XS(_wrap_Login_buildArtifactMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -24423,8 +24617,13 @@ XS(_wrap_Login_buildAssertion) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -24458,8 +24657,13 @@ XS(_wrap_Login_buildAuthnRequestMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -24493,8 +24697,13 @@ XS(_wrap_Login_buildAuthnResponseMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -24528,8 +24737,13 @@ XS(_wrap_Login_buildRequestMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -24566,8 +24780,13 @@ XS(_wrap_Login_buildResponseMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -24603,7 +24822,7 @@ XS(_wrap_Login_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -24642,8 +24861,13 @@ XS(_wrap_Login_initAuthnRequest) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -24684,8 +24908,13 @@ XS(_wrap_Login_initRequest) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -24724,8 +24953,13 @@ XS(_wrap_Login_initIdpInitiatedAuthnRequest) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -24816,8 +25050,13 @@ XS(_wrap_Login_processAuthnRequestMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -24854,8 +25093,13 @@ XS(_wrap_Login_processAuthnResponseMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -24892,8 +25136,13 @@ XS(_wrap_Login_processRequestMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -24930,8 +25179,13 @@ XS(_wrap_Login_processResponseMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -24968,8 +25222,13 @@ XS(_wrap_Login_setResourceId) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -25007,8 +25266,13 @@ XS(_wrap_Login_validateRequestMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -25767,8 +26031,13 @@ XS(_wrap_Logout_setIdentityFromDump) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -25805,8 +26074,13 @@ XS(_wrap_Logout_setSessionFromDump) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -25840,8 +26114,13 @@ XS(_wrap_Logout_buildRequestMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -25875,8 +26154,13 @@ XS(_wrap_Logout_buildResponseMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -25912,7 +26196,7 @@ XS(_wrap_Logout_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -25944,7 +26228,7 @@ XS(_wrap_Logout_getNextProviderId) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -25983,8 +26267,13 @@ XS(_wrap_Logout_initRequest) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -26021,8 +26310,13 @@ XS(_wrap_Logout_processRequestMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -26059,8 +26353,13 @@ XS(_wrap_Logout_processResponseMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -26094,8 +26393,13 @@ XS(_wrap_Logout_resetProviderIdIndex) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -26129,8 +26433,13 @@ XS(_wrap_Logout_validateRequest) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -26859,8 +27168,13 @@ XS(_wrap_Lecp_setIdentityFromDump) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -26897,8 +27211,13 @@ XS(_wrap_Lecp_setSessionFromDump) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -26947,8 +27266,13 @@ XS(_wrap_Lecp_buildAssertion) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -26985,8 +27309,13 @@ XS(_wrap_Lecp_setResourceId) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -27024,8 +27353,13 @@ XS(_wrap_Lecp_validateRequestMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -27059,8 +27393,13 @@ XS(_wrap_Lecp_buildAuthnRequestEnvelopeMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -27094,8 +27433,13 @@ XS(_wrap_Lecp_buildAuthnRequestMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -27129,8 +27473,13 @@ XS(_wrap_Lecp_buildAuthnResponseEnvelopeMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -27164,8 +27513,13 @@ XS(_wrap_Lecp_buildAuthnResponseMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -27204,8 +27558,13 @@ XS(_wrap_Lecp_initAuthnRequest) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -27242,8 +27601,13 @@ XS(_wrap_Lecp_processAuthnRequestEnvelopeMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -27280,8 +27644,13 @@ XS(_wrap_Lecp_processAuthnRequestMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -27318,8 +27687,13 @@ XS(_wrap_Lecp_processAuthnResponseEnvelopeMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -28048,8 +28422,13 @@ XS(_wrap_NameIdentifierMapping_setIdentityFromDump) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -28086,8 +28465,13 @@ XS(_wrap_NameIdentifierMapping_setSessionFromDump) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -28121,8 +28505,13 @@ XS(_wrap_NameIdentifierMapping_buildRequestMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -28156,8 +28545,13 @@ XS(_wrap_NameIdentifierMapping_buildResponseMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -28199,8 +28593,13 @@ XS(_wrap_NameIdentifierMapping_initRequest) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -28237,8 +28636,13 @@ XS(_wrap_NameIdentifierMapping_processRequestMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -28275,8 +28679,13 @@ XS(_wrap_NameIdentifierMapping_processResponseMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -28310,8 +28719,13 @@ XS(_wrap_NameIdentifierMapping_validateRequest) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -29128,8 +29542,13 @@ XS(_wrap_NameRegistration_setIdentityFromDump) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -29166,8 +29585,13 @@ XS(_wrap_NameRegistration_setSessionFromDump) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -29201,8 +29625,13 @@ XS(_wrap_NameRegistration_buildRequestMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -29236,8 +29665,13 @@ XS(_wrap_NameRegistration_buildResponseMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -29273,7 +29707,7 @@ XS(_wrap_NameRegistration_dump) {
         } else {
             sv_setsv((SV*)ST(argvi++), &PL_sv_undef);
         }
-        free(result);
+        g_free(result);
         XSRETURN(argvi);
         fail:
         ;
@@ -29310,8 +29744,13 @@ XS(_wrap_NameRegistration_initRequest) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -29348,8 +29787,13 @@ XS(_wrap_NameRegistration_processRequestMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -29386,8 +29830,13 @@ XS(_wrap_NameRegistration_processResponseMsg) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -29421,8 +29870,13 @@ XS(_wrap_NameRegistration_validateRequest) {
             
             if (errorCode) {
                 char errorMsg[256];
+                int swig_error = SWIG_RuntimeError;
+                if (errorCode == -501 || 
+                errorCode == -501) {
+                    swig_error = SWIG_ValueError;
+                }
                 build_exception_msg(errorCode, errorMsg);
-                SWIG_exception(SWIG_UnknownError, errorMsg);
+                SWIG_exception(swig_error, errorMsg);
             }
         }
         ST(argvi) = sv_newmortal();
@@ -29644,6 +30098,7 @@ static swig_constant_info swig_constants[] = {
 { SWIG_INT,     (char *) SWIG_prefix "SIGNATURE_METHOD_RSA_SHA1", (long) LASSO_SIGNATURE_METHOD_RSA_SHA1, 0, 0, 0},
 { SWIG_INT,     (char *) SWIG_prefix "SIGNATURE_METHOD_DSA_SHA1", (long) LASSO_SIGNATURE_METHOD_DSA_SHA1, 0, 0, 0},
 { SWIG_INT,     (char *) SWIG_prefix "ERROR_UNDEFINED", (long) -1, 0, 0, 0},
+{ SWIG_INT,     (char *) SWIG_prefix "ERROR_UNIMPLEMENTED", (long) -2, 0, 0, 0},
 { SWIG_INT,     (char *) SWIG_prefix "XML_ERROR_NODE_NOT_FOUND", (long) -10, 0, 0, 0},
 { SWIG_INT,     (char *) SWIG_prefix "XML_ERROR_NODE_CONTENT_NOT_FOUND", (long) -11, 0, 0, 0},
 { SWIG_INT,     (char *) SWIG_prefix "XML_ERROR_ATTR_NOT_FOUND", (long) -12, 0, 0, 0},
@@ -29691,11 +30146,12 @@ static swig_constant_info swig_constants[] = {
 { SWIG_INT,     (char *) SWIG_prefix "LASSO_PARAM_ERROR_CHECK_FAILED", (long) -503, 0, 0, 0},
 { SWIG_INT,     (char *) SWIG_prefix "LOGIN_ERROR_FEDERATION_NOT_FOUND", (long) 601, 0, 0, 0},
 { SWIG_INT,     (char *) SWIG_prefix "LOGIN_ERROR_CONSENT_NOT_OBTAINED", (long) 602, 0, 0, 0},
-{ SWIG_INT,     (char *) SWIG_prefix "LASSO_LOGIN_ERROR_INVALID_NAMEIDPOLICY", (long) -603, 0, 0, 0},
-{ SWIG_INT,     (char *) SWIG_prefix "LASSO_LOGIN_ERROR_REQUEST_DENIED", (long) 604, 0, 0, 0},
+{ SWIG_INT,     (char *) SWIG_prefix "LOGIN_ERROR_INVALID_NAMEIDPOLICY", (long) -603, 0, 0, 0},
+{ SWIG_INT,     (char *) SWIG_prefix "LOGIN_ERROR_REQUEST_DENIED", (long) 604, 0, 0, 0},
 { SWIG_INT,     (char *) SWIG_prefix "LOGIN_ERROR_INVALID_SIGNATURE", (long) 605, 0, 0, 0},
 { SWIG_INT,     (char *) SWIG_prefix "LOGIN_ERROR_UNSIGNED_AUTHN_REQUEST", (long) 606, 0, 0, 0},
 { SWIG_INT,     (char *) SWIG_prefix "LOGIN_ERROR_STATUS_NOT_SUCCESS", (long) 607, 0, 0, 0},
+{ SWIG_INT,     (char *) SWIG_prefix "LOGIN_ERROR_UNKNOWN_PRINCIPAL", (long) 608, 0, 0, 0},
 { SWIG_INT,     (char *) SWIG_prefix "DEFEDERATION_ERROR_MISSING_NAME_IDENTIFIER", (long) -700, 0, 0, 0},
 { SWIG_INT,     (char *) SWIG_prefix "CHECK_VERSION_EXACT", (long) LASSO_CHECK_VERSION_EXACT, 0, 0, 0},
 { SWIG_INT,     (char *) SWIG_prefix "CHECK_VERSIONABI_COMPATIBLE", (long) LASSO_CHECK_VERSIONABI_COMPATIBLE, 0, 0, 0},
@@ -29712,6 +30168,7 @@ static swig_command_info swig_commands[] = {
 {"lassoc::init", _wrap_init},
 {"lassoc::shutdown", _wrap_shutdown},
 {"lassoc::checkVersion", _wrap_checkVersion},
+{"lassoc::registerDstService", _wrap_registerDstService},
 {"lassoc::new_Node", _wrap_new_Node},
 {"lassoc::delete_Node", _wrap_delete_Node},
 {"lassoc::Node_dump", _wrap_Node_dump},
@@ -30248,6 +30705,8 @@ static swig_command_info swig_commands[] = {
 {"lassoc::Server_providerId_get", _wrap_Server_providerId_get},
 {"lassoc::Server_publicKey_set", _wrap_Server_publicKey_set},
 {"lassoc::Server_publicKey_get", _wrap_Server_publicKey_get},
+{"lassoc::Server_role_set", _wrap_Server_role_set},
+{"lassoc::Server_role_get", _wrap_Server_role_get},
 {"lassoc::Server_providerIds_get", _wrap_Server_providerIds_get},
 {"lassoc::new_Server", _wrap_new_Server},
 {"lassoc::delete_Server", _wrap_delete_Server},

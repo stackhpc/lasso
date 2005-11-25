@@ -1,4 +1,4 @@
-/* $Id: identityprivate.h,v 1.1 2005/01/26 07:55:52 fpeters Exp $
+/* $Id: identityprivate.h,v 1.5 2005/08/12 22:16:43 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *

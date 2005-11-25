@@ -1,4 +1,4 @@
-/* $Id: soap_body.h,v 1.2 2005/03/18 09:09:49 nclapies Exp $ 
+/* $Id: soap_body.h,v 1.3 2005/09/19 14:16:34 nclapies Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -49,6 +49,7 @@ struct _LassoSoapBody {
 	LassoNode parent;
 
 	GList *any;
+	gchar *id;
 	/* TODO : supports of any attributes */
 };
 

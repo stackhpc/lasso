@@ -1102,6 +1102,10 @@ static char* get_xml_string(xmlNode *xmlnode)
 	xmlOutputBufferPtr buf;
 	char *xmlString;
 
+	if (xmlnode == NULL) {
+		return NULL;
+	}
+
 	buf = xmlAllocOutputBuffer(NULL);
 	if (buf == NULL)
 		xmlString = NULL;
@@ -1116,6 +1120,19 @@ static char* get_xml_string(xmlNode *xmlnode)
 	}
 	xmlFreeNode(xmlnode);
 	return xmlString;
+}
+
+static xmlNode *get_string_xml(const char *string) {
+	xmlDoc *doc;
+	xmlNode *node;
+
+	doc = xmlReadDoc(string, NULL, NULL, XML_PARSE_NONET);
+	node = xmlDocGetRootElement(doc);
+	if (node != NULL)
+		node = xmlCopyNode(node, 1);
+	xmlFreeDoc(doc);
+
+	return node;
 }
 
 static void set_node(gpointer *nodePointer, gpointer value)
@@ -1207,6 +1224,25 @@ static void set_xml_list(GList **xmlListPointer, GPtrArray *xmlArray) {
 		}
 	}
 }
+
+static void set_xml_string(xmlNode **xmlnode, const char* string)
+{
+	xmlDoc *doc;
+	xmlNode *node;
+
+	doc = xmlReadDoc(string, NULL, NULL, XML_PARSE_NONET);
+	node = xmlDocGetRootElement(doc);
+	if (node != NULL)
+		node = xmlCopyNode(node, 1);
+	xmlFreeDoc(doc);
+
+	if (*xmlnode)
+		xmlFreeNode(*xmlnode);
+
+	*xmlnode = node;
+}
+
+
 
 
 static int _wrap_propset_LassoNode(zend_property_reference *property_reference, pval *value);
@@ -2727,6 +2763,12 @@ static int _propget_LassoServer(zend_property_reference *property_reference, pva
 #define LassoServer_set_public_key(self, value) set_string(&LASSO_PROVIDER(self)->public_key, (value))
 #define LassoServer_public_key_set(self, value) set_string(&LASSO_PROVIDER(self)->public_key, (value))
 
+/* role */
+#define LassoServer_get_role(self) LASSO_PROVIDER(self)->role
+#define LassoServer_role_get(self) LASSO_PROVIDER(self)->role
+#define LassoServer_set_role(self, value) LASSO_PROVIDER(self)->role = value
+#define LassoServer_role_set(self, value) LASSO_PROVIDER(self)->role = value
+
 /* Attributes implementations */
 
 /* providerIds */
@@ -2831,6 +2873,24 @@ LassoStringList *LassoIdentity_providerIds_get(LassoIdentity *self) {
 
 #define LassoIdentity_dump lasso_identity_dump
 #define LassoIdentity_getFederation lasso_identity_get_federation
+
+#ifdef LASSO_WSF_ENABLED
+#define LassoIdentity_addResourceOffering lasso_identity_add_resource_offering
+#define LassoIdentity_removeResourceOffering lasso_identity_remove_resource_offering
+
+LassoNodeList *LassoIdentity_getOfferings(LassoIdentity *self, const char *service_type) {
+	GPtrArray *array = NULL;
+	GList *list;
+
+	list = lasso_identity_get_offerings(self, service_type);
+	if (list) {
+		array = get_node_list(list);
+		g_list_foreach(list, (GFunc) free_node_list_item, NULL);
+		g_list_free(list);
+	}
+	return array;
+}
+#endif
 
 
 static int _wrap_propset_LassoSession(zend_property_reference *property_reference, pval *value);
@@ -4121,6 +4181,8 @@ function_entry lasso_functions[] = {
 		_wrap_lasso_shutdown, NULL)
 	ZEND_NAMED_FE(lasso_check_version,
 		_wrap_lasso_check_version, NULL)
+	ZEND_NAMED_FE(lasso_register_dst_service,
+		_wrap_lasso_register_dst_service, NULL)
 	ZEND_NAMED_FE(lasso_getrequesttypefromsoapmsg,
 		_wrap_lasso_getRequestTypeFromSoapMsg, NULL)
 	ZEND_NAMED_FE(lasso_islibertyquery,
@@ -4517,6 +4579,34 @@ ZEND_NAMED_FUNCTION(_wrap_lasso_check_version) {
     
     
     ZVAL_LONG(return_value,result);
+    
+}
+
+
+ZEND_NAMED_FUNCTION(_wrap_lasso_register_dst_service) {
+    char *arg1 = (char *) 0 ;
+    char *arg2 = (char *) 0 ;
+    zval **args[3];
+    int argbase=0 ;
+    
+    if (this_ptr && this_ptr->type==IS_OBJECT) {
+        /* fake this_ptr as first arg (till we can work out how to do it better */
+        argbase++;
+    }
+    if(((ZEND_NUM_ARGS() + argbase )!= 2) || (zend_get_parameters_array_ex(2-argbase, args)!= SUCCESS)) {
+        WRONG_PARAM_COUNT;
+    }
+    
+    
+    convert_to_string_ex(((0<argbase)?(&this_ptr):(args[0-argbase])));
+    arg1 = (char *) Z_STRVAL_PP(((0<argbase)?(&this_ptr):(args[0-argbase])));
+    
+    
+    convert_to_string_ex(args[1-argbase]);
+    arg2 = (char *) Z_STRVAL_PP(args[1-argbase]);
+    
+    lasso_register_dst_service((char const *)arg1,(char const *)arg2);
+    
     
 }
 
@@ -27201,6 +27291,60 @@ static pval _wrap_LassoServer_public_key_get(zend_property_reference *property_r
 }
 
 
+static int _wrap_LassoServer_role_set(zend_property_reference *property_reference, pval *value) {
+    LassoServer *arg1 = (LassoServer *) 0 ;
+    LassoProviderRole arg2 ;
+    zval **args[3];
+    int argbase=0 ;
+    TSRMLS_FETCH();
+
+    if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoServer) < 0) {
+        if ((*&(property_reference->object))->type == IS_NULL)
+        arg1 = 0;
+        else
+        zend_error(E_ERROR, "Type error in argument %d of LassoServer_role_set. Expected %s",
+        1-argbase, SWIGTYPE_p_LassoServer->name);
+    }
+    
+    
+    convert_to_long_ex(&value);
+    arg2 = (LassoProviderRole) Z_LVAL_PP(&value);
+    
+    LassoServer_role_set(arg1,(LassoProviderRole )arg2);
+    
+    
+    return SUCCESS;
+}
+
+
+static pval _wrap_LassoServer_role_get(zend_property_reference *property_reference) {
+    LassoServer *arg1 = (LassoServer *) 0 ;
+    LassoProviderRole result;
+    zval **args[2];
+    int argbase=0 ;
+    zval _return_value;
+    zval *return_value=&_return_value;
+    TSRMLS_FETCH();
+
+    
+    
+    if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoServer) < 0) {
+        if ((*&(property_reference->object))->type == IS_NULL)
+        arg1 = 0;
+        else
+        zend_error(E_ERROR, "Type error in argument %d of LassoServer_role_get. Expected %s",
+        1-argbase, SWIGTYPE_p_LassoServer->name);
+    }
+    
+    result = (LassoProviderRole)LassoServer_role_get(arg1);
+    
+    
+    ZVAL_LONG(return_value,result);
+    
+    return _return_value;
+}
+
+
 static pval _wrap_LassoServer_providerIds_get(zend_property_reference *property_reference) {
     LassoServer *arg1 = (LassoServer *) 0 ;
     LassoStringList *result;
@@ -27876,6 +28020,9 @@ static int _propget_LassoServer(zend_property_reference *property_reference, pva
   if (strcmp(propname,"providerIds")==0) {
     *value=_wrap_LassoServer_providerIds_get(property_reference);
     return SUCCESS;
+  } else  if (strcmp(propname,"role")==0) {
+    *value=_wrap_LassoServer_role_get(property_reference);
+    return SUCCESS;
   } else  if (strcmp(propname,"private_key_password")==0) {
     *value=_wrap_LassoServer_private_key_password_get(property_reference);
     return SUCCESS;
@@ -27936,6 +28083,8 @@ static int _propset_LassoServer(zend_property_reference *property_reference, pva
     return _wrap_LassoServer_signature_method_set(property_reference, value);
   } else  if (strcmp(propname,"public_key")==0) {
     return _wrap_LassoServer_public_key_set(property_reference, value);
+  } else  if (strcmp(propname,"role")==0) {
+    return _wrap_LassoServer_role_set(property_reference, value);
   } else  return FAILURE;
 }
 
@@ -38512,6 +38661,7 @@ REGISTER_STRING_CONSTANT("LASSO_SAML_AUTHENTICATION_METHOD_LIBERTY", "urn:libert
 REGISTER_LONG_CONSTANT( "LASSO_SIGNATURE_METHOD_RSA_SHA1", LASSO_SIGNATURE_METHOD_RSA_SHA1, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT( "LASSO_SIGNATURE_METHOD_DSA_SHA1", LASSO_SIGNATURE_METHOD_DSA_SHA1, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT( "LASSO_ERROR_UNDEFINED", -1, CONST_CS | CONST_PERSISTENT);
+REGISTER_LONG_CONSTANT( "LASSO_ERROR_UNIMPLEMENTED", -2, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT( "LASSO_XML_ERROR_NODE_NOT_FOUND", -10, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT( "LASSO_XML_ERROR_NODE_CONTENT_NOT_FOUND", -11, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT( "LASSO_XML_ERROR_ATTR_NOT_FOUND", -12, CONST_CS | CONST_PERSISTENT);
@@ -38564,6 +38714,7 @@ REGISTER_LONG_CONSTANT( "LASSO_LOGIN_ERROR_REQUEST_DENIED", 604, CONST_CS | CONS
 REGISTER_LONG_CONSTANT( "LASSO_LOGIN_ERROR_INVALID_SIGNATURE", 605, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT( "LASSO_LOGIN_ERROR_UNSIGNED_AUTHN_REQUEST", 606, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT( "LASSO_LOGIN_ERROR_STATUS_NOT_SUCCESS", 607, CONST_CS | CONST_PERSISTENT);
+REGISTER_LONG_CONSTANT( "LASSO_LOGIN_ERROR_UNKNOWN_PRINCIPAL", 608, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT( "LASSO_DEFEDERATION_ERROR_MISSING_NAME_IDENTIFIER", -700, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT( "LASSO_CHECK_VERSION_EXACT", LASSO_CHECK_VERSION_EXACT, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT( "LASSO_CHECK_VERSIONABI_COMPATIBLE", LASSO_CHECK_VERSIONABI_COMPATIBLE, CONST_CS | CONST_PERSISTENT);

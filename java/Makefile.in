@@ -324,6 +324,7 @@ SWIG_OUTPUTS = lasso_wrap.c \
 	SWIGTYPE_p_LassoSignatureType.java SWIGTYPE_p_void.java
 
 @WSF_ENABLED_TRUE@SWIG_WSF_OUTPUTS = Authentication.java \
+@WSF_ENABLED_TRUE@	DataService.java \
 @WSF_ENABLED_TRUE@	DiscoAuthenticateRequester.java \
 @WSF_ENABLED_TRUE@	DiscoAuthenticateSessionContext.java \
 @WSF_ENABLED_TRUE@	DiscoAuthorizeRequester.java \
@@ -367,7 +368,6 @@ SWIG_OUTPUTS = lasso_wrap.c \
 @WSF_ENABLED_TRUE@	IsText.java \
 @WSF_ENABLED_TRUE@	IsUserInteraction.java \
 @WSF_ENABLED_TRUE@	lassoConstants.java \
-@WSF_ENABLED_TRUE@	ProfileService.java \
 @WSF_ENABLED_TRUE@	SaCredentials.java \
 @WSF_ENABLED_TRUE@	SaSASLRequest.java \
 @WSF_ENABLED_TRUE@	SaSASLResponse.java \
@@ -388,6 +388,7 @@ JAVA_CRUFT = $(JAVA_PATH)lasso.class lasso_wrap.o lasso.jar $(JAVA_PATH)lasso.ja
 EXTRA_DIST = $(SWIG_OUTPUTS) $(SWIG_WSF_OUTPUTS)
 CLEANFILES = $(JAVA_CRUFT)
 MAINTAINERCLEANFILES = $(SWIG_OUTPUTS) $(SWIG_WSF_OUTPUTS)
+SWIG_I_FILES = $(shell find $(top_srcdir)/swig/ -name '*.[ih]')
 all: all-am
 
 .SUFFIXES:
@@ -735,9 +736,7 @@ uninstall-am: uninstall-info-am uninstall-javalibLTLIBRARIES \
 	tags uninstall uninstall-am uninstall-info-am \
 	uninstall-javalibLTLIBRARIES uninstall-javashareDATA
 
-
-lasso_wrap.c lasso.java: $(top_srcdir)/swig/Lasso.i $(top_srcdir)/swig/Lasso-wsf.i \
-		$(top_srcdir)/swig/inheritance.h
+lasso_wrap.c lasso.java: $(SWIG_I_FILES)
 	$(SWIG) -v -java -module lasso -package com.entrouvert.lasso -o lasso_wrap.c \
 		$(top_srcdir)/swig/Lasso.i
 	cp lasso_wrap.c lasso_wrap.c.bak

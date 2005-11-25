@@ -1,4 +1,4 @@
-/* $Id: lib_federation_termination_notification.c,v 1.24 2005/05/10 14:05:08 fpeters Exp $ 
+/* $Id: lib_federation_termination_notification.c,v 1.25 2005/07/30 22:36:54 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -96,8 +96,8 @@ build_query(LassoNode *node)
 	query = lasso_node_build_query_from_snippets(node);
 
 	if (request->RelayState) {
-		t = xmlURIEscapeStr(request->RelayState, NULL);
-		s = g_strdup_printf(t, "%s&RelayState=%s", query, request->RelayState);
+		t = xmlURIEscapeStr((xmlChar*)request->RelayState, NULL);
+		s = g_strdup_printf((char*)t, "%s&RelayState=%s", query, request->RelayState);
 		xmlFree(t);
 		g_free(query);
 		query = s;

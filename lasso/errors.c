@@ -1,4 +1,4 @@
-/* $Id: errors.c,v 1.4 2005/02/14 13:55:48 rchantereau Exp $ 
+/* $Id: errors.c,v 1.6 2005/08/12 09:10:19 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -31,6 +31,8 @@ const char*
 lasso_strerror(int error_code)
 {
 	switch (error_code) {
+		case LASSO_ERROR_UNIMPLEMENTED:
+			return "Unimplemented part of Lasso";
 		case LASSO_XML_ERROR_NODE_NOT_FOUND:
 			return "Unable to get child of element.";
 		case LASSO_XML_ERROR_NODE_CONTENT_NOT_FOUND:
@@ -126,6 +128,8 @@ lasso_strerror(int error_code)
 
 		case LASSO_DEFEDERATION_ERROR_MISSING_NAME_IDENTIFIER:
 			return "Name identifier not found in request";
+		case LASSO_LOGIN_ERROR_UNKNOWN_PRINCIPAL:
+			return "Unknown principal";
 
 		default:
 			return "Undefined error code.";

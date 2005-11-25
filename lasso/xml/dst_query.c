@@ -1,4 +1,4 @@
-/* $Id: dst_query.c,v 1.11 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: dst_query.c,v 1.15 2005/09/11 09:08:30 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -84,11 +84,30 @@ get_xmlNode(LassoNode *node, gboolean lasso_dump)
 	xmlNs *ns;
 
 	xmlnode = parent_class->get_xmlNode(node, lasso_dump);
-	ns = xmlNewNs(xmlnode, LASSO_DST_QUERY(node)->hrefServiceType,
-			LASSO_DST_QUERY(node)->prefixServiceType);
+	ns = xmlNewNs(xmlnode, (xmlChar*)LASSO_DST_QUERY(node)->hrefServiceType,
+			(xmlChar*)LASSO_DST_QUERY(node)->prefixServiceType);
 	insure_namespace(xmlnode, ns);
 
 	return xmlnode;
+}
+
+static int
+init_from_xml(LassoNode *node, xmlNode *xmlnode)
+{
+	int rc;
+	LassoDstQuery *query = LASSO_DST_QUERY(node);
+
+	rc = parent_class->init_from_xml(node, xmlnode);
+	if (rc) return rc;
+
+	query->hrefServiceType = g_strdup((char*)xmlnode->ns->href);
+	query->prefixServiceType = lasso_get_prefix_for_dst_service_href(
+			query->hrefServiceType);
+	if (query->prefixServiceType == NULL) {
+		/* XXX: what to do here ? */
+	}
+
+	return 0;
 }
 
 /*****************************************************************************/
@@ -110,13 +129,14 @@ instance_init(LassoDstQuery *node)
 static void
 class_init(LassoDstQueryClass *klass)
 {
-	LassoNodeClass *nodeClass = LASSO_NODE_CLASS(klass);
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
 
 	parent_class = g_type_class_peek_parent(klass);
-	nodeClass->get_xmlNode = get_xmlNode;
-	nodeClass->node_data = g_new0(LassoNodeClassData, 1);
-	lasso_node_class_set_nodename(nodeClass, "Query");
-	lasso_node_class_add_snippets(nodeClass, schema_snippets);
+	nclass->get_xmlNode = get_xmlNode;
+	nclass->init_from_xml = init_from_xml;
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "Query");
+	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
 
 GType
@@ -143,16 +163,25 @@ lasso_dst_query_get_type()
 	return this_type;
 }
 
+
+/**
+ * lasso_dst_query_new:
+ * @query_item: query item to embed in request (optional)
+ *
+ * Creates a new #LassoDstQuery object.  If @query_item is set it is added to
+ * the requested query items.
+ *
+ * Return value: a newly created #LassoDstQuery object.
+ **/
 LassoDstQuery*
 lasso_dst_query_new(LassoDstQueryItem *queryItem)
 {
 	LassoDstQuery *query;
 
-	g_return_val_if_fail(LASSO_IS_DST_QUERY_ITEM(queryItem), NULL);
-
 	query = g_object_new(LASSO_TYPE_DST_QUERY, NULL);
 
-	query->QueryItem = g_list_append(query->QueryItem, queryItem);
+	if (queryItem)
+		query->QueryItem = g_list_append(query->QueryItem, queryItem);
 
 	return query;
 }

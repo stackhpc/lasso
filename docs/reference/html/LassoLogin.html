@@ -1,4 +1,41 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>LassoLogin</title><meta name="generator" content="DocBook XSL Stylesheets V1.68.1"><link rel="start" href="index.html" title="Lasso Reference Manual"><link rel="up" href="idff.html" title="Identity Federation Framework"><link rel="prev" href="LassoProfile.html" title="LassoProfile"><link rel="next" href="LassoLecp.html" title="LassoLecp"><meta name="generator" content="GTK-Doc V1.3 (XML mode)"><link rel="stylesheet" href="style.css" type="text/css"><link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview"><link rel="chapter" href="architecture.html" title="Lasso Architecture"><link rel="chapter" href="idff.html" title="Identity Federation Framework"><link rel="chapter" href="idwsf.html" title="Identity Web Services Framework"><link rel="chapter" href="xml.html" title="Schemas"><link rel="chapter" href="misc.html" title="Misc"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="LassoProfile.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="idff.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">Lasso Reference Manual</th><td><a accesskey="n" href="LassoLecp.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="LassoLogin"></a><div class="titlepage"></div><div class="refnamediv"><table width="100%"><tr><td valign="top"><h2><span class="refentrytitle">LassoLogin</span></h2><p>LassoLogin &#8212; Single Sign-On and Federation Profile</p></td><td valign="top" align="right"></td></tr></table></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>LassoLogin</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.68.1">
+<link rel="start" href="index.html" title="Lasso Reference Manual">
+<link rel="up" href="idff.html" title="Identity Federation Framework">
+<link rel="prev" href="LassoProfile.html" title="LassoProfile">
+<link rel="next" href="LassoLecp.html" title="LassoLecp">
+<meta name="generator" content="GTK-Doc V1.4 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
+<link rel="chapter" href="architecture.html" title="Lasso Architecture">
+<link rel="chapter" href="idff.html" title="Identity Federation Framework">
+<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework">
+<link rel="chapter" href="xml.html" title="Schemas">
+<link rel="chapter" href="misc.html" title="Misc">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="LassoProfile.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="idff.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Lasso Reference Manual</th>
+<td><a accesskey="n" href="LassoLecp.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry" lang="en">
+<a name="LassoLogin"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle">LassoLogin</span></h2>
+<p>LassoLogin &#8212; Single Sign-On and Federation Profile</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<h2>Synopsis</h2>
+<pre class="synopsis">
 
 #include &lt;lasso/lasso.h&gt;
 
@@ -59,14 +96,22 @@ enum        <a href="LassoLogin.html#LassoLoginProtocolProfile">LassoLoginProtoc
 <GTKDOCLINK HREF="int">int</GTKDOCLINK>         <a href="LassoLogin.html#lasso-login-set-resourceId">lasso_login_set_resourceId</a>      (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login,
                                              const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *content);
 
-</pre></div><div class="refsect1" lang="en"><a name="id2545376"></a><h2>Object Hierarchy</h2><pre class="synopsis">
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="id2530090"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
 
   <GTKDOCLINK HREF="GObject">GObject</GTKDOCLINK>
    +----<a href="LassoNode.html" title="LassoNode">LassoNode</a>
          +----<a href="LassoProfile.html" title="LassoProfile">LassoProfile</a>
                +----LassoLogin
                      +----<a href="LassoLecp.html" title="LassoLecp">LassoLecp</a>
-</pre></div><div class="refsect1" lang="en"><a name="id2545418"></a><h2>Description</h2><p>
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="id2530131"></a><h2>Description</h2>
+<p>
 The Single Sign On process allows a user to log in once to an identity provider
 (IdP), and to be then transparently loged in to the required service providers
 (SP) belonging to the IP "circle of trust".  Subordinating different identities
@@ -75,17 +120,35 @@ Federation".  The liberty Alliance specifications allows, thanks to this
 federation, strong and unique authentication coupled with control by the user
 of his personnal informations. The explicit user agreement is necessary before
 proceeding to Identity Federation.
-</p><p>
+</p>
+<p>
 The service provider must implement the following process:
-</p><div class="itemizedlist"><ul type="disc"><li><p>creating an authentication request (<a href="LassoLibAuthnRequest.html" title="LassoLibAuthnRequest"><span class="type">LassoLibAuthnRequest</span></a>) with
- <a href="LassoLogin.html#lasso-login-init-authn-request"><code class="function">lasso_login_init_authn_request()</code></a>;</p></li><li><p>sending it to the identity provider with
- <a href="LassoLogin.html#lasso-login-build-authn-request-msg"><code class="function">lasso_login_build_authn_request_msg()</code></a>;</p></li><li><p>receiving and processing the answer:
-   </p><div class="itemizedlist"><ul type="circle"><li>either an authentication response with
-     <a href="LassoLogin.html#lasso-login-process-authn-response-msg"><code class="function">lasso_login_process_authn_response_msg()</code></a></li><li>or an artifact with <a href="LassoLogin.html#lasso-login-init-request"><code class="function">lasso_login_init_request()</code></a> then sending the
+</p>
+<div class="itemizedlist"><ul type="disc">
+<li><p>creating an authentication request (<a href="LassoLibAuthnRequest.html" title="LassoLibAuthnRequest"><span class="type">LassoLibAuthnRequest</span></a>) with
+ <a href="LassoLogin.html#lasso-login-init-authn-request"><code class="function">lasso_login_init_authn_request()</code></a>;</p></li>
+<li><p>sending it to the identity provider with
+ <a href="LassoLogin.html#lasso-login-build-authn-request-msg"><code class="function">lasso_login_build_authn_request_msg()</code></a>;</p></li>
+<li>
+<p>receiving and processing the answer:
+   </p>
+<div class="itemizedlist"><ul type="circle">
+<li>either an authentication response with
+     <a href="LassoLogin.html#lasso-login-process-authn-response-msg"><code class="function">lasso_login_process_authn_response_msg()</code></a>
+</li>
+<li>or an artifact with <a href="LassoLogin.html#lasso-login-init-request"><code class="function">lasso_login_init_request()</code></a> then sending the
      request to the IdP with <a href="LassoLogin.html#lasso-login-build-request-msg"><code class="function">lasso_login_build_request_msg()</code></a> and processing the
-     new answer with <a href="LassoLogin.html#lasso-login-process-response-msg"><code class="function">lasso_login_process_response_msg()</code></a>.</li></ul></div><p>
-   </p></li></ul></div><p>
-</p><div class="example"><a name="id2545551"></a><p class="title"><b>Example 1. Service Provider Login URL</b></p><pre class="programlisting">
+     new answer with <a href="LassoLogin.html#lasso-login-process-response-msg"><code class="function">lasso_login_process_response_msg()</code></a>.</li>
+</ul></div>
+<p>
+   </p>
+</li>
+</ul></div>
+<p>
+</p>
+<div class="example">
+<a name="id2530264"></a><p class="title"><b>Example&#160;1.&#160;Service Provider Login URL</b></p>
+<pre class="programlisting">
 LassoLogin *login;
 
 login = lasso_login_new(server);
@@ -103,7 +166,11 @@ lasso_login_build_authn_request_msg(login);
 
 /* redirect user to identity provider */
 printf("Location: <code class="literal">s</code>\n\nRedirected to IdP\n", LASSO_PROFILE(login)-&gt;msg_url);
-</pre></div><div class="example"><a name="id2545579"></a><p class="title"><b>Example 2. Service Provider Assertion Consumer Service URL</b></p><pre class="programlisting">
+</pre>
+</div>
+<div class="example">
+<a name="id2530292"></a><p class="title"><b>Example&#160;2.&#160;Service Provider Assertion Consumer Service URL</b></p>
+<pre class="programlisting">
 LassoLogin *login;
 char *request_method = getenv("REQUEST_METHOD");
 char *artifact_msg = NULL, *lares = NULL, *lareq = NULL;
@@ -164,221 +231,878 @@ if (lasso_profile_is_session_dirty(LASSO_PROFILE(login))) {
 
 /* redirect user anywhere */
 printf("Location: /\n\nRedirected to site root\n");
-</pre></div></div><div class="refsect1" lang="en"><a name="id2545660"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2545665"></a><h3><a name="LassoLogin-struct"></a>LassoLogin</h3><a class="indexterm" name="id2545676"></a><pre class="programlisting">typedef struct {
+</pre>
+</div>
+</div>
+<div class="refsect1" lang="en">
+<a name="id2530372"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="id2530378"></a><h3>
+<a name="LassoLogin-struct"></a>LassoLogin</h3>
+<a class="indexterm" name="id2530388"></a><pre class="programlisting">typedef struct {
 	LassoLoginProtocolProfile protocolProfile;
 	gchar *assertionArtifact;
 	LassoSamlAssertion *assertion;
 } LassoLogin;
-</pre><p>
+</pre>
+<p>
 Single sign-on profile for the current transaction; possibly an
 assertionArtifact to be used by the service provider in its
 "assertionConsumerServiceURL" and the assertion created or received for the
 principal.
-</p></div><hr><div class="refsect2" lang="en"><a name="id2545696"></a><h3><a name="LassoLoginProtocolProfile"></a>enum LassoLoginProtocolProfile</h3><a class="indexterm" name="id2545708"></a><pre class="programlisting">typedef enum {
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2530409"></a><h3>
+<a name="LassoLoginProtocolProfile"></a>enum LassoLoginProtocolProfile</h3>
+<a class="indexterm" name="id2530420"></a><pre class="programlisting">typedef enum {
 	LASSO_LOGIN_PROTOCOL_PROFILE_BRWS_ART = 1,
 	LASSO_LOGIN_PROTOCOL_PROFILE_BRWS_POST,
 	LASSO_LOGIN_PROTOCOL_PROFILE_BRWS_LECP,
 } LassoLoginProtocolProfile;
-</pre><p>
+</pre>
+<p>
 Identifies the two possible profiles for Single Sign-On and Federation.
-</p></div><hr><div class="refsect2" lang="en"><a name="id2545727"></a><h3><a name="lasso-login-new"></a>lasso_login_new ()</h3><a class="indexterm" name="id2545737"></a><pre class="programlisting"><a href="LassoLogin.html" title="LassoLogin">LassoLogin</a>* lasso_login_new                 (<a href="LassoServer.html" title="LassoServer">LassoServer</a> *server);</pre><p>
-Creates a new <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>.</p><p>
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2530438"></a><h3>
+<a name="lasso-login-new"></a>lasso_login_new ()</h3>
+<a class="indexterm" name="id2530448"></a><pre class="programlisting"><a href="LassoLogin.html" title="LassoLogin">LassoLogin</a>* lasso_login_new                 (<a href="LassoServer.html" title="LassoServer">LassoServer</a> *server);</pre>
+<p>
+Creates a new <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>server</code></em> :</span></td><td> the <a href="LassoServer.html" title="LassoServer"><span class="type">LassoServer</span></a>
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a newly created <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a> object; or NULL if an error
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>server</code></em>&#160;:</span></td>
+<td> the <a href="LassoServer.html" title="LassoServer"><span class="type">LassoServer</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> a newly created <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a> object; or NULL if an error
     occured
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2545821"></a><h3><a name="lasso-login-destroy"></a>lasso_login_destroy ()</h3><a class="indexterm" name="id2545832"></a><pre class="programlisting"><GTKDOCLINK HREF="void">void</GTKDOCLINK>        lasso_login_destroy             (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login);</pre><p>
-Destroys a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a> object.</p><p>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2530533"></a><h3>
+<a name="lasso-login-destroy"></a>lasso_login_destroy ()</h3>
+<a class="indexterm" name="id2530543"></a><pre class="programlisting"><GTKDOCLINK HREF="void">void</GTKDOCLINK>        lasso_login_destroy             (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login);</pre>
+<p>
+Destroys a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a> object.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>login</code></em> :</span></td><td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2545897"></a><h3><a name="lasso-login-dump"></a>lasso_login_dump ()</h3><a class="indexterm" name="id2545908"></a><pre class="programlisting"><GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK>*      lasso_login_dump                (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login);</pre><p>
-Dumps <em class="parameter"><code>login</code></em> content to an XML string.</p><p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td>
+<span class="term"><em class="parameter"><code>login</code></em>&#160;:</span></td>
+<td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2530608"></a><h3>
+<a name="lasso-login-dump"></a>lasso_login_dump ()</h3>
+<a class="indexterm" name="id2530618"></a><pre class="programlisting"><GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK>*      lasso_login_dump                (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login);</pre>
+<p>
+Dumps <em class="parameter"><code>login</code></em> content to an XML string.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>login</code></em> :</span></td><td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> the dump string.  It must be freed by the caller.
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2545982"></a><h3><a name="lasso-login-new-from-dump"></a>lasso_login_new_from_dump ()</h3><a class="indexterm" name="id2545994"></a><pre class="programlisting"><a href="LassoLogin.html" title="LassoLogin">LassoLogin</a>* lasso_login_new_from_dump       (<a href="LassoServer.html" title="LassoServer">LassoServer</a> *server,
-                                             const <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *dump);</pre><p>
-Restores the <em class="parameter"><code>dump</code></em> to a new <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>.</p><p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>login</code></em>&#160;:</span></td>
+<td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> the dump string.  It must be freed by the caller.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2530693"></a><h3>
+<a name="lasso-login-new-from-dump"></a>lasso_login_new_from_dump ()</h3>
+<a class="indexterm" name="id2530704"></a><pre class="programlisting"><a href="LassoLogin.html" title="LassoLogin">LassoLogin</a>* lasso_login_new_from_dump       (<a href="LassoServer.html" title="LassoServer">LassoServer</a> *server,
+                                             const <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *dump);</pre>
+<p>
+Restores the <em class="parameter"><code>dump</code></em> to a new <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>server</code></em> :</span></td><td> the <a href="LassoServer.html" title="LassoServer"><span class="type">LassoServer</span></a>
-</td></tr><tr><td><span class="term"><em class="parameter"><code>dump</code></em> :</span></td><td> XML login dump
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a newly created <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>; or NULL if an error occured.
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2546105"></a><h3><a name="lasso-login-accept-sso"></a>lasso_login_accept_sso ()</h3><a class="indexterm" name="id2546116"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_login_accept_sso          (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login);</pre><p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>server</code></em>&#160;:</span></td>
+<td> the <a href="LassoServer.html" title="LassoServer"><span class="type">LassoServer</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>dump</code></em>&#160;:</span></td>
+<td> XML login dump
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> a newly created <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>; or NULL if an error occured.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2530815"></a><h3>
+<a name="lasso-login-accept-sso"></a>lasso_login_accept_sso ()</h3>
+<a class="indexterm" name="id2530826"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_login_accept_sso          (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login);</pre>
+<p>
 Gets the assertion of the response and adds it into the session.
 Builds a federation with the 2 name identifiers of the assertion
 and adds it into the identity.
-If the session or the identity are NULL, they are created.</p><p>
+If the session or the identity are NULL, they are created.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>login</code></em> :</span></td><td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> 0 on success; or a negative value otherwise.
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2546188"></a><h3><a name="lasso-login-build-artifact-msg"></a>lasso_login_build_artifact_msg ()</h3><a class="indexterm" name="id2546200"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_login_build_artifact_msg  (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login,
-                                             <a href="LassoProvider.html#LassoHttpMethod">LassoHttpMethod</a> http_method);</pre><p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>login</code></em>&#160;:</span></td>
+<td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2530898"></a><h3>
+<a name="lasso-login-build-artifact-msg"></a>lasso_login_build_artifact_msg ()</h3>
+<a class="indexterm" name="id2530908"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_login_build_artifact_msg  (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login,
+                                             <a href="LassoProvider.html#LassoHttpMethod">LassoHttpMethod</a> http_method);</pre>
+<p>
 Builds a SAML artifact. Depending of the HTTP method, the data for the sending of
 the artifact are stored in <em class="parameter"><code>msg_url</code></em> (REDIRECT) or <em class="parameter"><code>msg_url</code></em>, <em class="parameter"><code>msg_body</code></em> and
-<em class="parameter"><code>msg_relayState</code></em> (POST).</p><p>
+<em class="parameter"><code>msg_relayState</code></em> (POST).</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>login</code></em> :</span></td><td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
-</td></tr><tr><td><span class="term"><em class="parameter"><code>http_method</code></em> :</span></td><td> the HTTP method to send the artifact (REDIRECT or POST)
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> 0 on success; or a negative value otherwise.
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2546317"></a><h3><a name="lasso-login-build-assertion"></a>lasso_login_build_assertion ()</h3><a class="indexterm" name="id2546329"></a><pre class="programlisting"><GTKDOCLINK HREF="int">int</GTKDOCLINK>         lasso_login_build_assertion     (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login,
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>login</code></em>&#160;:</span></td>
+<td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>http_method</code></em>&#160;:</span></td>
+<td> the HTTP method to send the artifact (REDIRECT or POST)
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2531026"></a><h3>
+<a name="lasso-login-build-assertion"></a>lasso_login_build_assertion ()</h3>
+<a class="indexterm" name="id2531038"></a><pre class="programlisting"><GTKDOCLINK HREF="int">int</GTKDOCLINK>         lasso_login_build_assertion     (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login,
                                              const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *authenticationMethod,
                                              const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *authenticationInstant,
                                              const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *reauthenticateOnOrAfter,
                                              const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *notBefore,
-                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *notOnOrAfter);</pre><p>
+                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *notOnOrAfter);</pre>
+<p>
 Builds an assertion and stores it in profile session.
 <em class="parameter"><code>authenticationInstant</code></em>, reauthenticateOnOrAfter, <em class="parameter"><code>notBefore</code></em> and
 <em class="parameter"><code>notOnOrAfter</code></em> may be NULL.  If <em class="parameter"><code>authenticationInstant</code></em> is NULL, the current
-time will be used.  Time values must be encoded in UTC.</p><p>
+time will be used.  Time values must be encoded in UTC.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>login</code></em> :</span></td><td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
-</td></tr><tr><td><span class="term"><em class="parameter"><code>authenticationMethod</code></em> :</span></td><td> the authentication method
-</td></tr><tr><td><span class="term"><em class="parameter"><code>authenticationInstant</code></em> :</span></td><td> the time at which the authentication took place
-</td></tr><tr><td><span class="term"><em class="parameter"><code>reauthenticateOnOrAfter</code></em> :</span></td><td> the time at, or after which the service provider
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>login</code></em>&#160;:</span></td>
+<td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>authenticationMethod</code></em>&#160;:</span></td>
+<td> the authentication method
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>authenticationInstant</code></em>&#160;:</span></td>
+<td> the time at which the authentication took place
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>reauthenticateOnOrAfter</code></em>&#160;:</span></td>
+<td> the time at, or after which the service provider
     must reauthenticates the principal with the identity provider
-</td></tr><tr><td><span class="term"><em class="parameter"><code>notBefore</code></em> :</span></td><td> the earliest time instant at which the assertion is valid
-</td></tr><tr><td><span class="term"><em class="parameter"><code>notOnOrAfter</code></em> :</span></td><td> the time instant at which the assertion has expired
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> 0 on success; or a negative value otherwise.
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2546537"></a><h3><a name="lasso-login-build-authn-request-msg"></a>lasso_login_build_authn_request_msg ()</h3><a class="indexterm" name="id2546550"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_login_build_authn_request_msg
-                                            (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login);</pre><p>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>notBefore</code></em>&#160;:</span></td>
+<td> the earliest time instant at which the assertion is valid
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>notOnOrAfter</code></em>&#160;:</span></td>
+<td> the time instant at which the assertion has expired
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2531246"></a><h3>
+<a name="lasso-login-build-authn-request-msg"></a>lasso_login_build_authn_request_msg ()</h3>
+<a class="indexterm" name="id2531258"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_login_build_authn_request_msg
+                                            (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login);</pre>
+<p>
 Converts profile authentication request (<em class="parameter"><code>request</code></em> member) into a Liberty
 message, either an URL in HTTP-Redirect profile or an URL and a field value
 in Browser-POST (form) profile.
-</p><p>
+</p>
+<p>
 The URL is set into the <em class="parameter"><code>msg_url</code></em> member and the eventual field value (LAREQ)
-is set into the <em class="parameter"><code>msg_body</code></em> member.</p><p>
+is set into the <em class="parameter"><code>msg_body</code></em> member.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>login</code></em> :</span></td><td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> 0 on success; or a negative value otherwise.
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2546644"></a><h3><a name="lasso-login-build-authn-response-msg"></a>lasso_login_build_authn_response_msg ()</h3><a class="indexterm" name="id2546656"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_login_build_authn_response_msg
-                                            (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login);</pre><p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>login</code></em>&#160;:</span></td>
+<td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2531352"></a><h3>
+<a name="lasso-login-build-authn-response-msg"></a>lasso_login_build_authn_response_msg ()</h3>
+<a class="indexterm" name="id2531363"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_login_build_authn_response_msg
+                                            (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login);</pre>
+<p>
 Converts profile authentication response (<em class="parameter"><code>response</code></em> member) into a Liberty
 message.
-</p><p>
+</p>
+<p>
 The URL is set into the <em class="parameter"><code>msg_url</code></em> member and the field value (LARES) is set
-into the <em class="parameter"><code>msg_body</code></em> member.</p><p>
+into the <em class="parameter"><code>msg_body</code></em> member.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>login</code></em> :</span></td><td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> 0 on success; or a negative value otherwise.
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2546749"></a><h3><a name="lasso-login-build-request-msg"></a>lasso_login_build_request_msg ()</h3><a class="indexterm" name="id2546761"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_login_build_request_msg   (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login);</pre><p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>login</code></em>&#160;:</span></td>
+<td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2531456"></a><h3>
+<a name="lasso-login-build-request-msg"></a>lasso_login_build_request_msg ()</h3>
+<a class="indexterm" name="id2531467"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_login_build_request_msg   (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login);</pre>
+<p>
 Converts profile artifact request into a Liberty SOAP message.
-</p><p>
+</p>
+<p>
 The URL is set into the <em class="parameter"><code>msg_url</code></em> member and the SOAP message is set into the
-<em class="parameter"><code>msg_body</code></em> member.</p><p>
+<em class="parameter"><code>msg_body</code></em> member.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>login</code></em> :</span></td><td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> 0 on success; or a negative value otherwise.
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2546846"></a><h3><a name="lasso-login-build-response-msg"></a>lasso_login_build_response_msg ()</h3><a class="indexterm" name="id2546858"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_login_build_response_msg  (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login,
-                                             <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *remote_providerID);</pre><p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>login</code></em>&#160;:</span></td>
+<td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2531553"></a><h3>
+<a name="lasso-login-build-response-msg"></a>lasso_login_build_response_msg ()</h3>
+<a class="indexterm" name="id2531564"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_login_build_response_msg  (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login,
+                                             <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *remote_providerID);</pre>
+<p>
 Converts profile assertion response (<em class="parameter"><code>response</code></em> member) into a Liberty SOAP
 messageresponse message.
-</p><p>
+</p>
+<p>
 The URL is set into the <em class="parameter"><code>msg_url</code></em> member and the SOAP message is set into the
-<em class="parameter"><code>msg_body</code></em> member.</p><p>
+<em class="parameter"><code>msg_body</code></em> member.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>login</code></em> :</span></td><td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
-</td></tr><tr><td><span class="term"><em class="parameter"><code>remote_providerID</code></em> :</span></td><td> service provider ID
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> 0 on success; or a negative value otherwise.
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2546972"></a><h3><a name="lasso-login-init-authn-request"></a>lasso_login_init_authn_request ()</h3><a class="indexterm" name="id2546984"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_login_init_authn_request  (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login,
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>login</code></em>&#160;:</span></td>
+<td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>remote_providerID</code></em>&#160;:</span></td>
+<td> service provider ID
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2531678"></a><h3>
+<a name="lasso-login-init-authn-request"></a>lasso_login_init_authn_request ()</h3>
+<a class="indexterm" name="id2531689"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_login_init_authn_request  (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login,
                                              const <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *remote_providerID,
-                                             <a href="LassoProvider.html#LassoHttpMethod">LassoHttpMethod</a> http_method);</pre><p>
+                                             <a href="LassoProvider.html#LassoHttpMethod">LassoHttpMethod</a> http_method);</pre>
+<p>
 Initializes a new lib:AuthnRequest from current service provider to remote
 identity provider specified in <em class="parameter"><code>remote_providerID</code></em> (if NULL the first known
-identity provider is used).</p><p>
+identity provider is used).</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>login</code></em> :</span></td><td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
-</td></tr><tr><td><span class="term"><em class="parameter"><code>remote_providerID</code></em> :</span></td><td> the providerID of the identity provider (may be NULL)
-</td></tr><tr><td><span class="term"><em class="parameter"><code>http_method</code></em> :</span></td><td> HTTP method to use for request transmission
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> 0 on success; or a negative value otherwise.
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2547106"></a><h3><a name="lasso-login-init-idp-initiated-authn-request"></a>lasso_login_init_idp_initiated_authn_request ()</h3><a class="indexterm" name="id2547119"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_login_init_idp_initiated_authn_request
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>login</code></em>&#160;:</span></td>
+<td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>remote_providerID</code></em>&#160;:</span></td>
+<td> the providerID of the identity provider (may be NULL)
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>http_method</code></em>&#160;:</span></td>
+<td> HTTP method to use for request transmission
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2531811"></a><h3>
+<a name="lasso-login-init-idp-initiated-authn-request"></a>lasso_login_init_idp_initiated_authn_request ()</h3>
+<a class="indexterm" name="id2531823"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_login_init_idp_initiated_authn_request
                                             (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login,
-                                             const <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *remote_providerID);</pre><p>
+                                             const <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *remote_providerID);</pre>
+<p>
 Generates an authentication response without matching authentication
 request.
-</p><p>
-If <em class="parameter"><code>remote_providerID</code></em> is NULL, the first known provider is used.</p><p>
+</p>
+<p>
+If <em class="parameter"><code>remote_providerID</code></em> is NULL, the first known provider is used.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>login</code></em> :</span></td><td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>.
-</td></tr><tr><td><span class="term"><em class="parameter"><code>remote_providerID</code></em> :</span></td><td> the providerID of the remote service provider (may be
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>login</code></em>&#160;:</span></td>
+<td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>.
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>remote_providerID</code></em>&#160;:</span></td>
+<td> the providerID of the remote service provider (may be
      NULL)
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> 0 on success; or a negative value otherwise.
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2547223"></a><h3><a name="lasso-login-init-request"></a>lasso_login_init_request ()</h3><a class="indexterm" name="id2547234"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_login_init_request        (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login,
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2531927"></a><h3>
+<a name="lasso-login-init-request"></a>lasso_login_init_request ()</h3>
+<a class="indexterm" name="id2531937"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_login_init_request        (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login,
                                              <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *response_msg,
-                                             <a href="LassoProvider.html#LassoHttpMethod">LassoHttpMethod</a> response_http_method);</pre><p>
+                                             <a href="LassoProvider.html#LassoHttpMethod">LassoHttpMethod</a> response_http_method);</pre>
+<p>
 Initializes an artifact request.  <em class="parameter"><code>response_msg</code></em> is either the query string
-(in redirect mode) or the form LAREQ field (in browser-post mode).</p><p>
+(in redirect mode) or the form LAREQ field (in browser-post mode).</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>login</code></em> :</span></td><td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
-</td></tr><tr><td><span class="term"><em class="parameter"><code>response_msg</code></em> :</span></td><td> the authentication response received
-</td></tr><tr><td><span class="term"><em class="parameter"><code>response_http_method</code></em> :</span></td><td> the method used to receive the authentication
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>login</code></em>&#160;:</span></td>
+<td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>response_msg</code></em>&#160;:</span></td>
+<td> the authentication response received
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>response_http_method</code></em>&#160;:</span></td>
+<td> the method used to receive the authentication
      response
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> 0 on success; or a negative value otherwise.
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2547356"></a><h3><a name="lasso-login-must-ask-for-consent"></a>lasso_login_must_ask_for_consent ()</h3><a class="indexterm" name="id2547368"></a><pre class="programlisting"><GTKDOCLINK HREF="gboolean">gboolean</GTKDOCLINK>    lasso_login_must_ask_for_consent
-                                            (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login);</pre><p>
-Evaluates if consent must be asked to the Principal to federate him.</p><p>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2532059"></a><h3>
+<a name="lasso-login-must-ask-for-consent"></a>lasso_login_must_ask_for_consent ()</h3>
+<a class="indexterm" name="id2532071"></a><pre class="programlisting"><GTKDOCLINK HREF="gboolean">gboolean</GTKDOCLINK>    lasso_login_must_ask_for_consent
+                                            (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login);</pre>
+<p>
+Evaluates if consent must be asked to the Principal to federate him.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>login</code></em> :</span></td><td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <code class="literal">TRUE</code> if consent must be asked
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2547443"></a><h3><a name="lasso-login-must-authenticate"></a>lasso_login_must_authenticate ()</h3><a class="indexterm" name="id2547455"></a><pre class="programlisting"><GTKDOCLINK HREF="gboolean">gboolean</GTKDOCLINK>    lasso_login_must_authenticate   (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login);</pre><p>
-Evaluates if user must be authenticated.</p><p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>login</code></em>&#160;:</span></td>
+<td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> <code class="literal">TRUE</code> if consent must be asked
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2532146"></a><h3>
+<a name="lasso-login-must-authenticate"></a>lasso_login_must_authenticate ()</h3>
+<a class="indexterm" name="id2532157"></a><pre class="programlisting"><GTKDOCLINK HREF="gboolean">gboolean</GTKDOCLINK>    lasso_login_must_authenticate   (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login);</pre>
+<p>
+Evaluates if user must be authenticated.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>login</code></em> :</span></td><td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <code class="literal">TRUE</code> if user must be authenticated
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2547529"></a><h3><a name="lasso-login-process-authn-request-msg"></a>lasso_login_process_authn_request_msg ()</h3><a class="indexterm" name="id2547541"></a><pre class="programlisting"><GTKDOCLINK HREF="int">int</GTKDOCLINK>         lasso_login_process_authn_request_msg
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>login</code></em>&#160;:</span></td>
+<td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> <code class="literal">TRUE</code> if user must be authenticated
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2532232"></a><h3>
+<a name="lasso-login-process-authn-request-msg"></a>lasso_login_process_authn_request_msg ()</h3>
+<a class="indexterm" name="id2532243"></a><pre class="programlisting"><GTKDOCLINK HREF="int">int</GTKDOCLINK>         lasso_login_process_authn_request_msg
                                             (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login,
-                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *authn_request_msg);</pre><p>
+                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *authn_request_msg);</pre>
+<p>
 Processes received authentication request, checks it is signed correctly,
-checks if requested protocol profile is supported, etc.</p><p>
+checks if requested protocol profile is supported, etc.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>login</code></em> :</span></td><td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
-</td></tr><tr><td><span class="term"><em class="parameter"><code>authn_request_msg</code></em> :</span></td><td> the authentication request received
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> 0 on success; or a negative value otherwise.
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2547635"></a><h3><a name="lasso-login-process-authn-response-msg"></a>lasso_login_process_authn_response_msg ()</h3><a class="indexterm" name="id2547647"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_login_process_authn_response_msg
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>login</code></em>&#160;:</span></td>
+<td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>authn_request_msg</code></em>&#160;:</span></td>
+<td> the authentication request received
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2532336"></a><h3>
+<a name="lasso-login-process-authn-response-msg"></a>lasso_login_process_authn_response_msg ()</h3>
+<a class="indexterm" name="id2532348"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_login_process_authn_response_msg
                                             (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login,
-                                             <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *authn_response_msg);</pre><p>
-Processes received authentication response.</p><p>
+                                             <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *authn_response_msg);</pre>
+<p>
+Processes received authentication response.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>login</code></em> :</span></td><td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
-</td></tr><tr><td><span class="term"><em class="parameter"><code>authn_response_msg</code></em> :</span></td><td> the authentication response received
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> 0 on success; or a negative value otherwise.
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2547739"></a><h3><a name="lasso-login-process-request-msg"></a>lasso_login_process_request_msg ()</h3><a class="indexterm" name="id2547752"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_login_process_request_msg (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login,
-                                             <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *request_msg);</pre><p>
-Processes received artifact request.</p><p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>login</code></em>&#160;:</span></td>
+<td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>authn_response_msg</code></em>&#160;:</span></td>
+<td> the authentication response received
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2532440"></a><h3>
+<a name="lasso-login-process-request-msg"></a>lasso_login_process_request_msg ()</h3>
+<a class="indexterm" name="id2532452"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_login_process_request_msg (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login,
+                                             <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *request_msg);</pre>
+<p>
+Processes received artifact request.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>login</code></em> :</span></td><td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
-</td></tr><tr><td><span class="term"><em class="parameter"><code>request_msg</code></em> :</span></td><td> the artifact request received
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> 0 on success; or a negative value otherwise.
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2547842"></a><h3><a name="lasso-login-process-response-msg"></a>lasso_login_process_response_msg ()</h3><a class="indexterm" name="id2547854"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_login_process_response_msg
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>login</code></em>&#160;:</span></td>
+<td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>request_msg</code></em>&#160;:</span></td>
+<td> the artifact request received
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2532543"></a><h3>
+<a name="lasso-login-process-response-msg"></a>lasso_login_process_response_msg ()</h3>
+<a class="indexterm" name="id2532554"></a><pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>        lasso_login_process_response_msg
                                             (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login,
-                                             <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *response_msg);</pre><p>
-Processes received assertion response.</p><p>
+                                             <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *response_msg);</pre>
+<p>
+Processes received assertion response.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>login</code></em> :</span></td><td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
-</td></tr><tr><td><span class="term"><em class="parameter"><code>response_msg</code></em> :</span></td><td> the assertion response received
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> 0 on success; or a negative value otherwise.
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2547946"></a><h3><a name="lasso-login-validate-request-msg"></a>lasso_login_validate_request_msg ()</h3><a class="indexterm" name="id2547958"></a><pre class="programlisting"><GTKDOCLINK HREF="int">int</GTKDOCLINK>         lasso_login_validate_request_msg
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>login</code></em>&#160;:</span></td>
+<td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>response_msg</code></em>&#160;:</span></td>
+<td> the assertion response received
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2532645"></a><h3>
+<a name="lasso-login-validate-request-msg"></a>lasso_login_validate_request_msg ()</h3>
+<a class="indexterm" name="id2532657"></a><pre class="programlisting"><GTKDOCLINK HREF="int">int</GTKDOCLINK>         lasso_login_validate_request_msg
                                             (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login,
                                              <GTKDOCLINK HREF="gboolean">gboolean</GTKDOCLINK> authentication_result,
-                                             <GTKDOCLINK HREF="gboolean">gboolean</GTKDOCLINK> is_consent_obtained);</pre><p>
-Initializes a response to the authentication request received.</p><p>
+                                             <GTKDOCLINK HREF="gboolean">gboolean</GTKDOCLINK> is_consent_obtained);</pre>
+<p>
+Initializes a response to the authentication request received.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>login</code></em> :</span></td><td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
-</td></tr><tr><td><span class="term"><em class="parameter"><code>authentication_result</code></em> :</span></td><td> whether user has authenticated succesfully
-</td></tr><tr><td><span class="term"><em class="parameter"><code>is_consent_obtained</code></em> :</span></td><td> whether user consent has been obtained
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> 0 on success; or a negative value otherwise.
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2548073"></a><h3><a name="lasso-login-set-encryptedResourceId"></a>lasso_login_set_encryptedResourceId ()</h3><a class="indexterm" name="id2548086"></a><pre class="programlisting"><GTKDOCLINK HREF="int">int</GTKDOCLINK>         lasso_login_set_encryptedResourceId
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>login</code></em>&#160;:</span></td>
+<td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>authentication_result</code></em>&#160;:</span></td>
+<td> whether user has authenticated succesfully
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>is_consent_obtained</code></em>&#160;:</span></td>
+<td> whether user consent has been obtained
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2532772"></a><h3>
+<a name="lasso-login-set-encryptedResourceId"></a>lasso_login_set_encryptedResourceId ()</h3>
+<a class="indexterm" name="id2532784"></a><pre class="programlisting"><GTKDOCLINK HREF="int">int</GTKDOCLINK>         lasso_login_set_encryptedResourceId
                                             (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login,
-                                             <GTKDOCLINK HREF="LassoDiscoEncryptedResourceID">LassoDiscoEncryptedResourceID</GTKDOCLINK> *encryptedResourceId);</pre><p>
-...</p><p>
+                                             <GTKDOCLINK HREF="LassoDiscoEncryptedResourceID">LassoDiscoEncryptedResourceID</GTKDOCLINK> *encryptedResourceId);</pre>
+<p>
+...</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>login</code></em> :</span></td><td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
-</td></tr><tr><td><span class="term"><em class="parameter"><code>encryptedResourceId</code></em> :</span></td><td>
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> 0 on success; or a negative value otherwise.
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2548176"></a><h3><a name="lasso-login-set-resourceId"></a>lasso_login_set_resourceId ()</h3><a class="indexterm" name="id2548188"></a><pre class="programlisting"><GTKDOCLINK HREF="int">int</GTKDOCLINK>         lasso_login_set_resourceId      (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login,
-                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *content);</pre><p>
-...</p><p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>login</code></em>&#160;:</span></td>
+<td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>encryptedResourceId</code></em>&#160;:</span></td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2532875"></a><h3>
+<a name="lasso-login-set-resourceId"></a>lasso_login_set_resourceId ()</h3>
+<a class="indexterm" name="id2532886"></a><pre class="programlisting"><GTKDOCLINK HREF="int">int</GTKDOCLINK>         lasso_login_set_resourceId      (<a href="LassoLogin.html" title="LassoLogin">LassoLogin</a> *login,
+                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *content);</pre>
+<p>
+...</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>login</code></em> :</span></td><td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
-</td></tr><tr><td><span class="term"><em class="parameter"><code>content</code></em> :</span></td><td>
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> 0 on success; or a negative value otherwise.
-</td></tr></tbody></table></div></div></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="LassoProfile.html"><b>&lt;&lt; LassoProfile</b></a></td><td align="right"><a accesskey="n" href="LassoLecp.html"><b>LassoLecp &gt;&gt;</b></a></td></tr></table></body></html>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>login</code></em>&#160;:</span></td>
+<td> a <a href="LassoLogin.html" title="LassoLogin"><span class="type">LassoLogin</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>content</code></em>&#160;:</span></td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle">
+<td align="left"><a accesskey="p" href="LassoProfile.html"><b>&lt;&lt;&#160;LassoProfile</b></a></td>
+<td align="right"><a accesskey="n" href="LassoLecp.html"><b>LassoLecp&#160;&gt;&gt;</b></a></td>
+</tr></table>
+</body>
+</html>

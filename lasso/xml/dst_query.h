@@ -1,4 +1,4 @@
-/* $Id: dst_query.h,v 1.11 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: dst_query.h,v 1.13 2005/09/10 19:36:33 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -59,6 +59,7 @@ struct _LassoDstQuery {
 	char *id;
 	char *itemID;
 
+	/*< private >*/
 	char *prefixServiceType;
 	char *hrefServiceType;
 };
@@ -68,7 +69,7 @@ struct _LassoDstQueryClass {
 };
 
 LASSO_EXPORT GType lasso_dst_query_get_type(void);
-LASSO_EXPORT LassoDstQuery* lasso_dst_query_new(LassoDstQueryItem *queryItem);
+LASSO_EXPORT LassoDstQuery* lasso_dst_query_new(LassoDstQueryItem *query_item);
 
 #ifdef __cplusplus
 }

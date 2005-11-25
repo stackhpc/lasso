@@ -14,7 +14,7 @@
 
 @SET_MAKE@
 
-SOURCES = $(m2_SOURCES) $(perfs_SOURCES) $(tests_SOURCES)
+SOURCES = $(perfs_SOURCES) $(tests_SOURCES)
 
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
@@ -37,8 +37,7 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 host_triplet = @host@
-@WITH_TESTS_TRUE@noinst_PROGRAMS = tests$(EXEEXT) perfs$(EXEEXT) \
-@WITH_TESTS_TRUE@	m2$(EXEEXT)
+@WITH_TESTS_TRUE@noinst_PROGRAMS = tests$(EXEEXT) perfs$(EXEEXT)
 subdir = tests
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -49,15 +48,10 @@ mkinstalldirs = $(mkdir_p)
 CONFIG_HEADER = $(top_builddir)/lasso/lasso_config.h
 CONFIG_CLEAN_FILES =
 PROGRAMS = $(noinst_PROGRAMS)
-am__m2_SOURCES_DIST = m2.c
-@WITH_TESTS_TRUE@am_m2_OBJECTS = m2.$(OBJEXT)
-m2_OBJECTS = $(am_m2_OBJECTS)
-am__DEPENDENCIES_1 =
-@WITH_TESTS_TRUE@m2_DEPENDENCIES = $(top_builddir)/lasso/liblasso.la \
-@WITH_TESTS_TRUE@	$(am__DEPENDENCIES_1)
 am__perfs_SOURCES_DIST = perfs.c
 @WITH_TESTS_TRUE@am_perfs_OBJECTS = perfs.$(OBJEXT)
 perfs_OBJECTS = $(am_perfs_OBJECTS)
+am__DEPENDENCIES_1 =
 @WITH_TESTS_TRUE@perfs_DEPENDENCIES =  \
 @WITH_TESTS_TRUE@	$(top_builddir)/lasso/liblasso.la \
 @WITH_TESTS_TRUE@	$(am__DEPENDENCIES_1)
@@ -74,9 +68,8 @@ DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)/lasso
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 @AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/basic_tests.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/login_tests.Po ./$(DEPDIR)/m2.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/perfs.Po ./$(DEPDIR)/random_tests.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/tests.Po
+@AMDEP_TRUE@	./$(DEPDIR)/login_tests.Po ./$(DEPDIR)/perfs.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/random_tests.Po ./$(DEPDIR)/tests.Po
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) \
@@ -85,9 +78,8 @@ LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) \
 CCLD = $(CC)
 LINK = $(LIBTOOL) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(m2_SOURCES) $(perfs_SOURCES) $(tests_SOURCES)
-DIST_SOURCES = $(am__m2_SOURCES_DIST) $(am__perfs_SOURCES_DIST) \
-	$(am__tests_SOURCES_DIST)
+SOURCES = $(perfs_SOURCES) $(tests_SOURCES)
+DIST_SOURCES = $(am__perfs_SOURCES_DIST) $(am__tests_SOURCES_DIST)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
 	install-exec-recursive install-info-recursive \
@@ -315,8 +307,6 @@ target_alias = @target_alias@
 
 @WITH_TESTS_TRUE@perfs_SOURCES = perfs.c
 @WITH_TESTS_TRUE@perfs_LDADD = $(top_builddir)/lasso/liblasso.la $(LASSO_LIBS)
-@WITH_TESTS_TRUE@m2_SOURCES = m2.c
-@WITH_TESTS_TRUE@m2_LDADD = $(top_builddir)/lasso/liblasso.la $(LASSO_LIBS)
 EXTRA_DIST = tests.c login_tests.c basic_tests.c random_tests.c
 SUBDIRS = data
 CLEANFILES = result.xml
@@ -360,9 +350,6 @@ clean-noinstPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
-m2$(EXEEXT): $(m2_OBJECTS) $(m2_DEPENDENCIES) 
-	@rm -f m2$(EXEEXT)
-	$(LINK) $(m2_LDFLAGS) $(m2_OBJECTS) $(m2_LDADD) $(LIBS)
 perfs$(EXEEXT): $(perfs_OBJECTS) $(perfs_DEPENDENCIES) 
 	@rm -f perfs$(EXEEXT)
 	$(LINK) $(perfs_LDFLAGS) $(perfs_OBJECTS) $(perfs_LDADD) $(LIBS)
@@ -378,7 +365,6 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/basic_tests.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/login_tests.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/m2.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/perfs.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/random_tests.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tests.Po@am__quote@
