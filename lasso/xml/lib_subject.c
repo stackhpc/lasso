@@ -1,12 +1,11 @@
-/* $Id: lib_subject.c,v 1.7 2004/09/01 09:59:53 fpeters Exp $
+/* $Id: lib_subject.c,v 1.17 2005/01/22 15:57:55 eraviart Exp $
  *
  * Lasso - A free implementation of the Samlerty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,133 +25,84 @@
 #include <lasso/xml/lib_subject.h>
 
 /*
-The schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
-
-<xs:complexType name="SubjectType">
-  <xs:complexContent>
-    <xs:extension base="saml:SubjectType">
-      <xs:sequence>
-        <xs:element ref="IDPProvidedNameIdentifier"/>
-      </xs:sequence>
-    </xs:extension>
-  </xs:complexContent>
-</xs:complexType>
-<xs:element name="Subject" type="SubjectType" substitutionGroup="saml:Subject"/>
-
-*/
+ * Schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
+ * 
+ * <xs:complexType name="SubjectType">
+ *   <xs:complexContent>
+ *     <xs:extension base="saml:SubjectType">
+ *       <xs:sequence>
+ *         <xs:element ref="IDPProvidedNameIdentifier"/>
+ *       </xs:sequence>
+ *     </xs:extension>
+ *   </xs:complexContent>
+ * </xs:complexType>
+ * <xs:element name="Subject" type="SubjectType" substitutionGroup="saml:Subject"/>
+ */
 
 /*****************************************************************************/
-/* public methods                                                            */
+/* private methods                                                           */
 /*****************************************************************************/
 
-void
-lasso_lib_subject_set_idpProvidedNameIdentifier(LassoLibSubject *node,
-						LassoLibIDPProvidedNameIdentifier *idpProvidedNameIdentifier)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_LIB_SUBJECT(node));
-  g_assert(LASSO_IS_LIB_IDP_PROVIDED_NAME_IDENTIFIER(idpProvidedNameIdentifier));
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->add_child(LASSO_NODE (node), LASSO_NODE(idpProvidedNameIdentifier), FALSE);
-}
+static struct XmlSnippet schema_snippets[] = {
+	{ "IDPProvidedNameIdentifier", SNIPPET_NAME_IDENTIFIER,
+		G_STRUCT_OFFSET(LassoLibSubject, IDPProvidedNameIdentifier) },
+	{ NULL, 0, 0}
+};
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-enum {
-  LASSO_LIB_SUBJECT_USE_XSITYPE = 1
-};
-
 static void
-lasso_lib_subject_set_property (GObject      *object,
-				guint         property_id,
-				const GValue *value,
-				GParamSpec   *pspec)
+instance_init(LassoLibSubject *node)
 {
-  LassoLibSubject *self = LASSO_LIB_SUBJECT(object);
-  LassoNodeClass *class = LASSO_NODE_GET_CLASS(LASSO_NODE(object));
-
-  switch (property_id) {
-  case LASSO_LIB_SUBJECT_USE_XSITYPE:
-    self->use_xsitype = g_value_get_boolean (value);
-    if (self->use_xsitype == TRUE) {
-      /* namespace and name were already set in parent class
-	 LassoSamlAssertion */
-      class->new_ns_prop(LASSO_NODE(object),
-			 "type", "lib:SubjectType",
-			 lassoXsiHRef, lassoXsiPrefix);
-    }
-    else {
-      /* node name was already set in parent class LassoSamlAssertion
-	 just change ns */
-      class->set_ns(LASSO_NODE(object), lassoLibHRef, lassoLibPrefix);
-    }
-    break;
-  default:
-    /* We don't have any other property... */
-    g_assert (FALSE);
-    break;
-  }
+	node->IDPProvidedNameIdentifier = NULL;
 }
 
 static void
-lasso_lib_subject_instance_init(LassoLibSubject *node)
+class_init(LassoLibSubjectClass *klass)
 {
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
+
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "Subject");
+	lasso_node_class_set_ns(nclass, LASSO_LIB_HREF, LASSO_LIB_PREFIX);
+	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
 
-static void
-lasso_lib_subject_class_init(LassoLibSubjectClass *g_class,
-			     gpointer              g_class_data)
+GType
+lasso_lib_subject_get_type()
 {
-  GObjectClass *gobject_class = G_OBJECT_CLASS (g_class);
-  GParamSpec *pspec;
+	static GType this_type = 0;
 
-  /* override parent class methods */
-  gobject_class->set_property = lasso_lib_subject_set_property;
+	if (!this_type) {
+		static const GTypeInfo this_info = {
+			sizeof (LassoLibSubjectClass),
+			NULL,
+			NULL,
+			(GClassInitFunc) class_init,
+			NULL,
+			NULL,
+			sizeof(LassoLibSubject),
+			0,
+			(GInstanceInitFunc) instance_init,
+		};
 
-  pspec = g_param_spec_boolean ("use_xsitype",
-				"use_xsitype",
-				"using xsi:type",
-				FALSE,
-				G_PARAM_CONSTRUCT_ONLY | G_PARAM_WRITABLE);
-  g_object_class_install_property (gobject_class,
-                                   LASSO_LIB_SUBJECT_USE_XSITYPE,
-                                   pspec);
+		this_type = g_type_register_static(LASSO_TYPE_SAML_SUBJECT,
+				"LassoLibSubject", &this_info, 0);
+	}
+	return this_type;
 }
 
-GType lasso_lib_subject_get_type() {
-  static GType this_type = 0;
-
-  if (!this_type) {
-    static const GTypeInfo this_info = {
-      sizeof (LassoLibSubjectClass),
-      NULL,
-      NULL,
-      (GClassInitFunc) lasso_lib_subject_class_init,
-      NULL,
-      NULL,
-      sizeof(LassoLibSubject),
-      0,
-      (GInstanceInitFunc) lasso_lib_subject_instance_init,
-    };
-    
-    this_type = g_type_register_static(LASSO_TYPE_SAML_SUBJECT,
-				       "LassoLibSubject",
-				       &this_info, 0);
-  }
-  return this_type;
-}
-
-LassoNode*
-lasso_lib_subject_new(gboolean use_xsitype)
+/**
+ * lasso_lib_subject_new:
+ *
+ * Creates a new #LassoLibSubject object.
+ *
+ * Return value: a newly created #LassoLibSubject object
+ **/
+LassoLibSubject*
+lasso_lib_subject_new()
 {
-  LassoNode *node;
-
-  node = LASSO_NODE(g_object_new(LASSO_TYPE_LIB_SUBJECT,
-				 "use_xsitype", use_xsitype,
-				 NULL));
-
-  return node;
+	return g_object_new(LASSO_TYPE_LIB_SUBJECT, NULL);
 }

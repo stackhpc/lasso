@@ -1,12 +1,11 @@
-/* $Id: lib_authentication_statement.c,v 1.6 2004/09/01 09:59:53 fpeters Exp $
+/* $Id: lib_authentication_statement.c,v 1.25 2005/04/25 14:25:03 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,164 +23,166 @@
  */
 
 #include <lasso/xml/lib_authentication_statement.h>
+#include <lasso/xml/lib_subject.h>
 
 /*
-The schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
-
-<xs:element name="AuthenticationStatement" type="AuthenticationStatementType" substitutionGroup="saml:Statement"/>
-<xs:complexType name="AuthenticationStatementType">
-  <xs:complexContent>
-    <xs:extension base="saml:AuthenticationStatementType">
-      <xs:sequence>
-        <xs:element ref="AuthnContext" minOccurs="0"/>
-      </xs:sequence>
-      <xs:attribute name="ReauthenticateOnOrAfter" type="xs:dateTime" use="optional"/>
-      <xs:attribute name="SessionIndex" type="xs:string" use="optional"/>
-    </xs:extension>
-  </xs:complexContent>
-</xs:complexType>
-*/
+ * Schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
+ *
+ * <xs:element name="AuthenticationStatement" type="AuthenticationStatementType"
+ *   substitutionGroup="saml:Statement"/>
+ * <xs:complexType name="AuthenticationStatementType">
+ *   <xs:complexContent>
+ *     <xs:extension base="saml:AuthenticationStatementType">
+ *       <xs:sequence>
+ *         <xs:element ref="AuthnContext" minOccurs="0"/>
+ *       </xs:sequence>
+ *       <xs:attribute name="ReauthenticateOnOrAfter" type="xs:dateTime" use="optional"/>
+ *       <xs:attribute name="SessionIndex" type="xs:string" use="required"/>
+ *     </xs:extension>
+ *   </xs:complexContent>
+ * </xs:complexType>
+ */
 
 /*****************************************************************************/
-/* public methods                                                            */
+/* private methods                                                           */
 /*****************************************************************************/
 
-void
-lasso_lib_authentication_statement_set_authnContext(LassoLibAuthenticationStatement *node,
-						    LassoLibAuthnContext *authnContext)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_LIB_AUTHENTICATION_STATEMENT(node));
-  g_assert(LASSO_IS_LIB_AUTHN_CONTEXT(authnContext));
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->add_child(LASSO_NODE (node), LASSO_NODE(authnContext), FALSE);
-}
-
-void
-lasso_lib_authentication_statement_set_reauthenticateOnOrAfter(LassoLibAuthenticationStatement *node,
-							       const xmlChar *reauthenticateOnOrAfter)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_LIB_AUTHENTICATION_STATEMENT(node));
-  g_assert(reauthenticateOnOrAfter != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->set_prop(LASSO_NODE (node), "ReauthenticateOnOrAfter", reauthenticateOnOrAfter);
-}
-
-void
-lasso_lib_authentication_statement_set_sessionIndex(LassoLibAuthenticationStatement *node,
-						    const xmlChar *sessionIndex)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_LIB_AUTHENTICATION_STATEMENT(node));
-  g_assert(sessionIndex != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->set_prop(LASSO_NODE (node), "SessionIndex", sessionIndex);
-}
+static struct XmlSnippet schema_snippets[] = {
+	{ "AuthnContext", SNIPPET_NODE,
+		G_STRUCT_OFFSET(LassoLibAuthenticationStatement, AuthnContext) },
+	{ "ReauthenticateOnOrAfter", SNIPPET_ATTRIBUTE,
+		G_STRUCT_OFFSET(LassoLibAuthenticationStatement, ReauthenticateOnOrAfter) },
+	{ "SessionIndex", SNIPPET_ATTRIBUTE,
+		G_STRUCT_OFFSET(LassoLibAuthenticationStatement, SessionIndex) },
+	{ NULL, 0, 0}
+};
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-enum {
-  LASSO_LIB_AUTHENTICATION_STATEMENT_USE_XSITYPE = 1
-};
-
 static void
-lasso_lib_authentication_statement_set_property (GObject      *object,
-						 guint         property_id,
-						 const GValue *value,
-						 GParamSpec   *pspec)
+instance_init(LassoLibAuthenticationStatement *node)
 {
-  LassoLibAuthenticationStatement *self = LASSO_LIB_AUTHENTICATION_STATEMENT(object);
-  LassoNodeClass *class = LASSO_NODE_GET_CLASS(LASSO_NODE(object));
-
-  switch (property_id) {
-  case LASSO_LIB_AUTHENTICATION_STATEMENT_USE_XSITYPE:
-    self->use_xsitype = g_value_get_boolean (value);
-    if (self->use_xsitype == TRUE) {
-      /* namespace and name were already set in parent class
-	 LassoSamlAuthenticationStatement */
-      class->new_ns_prop(LASSO_NODE(object),
-			 "type", "lib:AuthenticationStatementType",
-			 lassoXsiHRef, lassoXsiPrefix);
-    }
-    else {
-      /* node name was already set in parent class
-	 LassoSamlAuthenticationStatement, just change ns */
-      class->set_ns(LASSO_NODE(object), lassoLibHRef, lassoLibPrefix);
-    }
-    break;
-  default:
-    /* We don't have any other property... */
-    g_assert (FALSE);
-    break;
-  }
+	node->AuthnContext = NULL;
+	node->ReauthenticateOnOrAfter = NULL;
+	node->SessionIndex = g_strdup("1"); /* FIXME: proper SessionIndex usage */
 }
 
 static void
-lasso_lib_authentication_statement_instance_init(LassoLibAuthenticationStatement *node)
+class_init(LassoLibAuthenticationStatementClass *klass)
 {
-/*   LassoNodeClass *class = LASSO_NODE_GET_CLASS(LASSO_NODE(node)); */
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
 
-/*   class->set_name(LASSO_NODE(node), "AuthenticationStatement"); */
-/*   class->set_ns(LASSO_NODE(node), lassoLibHRef, lassoLibPrefix); */
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "AuthenticationStatement");
+	lasso_node_class_set_ns(nclass, LASSO_LIB_HREF, LASSO_LIB_PREFIX);
+	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
 
-static void
-lasso_lib_authentication_statement_class_init(LassoLibAuthenticationStatementClass *g_class,
-					      gpointer                              g_class_data)
+GType
+lasso_lib_authentication_statement_get_type()
 {
-  GObjectClass *gobject_class = G_OBJECT_CLASS (g_class);
-  GParamSpec *pspec;
-  
-  /* override parent class methods */
-  gobject_class->set_property = lasso_lib_authentication_statement_set_property;
-  
-  pspec = g_param_spec_boolean ("use_xsitype",
-				"use_xsitype",
-				"using xsi:type",
-				FALSE,
-				G_PARAM_CONSTRUCT_ONLY | G_PARAM_WRITABLE);
-  g_object_class_install_property (gobject_class,
-                                   LASSO_LIB_AUTHENTICATION_STATEMENT_USE_XSITYPE,
-                                   pspec);
+	static GType this_type = 0;
+
+	if (!this_type) {
+		static const GTypeInfo this_info = {
+			sizeof (LassoLibAuthenticationStatementClass),
+			NULL,
+			NULL,
+			(GClassInitFunc) class_init,
+			NULL,
+			NULL,
+			sizeof(LassoLibAuthenticationStatement),
+			0,
+			(GInstanceInitFunc) instance_init,
+		};
+
+		this_type = g_type_register_static(LASSO_TYPE_SAML_AUTHENTICATION_STATEMENT,
+				"LassoLibAuthenticationStatement", &this_info, 0);
+	}
+	return this_type;
 }
 
-GType lasso_lib_authentication_statement_get_type() {
-  static GType this_type = 0;
-
-  if (!this_type) {
-    static const GTypeInfo this_info = {
-      sizeof (LassoLibAuthenticationStatementClass),
-      NULL,
-      NULL,
-      (GClassInitFunc) lasso_lib_authentication_statement_class_init,
-      NULL,
-      NULL,
-      sizeof(LassoLibAuthenticationStatement),
-      0,
-      (GInstanceInitFunc) lasso_lib_authentication_statement_instance_init,
-    };
-    
-    this_type = g_type_register_static(LASSO_TYPE_SAML_AUTHENTICATION_STATEMENT,
-				       "LassoLibAuthenticationStatement",
-				       &this_info, 0);
-  }
-  return this_type;
+/**
+ * lasso_lib_authentication_statement_new:
+ *
+ * Creates a new #LassoLibAuthenticationStatement object.
+ *
+ * Return value: a newly created #LassoLibAuthenticationStatement object
+ **/
+LassoLibAuthenticationStatement*
+lasso_lib_authentication_statement_new(void)
+{
+	return g_object_new(LASSO_TYPE_LIB_AUTHENTICATION_STATEMENT, NULL);
 }
 
-LassoNode*
-lasso_lib_authentication_statement_new(gboolean use_xsitype)
+/**
+ * lasso_lib_authentication_statement_new_full:
+ * @authenticationMethod:
+ * @authenticationInstant: AuthenticationInstant (NULL to get current time)
+ * @reauthenticateOnOrAfter:
+ * @sp_identifier:
+ * @idp_identifier:
+ *
+ * Creates a new #LassoLibAuthenticationStatement object and initializes it
+ * with the parameters.
+ *
+ * Return value: a newly created #LassoLibAuthenticationStatement object
+ **/
+LassoLibAuthenticationStatement*
+lasso_lib_authentication_statement_new_full(const char *authenticationMethod,
+		const char *authenticationInstant,
+		const char *reauthenticateOnOrAfter,
+		LassoSamlNameIdentifier *sp_identifier,
+		LassoSamlNameIdentifier *idp_identifier)
 {
-  LassoNode *node;
+	LassoSamlAuthenticationStatement *statement;
+	LassoSamlNameIdentifier *new_identifier, *new_idp_identifier;
+	LassoLibSubject *subject;
+	LassoSamlSubjectConfirmation *subject_confirmation;
+	char *time;
 
-  node = LASSO_NODE(g_object_new(LASSO_TYPE_LIB_AUTHENTICATION_STATEMENT,
-				 "use_xsitype", use_xsitype,
-				 NULL));
+	g_return_val_if_fail(LASSO_IS_SAML_NAME_IDENTIFIER(idp_identifier), NULL);
+	g_return_val_if_fail(sp_identifier || idp_identifier, NULL);
 
-  return node;
+	subject = lasso_lib_subject_new();
+	if (sp_identifier == NULL) {
+		new_identifier = idp_identifier;
+	} else {
+		new_identifier = sp_identifier;
+	}
+
+	statement = g_object_new(LASSO_TYPE_LIB_AUTHENTICATION_STATEMENT, NULL);
+	statement->AuthenticationMethod = g_strdup(authenticationMethod);
+
+	if (authenticationInstant == NULL)
+		time = lasso_get_current_time();
+	else
+		time = g_strdup(authenticationInstant);
+
+	statement->AuthenticationInstant = time;
+
+	LASSO_LIB_AUTHENTICATION_STATEMENT(statement)->ReauthenticateOnOrAfter = 
+		g_strdup(reauthenticateOnOrAfter);
+
+	LASSO_SAML_SUBJECT(subject)->NameIdentifier = g_object_ref(new_identifier);
+
+	if (sp_identifier != NULL) {
+		/* create a new IdpProvidedNameIdentifier and use idp_identifier data to fill it */
+		new_idp_identifier = lasso_saml_name_identifier_new();
+		new_idp_identifier->content = g_strdup(idp_identifier->content);
+		new_idp_identifier->NameQualifier = g_strdup(idp_identifier->NameQualifier);
+		new_idp_identifier->Format = g_strdup(idp_identifier->Format);
+		subject->IDPProvidedNameIdentifier = new_idp_identifier;
+	}
+
+	/* SubjectConfirmation & Subject */
+	subject_confirmation = lasso_saml_subject_confirmation_new();
+	subject_confirmation->ConfirmationMethod = NULL;
+	LASSO_SAML_SUBJECT(subject)->SubjectConfirmation = subject_confirmation;
+
+	LASSO_SAML_SUBJECT_STATEMENT_ABSTRACT(statement)->Subject = LASSO_SAML_SUBJECT(subject);
+
+	return LASSO_LIB_AUTHENTICATION_STATEMENT(statement);
 }

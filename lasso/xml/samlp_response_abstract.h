@@ -1,12 +1,11 @@
-/* $Id: samlp_response_abstract.h,v 1.6 2004/08/19 12:45:05 valos Exp $ 
+/* $Id: samlp_response_abstract.h,v 1.15 2005/01/22 15:57:55 eraviart Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,59 +32,54 @@ extern "C" {
 #include <lasso/xml/xml.h>
 
 #define LASSO_TYPE_SAMLP_RESPONSE_ABSTRACT (lasso_samlp_response_abstract_get_type())
-#define LASSO_SAMLP_RESPONSE_ABSTRACT(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_SAMLP_RESPONSE_ABSTRACT, LassoSamlpResponseAbstract))
-#define LASSO_SAMLP_RESPONSE_ABSTRACT_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_SAMLP_RESPONSE_ABSTRACT, LassoSamlpResponseAbstractClass))
-#define LASSO_IS_SAMLP_RESPONSE_ABSTRACT(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_SAMLP_RESPONSE_ABSTRACT))
-#define LASSO_IS_SAMLP_RESPONSE_ABSTRACT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_SAMLP_RESPONSE_ABSTRACT))
-#define LASSO_SAMLP_RESPONSE_ABSTRACT_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_SAMLP_RESPONSE_ABSTRACT, LassoSamlpResponseAbstractClass)) 
+#define LASSO_SAMLP_RESPONSE_ABSTRACT(obj) \
+	(G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_SAMLP_RESPONSE_ABSTRACT, \
+				    LassoSamlpResponseAbstract))
+#define LASSO_SAMLP_RESPONSE_ABSTRACT_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_SAMLP_RESPONSE_ABSTRACT, \
+				 LassoSamlpResponseAbstractClass))
+#define LASSO_IS_SAMLP_RESPONSE_ABSTRACT(obj) \
+	(G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_SAMLP_RESPONSE_ABSTRACT))
+#define LASSO_IS_SAMLP_RESPONSE_ABSTRACT_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_SAMLP_RESPONSE_ABSTRACT))
+#define LASSO_SAMLP_RESPONSE_ABSTRACT_GET_CLASS(o) \
+	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_SAMLP_RESPONSE_ABSTRACT, \
+				    LassoSamlpResponseAbstractClass)) 
 
 typedef struct _LassoSamlpResponseAbstract LassoSamlpResponseAbstract;
 typedef struct _LassoSamlpResponseAbstractClass LassoSamlpResponseAbstractClass;
 
 struct _LassoSamlpResponseAbstract {
-  LassoNode parent;
-  /*< private >*/
+	LassoNode parent;
+
+	/*< public >*/
+	/* <attribute name="ResponseID" type="saml:IDType" use="required"/> */
+	char *ResponseID;
+	/* <attribute name="InResponseTo" type="saml:IDReferenceType" use="optional"/> */
+	char *InResponseTo;
+	/* <attribute name="MajorVersion" type="integer" use="required"/> */
+	int MajorVersion;
+	/* <attribute name="MinorVersion" type="integer" use="required"/> */
+	int MinorVersion;
+	/* <attribute name="IssueInstant" type="dateTime" use="required"/> */
+	char *IssueInstant;
+	/* <attribute name="Recipient" type="anyURI" use="optional"/> */
+	char *Recipient;
+
+	/* ds:Signature stuffs */
+	LassoSignatureType sign_type;
+	LassoSignatureMethod sign_method;
+	char *private_key_file;
+	char *certificate_file;
 };
 
 struct _LassoSamlpResponseAbstractClass {
-  LassoNodeClass parent;
-  /*< vtable >*/
+	LassoNodeClass parent;
 };
 
 LASSO_EXPORT GType lasso_samlp_response_abstract_get_type           (void);
-
-LASSO_EXPORT LassoNode* lasso_samlp_response_abstract_new           (void);
-
-LASSO_EXPORT void lasso_samlp_response_abstract_set_inResponseTo    (LassoSamlpResponseAbstract *node,
-								     const xmlChar *inResponseTo);
-
-LASSO_EXPORT void lasso_samlp_response_abstract_set_issueInstant    (LassoSamlpResponseAbstract *node,
-								     const xmlChar *issueInstant);
-
-LASSO_EXPORT void lasso_samlp_response_abstract_set_majorVersion    (LassoSamlpResponseAbstract *node,
-								     const xmlChar *majorVersion);
-
-LASSO_EXPORT void lasso_samlp_response_abstract_set_minorVersion    (LassoSamlpResponseAbstract *node,
-								     const xmlChar *minorVersion);
-
-LASSO_EXPORT void lasso_samlp_response_abstract_set_recipient       (LassoSamlpResponseAbstract *node,
-								     const xmlChar *recipient);
-
-LASSO_EXPORT void lasso_samlp_response_abstract_set_responseID      (LassoSamlpResponseAbstract *node,
-								     const xmlChar *responseID);
-
-LASSO_EXPORT gint lasso_samlp_response_abstract_set_signature       (LassoSamlpResponseAbstract *node,
-								     gint                        sign_method,
-								     const xmlChar              *private_key_file,
-								     const xmlChar              *certificate_file);
-
-LASSO_EXPORT gint lasso_samlp_response_abstract_set_signature_tmpl  (LassoSamlpResponseAbstract *node,
-								     lassoSignatureType          sign_type,
-								     lassoSignatureMethod        sign_method);
-
-LASSO_EXPORT gint lasso_samlp_response_abstract_sign_signature_tmpl (LassoSamlpResponseAbstract *node,
-								     const xmlChar              *private_key_file,
-								     const xmlChar              *certificate_file);
+LASSO_EXPORT void lasso_samlp_response_abstract_fill(LassoSamlpResponseAbstract *response,
+		const char *InResponseTo, const char *Recipient);
 
 #ifdef __cplusplus
 }

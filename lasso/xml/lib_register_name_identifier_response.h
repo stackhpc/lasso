@@ -1,12 +1,11 @@
-/* $Id: lib_register_name_identifier_response.h,v 1.2 2004/07/22 06:59:03 eraviart Exp $ 
+/* $Id: lib_register_name_identifier_response.h,v 1.9 2005/11/20 15:38:19 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,29 +29,43 @@
 extern "C" {
 #endif /* __cplusplus */ 
 
+#include <lasso/xml/lib_register_name_identifier_request.h>
 #include <lasso/xml/lib_status_response.h>
 
-#define LASSO_TYPE_LIB_REGISTER_NAME_IDENTIFIER_RESPONSE (lasso_lib_register_name_identifier_response_get_type())
-#define LASSO_LIB_REGISTER_NAME_IDENTIFIER_RESPONSE(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_LIB_REGISTER_NAME_IDENTIFIER_RESPONSE, LassoLibRegisterNameIdentifierResponse))
-#define LASSO_LIB_REGISTER_NAME_IDENTIFIER_RESPONSE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_LIB_REGISTER_NAME_IDENTIFIER_RESPONSE, LassoLibRegisterNameIdentifierResponseClass))
-#define LASSO_IS_LIB_REGISTER_NAME_IDENTIFIER_RESPONSE(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_LIB_REGISTER_NAME_IDENTIFIER_RESPONSE))
-#define LASSO_IS_LIB_REGISTER_NAME_IDENTIFIER_RESPONSE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_LIB_REGISTER_NAME_IDENTIFIER_RESPONSE))
-#define LASSO_LIB_REGISTER_NAME_IDENTIFIER_RESPONSE_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_LIB_REGISTER_NAME_IDENTIFIER_RESPONSE, LassoLibRegisterNameIdentifierResponseClass)) 
+#define LASSO_TYPE_LIB_REGISTER_NAME_IDENTIFIER_RESPONSE \
+	(lasso_lib_register_name_identifier_response_get_type())
+#define LASSO_LIB_REGISTER_NAME_IDENTIFIER_RESPONSE(obj) \
+	(G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_LIB_REGISTER_NAME_IDENTIFIER_RESPONSE, \
+				    LassoLibRegisterNameIdentifierResponse))
+#define LASSO_LIB_REGISTER_NAME_IDENTIFIER_RESPONSE_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_LIB_REGISTER_NAME_IDENTIFIER_RESPONSE, \
+				 LassoLibRegisterNameIdentifierResponseClass))
+#define LASSO_IS_LIB_REGISTER_NAME_IDENTIFIER_RESPONSE(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), \
+			LASSO_TYPE_LIB_REGISTER_NAME_IDENTIFIER_RESPONSE))
+#define LASSO_IS_LIB_REGISTER_NAME_IDENTIFIER_RESPONSE_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_LIB_REGISTER_NAME_IDENTIFIER_RESPONSE))
+#define LASSO_LIB_REGISTER_NAME_IDENTIFIER_RESPONSE_GET_CLASS(o) \
+	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_LIB_REGISTER_NAME_IDENTIFIER_RESPONSE, \
+				    LassoLibRegisterNameIdentifierResponseClass)) 
 
 typedef struct _LassoLibRegisterNameIdentifierResponse LassoLibRegisterNameIdentifierResponse;
-typedef struct _LassoLibRegisterNameIdentifierResponseClass LassoLibRegisterNameIdentifierResponseClass;
+typedef struct _LassoLibRegisterNameIdentifierResponseClass \
+	LassoLibRegisterNameIdentifierResponseClass;
 
 struct _LassoLibRegisterNameIdentifierResponse {
-  LassoLibStatusResponse parent;
-  /*< private >*/
+	LassoLibStatusResponse parent;
 };
 
 struct _LassoLibRegisterNameIdentifierResponseClass {
-  LassoLibStatusResponseClass parent;
+	LassoLibStatusResponseClass parent;
 };
 
 LASSO_EXPORT GType lasso_lib_register_name_identifier_response_get_type(void);
 LASSO_EXPORT LassoNode* lasso_lib_register_name_identifier_response_new(void);
+LASSO_EXPORT LassoNode* lasso_lib_register_name_identifier_response_new_full(
+		const char *providerID, const char *statusCodeValue,
+		LassoLibRegisterNameIdentifierRequest *request,
+		LassoSignatureType sign_type, LassoSignatureMethod sign_method);
 
 #ifdef __cplusplus
 }

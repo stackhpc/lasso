@@ -1,12 +1,11 @@
-/* $Id: lib_idp_entries.c,v 1.4 2004/08/13 15:16:13 fpeters Exp $
+/* $Id: lib_idp_entries.c,v 1.16 2005/01/22 15:57:55 eraviart Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,91 +25,81 @@
 #include <lasso/xml/lib_idp_entries.h>
 
 /*
-Schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
-
-<xs:element name="IDPEntries">
-  <xs:complexType>
-    <xs:sequence>
-      <xs:element ref="IDPEntry" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-</xs:element>
-*/
-
-/*****************************************************************************/
-/* public methods                                                            */
-/*****************************************************************************/
-
-/**
- * lasso_lib_idp_entries_add_idpEntry:
- * @node: the pointer to <lib:IDPEntries/> node object
- * @idpEntry: the pointer to <lib:IDPEntry/> node object
+ * Schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
  * 
- * Adds an "IDPEntry" element [required].
- *
- * It describes an identity provider that the service provider supports.
- **/
-void
-lasso_lib_idp_entries_add_idpEntry(LassoLibIDPEntries *node,
-				   LassoLibIDPEntry *idpEntry)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_LIB_IDP_ENTRIES(node));
-  g_assert(LASSO_IS_LIB_IDP_ENTRY(idpEntry));
+ * <xs:element name="IDPEntries">
+ *   <xs:complexType>
+ *     <xs:sequence>
+ *       <xs:element ref="IDPEntry" maxOccurs="unbounded"/>
+ *     </xs:sequence>
+ *   </xs:complexType>
+ * </xs:element>
+ */
 
-  class = LASSO_NODE_GET_CLASS(node);
-  class->add_child(LASSO_NODE (node), LASSO_NODE(idpEntry), TRUE);
-}
+/*****************************************************************************/
+/* private methods                                                           */
+/*****************************************************************************/
+
+static struct XmlSnippet schema_snippets[] = {
+	{ "IDPEntry", SNIPPET_LIST_NODES,
+		G_STRUCT_OFFSET(LassoLibIDPEntries, IDPEntry) },
+	{ NULL, 0, 0}
+};
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
 static void
-lasso_lib_idp_entries_instance_init(LassoLibIDPEntries *node)
+instance_init(LassoLibIDPEntries *node)
 {
-  LassoNodeClass *class = LASSO_NODE_GET_CLASS(LASSO_NODE(node));
-
-  class->set_ns(LASSO_NODE(node), lassoLibHRef, lassoLibPrefix);
-  class->set_name(LASSO_NODE(node), "IDPEntries");
+	node->IDPEntry = NULL;
 }
 
 static void
-lasso_lib_idp_entries_class_init(LassoLibIDPEntriesClass *klass)
+class_init(LassoLibIDPEntriesClass *klass)
 {
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
+
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "IDPEntries");
+	lasso_node_class_set_ns(nclass, LASSO_LIB_HREF, LASSO_LIB_PREFIX);
+	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
 
-GType lasso_lib_idp_entries_get_type() {
-  static GType this_type = 0;
+GType
+lasso_lib_idp_entries_get_type()
+{
+	static GType this_type = 0;
 
-  if (!this_type) {
-    static const GTypeInfo this_info = {
-      sizeof (LassoLibIDPEntriesClass),
-      NULL,
-      NULL,
-      (GClassInitFunc) lasso_lib_idp_entries_class_init,
-      NULL,
-      NULL,
-      sizeof(LassoLibIDPEntries),
-      0,
-      (GInstanceInitFunc) lasso_lib_idp_entries_instance_init,
-    };
-    
-    this_type = g_type_register_static(LASSO_TYPE_NODE,
-				       "LassoLibIDPEntries",
-				       &this_info, 0);
-  }
-  return this_type;
+	if (!this_type) {
+		static const GTypeInfo this_info = {
+			sizeof (LassoLibIDPEntriesClass),
+			NULL,
+			NULL,
+			(GClassInitFunc) class_init,
+			NULL,
+			NULL,
+			sizeof(LassoLibIDPEntries),
+			0,
+			(GInstanceInitFunc) instance_init,
+		};
+
+		this_type = g_type_register_static(LASSO_TYPE_NODE,
+				"LassoLibIDPEntries", &this_info, 0);
+	}
+	return this_type;
 }
 
 /**
  * lasso_lib_idp_entries_new:
  * 
- * Creates a new "<lib:IDPEntries/>" node object.
+ * Creates a new #LassoLibIDPEntries object.
  * 
- * Return value: the new @LassoLibIDPEntries
+ * Return value: a newly created #LassoLibIDPEntries object
  **/
-LassoNode* lasso_lib_idp_entries_new()
+LassoNode*
+lasso_lib_idp_entries_new()
 {
-  return LASSO_NODE(g_object_new(LASSO_TYPE_LIB_IDP_ENTRIES, NULL));
+	return g_object_new(LASSO_TYPE_LIB_IDP_ENTRIES, NULL);
 }

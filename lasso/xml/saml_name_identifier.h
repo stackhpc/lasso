@@ -1,12 +1,11 @@
-/* $Id: saml_name_identifier.h,v 1.4 2004/07/22 06:59:03 eraviart Exp $ 
+/* $Id: saml_name_identifier.h,v 1.9 2005/01/22 15:57:55 eraviart Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,33 +32,40 @@ extern "C" {
 #include <lasso/xml/xml.h>
 
 #define LASSO_TYPE_SAML_NAME_IDENTIFIER (lasso_saml_name_identifier_get_type())
-#define LASSO_SAML_NAME_IDENTIFIER(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_SAML_NAME_IDENTIFIER, LassoSamlNameIdentifier))
-#define LASSO_SAML_NAME_IDENTIFIER_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_SAML_NAME_IDENTIFIER, LassoSamlNameIdentifierClass))
-#define LASSO_IS_SAML_NAME_IDENTIFIER(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_SAML_NAME_IDENTIFIER))
-#define LASSO_IS_SAML_NAME_IDENTIFIER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_SAML_NAME_IDENTIFIER))
-#define LASSO_SAML_NAME_IDENTIFIER_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_SAML_NAME_IDENTIFIER, LassoSamlNameIdentifierClass)) 
+#define LASSO_SAML_NAME_IDENTIFIER(obj) \
+	(G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_SAML_NAME_IDENTIFIER, \
+				    LassoSamlNameIdentifier))
+#define LASSO_SAML_NAME_IDENTIFIER_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_SAML_NAME_IDENTIFIER, \
+				 LassoSamlNameIdentifierClass))
+#define LASSO_IS_SAML_NAME_IDENTIFIER(obj) \
+	(G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_SAML_NAME_IDENTIFIER))
+#define LASSO_IS_SAML_NAME_IDENTIFIER_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_SAML_NAME_IDENTIFIER))
+#define LASSO_SAML_NAME_IDENTIFIER_GET_CLASS(o) \
+	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_SAML_NAME_IDENTIFIER, \
+				    LassoSamlNameIdentifierClass)) 
 
 typedef struct _LassoSamlNameIdentifier LassoSamlNameIdentifier;
 typedef struct _LassoSamlNameIdentifierClass LassoSamlNameIdentifierClass;
 
 struct _LassoSamlNameIdentifier {
-  LassoNode parent;
-  /*< private >*/
+	LassoNode parent;
+	
+	/*< public >*/
+	char *NameQualifier;
+	char *Format;
+	char *content;
 };
 
 struct _LassoSamlNameIdentifierClass {
-  LassoNodeClass parent;
-  /*< vtable >*/
+	LassoNodeClass parent;
 };
 
 LASSO_EXPORT GType lasso_saml_name_identifier_get_type(void);
-LASSO_EXPORT LassoNode* lasso_saml_name_identifier_new(const xmlChar *content);
+LASSO_EXPORT LassoSamlNameIdentifier* lasso_saml_name_identifier_new(void);
 
-LASSO_EXPORT void lasso_saml_name_identifier_set_format        (LassoSamlNameIdentifier *node,
-								const xmlChar *format);
-
-LASSO_EXPORT void lasso_saml_name_identifier_set_nameQualifier (LassoSamlNameIdentifier *node,
-								const xmlChar *nameQualifier);
+LASSO_EXPORT LassoSamlNameIdentifier* lasso_saml_name_identifier_new_from_xmlNode(xmlNode*);
 
 #ifdef __cplusplus
 }
