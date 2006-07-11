@@ -36,21 +36,20 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 host_triplet = @host@
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in $(srcdir)/lasso.pc.in \
-	$(top_srcdir)/configure AUTHORS COPYING ChangeLog INSTALL NEWS \
-	compile config.guess config.sub depcomp install-sh ltmain.sh \
-	missing
+	$(srcdir)/Makefile.in $(srcdir)/lasso-src-config.in \
+	$(srcdir)/lasso.pc.in $(top_srcdir)/configure AUTHORS COPYING \
+	ChangeLog INSTALL NEWS compile config.guess config.sub depcomp \
+	install-sh ltmain.sh missing
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/macros/check.m4 \
-	$(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno configure.status.lineno
 mkinstalldirs = $(mkdir_p)
 CONFIG_HEADER = $(top_builddir)/lasso/lasso_config.h
-CONFIG_CLEAN_FILES = lasso.pc
+CONFIG_CLEAN_FILES = lasso-src-config lasso.pc
 SOURCES =
 DIST_SOURCES =
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
@@ -64,7 +63,7 @@ pkgconfigDATA_INSTALL = $(INSTALL_DATA)
 DATA = $(pkgconfig_DATA)
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = lasso php python java csharp tests swig win32 docs
+DIST_SUBDIRS = lasso swig php python java perl tests win32 docs
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -110,6 +109,7 @@ DARWIN_TRUE = @DARWIN_TRUE@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
 DLLTOOL = @DLLTOOL@
+DLL_FILENAME = @DLL_FILENAME@
 ECHO = @ECHO@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
@@ -126,9 +126,14 @@ GTK_DOC_CFLAGS = @GTK_DOC_CFLAGS@
 GTK_DOC_ENABLED_FALSE = @GTK_DOC_ENABLED_FALSE@
 GTK_DOC_ENABLED_TRUE = @GTK_DOC_ENABLED_TRUE@
 GTK_DOC_LIBS = @GTK_DOC_LIBS@
+HAVE_INKSCAPE_FALSE = @HAVE_INKSCAPE_FALSE@
+HAVE_INKSCAPE_TRUE = @HAVE_INKSCAPE_TRUE@
 HAVE_REST2HTML_FALSE = @HAVE_REST2HTML_FALSE@
 HAVE_REST2HTML_TRUE = @HAVE_REST2HTML_TRUE@
+HAVE_XSLTPROC_FALSE = @HAVE_XSLTPROC_FALSE@
+HAVE_XSLTPROC_TRUE = @HAVE_XSLTPROC_TRUE@
 HTML_DIR = @HTML_DIR@
+INKSCAPE = @INKSCAPE@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
@@ -148,8 +153,10 @@ LASSO_CORE_LIBS = @LASSO_CORE_LIBS@
 LASSO_DEFINES = @LASSO_DEFINES@
 LASSO_DOCDIR = @LASSO_DOCDIR@
 LASSO_LIBS = @LASSO_LIBS@
+LASSO_PUB_CFLAGS = @LASSO_PUB_CFLAGS@
 LASSO_STATIC_BINARIES = @LASSO_STATIC_BINARIES@
 LASSO_VERSION_INFO = @LASSO_VERSION_INFO@
+LASSO_WSF_SUPPORT = @LASSO_WSF_SUPPORT@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
@@ -172,10 +179,17 @@ PACKAGE_STRING = @PACKAGE_STRING@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
+PERL = @PERL@
+PERLINSTALLSITEARCH = @PERLINSTALLSITEARCH@
+PERLMAN3DIR = @PERLMAN3DIR@
+PERL_ENABLED_FALSE = @PERL_ENABLED_FALSE@
+PERL_ENABLED_TRUE = @PERL_ENABLED_TRUE@
+PERL_VERSION = @PERL_VERSION@
 PHP = @PHP@
 PHP_CONFIG = @PHP_CONFIG@
 PHP_ENABLED_FALSE = @PHP_ENABLED_FALSE@
 PHP_ENABLED_TRUE = @PHP_ENABLED_TRUE@
+PHP_EXTENSION_DIR = @PHP_EXTENSION_DIR@
 PHP_INCLUDES = @PHP_INCLUDES@
 PHP_LDFLAGS = @PHP_LDFLAGS@
 PHP_LIBS = @PHP_LIBS@
@@ -204,9 +218,17 @@ SWIG = @SWIG@
 SWIG_PYTHON_ARGS = @SWIG_PYTHON_ARGS@
 TAR = @TAR@
 U = @U@
+UPCASED_DLL_FILENAME = @UPCASED_DLL_FILENAME@
 VERSION = @VERSION@
+VERSION_UNDERSCORED = @VERSION_UNDERSCORED@
+WINDOWS_VERSION = @WINDOWS_VERSION@
 WITH_TESTS_FALSE = @WITH_TESTS_FALSE@
 WITH_TESTS_TRUE = @WITH_TESTS_TRUE@
+WSF_ENABLED_FALSE = @WSF_ENABLED_FALSE@
+WSF_ENABLED_TRUE = @WSF_ENABLED_TRUE@
+XSLTPROC = @XSLTPROC@
+Z_CFLAGS = @Z_CFLAGS@
+Z_LIBS = @Z_LIBS@
 ac_ct_AR = @ac_ct_AR@
 ac_ct_AS = @ac_ct_AS@
 ac_ct_CC = @ac_ct_CC@
@@ -217,6 +239,7 @@ ac_ct_OBJDUMP = @ac_ct_OBJDUMP@
 ac_ct_RANLIB = @ac_ct_RANLIB@
 ac_ct_RC = @ac_ct_RC@
 ac_ct_STRIP = @ac_ct_STRIP@
+ac_pt_PKG_CONFIG = @ac_pt_PKG_CONFIG@
 am__fastdepCC_FALSE = @am__fastdepCC_FALSE@
 am__fastdepCC_TRUE = @am__fastdepCC_TRUE@
 am__fastdepCXX_FALSE = @am__fastdepCXX_FALSE@
@@ -258,16 +281,16 @@ target_alias = @target_alias@
 @JAVA_ENABLED_TRUE@JAVA_SD = java
 @PHP_ENABLED_TRUE@PHP_SD = php
 @CSHARP_ENABLED_TRUE@CSHARP_SD = csharp
-@GTK_DOC_ENABLED_TRUE@GTK_DOC_SD = docs
+@PERL_ENABLED_TRUE@PERL_SD = perl
 SUBDIRS = lasso \
-		  $(PHP_SD) $(PYTHON_SD) $(JAVA_SD) $(CSHARP_SD) \
-		  tests \
 		  swig \
+		  $(PHP_SD) $(PYTHON_SD) $(JAVA_SD) $(PERL_SD) \
+		  tests \
 		  win32 \
-		  $(GTK_DOC_SD)
+		  docs
 
 ABS_BUILDDIR = $(shell pwd)
-EXTRA_DIST = COPYING lasso.pc.in
+EXTRA_DIST = COPYING lasso.pc.in lasso-src-config.in
 pkgconfig_DATA = lasso.pc
 pkgconfigdir = $(libdir)/pkgconfig
 all: all-recursive
@@ -306,6 +329,8 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 	cd $(srcdir) && $(AUTOCONF)
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(srcdir) && $(ACLOCAL) $(ACLOCAL_AMFLAGS)
+lasso-src-config: $(top_builddir)/config.status $(srcdir)/lasso-src-config.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
 lasso.pc: $(top_builddir)/config.status $(srcdir)/lasso.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 
@@ -459,7 +484,7 @@ distclean-tags:
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
-	$(mkdir_p) $(distdir)/. $(distdir)/csharp $(distdir)/macros
+	$(mkdir_p) $(distdir)/. $(distdir)/docs/reference $(distdir)/swig $(distdir)/win32 $(distdir)/win32/msvc $(distdir)/win32/nsis
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \

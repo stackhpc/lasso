@@ -1,12 +1,11 @@
-/* $Id: lib_idp_entries.h,v 1.2 2004/07/22 06:59:03 eraviart Exp $ 
+/* $Id: lib_idp_entries.h,v 1.7 2005/01/22 15:57:55 eraviart Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,29 +33,34 @@ extern "C" {
 #include <lasso/xml/lib_idp_entry.h>
 
 #define LASSO_TYPE_LIB_IDP_ENTRIES (lasso_lib_idp_entries_get_type())
-#define LASSO_LIB_IDP_ENTRIES(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_LIB_IDP_ENTRIES, LassoLibIDPEntries))
-#define LASSO_LIB_IDP_ENTRIES_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_LIB_IDP_ENTRIES, LassoLibIDPEntriesClass))
-#define LASSO_IS_LIB_IDP_ENTRIES(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_LIB_IDP_ENTRIES))
-#define LASSO_IS_LIB_IDP_ENTRIES_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_LIB_IDP_ENTRIES))
-#define LASSO_LIB_IDP_ENTRIES_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_LIB_IDP_ENTRIES, LassoLibIDPEntriesClass)) 
+#define LASSO_LIB_IDP_ENTRIES(obj) \
+	(G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_LIB_IDP_ENTRIES, LassoLibIDPEntries))
+#define LASSO_LIB_IDP_ENTRIES_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_LIB_IDP_ENTRIES, LassoLibIDPEntriesClass))
+#define LASSO_IS_LIB_IDP_ENTRIES(obj) \
+	(G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_LIB_IDP_ENTRIES))
+#define LASSO_IS_LIB_IDP_ENTRIES_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_LIB_IDP_ENTRIES))
+#define LASSO_LIB_IDP_ENTRIES_GET_CLASS(o) \
+	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_LIB_IDP_ENTRIES, LassoLibIDPEntriesClass)) 
 
 typedef struct _LassoLibIDPEntries LassoLibIDPEntries;
 typedef struct _LassoLibIDPEntriesClass LassoLibIDPEntriesClass;
 
 struct _LassoLibIDPEntries{
-  LassoNode parent;
-  /*< private >*/
+	LassoNode parent;
+	
+	/*< public >*/
+	/* <xs:element ref="IDPEntry" maxOccurs="unbounded"/> */
+	GList *IDPEntry;
 };
 
 struct _LassoLibIDPEntriesClass {
-  LassoNodeClass parent;
+	LassoNodeClass parent;
 };
 
 LASSO_EXPORT GType lasso_lib_idp_entries_get_type(void);
 LASSO_EXPORT LassoNode* lasso_lib_idp_entries_new(void);
-
-LASSO_EXPORT void lasso_lib_idp_entries_add_idpEntry (LassoLibIDPEntries *node,
-						      LassoLibIDPEntry *idpEntry);
 
 #ifdef __cplusplus
 }

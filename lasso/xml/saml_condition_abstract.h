@@ -1,12 +1,11 @@
-/* $Id: saml_condition_abstract.h,v 1.2 2004/07/22 06:59:03 eraviart Exp $ 
+/* $Id: saml_condition_abstract.h,v 1.6 2005/01/22 15:57:55 eraviart Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,27 +32,32 @@ extern "C" {
 #include <lasso/xml/xml.h>
 
 #define LASSO_TYPE_SAML_CONDITION_ABSTRACT (lasso_saml_condition_abstract_get_type())
-#define LASSO_SAML_CONDITION_ABSTRACT(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_SAML_CONDITION_ABSTRACT, LassoSamlConditionAbstract))
-#define LASSO_SAML_CONDITION_ABSTRACT_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_SAML_CONDITION_ABSTRACT, LassoSamlConditionAbstractClass))
-#define LASSO_IS_SAML_CONDITION_ABSTRACT(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_SAML_CONDITION_ABSTRACT))
-#define LASSO_IS_SAML_CONDITION_ABSTRACT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_SAML_CONDITION_ABSTRACT))
-#define LASSO_SAML_CONDITION_ABSTRACT_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_SAML_CONDITION_ABSTRACT, LassoSamlConditionAbstractClass)) 
+#define LASSO_SAML_CONDITION_ABSTRACT(obj) \
+	(G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_SAML_CONDITION_ABSTRACT, \
+				    LassoSamlConditionAbstract))
+#define LASSO_SAML_CONDITION_ABSTRACT_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_SAML_CONDITION_ABSTRACT, \
+				 LassoSamlConditionAbstractClass))
+#define LASSO_IS_SAML_CONDITION_ABSTRACT(obj) \
+	(G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_SAML_CONDITION_ABSTRACT))
+#define LASSO_IS_SAML_CONDITION_ABSTRACT_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_SAML_CONDITION_ABSTRACT))
+#define LASSO_SAML_CONDITION_ABSTRACT_GET_CLASS(o) \
+	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_SAML_CONDITION_ABSTRACT, \
+				    LassoSamlConditionAbstractClass)) 
 
 typedef struct _LassoSamlConditionAbstract LassoSamlConditionAbstract;
 typedef struct _LassoSamlConditionAbstractClass LassoSamlConditionAbstractClass;
 
 struct _LassoSamlConditionAbstract {
-  LassoNode parent;
-  /*< private >*/
+	LassoNode parent;
 };
 
 struct _LassoSamlConditionAbstractClass {
-  LassoNodeClass parent;
-  /*< vtable >*/
+	LassoNodeClass parent;
 };
 
 LASSO_EXPORT GType lasso_saml_condition_abstract_get_type(void);
-LASSO_EXPORT LassoNode* lasso_saml_condition_abstract_new(const xmlChar *name);
 
 #ifdef __cplusplus
 }

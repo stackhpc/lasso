@@ -1,12 +1,11 @@
-/* $Id: saml_statement_abstract.c,v 1.4 2004/09/01 09:59:53 fpeters Exp $
+/* $Id: saml_statement_abstract.c,v 1.11 2005/01/22 15:57:55 eraviart Exp $
  *
  * Lasso - A free implementation of the Samlerty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,65 +31,50 @@ The schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
 <complexType name="StatementAbstractType" abstract="true"/>
 */
 
+
+/*****************************************************************************/
+/* private methods                                                           */
+/*****************************************************************************/
+
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
 static void
-lasso_saml_statement_abstract_instance_init(LassoSamlStatementAbstract *node)
+instance_init(LassoSamlStatementAbstract *node)
 {
-  LassoNodeClass *class = LASSO_NODE_GET_CLASS(LASSO_NODE(node));
-
-  class->set_ns(LASSO_NODE(node), lassoSamlAssertionHRef,
-		lassoSamlAssertionPrefix);
-  class->set_name(LASSO_NODE(node), "StatementAbstract");
 }
 
 static void
-lasso_saml_statement_abstract_class_init(LassoSamlStatementAbstractClass *klass)
+class_init(LassoSamlStatementAbstractClass *klass)
 {
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
+
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "StatementAbstract");
+	lasso_node_class_set_ns(nclass, LASSO_SAML_ASSERTION_HREF, LASSO_SAML_ASSERTION_PREFIX);
 }
 
-GType lasso_saml_statement_abstract_get_type() {
-  static GType this_type = 0;
-
-  if (!this_type) {
-    static const GTypeInfo this_info = {
-      sizeof (LassoSamlStatementAbstractClass),
-      NULL,
-      NULL,
-      (GClassInitFunc) lasso_saml_statement_abstract_class_init,
-      NULL,
-      NULL,
-      sizeof(LassoSamlStatementAbstract),
-      0,
-      (GInstanceInitFunc) lasso_saml_statement_abstract_instance_init,
-    };
-    
-    this_type = g_type_register_static(LASSO_TYPE_NODE,
-				       "LassoSamlStatementAbstract",
-				       &this_info, 0);
-  }
-  return this_type;
-}
-
-/**
- * lasso_saml_statement_abstract_new:
- * @name: the node's name. If @name is NULL or an empty string, default value
- * "StatementAbstract" will be used.
- *
- * Creates a new <saml:StatementAbstract> node object.
- * 
- * Return value: the new @LassoSamlStatementAbstract
- **/
-LassoNode* lasso_saml_statement_abstract_new(const xmlChar *name)
+GType
+lasso_saml_statement_abstract_get_type()
 {
-  LassoNode *node;
+	static GType this_type = 0;
 
-  node = LASSO_NODE(g_object_new(LASSO_TYPE_SAML_STATEMENT_ABSTRACT, NULL));
+	if (!this_type) {
+		static const GTypeInfo this_info = {
+			sizeof (LassoSamlStatementAbstractClass),
+			NULL,
+			NULL,
+			(GClassInitFunc) class_init,
+			NULL,
+			NULL,
+			sizeof(LassoSamlStatementAbstract),
+			0,
+			(GInstanceInitFunc) instance_init,
+		};
 
-  if (name && *name)
-    LASSO_NODE_GET_CLASS(node)->set_name(node, name);
-
-  return node;
+		this_type = g_type_register_static(LASSO_TYPE_NODE,
+				"LassoSamlStatementAbstract", &this_info, 0);
+	}
+	return this_type;
 }
