@@ -1,3 +1,9 @@
+lasso (0.6.5-2ubuntu2) edgy; urgency=low
+
+  * Rebuild to add support for python2.5.
+
+ -- Matthias Klose <doko@ubuntu.com>  Fri,  8 Sep 2006 18:25:57 +0000
+
 lasso (0.6.5-2ubuntu1) edgy; urgency=low
 
   * Synchronize with Debian unstable.
