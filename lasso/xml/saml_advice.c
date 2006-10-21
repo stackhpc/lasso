@@ -1,12 +1,11 @@
-/* $Id: saml_advice.c,v 1.5 2004/08/13 15:16:13 fpeters Exp $
+/* $Id: saml_advice.c,v 1.18 2005/01/22 15:57:55 eraviart Exp $
  *
  * Lasso - A free implementation of the Samlerty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,121 +23,92 @@
  */
 
 #include <lasso/xml/saml_advice.h>
+#include <lasso/xml/saml_assertion.h>
 
 /*
-The schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
-
-<element name="Advice" type="saml:AdviceType"/>
-<complexType name="AdviceType">
-  <choice minOccurs="0" maxOccurs="unbounded">
-    <element ref="saml:AssertionIDReference"/>
-    <element ref="saml:Assertion"/>
-    <any namespace="##other" processContents="lax"/>
-  </choice>
-</complexType>
-
-<element name="AssertionIDReference" type="saml:IDReferenceType"/>
-<simpleType name="IDReferenceType">
-  <restriction base="string"/>
-</simpleType>
-*/
+ * Schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
+ * 
+ * <element name="Advice" type="saml:AdviceType"/>
+ * <complexType name="AdviceType">
+ *   <choice minOccurs="0" maxOccurs="unbounded">
+ *     <element ref="saml:AssertionIDReference"/>
+ *     <element ref="saml:Assertion"/>
+ *     <any namespace="##other" processContents="lax"/>
+ *   </choice>
+ * </complexType>
+ * 
+ * <element name="AssertionIDReference" type="saml:IDReferenceType"/>
+ * <simpleType name="IDReferenceType">
+ *   <restriction base="string"/>
+ * </simpleType>
+ */
 
 /*****************************************************************************/
-/* public methods                                                            */
+/* private methods                                                           */
 /*****************************************************************************/
 
-void
-lasso_saml_advice_add_assertionIDReference(LassoSamlAdvice *node,
-					   const xmlChar *assertionIDReference)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_SAML_ADVICE(node));
-  g_assert(assertionIDReference != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->new_child(LASSO_NODE (node),
-		   "AssertionIDReference",
-		   assertionIDReference,
-		   TRUE);
-}
-
-void
-lasso_saml_advice_add_assertion(LassoSamlAdvice *node,
-				gpointer *assertion)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_SAML_ADVICE(node));
-  /* g_assert(LASSO_IS_SAML_ASSERTION(assertion)); */
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->add_child(LASSO_NODE (node), LASSO_NODE (assertion), TRUE);
-}
+static struct XmlSnippet schema_snippets[] = {
+	{ "AssertionIDReference", SNIPPET_LIST_CONTENT,
+		G_STRUCT_OFFSET(LassoSamlAdvice, AssertionIDReference) },
+	{ "Assertion", SNIPPET_NODE, G_STRUCT_OFFSET(LassoSamlAdvice, Assertion) },
+	{ NULL, 0, 0}
+};
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
 static void
-lasso_saml_advice_instance_init(LassoSamlAdvice *node)
+instance_init(LassoSamlAdvice *node)
 {
-  LassoNodeClass *class = LASSO_NODE_GET_CLASS(LASSO_NODE(node));
-
-  class->set_ns(LASSO_NODE(node), lassoSamlAssertionHRef,
-		lassoSamlAssertionPrefix);
-  class->set_name(LASSO_NODE(node), "Advice");
+	node->AssertionIDReference = NULL;
+	node->Assertion = NULL;
 }
 
 static void
-lasso_saml_advice_class_init(LassoSamlAdviceClass *klass) {
+class_init(LassoSamlAdviceClass *klass)
+{
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
+
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "Advice");
+	lasso_node_class_set_ns(nclass, LASSO_SAML_ASSERTION_HREF, LASSO_SAML_ASSERTION_PREFIX);
+	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
 
-GType lasso_saml_advice_get_type() {
-  static GType this_type = 0;
+GType
+lasso_saml_advice_get_type()
+{
+	static GType this_type = 0;
 
-  if (!this_type) {
-    static const GTypeInfo this_info = {
-      sizeof (LassoSamlAdviceClass),
-      NULL,
-      NULL,
-      (GClassInitFunc) lasso_saml_advice_class_init,
-      NULL,
-      NULL,
-      sizeof(LassoSamlAdvice),
-      0,
-      (GInstanceInitFunc) lasso_saml_advice_instance_init,
-    };
-    
-    this_type = g_type_register_static(LASSO_TYPE_NODE,
-				       "LassoSamlAdvice",
-				       &this_info, 0);
-  }
-  return this_type;
+	if (!this_type) {
+		static const GTypeInfo this_info = {
+			sizeof (LassoSamlAdviceClass),
+			NULL,
+			NULL,
+			(GClassInitFunc) class_init,
+			NULL,
+			NULL,
+			sizeof(LassoSamlAdvice),
+			0,
+			(GInstanceInitFunc) instance_init,
+		};
+
+		this_type = g_type_register_static(LASSO_TYPE_NODE,
+				"LassoSamlAdvice", &this_info, 0);
+	}
+	return this_type;
 }
 
 /**
  * lasso_saml_advice_new:
  * 
- * Creates a new <saml:Advice> node object.
+ * Creates a new #LassoSamlAdvice object.
  *
- * The <Advice> element contains any additional information that the issuer
- * wishes to provide. This information MAY be ignored by applications without
- * affecting either the semantics or the validity of the assertion.
- * The <Advice> element contains a mixture of zero or more <Assertion>
- * elements, <AssertionIDReference> elements and elements in other namespaces,
- * with lax schema validation in effect for these other elements.
- * Following are some potential uses of the <Advice> element:
- *
- * - Include evidence supporting the assertion claims to be cited, either
- * directly (through incorporating the claims) or indirectly (by reference to
- * the supporting assertions).
- *
- * - State a proof of the assertion claims.
- *
- * - Specify the timing and distribution points for updates to the assertion.
- * 
- * Return value: the new @LassoSamlAdvice
+ * Return value: a newly created #LassoSamlAdvice
  **/
-LassoNode* lasso_saml_advice_new()
+LassoNode*
+lasso_saml_advice_new()
 {
-  return LASSO_NODE(g_object_new(LASSO_TYPE_SAML_ADVICE, NULL));
+	return g_object_new(LASSO_TYPE_SAML_ADVICE, NULL);
 }

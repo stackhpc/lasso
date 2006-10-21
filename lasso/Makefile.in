@@ -42,8 +42,7 @@ subdir = lasso
 DIST_COMMON = $(liblassoinclude_HEADERS) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/lasso_config.h.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/macros/check.m4 \
-	$(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(mkdir_p)
@@ -52,23 +51,27 @@ CONFIG_CLEAN_FILES =
 am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(liblassoincludedir)"
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
-am__DEPENDENCIES_1 =
+@WSF_ENABLED_TRUE@am__DEPENDENCIES_1 = $(top_builddir)/lasso/id-wsf/liblasso-id-wsf.la
+am__DEPENDENCIES_2 =
 @MINGW_FALSE@liblasso_la_DEPENDENCIES =  \
 @MINGW_FALSE@	$(top_builddir)/lasso/xml/liblasso-xml.la \
-@MINGW_FALSE@	$(top_builddir)/lasso/protocols/liblasso-protocols.la \
-@MINGW_FALSE@	$(top_builddir)/lasso/environs/liblasso-environs.la \
-@MINGW_FALSE@	$(am__DEPENDENCIES_1)
+@MINGW_FALSE@	$(top_builddir)/lasso/xml/saml-2.0/liblasso-xml-saml2.la \
+@MINGW_FALSE@	$(top_builddir)/lasso/id-ff/liblasso-id-ff.la \
+@MINGW_FALSE@	$(top_builddir)/lasso/saml-2.0/liblasso-saml-20.la \
+@MINGW_FALSE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_2)
 @MINGW_TRUE@liblasso_la_DEPENDENCIES =  \
 @MINGW_TRUE@	$(top_builddir)/lasso/xml/liblasso-xml.la \
-@MINGW_TRUE@	$(top_builddir)/lasso/protocols/liblasso-protocols.la \
-@MINGW_TRUE@	$(top_builddir)/lasso/environs/liblasso-environs.la \
-@MINGW_TRUE@	$(am__DEPENDENCIES_1) lasso.rc.lo
-am_liblasso_la_OBJECTS = lasso.lo
+@MINGW_TRUE@	$(top_builddir)/lasso/xml/saml-2.0/liblasso-xml-saml2.la \
+@MINGW_TRUE@	$(top_builddir)/lasso/id-ff/liblasso-id-ff.la \
+@MINGW_TRUE@	$(top_builddir)/lasso/saml-2.0/liblasso-saml-20.la \
+@MINGW_TRUE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_2) \
+@MINGW_TRUE@	lasso.rc.lo
+am_liblasso_la_OBJECTS = lasso.lo errors.lo
 liblasso_la_OBJECTS = $(am_liblasso_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
-@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/lasso.Plo
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/errors.Plo ./$(DEPDIR)/lasso.Plo
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) \
@@ -125,6 +128,7 @@ DARWIN_TRUE = @DARWIN_TRUE@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
 DLLTOOL = @DLLTOOL@
+DLL_FILENAME = @DLL_FILENAME@
 ECHO = @ECHO@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
@@ -141,9 +145,14 @@ GTK_DOC_CFLAGS = @GTK_DOC_CFLAGS@
 GTK_DOC_ENABLED_FALSE = @GTK_DOC_ENABLED_FALSE@
 GTK_DOC_ENABLED_TRUE = @GTK_DOC_ENABLED_TRUE@
 GTK_DOC_LIBS = @GTK_DOC_LIBS@
+HAVE_INKSCAPE_FALSE = @HAVE_INKSCAPE_FALSE@
+HAVE_INKSCAPE_TRUE = @HAVE_INKSCAPE_TRUE@
 HAVE_REST2HTML_FALSE = @HAVE_REST2HTML_FALSE@
 HAVE_REST2HTML_TRUE = @HAVE_REST2HTML_TRUE@
+HAVE_XSLTPROC_FALSE = @HAVE_XSLTPROC_FALSE@
+HAVE_XSLTPROC_TRUE = @HAVE_XSLTPROC_TRUE@
 HTML_DIR = @HTML_DIR@
+INKSCAPE = @INKSCAPE@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
@@ -163,8 +172,10 @@ LASSO_CORE_LIBS = @LASSO_CORE_LIBS@
 LASSO_DEFINES = @LASSO_DEFINES@
 LASSO_DOCDIR = @LASSO_DOCDIR@
 LASSO_LIBS = @LASSO_LIBS@
+LASSO_PUB_CFLAGS = @LASSO_PUB_CFLAGS@
 LASSO_STATIC_BINARIES = @LASSO_STATIC_BINARIES@
 LASSO_VERSION_INFO = @LASSO_VERSION_INFO@
+LASSO_WSF_SUPPORT = @LASSO_WSF_SUPPORT@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
@@ -187,10 +198,17 @@ PACKAGE_STRING = @PACKAGE_STRING@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
+PERL = @PERL@
+PERLINSTALLSITEARCH = @PERLINSTALLSITEARCH@
+PERLMAN3DIR = @PERLMAN3DIR@
+PERL_ENABLED_FALSE = @PERL_ENABLED_FALSE@
+PERL_ENABLED_TRUE = @PERL_ENABLED_TRUE@
+PERL_VERSION = @PERL_VERSION@
 PHP = @PHP@
 PHP_CONFIG = @PHP_CONFIG@
 PHP_ENABLED_FALSE = @PHP_ENABLED_FALSE@
 PHP_ENABLED_TRUE = @PHP_ENABLED_TRUE@
+PHP_EXTENSION_DIR = @PHP_EXTENSION_DIR@
 PHP_INCLUDES = @PHP_INCLUDES@
 PHP_LDFLAGS = @PHP_LDFLAGS@
 PHP_LIBS = @PHP_LIBS@
@@ -219,9 +237,17 @@ SWIG = @SWIG@
 SWIG_PYTHON_ARGS = @SWIG_PYTHON_ARGS@
 TAR = @TAR@
 U = @U@
+UPCASED_DLL_FILENAME = @UPCASED_DLL_FILENAME@
 VERSION = @VERSION@
+VERSION_UNDERSCORED = @VERSION_UNDERSCORED@
+WINDOWS_VERSION = @WINDOWS_VERSION@
 WITH_TESTS_FALSE = @WITH_TESTS_FALSE@
 WITH_TESTS_TRUE = @WITH_TESTS_TRUE@
+WSF_ENABLED_FALSE = @WSF_ENABLED_FALSE@
+WSF_ENABLED_TRUE = @WSF_ENABLED_TRUE@
+XSLTPROC = @XSLTPROC@
+Z_CFLAGS = @Z_CFLAGS@
+Z_LIBS = @Z_LIBS@
 ac_ct_AR = @ac_ct_AR@
 ac_ct_AS = @ac_ct_AS@
 ac_ct_CC = @ac_ct_CC@
@@ -232,6 +258,7 @@ ac_ct_OBJDUMP = @ac_ct_OBJDUMP@
 ac_ct_RANLIB = @ac_ct_RANLIB@
 ac_ct_RC = @ac_ct_RC@
 ac_ct_STRIP = @ac_ct_STRIP@
+ac_pt_PKG_CONFIG = @ac_pt_PKG_CONFIG@
 am__fastdepCC_FALSE = @am__fastdepCC_FALSE@
 am__fastdepCC_TRUE = @am__fastdepCC_TRUE@
 am__fastdepCXX_FALSE = @am__fastdepCXX_FALSE@
@@ -269,44 +296,50 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-SUBDIRS = xml protocols environs
+SUBDIRS = xml id-ff id-wsf saml-2.0
 liblassoincludedir = $(includedir)/lasso
-INCLUDES = \
-	-I$(top_srcdir) \
-	$(LASSO_DEFINES) \
-	$(LASSO_CFLAGS)
-
+INCLUDES = -I$(top_srcdir) -I$(top_builddir) $(LASSO_CORE_CFLAGS)
 LTRCCOMPILE = $(LIBTOOL) --tag=RC --mode=compile $(RC) \
      `echo $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) |\
          sed -e 's/-I/--include-dir /g;s/-D/--define /g'`
 
 lib_LTLIBRARIES = liblasso.la
-liblassoinclude_HEADERS = export.h lasso.h lasso_config.h
-liblasso_la_SOURCES = lasso.c
+liblassoinclude_HEADERS = export.h lasso.h lasso_config.h errors.h
+BUILT_SOURCES = types.c symbols.sym
+liblasso_la_SOURCES = lasso.c errors.c
+@WSF_ENABLED_TRUE@SYMBOLS_ARGS = -wsf
+EXTRA_DIST = extract_types.py extract_symbols.py
+@WSF_ENABLED_TRUE@WSF_LIB_FILE = $(top_builddir)/lasso/id-wsf/liblasso-id-wsf.la
 @MINGW_FALSE@liblasso_la_LIBADD = \
 @MINGW_FALSE@	$(top_builddir)/lasso/xml/liblasso-xml.la \
-@MINGW_FALSE@	$(top_builddir)/lasso/protocols/liblasso-protocols.la \
-@MINGW_FALSE@	$(top_builddir)/lasso/environs/liblasso-environs.la \
+@MINGW_FALSE@	$(top_builddir)/lasso/xml/saml-2.0/liblasso-xml-saml2.la \
+@MINGW_FALSE@	$(top_builddir)/lasso/id-ff/liblasso-id-ff.la \
+@MINGW_FALSE@	$(top_builddir)/lasso/saml-2.0/liblasso-saml-20.la \
+@MINGW_FALSE@	$(WSF_LIB_FILE) \
 @MINGW_FALSE@	$(LASSO_LIBS)
 
 @MINGW_TRUE@liblasso_la_LIBADD = \
 @MINGW_TRUE@	$(top_builddir)/lasso/xml/liblasso-xml.la \
-@MINGW_TRUE@	$(top_builddir)/lasso/protocols/liblasso-protocols.la \
-@MINGW_TRUE@	$(top_builddir)/lasso/environs/liblasso-environs.la \
+@MINGW_TRUE@	$(top_builddir)/lasso/xml/saml-2.0/liblasso-xml-saml2.la \
+@MINGW_TRUE@	$(top_builddir)/lasso/id-ff/liblasso-id-ff.la \
+@MINGW_TRUE@	$(top_builddir)/lasso/saml-2.0/liblasso-saml-20.la \
+@MINGW_TRUE@	$(WSF_LIB_FILE) \
 @MINGW_TRUE@	$(LASSO_LIBS) \
 @MINGW_TRUE@	lasso.rc.lo
 
 # Just make damn sure the ABI stays the same between
 # upgrades.
 # Obviously if you don't, fixing the situation up again can be painful. 
-@MINGW_FALSE@liblasso_la_LDFLAGS = -no-undefined -version-info @LASSO_VERSION_INFO@
+@MINGW_FALSE@liblasso_la_LDFLAGS = -no-undefined -version-info @LASSO_VERSION_INFO@  \
+@MINGW_FALSE@	-export-symbols symbols.sym
+
 # Just make damn sure the ABI stays the same between
 # upgrades.
 # Obviously if you don't, fixing the situation up again can be painful. 
 @MINGW_TRUE@liblasso_la_LDFLAGS = -no-undefined -version-info @LASSO_VERSION_INFO@ \
 @MINGW_TRUE@                      -Wl,--add-stdcall-alias 
 
-all: lasso_config.h
+all: $(BUILT_SOURCES) lasso_config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
 .SUFFIXES:
@@ -393,6 +426,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/errors.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lasso.Plo@am__quote@
 
 .c.o:
@@ -607,14 +641,16 @@ distdir: $(DISTFILES)
 	  fi; \
 	done
 check-am: all-am
-check: check-recursive
+check: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) check-recursive
 all-am: Makefile $(LTLIBRARIES) $(HEADERS) lasso_config.h
 installdirs: installdirs-recursive
 installdirs-am:
 	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(liblassoincludedir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
-install: install-recursive
+install: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) install-recursive
 install-exec: install-exec-recursive
 install-data: install-data-recursive
 uninstall: uninstall-recursive
@@ -638,9 +674,10 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
+	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
 clean: clean-recursive
 
-clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
+clean-am: clean-generic clean-libLTLIBRARIES clean-libtool clean-local \
 	mostlyclean-am
 
 distclean: distclean-recursive
@@ -694,7 +731,7 @@ uninstall-info: uninstall-info-recursive
 
 .PHONY: $(RECURSIVE_TARGETS) CTAGS GTAGS all all-am check check-am \
 	clean clean-generic clean-libLTLIBRARIES clean-libtool \
-	clean-recursive ctags ctags-recursive distclean \
+	clean-local clean-recursive ctags ctags-recursive distclean \
 	distclean-compile distclean-generic distclean-hdr \
 	distclean-libtool distclean-recursive distclean-tags distdir \
 	dvi dvi-am html html-am info info-am install install-am \
@@ -712,6 +749,17 @@ uninstall-info: uninstall-info-recursive
 
 lasso.rc.lo: $(top_srcdir)/win32/lasso.rc
 	$(LTRCCOMPILE) -i $< -o $@
+
+types.c:
+	$(PYTHON) $(srcdir)/extract_types.py $(srcdir) $(SYMBOLS_ARGS)
+
+symbols.sym:
+	$(PYTHON) $(srcdir)/extract_symbols.py $(srcdir) $(SYMBOLS_ARGS) > symbols.sym
+
+clean-local:
+	-rm types.c symbols.sym
+
+.PHONY: types.c symbols.sym
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

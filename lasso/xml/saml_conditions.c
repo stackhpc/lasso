@@ -1,12 +1,11 @@
-/* $Id: saml_conditions.c,v 1.4 2004/08/13 15:16:13 fpeters Exp $
+/* $Id: saml_conditions.c,v 1.17 2005/01/22 15:57:55 eraviart Exp $
  *
  * Lasso - A free implementation of the Samlerty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,158 +25,90 @@
 #include <lasso/xml/saml_conditions.h>
 
 /*
-The schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
-
-<element name="Conditions" type="saml:ConditionsType"/>
-<complexType name="ConditionsType">
-  <choice minOccurs="0" maxOccurs="unbounded">
-    <element ref="saml:AudienceRestrictionCondition"/>
-    <element ref="saml:Condition"/>
-  </choice>
-  <attribute name="NotBefore" type="dateTime" use="optional"/>
-  <attribute name="NotOnOrAfter" type="dateTime" use="optional"/>
-</complexType>
-*/
+ * Schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
+ * 
+ * <element name="Conditions" type="saml:ConditionsType"/>
+ * <complexType name="ConditionsType">
+ *   <choice minOccurs="0" maxOccurs="unbounded">
+ *     <element ref="saml:AudienceRestrictionCondition"/>
+ *     <element ref="saml:Condition"/>
+ *   </choice>
+ *   <attribute name="NotBefore" type="dateTime" use="optional"/>
+ *   <attribute name="NotOnOrAfter" type="dateTime" use="optional"/>
+ * </complexType>
+ */
 
 /*****************************************************************************/
-/* public methods                                                            */
+/* private methods                                                           */
 /*****************************************************************************/
 
-/**
- * lasso_saml_conditions_add_condition:
- * @node: the <saml:Conditions> node object
- * @condition: 
- * 
- * 
- **/
-void
-lasso_saml_conditions_add_condition(LassoSamlConditions *node,
-				    LassoSamlConditionAbstract *condition)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_SAML_CONDITIONS(node));
-  g_assert(LASSO_IS_SAML_CONDITION_ABSTRACT(condition));
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->add_child(LASSO_NODE (node), LASSO_NODE(condition), TRUE);
-}
-
-/**
- * lasso_saml_conditions_add_audienceRestrictionCondition:
- * @node: the <saml:Conditions> node object
- * @audienceRestrictionCondition: 
- * 
- * 
- **/
-void
-lasso_saml_conditions_add_audienceRestrictionCondition(LassoSamlConditions *node,
-						       LassoSamlAudienceRestrictionCondition *audienceRestrictionCondition)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_SAML_CONDITIONS(node));
-  g_assert(LASSO_IS_SAML_AUDIENCE_RESTRICTION_CONDITION(audienceRestrictionCondition));
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->add_child(LASSO_NODE (node), LASSO_NODE(audienceRestrictionCondition), TRUE);
-}
-
-/**
- * lasso_saml_conditions_set_notBefore:
- * @node: the <saml:Conditions> node object
- * @notBefore: the value of "NotBefore" attribute
- * 
- * Sets the "NotBefore" attribute.
- *
- * Specifies the earliest time instant at which the assertion is valid. The
- * time value is encoded in UTC as described in Section 1.2.2
- * (oasis-sstc-saml-core-1.0.pdf).
- **/
-void
-lasso_saml_conditions_set_notBefore(LassoSamlConditions *node,
-				    const xmlChar *notBefore)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_SAML_CONDITIONS(node));
-  g_assert(notBefore != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->set_prop(LASSO_NODE (node), "NotBefore", notBefore);
-}
-
-/**
- * lasso_saml_conditions_set_notOnOrAfter:
- * @node: the <saml:Conditions> node object
- * @notOnOrAfter: the value of "NotOnOrAfter" attribute.
- * 
- * Sets the "NotOnOrAfter" attribute.
- *
- * Specifies the time instant at which the assertion has expired. The time
- * value is encoded in UTC as described in Section 1.2.2
- * (oasis-sstc-saml-core-1.0.pdf).
- **/
-void
-lasso_saml_conditions_set_notOnOrAfter(LassoSamlConditions *node,
-				       const xmlChar *notOnOrAfter)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_SAML_CONDITIONS(node));
-  g_assert(notOnOrAfter != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->set_prop(LASSO_NODE (node), "NotOnOrAfter", notOnOrAfter);
-}
+static struct XmlSnippet schema_snippets[] = {
+	{ "AudienceRestrictionCondition", SNIPPET_LIST_NODES,
+		G_STRUCT_OFFSET(LassoSamlConditions, AudienceRestrictionCondition) },
+	{ "NotBefore", SNIPPET_ATTRIBUTE,
+		G_STRUCT_OFFSET(LassoSamlConditions, NotBefore) },
+	{ "NotOnOrAfter", SNIPPET_ATTRIBUTE,
+		G_STRUCT_OFFSET(LassoSamlConditions, NotOnOrAfter) },
+	{ NULL, 0, 0 }
+};
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
 static void
-lasso_saml_conditions_instance_init(LassoSamlConditions *node)
+instance_init(LassoSamlConditions *node)
 {
-  LassoNodeClass *class = LASSO_NODE_GET_CLASS(LASSO_NODE(node));
-
-  class->set_ns(LASSO_NODE(node), lassoSamlAssertionHRef,
-		lassoSamlAssertionPrefix);
-  class->set_name(LASSO_NODE(node), "Conditions");
+	node->Condition = NULL;
+	node->AudienceRestrictionCondition = NULL;
+	node->NotBefore = NULL;
+	node->NotOnOrAfter = NULL;
 }
 
 static void
-lasso_saml_conditions_class_init(LassoSamlConditionsClass *klass)
+class_init(LassoSamlConditionsClass *klass)
 {
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
+
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "Conditions");
+	lasso_node_class_set_ns(nclass, LASSO_SAML_ASSERTION_HREF, LASSO_SAML_ASSERTION_PREFIX);
+	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
 
-GType lasso_saml_conditions_get_type()
+GType
+lasso_saml_conditions_get_type()
 {
-  static GType this_type = 0;
+	static GType this_type = 0;
 
-  if (!this_type) {
-    static const GTypeInfo this_info = {
-      sizeof (LassoSamlConditionsClass),
-      NULL,
-      NULL,
-      (GClassInitFunc) lasso_saml_conditions_class_init,
-      NULL,
-      NULL,
-      sizeof(LassoSamlConditions),
-      0,
-      (GInstanceInitFunc) lasso_saml_conditions_instance_init,
-    };
-    
-    this_type = g_type_register_static(LASSO_TYPE_NODE,
-				       "LassoSamlConditions",
-				       &this_info, 0);
-  }
-  return this_type;
+	if (!this_type) {
+		static const GTypeInfo this_info = {
+			sizeof (LassoSamlConditionsClass),
+			NULL,
+			NULL,
+			(GClassInitFunc) class_init,
+			NULL,
+			NULL,
+			sizeof(LassoSamlConditions),
+			0,
+			(GInstanceInitFunc) instance_init,
+		};
+
+		this_type = g_type_register_static(LASSO_TYPE_NODE,
+				"LassoSamlConditions", &this_info, 0);
+	}
+	return this_type;
 }
 
 /**
  * lasso_saml_conditions_new:
  * 
- * Creates a new <saml:Conditions> node object.
+ * Creates a new #LassoSamlConditions object.
  *
- * Return value: the new @LassoSamlConditions
+ * Return value: a newly created #LassoSamlConditions object
  **/
-LassoNode* lasso_saml_conditions_new()
+LassoSamlConditions*
+lasso_saml_conditions_new()
 {
-  return LASSO_NODE(g_object_new(LASSO_TYPE_SAML_CONDITIONS, NULL));
+	return g_object_new(LASSO_TYPE_SAML_CONDITIONS, NULL);
 }

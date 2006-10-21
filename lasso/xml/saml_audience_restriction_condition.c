@@ -1,12 +1,11 @@
-/* $Id: saml_audience_restriction_condition.c,v 1.5 2004/08/13 15:16:13 fpeters Exp $
+/* $Id: saml_audience_restriction_condition.c,v 1.17 2005/01/22 15:57:55 eraviart Exp $
  *
  * Lasso - A free implementation of the Samlerty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,114 +25,108 @@
 #include <lasso/xml/saml_audience_restriction_condition.h>
 
 /*
-The schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
-
-<element name="AudienceRestrictionCondition" type="saml:AudienceRestrictionConditionType"/>
-<complexType name="AudienceRestrictionConditionType">
-  <complexContent>
-    <extension base="saml:ConditionAbstractType">
-      <sequence>
-        <element ref="saml:Audience" maxOccurs="unbounded"/>
-      </sequence>
-    </extension>
-  </complexContent>
-</complexType>
-
-<element name="Audience" type="anyURI"/>
-*/
-
-/*****************************************************************************/
-/* publics methods                                                           */
-/*****************************************************************************/
-
-/**
- * lasso_saml_audience_restriction_condition_add_audience:
- * @node: the <saml:AudienceRestrictionCondition> node object
- * @audience: the value of "Audience" element
+ * schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
  * 
- * Adds an "Audience" element.
- *
- * A URI reference that identifies an intended audience. The URI reference MAY
- * identify a document that describes the terms and conditions of audience
- * membership.
- **/
-void
-lasso_saml_audience_restriction_condition_add_audience(LassoSamlAudienceRestrictionCondition *node,
-						       const xmlChar *audience)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_SAML_AUDIENCE_RESTRICTION_CONDITION(node));
-  g_assert(audience != NULL);
+ * <element name="AudienceRestrictionCondition" type="saml:AudienceRestrictionConditionType"/>
+ * <complexType name="AudienceRestrictionConditionType">
+ *   <complexContent>
+ *     <extension base="saml:ConditionAbstractType">
+ *       <sequence>
+ *         <element ref="saml:Audience" maxOccurs="unbounded"/>
+ *       </sequence>
+ *     </extension>
+ *   </complexContent>
+ * </complexType>
+ * 
+ * <element name="Audience" type="anyURI"/>
+ */
 
-  class = LASSO_NODE_GET_CLASS(node);
-  class->new_child(LASSO_NODE (node), "Audience", audience, TRUE);
-}
+/*****************************************************************************/
+/* private methods                                                           */
+/*****************************************************************************/
+
+static struct XmlSnippet schema_snippets[] = {
+	{ "Audience", SNIPPET_LIST_CONTENT,
+		G_STRUCT_OFFSET(LassoSamlAudienceRestrictionCondition, Audience) },
+	{ NULL, 0, 0 }
+};
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
 static void
-lasso_saml_audience_restriction_condition_instance_init(LassoSamlAudienceRestrictionCondition *node)
+instance_init(LassoSamlAudienceRestrictionCondition *node)
 {
-  LassoNodeClass *class = LASSO_NODE_GET_CLASS(LASSO_NODE(node));
-
-  /* namespace herited from saml:ConditionAbstract */
-  class->set_name(LASSO_NODE(node), "AudienceRestrictionCondition");
+	node->Audience = NULL;
 }
 
 static void
-lasso_saml_audience_restriction_condition_class_init(LassoSamlAudienceRestrictionConditionClass *klass)
+class_init(LassoSamlAudienceRestrictionConditionClass *klass)
 {
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
+
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "AudienceRestrictionCondition");
+	lasso_node_class_set_ns(nclass, LASSO_SAML_ASSERTION_HREF, LASSO_SAML_ASSERTION_PREFIX);
+	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
 
-GType lasso_saml_audience_restriction_condition_get_type() {
-  static GType this_type = 0;
+GType
+lasso_saml_audience_restriction_condition_get_type()
+{
+	static GType this_type = 0;
 
-  if (!this_type) {
-    static const GTypeInfo this_info = {
-      sizeof (LassoSamlAudienceRestrictionConditionClass),
-      NULL,
-      NULL,
-      (GClassInitFunc) lasso_saml_audience_restriction_condition_class_init,
-      NULL,
-      NULL,
-      sizeof(LassoSamlAudienceRestrictionCondition),
-      0,
-      (GInstanceInitFunc) lasso_saml_audience_restriction_condition_instance_init,
-    };
-    
-    this_type = g_type_register_static(LASSO_TYPE_SAML_CONDITION_ABSTRACT,
-				       "LassoSamlAudienceRestrictionCondition",
-				       &this_info, 0);
-  }
-  return this_type;
+	if (!this_type) {
+		static const GTypeInfo this_info = {
+			sizeof (LassoSamlAudienceRestrictionConditionClass),
+			NULL,
+			NULL,
+			(GClassInitFunc) class_init,
+			NULL,
+			NULL,
+			sizeof(LassoSamlAudienceRestrictionCondition),
+			0,
+			(GInstanceInitFunc) instance_init,
+		};
+
+		this_type = g_type_register_static(LASSO_TYPE_SAML_CONDITION_ABSTRACT,
+				"LassoSamlAudienceRestrictionCondition", &this_info, 0);
+	}
+	return this_type;
 }
 
 /**
  * lasso_saml_audience_restriction_condition_new:
  * 
- * Creates a new <saml:AudienceRestrictionCondition> node object.
+ * Creates a new #LassoSamlAudienceRestrictionCondition object.
  * 
- * The <AudienceRestrictionCondition> element specifies that the assertion is
- * addressed to one or more specific audiences identified by <Audience>
- * elements. Although a party that is outside the audiences specified is
- * capable of drawing conclusions from an assertion, the issuer explicitly
- * makes no representation as to accuracy or trustworthiness to such a party.
- *
- * The AudienceRestrictionCondition evaluates to Valid if and only if the
- * relying party is a member of one or more of the audiences specified. The
- * issuer of an assertion cannot prevent a party to whom it is disclosed from
- * making a decision on the basis of the information provided. However, the
- * <AudienceRestrictionCondition> element allows the issuer to state explicitly
- * that no warranty is provided to such a party in a machine- and
- * human-readable form. While there can be no guarantee that a court would
- * uphold such a warranty exclusion in every circumstance, the probability of
- * upholding the warranty exclusion is considerably improved.
- *
- * Return value: the new @LassoSamlAudienceRestrictionCondition
+ * Return value: a newly created #LassoSamlAudienceRestrictionCondition
  **/
-LassoNode* lasso_saml_audience_restriction_condition_new()
+LassoSamlAudienceRestrictionCondition*
+lasso_saml_audience_restriction_condition_new()
 {
-  return LASSO_NODE(g_object_new(LASSO_TYPE_SAML_AUDIENCE_RESTRICTION_CONDITION, NULL));
+	return g_object_new(LASSO_TYPE_SAML_AUDIENCE_RESTRICTION_CONDITION, NULL);
+}
+
+
+/**
+ * lasso_saml_audience_restriction_condition_new_full:
+ * @audience:
+ * 
+ * Creates a new #LassoSamlAudienceRestrictionCondition object and initializes
+ * it with the parameters.
+ * 
+ * Return value: a newly created #LassoSamlAudienceRestrictionCondition
+ **/
+LassoSamlAudienceRestrictionCondition*
+lasso_saml_audience_restriction_condition_new_full(const char *audience)
+{
+	LassoSamlAudienceRestrictionCondition *condition;
+
+	condition = lasso_saml_audience_restriction_condition_new();
+	if (audience != NULL) {
+		condition->Audience = g_list_append(condition->Audience, g_strdup(audience));
+	}
+	return condition;
 }

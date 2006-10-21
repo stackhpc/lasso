@@ -1,12 +1,11 @@
-/* $Id: samlp_status_code.h,v 1.2 2004/07/22 06:59:03 eraviart Exp $
+/* $Id: samlp_status_code.h,v 1.7 2005/01/22 15:57:55 eraviart Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,29 +32,36 @@ extern "C" {
 #include <lasso/xml/xml.h>
 
 #define LASSO_TYPE_SAMLP_STATUS_CODE (lasso_samlp_status_code_get_type())
-#define LASSO_SAMLP_STATUS_CODE(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_SAMLP_STATUS_CODE, LassoSamlpStatusCode))
-#define LASSO_SAMLP_STATUS_CODE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_SAMLP_STATUS_CODE, LassoSamlpStatusCodeClass))
-#define LASSO_IS_SAMLP_STATUS_CODE(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_SAMLP_STATUS_CODE))
-#define LASSO_IS_SAMLP_STATUS_CODE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_SAMLP_STATUS_CODE))
-#define LASSO_SAMLP_STATUS_CODE_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_SAMLP_STATUS_CODE, LassoSamlpStatusCodeClass)) 
+#define LASSO_SAMLP_STATUS_CODE(obj) \
+	(G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_SAMLP_STATUS_CODE, LassoSamlpStatusCode))
+#define LASSO_SAMLP_STATUS_CODE_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_SAMLP_STATUS_CODE, LassoSamlpStatusCodeClass))
+#define LASSO_IS_SAMLP_STATUS_CODE(obj) \
+	(G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_SAMLP_STATUS_CODE))
+#define LASSO_IS_SAMLP_STATUS_CODE_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_SAMLP_STATUS_CODE))
+#define LASSO_SAMLP_STATUS_CODE_GET_CLASS(o) \
+	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_SAMLP_STATUS_CODE, LassoSamlpStatusCodeClass)) 
 
 typedef struct _LassoSamlpStatusCode LassoSamlpStatusCode;
 typedef struct _LassoSamlpStatusCodeClass LassoSamlpStatusCodeClass;
 
 struct _LassoSamlpStatusCode {
-  LassoNode parent;
-  /*< private >*/
+	LassoNode parent;
+	
+	/*< public >*/
+	/* <element ref="samlp:StatusCode" minOccurs="0"/> */
+	LassoSamlpStatusCode *StatusCode;
+	/* <attribute name="Value" type="QName" use="required"/> */
+	char *Value;
 };
 
 struct _LassoSamlpStatusCodeClass {
-  LassoNodeClass parent;
+	LassoNodeClass parent;
 };
 
 LASSO_EXPORT GType lasso_samlp_status_code_get_type(void);
-LASSO_EXPORT LassoNode* lasso_samlp_status_code_new(void);
-
-LASSO_EXPORT void lasso_samlp_status_code_set_value (LassoSamlpStatusCode *node,
-						     const xmlChar *value);
+LASSO_EXPORT LassoSamlpStatusCode* lasso_samlp_status_code_new(void);
 
 #ifdef __cplusplus
 }

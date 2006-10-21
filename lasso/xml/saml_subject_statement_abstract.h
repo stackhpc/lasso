@@ -1,12 +1,11 @@
-/* $Id: saml_subject_statement_abstract.h,v 1.2 2004/07/22 06:59:03 eraviart Exp $ 
+/* $Id: saml_subject_statement_abstract.h,v 1.7 2005/01/22 15:57:55 eraviart Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,31 +32,38 @@ extern "C" {
 #include <lasso/xml/saml_statement_abstract.h>
 #include <lasso/xml/saml_subject.h>
 
-#define LASSO_TYPE_SAML_SUBJECT_STATEMENT_ABSTRACT (lasso_saml_subject_statement_abstract_get_type())
-#define LASSO_SAML_SUBJECT_STATEMENT_ABSTRACT(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_SAML_SUBJECT_STATEMENT_ABSTRACT, LassoSamlSubjectStatementAbstract))
-#define LASSO_SAML_SUBJECT_STATEMENT_ABSTRACT_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_SAML_SUBJECT_STATEMENT_ABSTRACT, LassoSamlSubjectStatementAbstractClass))
-#define LASSO_IS_SAML_SUBJECT_STATEMENT_ABSTRACT(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_SAML_SUBJECT_STATEMENT_ABSTRACT))
-#define LASSO_IS_SAML_SUBJECT_STATEMENT_ABSTRACT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_SAML_SUBJECT_STATEMENT_ABSTRACT))
-#define LASSO_SAML_SUBJECT_STATEMENT_ABSTRACT_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_SAML_SUBJECT_STATEMENT_ABSTRACT, LassoSamlSubjectStatementAbstractClass)) 
+#define LASSO_TYPE_SAML_SUBJECT_STATEMENT_ABSTRACT \
+	(lasso_saml_subject_statement_abstract_get_type())
+#define LASSO_SAML_SUBJECT_STATEMENT_ABSTRACT(obj) \
+	(G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_SAML_SUBJECT_STATEMENT_ABSTRACT, \
+				    LassoSamlSubjectStatementAbstract))
+#define LASSO_SAML_SUBJECT_STATEMENT_ABSTRACT_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_SAML_SUBJECT_STATEMENT_ABSTRACT, \
+				 LassoSamlSubjectStatementAbstractClass))
+#define LASSO_IS_SAML_SUBJECT_STATEMENT_ABSTRACT(obj) \
+	(G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_SAML_SUBJECT_STATEMENT_ABSTRACT))
+#define LASSO_IS_SAML_SUBJECT_STATEMENT_ABSTRACT_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_SAML_SUBJECT_STATEMENT_ABSTRACT))
+#define LASSO_SAML_SUBJECT_STATEMENT_ABSTRACT_GET_CLASS(o) \
+	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_SAML_SUBJECT_STATEMENT_ABSTRACT, \
+				    LassoSamlSubjectStatementAbstractClass)) 
 
 typedef struct _LassoSamlSubjectStatementAbstract LassoSamlSubjectStatementAbstract;
 typedef struct _LassoSamlSubjectStatementAbstractClass LassoSamlSubjectStatementAbstractClass;
 
 struct _LassoSamlSubjectStatementAbstract {
-  LassoSamlStatementAbstract parent;
-  /*< private >*/
+	LassoSamlStatementAbstract parent;
+
+	/*< public >*/
+	/* <element ref="saml:Subject"/> */
+	LassoSamlSubject *Subject;
 };
 
 struct _LassoSamlSubjectStatementAbstractClass {
-  LassoSamlStatementAbstractClass parent;
-  /*< vtable >*/
+	LassoSamlStatementAbstractClass parent;
 };
 
 LASSO_EXPORT GType lasso_saml_subject_statement_abstract_get_type(void);
-LASSO_EXPORT LassoNode* lasso_saml_subject_statement_abstract_new(const xmlChar *name);
-
-LASSO_EXPORT void lasso_saml_subject_statement_abstract_set_subject (LassoSamlSubjectStatementAbstract *node,
-								     LassoSamlSubject *subject);
 
 #ifdef __cplusplus
 }

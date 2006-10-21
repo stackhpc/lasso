@@ -1,12 +1,11 @@
-/* $Id: saml_conditions.h,v 1.2 2004/07/22 06:59:03 eraviart Exp $ 
+/* $Id: saml_conditions.h,v 1.8 2005/01/22 15:57:55 eraviart Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,42 +30,44 @@ extern "C" {
 #endif /* __cplusplus */ 
 
 #include <lasso/xml/xml.h>
-#include <lasso/xml/saml_condition_abstract.h>
 #include <lasso/xml/saml_audience_restriction_condition.h>
+#include <lasso/xml/saml_condition_abstract.h>
 
 #define LASSO_TYPE_SAML_CONDITIONS (lasso_saml_conditions_get_type())
-#define LASSO_SAML_CONDITIONS(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_SAML_CONDITIONS, LassoSamlConditions))
-#define LASSO_SAML_CONDITIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_SAML_CONDITIONS, LassoSamlConditionsClass))
-#define LASSO_IS_SAML_CONDITIONS(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_SAML_CONDITIONS))
-#define LASSO_IS_SAML_CONDITIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_SAML_CONDITIONS))
-#define LASSO_SAML_CONDITIONS_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_SAML_CONDITIONS, LassoSamlConditionsClass)) 
+#define LASSO_SAML_CONDITIONS(obj) \
+	(G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_SAML_CONDITIONS, LassoSamlConditions))
+#define LASSO_SAML_CONDITIONS_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_SAML_CONDITIONS, LassoSamlConditionsClass))
+#define LASSO_IS_SAML_CONDITIONS(obj) \
+	(G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_SAML_CONDITIONS))
+#define LASSO_IS_SAML_CONDITIONS_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_SAML_CONDITIONS))
+#define LASSO_SAML_CONDITIONS_GET_CLASS(o) \
+	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_SAML_CONDITIONS, LassoSamlConditionsClass)) 
 
 typedef struct _LassoSamlConditions LassoSamlConditions;
 typedef struct _LassoSamlConditionsClass LassoSamlConditionsClass;
 
 struct _LassoSamlConditions {
-  LassoNode parent;
-  /*< private >*/
+	LassoNode parent;
+
+	/*< public >*/
+	/* <element ref="saml:Condition"/> */
+	GList *Condition; /* LassoSamlCondition (XXX missing from lasso) */
+	/* <element ref="saml:AudienceRestrictionCondition"/> */
+	GList *AudienceRestrictionCondition; /* LassoSamlAudienceRestrictionCondition */
+	/* <attribute name="NotBefore" type="dateTime" use="optional"/> */
+	char *NotBefore;
+	/* <attribute name="NotOnOrAfter" type="dateTime" use="optional"/> */
+	char *NotOnOrAfter;
 };
 
 struct _LassoSamlConditionsClass {
-  LassoNodeClass parent;
+	LassoNodeClass parent;
 };
 
 LASSO_EXPORT GType lasso_saml_conditions_get_type(void);
-LASSO_EXPORT LassoNode* lasso_saml_conditions_new(void);
-
-LASSO_EXPORT void lasso_saml_conditions_add_condition    (LassoSamlConditions *node,
-							  LassoSamlConditionAbstract *condition);
-
-LASSO_EXPORT void lasso_saml_conditions_add_audienceRestrictionCondition(LassoSamlConditions *node,
-									 LassoSamlAudienceRestrictionCondition *audienceRestrictionCondition);
-
-LASSO_EXPORT void lasso_saml_conditions_set_notBefore    (LassoSamlConditions *node,
-							  const xmlChar *notBefore);
-
-LASSO_EXPORT void lasso_saml_conditions_set_notOnOrAfter (LassoSamlConditions *node,
-							  const xmlChar *notOnOrAfter);
+LASSO_EXPORT LassoSamlConditions* lasso_saml_conditions_new(void);
 
 #ifdef __cplusplus
 }

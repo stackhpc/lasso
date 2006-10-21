@@ -1,12 +1,11 @@
-/* $Id: lib_authn_request_envelope.c,v 1.2 2004/08/13 15:16:13 fpeters Exp $ 
+/* $Id: lib_authn_request_envelope.c,v 1.15 2005/01/22 15:57:55 eraviart Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,172 +24,153 @@
 
 #include <lasso/xml/lib_authn_request_envelope.h>
 
-/*     <xs:element name="AuthnRequestEnvelope" type="AuthnRequestEnvelopeType"/> */
-/*     <xs:complexType name="AuthnRequestEnvelopeType"> */
-/*         <xs:complexContent> */
-/*             <xs:extension base="RequestEnvelopeType"> */
-/*                 <xs:sequence> */
-/*                     <xs:element ref="AuthnRequest"/> */
-/*                     <xs:element ref="ProviderID"/> */
-/*                     <xs:element name="ProviderName" type="xs:string" minOccurs="0"/> */
-/*                     <xs:element name="AssertionConsumerServiceURL" type="xs:anyURI"/> */
-/*                     <xs:element ref="IDPList" minOccurs="0"/> */
-/*                     <xs:element name="IsPassive" type="xs:boolean" minOccurs="0"/> */
-/*                 </xs:sequence> */
-/*             </xs:extension> */
-/*         </xs:complexContent> */
-/*     </xs:complexType> */
-/*     <xs:complexType name="RequestEnvelopeType"> */
-/*         <xs:sequence> */
-/*             <xs:element ref="Extension" minOccurs="0" maxOccurs="unbounded"/> */
-/*         </xs:sequence> */
-/*     </xs:complexType> */
-/*     <xs:element name="IDPList" type="IDPListType"/> */
-/*     <xs:complexType name="IDPListType"> */
-/*         <xs:sequence> */
-/*             <xs:element ref="IDPEntries"/> */
-/*             <xs:element ref="GetComplete" minOccurs="0"/> */
-/*         </xs:sequence> */
-/*     </xs:complexType> */
-/*     <xs:complexType name="ResponseEnvelopeType"> */
-/*         <xs:sequence> */
-/*             <xs:element ref="Extension" minOccurs="0" maxOccurs="unbounded"/> */
-/*         </xs:sequence> */
-
+/*
+ * Schema:
+ *
+ * <xs:element name="AuthnRequestEnvelope" type="AuthnRequestEnvelopeType"/>
+ * <xs:complexType name="AuthnRequestEnvelopeType">
+ *   <xs:complexContent>
+ *     <xs:extension base="RequestEnvelopeType">
+ *       <xs:sequence>
+ *         <xs:element ref="AuthnRequest"/>
+ *         <xs:element ref="ProviderID"/>
+ *         <xs:element name="ProviderName" type="xs:string" minOccurs="0"/>
+ *         <xs:element name="AssertionConsumerServiceURL" type="xs:anyURI"/>
+ *         <xs:element ref="IDPList" minOccurs="0"/>
+ *         <xs:element name="IsPassive" type="xs:boolean" minOccurs="0"/>
+ *       </xs:sequence>
+ *     </xs:extension>
+ *   </xs:complexContent>
+ * </xs:complexType>
+ * <xs:complexType name="RequestEnvelopeType">
+ *   <xs:sequence>
+ *     <xs:element ref="Extension" minOccurs="0" maxOccurs="unbounded"/>
+ *   </xs:sequence>
+ * </xs:complexType>
+ * <xs:element name="IDPList" type="IDPListType"/>
+ * <xs:complexType name="IDPListType">
+ *   <xs:sequence>
+ *     <xs:element ref="IDPEntries"/>
+ *     <xs:element ref="GetComplete" minOccurs="0"/>
+ *   </xs:sequence>
+ * </xs:complexType>
+ * <xs:complexType name="ResponseEnvelopeType">
+ *   <xs:sequence>
+ *     <xs:element ref="Extension" minOccurs="0" maxOccurs="unbounded"/>
+ *   </xs:sequence>
+ * </xs:complexType>
+ */
 
 /*****************************************************************************/
-/* public methods                                                            */
+/* private methods                                                           */
 /*****************************************************************************/
 
-void
-lasso_lib_authn_request_envelope_set_extension(LassoLibAuthnRequestEnvelope *node,
-					       LassoNode                    *extension)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_LIB_AUTHN_REQUEST_ENVELOPE(node));
-  g_assert(LASSO_IS_NODE(extension));
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->add_child(LASSO_NODE(node), extension, FALSE);
-}
-
-void lasso_lib_authn_request_envelope_set_authnRequest(LassoLibAuthnRequestEnvelope *node,
-						       LassoLibAuthnRequest         *request)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_LIB_AUTHN_REQUEST_ENVELOPE(node));
-  g_assert(LASSO_IS_LIB_AUTHN_REQUEST(request));
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->add_child(LASSO_NODE(node), LASSO_NODE(request), FALSE);
-}
-
-void
-lasso_lib_authn_request_envelope_set_assertionConsumerServiceURL(LassoLibAuthnRequestEnvelope *node,
-								 const xmlChar                *assertionConsumerServiceURL)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_LIB_AUTHN_REQUEST_ENVELOPE(node));
-  g_assert(assertionConsumerServiceURL != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->new_child(LASSO_NODE(node), "AssertionConsumerServiceURL", assertionConsumerServiceURL, FALSE);
-}
-
-void
-lasso_lib_authn_request_envelope_set_providerID(LassoLibAuthnRequestEnvelope *node,
-						const xmlChar                *providerID)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_LIB_AUTHN_REQUEST_ENVELOPE(node));
-  g_assert(providerID != NULL);
-  /* FIXME : providerID length SHOULD be <= 1024 */
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->new_child(LASSO_NODE(node), "ProviderID", providerID, FALSE);
-}
-
-void lasso_lib_authn_request_envelope_set_providerName(LassoLibAuthnRequestEnvelope *node,
-						       const xmlChar                *providerName)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_LIB_AUTHN_REQUEST_ENVELOPE(node));
-  g_assert(providerName != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->new_child(LASSO_NODE(node), "ProviderName", providerName, FALSE);
-}
-
-void lasso_lib_authn_request_envelope_set_idpList(LassoLibAuthnRequestEnvelope *node,
-						  LassoLibIDPList              *idpList)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_LIB_AUTHN_REQUEST_ENVELOPE(node));
-  g_assert(LASSO_IS_LIB_IDP_LIST(idpList));
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->add_child(LASSO_NODE(node), LASSO_NODE(idpList), FALSE);
-}
-
-void
-lasso_lib_authn_request_envelope_set_isPassive(LassoLibAuthnRequestEnvelope *node,
-					       gboolean                      isPassive)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_LIB_AUTHN_REQUEST_ENVELOPE(node));
-  g_assert(isPassive == FALSE || isPassive == TRUE);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  if (isPassive == FALSE) {
-    class->new_child(LASSO_NODE (node), "IsPassive", "false", FALSE);
-  }
-  if (isPassive == TRUE) {
-    class->new_child(LASSO_NODE (node), "IsPassive", "true", FALSE);
-  }
-}
+static struct XmlSnippet schema_snippets[] = {
+	{ "Extension", SNIPPET_EXTENSION,
+		G_STRUCT_OFFSET(LassoLibAuthnRequestEnvelope, Extension) },
+	{ "AuthnRequest", SNIPPET_NODE,
+		G_STRUCT_OFFSET(LassoLibAuthnRequestEnvelope, AuthnRequest) },
+	{ "ProviderID", SNIPPET_CONTENT,
+		G_STRUCT_OFFSET(LassoLibAuthnRequestEnvelope, ProviderID) },
+	{ "ProviderName", SNIPPET_CONTENT,
+		G_STRUCT_OFFSET(LassoLibAuthnRequestEnvelope, ProviderName) },
+	{ "AssertionConsumerServiceURL", SNIPPET_CONTENT,
+		G_STRUCT_OFFSET(LassoLibAuthnRequestEnvelope, AssertionConsumerServiceURL) },
+	{ "IDPList", SNIPPET_NODE,
+		G_STRUCT_OFFSET(LassoLibAuthnRequestEnvelope, IDPList) },
+	{ "IsPassive", SNIPPET_CONTENT | SNIPPET_BOOLEAN,
+		G_STRUCT_OFFSET(LassoLibAuthnRequestEnvelope, IsPassive) },
+	{ NULL, 0, 0 }
+};
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
 static void
-lasso_lib_authn_request_envelope_instance_init(LassoLibAuthnRequestEnvelope *node)
+instance_init(LassoLibAuthnRequestEnvelope *node)
 {
-  LassoNodeClass *class = LASSO_NODE_GET_CLASS(LASSO_NODE(node));
-
-  class->set_ns(LASSO_NODE(node), lassoLibHRef, lassoLibPrefix);
-  class->set_name(LASSO_NODE(node), "AuthnRequestEnvelope");
+	node->Extension = NULL;
+	node->AuthnRequest = NULL;
+	node->ProviderID = NULL;
+	node->ProviderName = NULL;
+	node->AssertionConsumerServiceURL = NULL;
+	node->IDPList = NULL;
+	node->IsPassive = FALSE;
 }
 
 static void
-lasso_lib_authn_request_envelope_class_init(LassoLibAuthnRequestEnvelopeClass *class)
+class_init(LassoLibAuthnRequestEnvelopeClass *klass)
 {
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
+
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "AuthnRequestEnvelope");
+	lasso_node_class_set_ns(nclass, LASSO_LIB_HREF, LASSO_LIB_PREFIX);
+	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
 
-GType lasso_lib_authn_request_envelope_get_type() {
-  static GType this_type = 0;
+GType
+lasso_lib_authn_request_envelope_get_type()
+{
+	static GType this_type = 0;
 
-  if (!this_type) {
-    static const GTypeInfo this_info = {
-      sizeof (LassoLibAuthnRequestEnvelopeClass),
-      NULL,
-      NULL,
-      (GClassInitFunc) lasso_lib_authn_request_envelope_class_init,
-      NULL,
-      NULL,
-      sizeof(LassoLibAuthnRequestEnvelope),
-      0,
-      (GInstanceInitFunc) lasso_lib_authn_request_envelope_instance_init,
-    };
-    
-    this_type = g_type_register_static(LASSO_TYPE_NODE,
-				       "LassoLibAuthnRequestEnvelope",
-				       &this_info, 0);
-  }
-  return this_type;
+	if (!this_type) {
+		static const GTypeInfo this_info = {
+			sizeof (LassoLibAuthnRequestEnvelopeClass),
+			NULL,
+			NULL,
+			(GClassInitFunc) class_init,
+			NULL,
+			NULL,
+			sizeof(LassoLibAuthnRequestEnvelope),
+			0,
+			(GInstanceInitFunc) instance_init,
+		};
+
+		this_type = g_type_register_static(LASSO_TYPE_NODE,
+				"LassoLibAuthnRequestEnvelope", &this_info, 0);
+	}
+	return this_type;
 }
 
-LassoNode* lasso_lib_authn_request_envelope_new() {
-  return LASSO_NODE(g_object_new(LASSO_TYPE_LIB_AUTHN_REQUEST_ENVELOPE,
-				 NULL));
+
+/**
+ * lasso_lib_authn_request_envelope_new:
+ *
+ * Creates a new #LassoLibAuthnRequestEnvelope object.
+ *
+ * Return value: a newly created #LassoLibAuthnRequestEnvelope object
+ **/
+LassoLibAuthnRequestEnvelope*
+lasso_lib_authn_request_envelope_new()
+{
+	return g_object_new(LASSO_TYPE_LIB_AUTHN_REQUEST_ENVELOPE, NULL);
+}
+
+
+/**
+ * lasso_lib_authn_request_envelope_new_full:
+ * @authnRequest: the #LassoLibAuthnRequest to envelop
+ * @providerID: service provider ID
+ * @assertionConsumerServiceURL: assertion consumer service URL on the service
+ *      provider
+ *
+ * Creates a new #LassoLibAuthnRequestEnvelope object and initializes it with
+ * the parameters.
+ *
+ * Return value: a newly created #LassoLibAuthnRequestEnvelope object
+ **/
+LassoLibAuthnRequestEnvelope*
+lasso_lib_authn_request_envelope_new_full(LassoLibAuthnRequest *authnRequest,
+		char *providerID, char *assertionConsumerServiceURL)
+{
+	LassoLibAuthnRequestEnvelope *request;
+
+	request = g_object_new(LASSO_TYPE_LIB_AUTHN_REQUEST_ENVELOPE, NULL);
+	request->AuthnRequest = g_object_ref(authnRequest);
+	request->ProviderID = g_strdup(providerID);
+	request->AssertionConsumerServiceURL = g_strdup(assertionConsumerServiceURL);
+
+	return request;
 }

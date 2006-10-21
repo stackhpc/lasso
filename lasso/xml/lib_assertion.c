@@ -1,12 +1,11 @@
-/* $Id: lib_assertion.c,v 1.6 2004/09/01 09:59:53 fpeters Exp $
+/* $Id: lib_assertion.c,v 1.17 2005/01/22 15:57:55 eraviart Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,143 +25,136 @@
 #include <lasso/xml/lib_assertion.h>
 
 /*
-Authentication assertions provided in an <AuthnResponse> element MUST be of
-type AssertionType, which is an extension of saml:AssertionType, so that the
-RequestID attribute from the original <AuthnRequest> MAY be included in the
-InResponseTo attribute in the <Assertion> element. This is done because it is
-not required that the <AuthnResponse> element itself be signed. Instead, the
-individual <Assertion> elements contained MUST each be signed. Note that it is
-optional for the InResponseTo to be present. Its absence indicates that the
-<AuthnResponse> has been unilaterally sent by the identity provider without a
-corresponding <AuthnRequest> message from the service provider. If the
-attribute is present, it MUST be set to the RequestID of the original
-<AuthnRequest>.
+ * Authentication assertions provided in an <AuthnResponse> element MUST be of
+ * type AssertionType, which is an extension of saml:AssertionType, so that the
+ * RequestID attribute from the original <AuthnRequest> MAY be included in the
+ * InResponseTo attribute in the <Assertion> element. This is done because it is
+ * not required that the <AuthnResponse> element itself be signed. Instead, the
+ * individual <Assertion> elements contained MUST each be signed. Note that it is
+ * optional for the InResponseTo to be present. Its absence indicates that the
+ * <AuthnResponse> has been unilaterally sent by the identity provider without a
+ * corresponding <AuthnRequest> message from the service provider. If the
+ * attribute is present, it MUST be set to the RequestID of the original
+ * <AuthnRequest>.
+ *
+ * The schema fragment is as follows:
 
-The schema fragment is as follows:
-
-<xs:element name="Assertion" type="AssertionType" substitutionGroup="saml:Assertion" />
-<xs:complexType name="AssertionType">
-  <xs:complexContent>
-    <xs:extension base="saml:AssertionType">
-      <xs:attribute name="InResponseTo" type="xs:NCName" use="optional"/>
-    </xs:extension>
-  </xs:complexContent>
-</xs:complexType>
-
-*/
+ * <xs:element name="Assertion" type="AssertionType" substitutionGroup="saml:Assertion" />
+ * <xs:complexType name="AssertionType">
+ *   <xs:complexContent>
+ *     <xs:extension base="saml:AssertionType">
+ *       <xs:attribute name="InResponseTo" type="xs:NCName" use="optional"/>
+ *     </xs:extension>
+ *   </xs:complexContent>
+ * </xs:complexType>
+ */
 
 /*****************************************************************************/
-/* public methods                                                            */
+/* private methods                                                           */
 /*****************************************************************************/
 
-void
-lasso_lib_assertion_set_inResponseTo(LassoLibAssertion *node,
-				     const xmlChar *inResponseTo)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_LIB_ASSERTION(node));
-  g_assert(inResponseTo != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->set_prop(LASSO_NODE (node), "InResponseTo", inResponseTo);
-}
+static struct XmlSnippet schema_snippets[] = {
+	{ "InResponseTo", SNIPPET_ATTRIBUTE,
+		G_STRUCT_OFFSET(LassoLibAssertion, InResponseTo) },
+	{ NULL, 0, 0}
+};
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-enum {
-  LASSO_LIB_ASSERTION_USE_XSITYPE = 1
-};
-
 static void
-lasso_lib_assertion_set_property (GObject      *object,
-				  guint         property_id,
-				  const GValue *value,
-				  GParamSpec   *pspec)
+instance_init(LassoLibAssertion *node)
 {
-  LassoLibAssertion *self = LASSO_LIB_ASSERTION(object);
-  LassoNodeClass *class = LASSO_NODE_GET_CLASS(LASSO_NODE(object));
-
-  switch (property_id) {
-  case LASSO_LIB_ASSERTION_USE_XSITYPE:
-    self->use_xsitype = g_value_get_boolean (value);
-    if (self->use_xsitype == TRUE) {
-      /* namespace and name were already set in parent class
-	 LassoSamlAssertion */
-      class->new_ns_prop(LASSO_NODE(object),
-			 "type", "lib:AssertionType",
-			 lassoXsiHRef, lassoXsiPrefix);
-    }
-    else {
-      /* node name was already set in parent class LassoSamlAssertion
-	 just change ns */
-      class->set_ns(LASSO_NODE(object), lassoLibHRef, lassoLibPrefix);
-    }
-    break;
-  default:
-    /* We don't have any other property... */
-    g_assert (FALSE);
-    break;
-  }
+	node->InResponseTo = NULL;
 }
 
 static void
-lasso_lib_assertion_instance_init(LassoLibAssertion *node)
+class_init(LassoLibAssertionClass *klass)
 {
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
+
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "Assertion");
+	lasso_node_class_set_ns(nclass, LASSO_LIB_HREF, LASSO_LIB_PREFIX);
+	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
 
-static void
-lasso_lib_assertion_class_init(LassoLibAssertionClass *g_class,
-			       gpointer                g_class_data)
+GType
+lasso_lib_assertion_get_type()
 {
-  GObjectClass *gobject_class = G_OBJECT_CLASS (g_class);
-  GParamSpec *pspec;
+	static GType this_type = 0;
 
-  /* override parent class methods */
-  gobject_class->set_property = lasso_lib_assertion_set_property;
+	if (!this_type) {
+		static const GTypeInfo this_info = {
+			sizeof (LassoLibAssertionClass),
+			NULL,
+			NULL,
+			(GClassInitFunc) class_init,
+			NULL,
+			NULL,
+			sizeof(LassoLibAssertion),
+			0,
+			(GInstanceInitFunc) instance_init,
+		};
 
-  pspec = g_param_spec_boolean ("use_xsitype",
-				"use_xsitype",
-				"using xsi:type",
-				FALSE,
-				G_PARAM_CONSTRUCT_ONLY | G_PARAM_WRITABLE);
-  g_object_class_install_property (gobject_class,
-                                   LASSO_LIB_ASSERTION_USE_XSITYPE,
-                                   pspec);
+		this_type = g_type_register_static(LASSO_TYPE_SAML_ASSERTION,
+				"LassoLibAssertion", &this_info, 0);
+	}
+	return this_type;
 }
 
-GType lasso_lib_assertion_get_type() {
-  static GType this_type = 0;
-
-  if (!this_type) {
-    static const GTypeInfo this_info = {
-      sizeof (LassoLibAssertionClass),
-      NULL,
-      NULL,
-      (GClassInitFunc) lasso_lib_assertion_class_init,
-      NULL,
-      NULL,
-      sizeof(LassoLibAssertion),
-      0,
-      (GInstanceInitFunc) lasso_lib_assertion_instance_init,
-    };
-    
-    this_type = g_type_register_static(LASSO_TYPE_SAML_ASSERTION,
-				       "LassoLibAssertion",
-				       &this_info, 0);
-  }
-  return this_type;
+/**
+ * lasso_lib_assertion_new:
+ *
+ * Creates a new #LassoLibAssertion object.
+ *
+ * Return value: a newly created #LassoLibAssertion object
+ **/
+LassoLibAssertion*
+lasso_lib_assertion_new()
+{
+	return g_object_new(LASSO_TYPE_LIB_ASSERTION, NULL);
 }
 
-LassoNode*
-lasso_lib_assertion_new(gboolean use_xsitype)
+/**
+ * lasso_lib_assertion_new_full:
+ * @issuer:
+ * @requestID:
+ * @audience:
+ * @notBefore:
+ * @notOnOrAfter:
+ *
+ * Creates a new #LassoLibAssertion object and initializes it with the
+ * parameters.
+ *
+ * Return value: a newly created #LassoLibAssertion object
+ **/
+LassoLibAssertion*
+lasso_lib_assertion_new_full(const char *issuer, const char *requestID,
+		const char *audience, const char *notBefore, const char *notOnOrAfter)
 {
-  LassoNode *node;
+	LassoSamlAssertion *assertion;
 
-  node = LASSO_NODE(g_object_new(LASSO_TYPE_LIB_ASSERTION,
-				 "use_xsitype", use_xsitype,
-				 NULL));
+	g_return_val_if_fail(issuer != NULL, NULL);
 
-  return node;
+	assertion = LASSO_SAML_ASSERTION(g_object_new(LASSO_TYPE_LIB_ASSERTION, NULL));
+
+	assertion->AssertionID = lasso_build_unique_id(32);
+	assertion->MajorVersion = LASSO_LIB_MAJOR_VERSION_N;
+	assertion->MinorVersion = LASSO_LIB_MINOR_VERSION_N;
+	assertion->IssueInstant = lasso_get_current_time();
+	assertion->Issuer = g_strdup(issuer);
+	if (requestID != NULL)
+		LASSO_LIB_ASSERTION(assertion)->InResponseTo = g_strdup(requestID);
+
+	assertion->Conditions = lasso_saml_conditions_new();
+	assertion->Conditions->NotBefore = g_strdup(notBefore);
+	assertion->Conditions->NotOnOrAfter = g_strdup(notOnOrAfter);
+	if (audience) {
+		assertion->Conditions->AudienceRestrictionCondition = g_list_append(NULL,
+			lasso_saml_audience_restriction_condition_new_full(audience));
+	}
+
+	return LASSO_LIB_ASSERTION(assertion);
 }

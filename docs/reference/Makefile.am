@@ -1,34 +1,40 @@
-TOP=$(top_srcdir)
-DOC_MAIN_SGML_FILE=lasso.sgml
-SOURCE_DIR=$(TOP)/lasso
-INCLUDE_DIR=$(TOP)/lasso
-
 EXTRA_DIST = \
 	lasso-sections.txt \
 	lasso.sgml \
-	lasso.types 
+	lasso.types.in \
+	version.xml.in \
+	style.css
 
-# Extra options to pass to gtkdoc-scangobj.
-SCANOBJ_OPTIONS=
+if WSF_ENABLED
+lasso.types: lasso.types.in
+	sed -e 's/#WSF# //g' < $(srcdir)/lasso.types.in > lasso.types
+else
+lasso.types: lasso.types.in
+	grep -v '#WSF#' $(srcdir)/lasso.types.in > lasso.types
+endif
 
-#
+	
+
 # We need to pre-process original source files
 # because gtkdoc does not understand some C features
 #
-DOC_SOURCE_DIR=./code
-DOC_SOURCE_FILES=\
-	$(shell find $(SOURCE_DIR) -name '*.c' -print ) \
-	$(shell find $(INCLUDE_DIR) -name '*.h' -print )
+DOC_SOURCE_DIR = ./code
+DOC_SOURCE_FILES = \
+	$(shell find $(top_srcdir)/lasso -name '*.c' -print ) \
+	$(shell find $(top_srcdir)/lasso -name '*.h' -print | grep -v private)
+
+IGNORE_HFILES = lasso_config.h
 
 # do nothing for all
 all: docs
 
 docs: sgml html clean-sources
 
-html: sgml $(DOC_MAIN_SGML_FILE) lasso-index
+html: sgml lasso.sgml lasso-index
 	@echo '*** Building HTML ***'
 	test -d html || mkdir html
-	cd html && gtkdoc-mkhtml lasso ../build/$(DOC_MAIN_SGML_FILE)
+	cd html && gtkdoc-mkhtml lasso ../build/lasso.sgml
+	cp $(srcdir)/style.css html/
 
 SCANOBJ_FILES = lasso.hierarchy	lasso.signals lasso.interfaces lasso.prerequisites lasso.args
 
@@ -40,12 +46,14 @@ SCANOBJ_FILES = lasso.hierarchy	lasso.signals lasso.interfaces lasso.prerequisit
 #
 sgml: templates
 	@echo '*** Building SGML ***'
+	cp $(srcdir)/*.sgml version.xml build/
 	cd build && gtkdoc-mkdb --module=lasso \
-		    --main-sgml-file=$(DOC_MAIN_SGML_FILE) \
+		    --main-sgml-file=lasso.sgml \
+		    --sgml-mode \
+		    --output-format=xml \
 		    --tmpl-dir=../tmpl/ \
 		    --source-dir=../$(DOC_SOURCE_DIR)/lasso \
 		    --output-dir=../sgml/
-	cp $(srcdir)/lasso.sgml build/
 	(for i in `find sgml -name "*.sgml" -print` ; do \
 	    cat $$i | \
 		sed 's!\(&lt;dsig:\)\([^/]*\)\(\/&gt;\)!<ulink URL=\"http://www.w3.org/TR/xmldsig-core/#sec-\2\">\1\2\3</ulink>!g' | \
@@ -56,9 +64,17 @@ sgml: templates
 	done);
 	rm -f build/sgml && $(LN_S) ../sgml build/sgml
 
+
+# don't rebuild templates if tmpl is not in srcdir
 templates: scan
 	@echo '*** Building TMPL ***'
-	cd build && gtkdoc-mktmpl --module=lasso --output-dir=../tmpl/
+	if test $(top_builddir) != $(top_srcdir); then \
+		cp -R $(srcdir)/tmpl/ . ; \
+		chmod +w tmpl/ ; \
+		chmod +w tmpl/*.sgml ; \
+	else \
+		(cd build && gtkdoc-mktmpl --module=lasso --output-dir=../tmpl/) ; \
+	fi
 
 # CFLAGS and LDFLAGS for compiling scan program.
 GTKDOC_CFLAGS = 		\
@@ -69,23 +85,25 @@ GTKDOC_LIBS = 	\
 	$(LASSO_LIBS) \
 	$(top_builddir)/lasso/liblasso.la
 
-GTKDOC_CC=$(LIBTOOL) --mode=compile $(CC)
-GTKDOC_LD=$(LIBTOOL) --mode=link $(CC)
+GTKDOC_CC = $(LIBTOOL) --mode=compile $(CC)
+GTKDOC_LD = $(LIBTOOL) --mode=link $(CC)
 
-scan: doc_sources
+scan: doc_sources lasso.types
 	test -d build || mkdir build
 	@echo '*** Scan sources ***'
 	cp $(srcdir)/lasso-sections.txt build/
-	if grep -l '^..*$$' $(srcdir)/lasso.types > /dev/null ; then \
-		CC="$(GTKDOC_CC)" LD="$(GTKDOC_LD)" CFLAGS="$(GTKDOC_CFLAGS)" LDFLAGS="$(GTKDOC_LIBS)" gtkdoc-scangobj $(SCANOBJ_OPTIONS) --module=lasso --types=$(srcdir)/lasso.types --output-dir=build/ ; \
+	if grep -l '^..*$$' lasso.types > /dev/null ; then \
+		CC="$(GTKDOC_CC)" LD="$(GTKDOC_LD)" CFLAGS="$(GTKDOC_CFLAGS)" LDFLAGS="$(GTKDOC_LIBS)" gtkdoc-scangobj $(SCANOBJ_OPTIONS) --module=lasso --types=lasso.types --output-dir=build/ ; \
 	else \
 		cd $(srcdir) ; \
 		for i in $(SCANOBJ_FILES) ; do \
 			test -f $$i || touch $$i ; \
 		done \
 	fi
-	gtkdoc-scan --module=lasso --source-dir=$(DOC_SOURCE_DIR)/lasso/ --output-dir=build/
-
+	gtkdoc-scan --module=lasso \
+		--source-dir=$(DOC_SOURCE_DIR)/lasso/ \
+		--output-dir=build/ \
+		--ignore-headers="$(IGNORE_HFILES)"
 
 #
 # Prepare source files by coping them to "code" folder and 
@@ -94,7 +112,7 @@ scan: doc_sources
 doc_sources: $(DOC_SOURCE_FILES)
 	@echo '*** Prepare sources ***'
 	(for i in $(DOC_SOURCE_FILES) ; do \
-	    folder_name=`echo $$i | sed 's#$(TOP)/##' | sed 's#/[^/]*$$##'`; \
+	    folder_name=`echo $$i | sed 's#$(top_srcdir)/##' | sed 's#/[^/]*$$##'`; \
 	    file_name=`echo $$i | sed 's#.*/##'`; \
 	    test -d $(DOC_SOURCE_DIR)/$$folder_name || mkdir -p $(DOC_SOURCE_DIR)/$$folder_name; \
 	    cat $$i | \
@@ -119,18 +137,16 @@ lasso-index: scan
 		sed 's#<NAME>\([^<]*\)</NAME>#<listitem><para><link linkend=\"\1\">\1</link></para></listitem>#g' > \
 		sgml/lasso-index.sgml
 
-#dist-hook:
-#	@cp -p $(srcdir)/html/*.html $(srcdir)/images/*.png $(srcdir)/*.sgml $(distdir)
-
 clean-local: clean-sources
 	-rm -rf $(DOC_SOURCE_DIR)
 	-rm -rf .libs
-	-rm -rf tmpl
+	-if test $(top_builddir) != $(top_srcdir); then rm -f tmpl/*.sgml ; fi
 	-rm -rf sgml
 	-rm -rf html
 	-rm -rf build
 	-rm -f $(SCANOBJ_FILES) index.sgml lasso-index.sgml
 	-rm -rf  $(SCANOBJ_FILES) *.o *~ *.bak *.stamp
+	-rm -f lasso.types
 
 clean-sources:
 	-rm -rf code
@@ -138,3 +154,18 @@ clean-sources:
 maintainer-clean-local: clean
 	-rm -rf `find sgml -name "*.sgml" -print`
 
+if GTK_DOC_ENABLED
+dist-check-gtkdoc:
+else
+dist-check-gtkdoc:
+	@echo "*** gtk-doc must be installed and enabled in order to make dist"
+	@false
+endif
+
+dist-hook: dist-check-gtkdoc dist-hook-local
+	mkdir $(distdir)/tmpl
+	mkdir $(distdir)/html
+	-cp $(srcdir)/tmpl/*.sgml $(distdir)/tmpl
+	-cp $(srcdir)/html/* $(distdir)/html
+
+.PHONY : dist-hook-local

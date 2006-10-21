@@ -1,12 +1,11 @@
-/* $Id: saml_subject_locality.h,v 1.2 2004/07/22 06:59:03 eraviart Exp $ 
+/* $Id: saml_subject_locality.h,v 1.6 2005/01/22 15:57:55 eraviart Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,33 +32,39 @@ extern "C" {
 #include <lasso/xml/xml.h>
 
 #define LASSO_TYPE_SAML_SUBJECT_LOCALITY (lasso_saml_subject_locality_get_type())
-#define LASSO_SAML_SUBJECT_LOCALITY(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_SAML_SUBJECT_LOCALITY, LassoSamlSubjectLocality))
-#define LASSO_SAML_SUBJECT_LOCALITY_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_SAML_SUBJECT_LOCALITY, LassoSamlSubjectLocalityClass))
-#define LASSO_IS_SAML_SUBJECT_LOCALITY(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_SAML_SUBJECT_LOCALITY))
-#define LASSO_IS_SAML_SUBJECT_LOCALITY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_SAML_SUBJECT_LOCALITY))
-#define LASSO_SAML_SUBJECT_LOCALITY_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_SAML_SUBJECT_LOCALITY, LassoSamlSubjectLocalityClass)) 
+#define LASSO_SAML_SUBJECT_LOCALITY(obj) \
+	(G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_SAML_SUBJECT_LOCALITY, \
+				    LassoSamlSubjectLocality))
+#define LASSO_SAML_SUBJECT_LOCALITY_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_SAML_SUBJECT_LOCALITY, \
+				 LassoSamlSubjectLocalityClass))
+#define LASSO_IS_SAML_SUBJECT_LOCALITY(obj) \
+	(G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_SAML_SUBJECT_LOCALITY))
+#define LASSO_IS_SAML_SUBJECT_LOCALITY_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_SAML_SUBJECT_LOCALITY))
+#define LASSO_SAML_SUBJECT_LOCALITY_GET_CLASS(o) \
+	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_SAML_SUBJECT_LOCALITY, \
+				    LassoSamlSubjectLocalityClass)) 
 
 typedef struct _LassoSamlSubjectLocality LassoSamlSubjectLocality;
 typedef struct _LassoSamlSubjectLocalityClass LassoSamlSubjectLocalityClass;
 
 struct _LassoSamlSubjectLocality {
-  LassoNode parent;
-  /*< private >*/
+	LassoNode parent;
+
+	/*< public >*/
+	/* <attribute name="IPAddress" type="string" use="optional"/> */
+	char *IPAddress;
+	/* <attribute name="DNSAddress" type="string" use="optional"/> */
+	char *DNSAddress;
 };
 
 struct _LassoSamlSubjectLocalityClass {
-  LassoNodeClass parent;
-  /*< vtable >*/
+	LassoNodeClass parent;
 };
 
 LASSO_EXPORT GType lasso_saml_subject_locality_get_type(void);
 LASSO_EXPORT LassoNode* lasso_saml_subject_locality_new(void);
-
-LASSO_EXPORT void lasso_saml_subject_locality_set_dnsAddress (LassoSamlSubjectLocality *node,
-							      const xmlChar *dnsAddress);
-
-LASSO_EXPORT void lasso_saml_subject_locality_set_ipAddress  (LassoSamlSubjectLocality *node,
-							      const xmlChar *ipAddress);
 
 #ifdef __cplusplus
 }

@@ -1,12 +1,11 @@
-/* $Id: lib_logout_request.h,v 1.3 2004/07/22 06:59:03 eraviart Exp $ 
+/* $Id: lib_logout_request.h,v 1.17 2005/11/20 15:38:19 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,45 +29,50 @@
 extern "C" {
 #endif /* __cplusplus */ 
 
-#include <lasso/xml/saml_name_identifier.h>
 #include <lasso/xml/samlp_request_abstract.h>
+#include <lasso/xml/saml_name_identifier.h>
 
 #define LASSO_TYPE_LIB_LOGOUT_REQUEST (lasso_lib_logout_request_get_type())
-#define LASSO_LIB_LOGOUT_REQUEST(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_LIB_LOGOUT_REQUEST, LassoLibLogoutRequest))
-#define LASSO_LIB_LOGOUT_REQUEST_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_LIB_LOGOUT_REQUEST, LassoLibLogoutRequestClass))
-#define LASSO_IS_LIB_LOGOUT_REQUEST(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_LIB_LOGOUT_REQUEST))
-#define LASSO_IS_LIB_LOGOUT_REQUEST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_LIB_LOGOUT_REQUEST))
-#define LASSO_LIB_LOGOUT_REQUEST_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_LIB_LOGOUT_REQUEST, LassoLibLogoutRequestClass)) 
+#define LASSO_LIB_LOGOUT_REQUEST(obj) \
+	(G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_LIB_LOGOUT_REQUEST, LassoLibLogoutRequest))
+#define LASSO_LIB_LOGOUT_REQUEST_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_LIB_LOGOUT_REQUEST, \
+				 LassoLibLogoutRequestClass))
+#define LASSO_IS_LIB_LOGOUT_REQUEST(obj) \
+	(G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_LIB_LOGOUT_REQUEST))
+#define LASSO_IS_LIB_LOGOUT_REQUEST_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_LIB_LOGOUT_REQUEST))
+#define LASSO_LIB_LOGOUT_REQUEST_GET_CLASS(o) \
+	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_LIB_LOGOUT_REQUEST, \
+				    LassoLibLogoutRequestClass)) 
 
 typedef struct _LassoLibLogoutRequest LassoLibLogoutRequest;
 typedef struct _LassoLibLogoutRequestClass LassoLibLogoutRequestClass;
 
 struct _LassoLibLogoutRequest {
-  LassoSamlpRequestAbstract parent;
-  /*< private >*/
+	LassoSamlpRequestAbstract parent;
+
+	/*< public >*/
+	/* <xs:element ref="Extension" minOccurs="0" maxOccurs="unbounded"/> */
+	GList *Extension;
+	char *ProviderID;
+	LassoSamlNameIdentifier *NameIdentifier;
+	char *SessionIndex;
+	char *RelayState;
+	char *consent;
+	char *NotOnOrAfter;
 };
 
 struct _LassoLibLogoutRequestClass {
-  LassoSamlpRequestAbstractClass parent;
+	LassoSamlpRequestAbstractClass parent;
 };
 
 LASSO_EXPORT GType lasso_lib_logout_request_get_type(void);
 LASSO_EXPORT LassoNode* lasso_lib_logout_request_new(void);
 
-LASSO_EXPORT void lasso_lib_logout_request_set_consent        (LassoLibLogoutRequest *,
-							       const xmlChar *);
-
-LASSO_EXPORT void lasso_lib_logout_request_set_nameIdentifier (LassoLibLogoutRequest *,
-							       LassoSamlNameIdentifier *);
-
-LASSO_EXPORT void lasso_lib_logout_request_set_providerID     (LassoLibLogoutRequest *,
-							       const xmlChar *);
-
-LASSO_EXPORT void lasso_lib_logout_request_set_relayState     (LassoLibLogoutRequest *,
-							       const xmlChar *);
-
-LASSO_EXPORT void lasso_lib_logout_request_set_sessionIndex   (LassoLibLogoutRequest *,
-							       const xmlChar *);
+LASSO_EXPORT LassoNode* lasso_lib_logout_request_new_full(
+		char *providerID, LassoSamlNameIdentifier *nameIdentifier,
+		LassoSignatureType sign_type, LassoSignatureMethod sign_method);
 
 #ifdef __cplusplus
 }
