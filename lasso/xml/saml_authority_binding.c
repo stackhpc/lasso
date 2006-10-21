@@ -1,12 +1,11 @@
-/* $Id: saml_authority_binding.c,v 1.4 2004/08/13 15:16:13 fpeters Exp $
+/* $Id: saml_authority_binding.c,v 1.16 2005/01/22 15:57:55 eraviart Exp $
  *
  * Lasso - A free implementation of the Samlerty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,107 +25,86 @@
 #include <lasso/xml/saml_authority_binding.h>
 
 /*
-The schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
-
-<element name="AuthorityBinding" type="saml:AuthorityBindingType"/>
-<complexType name="AuthorityBindingType">
-  <attribute name="AuthorityKind" type="QName" use="required"/>
-  <attribute name="Location" type="anyURI" use="required"/>
-  <attribute name="Binding" type="anyURI" use="required"/>
-</complexType>
-
-*/
+ * Schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
+ * 
+ * <element name="AuthorityBinding" type="saml:AuthorityBindingType"/>
+ * <complexType name="AuthorityBindingType">
+ *   <attribute name="AuthorityKind" type="QName" use="required"/>
+ *   <attribute name="Location" type="anyURI" use="required"/>
+ *   <attribute name="Binding" type="anyURI" use="required"/>
+ * </complexType>
+ */
 
 /*****************************************************************************/
-/* public methods                                                            */
+/* private methods                                                           */
 /*****************************************************************************/
 
-void
-lasso_saml_authority_binding_set_authorityKind(LassoSamlAuthorityBinding *node,
-					       const xmlChar *authorityKind)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_SAML_AUTHORITY_BINDING(node));
-  g_assert(authorityKind != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->set_prop(LASSO_NODE (node), "AuthorityKind", authorityKind);
-}
-
-void
-lasso_saml_authority_binding_set_binding(LassoSamlAuthorityBinding *node,
-					 const xmlChar *binding)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_SAML_AUTHORITY_BINDING(node));
-  g_assert(binding != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->set_prop(LASSO_NODE (node), "Binding", binding);
-}
-
-void
-lasso_saml_authority_binding_set_location(LassoSamlAuthorityBinding *node,
-					  const xmlChar *location)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_SAML_AUTHORITY_BINDING(node));
-  g_assert(location != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->set_prop(LASSO_NODE (node), "Location", location);
-}
+static struct XmlSnippet schema_snippets[] = {
+	{ "AuthorityKind", SNIPPET_ATTRIBUTE,
+		G_STRUCT_OFFSET(LassoSamlAuthorityBinding, AuthorityKind) },
+	{ "Location", SNIPPET_ATTRIBUTE,
+		G_STRUCT_OFFSET(LassoSamlAuthorityBinding, Location) },
+	{ "Binding", SNIPPET_ATTRIBUTE,
+		G_STRUCT_OFFSET(LassoSamlAuthorityBinding, Binding) },
+	{ NULL, 0, 0 }
+};
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
 static void
-lasso_saml_authority_binding_instance_init(LassoSamlAuthorityBinding *node)
+instance_init(LassoSamlAuthorityBinding *node)
 {
-  LassoNodeClass *class = LASSO_NODE_GET_CLASS(LASSO_NODE(node));
-
-  class->set_ns(LASSO_NODE(node), lassoSamlAssertionHRef,
-		lassoSamlAssertionPrefix);
-  class->set_name(LASSO_NODE(node), "AuthorityBinding");
+	node->AuthorityKind = NULL;
+	node->Location = NULL;
+	node->Binding = NULL;
 }
 
 static void
-lasso_saml_authority_binding_class_init(LassoSamlAuthorityBindingClass *klass)
+class_init(LassoSamlAuthorityBindingClass *klass)
 {
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
+
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "AuthorityBinding");
+	lasso_node_class_set_ns(nclass, LASSO_SAML_ASSERTION_HREF, LASSO_SAML_ASSERTION_PREFIX);
+	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
 
-GType lasso_saml_authority_binding_get_type() {
-  static GType this_type = 0;
+GType
+lasso_saml_authority_binding_get_type()
+{
+	static GType this_type = 0;
 
-  if (!this_type) {
-    static const GTypeInfo this_info = {
-      sizeof (LassoSamlAuthorityBindingClass),
-      NULL,
-      NULL,
-      (GClassInitFunc) lasso_saml_authority_binding_class_init,
-      NULL,
-      NULL,
-      sizeof(LassoSamlAuthorityBinding),
-      0,
-      (GInstanceInitFunc) lasso_saml_authority_binding_instance_init,
-    };
-    
-    this_type = g_type_register_static(LASSO_TYPE_NODE,
-				       "LassoSamlAuthorityBinding",
-				       &this_info, 0);
-  }
-  return this_type;
+	if (!this_type) {
+		static const GTypeInfo this_info = {
+			sizeof (LassoSamlAuthorityBindingClass),
+			NULL,
+			NULL,
+			(GClassInitFunc) class_init,
+			NULL,
+			NULL,
+			sizeof(LassoSamlAuthorityBinding),
+			0,
+			(GInstanceInitFunc) instance_init,
+		};
+
+		this_type = g_type_register_static(LASSO_TYPE_NODE,
+				"LassoSamlAuthorityBinding", &this_info, 0);
+	}
+	return this_type;
 }
 
 /**
  * lasso_saml_authority_binding_new:
  * 
- * Creates a new <saml:AuthorityBinding> node object.
+ * Creates a new #LassoSamlAuthorityBinding object.
  * 
- * Return value: the new @LassoSamlAuthorityBinding
+ * Return value: a newly created #LassoSamlAuthorityBinding object
  **/
-LassoNode* lasso_saml_authority_binding_new()
+LassoNode*
+lasso_saml_authority_binding_new()
 {
-  return LASSO_NODE(g_object_new(LASSO_TYPE_SAML_AUTHORITY_BINDING, NULL));
+	return g_object_new(LASSO_TYPE_SAML_AUTHORITY_BINDING, NULL);
 }

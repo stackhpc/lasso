@@ -1,12 +1,11 @@
-/* $Id: samlp_response_abstract.c,v 1.13 2004/09/01 09:59:53 fpeters Exp $ 
+/* $Id: samlp_response_abstract.c,v 1.31 2005/01/22 15:57:55 eraviart Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,167 +22,74 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "errors.h"
+#include <xmlsec/xmldsig.h>
+#include <xmlsec/templates.h>
 
 #include <lasso/xml/samlp_response_abstract.h>
 
 /*
-The schema fragment (oasis-sstc-saml-schema-protocol-1.0.xsd):
-
-<complexType name="ResponseAbstractType" abstract="true">
-  <sequence>
-     <element ref="ds:Signature" minOccurs="0"/>
-  </sequence>
-  <attribute name="ResponseID" type="saml:IDType" use="required"/>
-  <attribute name="InResponseTo" type="saml:IDReferenceType" use="optional"/>
-  <attribute name="MajorVersion" type="integer" use="required"/>
-  <attribute name="MinorVersion" type="integer" use="required"/>
-  <attribute name="IssueInstant" type="dateTime" use="required"/>
-  <attribute name="Recipient" type="anyURI" use="optional"/>
-</complexType>
-
-From oasis-sstc-saml-schema-assertion-1.0.xsd:
-<simpleType name="IDType">
-  <restriction base="string"/>
-</simpleType>
-<simpleType name="IDReferenceType">
-  <restriction base="string"/>
-</simpleType>
-*/
-
-/*****************************************************************************/
-/* public methods                                                            */
-/*****************************************************************************/
-
-void
-lasso_samlp_response_abstract_set_inResponseTo(LassoSamlpResponseAbstract *node,
-					       const xmlChar *inResponseTo)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_SAMLP_RESPONSE_ABSTRACT(node));
-  g_assert(inResponseTo != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->set_prop(LASSO_NODE (node), "InResponseTo", inResponseTo);
-}
-
-void
-lasso_samlp_response_abstract_set_issueInstant(LassoSamlpResponseAbstract *node,
-					       const xmlChar *issueInstant)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_SAMLP_RESPONSE_ABSTRACT(node));
-  g_assert(issueInstant != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->set_prop(LASSO_NODE (node), "IssueInstant", issueInstant);
-}
-
-void
-lasso_samlp_response_abstract_set_majorVersion(LassoSamlpResponseAbstract *node,
-					       const xmlChar *majorVersion)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_SAMLP_RESPONSE_ABSTRACT(node));
-  g_assert(majorVersion != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->set_prop(LASSO_NODE (node), "MajorVersion", majorVersion);
-}
-
-void
-lasso_samlp_response_abstract_set_minorVersion(LassoSamlpResponseAbstract *node,
-					       const xmlChar *minorVersion)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_SAMLP_RESPONSE_ABSTRACT(node));
-  g_assert(minorVersion != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->set_prop(LASSO_NODE (node), "MinorVersion", minorVersion);
-}
-
-void
-lasso_samlp_response_abstract_set_recipient(LassoSamlpResponseAbstract *node,
-					    const xmlChar *recipient)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_SAMLP_RESPONSE_ABSTRACT(node));
-  g_assert(recipient != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->set_prop(LASSO_NODE (node), "Recipient", recipient);
-}
-
-/**
- * lasso_samlp_response_abstract_set_responseId:
- * @node: the pointer to <Samlp:ResponseAbstract/> node
- * @responseId: the ResponseID attribute
+ * Schema fragment (oasis-sstc-saml-schema-protocol-1.0.xsd):
  * 
- * Sets the ResponseID attribute (unique)
- **/
-void
-lasso_samlp_response_abstract_set_responseID(LassoSamlpResponseAbstract *node,
-					     const xmlChar *responseID)
+ * <complexType name="ResponseAbstractType" abstract="true">
+ *   <sequence>
+ *      <element ref="ds:Signature" minOccurs="0"/>
+ *   </sequence>
+ *   <attribute name="ResponseID" type="saml:IDType" use="required"/>
+ *   <attribute name="InResponseTo" type="saml:IDReferenceType" use="optional"/>
+ *   <attribute name="MajorVersion" type="integer" use="required"/>
+ *   <attribute name="MinorVersion" type="integer" use="required"/>
+ *   <attribute name="IssueInstant" type="dateTime" use="required"/>
+ *   <attribute name="Recipient" type="anyURI" use="optional"/>
+ * </complexType>
+ * 
+ * From oasis-sstc-saml-schema-assertion-1.0.xsd:
+ * <simpleType name="IDType">
+ *   <restriction base="string"/>
+ * </simpleType>
+ * <simpleType name="IDReferenceType">
+ *   <restriction base="string"/>
+ * </simpleType>
+ */
+
+/*****************************************************************************/
+/* private methods                                                           */
+/*****************************************************************************/
+
+static struct XmlSnippet schema_snippets[] = {
+	{ "Signature", SNIPPET_SIGNATURE,
+		G_STRUCT_OFFSET(LassoSamlpResponseAbstract, ResponseID) },
+	{ "ResponseID", SNIPPET_ATTRIBUTE,
+		G_STRUCT_OFFSET(LassoSamlpResponseAbstract, ResponseID) },
+	{ "MajorVersion", SNIPPET_ATTRIBUTE | SNIPPET_INTEGER,
+		G_STRUCT_OFFSET(LassoSamlpResponseAbstract, MajorVersion) },
+	{ "MinorVersion", SNIPPET_ATTRIBUTE | SNIPPET_INTEGER,
+		G_STRUCT_OFFSET(LassoSamlpResponseAbstract, MinorVersion) },
+	{ "IssueInstant", SNIPPET_ATTRIBUTE,
+		G_STRUCT_OFFSET(LassoSamlpResponseAbstract, IssueInstant) },
+	{ "InResponseTo", SNIPPET_ATTRIBUTE,
+		G_STRUCT_OFFSET(LassoSamlpResponseAbstract, InResponseTo) },
+	{ "Recipient", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoSamlpResponseAbstract, Recipient) },
+	{ NULL, 0, 0}
+};
+
+static LassoNodeClass *parent_class = NULL;
+
+static xmlNode*
+get_xmlNode(LassoNode *node, gboolean lasso_dump)
 {
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_SAMLP_RESPONSE_ABSTRACT(node));
-  g_assert(responseID != NULL);
+	LassoSamlpResponseAbstract *response = LASSO_SAMLP_RESPONSE_ABSTRACT(node);
+	xmlNode *xmlnode;
+	int rc;
+	
+	xmlnode = parent_class->get_xmlNode(node, lasso_dump);
 
-  class = LASSO_NODE_GET_CLASS(node);
-  class->set_prop(LASSO_NODE (node), "ResponseID", responseID);
-}
+	if (lasso_dump == FALSE && response->sign_type) {
+		rc = lasso_sign_node(xmlnode, "ResponseID", response->ResponseID,
+				response->private_key_file, response->certificate_file);
+		/* signature may have failed; what to do ? */
+	}
 
-/* obsolete method */
-gint
-lasso_samlp_response_abstract_set_signature(LassoSamlpResponseAbstract *node,
-					    gint                        sign_method,
-					    const xmlChar              *private_key_file,
-					    const xmlChar              *certificate_file)
-{
-  gint ret;
-  LassoNodeClass *class;
-
-  g_return_val_if_fail(LASSO_IS_SAMLP_RESPONSE_ABSTRACT(node),
-		       LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
-
-  class = LASSO_NODE_GET_CLASS(node);
-
-  ret = class->add_signature(LASSO_NODE (node), sign_method,
-			     private_key_file, certificate_file);
-
-  return ret;
-}
-
-gint
-lasso_samlp_response_abstract_set_signature_tmpl(LassoSamlpResponseAbstract *node,
-						 lassoSignatureType          sign_type,
-						 lassoSignatureMethod        sign_method)
-{
-  LassoNodeClass *class;
-
-  g_return_val_if_fail(LASSO_IS_SAMLP_RESPONSE_ABSTRACT(node),
-		       LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
-
-  class = LASSO_NODE_GET_CLASS(node);
-
-  return class->add_signature_tmpl(LASSO_NODE (node), sign_type, sign_method, NULL);
-}
-
-gint
-lasso_samlp_response_abstract_sign_signature_tmpl(LassoSamlpResponseAbstract *node,
-						  const xmlChar              *private_key_file,
-						  const xmlChar              *certificate_file)
-{
-  LassoNodeClass *class;
-
-  g_return_val_if_fail(LASSO_IS_SAMLP_RESPONSE_ABSTRACT(node),
-		       LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
-
-  class = LASSO_NODE_GET_CLASS(node);
-
-  return(class->sign_signature_tmpl(LASSO_NODE (node), private_key_file,
-				    certificate_file));
+	return xmlnode;
 }
 
 /*****************************************************************************/
@@ -191,44 +97,67 @@ lasso_samlp_response_abstract_sign_signature_tmpl(LassoSamlpResponseAbstract *no
 /*****************************************************************************/
 
 static void
-lasso_samlp_response_abstract_instance_init(LassoSamlpResponseAbstract *node)
+instance_init(LassoSamlpResponseAbstract *node)
 {
-  LassoNodeClass *class = LASSO_NODE_GET_CLASS(LASSO_NODE(node));
-
-  class->set_ns(LASSO_NODE(node), lassoSamlProtocolHRef,
-		lassoSamlProtocolPrefix);
-  class->set_name(LASSO_NODE(node), "ResponseAbstract");
+	node->ResponseID = NULL;
+	node->MajorVersion = 0;
+	node->MinorVersion = 0;
+	node->IssueInstant = NULL;
+	node->InResponseTo = NULL;
+	node->Recipient = NULL;
+	node->sign_type = LASSO_SIGNATURE_TYPE_NONE;
 }
 
 static void
-lasso_samlp_response_abstract_class_init(LassoSamlpResponseAbstractClass *klass)
+class_init(LassoSamlpResponseAbstractClass *klass)
 {
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
+
+	parent_class = g_type_class_peek_parent(klass);
+	nclass->get_xmlNode = get_xmlNode;
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "ResponseAbstract");
+	lasso_node_class_set_ns(nclass, LASSO_SAML_PROTOCOL_HREF, LASSO_SAML_PROTOCOL_PREFIX);
+	lasso_node_class_add_snippets(nclass, schema_snippets);
+	nclass->node_data->sign_type_offset = G_STRUCT_OFFSET(
+			LassoSamlpResponseAbstract, sign_type);
+	nclass->node_data->sign_method_offset = G_STRUCT_OFFSET(
+			LassoSamlpResponseAbstract, sign_method);
 }
 
-GType lasso_samlp_response_abstract_get_type() {
-  static GType response_abstract_type = 0;
+GType
+lasso_samlp_response_abstract_get_type()
+{
+	static GType response_abstract_type = 0;
 
-  if (!response_abstract_type) {
-    static const GTypeInfo response_abstract_info = {
-      sizeof (LassoSamlpResponseAbstractClass),
-      NULL,
-      NULL,
-      (GClassInitFunc) lasso_samlp_response_abstract_class_init,
-      NULL,
-      NULL,
-      sizeof(LassoSamlpResponseAbstract),
-      0,
-      (GInstanceInitFunc) lasso_samlp_response_abstract_instance_init,
-    };
-    
-    response_abstract_type = g_type_register_static(LASSO_TYPE_NODE ,
-						    "LassoSamlpResponseAbstract",
-						    &response_abstract_info, 0);
-  }
-  return response_abstract_type;
+	if (!response_abstract_type) {
+		static const GTypeInfo response_abstract_info = {
+			sizeof (LassoSamlpResponseAbstractClass),
+			NULL,
+			NULL,
+			(GClassInitFunc) class_init,
+			NULL,
+			NULL,
+			sizeof(LassoSamlpResponseAbstract),
+			0,
+			(GInstanceInitFunc) instance_init,
+		};
+
+		response_abstract_type = g_type_register_static(LASSO_TYPE_NODE ,
+				"LassoSamlpResponseAbstract",
+				&response_abstract_info, 0);
+	}
+	return response_abstract_type;
 }
 
-LassoNode* lasso_samlp_response_abstract_new()
+void
+lasso_samlp_response_abstract_fill(LassoSamlpResponseAbstract *response,
+		const char *InResponseTo, const char *Recipient)
 {
-  return LASSO_NODE(g_object_new(LASSO_TYPE_SAMLP_RESPONSE_ABSTRACT, NULL));
+	response->ResponseID = lasso_build_unique_id(32);
+	response->MajorVersion = LASSO_LIB_MAJOR_VERSION_N;
+	response->MinorVersion = LASSO_LIB_MINOR_VERSION_N;
+	response->IssueInstant = lasso_get_current_time();
+	response->InResponseTo = g_strdup(InResponseTo);
+	response->Recipient = g_strdup(Recipient);
 }

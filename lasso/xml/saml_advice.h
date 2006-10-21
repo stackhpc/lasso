@@ -1,12 +1,11 @@
-/* $Id: saml_advice.h,v 1.2 2004/07/22 06:59:03 eraviart Exp $ 
+/* $Id: saml_advice.h,v 1.7 2005/01/22 15:57:55 eraviart Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,32 +32,35 @@ extern "C" {
 #include <lasso/xml/xml.h>
 
 #define LASSO_TYPE_SAML_ADVICE (lasso_saml_advice_get_type())
-#define LASSO_SAML_ADVICE(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_SAML_ADVICE, LassoSamlAdvice))
-#define LASSO_SAML_ADVICE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_SAML_ADVICE, LassoSamlAdviceClass))
+#define LASSO_SAML_ADVICE(obj) \
+	(G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_SAML_ADVICE, LassoSamlAdvice))
+#define LASSO_SAML_ADVICE_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_SAML_ADVICE, LassoSamlAdviceClass))
 #define LASSO_IS_SAML_ADVICE(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_SAML_ADVICE))
-#define LASSO_IS_SAML_ADVICE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_SAML_ADVICE))
-#define LASSO_SAML_ADVICE_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_SAML_ADVICE, LassoSamlAdviceClass)) 
+#define LASSO_IS_SAML_ADVICE_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_SAML_ADVICE))
+#define LASSO_SAML_ADVICE_GET_CLASS(o) \
+	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_SAML_ADVICE, LassoSamlAdviceClass)) 
 
 typedef struct _LassoSamlAdvice LassoSamlAdvice;
 typedef struct _LassoSamlAdviceClass LassoSamlAdviceClass;
 
 struct _LassoSamlAdvice {
-  LassoNode parent;
-  /*< private >*/
+	LassoNode parent;
+
+	/*< public >*/
+	/* <element ref="saml:AssertionIDReference"/> */
+	GList *AssertionIDReference;
+	/* <element ref="saml:Assertion"/> */
+	LassoNode *Assertion; /* actually LassoSamlAssertion* but it recurses */
 };
 
 struct _LassoSamlAdviceClass {
-  LassoNodeClass parent;
+	LassoNodeClass parent;
 };
 
 LASSO_EXPORT GType lasso_saml_advice_get_type(void);
 LASSO_EXPORT LassoNode* lasso_saml_advice_new(void);
-
-LASSO_EXPORT void lasso_saml_advice_add_assertionIDReference (LassoSamlAdvice *node,
-							      const xmlChar *assertionIDReference);
-
-LASSO_EXPORT void lasso_saml_advice_add_assertion            (LassoSamlAdvice *node,
-							      gpointer *assertion);
 
 #ifdef __cplusplus
 }

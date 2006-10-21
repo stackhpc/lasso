@@ -1,12 +1,11 @@
-/* $Id: saml_subject_locality.c,v 1.4 2004/08/13 15:16:13 fpeters Exp $
+/* $Id: saml_subject_locality.c,v 1.14 2005/01/22 15:57:55 eraviart Exp $
  *
  * Lasso - A free implementation of the Samlerty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,93 +25,79 @@
 #include <lasso/xml/saml_subject_locality.h>
 
 /*
-The schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
-
-<element name="SubjectLocality" type="saml:SubjectLocalityType"/>
-<complexType name="SubjectLocalityType">
-  <attribute name="IPAddress" type="string" use="optional"/>
-  <attribute name="DNSAddress" type="string" use="optional"/>
-</complexType>
-*/
+ * Schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
+ * 
+ * <element name="SubjectLocality" type="saml:SubjectLocalityType"/>
+ * <complexType name="SubjectLocalityType">
+ *   <attribute name="IPAddress" type="string" use="optional"/>
+ *   <attribute name="DNSAddress" type="string" use="optional"/>
+ * </complexType>
+ */
 
 /*****************************************************************************/
-/* public methods                                                            */
+/* private methods                                                           */
 /*****************************************************************************/
 
-void
-lasso_saml_subject_locality_set_dnsAddress(LassoSamlSubjectLocality *node,
-					   const xmlChar *dnsAddress)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_SAML_SUBJECT_LOCALITY(node));
-  g_assert(dnsAddress != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->set_prop(LASSO_NODE (node), "DNSAddress", dnsAddress);
-}
-
-void
-lasso_saml_subject_locality_set_ipAddress(LassoSamlSubjectLocality *node,
-					  const xmlChar *ipAddress)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_SAML_SUBJECT_LOCALITY(node));
-  g_assert(ipAddress != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->set_prop(LASSO_NODE (node), "IPAddress", ipAddress);
-}
+static struct XmlSnippet schema_snippets[] = {
+	{ "IPAddress", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoSamlSubjectLocality, IPAddress) },
+	{ "DNSAddress", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoSamlSubjectLocality, DNSAddress) },
+	{ NULL, 0, 0}
+};
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
 static void
-lasso_saml_subject_locality_instance_init(LassoSamlSubjectLocality *node)
+instance_init(LassoSamlSubjectLocality *node)
 {
-  LassoNodeClass *class = LASSO_NODE_GET_CLASS(LASSO_NODE(node));
-
-  class->set_ns(LASSO_NODE(node), lassoSamlAssertionHRef,
-		lassoSamlAssertionPrefix);
-  class->set_name(LASSO_NODE(node), "SubjectLocality");
+	node->IPAddress = NULL;
+	node->DNSAddress = NULL;
 }
 
 static void
-lasso_saml_subject_locality_class_init(LassoSamlSubjectLocalityClass *klass)
+class_init(LassoSamlSubjectLocalityClass *klass)
 {
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
+	
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "SubjectLocality");
+	lasso_node_class_set_ns(nclass, LASSO_SAML_ASSERTION_HREF, LASSO_SAML_ASSERTION_PREFIX);
+	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
 
-GType lasso_saml_subject_locality_get_type() {
-  static GType this_type = 0;
+GType
+lasso_saml_subject_locality_get_type()
+{
+	static GType this_type = 0;
 
-  if (!this_type) {
-    static const GTypeInfo this_info = {
-      sizeof (LassoSamlSubjectLocalityClass),
-      NULL,
-      NULL,
-      (GClassInitFunc) lasso_saml_subject_locality_class_init,
-      NULL,
-      NULL,
-      sizeof(LassoSamlSubjectLocality),
-      0,
-      (GInstanceInitFunc) lasso_saml_subject_locality_instance_init,
-    };
-    
-    this_type = g_type_register_static(LASSO_TYPE_NODE,
-				       "LassoSamlSubjectLocality",
-				       &this_info, 0);
-  }
-  return this_type;
+	if (!this_type) {
+		static const GTypeInfo this_info = {
+			sizeof (LassoSamlSubjectLocalityClass),
+			NULL,
+			NULL,
+			(GClassInitFunc) class_init,
+			NULL,
+			NULL,
+			sizeof(LassoSamlSubjectLocality),
+			0,
+			(GInstanceInitFunc) instance_init,
+		};
+
+		this_type = g_type_register_static(LASSO_TYPE_NODE,
+				"LassoSamlSubjectLocality", &this_info, 0);
+	}
+	return this_type;
 }
 
 /**
  * lasso_saml_subject_locality_new:
  * 
- * Creates a new <saml:SubjectLocality> node object.
+ * Creates a new #LassoSamlSubjectLocality object.
  * 
- * Return value: the new @LassoSamlSubjectLocality
+ * Return value: a newly created #LassoSamlSubjectLocality object
  **/
 LassoNode* lasso_saml_subject_locality_new()
 {
-  return LASSO_NODE(g_object_new(LASSO_TYPE_SAML_SUBJECT_LOCALITY, NULL));
+	return g_object_new(LASSO_TYPE_SAML_SUBJECT_LOCALITY, NULL);
 }

@@ -1,12 +1,11 @@
-/* $Id: lib_authn_response.c,v 1.5 2004/08/13 15:16:13 fpeters Exp $ 
+/* $Id: lib_authn_response.c,v 1.19 2005/11/20 15:38:19 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,116 +25,118 @@
 #include <lasso/xml/lib_authn_response.h>
 
 /*
-Schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
-
-<xs:element name="AuthnResponse" type="AuthnResponseType"/>
-<xs:complexType name="AuthnResponseType">
-  <xs:complexContent>
-    <xs:extension base="samlp:ResponseType">
-      <xs:sequence>
-        <xs:element ref="Extension" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="ProviderID"/>
-	<xs:element ref="RelayState" minOccurs="0"/>
-      </xs:sequence>
-      <xs:attribute ref="consent" use="optional"/>
-    </xs:extension>
-  </xs:complexContent>
-</xs:complexType>
-
-<xs:element name="ProviderID" type="md:entityIDType"/>
-From liberty-metadata-v1.0.xsd:
-<xs:simpleType name="entityIDType">
-  <xs:restriction base="xs:anyURI">
-    <xs:maxLength value="1024" id="maxlengthid"/>
-  </xs:restriction>
-</xs:simpleType>
-<xs:element name="RelayState" type="xs:string"/>
-
-*/
+ * Schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
+ * 
+ * <xs:element name="AuthnResponse" type="AuthnResponseType"/>
+ * <xs:complexType name="AuthnResponseType">
+ *   <xs:complexContent>
+ *     <xs:extension base="samlp:ResponseType">
+ *       <xs:sequence>
+ *         <xs:element ref="Extension" minOccurs="0" maxOccurs="unbounded"/>
+ * 	<xs:element ref="ProviderID"/>
+ * 	<xs:element ref="RelayState" minOccurs="0"/>
+ *       </xs:sequence>
+ *       <xs:attribute ref="consent" use="optional"/>
+ *     </xs:extension>
+ *   </xs:complexContent>
+ * </xs:complexType>
+ * 
+ * <xs:element name="ProviderID" type="md:entityIDType"/>
+ * From liberty-metadata-v1.0.xsd:
+ * <xs:simpleType name="entityIDType">
+ *   <xs:restriction base="xs:anyURI">
+ *     <xs:maxLength value="1024" id="maxlengthid"/>
+ *   </xs:restriction>
+ * </xs:simpleType>
+ * <xs:element name="RelayState" type="xs:string"/>
+ * 
+ */
 
 /*****************************************************************************/
-/* public methods                                                            */
+/* private methods                                                           */
 /*****************************************************************************/
 
-void
-lasso_lib_authn_response_set_consent(LassoLibAuthnResponse *node,
-				     const xmlChar *consent)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_LIB_AUTHN_RESPONSE(node));
-  g_assert(consent != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->set_prop(LASSO_NODE (node), "consent", consent);
-}
-
-void
-lasso_lib_authn_response_set_providerID(LassoLibAuthnResponse *node,
-					const xmlChar *providerID)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_LIB_AUTHN_RESPONSE(node));
-  g_assert(providerID != NULL);
-  /* FIXME : providerID length SHOULD be <= 1024 */
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->new_child(LASSO_NODE (node), "ProviderID", providerID, FALSE);
-}
-
-void
-lasso_lib_authn_response_set_relayState(LassoLibAuthnResponse *node,
-					const xmlChar *relayState)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_LIB_AUTHN_RESPONSE(node));
-  g_assert(relayState != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->new_child(LASSO_NODE (node), "RelayState", relayState, FALSE);
-}
+static struct XmlSnippet schema_snippets[] = {
+	{ "Extension", SNIPPET_EXTENSION, G_STRUCT_OFFSET(LassoLibAuthnResponse, Extension) },
+	{ "ProviderID", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoLibAuthnResponse, ProviderID) },
+	{ "RelayState", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoLibAuthnResponse, RelayState) },
+	{ "consent", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoLibAuthnResponse, consent) },
+	{ NULL, 0, 0 }
+};
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
 static void
-lasso_lib_authn_response_instance_init(LassoLibAuthnResponse *node)
+instance_init(LassoLibAuthnResponse *node)
 {
-  LassoNodeClass *class = LASSO_NODE_GET_CLASS(LASSO_NODE(node));
-
-  class->set_ns(LASSO_NODE(node), lassoLibHRef, lassoLibPrefix);
-  class->set_name(LASSO_NODE(node), "AuthnResponse");
+	node->Extension = NULL;
+	node->ProviderID = NULL;
+	node->RelayState = NULL;
+	node->consent = NULL;
 }
 
 static void
-lasso_lib_authn_response_class_init(LassoLibAuthnResponseClass *klass)
+class_init(LassoLibAuthnResponseClass *klass)
 {
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
+
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "AuthnResponse");
+	lasso_node_class_set_ns(nclass, LASSO_LIB_HREF, LASSO_LIB_PREFIX);
+	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
 
-GType lasso_lib_authn_response_get_type() {
-  static GType authn_response_type = 0;
+GType
+lasso_lib_authn_response_get_type()
+{
+	static GType authn_response_type = 0;
 
-  if (!authn_response_type) {
-    static const GTypeInfo authn_response_info = {
-      sizeof (LassoLibAuthnResponseClass),
-      NULL,
-      NULL,
-      (GClassInitFunc) lasso_lib_authn_response_class_init,
-      NULL,
-      NULL,
-      sizeof(LassoLibAuthnResponse),
-      0,
-      (GInstanceInitFunc) lasso_lib_authn_response_instance_init,
-    };
-    
-    authn_response_type = g_type_register_static(LASSO_TYPE_SAMLP_RESPONSE,
-						 "LassoLibAuthnResponse",
-						 &authn_response_info, 0);
-  }
-  return authn_response_type;
+	if (!authn_response_type) {
+		static const GTypeInfo authn_response_info = {
+			sizeof (LassoLibAuthnResponseClass),
+			NULL,
+			NULL,
+			(GClassInitFunc) class_init,
+			NULL,
+			NULL,
+			sizeof(LassoLibAuthnResponse),
+			0,
+			(GInstanceInitFunc) instance_init,
+		};
+
+		authn_response_type = g_type_register_static(LASSO_TYPE_SAMLP_RESPONSE,
+				"LassoLibAuthnResponse", &authn_response_info, 0);
+	}
+	return authn_response_type;
 }
 
-LassoNode* lasso_lib_authn_response_new()
+
+/**
+ * lasso_lib_authn_response_new:
+ * @providerID: the identity provider ID
+ * @request: the #LassoLibAuthnRequest it is a response to
+ *
+ * Creates a new #LassoLibAuthnResponse object.
+ *
+ * Return value: a newly created #LassoLibAuthnResponse object
+ **/
+LassoNode*
+lasso_lib_authn_response_new(char *providerID, LassoLibAuthnRequest *request)
 {
-  return LASSO_NODE(g_object_new(LASSO_TYPE_LIB_AUTHN_RESPONSE, NULL));
+	LassoLibAuthnResponse *response;
+
+	response = g_object_new(LASSO_TYPE_LIB_AUTHN_RESPONSE, NULL);
+ 
+	if (providerID) {
+		lasso_samlp_response_abstract_fill(
+				LASSO_SAMLP_RESPONSE_ABSTRACT(response),
+				LASSO_SAMLP_REQUEST_ABSTRACT(request)->RequestID,
+				request->ProviderID);
+		response->ProviderID = g_strdup(providerID);
+		response->RelayState = g_strdup(request->RelayState);
+	}
+
+	return LASSO_NODE(response);
 }

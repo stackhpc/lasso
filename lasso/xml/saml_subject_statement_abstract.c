@@ -1,12 +1,11 @@
-/* $Id: saml_subject_statement_abstract.c,v 1.6 2004/09/01 09:59:53 fpeters Exp $
+/* $Id: saml_subject_statement_abstract.c,v 1.17 2005/01/22 15:57:55 eraviart Exp $
  *
  * Lasso - A free implementation of the Samlerty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,94 +25,70 @@
 #include <lasso/xml/saml_subject_statement_abstract.h>
 
 /*
-The schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
-
-<element name="SubjectStatement" type="saml:SubjectStatementAbstractType"/>
-<complexType name="SubjectStatementAbstractType" abstract="true">
-  <complexContent>
-    <extension base="saml:StatementAbstractType">
-      <sequence>
-        <element ref="saml:Subject"/>
-      </sequence>
-    </extension>
-  </complexContent>
-</complexType>
-*/
+ * Schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
+ * 
+ * <complexType name="SubjectStatementAbstractType" abstract="true">
+ *   <complexContent>
+ *     <extension base="saml:StatementAbstractType">
+ *       <sequence>
+ *         <element ref="saml:Subject"/>
+ *       </sequence>
+ *     </extension>
+ *   </complexContent>
+ * </complexType>
+ */
 
 /*****************************************************************************/
-/* publics methods                                                           */
+/* private methods                                                           */
 /*****************************************************************************/
 
-void
-lasso_saml_subject_statement_abstract_set_subject(LassoSamlSubjectStatementAbstract *node,
-						  LassoSamlSubject *subject)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_SAML_SUBJECT_STATEMENT_ABSTRACT(node));
-  g_assert(LASSO_IS_SAML_SUBJECT(subject));
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->add_child(LASSO_NODE (node), LASSO_NODE(subject), FALSE);
-}
+static struct XmlSnippet schema_snippets[] = {
+	{ "Subject", SNIPPET_NODE,
+		G_STRUCT_OFFSET(LassoSamlSubjectStatementAbstract, Subject) },
+	{ NULL, 0, 0 }
+};
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
 static void
-lasso_saml_subject_statement_abstract_instance_init(LassoSamlSubjectStatementAbstract *node)
+instance_init(LassoSamlSubjectStatementAbstract *node)
 {
-  LassoNodeClass *class = LASSO_NODE_GET_CLASS(LASSO_NODE(node));
-
-  /* namespace herited from saml:StatementAbstract */
-  class->set_name(LASSO_NODE(node), "SubjectStatementAbstract");
+	node->Subject = NULL;
 }
 
 static void
-lasso_saml_subject_statement_abstract_class_init(LassoSamlSubjectStatementAbstractClass *klass)
+class_init(LassoSamlSubjectStatementAbstractClass *klass)
 {
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
+
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "SubjectStatementAbstract");
+	lasso_node_class_set_ns(nclass, LASSO_SAML_ASSERTION_HREF, LASSO_SAML_ASSERTION_PREFIX);
+	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
 
-GType lasso_saml_subject_statement_abstract_get_type() {
-  static GType this_type = 0;
-
-  if (!this_type) {
-    static const GTypeInfo this_info = {
-      sizeof (LassoSamlSubjectStatementAbstractClass),
-      NULL,
-      NULL,
-      (GClassInitFunc) lasso_saml_subject_statement_abstract_class_init,
-      NULL,
-      NULL,
-      sizeof(LassoSamlSubjectStatementAbstract),
-      0,
-      (GInstanceInitFunc) lasso_saml_subject_statement_abstract_instance_init,
-    };
-    
-    this_type = g_type_register_static(LASSO_TYPE_SAML_STATEMENT_ABSTRACT,
-				       "LassoSamlSubjectStatementAbstract",
-				       &this_info, 0);
-  }
-  return this_type;
-}
-
-/**
- * lasso_saml_subject_statement_abstract_new:
- * @name: the node's name. If @name is NULL or an empty string, default value
- * "SubjectStatementAbstract" will be used.
- * 
- * Creates a new <saml:SubjectStatementAbstract> node object.
- * 
- * Return value: the new @LassoSamlSubjectStatementAbstract
- **/
-LassoNode* lasso_saml_subject_statement_abstract_new(const xmlChar *name)
+GType
+lasso_saml_subject_statement_abstract_get_type()
 {
-  LassoNode *node;
+	static GType this_type = 0;
 
-  node = LASSO_NODE(g_object_new(LASSO_TYPE_SAML_SUBJECT_STATEMENT_ABSTRACT, NULL));
+	if (!this_type) {
+		static const GTypeInfo this_info = {
+			sizeof (LassoSamlSubjectStatementAbstractClass),
+			NULL,
+			NULL,
+			(GClassInitFunc) class_init,
+			NULL,
+			NULL,
+			sizeof(LassoSamlSubjectStatementAbstract),
+			0,
+			(GInstanceInitFunc) instance_init,
+		};
 
-  if (name && *name)
-    LASSO_NODE_GET_CLASS(node)->set_name(node, name);
-
-  return node;
+		this_type = g_type_register_static(LASSO_TYPE_SAML_STATEMENT_ABSTRACT,
+				"LassoSamlSubjectStatementAbstract", &this_info, 0);
+	}
+	return this_type;
 }

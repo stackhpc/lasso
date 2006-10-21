@@ -1,12 +1,11 @@
-/* $Id: lib_authn_request_envelope.h,v 1.1 2004/07/22 12:52:09 nclapies Exp $ 
+/* $Id: lib_authn_request_envelope.h,v 1.9 2005/01/22 15:57:55 eraviart Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,49 +34,54 @@ extern "C" {
 #include <lasso/xml/lib_authn_request.h>
 
 #define LASSO_TYPE_LIB_AUTHN_REQUEST_ENVELOPE (lasso_lib_authn_request_envelope_get_type())
-#define LASSO_LIB_AUTHN_REQUEST_ENVELOPE(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_LIB_AUTHN_REQUEST_ENVELOPE, LassoLibAuthnRequestEnvelope))
-#define LASSO_LIB_AUTHN_REQUEST_ENVELOPE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_LIB_AUTHN_REQUEST_ENVELOPE, LassoLibAuthnRequestEnvelopeClass))
-#define LASSO_IS_LIB_AUTHN_REQUEST_ENVELOPE(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_LIB_AUTHN_REQUEST_ENVELOPE))
-#define LASSO_IS_LIB_AUTHN_REQUEST_ENVELOPE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_LIB_AUTHN_REQUEST_ENVELOPE))
-#define LASSO_LIB_AUTHN_REQUEST_ENVELOPE_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_LIB_AUTHN_REQUEST_ENVELOPE, LassoLibAuthnRequestEnvelopeClass)) 
+#define LASSO_LIB_AUTHN_REQUEST_ENVELOPE(obj) \
+	(G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_LIB_AUTHN_REQUEST_ENVELOPE, \
+				    LassoLibAuthnRequestEnvelope))
+#define LASSO_LIB_AUTHN_REQUEST_ENVELOPE_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_LIB_AUTHN_REQUEST_ENVELOPE, \
+				 LassoLibAuthnRequestEnvelopeClass))
+#define LASSO_IS_LIB_AUTHN_REQUEST_ENVELOPE(obj) \
+	(G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_LIB_AUTHN_REQUEST_ENVELOPE))
+#define LASSO_IS_LIB_AUTHN_REQUEST_ENVELOPE_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_LIB_AUTHN_REQUEST_ENVELOPE))
+#define LASSO_LIB_AUTHN_REQUEST_ENVELOPE_GET_CLASS(o) \
+	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_LIB_AUTHN_REQUEST_ENVELOPE, \
+				    LassoLibAuthnRequestEnvelopeClass)) 
 
 typedef struct _LassoLibAuthnRequestEnvelope LassoLibAuthnRequestEnvelope;
 typedef struct _LassoLibAuthnRequestEnvelopeClass LassoLibAuthnRequestEnvelopeClass;
 
 struct _LassoLibAuthnRequestEnvelope {
-  LassoNode parent;
+	LassoNode parent;
 
-  /*< private >*/
+	/*< public >*/
+	/* <xs:element ref="Extension" minOccurs="0" maxOccurs="unbounded"/> */
+	GList *Extension;
+	/* <xs:element ref="AuthnRequest"/> */
+	LassoLibAuthnRequest *AuthnRequest;
+	/* <xs:element ref="ProviderID"/> */
+	char *ProviderID;
+	/* <xs:element name="ProviderName" type="xs:string" minOccurs="0"/> */
+	char *ProviderName;
+	/* <xs:element name="AssertionConsumerServiceURL" type="xs:anyURI"/> */
+	char *AssertionConsumerServiceURL;
+	/* <xs:element ref="IDPList" minOccurs="0"/> */
+	LassoLibIDPList *IDPList;
+	/* <xs:element name="IsPassive" type="xs:boolean" minOccurs="0"/> */
+	gboolean IsPassive;
+
 };
 
 struct _LassoLibAuthnRequestEnvelopeClass {
-  LassoNodeClass parent;
+	LassoNodeClass parent;
 };
 
-LASSO_EXPORT GType      lasso_lib_authn_request_envelope_get_type         (void);
+LASSO_EXPORT GType lasso_lib_authn_request_envelope_get_type(void);
+LASSO_EXPORT LassoLibAuthnRequestEnvelope* lasso_lib_authn_request_envelope_new(void);
 
-LASSO_EXPORT LassoNode* lasso_lib_authn_request_envelope_new              (void);
-
-LASSO_EXPORT void       lasso_lib_authn_request_envelope_set_extension    (LassoLibAuthnRequestEnvelope *node,
-									   LassoNode                    *extension);
-
-LASSO_EXPORT void       lasso_lib_authn_request_envelope_set_authnRequest (LassoLibAuthnRequestEnvelope *node,
-									   LassoLibAuthnRequest         *request);
-
-LASSO_EXPORT void       lasso_lib_authn_request_envelope_set_assertionConsumerServiceURL (LassoLibAuthnRequestEnvelope *node,
-											  const xmlChar *assertionConsumerServiceURL);
-
-LASSO_EXPORT void       lasso_lib_authn_request_envelope_set_providerID   (LassoLibAuthnRequestEnvelope *node,
-									   const xmlChar                *providerID);
-
-LASSO_EXPORT void       lasso_lib_authn_request_envelope_set_providerName (LassoLibAuthnRequestEnvelope *node,
-									   const xmlChar                *providerName);
-
-LASSO_EXPORT void       lasso_lib_authn_request_envelope_set_idpList      (LassoLibAuthnRequestEnvelope *node,
-									   LassoLibIDPList              *idpList);
-
-LASSO_EXPORT void       lasso_lib_authn_request_envelope_set_isPassive    (LassoLibAuthnRequestEnvelope *node,
-									   gboolean                      isPassive);
+LASSO_EXPORT LassoLibAuthnRequestEnvelope* lasso_lib_authn_request_envelope_new_full(
+		LassoLibAuthnRequest *authnRequest,
+		char *providerID, char *assertionConsumerServiceURL);
 
 #ifdef __cplusplus
 }

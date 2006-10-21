@@ -12,6 +12,9 @@
 /* Define to 1 if you have the <jni.h> header file. */
 #undef HAVE_JNI_H
 
+/* Define to 1 if you have the `sasl2' library (-lsasl2). */
+#undef HAVE_LIBSASL2
+
 /* Define to 1 if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H
 
@@ -36,8 +39,8 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
 
-/* Release version as a decimal */
-#undef LASSO_VERSION_DECIMAL
+/* Support for variadic macros */
+#undef HAVE_VARIADIC_MACROS
 
 /* Major version number */
 #undef LASSO_VERSION_MAJOR
@@ -48,8 +51,8 @@
 /* Release version number */
 #undef LASSO_VERSION_SUBMINOR
 
-/* Windows version of the lasso version */
-#undef LASSO_WINDOWS_VERSION
+/* Define if ID-WSF support is enabled */
+#undef LASSO_WSF_ENABLED
 
 /* Define to 1 if your C compiler doesn't accept -c and -o together. */
 #undef NO_MINUS_C_MINUS_O
