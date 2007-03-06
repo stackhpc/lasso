@@ -1,3 +1,14 @@
+lasso (0.6.5-3ubuntu1) feisty; urgency=low
+
+  * Rebuild because of PHP4 API change
+  * debian/rules:
+    - changed php-config to php-config4
+  * debian/control:
+    - Added Ubuntu MOTU Maintainer field
+    - Moved old Maintainer field to Original-Maintainer
+
+ -- Stephan Hermann <sh@sourcecode.de>  Tue,  6 Mar 2007 18:04:09 +0100
+
 lasso (0.6.5-3) unstable; urgency=low
 
   * Converted to new Python policy (merged from unreported Ubuntu patch)
