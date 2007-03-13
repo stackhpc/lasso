@@ -123,7 +123,6 @@ binary-arch: build install
 	#dh_clideps -L liblasso-cil -r -d
 	dh_installdeb
 	dh_shlibdeps -a
-	echo "php:Depends=phpapi-$(phpapiver)" >> debian/php4-lasso.substvars
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb

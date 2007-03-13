@@ -2,8 +2,8 @@ Source: lasso
 Priority: optional
 Section: libs
 Maintainer: Ubuntu MOTU Developers <ubuntu-motu@lists.ubuntu.com>
-Original-Maintainer: Frederic Peters <fpeters@debian.org>
-Build-Depends: debhelper (>= 5.0.37.2), libxml2-dev, libxslt1-dev, libxmlsec1-dev, libxmlsec1-openssl, libglib2.0-dev, python-all-dev (>= 2.3.5-11), php4-dev (>= 4:4.3.10-10), libexpat1-dev, libgcj-dev, fastjar, python-central (>= 0.5)
+XSBC-Original-Maintainer: Frederic Peters <fpeters@debian.org>
+Build-Depends: debhelper (>= 5.0.37.2), libxml2-dev, libxslt1-dev, libxmlsec1-dev, libxmlsec1-openssl, libglib2.0-dev, python-all-dev (>= 2.3.5-11), libexpat1-dev, libgcj-dev, fastjar, python-central (>= 0.5)
 XS-Python-Version: all
 Standards-Version: 3.7.2
 
@@ -52,20 +52,6 @@ Description: Liberty ID-FF library - Python bindings
  .
  This package contains Python bindings for liblasso, needed to use lasso
  in Python applications.
- .
- Homepage: http://lasso.entrouvert.org
-
-Package: php4-lasso
-Section: web
-Architecture: any
-Depends: ${php:Depends}, ${shlibs:Depends}, ${misc:depends}
-Description: Liberty ID-FF library - PHP 4 bindings
- Lasso is an implementation of the Liberty Identity Federation specifications
- defined by the Liberty Alliance consortium.  They defines processes such as
- network identity federation and single sign-on.
- .
- This package contains PHP 4 bindings for liblasso, needed to use lasso
- in PHP applications.
  .
  Homepage: http://lasso.entrouvert.org
 
