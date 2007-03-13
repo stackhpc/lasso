@@ -1,3 +1,10 @@
+lasso (0.6.5-3ubuntu2) feisty; urgency=low
+
+  * Don't build a php4 module anymore. 
+  * debian/control: Rename Original-Maintainer to XSBC-Original-Maintainer.
+
+ -- Michael Bienia <geser@ubuntu.com>  Tue, 13 Mar 2007 19:46:55 +0100
+
 lasso (0.6.5-3ubuntu1) feisty; urgency=low
 
   * Rebuild because of PHP4 API change
