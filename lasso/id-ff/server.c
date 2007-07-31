@@ -1,4 +1,4 @@
-/* $Id: server.c,v 1.108 2006/03/04 12:35:37 fpeters Exp $
+/* $Id: server.c,v 1.124 2007/01/05 11:40:10 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -30,10 +30,8 @@
 #include <lasso/id-ff/providerprivate.h>
 #include <lasso/id-ff/serverprivate.h>
 
-struct _LassoServerPrivate
-{
-	gboolean dispose_has_run;
-};
+#include <lasso/saml-2.0/serverprivate.h>
+
 
 /*****************************************************************************/
 /* public methods                                                            */
@@ -64,6 +62,7 @@ lasso_server_add_provider(LassoServer *server, LassoProviderRole role,
 	if (provider == NULL) {
 		return critical_error(LASSO_SERVER_ERROR_ADD_PROVIDER_FAILED);
 	}
+	provider->role = role;
 
 	if (LASSO_PROVIDER(server)->private_data->conformance == LASSO_PROTOCOL_SAML_2_0 &&
 			provider->private_data->conformance != LASSO_PROTOCOL_SAML_2_0) {
@@ -120,6 +119,78 @@ lasso_server_destroy(LassoServer *server)
 	lasso_node_destroy(LASSO_NODE(server));
 }
 
+
+/**
+ * lasso_server_set_encryption_private_key:
+ * @server: a #LassoServer
+ * @filename: file name of the encryption key to load
+ *
+ * Load an encryption private key from a file and set it in the server object
+ *
+ * Return value: 0 on success; another value if an error occured.
+ **/
+int
+lasso_server_set_encryption_private_key(LassoServer *server, const gchar *filename)
+{
+	LassoPemFileType file_type;
+
+	if (server->private_data->encryption_private_key != NULL) {
+		xmlSecKeyDestroy(server->private_data->encryption_private_key);
+		server->private_data->encryption_private_key = NULL;
+	}
+	file_type = lasso_get_pem_file_type(filename);
+	if (file_type == LASSO_PEM_FILE_TYPE_PRIVATE_KEY) {
+		server->private_data->encryption_private_key = xmlSecCryptoAppKeyLoad(filename,
+			xmlSecKeyDataFormatPem, NULL, NULL, NULL);
+	}
+
+	if (server->private_data->encryption_private_key == NULL)
+		return LASSO_SERVER_ERROR_SET_ENCRYPTION_PRIVATE_KEY_FAILED;
+
+	return 0;
+}
+
+
+/**
+ * lasso_server_load_affiliation:
+ * @server: a #LassoServer
+ * @filename: file name of the affiliation metadata to load
+ *
+ * Load an affiliation metadata file into @server; this must be called after
+ * providers have been added to @server.
+ *
+ * Return value: 0 on success; another value if an error occured.
+ **/
+int
+lasso_server_load_affiliation(LassoServer *server, const gchar *filename)
+{
+	LassoProvider *provider = LASSO_PROVIDER(server);
+	xmlDoc *doc;
+	xmlNode *node;
+	int rc;
+
+	doc = xmlParseFile(filename);
+	if (doc == NULL) {
+		return LASSO_XML_ERROR_INVALID_FILE;
+	}
+
+	node = xmlDocGetRootElement(doc);
+	if (node == NULL || node->ns == NULL) {
+		xmlFreeDoc(doc);
+		return LASSO_XML_ERROR_NODE_NOT_FOUND;
+	}
+
+	if (provider->private_data->conformance == LASSO_PROTOCOL_SAML_2_0) {
+		rc = lasso_saml20_server_load_affiliation(server, doc, node);
+	} else {
+		/* affiliations are not supported in ID-FF 1.2 mode */
+		rc = LASSO_ERROR_UNIMPLEMENTED;
+	}
+
+	xmlFreeDoc(doc);
+
+	return rc;
+}
 
 /*****************************************************************************/
 /* private methods                                                           */
@@ -219,12 +290,12 @@ init_from_xml(LassoNode *node, xmlNode *xmlnode)
 				}
 				p = g_object_new(LASSO_TYPE_PROVIDER, NULL);
 				LASSO_NODE_GET_CLASS(p)->init_from_xml(LASSO_NODE(p), t2);
-				if (lasso_provider_load_public_key(p) == TRUE) {
+				if (lasso_provider_load_public_key(p, LASSO_PUBLIC_KEY_SIGNING)) {
 					g_hash_table_insert(server->providers,
 							g_strdup(p->ProviderID), p);
 				} else {
 					message(G_LOG_LEVEL_CRITICAL,
-							"Failed to load public key for %s.",
+							"Failed to load signing public key for %s.",
 							p->ProviderID);
 				}
 				t2 = t2->next;
@@ -291,7 +362,7 @@ lasso_server_get_first_providerID(LassoServer *server)
  *     #LassoProvider is owned by Lasso and should not be freed.
  **/
 LassoProvider*
-lasso_server_get_provider(LassoServer *server, gchar *providerID)
+lasso_server_get_provider(LassoServer *server, const gchar *providerID)
 {
 	return g_hash_table_lookup(server->providers, providerID);
 }
@@ -309,7 +380,7 @@ lasso_server_get_provider(LassoServer *server, gchar *providerID)
  *     freed.
  **/
 LassoDiscoServiceInstance*
-lasso_server_get_service(LassoServer *server, gchar *serviceType)
+lasso_server_get_service(LassoServer *server, const gchar *serviceType)
 {
 	return g_hash_table_lookup(server->services, serviceType);
 }
@@ -407,6 +478,7 @@ instance_init(LassoServer *server)
 {
 	server->private_data = g_new(LassoServerPrivate, 1);
 	server->private_data->dispose_has_run = FALSE;
+	server->private_data->encryption_private_key = NULL;
 
 	server->providers = g_hash_table_new_full(
 			g_str_hash, g_str_equal, g_free,
@@ -417,9 +489,9 @@ instance_init(LassoServer *server)
 	server->certificate = NULL;
 	server->signature_method = LASSO_SIGNATURE_METHOD_RSA_SHA1;
 
-	/* FIXME: set the value_destroy_func */
 	server->services = g_hash_table_new_full(g_str_hash, g_str_equal,
-						 (GDestroyNotify)g_free, NULL);
+			(GDestroyNotify)g_free,
+			(GDestroyNotify)lasso_node_destroy);
 }
 
 static void

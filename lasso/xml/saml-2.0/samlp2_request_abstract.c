@@ -1,4 +1,4 @@
-/* $Id: samlp2_request_abstract.c,v 1.2 2005/11/21 18:51:52 fpeters Exp $ 
+/* $Id: samlp2_request_abstract.c,v 1.4 2006/12/04 10:21:09 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -54,6 +54,8 @@ static struct XmlSnippet schema_snippets[] = {
 	{ "Issuer", SNIPPET_NODE,
 		G_STRUCT_OFFSET(LassoSamlp2RequestAbstract, Issuer),
 		"LassoSaml2NameID" },
+	{ "Signature", SNIPPET_SIGNATURE,
+		G_STRUCT_OFFSET(LassoSamlp2RequestAbstract, ID) },
 	{ "Extensions", SNIPPET_NODE,
 		G_STRUCT_OFFSET(LassoSamlp2RequestAbstract, Extensions) },
 	{ "ID", SNIPPET_ATTRIBUTE,
@@ -66,8 +68,6 @@ static struct XmlSnippet schema_snippets[] = {
 		G_STRUCT_OFFSET(LassoSamlp2RequestAbstract, Destination) },
 	{ "Consent", SNIPPET_ATTRIBUTE,
 		G_STRUCT_OFFSET(LassoSamlp2RequestAbstract, Consent) },
-	{ "Signature", SNIPPET_SIGNATURE,
-		G_STRUCT_OFFSET(LassoSamlp2RequestAbstract, ID) },
 
 	/* hidden fields; used in lasso dumps */
 	{ "SignType", SNIPPET_ATTRIBUTE | SNIPPET_INTEGER | SNIPPET_LASSO_DUMP,
@@ -120,6 +120,8 @@ instance_init(LassoSamlp2RequestAbstract *node)
 	node->Destination = NULL;
 	node->Consent = NULL;
 	node->sign_type = LASSO_SIGNATURE_TYPE_NONE;
+	node->private_key_file = NULL;
+	node->certificate_file = NULL;
 }
 
 static void

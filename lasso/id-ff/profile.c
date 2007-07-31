@@ -1,4 +1,4 @@
-/* $Id: profile.c,v 1.63 2005/11/21 18:51:52 fpeters Exp $
+/* $Id: profile.c,v 1.76 2007/01/06 22:55:44 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -32,6 +32,9 @@
 
 #include <lasso/id-ff/profile.h>
 #include <lasso/id-ff/profileprivate.h>
+#include <lasso/id-ff/providerprivate.h>
+
+#include <lasso/saml-2.0/profileprivate.h>
 
 /*****************************************************************************/
 /* public functions                                                          */
@@ -53,6 +56,7 @@ lasso_profile_get_nameIdentifier(LassoProfile *profile)
 {
 	LassoProvider *remote_provider;
 	LassoFederation *federation;
+	char *name_id_sp_name_qualifier;
 
 	g_return_val_if_fail(LASSO_IS_PROFILE(profile), NULL);
 
@@ -65,8 +69,15 @@ lasso_profile_get_nameIdentifier(LassoProfile *profile)
 	if (remote_provider == NULL)
 		return NULL;
 
+	if (remote_provider->private_data->affiliation_id) {
+		name_id_sp_name_qualifier = remote_provider->private_data->affiliation_id;
+	} else {
+		name_id_sp_name_qualifier = profile->remote_providerID;
+	}
+
 	federation = g_hash_table_lookup(
-			profile->identity->federations, profile->remote_providerID);
+			profile->identity->federations,
+			name_id_sp_name_qualifier);
 	if (federation == NULL)
 		return NULL;
 
@@ -129,14 +140,16 @@ lasso_profile_get_request_type_from_soap_msg(const gchar *soap)
 		}
 	} else if (strcmp(name, "Modify") == 0) {
 		if (strcmp((char*)ns->href, LASSO_DISCO_HREF) == 0) {
-			type =LASSO_REQUEST_TYPE_DISCO_MODIFY;
+			type = LASSO_REQUEST_TYPE_DISCO_MODIFY;
 		} else {
-			type =LASSO_REQUEST_TYPE_DST_MODIFY;	
+			type = LASSO_REQUEST_TYPE_DST_MODIFY;	
 		}
 	} else if (strcmp(name, "SASLRequest") == 0) {
 		type = LASSO_REQUEST_TYPE_SASL_REQUEST;
+	} else if (strcmp(name, "ManageNameIDRequest") == 0) {
+		type = LASSO_REQUEST_TYPE_NAME_ID_MANAGEMENT;
 	} else {
-		message(G_LOG_LEVEL_WARNING, "Unkown node name : %s", name);
+		message(G_LOG_LEVEL_WARNING, "Unknown node name : %s", name);
 	}
 
 	xmlFreeDoc(doc);
@@ -153,7 +166,7 @@ lasso_profile_get_request_type_from_soap_msg(const gchar *soap)
  * Tests the query string to know if the URL is called as the result of a
  * Liberty redirect (action initiated elsewhere) or not.
  *
- * Return value: TRUE if lasso query, FALSE otherwise
+ * Return value: TRUE if Liberty query, FALSE otherwise
  **/
 gboolean
 lasso_profile_is_liberty_query(const gchar *query)
@@ -284,7 +297,7 @@ lasso_profile_set_response_status(LassoProfile *profile, const char *statusCodeV
 
 	if (LASSO_IS_SAMLP_RESPONSE(profile->response)) {
 		LassoSamlpResponse *response = LASSO_SAMLP_RESPONSE(profile->response);
- 		if (response->Status) lasso_node_destroy(LASSO_NODE(response->Status));
+		if (response->Status) lasso_node_destroy(LASSO_NODE(response->Status));
 		response->Status = status;
 		return;
 	}
@@ -298,6 +311,19 @@ lasso_profile_set_response_status(LassoProfile *profile, const char *statusCodeV
 	message(G_LOG_LEVEL_CRITICAL, "Failed to set status");
 	g_assert_not_reached();
 } 
+
+void
+lasso_profile_clean_msg_info(LassoProfile *profile)
+{
+	if (profile->msg_url) {
+		g_free(profile->msg_url);
+		profile->msg_url = NULL;
+	}
+	if (profile->msg_body) {
+		g_free(profile->msg_body);
+		profile->msg_body = NULL;
+	}
+}
 
 
 /**
@@ -332,13 +358,18 @@ lasso_profile_set_identity_from_dump(LassoProfile *profile, const gchar *dump)
  * Return value: 0 on success; or a negative value otherwise.
  **/
 gint
-lasso_profile_set_session_from_dump(LassoProfile *profile, const gchar  *dump)
+lasso_profile_set_session_from_dump(LassoProfile *profile, const gchar *dump)
 {
 	g_return_val_if_fail(dump != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
 
 	profile->session = lasso_session_new_from_dump(dump);
 	if (profile->session == NULL)
 		return critical_error(LASSO_PROFILE_ERROR_BAD_SESSION_DUMP);
+	
+	IF_SAML2(profile) {
+		lasso_saml20_profile_set_session_from_dump(profile);
+	}
+
 	profile->session->is_dirty = FALSE;
 
 	return 0;
@@ -379,10 +410,72 @@ static struct XmlSnippet schema_snippets[] = {
 	{ "MsgUrl", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoProfile, msg_url) },
 	{ "MsgBody", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoProfile, msg_body) },
 	{ "MsgRelayState", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoProfile, msg_relayState) },
+	{ "HttpRequestMethod", SNIPPET_CONTENT | SNIPPET_INTEGER,
+		G_STRUCT_OFFSET(LassoProfile, http_request_method) },
 	{ NULL, 0, 0}
 };
 
 static LassoNodeClass *parent_class = NULL;
+
+static xmlNode*
+get_xmlNode(LassoNode *node, gboolean lasso_dump)
+{
+	xmlNode *xmlnode;
+	LassoProfile *profile = LASSO_PROFILE(node);
+
+	xmlnode = parent_class->get_xmlNode(node, lasso_dump);
+
+	if (profile->private_data->artifact) {
+		xmlNewTextChild(xmlnode, NULL, (xmlChar*)"Artifact",
+			(xmlChar*)profile->private_data->artifact);
+	}
+
+	if (profile->private_data->artifact_message) {
+		xmlNewTextChild(xmlnode, NULL, (xmlChar*)"ArtifactMessage",
+			(xmlChar*)profile->private_data->artifact_message);
+	}
+
+	return xmlnode;
+}
+
+
+static int
+init_from_xml(LassoNode *node, xmlNode *xmlnode)
+{
+	LassoProfile *profile = LASSO_PROFILE(node);
+	xmlNode *t;
+
+	parent_class->init_from_xml(node, xmlnode);
+	
+	if (xmlnode == NULL)
+		return LASSO_XML_ERROR_OBJECT_CONSTRUCTION_FAILED;
+
+	t = xmlnode->children;
+	while (t) {
+		xmlChar *s;
+
+		if (t->type != XML_ELEMENT_NODE) {
+			t = t->next;
+			continue;
+		}
+
+		if (strcmp((char*)t->name, "Artifact") == 0) {
+			s = xmlNodeGetContent(t);
+			profile->private_data->artifact = g_strdup((char*)s);
+			xmlFree(s);
+		} else if (strcmp((char*)t->name, "ArtifactMessage") == 0) {
+			s = xmlNodeGetContent(t);
+			profile->private_data->artifact_message = g_strdup((char*)s);
+			xmlFree(s);
+		}
+
+		t = t->next;
+	}
+
+	return 0;
+}
+
+
 
 /*****************************************************************************/
 /* overridden parent class methods                                           */
@@ -456,6 +549,8 @@ class_init(LassoProfileClass *klass)
 	lasso_node_class_set_nodename(nclass, "Profile");
 	lasso_node_class_set_ns(nclass, LASSO_LASSO_HREF, LASSO_LASSO_PREFIX);
 	lasso_node_class_add_snippets(nclass, schema_snippets);
+	nclass->get_xmlNode = get_xmlNode;
+	nclass->init_from_xml = init_from_xml;
 
 	G_OBJECT_CLASS(klass)->dispose = dispose;
 	G_OBJECT_CLASS(klass)->finalize = finalize;

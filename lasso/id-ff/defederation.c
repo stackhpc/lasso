@@ -1,4 +1,4 @@
-/* $Id: defederation.c,v 1.67 2006/01/23 15:30:00 fpeters Exp $ 
+/* $Id: defederation.c,v 1.72 2007/01/05 13:40:07 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -68,9 +68,10 @@ lasso_defederation_build_notification_msg(LassoDefederation *defederation)
 			LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
 
 	profile = LASSO_PROFILE(defederation);
+	lasso_profile_clean_msg_info(profile);
 
 	if (profile->remote_providerID == NULL) {
-		/* this means lasso_logout_init_request was not called before */
+		/* this means lasso_defederation_init_notification was not called before */
 		return critical_error(LASSO_PROFILE_ERROR_MISSING_REMOTE_PROVIDERID);
 	}
 
@@ -113,7 +114,7 @@ lasso_defederation_build_notification_msg(LassoDefederation *defederation)
 			return critical_error(LASSO_PROFILE_ERROR_BUILDING_QUERY_FAILED);
 		}
 
-		profile->msg_url = g_strdup_printf("%s?%s", url, query);
+		profile->msg_url = lasso_concat_url_query(url, query);
 		profile->msg_body = NULL;
 		g_free(url);
 		g_free(query);
@@ -190,7 +191,7 @@ lasso_defederation_init_notification(LassoDefederation *defederation, gchar *rem
 
 	/* get the nameIdentifier to send the federation termination notification */
 	nameIdentifier_n = lasso_profile_get_nameIdentifier(profile);
-	if (nameIdentifier == NULL) {
+	if (nameIdentifier_n == NULL) {
 		return critical_error(LASSO_PROFILE_ERROR_NAME_IDENTIFIER_NOT_FOUND);
 	}
 	nameIdentifier = LASSO_SAML_NAME_IDENTIFIER(nameIdentifier_n);
@@ -285,7 +286,7 @@ lasso_defederation_process_notification_msg(LassoDefederation *defederation, cha
 
 	g_return_val_if_fail(LASSO_IS_DEFEDERATION(defederation),
 			LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
-	g_return_val_if_fail(request_msg != NULL, LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
+	g_return_val_if_fail(request_msg != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
 
 	profile = LASSO_PROFILE(defederation);
 
@@ -375,9 +376,10 @@ lasso_defederation_validate_notification(LassoDefederation *defederation)
 		/* if a relay state, then build the query part */
 		if (profile->msg_relayState) {
 			gchar *url;
-			url = g_strdup_printf("%s?RelayState=%s",
-					profile->msg_url, profile->msg_relayState);
+			gchar *query = g_strdup_printf("RelayState=%s", profile->msg_relayState);
+			url = lasso_concat_url_query(profile->msg_url, query);
 			g_free(profile->msg_url);
+			g_free(query);
 			profile->msg_url = url;
 		}
 	}

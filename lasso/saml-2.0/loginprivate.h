@@ -1,4 +1,4 @@
-/* $Id: loginprivate.h,v 1.1 2005/11/20 15:38:19 fpeters Exp $
+/* $Id: loginprivate.h,v 1.5 2006/12/05 17:16:54 nclapies Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -34,6 +34,7 @@ extern "C" {
 gint lasso_saml20_login_init_authn_request(LassoLogin *login, LassoProvider *remote_provider,
 		LassoHttpMethod http_method);
 gint lasso_saml20_login_build_authn_request_msg(LassoLogin *login, LassoProvider *remote_provider);
+gint lasso_saml20_login_build_authn_response_msg(LassoLogin *login);
 gint lasso_saml20_login_process_authn_request_msg(LassoLogin *login, const char *authn_request_msg);
 gboolean lasso_saml20_login_must_authenticate(LassoLogin *login);
 gboolean lasso_saml20_login_must_ask_for_consent(LassoLogin *login);
@@ -50,7 +51,12 @@ gint lasso_saml20_login_build_request_msg(LassoLogin *login);
 gint lasso_saml20_login_process_request_msg(LassoLogin *login, gchar *request_msg);
 gint lasso_saml20_login_build_response_msg(LassoLogin *login, gchar *remote_providerID);
 gint lasso_saml20_login_process_response_msg(LassoLogin *login, gchar *response_msg);
+gint lasso_saml20_login_process_authn_response_msg(LassoLogin *login, gchar *authn_response_msg);
 gint lasso_saml20_login_accept_sso(LassoLogin *login);
+gint lasso_saml20_login_process_paos_response_msg(LassoLogin *login, gchar *paos_response_msg);
+
+gint lasso_saml20_login_init_idp_initiated_authn_request(LassoLogin *login,
+		const gchar *remote_providerID);
 
 #ifdef __cplusplus
 }

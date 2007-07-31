@@ -1,4 +1,4 @@
-/* $Id: lib_authn_response.c,v 1.19 2005/11/20 15:38:19 fpeters Exp $ 
+/* $Id: lib_authn_response.c,v 1.20 2007/01/06 22:55:24 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -128,7 +128,7 @@ lasso_lib_authn_response_new(char *providerID, LassoLibAuthnRequest *request)
 	LassoLibAuthnResponse *response;
 
 	response = g_object_new(LASSO_TYPE_LIB_AUTHN_RESPONSE, NULL);
- 
+
 	if (providerID) {
 		lasso_samlp_response_abstract_fill(
 				LASSO_SAMLP_RESPONSE_ABSTRACT(response),

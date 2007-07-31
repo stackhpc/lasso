@@ -2,7 +2,7 @@
 LassoSamlAdvice
 
 <!-- ##### SECTION Short_Description ##### -->
-
+&lt;saml:Advice&gt;
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>

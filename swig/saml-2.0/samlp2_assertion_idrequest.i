@@ -3,41 +3,44 @@
 %rename(Samlp2AssertionIDRequest) LassoSamlp2AssertionIDRequest;
 #endif
 typedef struct {
+#ifndef SWIGPHP4
+	%rename(assertionIdRef) AssertionIDRef;
+#endif
 	char *AssertionIDRef;
 } LassoSamlp2AssertionIDRequest;
 %extend LassoSamlp2AssertionIDRequest {
 
 	/* inherited from Samlp2RequestAbstract */
 #ifndef SWIGPHP4
-	%rename(issuer) *Issuer;
+	%rename(issuer) Issuer;
 #endif
 	%newobject *Issuer_get;
 	LassoSaml2NameID *Issuer;
 
 #ifndef SWIGPHP4
-	%rename(extensions) *Extensions;
+	%rename(extensions) Extensions;
 #endif
 	%newobject *Extensions_get;
 	LassoSamlp2Extensions *Extensions;
 
 #ifndef SWIGPHP4
-	%rename(iD) *ID;
+	%rename(iD) ID;
 #endif
 	char *ID;
 #ifndef SWIGPHP4
-	%rename(version) *Version;
+	%rename(version) Version;
 #endif
 	char *Version;
 #ifndef SWIGPHP4
-	%rename(issueInstant) *IssueInstant;
+	%rename(issueInstant) IssueInstant;
 #endif
 	char *IssueInstant;
 #ifndef SWIGPHP4
-	%rename(destination) *Destination;
+	%rename(destination) Destination;
 #endif
 	char *Destination;
 #ifndef SWIGPHP4
-	%rename(consent) *Consent;
+	%rename(consent) Consent;
 #endif
 	char *Consent;
 

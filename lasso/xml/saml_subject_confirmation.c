@@ -1,4 +1,4 @@
-/* $Id: saml_subject_confirmation.c,v 1.18 2005/10/05 15:59:59 nclapies Exp $
+/* $Id: saml_subject_confirmation.c,v 1.19 2007/01/06 22:55:01 fpeters Exp $
  *
  * Lasso - A free implementation of the Samlerty Alliance specifications.
  *
@@ -61,9 +61,9 @@ static struct XmlSnippet schema_snippets[] = {
 static void
 instance_init(LassoSamlSubjectConfirmation *node)
 {
-  node->ConfirmationMethod = NULL;
-  node->SubjectConfirmationData = NULL;
-  node->KeyInfo = NULL;
+	node->ConfirmationMethod = NULL;
+	node->SubjectConfirmationData = NULL;
+	node->KeyInfo = NULL;
 }
 
 static void

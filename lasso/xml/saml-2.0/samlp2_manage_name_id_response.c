@@ -1,4 +1,4 @@
-/* $Id: samlp2_manage_name_id_response.c,v 1.1 2005/11/21 18:51:52 fpeters Exp $ 
+/* $Id: samlp2_manage_name_id_response.c,v 1.2 2006/12/28 14:44:56 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -48,6 +48,9 @@ build_query(LassoNode *node)
 	char *ret, *deflated_message;
 
 	deflated_message = lasso_node_build_deflated_query(node);
+	if (deflated_message == NULL) {
+		return NULL;
+	}
 	ret = g_strdup_printf("SAMLResponse=%s", deflated_message);
 	/* XXX: must support RelayState (which profiles?) */
 	g_free(deflated_message);

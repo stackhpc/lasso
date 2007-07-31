@@ -1,8 +1,8 @@
-/* $Id: saml2_encrypted_element.c,v 1.2 2005/11/21 18:51:52 fpeters Exp $ 
+/* $Id: saml2_encrypted_element.c,v 1.8 2006/11/23 17:44:26 dlaniel Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004, 2005, 2006 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -41,10 +41,12 @@
 
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "EncryptedData", SNIPPET_NODE,
+	{ "EncryptedData", SNIPPET_XMLNODE,
 		G_STRUCT_OFFSET(LassoSaml2EncryptedElement, EncryptedData) },
-	{ "EncryptedKey", SNIPPET_NODE,
+	{ "EncryptedKey", SNIPPET_LIST_XMLNODES,
 		G_STRUCT_OFFSET(LassoSaml2EncryptedElement, EncryptedKey) },
+	{ "NameID", SNIPPET_NODE | SNIPPET_LASSO_DUMP,
+		G_STRUCT_OFFSET(LassoSaml2EncryptedElement, original_data) },
 	{NULL, 0, 0}
 };
 
@@ -60,6 +62,7 @@ instance_init(LassoSaml2EncryptedElement *node)
 {
 	node->EncryptedData = NULL;
 	node->EncryptedKey = NULL;
+	node->original_data = NULL;
 }
 
 static void
@@ -69,7 +72,8 @@ class_init(LassoSaml2EncryptedElementClass *klass)
 
 	parent_class = g_type_class_peek_parent(klass);
 	nclass->node_data = g_new0(LassoNodeClassData, 1);
-	lasso_node_class_set_nodename(nclass, "EncryptedElement"); 
+
+	lasso_node_class_set_nodename(nclass, "EncryptedElement");
 	lasso_node_class_set_ns(nclass, LASSO_SAML2_ASSERTION_HREF, LASSO_SAML2_ASSERTION_PREFIX);
 	lasso_node_class_add_snippets(nclass, schema_snippets);
 }

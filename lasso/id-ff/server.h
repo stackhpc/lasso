@@ -1,4 +1,4 @@
-/* $Id: server.h,v 1.45 2005/08/24 14:54:55 fpeters Exp $ 
+/* $Id: server.h,v 1.50 2006/11/19 20:07:46 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -91,10 +91,16 @@ LASSO_EXPORT void lasso_server_destroy(LassoServer *server);
 
 LASSO_EXPORT gchar* lasso_server_dump(LassoServer *server);
 
-LASSO_EXPORT LassoProvider* lasso_server_get_provider(LassoServer *server, gchar *providerID);
+LASSO_EXPORT LassoProvider* lasso_server_get_provider(LassoServer *server,
+		const gchar *providerID);
 
 LASSO_EXPORT LassoDiscoServiceInstance* lasso_server_get_service(LassoServer *server,
-								 gchar *serviceType);
+		const gchar *serviceType);
+
+LASSO_EXPORT int lasso_server_set_encryption_private_key(LassoServer *server,
+		const gchar *filename);
+
+LASSO_EXPORT int lasso_server_load_affiliation(LassoServer *server, const gchar* filename);
 
 #ifdef __cplusplus
 }

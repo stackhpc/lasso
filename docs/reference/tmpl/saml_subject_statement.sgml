@@ -2,7 +2,7 @@
 LassoSamlSubjectStatement
 
 <!-- ##### SECTION Short_Description ##### -->
-
+&lt;saml:SubjectStatement&gt;
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>

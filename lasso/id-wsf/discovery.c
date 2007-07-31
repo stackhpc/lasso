@@ -1,4 +1,4 @@
-/* $Id: discovery.c,v 1.62 2006/02/21 09:51:49 fpeters Exp $
+/* $Id: discovery.c,v 1.75 2007/01/03 23:35:17 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -21,6 +21,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
+#include <libxml/xpath.h>
+#include <libxml/xpathInternals.h>
+
+#include <xmlsec/xmltree.h>
 
 #include <lasso/xml/soap_binding_correlation.h>
 #include <lasso/xml/saml_assertion.h>
@@ -52,7 +57,9 @@ struct _LassoDiscoveryPrivate
 /* static methods/functions */
 /*****************************************************************************/
 
-gchar*
+static gchar* lasso_discovery_build_credential(LassoDiscovery *discovery, const gchar *providerId);
+
+static gchar*
 lasso_discovery_build_credential(LassoDiscovery *discovery, const gchar *providerId)
 {
 	LassoSoapHeader *header;
@@ -102,8 +109,7 @@ lasso_discovery_build_credential(LassoDiscovery *discovery, const gchar *provide
 	if (provider) {
 		identifier->Format = g_strdup(LASSO_LIB_NAME_IDENTIFIER_FORMAT_ENTITYID);
 		identifier->content = g_strdup(provider->providerID);
-	}
-	else {
+	} else {
 		identifier->Format = g_strdup(LASSO_LIB_NAME_IDENTIFIER_FORMAT_FEDERATED);
 	}
 	subject->NameIdentifier = identifier;
@@ -141,15 +147,17 @@ lasso_discovery_build_credential(LassoDiscovery *discovery, const gchar *provide
 		ctx->mode = xmlSecKeyInfoModeWrite;
 		ctx->keyReq.keyType = xmlSecKeyDataTypePublic;
 
-		doc = xmlSecCreateTree("KeyInfo", "http://www.w3.org/2000/09/xmldsig#");
+		doc = xmlSecCreateTree((xmlChar*)"KeyInfo",
+				(xmlChar*)"http://www.w3.org/2000/09/xmldsig#");
 		key_info_node = xmlDocGetRootElement(doc);
-		xmlSecAddChild(key_info_node,
-			       "KeyValue", "http://www.w3.org/2000/09/xmldsig#");
+		xmlSecAddChild(key_info_node, (xmlChar*)"KeyValue",
+				(xmlChar*)"http://www.w3.org/2000/09/xmldsig#");
 
 		xmlSecKeyInfoNodeWrite(key_info_node, public_key, ctx);
 
 		xpathCtx = xmlXPathNewContext(doc);
-		xmlXPathRegisterNs(xpathCtx, (xmlChar*)"ds", "http://www.w3.org/2000/09/xmldsig#");
+		xmlXPathRegisterNs(xpathCtx, (xmlChar*)"ds",
+				(xmlChar*)"http://www.w3.org/2000/09/xmldsig#");
 
 		rsa_key_value = lasso_ds_rsa_key_value_new();
 		xpathObj = xmlXPathEvalExpression((xmlChar*)"//ds:Modulus", xpathCtx);
@@ -157,18 +165,23 @@ lasso_discovery_build_credential(LassoDiscovery *discovery, const gchar *provide
 			xmlnode = xpathObj->nodesetval->nodeTab[0];
 			rsa_key_value->Modulus = (gchar *) xmlNodeGetContent(xmlnode);
 		}
+		xmlXPathFreeObject(xpathObj);
 
 		xpathObj = xmlXPathEvalExpression((xmlChar*)"//ds:Exponent", xpathCtx);
 		if (xpathObj->nodesetval && xpathObj->nodesetval->nodeNr) {
 			xmlnode = xpathObj->nodesetval->nodeTab[0];
 			rsa_key_value->Exponent = (gchar *) xmlNodeGetContent(xmlnode);
 		}
+		xmlXPathFreeObject(xpathObj);
 
 		key_value = lasso_ds_key_value_new();
 		key_value->RSAKeyValue = rsa_key_value;
 		key_info = lasso_ds_key_info_new();
 		key_info->KeyValue = key_value;
 		subject_confirmation->KeyInfo = key_info;
+
+		xmlXPathFreeContext(xpathCtx);
+		xmlFreeDoc(doc);
 	}
 
 	subject->SubjectConfirmation = subject_confirmation;
@@ -213,19 +226,16 @@ lasso_discovery_init_request(LassoDiscovery *discovery,
 		if (LASSO_IS_DISCO_MODIFY(profile->request)) {
 			LASSO_DISCO_MODIFY(profile->request)->ResourceID = \
 				resourceOffering->ResourceID;
-		}
-		else if (LASSO_IS_DISCO_QUERY(profile->request)) {
+		} else if (LASSO_IS_DISCO_QUERY(profile->request)) {
 			LASSO_DISCO_QUERY(profile->request)->ResourceID = \
 				resourceOffering->ResourceID;
 		}
-	}
-	else if (resourceOffering->EncryptedResourceID != NULL) {
+	} else if (resourceOffering->EncryptedResourceID != NULL) {
 		g_object_ref(resourceOffering->EncryptedResourceID);
 		if (LASSO_IS_DISCO_MODIFY(profile->request)) {
 			LASSO_DISCO_MODIFY(profile->request)->EncryptedResourceID = \
 				resourceOffering->EncryptedResourceID;
-		}
-		else if (LASSO_IS_DISCO_QUERY(profile->request)) {
+		} else if (LASSO_IS_DISCO_QUERY(profile->request)) {
 			LASSO_DISCO_QUERY(profile->request)->EncryptedResourceID = \
 				resourceOffering->EncryptedResourceID;
 		}
@@ -233,8 +243,7 @@ lasso_discovery_init_request(LassoDiscovery *discovery,
 
 	if (description->Endpoint != NULL) {
 		profile->msg_url = g_strdup(description->Endpoint);
-	}
-	else if (description->WsdlURI != NULL) {
+	} else if (description->WsdlURI != NULL) {
 		/* TODO: get Endpoint at WsdlURI */
 	}
 
@@ -314,6 +323,10 @@ lasso_discovery_add_requested_service_type(LassoDiscovery *discovery,
 	/* option is optional */
 
 	query = LASSO_DISCO_QUERY(LASSO_WSF_PROFILE(discovery)->request);
+	if (query == NULL) {
+		/* missing request */
+		return NULL;
+	}
 
 	rst = lasso_disco_requested_service_type_new(service_type);
 
@@ -416,7 +429,8 @@ lasso_discovery_get_resource_offering_auto(LassoDiscovery *discovery, const gcha
 
 end:
 
-	/* XXX lasso_node_destroy(assertions) */
+	g_list_free(assertions);
+
 	if (resource_offering) {
 		return g_object_ref(resource_offering);
 	}
@@ -478,16 +492,18 @@ lasso_discovery_init_insert(LassoDiscovery *discovery,
 	/* get discovery service resource id from principal assertion */
 	offering = lasso_discovery_get_resource_offering_auto(discovery, LASSO_DISCO_HREF);
 	if (offering == NULL) {
-		return -1;
+		return LASSO_PROFILE_ERROR_MISSING_RESOURCE_OFFERING;
 	}
-	if (security_mech_id)
+	if (security_mech_id) {
 		description = lasso_discovery_get_description_auto(offering, security_mech_id);
-	else
+	} else {
 		description = LASSO_DISCO_DESCRIPTION(offering->ServiceInstance->Description->data);
-	if (!description)
-	       return -1;
+	}
+	if (!description) {
+		return LASSO_PROFILE_ERROR_MISSING_SERVICE_DESCRIPTION;
+	}
 	lasso_wsf_profile_set_description(LASSO_WSF_PROFILE(discovery), description);
-	
+
 	/* XXX: EncryptedResourceID support */
 	modify->ResourceID = g_object_ref(offering->ResourceID);
 	lasso_node_destroy(LASSO_NODE(offering));
@@ -526,7 +542,7 @@ lasso_discovery_init_remove(LassoDiscovery *discovery, const char *entry_id)
 	/* get discovery service resource id from principal assertion */
 	offering = lasso_discovery_get_resource_offering_auto(discovery, LASSO_DISCO_HREF);
 	if (offering == NULL) {
-		return -1;
+		return LASSO_PROFILE_ERROR_MISSING_RESOURCE_OFFERING;
 	}
 	description = lasso_discovery_get_description_auto(offering,
 		LASSO_SECURITY_MECH_NULL);
@@ -567,15 +583,15 @@ lasso_discovery_init_query(LassoDiscovery *discovery, const gchar *security_mech
 	/* get discovery service resource id from principal assertion */
 	offering = lasso_discovery_get_resource_offering_auto(discovery, LASSO_DISCO_HREF);
 	if (offering == NULL)
-		return -1;
+		return LASSO_PROFILE_ERROR_MISSING_RESOURCE_OFFERING;
 
-	if (!security_mech_id)
+	if (security_mech_id == NULL) {
 		description = LASSO_DISCO_DESCRIPTION(offering->ServiceInstance->Description->data);
-	else {
+	} else {
 		description = lasso_discovery_get_description_auto(offering, security_mech_id);
 	}
-	if (!description)
-		return -1;
+	if (description == NULL)
+		return LASSO_PROFILE_ERROR_MISSING_SERVICE_DESCRIPTION;
 
 	lasso_wsf_profile_set_description(LASSO_WSF_PROFILE(discovery), description);
 
@@ -655,6 +671,10 @@ lasso_discovery_build_modify_response_msg(LassoDiscovery *discovery)
 	if (lasso_wsf_profile_get_fault(LASSO_WSF_PROFILE(discovery))) {
 		return lasso_wsf_profile_build_soap_response_msg(LASSO_WSF_PROFILE(discovery));
 	}
+	
+	if (LASSO_WSF_PROFILE(discovery)->identity == NULL) {
+		return LASSO_PROFILE_ERROR_IDENTITY_NOT_FOUND;
+	}
 
 	/* build response */
 	status = lasso_utility_status_new(LASSO_DISCO_STATUS_CODE_FAILED);
@@ -672,8 +692,7 @@ lasso_discovery_build_modify_response_msg(LassoDiscovery *discovery)
 		if (lasso_identity_get_resource_offering(
 					LASSO_WSF_PROFILE(discovery)->identity,
 					entry->entryID) == NULL) {
-			/* FIXME: Return a better code error. */
-			return -1;
+			return LASSO_PROFILE_ERROR_MISSING_RESOURCE_OFFERING;
 		}
 	}
 
@@ -736,11 +755,14 @@ lasso_discovery_process_modify_response_msg(LassoDiscovery *discovery, const gch
 	LassoDiscoModifyResponse *response;
 	
 	rc = lasso_wsf_profile_process_soap_response_msg(LASSO_WSF_PROFILE(discovery), message);
-	if (rc) return rc;
+	if (rc) {
+		return rc;
+	}
 
 	response = LASSO_DISCO_MODIFY_RESPONSE(LASSO_WSF_PROFILE(discovery)->response);
-	if (strcmp(response->Status->code, "OK") != 0)
-		return LASSO_ERROR_UNDEFINED;
+	if (strcmp(response->Status->code, "OK") != 0) {
+		return LASSO_PROFILE_ERROR_STATUS_NOT_SUCCESS;
+	}
 
 	return 0;
 }
@@ -771,11 +793,11 @@ lasso_discovery_process_query_msg(LassoDiscovery *discovery, const gchar *messag
 	envelope = LASSO_WSF_PROFILE(discovery)->soap_envelope_response;
 	request = LASSO_DISCO_QUERY(LASSO_WSF_PROFILE(discovery)->request);
 	
-	if (request->ResourceID)
+	if (request->ResourceID) {
 		discovery->resource_id = g_object_ref(request->ResourceID);
-	else if (request->EncryptedResourceID)
+	} else if (request->EncryptedResourceID) {
 		discovery->encrypted_resource_id = g_object_ref(request->EncryptedResourceID);
-	else {
+	} else {
 		return LASSO_ERROR_UNIMPLEMENTED; /* implied ? */
 	}
 
@@ -802,16 +824,18 @@ lasso_discovery_build_response_msg(LassoDiscovery *discovery)
 	LassoDiscoQueryResponse *response;
 	LassoSoapEnvelope *envelope;
 
-	LassoSoapBindingProvider *provider = NULL;
-
 	GList *offerings = NULL;
-	GList *iter, *iter2, *iter3, *iter4;
+	GList *iter, *iter2, *iter3;
 	int res = 0;
 	
 	gchar *credentialRef;
 
 	if (lasso_wsf_profile_get_fault(LASSO_WSF_PROFILE(discovery))) {
 		return lasso_wsf_profile_build_soap_response_msg(LASSO_WSF_PROFILE(discovery));
+	}
+
+	if (LASSO_WSF_PROFILE(discovery)->identity == NULL) {
+		return LASSO_PROFILE_ERROR_IDENTITY_NOT_FOUND;
 	}
 
 	iter = request->RequestedServiceType;
@@ -843,7 +867,6 @@ lasso_discovery_build_response_msg(LassoDiscovery *discovery)
 			while (iter3) {
 				if (lasso_security_mech_id_is_saml_authentication(
 					    iter3->data) == TRUE) {
-					printf("At disco, add credential\n");
 					credentialRef = lasso_discovery_build_credential(
 						discovery, NULL);
 					description->CredentialRef = g_list_append(
@@ -876,11 +899,14 @@ lasso_discovery_process_query_response_msg(LassoDiscovery *discovery, const gcha
 	LassoDiscoQueryResponse *response;
 
 	rc = lasso_wsf_profile_process_soap_response_msg(LASSO_WSF_PROFILE(discovery), message);
-	if (rc) return rc;
+	if (rc) {
+		return rc;
+	}
 
 	response = LASSO_DISCO_QUERY_RESPONSE(LASSO_WSF_PROFILE(discovery)->response);
-	if (strcmp(response->Status->code, "OK") != 0)
-		return LASSO_ERROR_UNDEFINED;
+	if (strcmp(response->Status->code, "OK") != 0) {
+		return LASSO_PROFILE_ERROR_STATUS_NOT_SUCCESS;
+	}
 
 	/* XXX: anything else to do ? */
 
@@ -908,6 +934,11 @@ lasso_discovery_get_service(LassoDiscovery *discovery, const char *service_type)
 	LassoDataService *service;
 
 	response = LASSO_DISCO_QUERY_RESPONSE(LASSO_WSF_PROFILE(discovery)->response);
+	if (response == NULL) {
+		/* no response; probably called at wrong time */
+		return NULL;
+	}
+
 	iter = response->ResourceOffering;
 	if (iter == NULL) {
 		return NULL; /* resource not found */

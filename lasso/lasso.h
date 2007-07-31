@@ -1,4 +1,4 @@
-/* $Id: lasso.h,v 1.23 2005/02/21 14:16:59 fpeters Exp $ 
+/* $Id: lasso.h,v 1.25 2006/11/14 14:15:06 nclapies Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -44,6 +44,8 @@ extern "C" {
 #include <lasso/id-ff/logout.h>
 #include <lasso/id-ff/name_identifier_mapping.h>
 #include <lasso/id-ff/name_registration.h>
+#include <lasso/saml-2.0/name_id_management.h>
+#include <lasso/saml-2.0/ecp.h>
 
 LASSO_EXPORT int lasso_init(void);
 LASSO_EXPORT int lasso_shutdown(void);

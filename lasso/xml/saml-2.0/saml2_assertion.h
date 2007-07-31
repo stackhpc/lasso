@@ -1,4 +1,4 @@
-/* $Id: saml2_assertion.h,v 1.2 2005/11/21 18:51:52 fpeters Exp $ 
+/* $Id: saml2_assertion.h,v 1.4 2006/12/20 09:03:40 dlaniel Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -53,6 +53,8 @@ typedef struct _LassoSaml2AssertionClass LassoSaml2AssertionClass;
 #include "saml2_subject.h"
 #include "saml2_name_id.h"
 
+#include <lasso/xml/xml_enc.h>
+
 struct _LassoSaml2Assertion {
 	LassoNode parent;
 
@@ -76,7 +78,9 @@ struct _LassoSaml2Assertion {
 	LassoSignatureMethod sign_method;
 	char *private_key_file;
 	char *certificate_file;
-
+	gboolean encryption_activated;
+	char *encryption_public_key_str;
+	LassoEncryptionSymKeyType encryption_sym_key_type;
 };
 
 

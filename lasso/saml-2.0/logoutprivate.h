@@ -1,4 +1,4 @@
-/* $Id: logoutprivate.h,v 1.2 2005/11/22 21:24:12 fpeters Exp $
+/* $Id: logoutprivate.h,v 1.3 2006/11/15 16:41:55 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -42,7 +42,7 @@ int lasso_saml20_logout_validate_request(LassoLogout *logout);
 
 int lasso_saml20_logout_build_response_msg(LassoLogout *logout);
 
-int lasso_saml20_process_response_msg(LassoLogout *logout, const char *response_msg);
+int lasso_saml20_logout_process_response_msg(LassoLogout *logout, const char *response_msg);
 
 #ifdef __cplusplus
 }

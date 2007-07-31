@@ -32,14 +32,11 @@ version=`ls src/.libs/lib*.so.* | \
 major=`ls src/.libs/lib*.so.* | \
  awk '{if (match($$0,/\.so\.[0-9]+$$/)) print substr($$0,RSTART+4)}'`
 
-phpapiver=$(shell php-config4 --phpapi)
-
 config.status: configure
 	dh_testdir
 	# Add here commands to configure the package.
-	CFLAGS="$(CFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --enable-tests=no --disable-gtk-doc --disable-perl --disable-csharp
+	CC=gcc-4.2 CFLAGS="$(CFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --enable-tests=no --disable-gtk-doc --disable-perl --disable-csharp --disable-php4
 	# be sure not to call swig:
-	touch php/lasso_wrap.c php/php_lasso.h php/lasso.php
 	touch python/lasso_wrap.c python/lasso.py
 	touch perl/lasso_wrap.c perl/lasso.pm
 	touch java/lasso_wrap.c java/lasso.java
@@ -120,7 +117,6 @@ binary-arch: build install
 	dh_compress
 	dh_fixperms
 	dh_makeshlibs -a -V
-	#dh_clideps -L liblasso-cil -r -d
 	dh_installdeb
 	dh_shlibdeps -a
 	dh_gencontrol

@@ -2,7 +2,7 @@
 LassoSamlpRequest
 
 <!-- ##### SECTION Short_Description ##### -->
-
+&lt;samlp:Request&gt;
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>

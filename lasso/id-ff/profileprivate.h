@@ -1,4 +1,4 @@
-/* $Id: profileprivate.h,v 1.3 2005/11/20 15:38:19 fpeters Exp $ 
+/* $Id: profileprivate.h,v 1.4 2007/01/05 13:40:07 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -40,6 +40,7 @@ struct _LassoProfilePrivate
 };
 
 void lasso_profile_set_response_status(LassoProfile *profile, const gchar *statusCodeValue);
+void lasso_profile_clean_msg_info(LassoProfile *profile);
 
 #ifdef __cplusplus
 }

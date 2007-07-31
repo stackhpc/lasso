@@ -1,4 +1,4 @@
-/* $Id: soap_binding_ext_credential.c,v 1.2 2005/03/11 21:48:54 fpeters Exp $ 
+/* $Id: soap_binding_ext_credential.c,v 1.3 2006/11/21 14:06:19 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -43,10 +43,10 @@
 /*****************************************************************************/
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "any", SNIPPET_LIST_NODES,
-	  G_STRUCT_OFFSET(LassoSoapBindingExtCredential, any) },
+	{ "", SNIPPET_LIST_NODES,
+		G_STRUCT_OFFSET(LassoSoapBindingExtCredential, any) },
 	{ "notOnOrAfter", SNIPPET_ATTRIBUTE,
-	  G_STRUCT_OFFSET(LassoSoapBindingExtCredential, notOnOrAfter) },
+		G_STRUCT_OFFSET(LassoSoapBindingExtCredential, notOnOrAfter) },
 	{ NULL, 0, 0}
 };
 

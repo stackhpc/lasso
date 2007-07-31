@@ -15,16 +15,16 @@ dnl - Second number is the number of supported API versions where API version >
 dnl   first number.
 dnl - Third number is the current API version implementation version number.
 dnl See libtool explanations about current, age and release, later in this file.
-AC_INIT([Liberty Alliance Single Sign On], 0.6.5, lasso-devel@lists.labs.libre-entreprise.org)
+AC_INIT([Liberty Alliance Single Sign On], 2.0.0, lasso-devel@lists.labs.libre-entreprise.org)
 dnl Check if autoconf ver > 2.53
 AC_PREREQ(2.53)
 dnl Check existence of a relative pathed source file.
 AC_CONFIG_SRCDIR(lasso/lasso.c)
 dnl Copy stamp REVISIO-INFO in the configure script.
-AC_REVISION($Revision: 1.146 $)
+AC_REVISION($Revision: 1.153 $)
 
 dnl Run many macros mostly needed by configure.ac.
-AM_INIT_AUTOMAKE(lasso, 0.6.5)
+AM_INIT_AUTOMAKE(lasso, 2.0.0)
 dnl Create rules to automaticaly regenerate the config header.
 AM_CONFIG_HEADER(lasso/lasso_config.h)
 dnl Add --enable-maintainer-mode option to configure.
@@ -102,9 +102,10 @@ AC_CHECK_PROGS(JAVA, java)
 AC_CHECK_PROGS(JAVAC, gcj javac)
 AC_CHECK_PROGS(JAR, fastjar jar)
 AC_CHECK_PROGS(PERL, perl)
-AC_CHECK_PROGS(PHP, php)
-AC_CHECK_PROG(PHP_CONFIG, php-config, php-config)
-AC_PATH_PROGS(PHP_PATH, php)
+AC_CHECK_PROGS(PHP4, php4 php)
+AC_CHECK_PROGS(PHP5, php5 php)
+AC_CHECK_PROGS(PHP4_CONFIG, php-config4 php-config)
+AC_CHECK_PROGS(PHP5_CONFIG, php-config5 php-config)
 AC_CHECK_PROGS(PYTHON, python)
 AC_CHECK_PROGS(SWIG, swig)
 
@@ -160,7 +161,7 @@ dnl - interfaces removed -> AGE = 0
 # m = a
 # r = r
 current=`expr $VERSION_MAJOR + $VERSION_MINOR`
-LASSO_VERSION_INFO="6:0:3"
+LASSO_VERSION_INFO="7:0:4"
 AC_SUBST(LASSO_VERSION_INFO)
 
 dnl Compute the minimal supported ABI version for Win32 scripts and resources files.
@@ -173,7 +174,7 @@ AC_SUBST(DLL_FILENAME)
 dnl ==========================================================================
 dnl Swig
 dnl ==========================================================================
-SWIG_MIN_VERSION=1.3.27
+SWIG_MIN_VERSION=1.3.28
 AC_MSG_CHECKING(SWIG support)
 if test "X$SWIG" != "X"; then
   SWIG_VERSION=`$SWIG -version 2>&1 | $SED -ne 's/^SWIG Version //p'`
@@ -351,52 +352,52 @@ AC_MSG_RESULT($enable_python)
 AC_SUBST(PYTHON_VERSION)
 
 # -----------
-# PHP binding
+# PHP 4 binding
 # -----------
 
 dnl Check if php is explicitly disabled.
-AC_ARG_ENABLE(php, [  --disable-php           disable the PHP binding],,
-              enable_php="yes")
+AC_ARG_ENABLE(php4, [  --disable-php4          disable the PHP 4 binding],,
+              enable_php4="yes")
 
-AC_ARG_ENABLE(php-force, [  --enable-php-force      always enable of the PHP binding (win32)],
-              [ENABLE_PHP_FORCE="yes"],
-              [ENABLE_PHP_FORCE="no"])
+AC_ARG_ENABLE(php4-force, [  --enable-php4-force     always enable of the PHP 4 binding (win32)],
+              [ENABLE_PHP4_FORCE="yes"],
+              [ENABLE_PHP4_FORCE="no"])
 
-AC_ARG_WITH(php-config,
-            [  --with-php-config=(PHP_CONFIG)      Specify full path to php-config.])
+AC_ARG_WITH(php4-config,
+            [  --with-php4-config=(PHP4_CONFIG)      Specify full path to php-config4.])
 
-AC_ARG_WITH(php-extension-dir,
-            [  --with-php-extension-dir=(PHP_EXTENSION_DIR)      Specify full path to php extension dir.],
-            [PHP_EXTENSION_DIR="$withval"],[PHP_EXTENSION_DIR=])
+AC_ARG_WITH(php4-extension-dir,
+            [  --with-php4-extension-dir=(PHP4_EXTENSION_DIR)      Specify full path to php 4 extension dir.],
+            [PHP4_EXTENSION_DIR="$withval"],[PHP4_EXTENSION_DIR=])
 
 dnl Check if user passed a specific php-config program.
-if test "X$with_php_config" != "X" ; then
-    PHP_CONFIG=$with_php_config
+if test "X$with_php4_config" != "X" ; then
+    PHP4_CONFIG=$with_php4_config
 fi
 
-if test "X$PHP_CONFIG" != "X" ; then
-  PHP_INCLUDES=`$PHP_CONFIG --includes`
-  PHP_LDFLAGS=`$PHP_CONFIG --ldflags`
-  PHP_LIBS=`$PHP_CONFIG --libs`
-  PHP_UNPREFIXED_EXTENSION_DIR=`$PHP_CONFIG --extension-dir | $SED 's/\/usr//g'`
-  PHP_PREFIX=`$PHP_CONFIG --prefix`
+if test "X$PHP4_CONFIG" != "X" ; then
+  PHP4_INCLUDES=`$PHP4_CONFIG --includes`
+  PHP4_LDFLAGS=`$PHP4_CONFIG --ldflags`
+  PHP4_LIBS=`$PHP4_CONFIG --libs`
+  PHP4_UNPREFIXED_EXTENSION_DIR=`$PHP4_CONFIG --extension-dir | $SED 's/\/usr//g'`
+  PHP4_PREFIX=`$PHP4_CONFIG --prefix`
 else
-  # We assumes PHP are in /usr/local directory.
+  # We assume PHP are in /usr/local directory.
   if test $MINGW -eq 1; then 
     CFLAGS="$CFLAGS -DZTS -DZEND_WIN32 -DWIN32 -D_MBCS"
   fi
-  PHP_INCLUDES="-I/usr/local/include/php4 -I/usr/local/include/php4/main -I/usr/local/include/php4/Zend -I/usr/local/include/php4/TSRM -I/usr/local/include/php4/win32"
-  PHP_LDFLAGS=
-  PHP_LIBS=-lphp4ts -lxmlparse -lxmltok
-  PHP_UNPREFIXED_EXTENSION_DIR=
-  PHP_PREFIX=
+  PHP4_INCLUDES="-I/usr/local/include/php4 -I/usr/local/include/php4/main -I/usr/local/include/php4/Zend -I/usr/local/include/php4/TSRM -I/usr/local/include/php4/win32"
+  PHP4_LDFLAGS=
+  PHP4_LIBS="-lphp4ts -lxmlparse -lxmltok"
+  PHP4_UNPREFIXED_EXTENSION_DIR=
+  PHP4_PREFIX=
 fi
-AC_SUBST(PHP_INCLUDES)
-AC_SUBST(PHP_LDFLAGS)
-AC_SUBST(PHP_LIBS)
-AC_SUBST(PHP_UNPREFIXED_EXTENSION_DIR)
-AC_SUBST(PHP_EXTENSION_DIR)
-AC_SUBST(PHP_PREFIX)
+AC_SUBST(PHP4_INCLUDES)
+AC_SUBST(PHP4_LDFLAGS)
+AC_SUBST(PHP4_LIBS)
+AC_SUBST(PHP4_UNPREFIXED_EXTENSION_DIR)
+AC_SUBST(PHP4_EXTENSION_DIR)
+AC_SUBST(PHP4_PREFIX)
 
 dnl Check for expat
 have_expat_include=no
@@ -407,21 +408,94 @@ else
 fi
   
 if test x$have_expat_lib = xno; then
-    enable_php=no
+    enable_php4=no
 fi
 
-AC_MSG_CHECKING(for PHP development files)
-PHP_VERSION=`$PHP_CONFIG --version 2>/dev/null`
-dnl Check if we were be able to extract a good version number.
-if test "X$PHP_VERSION" != "X" || test "X$ENABLE_PHP_FORCE" == "Xyes"; then
-    languages_available="$languages_available php($PHP_VERSION)"
+AC_MSG_CHECKING(for PHP 4 development files)
+if $PHP4_CONFIG --version | grep -q 4 || test "x$ENABLE_PHP4_FORCE" == "xyes"
+then
+	PHP4_VERSION=`$PHP4_CONFIG --version 2> /dev/null`
+	languages_available="$languages_available php4($PHP4_VERSION)"
 else
-    enable_php=no
+	enable_php4=no
 fi
-AC_MSG_RESULT($enable_php)
-AM_CONDITIONAL([PHP_ENABLED], [test "x$enable_php" = "xyes"])
-AC_SUBST(PHP_VERSION)
 
+AC_MSG_RESULT($enable_php4)
+AM_CONDITIONAL([PHP4_ENABLED], [test "x$enable_php4" = "xyes"])
+AC_SUBST(PHP4_VERSION)
+
+# -----------
+# PHP 5 binding
+# -----------
+
+dnl Check if php is explicitly enabled.
+AC_ARG_ENABLE(php5, [  --enable-php5          enable the PHP 5 binding],,
+              enable_php5="no")
+
+AC_ARG_ENABLE(php5-force, [  --enable-php5-force     always enable of the PHP 5 binding (win32)],
+              [ENABLE_PHP5_FORCE="yes"],
+              [ENABLE_PHP5_FORCE="no"])
+
+AC_ARG_WITH(php5-config,
+            [  --with-php5-config=(PHP5_CONFIG)      Specify full path to php-config5.])
+
+AC_ARG_WITH(php5-extension-dir,
+            [  --with-php5-extension-dir=(PHP5_EXTENSION_DIR)      Specify full path to php 5 extension dir.],
+            [PHP5_EXTENSION_DIR="$withval"],[PHP5_EXTENSION_DIR=])
+
+dnl Check if user passed a specific php-config program.
+if test "X$with_php5_config" != "X" ; then
+    PHP5_CONFIG=$with_php5_config
+fi
+
+if test "X$PHP5_CONFIG" != "X" ; then
+  PHP5_INCLUDES=`$PHP5_CONFIG --includes`
+  PHP5_LDFLAGS=`$PHP5_CONFIG --ldflags`
+  PHP5_LIBS=`$PHP5_CONFIG --libs`
+  PHP5_UNPREFIXED_EXTENSION_DIR=`$PHP5_CONFIG --extension-dir | $SED 's/\/usr//g'`
+  PHP5_PREFIX=`$PHP5_CONFIG --prefix`
+else
+  # We assume PHP are in /usr/local directory.
+  if test $MINGW -eq 1; then 
+    CFLAGS="$CFLAGS -DZTS -DZEND_WIN32 -DWIN32 -D_MBCS"
+  fi
+  PHP5_INCLUDES="-I/usr/local/include/php5 -I/usr/local/include/php5/main -I/usr/local/include/php5/Zend -I/usr/local/include/php5/TSRM -I/usr/local/include/php5/win32"
+  PHP5_LDFLAGS=
+  PHP5_LIBS="-lphp5ts -lxmlparse -lxmltok"
+  PHP5_UNPREFIXED_EXTENSION_DIR=
+  PHP5_PREFIX=
+fi
+AC_SUBST(PHP5_INCLUDES)
+AC_SUBST(PHP5_LDFLAGS)
+AC_SUBST(PHP5_LIBS)
+AC_SUBST(PHP5_UNPREFIXED_EXTENSION_DIR)
+AC_SUBST(PHP5_EXTENSION_DIR)
+AC_SUBST(PHP5_PREFIX)
+
+dnl Check for expat
+have_expat_include=no
+if test $MINGW -eq 1; then 
+    AC_CHECK_LIB(xmlparse, XML_ParserCreate, have_expat_lib=yes, have_expat_lib=no)
+else
+    AC_CHECK_LIB(expat, XML_ParserCreate, have_expat_lib=yes, have_expat_lib=no)
+fi
+  
+if test x$have_expat_lib = xno; then
+    enable_php5=no
+fi
+
+AC_MSG_CHECKING(for PHP 5 development files)
+if $PHP5_CONFIG --version | grep -q 5 || test "x$ENABLE_PHP5_FORCE" == "xyes"
+then
+	PHP5_VERSION=`$PHP5_CONFIG --version 2> /dev/null`
+	languages_available="$languages_available php5($PHP5_VERSION)"
+else
+	enable_php5=no
+fi
+
+AC_MSG_RESULT($enable_php5)
+AM_CONDITIONAL([PHP5_ENABLED], [test "x$enable_php5" = "xyes"])
+AC_SUBST(PHP5_VERSION)
 
 
 ### # ----------
@@ -698,7 +772,7 @@ dnl Conditional docs sub dir test.
 AM_CONDITIONAL([GTK_DOC_ENABLED],[test "x$enable_gtk_doc" = "xyes"])
 
 
-AC_CHECK_PROGS(REST2HTML, rest2html)
+AC_CHECK_PROGS(REST2HTML, rest2html rst2html)
 AM_CONDITIONAL(HAVE_REST2HTML, test -n "$ac_cv_prog_REST2HTML")
 
 AC_CHECK_PROGS(XSLTPROC, xsltproc)
@@ -805,6 +879,7 @@ lasso/xml/Makefile
 lasso/xml/saml-2.0/Makefile
 perl/Makefile
 php/Makefile
+php5/Makefile
 python/Makefile
 swig/Makefile
 swig/wsf-support.i
@@ -815,6 +890,7 @@ tests/data/ca1-la/Makefile
 tests/data/idp1-la/Makefile
 tests/data/lecp1-la/Makefile
 tests/data/sp1-la/Makefile
+tests/metadata/Makefile
 lasso.pc
 win32/Makefile
 win32/lasso.rc
@@ -854,7 +930,8 @@ Available languages:    ${languages_available}
 
 Java binding:           ${enable_java}
 Perl binding:           ${enable_perl}
-PHP binding:            ${enable_php}
+PHP 4 binding:          ${enable_php4}
+PHP 5 binding:          ${enable_php5}
 Python binding:         ${enable_python}
 
 C API references:       ${enable_gtk_doc}

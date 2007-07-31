@@ -2,7 +2,7 @@
 LassoSamlConditionAbstract
 
 <!-- ##### SECTION Short_Description ##### -->
-
+&lt;saml:ConditionAbstract&gt;
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
