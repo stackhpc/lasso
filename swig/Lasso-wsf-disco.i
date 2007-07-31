@@ -1,6 +1,6 @@
 /* -*- Mode: c; c-basic-offset: 8 -*-
  *
- * $Id: Lasso-wsf-disco.i,v 1.4 2006/01/21 09:31:13 fpeters Exp $
+ * $Id: Lasso-wsf-disco.i,v 1.7 2006/12/20 23:41:44 fpeters Exp $
  *
  * SWIG bindings for Lasso Library
  *
@@ -495,6 +495,7 @@ typedef struct {
 /* Implementations of methods */
 
 /* Implementations of methods inherited from LassoNode */
+void
 LassoDiscoDescription_addSecurityMechId(LassoDiscoDescription *self, const char *security_mech_id) {
 	self->SecurityMechID = g_list_append(self->SecurityMechID, g_strdup(security_mech_id));
 }
@@ -1147,11 +1148,17 @@ typedef struct {
 typedef struct {
 	/* Attributes */
 
-#if !defined(SWIGPHP4) && !defined(SWIGCSHARP)
-	/* "abstract" is a reserved word in C#. */
+#ifndef SWIGPHP4
+  /* XXX: SWIG 1.3.31 fails to compile the PHP binding it generates if this
+   * part is present */
+
+#if !defined(SWIGPHP4) && !defined(SWIGCSHARP) && !defined(SWIGJAVA)
+	/* "abstract" is a reserved word in PHP, C# and Java. */
 	%rename(abstract) Abstract;
 #endif
 	char *Abstract;
+
+#endif /* !SWIGPHP4 */
 
 #ifndef SWIGPHP4
 	%rename(entryId) entryID;

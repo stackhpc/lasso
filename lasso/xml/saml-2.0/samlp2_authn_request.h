@@ -1,4 +1,4 @@
-/* $Id: samlp2_authn_request.h,v 1.2 2005/11/21 18:51:52 fpeters Exp $ 
+/* $Id: samlp2_authn_request.h,v 1.3 2006/12/06 09:26:45 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -73,6 +73,9 @@ struct _LassoSamlp2AuthnRequest {
 	char *AssertionConsumerServiceURL;
 	int AttributeConsumingServiceIndex;
 	char *ProviderName;
+
+	/* out of schema */
+	char *relayState;
 };
 
 

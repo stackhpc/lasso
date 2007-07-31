@@ -1,4 +1,4 @@
-/* $Id: private.h,v 1.19 2005/11/21 18:51:52 fpeters Exp $ 
+/* $Id: private.h,v 1.22 2006/12/16 09:47:15 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -44,6 +44,7 @@ typedef enum {
 	SNIPPET_EXTENSION,
 	SNIPPET_SIGNATURE,
 	SNIPPET_LIST_XMLNODES,
+	SNIPPET_XMLNODE,
 
 	/* transformers for content transformation */
 	SNIPPET_STRING  = 1 << 0, /* default, can be omitted */
@@ -60,6 +61,8 @@ struct XmlSnippet {
 	SnippetType type;
 	guint offset;
 	char *class_name;
+	char *ns_name;
+	char *ns_uri;
 };
 
 struct QuerySnippet {
@@ -118,6 +121,8 @@ void xmlCleanNs(xmlNode *root_node);
 gchar* lasso_node_build_deflated_query(LassoNode *node);
 
 gboolean lasso_node_init_from_deflated_query_part(LassoNode *node, char *deflate_string);
+
+char* lasso_concat_url_query(char *url, char *query);
 
 void _debug(GLogLevelFlags level, const char *filename, int line,
 		const char *function, const char *format, ...);

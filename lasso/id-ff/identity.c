@@ -1,4 +1,4 @@
-/* $Id: identity.c,v 1.55 2005/09/16 13:30:34 fpeters Exp $
+/* $Id: identity.c,v 1.59 2007/01/03 23:35:17 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -50,8 +50,9 @@ struct _LassoIdentityPrivate
 gint
 lasso_identity_add_federation(LassoIdentity *identity, LassoFederation *federation)
 {
-	g_return_val_if_fail(LASSO_IS_IDENTITY(identity), -1);
-	g_return_val_if_fail(LASSO_IS_FEDERATION(federation), -3);
+	g_return_val_if_fail(LASSO_IS_IDENTITY(identity), LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
+	g_return_val_if_fail(LASSO_IS_FEDERATION(federation),
+			LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
 
 	/* add the federation, replace if one already exists */
 	g_hash_table_insert(identity->federations,
@@ -91,7 +92,7 @@ gint
 lasso_identity_remove_federation(LassoIdentity *identity, const char *providerID)
 {
 	if (g_hash_table_remove(identity->federations, providerID) == FALSE) {
-		return LASSO_ERROR_UNDEFINED;
+		return LASSO_PROFILE_ERROR_FEDERATION_NOT_FOUND;
 	}
 	identity->is_dirty = TRUE;
 	return 0;
@@ -184,8 +185,8 @@ lasso_identity_get_offerings(LassoIdentity *identity, const char *service_type)
 	while (iter) {
 		t = iter->data;
 		iter = g_list_next(iter);
-		if (service_type == NULL || strcmp(
-					t->ServiceInstance->ServiceType, service_type) == 0) {
+		if (service_type == NULL || (t->ServiceInstance && strcmp(
+					t->ServiceInstance->ServiceType, service_type) == 0)) {
 			result = g_list_append(result, g_object_ref(t));
 		}
 	}

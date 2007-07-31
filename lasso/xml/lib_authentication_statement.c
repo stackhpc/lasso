@@ -1,4 +1,4 @@
-/* $Id: lib_authentication_statement.c,v 1.25 2005/04/25 14:25:03 fpeters Exp $
+/* $Id: lib_authentication_statement.c,v 1.26 2006/12/28 10:56:13 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -156,10 +156,11 @@ lasso_lib_authentication_statement_new_full(const char *authenticationMethod,
 	statement = g_object_new(LASSO_TYPE_LIB_AUTHENTICATION_STATEMENT, NULL);
 	statement->AuthenticationMethod = g_strdup(authenticationMethod);
 
-	if (authenticationInstant == NULL)
+	if (authenticationInstant == NULL) {
 		time = lasso_get_current_time();
-	else
+	} else {
 		time = g_strdup(authenticationInstant);
+	}
 
 	statement->AuthenticationInstant = time;
 

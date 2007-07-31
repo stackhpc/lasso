@@ -8,47 +8,53 @@ typedef struct {
 
 	/* inherited from Samlp2StatusResponse */
 #ifndef SWIGPHP4
-	%rename(issuer) *Issuer;
+	%rename(issuer) Issuer;
 #endif
 	%newobject *Issuer_get;
 	LassoSaml2NameID *Issuer;
 
 #ifndef SWIGPHP4
-	%rename(extensions) *Extensions;
+	%rename(extensions) Extensions;
 #endif
 	%newobject *Extensions_get;
 	LassoSamlp2Extensions *Extensions;
 
 #ifndef SWIGPHP4
-	%rename(status) *Status;
+	%rename(status) Status;
 #endif
 	%newobject *Status_get;
 	LassoSamlp2Status *Status;
 
 #ifndef SWIGPHP4
-	%rename(iD) *ID;
+	%rename(iD) ID;
 #endif
 	char *ID;
 #ifndef SWIGPHP4
-	%rename(inResponseTo) *InResponseTo;
+	%rename(inResponseTo) InResponseTo;
 #endif
 	char *InResponseTo;
 #ifndef SWIGPHP4
-	%rename(version) *Version;
+	%rename(version) Version;
 #endif
 	char *Version;
 #ifndef SWIGPHP4
-	%rename(issueInstant) *IssueInstant;
+	%rename(issueInstant) IssueInstant;
 #endif
 	char *IssueInstant;
 #ifndef SWIGPHP4
-	%rename(destination) *Destination;
+	%rename(destination) Destination;
 #endif
 	char *Destination;
 #ifndef SWIGPHP4
-	%rename(consent) *Consent;
+	%rename(consent) Consent;
 #endif
 	char *Consent;
+
+#ifndef SWIGPHP4
+	%rename(assertion) Assertion;
+#endif
+	%newobject Assertion_get;
+	LassoNodeList *Assertion;
 
 	/* Constructor, Destructor & Static Methods */
 	LassoSamlp2Response();
@@ -134,6 +140,14 @@ typedef struct {
 
 #define LassoSamlp2Response_set_Consent(self,value) set_string(&LASSO_SAMLP2_STATUS_RESPONSE(self)->Consent, (value))
 #define LassoSamlp2Response_Consent_set(self,value) set_string(&LASSO_SAMLP2_STATUS_RESPONSE(self)->Consent, (value))
+
+
+/* Assertion */
+
+#define LassoSamlp2Response_get_Assertion(self) get_node_list((self)->Assertion)
+#define LassoSamlp2Response_Assertion_get(self) get_node_list((self)->Assertion)
+#define LassoSamlp2Response_set_Assertion(self, value) set_node_list(&(self)->Assertion, (value))
+#define LassoSamlp2Response_Assertion_set(self, value) set_node_list(&(self)->Assertion, (value))
 
 
 /* Constructors, destructors & static methods implementations */

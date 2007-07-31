@@ -1,6 +1,6 @@
 /* -*- Mode: c; c-basic-offset: 8 -*-
  *
- * $Id: Lasso.i,v 1.216 2006/03/06 16:58:46 fpeters Exp $
+ * $Id: Lasso.i,v 1.246 2007/01/03 23:17:52 fpeters Exp $
  *
  * SWIG bindings for Lasso Library
  *
@@ -43,7 +43,6 @@
 #ifndef SWIGPHP4
 %rename(SAML2_SUPPORT) LASSO_SAML2_SUPPORT;
 #endif
-%include Lasso-saml2.i
 
 %{
 
@@ -202,10 +201,10 @@ static void throw_exception_msg(int errorCode) {
 	if (errorCode > 0) {
 		sprintf(errorMsg, "%d / Lasso Warning: %s", errorCode, lasso_strerror(errorCode));
 		zend_error(E_WARNING, errorMsg);
-        } else {
+	} else {
 		sprintf(errorMsg, "%d / Lasso Error: %s", errorCode, lasso_strerror(errorCode));
 		zend_error(E_ERROR, errorMsg);
-        }
+	}
 }
 
 %}
@@ -446,7 +445,7 @@ DowncastableNode *downcast_node(LassoNode *node); // FIXME: Replace with LassoNo
   }
 %}
 
-%typemap(javadestruct, methodname="delete") NODE_SUBCLASS {
+%typemap(javadestruct, methodname="delete", methodmodifiers="public") NODE_SUBCLASS {
   super.delete();
 }
 
@@ -493,10 +492,17 @@ typedef struct {
 
 DowncastableNode *downcast_node(LassoNode *node); // FIXME: Replace with LassoNode.
 
+#if SWIG_VERSION < 0x010330
 %typemap(javaout) NODE_SUPERCLASS * {
 	long cPtr = $jnicall;
 	return (cPtr == 0) ? null : ($javaclassname) lassoJNI.downcast_node(cPtr);
 }
+#else
+%typemap(javaout) NODE_SUPERCLASS * {
+	long cPtr = $jnicall;
+	return (cPtr == 0) ? null : ($javaclassname) lassoJNI.downcast_node(cPtr, null);
+}
+#endif
 
 %apply NODE_SUPERCLASS * {LassoNode *, LassoSamlpRequestAbstract *,
 		LassoSamlpResponseAbstract *};
@@ -515,7 +521,7 @@ typedef struct node_info {
 	char *name;
 	struct node_info *super;
 	swig_type_info *swig;
-#ifdef PHP_VERSION
+#if defined(PHP_VERSION) && ! defined(PHP_VERSION_ID)
 	zend_class_entry *php;
 #endif
 } node_info;
@@ -547,7 +553,7 @@ static node_info *get_node_info_with_swig(swig_type_info *swig) {
 	return NULL;
 }
 
-#ifdef PHP_VERSION
+#if defined(PHP_VERSION) && ! defined(PHP_VERSION_ID)
 static void set_node_info(node_info *info, char *name, char *superName, swig_type_info *swig,
 			  zend_class_entry *php) {
 #else
@@ -570,7 +576,7 @@ static void set_node_info(node_info *info, char *name, char *superName, swig_typ
 	}
 	info->super = super;
 	info->swig = swig;
-#ifdef PHP_VERSION
+#if defined(PHP_VERSION) && ! defined(PHP_VERSION_ID)
 	info->php = php;
 #endif
 }
@@ -592,7 +598,7 @@ static void set_node_info(node_info *info, char *name, char *superName, swig_typ
 		SWIG_croak("Type error in argument $argnum of $symname. Expected $1_mangle");
 	}
 #else
-#ifdef SWIGPHP4
+#if defined(SWIGPHP4) || defined(SWIGPHP5)
 	if ((*$input)->type == IS_NULL) {
 		$1=0;
 	} else {
@@ -677,7 +683,7 @@ SET_NODE_INFO(Node, DowncastableNode)
 	node_info *info;
 
 	info = node_infos;
-#ifdef PHP_VERSION
+#if defined(PHP_VERSION) && ! defined(PHP_VERSION_ID)
 	set_node_info(info++, "LassoNode", NULL, SWIGTYPE_p_LassoNode, &ce_swig_LassoNode);
 #define SET_NODE_INFO(className, superClassName)\
 	set_node_info(info++, "Lasso"#className, "Lasso"#superClassName,\
@@ -877,6 +883,7 @@ typedef enum {
 %rename(REQUEST_TYPE_DST_QUERY) LASSO_REQUEST_TYPE_DST_QUERY;
 %rename(REQUEST_TYPE_DST_MODIFY) LASSO_REQUEST_TYPE_DST_MODIFY;
 %rename(REQUEST_TYPE_SASL_REQUEST) LASSO_REQUEST_TYPE_SASL_REQUEST;
+%rename(REQUEST_TYPE_NAME_ID_MANAGEMENT) LASSO_REQUEST_TYPE_NAME_ID_MANAGEMENT;
 %rename(RequestType) LassoRequestType;
 #endif
 typedef enum {
@@ -892,6 +899,7 @@ typedef enum {
 	LASSO_REQUEST_TYPE_DST_QUERY = 9,
 	LASSO_REQUEST_TYPE_DST_MODIFY = 10,
 	LASSO_REQUEST_TYPE_SASL_REQUEST = 11,
+	LASSO_REQUEST_TYPE_NAME_ID_MANAGEMENT = 12,
 } LassoRequestType;
 
 /* lib:AuthnContextClassRef */
@@ -1001,6 +1009,34 @@ typedef enum {
 	LASSO_SIGNATURE_METHOD_DSA_SHA1
 } LassoSignatureMethod;
 
+/* Encryption mode */
+#ifndef SWIGPHP4
+%rename(ENCRYPTION_MODE_NONE) LASSO_ENCRYPTION_MODE_NONE;
+%rename(ENCRYPTION_MODE_NAMEID) LASSO_ENCRYPTION_MODE_NAMEID;
+%rename(ENCRYPTION_MODE_ASSERTION) LASSO_ENCRYPTION_MODE_ASSERTION;
+%rename(EncryptionMode) LassoEncryptionMode;
+#endif
+typedef enum {
+	LASSO_ENCRYPTION_MODE_NONE,
+	LASSO_ENCRYPTION_MODE_NAMEID,
+	LASSO_ENCRYPTION_MODE_ASSERTION
+} LassoEncryptionMode;
+
+
+/* Encryption symetric key type */
+#ifndef SWIGPHP4
+%rename(ENCRYPTION_SYM_KEY_TYPE_DEFAULT) LASSO_ENCRYPTION_SYM_KEY_TYPE_DEFAULT;
+%rename(ENCRYPTION_SYM_KEY_TYPE_AES_256) LASSO_ENCRYPTION_SYM_KEY_TYPE_AES_256;
+%rename(ENCRYPTION_SYM_KEY_TYPE_AES_128) LASSO_ENCRYPTION_SYM_KEY_TYPE_AES_128;
+%rename(ENCRYPTION_SYM_KEY_TYPE_3DES) LASSO_ENCRYPTION_SYM_KEY_TYPE_3DES;
+#endif
+typedef enum {
+	LASSO_ENCRYPTION_SYM_KEY_TYPE_DEFAULT,
+	LASSO_ENCRYPTION_SYM_KEY_TYPE_AES_256,
+	LASSO_ENCRYPTION_SYM_KEY_TYPE_AES_128,
+	LASSO_ENCRYPTION_SYM_KEY_TYPE_3DES
+} LassoEncryptionSymKeyType;
+
 
 /***********************************************************************
  * Errors
@@ -1019,6 +1055,8 @@ typedef enum {
 %rename(XML_ERROR_NODE_CONTENT_NOT_FOUND) LASSO_XML_ERROR_NODE_CONTENT_NOT_FOUND;
 %rename(XML_ERROR_ATTR_NOT_FOUND) LASSO_XML_ERROR_ATTR_NOT_FOUND;
 %rename(XML_ERROR_ATTR_VALUE_NOT_FOUND) LASSO_XML_ERROR_ATTR_VALUE_NOT_FOUND;
+%rename(FILE_ERROR_INVALID_FILE) LASSO_FILE_ERROR_INVALID_FILE;
+%rename(_XML_ERROR_OBJECT_CONSTRUCTION_FAILED) %LASSO_XML_ERROR_OBJECT_CONSTRUCTION_FAILED;
 #endif
 
 /* XMLDSig */
@@ -1037,18 +1075,24 @@ typedef enum {
 %rename(DS_ERROR_CA_CERT_CHAIN_LOAD_FAILED) LASSO_DS_ERROR_CA_CERT_CHAIN_LOAD_FAILED;
 %rename(DS_ERROR_INVALID_SIGALG) LASSO_DS_ERROR_INVALID_SIGALG;
 %rename(DS_ERROR_DIGEST_COMPUTE_FAILED) LASSO_DS_ERROR_DIGEST_COMPUTE_FAILED;
+%rename(DS_ERROR_SIGNATURE_TEMPLATE_NOT_FOUND) LASSO_DS_ERROR_SIGNATURE_TEMPLATE_NOT_FOUND;
 #endif
 
 /* Server */
 #ifndef SWIGPHP4
 %rename(SERVER_ERROR_PROVIDER_NOT_FOUND) LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND;
 %rename(SERVER_ERROR_ADD_PROVIDER_FAILED) LASSO_SERVER_ERROR_ADD_PROVIDER_FAILED;
+%rename(SERVER_ERROR_ADD_PROVIDER_PROTOCOL_MISMATCH) \
+		LASSO_SERVER_ERROR_ADD_PROVIDER_PROTOCOL_MISMATCH;
+%rename(SERVER_ERROR_SET_ENCRYPTION_PRIVATE_KEY_FAILED) LASSO_SERVER_ERROR_SET_ENCRYPTION_PRIVATE_KEY_FAILED;
 #endif
 
 /* Single Logout */
 #ifndef SWIGPHP4
 %rename(LOGOUT_ERROR_UNSUPPORTED_PROFILE) LASSO_LOGOUT_ERROR_UNSUPPORTED_PROFILE;
 %rename(LOGOUT_ERROR_REQUEST_DENIED) LASSO_LOGOUT_ERROR_REQUEST_DENIED;
+%rename(LOGOUT_ERROR_FEDERATION_NOT_FOUND) LASSO_LOGOUT_ERROR_FEDERATION_NOT_FOUND;
+%rename(LOGOUT_ERROR_UNKNOWN_PRINCIPAL) LASSO_LOGOUT_ERROR_UNKNOWN_PRINCIPAL;
 #endif
 
 /* Profile */
@@ -1073,6 +1117,19 @@ typedef enum {
 %rename(PROFILE_ERROR_SESSION_NOT_FOUND) LASSO_PROFILE_ERROR_SESSION_NOT_FOUND;
 %rename(PROFILE_ERROR_BAD_IDENTITY_DUMP) LASSO_PROFILE_ERROR_BAD_IDENTITY_DUMP;
 %rename(PROFILE_ERROR_BAD_SESSION_DUMP) LASSO_PROFILE_ERROR_BAD_SESSION_DUMP;
+%rename(PROFILE_ERROR_MISSING_RESPONSE) LASSO_PROFILE_ERROR_MISSING_RESPONSE;
+%rename(PROFILE_ERROR_MISSING_STATUS_CODE) LASSO_PROFILE_ERROR_MISSING_STATUS_CODE;
+%rename(PROFILE_ERROR_MISSING_ARTIFACT) LASSO_PROFILE_ERROR_MISSING_ARTIFACT;
+%rename(PROFILE_ERROR_MISSING_RESOURCE_OFFERING) LASSO_PROFILE_ERROR_MISSING_RESOURCE_OFFERING;
+%rename(PROFILE_ERROR_MISSING_SERVICE_DESCRIPTION) LASSO_PROFILE_ERROR_MISSING_SERVICE_DESCRIPTION;
+%rename(PROFILE_ERROR_MISSING_SERVICE_TYPE) LASSO_PROFILE_ERROR_MISSING_SERVICE_TYPE;
+%rename(PROFILE_ERROR_MISSING_ASSERTION) LASSO_PROFILE_ERROR_MISSING_ASSERTION;
+%rename(PROFILE_ERROR_MISSING_SUBJECT) LASSO_PROFILE_ERROR_MISSING_SUBJECT;
+%rename(PROFILE_ERROR_MISSING_NAME_IDENTIFIER) LASSO_PROFILE_ERROR_MISSING_NAME_IDENTIFIER;
+%rename(PROFILE_ERROR_INVALID_ARTIFACT) LASSO_PROFILE_ERROR_INVALID_ARTIFACT;
+%rename(PROFILE_ERROR_MISSING_ENCRYPTION_PRIVATE_KEY) \
+		LASSO_PROFILE_ERROR_MISSING_ENCRYPTION_PRIVATE_KEY;
+%rename(PROFILE_ERROR_STATUS_NOT_SUCCESS) LASSO_PROFILE_ERROR_STATUS_NOT_SUCCESS;
 #endif
 
 /* functions/methods parameters checking */
@@ -1092,11 +1149,28 @@ typedef enum {
 %rename(LOGIN_ERROR_UNSIGNED_AUTHN_REQUEST) LASSO_LOGIN_ERROR_UNSIGNED_AUTHN_REQUEST;
 %rename(LOGIN_ERROR_STATUS_NOT_SUCCESS) LASSO_LOGIN_ERROR_STATUS_NOT_SUCCESS;
 %rename(LOGIN_ERROR_UNKNOWN_PRINCIPAL) LASSO_LOGIN_ERROR_UNKNOWN_PRINCIPAL;
+%rename(LOGIN_ERROR_NO_DEFAULT_ENDPOINT) LASSO_LOGIN_ERROR_NO_DEFAULT_ENDPOINT;
+%rename(LOGIN_ERROR_ASSERTION_REPLAY) LASSO_LOGIN_ERROR_ASSERTION_REPLAY;
 #endif
 
 /* Federation Termination Notification */
 #ifndef SWIGPHP4
 %rename(DEFEDERATION_ERROR_MISSING_NAME_IDENTIFIER) LASSO_DEFEDERATION_ERROR_MISSING_NAME_IDENTIFIER;
+#endif
+
+/* Soap */
+#ifndef SWIGPHP4
+%rename(SOAP_FAULT_REDIRECT_REQUEST) LASSO_SOAP_FAULT_REDIRECT_REQUEST;
+#endif
+
+/* Name Identifier Mapping */
+#ifndef SWIGPHP4
+%rename(NAME_IDENTIFIER_MAPPING_ERROR_MISSING_TARGET_NAMESPACE) \
+		LASSO_NAME_IDENTIFIER_MAPPING_ERROR_MISSING_TARGET_NAMESPACE;
+%rename(NAME_IDENTIFIER_MAPPING_ERROR_FORBIDDEN_CALL_ON_THIS_SIDE) \
+		LASSO_NAME_IDENTIFIER_MAPPING_ERROR_FORBIDDEN_CALL_ON_THIS_SIDE;
+%rename(NAME_IDENTIFIER_MAPPING_ERROR_MISSING_TARGET_IDENTIFIER) \
+		LASSO_NAME_IDENTIFIER_MAPPING_ERROR_MISSING_TARGET_IDENTIFIER;
 #endif
 
 #ifndef SWIGPHP4
@@ -1140,9 +1214,9 @@ int lasso_shutdown(void);
 %rename(CheckVersionMode) LassoCheckVersionMode;
 #endif
 typedef enum {
-        LASSO_CHECK_VERSION_EXACT = 0,
-        LASSO_CHECK_VERSIONABI_COMPATIBLE,
-        LASSO_CHECK_VERSION_NUMERIC
+	LASSO_CHECK_VERSION_EXACT = 0,
+	LASSO_CHECK_VERSIONABI_COMPATIBLE,
+	LASSO_CHECK_VERSION_NUMERIC
 } LassoCheckVersionMode;
 
 #ifndef SWIGPHP4
@@ -1166,7 +1240,7 @@ void lasso_register_dst_service(const char *prefix, const char *href);
 
 static void add_key_to_array(char *key, gpointer pointer, GPtrArray *array)
 {
-        g_ptr_array_add(array, g_strdup(key));
+	g_ptr_array_add(array, g_strdup(key));
 }
 
 static void add_node_to_array(gpointer node, GPtrArray *array)
@@ -1174,7 +1248,7 @@ static void add_node_to_array(gpointer node, GPtrArray *array)
 	if (node != NULL) {
 		g_object_ref(node);
 	}
-        g_ptr_array_add(array, node);
+	g_ptr_array_add(array, node);
 }
 
 static void add_string_to_array(char *string, GPtrArray *array)
@@ -1182,7 +1256,7 @@ static void add_string_to_array(char *string, GPtrArray *array)
 	if (string != NULL) {
 		string = g_strdup(string);
 	}
-        g_ptr_array_add(array, string);
+	g_ptr_array_add(array, string);
 }
 
 static void add_xml_to_array(xmlNode *xmlnode, GPtrArray *array)
@@ -1466,22 +1540,22 @@ static void set_xml_string(xmlNode **xmlnode, const char* string)
 #else /* ifdef SWIGCSHARP */
 #ifdef SWIGJAVA
 %pragma(java) jniclasscode=%{
-  static {
-    try {
-      // Load a library whose "core" name is "jlasso".
-      // Operating system specific stuff will be added to make an
-      // actual filename from this: Under Unix this will become
-      // libjlasso.so while under Windows it will likely become
-      // something like jlasso.dll.
-      System.loadLibrary("jlasso");
-    }
-    catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. \n" + e);
-      System.exit(1);
-    }
-    // Initialize Lasso.
-    init();
-  }
+	static {
+		try {
+			// Load a library whose "core" name is "jlasso".
+			// Operating system specific stuff will be added to make an
+			// actual filename from this: Under Unix this will become
+			// libjlasso.so while under Windows it will likely become
+			// something like jlasso.dll.
+			System.loadLibrary("jlasso");
+		}
+		catch (UnsatisfiedLinkError e) {
+			System.err.println("Native code library failed to load. \n" + e);
+			System.exit(1);
+		}
+		// Initialize Lasso.
+		init();
+	}
 %}
 #else /* ifdef SWIGJAVA */
 
@@ -4972,6 +5046,12 @@ typedef struct {
 	gboolean hasProtocolProfile(LassoMdProtocolType protocol_type, char *protocol_profile);
 
 	LassoProtocolConformance getProtocolConformance();
+
+	%newobject setEncryptionMode;
+	void setEncryptionMode(LassoEncryptionMode encryption_mode);
+
+	%newobject setEncryptionSymKeyType;
+	void setEncryptionSymKeyType(LassoEncryptionSymKeyType encryption_sym_key_type);
 }
 
 %{
@@ -4996,7 +5076,8 @@ typedef struct {
 #define LassoProvider_getProtocolConformance lasso_provider_get_protocol_conformance
 #define LassoProvider_hasProtocolProfile lasso_provider_has_protocol_profile
 #define LassoProvider_getOrganization(self) get_xml_string(lasso_provider_get_organization(self))
-
+#define LassoProvider_setEncryptionMode lasso_provider_set_encryption_mode
+#define LassoProvider_setEncryptionSymKeyType lasso_provider_set_encryption_sym_key_type
 
 %}
 
@@ -5104,6 +5185,14 @@ typedef struct {
 			char *caCertChain = NULL);
 	END_THROW_ERROR()
 
+	THROW_ERROR()
+	int setEncryptionPrivateKey(char *filename);
+	END_THROW_ERROR()
+
+	THROW_ERROR()
+	int loadAffiliation(char *filename);
+	END_THROW_ERROR()
+
 #ifdef LASSO_WSF_ENABLED
 	THROW_ERROR()
 	int addService(LassoDiscoServiceInstance *service);
@@ -5188,6 +5277,8 @@ LassoStringList *LassoServer_providerIds_get(LassoServer *self) {
 #define LassoServer_dump lasso_server_dump
 #define LassoServer_getProvider lasso_server_get_provider
 #define LassoServer_getService lasso_server_get_service
+#define LassoServer_setEncryptionPrivateKey lasso_server_set_encryption_private_key
+#define LassoServer_loadAffiliation lasso_server_load_affiliation
 
 %}
 
@@ -5350,6 +5441,9 @@ LassoStringList *LassoIdentity_providerIds_get(LassoIdentity *self) {
 #define LassoIdentity_getFederation lasso_identity_get_federation
 
 #ifdef LASSO_WSF_ENABLED
+
+#include <lasso/id-wsf/identity.h>
+
 #define LassoIdentity_addResourceOffering lasso_identity_add_resource_offering
 #define LassoIdentity_removeResourceOffering lasso_identity_remove_resource_offering
 
@@ -5441,7 +5535,6 @@ LassoNodeList *LassoSession_getAssertions(LassoSession *self, char *providerId) 
 	assertionsList = lasso_session_get_assertions(self, providerId);
 	if (assertionsList) {
 		assertionsArray = get_node_list(assertionsList);
-		g_list_foreach(assertionsList, (GFunc) free_node_list_item, NULL);
 		g_list_free(assertionsList);
 	} else {
 		assertionsArray = NULL;
@@ -5534,7 +5627,7 @@ typedef struct {
 
 	/* Methods inherited from Profile */
 
-        THROW_ERROR()
+	THROW_ERROR()
 	int setIdentityFromDump(char *dump);
 	END_THROW_ERROR()
 
@@ -5733,7 +5826,7 @@ typedef struct {
 
 	/* Methods inherited from Profile */
 
-        THROW_ERROR()
+	THROW_ERROR()
 	int setIdentityFromDump(char *dump);
 	END_THROW_ERROR()
 
@@ -5823,6 +5916,10 @@ typedef struct {
 	THROW_ERROR()
 	int validateRequestMsg(gboolean authenticationResult, gboolean isConsentObtained);
 	END_THROW_ERROR()
+
+	THROW_ERROR()
+	int processPaosResponseMsg(gchar *msg);
+	END_THROW_ERROR()
 }
 
 %{
@@ -5860,6 +5957,8 @@ typedef struct {
 /* msgRelayState */
 #define LassoLogin_get_msgRelayState(self) LASSO_PROFILE(self)->msg_relayState
 #define LassoLogin_msgRelayState_get(self) LASSO_PROFILE(self)->msg_relayState
+#define LassoLogin_set_msgRelayState(self, value) set_string(&LASSO_PROFILE(self)->msg_relayState, (value))
+#define LassoLogin_msgRelayState_set(self, value) set_string(&LASSO_PROFILE(self)->msg_relayState, (value))
 
 /* msgUrl */
 #define LassoLogin_get_msgUrl(self) LASSO_PROFILE(self)->msg_url
@@ -5939,6 +6038,7 @@ int LassoLogin_setSessionFromDump(LassoLogin *self, char *dump) {
 #define LassoLogin_setEncryptedResourceId lasso_login_set_encryptedResourceId 
 #define LassoLogin_setResourceId lasso_login_set_resourceId
 #define LassoLogin_validateRequestMsg lasso_login_validate_request_msg
+#define LassoLogin_processPaosResponseMsg lasso_login_process_paos_response_msg
 
 %}
 
@@ -6006,7 +6106,7 @@ typedef struct {
 
 	/* Methods inherited from Profile */
 
-        THROW_ERROR()
+	THROW_ERROR()
 	int setIdentityFromDump(char *dump);
 	END_THROW_ERROR()
 
@@ -6222,7 +6322,7 @@ typedef struct {
 
 	/* Methods inherited from Profile */
 
-        THROW_ERROR()
+	THROW_ERROR()
 	int setIdentityFromDump(char *dump);
 	END_THROW_ERROR()
 
@@ -6477,7 +6577,7 @@ typedef struct {
 
 	/* Methods inherited from Profile */
 
-        THROW_ERROR()
+	THROW_ERROR()
 	int setIdentityFromDump(char *dump);
 	END_THROW_ERROR()
 
@@ -6683,7 +6783,7 @@ typedef struct {
 
 	/* Methods inherited from Profile */
 
-        THROW_ERROR()
+	THROW_ERROR()
 	int setIdentityFromDump(char *dump);
 	END_THROW_ERROR()
 
@@ -6838,5 +6938,6 @@ int LassoNameRegistration_setSessionFromDump(LassoNameRegistration *self, char *
 %include Lasso-wsf.i
 #endif
 
+%include Lasso-saml2.i
 %include saml-2.0/main.h
 

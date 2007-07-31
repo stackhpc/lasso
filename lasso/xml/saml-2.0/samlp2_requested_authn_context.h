@@ -1,4 +1,4 @@
-/* $Id: samlp2_requested_authn_context.h,v 1.2 2005/11/21 18:51:52 fpeters Exp $ 
+/* $Id: samlp2_requested_authn_context.h,v 1.4 2006/12/16 09:47:16 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -55,8 +55,8 @@ struct _LassoSamlp2RequestedAuthnContext {
 
 	/*< public >*/
 	/* elements */
-	char *AuthnContextClassRef;
-	char *AuthnContextDeclRef;
+	GList *AuthnContextClassRef; /* of strings */
+	GList *AuthnContextDeclRef; /* of strings */
 	/* attributes */
 	char *Comparison;
 };

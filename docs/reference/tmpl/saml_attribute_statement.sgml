@@ -2,7 +2,7 @@
 LassoSamlAttributeStatement
 
 <!-- ##### SECTION Short_Description ##### -->
-
+&lt;saml:AttributeStatement&gt;
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>

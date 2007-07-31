@@ -1,4 +1,4 @@
-/* $Id: personal_profile_service.c,v 1.23 2005/10/06 15:01:01 nclapies Exp $
+/* $Id: personal_profile_service.c,v 1.24 2006/12/28 10:56:13 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -51,8 +51,7 @@ lasso_personal_profile_service_get_email(LassoPersonalProfileService *service)
 
 		if (strcmp((char *)child->name, "MsgAccount") == 0) {
 			msgAccount = xmlNodeGetContent(child);
-		}
-		else if (strcmp((char *)child->name, "MsgProvider") == 0) {
+		} else if (strcmp((char *)child->name, "MsgProvider") == 0) {
 			msgProvider = xmlNodeGetContent(child);
 		}
 				

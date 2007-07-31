@@ -1,4 +1,4 @@
-/* $Id: data_service.c,v 1.21 2005/12/06 13:22:08 nclapies Exp $
+/* $Id: data_service.c,v 1.33 2007/01/05 11:40:10 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -61,6 +61,7 @@ lasso_data_service_add_credential(LassoDataService *service,
 	service->private_data->credentials = g_list_append(
 		service->private_data->credentials,
 		g_object_ref(assertion));
+	return 0;
 }
 
 LassoDstModification*
@@ -126,12 +127,7 @@ lasso_data_service_add_query_item(LassoDataService *service,
 gint
 lasso_data_service_need_redirect_user(LassoDataService *service, const char *redirectUrl)
 {
-	LassoWsfProfile *profile;
-	LassoSoapBody *body;
-	LassoSoapFault *fault;
-	LassoUtilityStatus *status;
 	LassoSoapDetail *detail;
-	GList *iter;
 
 	/* Find a SOAP fault element */
 	service->private_data->fault = lasso_soap_fault_new();
@@ -176,14 +172,22 @@ lasso_data_service_init_query(LassoDataService *service, const char *select,
 		query = lasso_dst_query_new(NULL);
 	}
 	profile->request = LASSO_NODE(query);
-	
+
+	if (service == NULL || service->private_data == NULL
+			|| service->private_data->offering == NULL) {
+		return LASSO_PROFILE_ERROR_MISSING_RESOURCE_OFFERING;
+	}
 	offering = service->private_data->offering;
 
+	if (offering->ServiceInstance == NULL
+			|| offering->ServiceInstance->ServiceType == NULL) {
+		return LASSO_PROFILE_ERROR_MISSING_SERVICE_TYPE;
+	}
 	query->hrefServiceType = g_strdup(offering->ServiceInstance->ServiceType);
 	query->prefixServiceType = lasso_get_prefix_for_dst_service_href(
 		query->hrefServiceType);
 	if (query->prefixServiceType == NULL) {
-		return LASSO_ERROR_UNDEFINED;
+		return LASSO_PROFILE_ERROR_MISSING_SERVICE_TYPE;
 	}
 
 	if (offering->ResourceID) {
@@ -197,13 +201,15 @@ lasso_data_service_init_query(LassoDataService *service, const char *select,
 
 	lasso_wsf_profile_init_soap_request(LASSO_WSF_PROFILE(service), LASSO_NODE(query));
 
-	if (!security_mech_id)
+	if (security_mech_id == NULL) {
 		description = LASSO_DISCO_DESCRIPTION(offering->ServiceInstance->Description->data);
-	else {
+	} else {
 		description = lasso_discovery_get_description_auto(offering, security_mech_id);
 	}
-	if (!description)
-		return -1;
+
+	if (description == NULL) {
+		return LASSO_PROFILE_ERROR_MISSING_SERVICE_DESCRIPTION;
+	}
 	lasso_wsf_profile_set_description(LASSO_WSF_PROFILE(service), description);
 
 	if (description->Endpoint != NULL) {
@@ -215,16 +221,16 @@ lasso_data_service_init_query(LassoDataService *service, const char *select,
 
 	/* Added needed credential for remote service */
 	if (description->CredentialRef) {
-			char *credentialRef = description->CredentialRef->data;
-			iter = service->private_data->credentials;
-			while (iter) {
-				LassoSamlAssertion *credential = LASSO_SAML_ASSERTION(
-					iter->data);
-				if (strcmp(credentialRef, credential->AssertionID) == 0)
-				  //lasso_wsf_profile_add_saml_authentication(
-				  //	LASSO_WSF_PROFILE(service), credential);
+		char *credentialRef = description->CredentialRef->data;
+		iter = service->private_data->credentials;
+		while (iter) {
+			LassoSamlAssertion *credential = LASSO_SAML_ASSERTION(iter->data);
+			if (strcmp(credentialRef, credential->AssertionID) == 0) {
+				//lasso_wsf_profile_add_saml_authentication(
+				//	LASSO_WSF_PROFILE(service), credential);
 				iter = iter->next;
 			}
+		}
 	}
 
 	return 0;
@@ -246,6 +252,11 @@ lasso_data_service_get_redirect_request_url(LassoDataService *service)
 	LassoIsRedirectRequest *redirect_request = NULL;
 	GList *iter;
 
+	if (LASSO_WSF_PROFILE(service)->soap_envelope_response == NULL ||
+			LASSO_WSF_PROFILE(service)->soap_envelope_response->Body == NULL) {
+		return NULL;
+	}
+
 	iter = LASSO_WSF_PROFILE(service)->soap_envelope_response->Body->any;
 	while (iter) {
 		if (LASSO_IS_SOAP_FAULT(iter->data) == TRUE) {
@@ -254,7 +265,7 @@ lasso_data_service_get_redirect_request_url(LassoDataService *service)
 		}
 		iter = iter->next;
 	}
-	if (!fault)
+	if (fault == NULL || fault->Detail == NULL)
 		return NULL;
 
 	iter = fault->Detail->any;
@@ -263,9 +274,9 @@ lasso_data_service_get_redirect_request_url(LassoDataService *service)
 			redirect_request = LASSO_IS_REDIRECT_REQUEST(iter->data);
 			break;
 		}
-		iter = iter->next;
+		iter = g_list_next(iter);
 	}
-	if (!redirect_request)
+	if (redirect_request == NULL)
 		return NULL;
 
 	return g_strdup(redirect_request->redirectURL);
@@ -289,38 +300,59 @@ lasso_data_service_process_query_msg(LassoDataService *service, const char *mess
 	LassoWsfProfile *profile;
 	int rc;
 	gchar *service_type;
+	GList *node_list;
+	LassoSoapEnvelope *envelope;
+	LassoDstQuery *request;
+	xmlDoc *doc;
+	xmlNode *xmlnode;
 
 	/* FIXME: another way to get the service type ? */
-	{
-		LassoSoapEnvelope *envelope;
-		LassoDstQuery *request;
-		xmlDoc *doc;
-		doc = xmlParseMemory(message, strlen(message));
-		xmlNode *xmlnode = xmlSecFindNode(xmlDocGetRootElement(doc), xmlSecNodeSignature,
-						  xmlSecDSigNs);
-		if (xmlnode) {
-			xmlUnlinkNode(xmlnode);
-			xmlFreeNode(xmlnode);
-		}
-		envelope = LASSO_SOAP_ENVELOPE(
-			lasso_node_new_from_xmlNode(xmlDocGetRootElement(doc)));
-		request = LASSO_DST_QUERY(envelope->Body->any->data);
-		service_type = g_strdup(request->hrefServiceType);
-		xmlFreeDoc(doc);
+
+	g_return_val_if_fail(message != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
+
+	doc = xmlParseMemory(message, strlen(message));
+	if (doc == NULL) {
+		return critical_error(LASSO_PROFILE_ERROR_INVALID_MSG);
 	}
+	
+	xmlnode = xmlSecFindNode(xmlDocGetRootElement(doc), xmlSecNodeSignature,
+					  xmlSecDSigNs);
+	if (xmlnode) {
+		xmlUnlinkNode(xmlnode);
+		xmlFreeNode(xmlnode);
+		xmlnode = NULL;
+	}
+
+	envelope = LASSO_SOAP_ENVELOPE(
+		lasso_node_new_from_xmlNode(xmlDocGetRootElement(doc)));
+	request = LASSO_DST_QUERY(envelope->Body->any->data);
+	service_type = g_strdup(request->hrefServiceType);
+	xmlFreeDoc(doc);
 
 	profile = LASSO_WSF_PROFILE(service);
 	rc = lasso_wsf_profile_process_soap_request_msg(profile, message, service_type,
 							security_mech_id);
 	if (rc)
 		return rc;
-
+	
+	/* get provider id from soap:Header */
+	for (node_list = profile->soap_envelope_request->Header->Other;
+			node_list; node_list = g_list_next(node_list)) {
+		LassoNode *node = node_list->data;
+		if (LASSO_IS_SOAP_BINDING_PROVIDER(node)) {
+			if (service->provider_id)
+				g_free(service->provider_id);
+			service->provider_id = g_strdup(
+				LASSO_SOAP_BINDING_PROVIDER(node)->providerID);
+		}
+	}
+	
 	query = LASSO_DST_QUERY(profile->request);
-	if (query->ResourceID)
+	if (query->ResourceID) {
 		service->resource_id = g_object_ref(query->ResourceID);
-	else if (query->EncryptedResourceID)
+	} else if (query->EncryptedResourceID) {
 		service->encrypted_resource_id = g_object_ref(query->EncryptedResourceID);
-	else {
+	} else {
 		return LASSO_ERROR_UNIMPLEMENTED; /* implied ? */
 	}
 
@@ -367,9 +399,14 @@ lasso_data_service_build_modify_response_msg(LassoDataService *service) {
 			xmlNode *node = xpathObj->nodesetval->nodeTab[0];
 			xmlReplaceNode(node, newNode);
 		}
+		xmlXPathFreeObject(xpathObj);
+		xpathObj = NULL;
 
 		iter = g_list_next(iter);
 	}
+
+	xmlXPathFreeContext(xpathCtx);
+	xmlFreeDoc(doc);
 
 	return lasso_wsf_profile_build_soap_response_msg(profile);
 }
@@ -434,10 +471,13 @@ lasso_data_service_build_response_msg(LassoDataService *service)
 			}
 			response->Data = g_list_append(response->Data, data);
 		}
+		xmlXPathFreeObject(xpathObj);
+		xpathObj = NULL;
 		iter = g_list_next(iter);
 	}
 
 	xmlUnlinkNode(service->resource_data);
+	xmlXPathFreeContext(xpathCtx);
 	xmlFreeDoc(doc);
 
 	return lasso_wsf_profile_build_soap_response_msg(profile);
@@ -570,7 +610,6 @@ lasso_data_service_process_query_response_msg(LassoDataService *service,
 	const char *message)
 {
 	int rc;
-	LassoDstQueryResponse *response;
 	LassoSoapFault *fault = NULL;
 	LassoIsRedirectRequest *redirect_request = NULL;
 	GList *iter;
@@ -600,15 +639,6 @@ lasso_data_service_process_query_response_msg(LassoDataService *service,
 	}
 	if (redirect_request)
 		return LASSO_SOAP_FAULT_REDIRECT_REQUEST;
-
-	return 0;
-
-	/*if (! LASSO_IS_DST_QUERY_RESPONSE(LASSO_WSF_PROFILE(service)->response))
-		return LASSO_ERROR_UNDEFINED;
-
-	response = LASSO_DST_QUERY_RESPONSE(LASSO_WSF_PROFILE(service)->response);
-	if (response->Status == NULL || strcmp(response->Status->code, "OK") != 0)
-	return LASSO_ERROR_UNDEFINED;*/
 
 	return 0;
 }
@@ -643,19 +673,17 @@ lasso_data_service_init_modify(LassoDataService *service, const gchar *select,
 	
 	modify->hrefServiceType = g_strdup(offering->ServiceInstance->ServiceType);
 	modify->prefixServiceType = lasso_get_prefix_for_dst_service_href(
-		modify->hrefServiceType);
+			modify->hrefServiceType);
 	if (modify->prefixServiceType == NULL) {
-		return LASSO_ERROR_UNDEFINED;
+		return LASSO_DATA_SERVICE_ERROR_UNREGISTERED_DST;
 	}
 
 	/* get ResourceID / EncryptedResourceID */
 	if (offering->ResourceID) {
 		modify->ResourceID = offering->ResourceID;
-	}
-	else if (offering->EncryptedResourceID) {
+	} else if (offering->EncryptedResourceID) {
 	  modify->EncryptedResourceID = offering->EncryptedResourceID;
-	}
-	else {
+	} else {
 		/* XXX: no resource id, implied:resource, etc. */
 		return LASSO_ERROR_UNIMPLEMENTED;
 	}
@@ -691,11 +719,11 @@ lasso_data_service_process_modify_msg(LassoDataService *service,
 	}
 
 	modify = LASSO_DST_MODIFY(profile->request);
-	if (modify->ResourceID)
+	if (modify->ResourceID) {
 		service->resource_id = g_object_ref(modify->ResourceID);
-	else if (modify->EncryptedResourceID)
+	} else if (modify->EncryptedResourceID) {
 		service->encrypted_resource_id = g_object_ref(modify->EncryptedResourceID);
-	else {
+	} else {
 		return LASSO_ERROR_UNIMPLEMENTED; /* implied ? */
 	}
 
@@ -707,8 +735,9 @@ lasso_data_service_process_modify_response_msg(LassoDataService *service, const 
 	LassoDstModifyResponse *response;
 	LassoSoapEnvelope *envelope;
 
-	g_return_val_if_fail(LASSO_IS_PROFILE_SERVICE(service), -1);
-	g_return_val_if_fail(soap_msg != NULL, -1);
+	g_return_val_if_fail(LASSO_IS_PROFILE_SERVICE(service),
+			LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
+	g_return_val_if_fail(soap_msg != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
 
 	envelope = LASSO_SOAP_ENVELOPE(lasso_node_new_from_dump(soap_msg));
 	LASSO_WSF_PROFILE(service)->soap_envelope_response = envelope;
@@ -745,6 +774,8 @@ dispose(GObject *object)
 
 	if (service->private_data->dispose_has_run == TRUE)
 		return;
+	g_free(service->provider_id);
+	service->provider_id = NULL;
 	service->private_data->dispose_has_run = TRUE;
 
 	G_OBJECT_CLASS(parent_class)->dispose(object);

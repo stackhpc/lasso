@@ -1,4 +1,4 @@
-/* $Id: saml_attribute_value.c,v 1.2 2005/01/27 23:41:05 eraviart Exp $
+/* $Id: saml_attribute_value.c,v 1.4 2006/10/09 10:09:25 fpeters Exp $
  *
  * Lasso - A free implementation of the Samlerty Alliance specifications.
  *

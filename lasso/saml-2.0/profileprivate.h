@@ -1,4 +1,4 @@
-/* $Id: profileprivate.h,v 1.1 2005/11/20 15:38:19 fpeters Exp $
+/* $Id: profileprivate.h,v 1.2 2006/11/23 17:44:26 dlaniel Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -38,6 +38,7 @@ int lasso_saml20_profile_init_artifact_resolve(LassoProfile *profile,
 int lasso_saml20_profile_process_artifact_resolve(LassoProfile *profile, const char *msg);
 int lasso_saml20_profile_build_artifact_response(LassoProfile *profile);
 int lasso_saml20_profile_process_artifact_response(LassoProfile *profile, const char *msg);
+gint lasso_saml20_profile_set_session_from_dump(LassoProfile *profile);
 
 #ifdef __cplusplus
 }

@@ -1,3 +1,24 @@
+lasso (2.0.0-1ubuntu1) gutsy; urgency=low
+
+  * Merge from debian unstable. Remaining changes:
+    + debian/control:
+      - Modify Maintainer value to match DebianMaintainerField spec.
+  * debian/rules:
+    + Add CC=gcc-4.2 to the configure call else configure won't find jni.h
+      from libgcj8-dev.
+  * configure{,.ac}:
+    + Add missing quotes around the value for PHP[45]_LIBS.
+
+ -- Michael Bienia <geser@ubuntu.com>  Tue, 31 Jul 2007 21:35:26 +0200
+
+lasso (2.0.0-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/control: removes php4-lasso since PHP4 is no longer provided.
+    (closes: #432422, #418268)
+
+ -- Frederic Peters <fpeters@debian.org>  Mon, 09 Jul 2007 22:55:58 +0200
+
 lasso (0.6.5-3ubuntu2) feisty; urgency=low
 
   * Don't build a php4 module anymore. 

@@ -1,4 +1,4 @@
-/* $Id: authentication.h,v 1.5 2005/04/01 07:57:25 nclapies Exp $ 
+/* $Id: authentication.h,v 1.6 2006/12/27 15:57:07 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -81,6 +81,8 @@ struct _LassoAuthenticationClass {
 LASSO_EXPORT GType lasso_authentication_get_type(void);
 
 LASSO_EXPORT LassoAuthentication* lasso_authentication_new(LassoServer *server);
+
+LASSO_EXPORT void lasso_authentication_destroy(LassoAuthentication *authentication);
 
 LASSO_EXPORT gint lasso_authentication_client_start(LassoAuthentication *authentication);
 

@@ -1,4 +1,4 @@
-/* $Id: ds_key_info.c,v 1.3 2005/12/06 13:30:12 nclapies Exp $
+/* $Id: ds_key_info.c,v 1.4 2007/01/06 22:55:01 fpeters Exp $
  *
  * Lasso - A free implementation of the Samlerty Alliance specifications.
  *
@@ -44,7 +44,7 @@ static struct XmlSnippet schema_snippets[] = {
 static void
 instance_init(LassoDsKeyInfo *node)
 {
-  node->KeyValue = NULL;
+	node->KeyValue = NULL;
 }
 
 static void

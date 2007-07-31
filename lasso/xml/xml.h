@@ -1,4 +1,4 @@
-/* $Id: xml.h,v 1.67 2005/09/11 09:08:31 fpeters Exp $ 
+/* $Id: xml.h,v 1.72 2006/11/16 14:34:57 dlaniel Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -37,6 +37,8 @@ extern "C" {
 
 #include <libxml/uri.h>
 #include <libxml/tree.h>
+
+#include <xmlsec/xmlenc.h>
 
 #include <lasso/export.h>
 #include <lasso/errors.h>
@@ -136,6 +138,12 @@ LASSO_EXPORT char* lasso_node_export_to_query(LassoNode *node,
 		LassoSignatureMethod sign_method, const char *private_key_file);
 
 LASSO_EXPORT char* lasso_node_export_to_soap(LassoNode *node);
+
+LASSO_EXPORT char* lasso_node_export_to_paos_request(LassoNode *node, const char *issuer,
+				const char *responseConsumerURL, const char *relay_state);
+
+LASSO_EXPORT char* lasso_node_export_to_ecp_soap_response(LassoNode *node,
+				const char *assertionConsumerURL);
 
 LASSO_EXPORT xmlNode* lasso_node_get_xmlNode(LassoNode *node, gboolean lasso_dump);
 
