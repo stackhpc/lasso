@@ -1,8 +1,8 @@
-/* $Id: profile.c,v 1.76 2007/01/06 22:55:44 fpeters Exp $
+/* $Id: profile.c 3324 2007-06-19 11:16:17Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -135,6 +135,8 @@ lasso_profile_get_request_type_from_soap_msg(const gchar *soap)
 	} else if (strcmp(name, "Query") == 0) {
 		if (strcmp((char*)ns->href, LASSO_DISCO_HREF) == 0) {
 			type = LASSO_REQUEST_TYPE_DISCO_QUERY;
+		} else if (strcmp((char*)ns->href, LASSO_IDWSF2_DISCO_HREF) == 0) {
+			type = LASSO_REQUEST_TYPE_IDWSF2_DISCO_QUERY;
 		} else {
 			type = LASSO_REQUEST_TYPE_DST_QUERY;
 		}
@@ -148,6 +150,10 @@ lasso_profile_get_request_type_from_soap_msg(const gchar *soap)
 		type = LASSO_REQUEST_TYPE_SASL_REQUEST;
 	} else if (strcmp(name, "ManageNameIDRequest") == 0) {
 		type = LASSO_REQUEST_TYPE_NAME_ID_MANAGEMENT;
+	} else if (strcmp(name, "SvcMDRegister") == 0) {
+		type = LASSO_REQUEST_TYPE_IDWSF2_DISCO_SVCMD_REGISTER;
+	} else if (strcmp(name, "SvcMDAssociationAdd") == 0) {
+		type = LASSO_REQUEST_TYPE_IDWSF2_DISCO_SVCMD_ASSOCIATION_ADD;
 	} else {
 		message(G_LOG_LEVEL_WARNING, "Unknown node name : %s", name);
 	}

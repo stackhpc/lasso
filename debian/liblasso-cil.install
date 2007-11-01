@@ -1,0 +1,7 @@
+debian/tmp/usr/lib/liblassosharpglue.so
+debian/tmp/usr/lib/liblassosharpglue.la
+debian/tmp/usr/lib/pkgconfig/lasso-sharp.pc
+debian/tmp/usr/share/dotnet/lasso/lasso.dll
+debian/tmp/usr/share/dotnet/lasso/lasso.dll.config
+debian/tmp/usr/lib/mono/gac/
+debian/tmp/usr/lib/mono/lasso/

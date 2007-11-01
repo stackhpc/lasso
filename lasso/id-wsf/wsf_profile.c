@@ -1,8 +1,8 @@
-/* $Id: wsf_profile.c,v 1.45 2007/01/05 16:11:02 fpeters Exp $
+/* $Id: wsf_profile.c 3374 2007-08-12 22:19:32Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -1283,7 +1283,7 @@ lasso_wsf_profile_process_soap_request_msg(LassoWsfProfile *profile, const gchar
 		}
 	}
 
-	doc = xmlParseMemory(message, strlen(message));
+	doc = lasso_xml_parse_memory(message, strlen(message));
 
 	/* Verify authentication mecanisms */
 	if (lasso_wsf_profile_has_x509_authentication(profile) == TRUE) {
@@ -1352,7 +1352,7 @@ lasso_wsf_profile_process_soap_response_msg(LassoWsfProfile *profile, const gcha
 	g_return_val_if_fail(LASSO_IS_WSF_PROFILE(profile), LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
 	g_return_val_if_fail(message != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
 
-	doc = xmlParseMemory(message, strlen(message));
+	doc = lasso_xml_parse_memory(message, strlen(message));
 
 	if (lasso_wsf_profile_has_x509_authentication(profile) == TRUE) {
 		xmlNode *xmlnode;
@@ -1401,6 +1401,10 @@ lasso_wsf_profile_process_soap_response_msg(LassoWsfProfile *profile, const gcha
 	xmlFreeDoc(doc);
 
 	profile->soap_envelope_response = envelope;
+
+	if (envelope == NULL) {
+		return critical_error(LASSO_PROFILE_ERROR_INVALID_SOAP_MSG);
+	}
 
 	/* Soap Fault message */
 	if (LASSO_IS_SOAP_FAULT(envelope->Body->any->data) == FALSE)

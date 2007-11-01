@@ -15,16 +15,16 @@ dnl - Second number is the number of supported API versions where API version >
 dnl   first number.
 dnl - Third number is the current API version implementation version number.
 dnl See libtool explanations about current, age and release, later in this file.
-AC_INIT([Liberty Alliance Single Sign On], 2.0.0, lasso-devel@lists.labs.libre-entreprise.org)
+AC_INIT([Liberty Alliance Single Sign On], 2.1.1, lasso-devel@lists.labs.libre-entreprise.org)
 dnl Check if autoconf ver > 2.53
 AC_PREREQ(2.53)
 dnl Check existence of a relative pathed source file.
 AC_CONFIG_SRCDIR(lasso/lasso.c)
 dnl Copy stamp REVISIO-INFO in the configure script.
-AC_REVISION($Revision: 1.153 $)
+AC_REVISION($Revision: 3386 $)
 
 dnl Run many macros mostly needed by configure.ac.
-AM_INIT_AUTOMAKE(lasso, 2.0.0)
+AM_INIT_AUTOMAKE(lasso, 2.1.1)
 dnl Create rules to automaticaly regenerate the config header.
 AM_CONFIG_HEADER(lasso/lasso_config.h)
 dnl Add --enable-maintainer-mode option to configure.
@@ -161,7 +161,7 @@ dnl - interfaces removed -> AGE = 0
 # m = a
 # r = r
 current=`expr $VERSION_MAJOR + $VERSION_MINOR`
-LASSO_VERSION_INFO="7:0:4"
+LASSO_VERSION_INFO="8:1:5"
 AC_SUBST(LASSO_VERSION_INFO)
 
 dnl Compute the minimal supported ABI version for Win32 scripts and resources files.
@@ -875,8 +875,11 @@ lasso/Makefile
 lasso/id-ff/Makefile
 lasso/id-wsf/Makefile
 lasso/saml-2.0/Makefile
+lasso/id-wsf-2.0/Makefile
 lasso/xml/Makefile
 lasso/xml/saml-2.0/Makefile
+lasso/xml/id-wsf-2.0/Makefile
+lasso/xml/ws/Makefile
 perl/Makefile
 php/Makefile
 php5/Makefile
@@ -884,12 +887,17 @@ python/Makefile
 swig/Makefile
 swig/wsf-support.i
 swig/saml-2.0/Makefile
+swig/id-wsf-2.0/Makefile
+swig/ws/Makefile
 tests/Makefile
 tests/data/Makefile
 tests/data/ca1-la/Makefile
 tests/data/idp1-la/Makefile
 tests/data/lecp1-la/Makefile
 tests/data/sp1-la/Makefile
+tests/data/idp5-saml2/Makefile
+tests/data/sp5-saml2/Makefile
+tests/data/sp6-saml2/Makefile
 tests/metadata/Makefile
 lasso.pc
 win32/Makefile
@@ -918,10 +926,10 @@ Configuration
 Main
 ----
 
-Compiler:               ${CC} 
-Install prefix:         ${prefix}
-Debugging:              $enable_debugging
-Experimental ID-WSF:    $enable_wsf
+Compiler:                ${CC} 
+Install prefix:          ${prefix}
+Debugging:               $enable_debugging
+Experimental ID-WSF:     $enable_wsf
 
 Optionals builds
 ----------------

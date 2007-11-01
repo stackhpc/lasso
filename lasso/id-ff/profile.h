@@ -1,8 +1,8 @@
-/* $Id: profile.h,v 1.36 2006/11/05 12:23:18 fpeters Exp $ 
+/* $Id: profile.h 3323 2007-06-18 09:43:47Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -82,6 +82,9 @@ typedef enum {
 	LASSO_REQUEST_TYPE_DST_MODIFY = 10,
 	LASSO_REQUEST_TYPE_SASL_REQUEST = 11,
 	LASSO_REQUEST_TYPE_NAME_ID_MANAGEMENT = 12,
+	LASSO_REQUEST_TYPE_IDWSF2_DISCO_SVCMD_REGISTER = 13,
+	LASSO_REQUEST_TYPE_IDWSF2_DISCO_SVCMD_ASSOCIATION_ADD = 14,
+	LASSO_REQUEST_TYPE_IDWSF2_DISCO_QUERY = 15,
 } LassoRequestType;
 
 

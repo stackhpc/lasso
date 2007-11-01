@@ -1,8 +1,8 @@
-/* $Id: dst_query.h,v 1.13 2005/09/10 19:36:33 fpeters Exp $ 
+/* $Id: dst_query.h 3237 2007-05-30 17:17:45Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.

@@ -33,12 +33,12 @@ public class Saml2SubjectLocality extends Node {
     return lassoJNI.Saml2SubjectLocality_address_get(swigCPtr, this);
   }
 
-  public void setDnsName(String value) {
-    lassoJNI.Saml2SubjectLocality_dnsName_set(swigCPtr, this, value);
+  public void setDNSName(String value) {
+    lassoJNI.Saml2SubjectLocality_dNSName_set(swigCPtr, this, value);
   }
 
-  public String getDnsName() {
-    return lassoJNI.Saml2SubjectLocality_dnsName_get(swigCPtr, this);
+  public String getDNSName() {
+    return lassoJNI.Saml2SubjectLocality_dNSName_get(swigCPtr, this);
   }
 
   public Saml2SubjectLocality() {

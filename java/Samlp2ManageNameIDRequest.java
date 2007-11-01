@@ -25,12 +25,12 @@ public class Samlp2ManageNameIDRequest extends Samlp2RequestAbstract {
   super.delete();
 }
 
-  public void setNewId(String value) {
-    lassoJNI.Samlp2ManageNameIDRequest_newId_set(swigCPtr, this, value);
+  public void setNewID(String value) {
+    lassoJNI.Samlp2ManageNameIDRequest_newID_set(swigCPtr, this, value);
   }
 
-  public String getNewId() {
-    return lassoJNI.Samlp2ManageNameIDRequest_newId_get(swigCPtr, this);
+  public String getNewID() {
+    return lassoJNI.Samlp2ManageNameIDRequest_newID_get(swigCPtr, this);
   }
 
   public void setNameID(Saml2NameID value) {

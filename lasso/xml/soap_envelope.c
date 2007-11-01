@@ -1,8 +1,8 @@
-/* $Id: soap_envelope.c,v 1.2 2005/03/18 09:09:22 nclapies Exp $ 
+/* $Id: soap_envelope.c 3237 2007-05-30 17:17:45Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -104,8 +104,8 @@ lasso_soap_envelope_new_from_message(const gchar *message)
 
 	g_return_val_if_fail(message != NULL, NULL);
 
-/* 	node = g_object_new(LASSO_TYPE_SOAP_ENVELOPE, NULL); */
-/* 	lasso_node_init_from_message(LASSO_NODE(node), message); */
+	node = g_object_new(LASSO_TYPE_SOAP_ENVELOPE, NULL);
+	lasso_node_init_from_message(LASSO_NODE(node), message);
 
 	node = LASSO_SOAP_ENVELOPE(lasso_node_new_from_dump(message));
 

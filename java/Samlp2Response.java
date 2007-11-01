@@ -25,6 +25,24 @@ public class Samlp2Response extends Samlp2StatusResponse {
   super.delete();
 }
 
+  public void setAssertion(NodeList value) {
+    lassoJNI.Samlp2Response_assertion_set(swigCPtr, this, NodeList.getCPtr(value), value);
+  }
+
+  public NodeList getAssertion() {
+    long cPtr = lassoJNI.Samlp2Response_assertion_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new NodeList(cPtr, false);
+  }
+
+  public void setEncryptedAssertion(NodeList value) {
+    lassoJNI.Samlp2Response_encryptedAssertion_set(swigCPtr, this, NodeList.getCPtr(value), value);
+  }
+
+  public NodeList getEncryptedAssertion() {
+    long cPtr = lassoJNI.Samlp2Response_encryptedAssertion_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new NodeList(cPtr, false);
+  }
+
   public void setIssuer(Saml2NameID value) {
     lassoJNI.Samlp2Response_issuer_set(swigCPtr, this, Saml2NameID.getCPtr(value), value);
   }
@@ -98,15 +116,6 @@ public class Samlp2Response extends Samlp2StatusResponse {
 
   public String getConsent() {
     return lassoJNI.Samlp2Response_consent_get(swigCPtr, this);
-  }
-
-  public void setAssertion(NodeList value) {
-    lassoJNI.Samlp2Response_assertion_set(swigCPtr, this, NodeList.getCPtr(value), value);
-  }
-
-  public NodeList getAssertion() {
-    long cPtr = lassoJNI.Samlp2Response_assertion_get(swigCPtr, this);
-    return (cPtr == 0) ? null : new NodeList(cPtr, false);
   }
 
   public Samlp2Response() {

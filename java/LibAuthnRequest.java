@@ -162,12 +162,12 @@ public class LibAuthnRequest extends SamlpRequestAbstract {
     return lassoJNI.LibAuthnRequest_signMethod_get(swigCPtr, this);
   }
 
-  public void setSignType(SWIGTYPE_p_LassoSignatureType value) {
-    lassoJNI.LibAuthnRequest_signType_set(swigCPtr, this, SWIGTYPE_p_LassoSignatureType.getCPtr(value));
+  public void setSignType(int value) {
+    lassoJNI.LibAuthnRequest_signType_set(swigCPtr, this, value);
   }
 
-  public SWIGTYPE_p_LassoSignatureType getSignType() {
-    return new SWIGTYPE_p_LassoSignatureType(lassoJNI.LibAuthnRequest_signType_get(swigCPtr, this), true);
+  public int getSignType() {
+    return lassoJNI.LibAuthnRequest_signType_get(swigCPtr, this);
   }
 
   public void setExtension(StringList value) {

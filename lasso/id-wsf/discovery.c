@@ -1,8 +1,8 @@
-/* $Id: discovery.c,v 1.75 2007/01/03 23:35:17 fpeters Exp $
+/* $Id: discovery.c 3301 2007-06-13 12:01:54Z dlaniel $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -83,8 +83,8 @@ lasso_discovery_build_credential(LassoDiscovery *discovery, const gchar *provide
 	assertion->MajorVersion = LASSO_SAML_MAJOR_VERSION_N;
 	assertion->MinorVersion = LASSO_SAML_MINOR_VERSION_N;
 	assertion->IssueInstant = lasso_get_current_time();
-	assertion->Issuer = \
-	  g_strdup(LASSO_PROVIDER(LASSO_WSF_PROFILE(discovery)->server)->ProviderID);
+	assertion->Issuer =
+		g_strdup(LASSO_PROVIDER(LASSO_WSF_PROFILE(discovery)->server)->ProviderID);
 
 	/* Add AuthenticationStatement */
 	authentication_statement = LASSO_SAML_AUTHENTICATION_STATEMENT(
@@ -116,8 +116,8 @@ lasso_discovery_build_credential(LassoDiscovery *discovery, const gchar *provide
 
 	/* SubjectConfirmation */
 	subject_confirmation = lasso_saml_subject_confirmation_new();
-	subject_confirmation->ConfirmationMethod = \
-	  g_list_append(subject_confirmation->ConfirmationMethod,
+	subject_confirmation->ConfirmationMethod =
+		g_list_append(subject_confirmation->ConfirmationMethod,
 			g_strdup(LASSO_SAML_CONFIRMATION_METHOD_HOLDER_OF_KEY));
 
 	/* Add public key value in credential */
@@ -403,12 +403,19 @@ lasso_discovery_get_resource_offering_auto(LassoDiscovery *discovery, const gcha
 		while (iter2) {
 			LassoSamlAttribute *attribute = iter2->data;
 			iter2 = g_list_next(iter2);
-			if (strcmp(attribute->attributeName, "DiscoveryResourceOffering") != 0)
+			if (! LASSO_IS_SAML_ATTRIBUTE(attribute)) {
 				continue;
+			}
+			if (strcmp(attribute->attributeName, "DiscoveryResourceOffering") != 0) {
+				continue;
+			}
 			iter3 = attribute->AttributeValue;
 			while (iter3) {
 				LassoSamlAttributeValue *attribute_value = iter3->data;
 				iter3 = g_list_next(iter3);
+				if (! LASSO_IS_SAML_ATTRIBUTE_VALUE(attribute_value)) {
+					continue;
+				}
 				iter4 = attribute_value->any;
 				while (iter4) {
 					LassoDiscoResourceOffering *v = iter4->data;
@@ -760,7 +767,7 @@ lasso_discovery_process_modify_response_msg(LassoDiscovery *discovery, const gch
 	}
 
 	response = LASSO_DISCO_MODIFY_RESPONSE(LASSO_WSF_PROFILE(discovery)->response);
-	if (strcmp(response->Status->code, "OK") != 0) {
+	if (strcmp(response->Status->code, LASSO_DISCO_STATUS_CODE_OK) != 0) {
 		return LASSO_PROFILE_ERROR_STATUS_NOT_SUCCESS;
 	}
 
@@ -904,7 +911,7 @@ lasso_discovery_process_query_response_msg(LassoDiscovery *discovery, const gcha
 	}
 
 	response = LASSO_DISCO_QUERY_RESPONSE(LASSO_WSF_PROFILE(discovery)->response);
-	if (strcmp(response->Status->code, "OK") != 0) {
+	if (strcmp(response->Status->code, LASSO_DISCO_STATUS_CODE_OK) != 0) {
 		return LASSO_PROFILE_ERROR_STATUS_NOT_SUCCESS;
 	}
 

@@ -59,6 +59,24 @@ public class Saml2Conditions extends Node {
     return (cPtr == 0) ? null : new NodeList(cPtr, false);
   }
 
+  public void setOneTimeUse(NodeList value) {
+    lassoJNI.Saml2Conditions_oneTimeUse_set(swigCPtr, this, NodeList.getCPtr(value), value);
+  }
+
+  public NodeList getOneTimeUse() {
+    long cPtr = lassoJNI.Saml2Conditions_oneTimeUse_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new NodeList(cPtr, false);
+  }
+
+  public void setProxyRestriction(NodeList value) {
+    lassoJNI.Saml2Conditions_proxyRestriction_set(swigCPtr, this, NodeList.getCPtr(value), value);
+  }
+
+  public NodeList getProxyRestriction() {
+    long cPtr = lassoJNI.Saml2Conditions_proxyRestriction_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new NodeList(cPtr, false);
+  }
+
   public Saml2Conditions() {
     this(lassoJNI.new_Saml2Conditions(), true);
   }

@@ -1,10 +1,10 @@
 /* -*- Mode: c; c-basic-offset: 8 -*-
  *
- * $Id: Lasso-wsf-soap.i,v 1.1 2005/08/29 12:54:28 nclapies Exp $
+ * $Id: Lasso-wsf-soap.i 3237 2007-05-30 17:17:45Z dlaniel $
  *
  * SWIG bindings for Lasso Library
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  *
  * Authors: See AUTHORS file in top-level directory.
@@ -46,7 +46,7 @@
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(WsseSecurity) LassoWsseSecurity;
 #endif
 typedef struct {
@@ -102,17 +102,17 @@ typedef struct {
  * soap-binding:Correlation
  ***********************************************************************/
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SoapBindingCorrelation) LassoSoapBindingCorrelation;
 #endif
 typedef struct {
 	/* Attributes */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(messageId) messageID;
 #endif
 	char *messageID;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(refToMessageId) refToMessageID;
 #endif
 	char *refToMessageID;
@@ -160,7 +160,7 @@ typedef struct {
  * soap-env:Body
  ***********************************************************************/
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SoapBody) LassoSoapBody;
 #endif
 typedef struct {
@@ -209,7 +209,7 @@ typedef struct {
  * soap-env:Envelope
  ***********************************************************************/
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SoapEnvelope) LassoSoapEnvelope;
 #endif
 typedef struct {
@@ -218,13 +218,13 @@ typedef struct {
 %extend LassoSoapEnvelope {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(header) Header;
 #endif
 	%newobject Header_get;
 	LassoSoapHeader *Header;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(body) Body;
 #endif
 	%newobject Body_get;
@@ -272,7 +272,7 @@ typedef struct {
  * soap-env:Header
  ***********************************************************************/
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SoapHeader) LassoSoapHeader;
 #endif
 typedef struct {
@@ -281,7 +281,7 @@ typedef struct {
 %extend LassoSoapHeader {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(other) Other;
 #endif
 	%newobject Other_get;

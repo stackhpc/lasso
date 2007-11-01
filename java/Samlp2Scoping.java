@@ -25,12 +25,12 @@ public class Samlp2Scoping extends Node {
   super.delete();
 }
 
-  public void setRequesterId(String value) {
-    lassoJNI.Samlp2Scoping_requesterId_set(swigCPtr, this, value);
+  public void setRequesterID(String value) {
+    lassoJNI.Samlp2Scoping_requesterID_set(swigCPtr, this, value);
   }
 
-  public String getRequesterId() {
-    return lassoJNI.Samlp2Scoping_requesterId_get(swigCPtr, this);
+  public String getRequesterID() {
+    return lassoJNI.Samlp2Scoping_requesterID_get(swigCPtr, this);
   }
 
   public void setProxyCount(String value) {

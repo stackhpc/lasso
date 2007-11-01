@@ -41,6 +41,15 @@ public class Login {
     return lassoJNI.Login_protocolProfile_get(swigCPtr, this);
   }
 
+  public void setAssertion(SamlAssertion value) {
+    lassoJNI.Login_assertion_set(swigCPtr, this, SamlAssertion.getCPtr(value), value);
+  }
+
+  public SamlAssertion getAssertion() {
+    long cPtr = lassoJNI.Login_assertion_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new SamlAssertion(cPtr, false);
+  }
+
   public String getArtifact() {
     return lassoJNI.Login_artifact_get(swigCPtr, this);
   }

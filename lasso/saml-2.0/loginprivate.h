@@ -1,8 +1,8 @@
-/* $Id: loginprivate.h,v 1.5 2006/12/05 17:16:54 nclapies Exp $
+/* $Id: loginprivate.h 3237 2007-05-30 17:17:45Z dlaniel $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.

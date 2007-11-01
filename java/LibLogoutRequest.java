@@ -130,12 +130,12 @@ public class LibLogoutRequest extends SamlpRequestAbstract {
     return lassoJNI.LibLogoutRequest_signMethod_get(swigCPtr, this);
   }
 
-  public void setSignType(SWIGTYPE_p_LassoSignatureType value) {
-    lassoJNI.LibLogoutRequest_signType_set(swigCPtr, this, SWIGTYPE_p_LassoSignatureType.getCPtr(value));
+  public void setSignType(int value) {
+    lassoJNI.LibLogoutRequest_signType_set(swigCPtr, this, value);
   }
 
-  public SWIGTYPE_p_LassoSignatureType getSignType() {
-    return new SWIGTYPE_p_LassoSignatureType(lassoJNI.LibLogoutRequest_signType_get(swigCPtr, this), true);
+  public int getSignType() {
+    return lassoJNI.LibLogoutRequest_signType_get(swigCPtr, this);
   }
 
   public void setExtension(StringList value) {
@@ -160,8 +160,8 @@ public class LibLogoutRequest extends SamlpRequestAbstract {
     this(lassoJNI.new_LibLogoutRequest(), true);
   }
 
-  public static LibLogoutRequest newFull(String providerID, SamlNameIdentifier nameIdentifier, SWIGTYPE_p_LassoSignatureType sign_type, int sign_method) {
-    long cPtr = lassoJNI.LibLogoutRequest_newFull(providerID, SamlNameIdentifier.getCPtr(nameIdentifier), nameIdentifier, SWIGTYPE_p_LassoSignatureType.getCPtr(sign_type), sign_method);
+  public static LibLogoutRequest newFull(String providerID, SamlNameIdentifier nameIdentifier, int sign_type, int sign_method) {
+    long cPtr = lassoJNI.LibLogoutRequest_newFull(providerID, SamlNameIdentifier.getCPtr(nameIdentifier), nameIdentifier, sign_type, sign_method);
     return (cPtr == 0) ? null : new LibLogoutRequest(cPtr, true);
   }
 

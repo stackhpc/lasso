@@ -42,11 +42,11 @@ public class Saml2AuthnContext extends Node {
   }
 
   public void setAuthenticatingAuthority(String value) {
-    lassoJNI.Saml2AuthnContext_AuthenticatingAuthority_set(swigCPtr, this, value);
+    lassoJNI.Saml2AuthnContext_authenticatingAuthority_set(swigCPtr, this, value);
   }
 
   public String getAuthenticatingAuthority() {
-    return lassoJNI.Saml2AuthnContext_AuthenticatingAuthority_get(swigCPtr, this);
+    return lassoJNI.Saml2AuthnContext_authenticatingAuthority_get(swigCPtr, this);
   }
 
   public Saml2AuthnContext() {

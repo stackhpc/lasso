@@ -1,8 +1,8 @@
-/* $Id: strings.h,v 1.61 2006/11/27 11:05:27 dlaniel Exp $ 
+/* $Id: strings.h 3339 2007-07-06 18:47:55Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -166,8 +166,8 @@
 
 
 /* liberty wsf prefix & href */
-#define LASSO_DISCO_HREF   "urn:liberty:disco:2003-08"
-#define LASSO_DISCO_PREFIX "disco"
+#define LASSO_DISCO_HREF          "urn:liberty:disco:2003-08"
+#define LASSO_DISCO_PREFIX        "disco"
 
 #define LASSO_EP_HREF   "urn:liberty:id-sis-ep:2003-08"
 #define LASSO_EP_PREFIX "ep"
@@ -199,6 +199,9 @@
 #define LASSO_DISCO_STATUS_CODE_NO_RESULTS "NoResults"
 #define LASSO_DISCO_STATUS_CODE_DIRECTIVES "Directive"
 
+#define LASSO_DST_STATUS_CODE_OK "OK"
+#define LASSO_DST_STATUS_CODE_FAILED "Failed"
+#define LASSO_DST_STATUS_CODE_PARTIAL "Partial"
 #define LASSO_DST_STATUS_CODE_ACTION_NOT_AUTHORIZED "ActionNotAuthorized"
 #define LASSO_DST_STATUS_CODE_ACTION_NOT_SUPPORTED "ActionNotSupported"
 #define LASSO_DST_STATUS_CODE_ALL_RETURNED "AllReturned"
@@ -218,13 +221,12 @@
 #define LASSO_DST_STATUS_CODE_NO_MORE_ELEMENTS "NoMoreElements"
 #define LASSO_DST_STATUS_CODE_NO_MULTIPLE_ALLOWED "NoMultipleAllowed"
 #define LASSO_DST_STATUS_CODE_NO_MULTIPLE_RESOURCES "NoMultipleResources"
-#define LASSO_DST_STATUS_CODE_OK "OK"
 #define LASSO_DST_STATUS_CODE_TIME_OUT "TimeOut"
 #define LASSO_DST_STATUS_CODE_UNEXPECTED_ERROR "UnexpectedError"
 
+#define LASSO_SA_STATUS_CODE_OK "OK"
 #define LASSO_SA_STATUS_CODE_CONTINUE "continue"
 #define LASSO_SA_STATUS_CODE_ABORT "abort"
-#define LASSO_SA_STATUS_CODE_OK "OK"
 
 /*****************************************************************************/
 /* METADATA                                                                  */
@@ -239,10 +241,10 @@
 /*****************************************************************************/
 
 /* prefix & href */
-#define LASSO_SAML_ASSERTION_HREF	 "urn:oasis:names:tc:SAML:1.0:assertion"
-#define LASSO_SAML_ASSERTION_PREFIX "saml"
-#define LASSO_SAML_PROTOCOL_HREF	 "urn:oasis:names:tc:SAML:1.0:protocol"
-#define LASSO_SAML_PROTOCOL_PREFIX	 "samlp"
+#define LASSO_SAML_ASSERTION_HREF	"urn:oasis:names:tc:SAML:1.0:assertion"
+#define LASSO_SAML_ASSERTION_PREFIX	"saml"
+#define LASSO_SAML_PROTOCOL_HREF	"urn:oasis:names:tc:SAML:1.0:protocol"
+#define LASSO_SAML_PROTOCOL_PREFIX	"samlp"
 
 /* Versioning */
 #define LASSO_SAML_MAJOR_VERSION_N	 1
@@ -294,14 +296,28 @@
 
 #define LASSO_SOAP_ENV_ACTOR "http://schemas.xmlsoap.org/soap/actor/next"
 
-#define LASSO_SOAP_BINDING_HREF   "urn:liberty:sb:2003-08"
-#define LASSO_SOAP_BINDING_PREFIX "sb"
+#define LASSO_SOAP_BINDING_HREF          "urn:liberty:sb:2003-08"
+#define LASSO_SOAP_BINDING_PREFIX        "sb"
+
+#define LASSO_IDWSF2_SB2_HREF "urn:liberty:sb:2006-08"
+#define LASSO_IDWSF2_SB2_PREFIX "sb"
+
+#define LASSO_IDWSF2_SBF_HREF "urn:liberty:sb"
+#define LASSO_IDWSF2_SBF_PREFIX "sbf"
 
 #define LASSO_SOAP_BINDING_EXT_HREF "urn:liberty:sb:2004-04"
 #define LASSO_SOAP_BINDING_EXT_PREFIX "sbe"
 
 #define LASSO_WSSE_HREF "http://schemas.xmlsoap.org/ws/2002/07/secext"
 #define LASSO_WSSE_PREFIX "wsse"
+
+#define LASSO_WSSE1_HREF \
+	"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
+#define LASSO_WSSE1_PREFIX "wsse"
+
+#define LASSO_WSUTIL1_HREF \
+	"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+#define LASSO_WSUTIL1_PREFIX "wsutil"
 
 #define LASSO_SOAP_BINDING_PROCESS_CONTEXT_PRINCIPAL_OFFLINE \
 	"urn:liberty:sb:2003-08:ProcessingContext:PrincipalOffline"
@@ -359,6 +375,11 @@
 #define LASSO_SAML2_NAME_IDENTIFIER_FORMAT_ENCRYPTED \
 		"urn:oasis:names:tc:SAML:2.0:nameid-format:encrypted"
 
+/* Attribute Name */
+#define LASSO_SAML2_ATTRIBUTE_NAME_EPR "urn:liberty:disco:2006-08:DiscoveryEPR"
+
+/* Attribute Name Format*/
+#define LASSO_SAML2_ATTRIBUTE_NAME_FORMAT_URI "urn:oasis:names:tc:SAML:2.0:attrname-format:uri"
 
 /* Consent */
 #define LASSO_SAML2_CONSENT_OBTAINED "urn:oasis:names:tc:SAML:2.0:consent:obtained"
@@ -468,6 +489,52 @@
 #define LASSO_SAML2_CONFIRMATION_METHOD_BEARER "urn:oasis:names:tc:SAML:2.0:cm:bearer"
 
 /*****************************************************************************/
+/* ID-WSF 2.0                                                                */
+/*****************************************************************************/
+
+#define LASSO_IDWSF2_DISCO_HREF   "urn:liberty:disco:2006-08"
+#define LASSO_IDWSF2_DISCO_PREFIX "disco"
+
+#define LASSO_EP_HREF   "urn:liberty:id-sis-ep:2003-08"
+#define LASSO_EP_PREFIX "ep"
+
+#define LASSO_PP_HREF   "urn:liberty:id-sis-pp:2003-08"
+#define LASSO_PP_PREFIX "pp"
+
+#define LASSO_IDWSF2_DST_HREF "urn:liberty:dst:2006-08"
+#define LASSO_IDWSF2_DST_PREFIX "dst"
+
+#define LASSO_IDWSF2_DSTREF_HREF "urn:liberty:dst:2006-08:ref"
+#define LASSO_IDWSF2_DSTREF_PREFIX "dstref"
+
+#define LASSO_IDWSF2_IMS_HREF "urn:liberty:ims:2006-08"
+#define LASSO_IDWSF2_IMS_PREFIX "ims"
+
+#define LASSO_IDWSF2_IS_HREF "urn:liberty:is:2006-08"
+#define LASSO_IDWSF2_IS_PREFIX "is"
+
+#define LASSO_IDWSF2_PS_HREF "urn:liberty:ps:2006-08"
+#define LASSO_IDWSF2_PS_PREFIX "ps"
+
+#define LASSO_IDWSF2_SUBS_HREF "urn:liberty:ssos:2006-08"
+#define LASSO_IDWSF2_SUBS_PREFIX "subs"
+
+#define LASSO_IDWSF2_SUBSREF_HREF "urn:liberty:ssos:2006-08:ref"
+#define LASSO_IDWSF2_SUBSREF_PREFIX "subsref"
+
+#define LASSO_IDWSF2_UTIL_HREF "urn:liberty:util:2006-08"
+#define LASSO_IDWSF2_UTIL_PREFIX "util"
+
+#define LASSO_IDWSF2_SEC_HREF "urn:liberty:security:2006-08"
+#define LASSO_IDWSF2_SEC_PREFIX "sec"
+
+#define LASSO_IDWSF2_SOAP_BINDING_HREF   "urn:liberty:sb"
+#define LASSO_IDWSF2_SOAP_BINDING_PREFIX "sb"
+
+#define LASSO_IDWSF2_SOAP_BINDING2_HREF   "urn:liberty:sb:2006-08"
+#define LASSO_IDWSF2_SOAP_BINDING2_PREFIX "sb2"
+
+/*****************************************************************************/
 /* Others                                                                    */
 /*****************************************************************************/
 
@@ -475,6 +542,23 @@
 #define LASSO_XSI_HREF "http://www.w3.org/2001/XMLSchema-instance"
 #define LASSO_XSI_PREFIX "xsi"
 
+/* WS-Addressing */
+#define LASSO_WSA_HREF "http://www.w3.org/2005/08/addressing"
+#define LASSO_WSA_PREFIX "wsa"
+
+/* WS-Security - 2004/01 */
+#define LASSO_WSSE_200401_HREF \
+	"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
+#define LASSO_WSSE_200401_PREFIX "wsse"
+
+/* WS-Utility */
+#define LASSO_WSU_HREF \
+	"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+#define LASSO_WSU_PREFIX "wsu"
+
 #define LASSO_SOAP_FAULT_CODE_SERVER "Server"
 
+#define LASSO_SOAP_FAULT_STRING_SERVER "Server Error"
+
 #endif /* __LASSO_STRINGS_H__ */
+
