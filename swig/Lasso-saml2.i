@@ -6,7 +6,7 @@
 
 /* Utility functions */
 
-#ifdef SWIGPHP4
+#ifdef SWIG_PHP_RENAMES
 %rename(lasso_isSamlQuery) lasso_profile_is_saml_query;
 #else
 %rename(isSamlQuery) lasso_profile_is_saml_query;
@@ -15,7 +15,7 @@ gboolean lasso_profile_is_saml_query(char *query);
 
 
 /* NameIdPolicy */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SAML2_NAME_IDENTIFIER_FORMAT_PERSISTENT) LASSO_SAML2_NAME_IDENTIFIER_FORMAT_PERSISTENT;
 %rename(SAML2_NAME_IDENTIFIER_FORMAT_TRANSIENT) LASSO_SAML2_NAME_IDENTIFIER_FORMAT_TRANSIENT;
 %rename(SAML2_NAME_IDENTIFIER_FORMAT_ENCRYPTED) LASSO_SAML2_NAME_IDENTIFIER_FORMAT_ENCRYPTED;
@@ -28,7 +28,7 @@ gboolean lasso_profile_is_saml_query(char *query);
 		"urn:oasis:names:tc:SAML:2.0:nameid-format:encrypted"
 
 /* Protocol Bindings */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SAML2_METADATA_BINDING_SOAP) LASSO_SAML2_METADATA_BINDING_SOAP;
 %rename(SAML2_METADATA_BINDING_REDIRECT) LASSO_SAML2_METADATA_BINDING_REDIRECT;
 %rename(SAML2_METADATA_BINDING_POST) LASSO_SAML2_METADATA_BINDING_POST;
@@ -43,7 +43,7 @@ gboolean lasso_profile_is_saml_query(char *query);
 
 
 /* AuthnClassRef */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SAML2_AUTHN_CONTEXT_AUTHENTICATED_TELEPHONY) \
 	LASSO_SAML2_AUTHN_CONTEXT_AUTHENTICATED_TELEPHONY;
 %rename(SAML2_AUTHN_CONTEXT_INTERNET_PROTOCOL) \
@@ -147,13 +147,13 @@ gboolean lasso_profile_is_saml_query(char *query);
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(NameIdManagement) LassoNameIdManagement;
 #endif
 typedef struct {
 } LassoNameIdManagement;
 %extend LassoNameIdManagement {
-	/* Attributes inherited from Profile */
+	/* Attributes inherited from LassoProfile */
 	%immutable artifact;
 	char *artifact;
 
@@ -203,7 +203,7 @@ typedef struct {
 	%newobject newFromDump;
 	static LassoNameIdManagement *newFromDump(LassoServer *server, char *dump);
 
-	/* Methods inherited from Profile */
+	/* Methods inherited from LassoProfile */
 
 	THROW_ERROR()
 	int setIdentityFromDump(char *dump);
@@ -247,7 +247,7 @@ typedef struct {
 
 %{
 
-/* Implementations of attributes inherited from Profile */
+/* Implementations of attributes inherited from LassoProfile */
 
 /* identity */
 #define LassoNameIdManagement_get_identity(self) lasso_profile_get_identity(LASSO_PROFILE(self))
@@ -327,15 +327,12 @@ typedef struct {
 #define delete_LassoNameIdManagement(self) lasso_node_destroy(LASSO_NODE(self))
 #define LassoNameIdManagement_newFromDump lasso_name_id_management_new_from_dump
 
-/* Implementations of methods inherited from Profile */
+/* Implementations of methods inherited from LassoProfile */
 
-int LassoNameIdManagement_setIdentityFromDump(LassoNameIdManagement *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoNameIdManagement_setSessionFromDump(LassoNameIdManagement *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoNameIdManagement_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoNameIdManagement_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Methods implementations */
 
@@ -356,7 +353,7 @@ int LassoNameIdManagement_setSessionFromDump(LassoNameIdManagement *self, char *
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(Ecp) LassoEcp;
 #endif
 typedef struct {

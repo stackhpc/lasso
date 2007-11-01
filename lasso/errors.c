@@ -1,8 +1,8 @@
-/* $Id: errors.c,v 1.26 2006/12/28 10:19:46 fpeters Exp $ 
+/* $Id: errors.c 3373 2007-08-08 16:03:29Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -153,6 +153,14 @@ lasso_strerror(int error_code)
 			return "Found an encrypted element but encryption private key is not set";
 		case LASSO_PROFILE_ERROR_STATUS_NOT_SUCCESS:
 			return "Status code is not success";
+		case LASSO_PROFILE_ERROR_MISSING_ISSUER:
+		        return "Missing issuer";
+		case LASSO_PROFILE_ERROR_MISSING_SERVICE_INSTANCE:
+		        return "Missing service instance";
+		case LASSO_PROFILE_ERROR_MISSING_ENDPOINT_REFERENCE:
+		        return "Missing endpoint reference";
+                case LASSO_PROFILE_ERROR_MISSING_ENDPOINT_REFERENCE_ADDRESS:
+                        return "Missing endpoint reference address";
 
 		case LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ:
 			return "An object type provided as parameter "\
@@ -181,9 +189,39 @@ lasso_strerror(int error_code)
 
 		case LASSO_SOAP_FAULT_REDIRECT_REQUEST:
 			return "Redirect request from Attribute Provider";
+		case LASSO_SOAP_ERROR_MISSING_ENVELOPE:
+			return "Missing SOAP envelope";
+		case LASSO_SOAP_ERROR_MISSING_HEADER:
+			return "Missing SOAP header";
+		case LASSO_SOAP_ERROR_MISSING_BODY:
+			return "Missing SOAP body";
+		case LASSO_SOAP_ERROR_MISSING_SOAP_FAULT_DETAIL:
+			return "Missing SOAP fault detail";
 
 		case LASSO_NAME_IDENTIFIER_MAPPING_ERROR_MISSING_TARGET_NAMESPACE:
 			return "Target name space not found";
+
+		case LASSO_DISCOVERY_ERROR_SVC_METADATA_REGISTER_FAILED:
+			return "Service metadata registration failed";
+		case LASSO_DISCOVERY_ERROR_SVC_METADATA_ASSOCIATION_ADD_FAILED:
+		        return "Service metadata association failed";
+		case LASSO_DISCOVERY_ERROR_MISSING_REQUESTED_SERVICE:
+		        return "Missing requested service";
+		case LASSO_DISCOVERY_ERROR_FAILED_TO_BUILD_ENDPOINT_REFERENCE:
+			return "Failed to build Endpoint Reference";
+
+		case LASSO_DST_ERROR_MISSING_SERVICE_DATA:
+			return "Missing service data";
+		case LASSO_DST_ERROR_QUERY_FAILED:
+			return "Query failed";
+		case LASSO_DST_ERROR_QUERY_PARTIALLY_FAILED:
+			return "Query partially failed : some items were correctly processed";
+		case LASSO_DST_ERROR_MODIFY_FAILED:
+			return "Modify failed";
+		case LASSO_DST_ERROR_MODIFY_PARTIALLY_FAILED:
+			return "Modify partially failed : some items were correctly processed";
+		case LASSO_DST_ERROR_NEW_DATA_MISSING:
+			return "Missing new data";
 
 		default:
 			return "Error";

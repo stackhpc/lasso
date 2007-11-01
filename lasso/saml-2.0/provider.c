@@ -1,8 +1,8 @@
-/* $Id: provider.c,v 1.16 2007/01/06 22:13:53 fpeters Exp $
+/* $Id: provider.c 3293 2007-06-12 14:15:55Z dlaniel $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -129,10 +129,11 @@ load_descriptor(xmlNode *xmlnode, GHashTable *descriptor, LassoProvider *provide
 		t = t->next;
 	}
 
-	for (i=0; descriptor_attrs[i]; i++) {
+	for (i = 0; descriptor_attrs[i]; i++) {
 		value = xmlGetProp(xmlnode, (xmlChar*)descriptor_attrs[i]);
-		if (value == NULL) continue;
-
+		if (value == NULL) {
+			continue;
+		}
 		name = g_strdup(descriptor_attrs[i]);
 		elements = g_hash_table_lookup(descriptor, name);
 		elements = g_list_append(elements, g_strdup((char*)value));

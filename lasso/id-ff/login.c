@@ -1,8 +1,8 @@
-/* $Id: login.c,v 1.288 2007/01/08 13:13:49 fpeters Exp $
+/* $Id: login.c 3344 2007-07-10 14:25:55Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -1779,7 +1779,9 @@ lasso_login_process_response_msg(LassoLogin *login, gchar *response_msg)
 	/* rebuild samlp:Response with response_msg */
 	profile->response = lasso_node_new_from_soap(response_msg);
 	if (! LASSO_IS_SAMLP_RESPONSE(profile->response) ) {
-		lasso_node_destroy(profile->response);
+		if (profile->response) {
+			lasso_node_destroy(profile->response);
+		}
 		profile->response = NULL;
 		return critical_error(LASSO_PROFILE_ERROR_INVALID_MSG);
 	}
@@ -1833,7 +1835,6 @@ lasso_login_set_resourceId(LassoLogin *login, const char *content)
 #endif
 	return 0;
 }
-
 
 /*****************************************************************************/
 /* private methods                                                           */

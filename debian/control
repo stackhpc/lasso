@@ -10,7 +10,7 @@ Standards-Version: 3.7.2
 Package: liblasso3-dev
 Section: libdevel
 Architecture: any
-Depends: liblasso3 (= ${Source-Version}), libxml2-dev, libxmlsec1-dev, libglib2.0-dev
+Depends: liblasso3 (= ${binary:Version}), libxml2-dev, libxmlsec1-dev, libglib2.0-dev
 Provides: liblasso-dev
 Conflicts: liblasso-dev, liblasso0, liblasso1
 Description: Liberty ID-FF library - development kit
@@ -66,6 +66,20 @@ Description: Liberty ID-FF library - Java bindings
  .
  This package provides the Java interface to liblasso, needed to use lasso in
  Java applications.
+ .
+ Homepage: http://lasso.entrouvert.org
+
+Package: liblasso-perl
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:depends}
+Description: Liberty ID-FF library - Perl bindings
+ Lasso is an implementation of the Liberty Identity Federation specifications
+ defined by the Liberty Alliance consortium.  They defines processes such as
+ network identity federation and single sign-on.
+ .
+ This package contains Perl bindings for liblasso, needed to use lasso
+ in Perl applications.
  .
  Homepage: http://lasso.entrouvert.org
 

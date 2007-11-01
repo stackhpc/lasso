@@ -1,8 +1,8 @@
-/* $Id: xml_enc.h,v 1.4 2006/12/27 15:05:53 fpeters Exp $ 
+/* $Id: xml_enc.h 3289 2007-06-12 14:05:38Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -28,6 +28,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
+
+#include <xmlsec/xmlenc.h>
 
 #include <lasso/xml/xml.h>
 #include <lasso/xml/saml-2.0/saml2_encrypted_element.h>

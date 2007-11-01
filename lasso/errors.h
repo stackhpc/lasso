@@ -1,8 +1,8 @@
-/* $Id: errors.h,v 1.24 2007/01/03 23:17:52 fpeters Exp $ 
+/* $Id: errors.h 3373 2007-08-08 16:03:29Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -103,6 +103,8 @@
 #define LASSO_PROFILE_ERROR_STATUS_NOT_SUCCESS        -432
 #define LASSO_PROFILE_ERROR_MISSING_ISSUER            -433
 #define LASSO_PROFILE_ERROR_MISSING_SERVICE_INSTANCE  -434
+#define LASSO_PROFILE_ERROR_MISSING_ENDPOINT_REFERENCE -435
+#define LASSO_PROFILE_ERROR_MISSING_ENDPOINT_REFERENCE_ADDRESS -436
 
 /* functions/methods parameters checking */
 #define LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ        -501
@@ -126,8 +128,10 @@
 
 /* Soap */
 #define LASSO_SOAP_FAULT_REDIRECT_REQUEST                800
-#define LASSO_SOAP_ERROR_MISSING_HEADER                 -801
-#define LASSO_SOAP_ERROR_MISSING_BODY                   -802
+#define LASSO_SOAP_ERROR_MISSING_ENVELOPE               -801
+#define LASSO_SOAP_ERROR_MISSING_HEADER                 -802
+#define LASSO_SOAP_ERROR_MISSING_BODY                   -803
+#define LASSO_SOAP_ERROR_MISSING_SOAP_FAULT_DETAIL      -804
 
 /* Name Identifier Mapping */
 #define LASSO_NAME_IDENTIFIER_MAPPING_ERROR_MISSING_TARGET_NAMESPACE -900
@@ -140,4 +144,18 @@
 /* WSF Profile */
 #define LASSO_WSF_PROFILE_ERROR_MISSING_CORRELATION     -1100
 #define LASSO_WSF_PROFILE_ERROR_MISSING_SECURITY        -1101
+
+/* ID-WSF 2 Discovery */
+#define LASSO_DISCOVERY_ERROR_SVC_METADATA_REGISTER_FAILED              -1200
+#define LASSO_DISCOVERY_ERROR_SVC_METADATA_ASSOCIATION_ADD_FAILED       -1201
+#define LASSO_DISCOVERY_ERROR_MISSING_REQUESTED_SERVICE                 -1202
+#define LASSO_DISCOVERY_ERROR_FAILED_TO_BUILD_ENDPOINT_REFERENCE        -1203
+
+/* ID-WSF 2 Data Service */
+#define LASSO_DST_ERROR_MISSING_SERVICE_DATA      -1300
+#define LASSO_DST_ERROR_QUERY_FAILED              -1301
+#define LASSO_DST_ERROR_QUERY_PARTIALLY_FAILED    -1302
+#define LASSO_DST_ERROR_MODIFY_FAILED             -1303
+#define LASSO_DST_ERROR_MODIFY_PARTIALLY_FAILED   -1304
+#define LASSO_DST_ERROR_NEW_DATA_MISSING          -1305
 

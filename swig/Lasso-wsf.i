@@ -1,10 +1,10 @@
 /* -*- Mode: c; c-basic-offset: 8 -*-
  *
- * $Id: Lasso-wsf.i,v 1.79 2006/03/06 14:01:29 fpeters Exp $
+ * $Id: Lasso-wsf.i 3334 2007-07-02 16:39:58Z dlaniel $
  *
  * SWIG bindings for Lasso Library
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  *
  * Authors: See AUTHORS file in top-level directory.
@@ -46,7 +46,7 @@
  ***********************************************************************/
 
 /* Liberty Security Mechanisms */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SECURITY_MECH_NULL) LASSO_SECURITY_MECH_NULL;
 
 %rename(SECURITY_MECH_X509) LASSO_SECURITY_MECH_X509;
@@ -80,7 +80,7 @@
 #define LASSO_SECURITY_MECH_CLIENT_TLS_BEARER "urn:liberty:security:2004-04:ClientTLS:Bearer"
 
 /* WSF prefix & href */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(EP_HREF) LASSO_EP_HREF;
 %rename(EP_PREFIX) LASSO_EP_PREFIX;
 %rename(PP_HREF) LASSO_PP_HREF;
@@ -104,7 +104,7 @@
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(UtilityStatus) LassoUtilityStatus;
 #endif
 typedef struct {
@@ -123,7 +123,7 @@ typedef struct {
 %extend LassoUtilityStatus {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(status) Status;
 #endif
 	%newobject Status_get;
@@ -174,7 +174,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(Discovery) LassoDiscovery;
 #endif
 typedef struct {
@@ -375,8 +375,6 @@ typedef struct {
 #define LassoDiscovery_set_resourceId(self, value) set_node((gpointer *) &(self)->resource_id, (value))
 #define LassoDiscovery_resourceId_set(self, value) set_node((gpointer *) &(self)->resource_id, (value))
 
-
-
 /* Constructors, destructors & static methods implementations */
 
 #define new_LassoDiscovery lasso_discovery_new
@@ -384,14 +382,10 @@ typedef struct {
 
 /* Implementations of methods inherited from WsfProfile */
 
-int LassoDiscovery_setIdentityFromDump(LassoDiscovery *self, char *dump) {
-	return lasso_wsf_profile_set_identity_from_dump(LASSO_WSF_PROFILE(self), dump);
-}
-
-int LassoDiscovery_setSessionFromDump(LassoDiscovery *self, char *dump) {
-	return lasso_wsf_profile_set_session_from_dump(LASSO_WSF_PROFILE(self), dump);
-}
-
+#define LassoDiscovery_setIdentityFromDump(self, dump) \
+	lasso_wsf_profile_set_identity_from_dump(LASSO_WSF_PROFILE(self), dump)
+#define LassoDiscovery_setSessionFromDump(self, dump) \
+	lasso_wsf_profile_set_session_from_dump(LASSO_WSF_PROFILE(self), dump)
 #define LassoDiscovery_buildRequestMsg(self) lasso_wsf_profile_build_soap_request_msg(LASSO_WSF_PROFILE(self))
 
 /* Methods implementations */
@@ -421,7 +415,7 @@ int LassoDiscovery_setSessionFromDump(LassoDiscovery *self, char *dump) {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(InteractionProfileService) LassoInteractionProfileService;
 #endif
 typedef struct {
@@ -538,7 +532,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(PersonalProfileService) LassoPersonalProfileService;
 #endif
 typedef struct {
@@ -688,19 +682,28 @@ typedef struct {
 #define LassoPersonalProfileService_buildRequestMsg(self) lasso_wsf_profile_build_soap_request_msg(LASSO_WSF_PROFILE(self))
 
 /* Implementations of methods inherited from DataService */
-#define LassoPersonalProfileService_buildResponseMsg lasso_data_service_build_response_msg
-#define LassoPersonalProfileService_addData lasso_data_service_add_data
-#define LassoPersonalProfileService_addModification lasso_data_service_add_modification
-#define LassoPersonalProfileService_addQueryItem lasso_data_service_add_query_item
-#define LassoPersonalProfileService_initQuery lasso_data_service_init_query
-#define LassoPersonalProfileService_processModifyMsg lasso_data_service_process_modify_msg
-#define LassoPersonalProfileService_processModifyResponseMsg lasso_data_service_process_modify_response_msg
-#define LassoPersonalProfileService_processQueryMsg lasso_data_service_process_query_msg
-#define LassoPersonalProfileService_processQueryResponseMsg lasso_data_service_process_query_response_msg
-#define LassoPersonalProfileService_validateQuery lasso_data_service_validate_query
-#define LassoPersonalProfileService_getAnswer(self,select) get_xml_string(lasso_data_service_get_answer(LASSO_DATA_SERVICE(self), select))
-#define LassoPersonalProfileService_getAnswerForItemId(self,itemId) get_xml_string(lasso_data_service_get_answer_for_item_id(LASSO_DATA_SERVICE(self), itemId))
-#define LassoPersonalProfileService_initModify(self, select, xmlString) lasso_data_service_init_modify(LASSO_DATA_SERVICE(self), select, get_string_xml(xmlString))
+#define LassoPersonalProfileService_buildResponseMsg(self) \
+	lasso_data_service_build_response_msg(LASSO_DATA_SERVICE(self))
+#define LassoPersonalProfileService_addModification(self, select) \
+	lasso_data_service_add_modification(LASSO_DATA_SERVICE(self), select)
+#define LassoPersonalProfileService_addQueryItem(self, select, item_id) \
+	lasso_data_service_add_query_item(LASSO_DATA_SERVICE(self), select, item_id)
+#define LassoPersonalProfileService_initQuery(self, select, item_id, security_mech_id) \
+	lasso_data_service_init_query(LASSO_DATA_SERVICE(self), select, item_id, security_mech_id)
+#define LassoPersonalProfileService_processModifyMsg(self, soap_msg, security_mech_id) \
+	lasso_data_service_process_modify_msg(LASSO_DATA_SERVICE(self), soap_msg, security_mech_id)
+#define LassoPersonalProfileService_processModifyResponseMsg(self, soap_msg) \
+	lasso_data_service_process_modify_response_msg(LASSO_DATA_SERVICE(self), soap_msg)
+#define LassoPersonalProfileService_processQueryMsg(self, message, security_mech_id) \
+	lasso_data_service_process_query_msg(LASSO_DATA_SERVICE(self), message, security_mech_id)
+#define LassoPersonalProfileService_processQueryResponseMsg(self, message) \
+	lasso_data_service_process_query_response_msg(LASSO_DATA_SERVICE(self), message)
+#define LassoPersonalProfileService_getAnswer(self, select) \
+	get_xml_string(lasso_data_service_get_answer(LASSO_DATA_SERVICE(self), select))
+#define LassoPersonalProfileService_getAnswerForItemId(self, itemId) \
+	get_xml_string(lasso_data_service_get_answer_for_item_id(LASSO_DATA_SERVICE(self), itemId))
+#define LassoPersonalProfileService_initModify(self, select, xmlString) \
+	lasso_data_service_init_modify(LASSO_DATA_SERVICE(self), select, get_string_xml(xmlString))
 
 /* Methods implementations */
 #define LassoPersonalProfileService_getEmail lasso_personal_profile_service_get_email
@@ -712,7 +715,7 @@ typedef struct {
  * lasso:DataService
  ***********************************************************************/
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(DataService) LassoDataService;
 #endif
 typedef struct {
@@ -902,7 +905,6 @@ typedef struct {
 /* Methods implementations */
 #define LassoDataService_buildModifyResponseMsg lasso_data_service_build_modify_response_msg
 #define LassoDataService_buildResponseMsg lasso_data_service_build_response_msg
-#define LassoDataService_addData lasso_data_service_add_data
 #define LassoDataService_addModification lasso_data_service_add_modification
 #define LassoDataService_addQueryItem lasso_data_service_add_query_item
 #define LassoDataService_initModify(self, select, xmlString) lasso_data_service_init_modify(self, select, get_string_xml(xmlString))
@@ -911,7 +913,6 @@ typedef struct {
 #define LassoDataService_processModifyResponseMsg lasso_data_service_process_modify_response_msg
 #define LassoDataService_processQueryMsg lasso_data_service_process_query_msg
 #define LassoDataService_processQueryResponseMsg lasso_data_service_process_query_response_msg
-#define LassoDataService_validateQuery lasso_data_service_validate_query
 #define LassoDataService_getAnswer(self,select) get_xml_string(lasso_data_service_get_answer(self, select))
 #define LassoDataService_getAnswerForItemId(self,itemId) get_xml_string(lasso_data_service_get_answer_for_item_id(self, itemId))
 
@@ -937,7 +938,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(Authentication) LassoAuthentication;
 #endif
 typedef struct {
@@ -952,13 +953,13 @@ typedef struct {
 	%immutable msgUrl;
 	char *msgUrl;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(soapEnvelopeRequest) soap_envelope_request;
 #endif
 	%newobject soap_envelope_request_get;
 	LassoSoapEnvelope *soap_envelope_request;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(soapEnvelopeResponse) soap_envelope_response;
 #endif
 	%newobject soap_envelope_response_get;

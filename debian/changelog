@@ -1,3 +1,33 @@
+lasso (2.1.1-2ubuntu1) hardy; urgency=low
+
+  * Merge from debian unstable (LP: #134095), remaining changes:
+    + debian/control:
+      - Modify Maintainer value to match DebianMaintainerField spec.
+    + configure{,.ac}:
+      - Add missing quotes around the value for PHP[45]_LIBS.
+  * Fix two lintian warnings:
+    + debian/control:
+      - liblasso3-dev: Replace ${Source-Version} with ${binary:Version}
+    + debian/rules:
+      - Don't ignore a make clean error.
+
+ -- Michael Bienia <geser@ubuntu.com>  Thu, 01 Nov 2007 20:01:20 +0100
+
+lasso (2.1.1-2) unstable; urgency=low
+
+  * debian/rules, debian/*.files: updated from dh_movefiles to dh_install
+    * really install files in liblasso-perl package (closes: #446578)
+
+ -- Frederic Peters <fpeters@debian.org>  Mon, 15 Oct 2007 17:12:37 +0200
+
+lasso (2.1.1-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/control: added liblasso-perl, Perl bindings for the library.
+  * debian/rules: --enable-perl
+
+ -- Frederic Peters <fpeters@debian.org>  Wed, 22 Aug 2007 18:08:12 +0200
+
 lasso (2.0.0-1ubuntu1) gutsy; urgency=low
 
   * Merge from debian unstable. Remaining changes:

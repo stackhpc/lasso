@@ -117,6 +117,9 @@ REQUEST_TYPE_DST_QUERY = _lasso.REQUEST_TYPE_DST_QUERY
 REQUEST_TYPE_DST_MODIFY = _lasso.REQUEST_TYPE_DST_MODIFY
 REQUEST_TYPE_SASL_REQUEST = _lasso.REQUEST_TYPE_SASL_REQUEST
 REQUEST_TYPE_NAME_ID_MANAGEMENT = _lasso.REQUEST_TYPE_NAME_ID_MANAGEMENT
+REQUEST_TYPE_IDWSF2_DISCO_SVCMD_REGISTER = _lasso.REQUEST_TYPE_IDWSF2_DISCO_SVCMD_REGISTER
+REQUEST_TYPE_IDWSF2_DISCO_SVCMD_ASSOCIATION_ADD = _lasso.REQUEST_TYPE_IDWSF2_DISCO_SVCMD_ASSOCIATION_ADD
+REQUEST_TYPE_IDWSF2_DISCO_QUERY = _lasso.REQUEST_TYPE_IDWSF2_DISCO_QUERY
 LIB_AUTHN_CONTEXT_CLASS_REF_INTERNET_PROTOCOL = _lasso.LIB_AUTHN_CONTEXT_CLASS_REF_INTERNET_PROTOCOL
 LIB_AUTHN_CONTEXT_CLASS_REF_INTERNET_PROTOCOL_PASSWORD = _lasso.LIB_AUTHN_CONTEXT_CLASS_REF_INTERNET_PROTOCOL_PASSWORD
 LIB_AUTHN_CONTEXT_CLASS_REF_MOBILE_ONE_FACTOR_UNREGISTERED = _lasso.LIB_AUTHN_CONTEXT_CLASS_REF_MOBILE_ONE_FACTOR_UNREGISTERED
@@ -146,6 +149,9 @@ SAML_AUTHENTICATION_METHOD_XKMS = _lasso.SAML_AUTHENTICATION_METHOD_XKMS
 SAML_AUTHENTICATION_METHOD_XMLD_SIG = _lasso.SAML_AUTHENTICATION_METHOD_XMLD_SIG
 SAML_AUTHENTICATION_METHOD_UNSPECIFIED = _lasso.SAML_AUTHENTICATION_METHOD_UNSPECIFIED
 SAML_AUTHENTICATION_METHOD_LIBERTY = _lasso.SAML_AUTHENTICATION_METHOD_LIBERTY
+SIGNATURE_TYPE_NONE = _lasso.SIGNATURE_TYPE_NONE
+SIGNATURE_TYPE_SIMPLE = _lasso.SIGNATURE_TYPE_SIMPLE
+SIGNATURE_TYPE_WITHX509 = _lasso.SIGNATURE_TYPE_WITHX509
 SIGNATURE_METHOD_RSA_SHA1 = _lasso.SIGNATURE_METHOD_RSA_SHA1
 SIGNATURE_METHOD_DSA_SHA1 = _lasso.SIGNATURE_METHOD_DSA_SHA1
 ENCRYPTION_MODE_NONE = _lasso.ENCRYPTION_MODE_NONE
@@ -220,8 +226,10 @@ PROFILE_ERROR_MISSING_NAME_IDENTIFIER = _lasso.PROFILE_ERROR_MISSING_NAME_IDENTI
 PROFILE_ERROR_INVALID_ARTIFACT = _lasso.PROFILE_ERROR_INVALID_ARTIFACT
 PROFILE_ERROR_MISSING_ENCRYPTION_PRIVATE_KEY = _lasso.PROFILE_ERROR_MISSING_ENCRYPTION_PRIVATE_KEY
 PROFILE_ERROR_STATUS_NOT_SUCCESS = _lasso.PROFILE_ERROR_STATUS_NOT_SUCCESS
-LASSO_PROFILE_ERROR_MISSING_ISSUER = _lasso.LASSO_PROFILE_ERROR_MISSING_ISSUER
-LASSO_PROFILE_ERROR_MISSING_SERVICE_INSTANCE = _lasso.LASSO_PROFILE_ERROR_MISSING_SERVICE_INSTANCE
+PROFILE_ERROR_MISSING_ISSUER = _lasso.PROFILE_ERROR_MISSING_ISSUER
+PROFILE_ERROR_MISSING_SERVICE_INSTANCE = _lasso.PROFILE_ERROR_MISSING_SERVICE_INSTANCE
+PROFILE_ERROR_MISSING_ENDPOINT_REFERENCE = _lasso.PROFILE_ERROR_MISSING_ENDPOINT_REFERENCE
+PROFILE_ERROR_MISSING_ENDPOINT_REFERENCE_ADDRESS = _lasso.PROFILE_ERROR_MISSING_ENDPOINT_REFERENCE_ADDRESS
 LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ = _lasso.LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ
 PARAM_ERROR_INVALID_VALUE = _lasso.PARAM_ERROR_INVALID_VALUE
 LASSO_PARAM_ERROR_CHECK_FAILED = _lasso.LASSO_PARAM_ERROR_CHECK_FAILED
@@ -237,14 +245,26 @@ LOGIN_ERROR_NO_DEFAULT_ENDPOINT = _lasso.LOGIN_ERROR_NO_DEFAULT_ENDPOINT
 LOGIN_ERROR_ASSERTION_REPLAY = _lasso.LOGIN_ERROR_ASSERTION_REPLAY
 DEFEDERATION_ERROR_MISSING_NAME_IDENTIFIER = _lasso.DEFEDERATION_ERROR_MISSING_NAME_IDENTIFIER
 SOAP_FAULT_REDIRECT_REQUEST = _lasso.SOAP_FAULT_REDIRECT_REQUEST
-LASSO_SOAP_ERROR_MISSING_HEADER = _lasso.LASSO_SOAP_ERROR_MISSING_HEADER
-LASSO_SOAP_ERROR_MISSING_BODY = _lasso.LASSO_SOAP_ERROR_MISSING_BODY
+LASSO_SOAP_ERROR_MISSING_ENVELOPE = _lasso.LASSO_SOAP_ERROR_MISSING_ENVELOPE
+SOAP_ERROR_MISSING_HEADER = _lasso.SOAP_ERROR_MISSING_HEADER
+SOAP_ERROR_MISSING_BODY = _lasso.SOAP_ERROR_MISSING_BODY
+LASSO_SOAP_ERROR_MISSING_SOAP_FAULT_DETAIL = _lasso.LASSO_SOAP_ERROR_MISSING_SOAP_FAULT_DETAIL
 NAME_IDENTIFIER_MAPPING_ERROR_MISSING_TARGET_NAMESPACE = _lasso.NAME_IDENTIFIER_MAPPING_ERROR_MISSING_TARGET_NAMESPACE
 NAME_IDENTIFIER_MAPPING_ERROR_FORBIDDEN_CALL_ON_THIS_SIDE = _lasso.NAME_IDENTIFIER_MAPPING_ERROR_FORBIDDEN_CALL_ON_THIS_SIDE
 NAME_IDENTIFIER_MAPPING_ERROR_MISSING_TARGET_IDENTIFIER = _lasso.NAME_IDENTIFIER_MAPPING_ERROR_MISSING_TARGET_IDENTIFIER
-LASSO_DATA_SERVICE_ERROR_UNREGISTERED_DST = _lasso.LASSO_DATA_SERVICE_ERROR_UNREGISTERED_DST
-LASSO_WSF_PROFILE_ERROR_MISSING_CORRELATION = _lasso.LASSO_WSF_PROFILE_ERROR_MISSING_CORRELATION
-LASSO_WSF_PROFILE_ERROR_MISSING_SECURITY = _lasso.LASSO_WSF_PROFILE_ERROR_MISSING_SECURITY
+DATA_SERVICE_ERROR_UNREGISTERED_DST = _lasso.DATA_SERVICE_ERROR_UNREGISTERED_DST
+WSF_PROFILE_ERROR_MISSING_CORRELATION = _lasso.WSF_PROFILE_ERROR_MISSING_CORRELATION
+WSF_PROFILE_ERROR_MISSING_SECURITY = _lasso.WSF_PROFILE_ERROR_MISSING_SECURITY
+DISCOVERY_ERROR_SVC_METADATA_REGISTER_FAILED = _lasso.DISCOVERY_ERROR_SVC_METADATA_REGISTER_FAILED
+DISCOVERY_ERROR_SVC_METADATA_ASSOCIATION_ADD_FAILED = _lasso.DISCOVERY_ERROR_SVC_METADATA_ASSOCIATION_ADD_FAILED
+DISCOVERY_ERROR_MISSING_REQUESTED_SERVICE = _lasso.DISCOVERY_ERROR_MISSING_REQUESTED_SERVICE
+DISCOVERY_ERROR_FAILED_TO_BUILD_ENDPOINT_REFERENCE = _lasso.DISCOVERY_ERROR_FAILED_TO_BUILD_ENDPOINT_REFERENCE
+LASSO_DST_ERROR_MISSING_SERVICE_DATA = _lasso.LASSO_DST_ERROR_MISSING_SERVICE_DATA
+DST_ERROR_QUERY_FAILED = _lasso.DST_ERROR_QUERY_FAILED
+DST_ERROR_QUERY_PARTIALLY_FAILED = _lasso.DST_ERROR_QUERY_PARTIALLY_FAILED
+LASSO_DST_ERROR_MODIFY_FAILED = _lasso.LASSO_DST_ERROR_MODIFY_FAILED
+LASSO_DST_ERROR_MODIFY_PARTIALLY_FAILED = _lasso.LASSO_DST_ERROR_MODIFY_PARTIALLY_FAILED
+LASSO_DST_ERROR_NEW_DATA_MISSING = _lasso.LASSO_DST_ERROR_NEW_DATA_MISSING
 init = _lasso.init
 shutdown = _lasso.shutdown
 CHECK_VERSION_EXACT = _lasso.CHECK_VERSION_EXACT
@@ -252,6 +272,7 @@ CHECK_VERSIONABI_COMPATIBLE = _lasso.CHECK_VERSIONABI_COMPATIBLE
 CHECK_VERSION_NUMERIC = _lasso.CHECK_VERSION_NUMERIC
 checkVersion = _lasso.checkVersion
 registerDstService = _lasso.registerDstService
+registerIdWsf2DstService = _lasso.registerIdWsf2DstService
 class Node(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, Node, name, value)
@@ -313,6 +334,58 @@ class StringList(_object):
 StringList_swigregister = _lasso.StringList_swigregister
 StringList_swigregister(StringList)
 StringList_frompointer = _lasso.StringList_frompointer
+
+class StringDict(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, StringDict, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, StringDict, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _lasso.new_StringDict(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _lasso.delete_StringDict
+    __del__ = lambda self : None;
+    def cast(*args): return _lasso.StringDict_cast(*args)
+    __swig_getmethods__["frompointer"] = lambda x: _lasso.StringDict_frompointer
+    if _newclass:frompointer = staticmethod(_lasso.StringDict_frompointer)
+    def __getitem__(*args): return _lasso.StringDict___getitem__(*args)
+    def __setitem__(*args): return _lasso.StringDict___setitem__(*args)
+StringDict_swigregister = _lasso.StringDict_swigregister
+StringDict_swigregister(StringDict)
+StringDict_frompointer = _lasso.StringDict_frompointer
+
+class MiscTextNode(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, MiscTextNode, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, MiscTextNode, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["content"] = _lasso.MiscTextNode_content_set
+    __swig_getmethods__["content"] = _lasso.MiscTextNode_content_get
+    if _newclass:content = _swig_property(_lasso.MiscTextNode_content_get, _lasso.MiscTextNode_content_set)
+    __swig_setmethods__["name"] = _lasso.MiscTextNode_name_set
+    __swig_getmethods__["name"] = _lasso.MiscTextNode_name_get
+    if _newclass:name = _swig_property(_lasso.MiscTextNode_name_get, _lasso.MiscTextNode_name_set)
+    __swig_setmethods__["ns_href"] = _lasso.MiscTextNode_ns_href_set
+    __swig_getmethods__["ns_href"] = _lasso.MiscTextNode_ns_href_get
+    if _newclass:ns_href = _swig_property(_lasso.MiscTextNode_ns_href_get, _lasso.MiscTextNode_ns_href_set)
+    __swig_setmethods__["ns_prefix"] = _lasso.MiscTextNode_ns_prefix_set
+    __swig_getmethods__["ns_prefix"] = _lasso.MiscTextNode_ns_prefix_get
+    if _newclass:ns_prefix = _swig_property(_lasso.MiscTextNode_ns_prefix_get, _lasso.MiscTextNode_ns_prefix_set)
+    __swig_setmethods__["text_child"] = _lasso.MiscTextNode_text_child_set
+    __swig_getmethods__["text_child"] = _lasso.MiscTextNode_text_child_get
+    if _newclass:text_child = _swig_property(_lasso.MiscTextNode_text_child_get, _lasso.MiscTextNode_text_child_set)
+    def __init__(self, *args): 
+        this = _lasso.new_MiscTextNode(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _lasso.delete_MiscTextNode
+    __del__ = lambda self : None;
+    def dump(*args): return _lasso.MiscTextNode_dump(*args)
+MiscTextNode_swigregister = _lasso.MiscTextNode_swigregister
+MiscTextNode_swigregister(MiscTextNode)
 
 class SamlAdvice(_object):
     __swig_setmethods__ = {}
@@ -1672,6 +1745,9 @@ class Login(_object):
     if _newclass:assertionArtifact = _swig_property(_lasso.Login_assertionArtifact_get)
     __swig_getmethods__["protocolProfile"] = _lasso.Login_protocolProfile_get
     if _newclass:protocolProfile = _swig_property(_lasso.Login_protocolProfile_get)
+    __swig_setmethods__["assertion"] = _lasso.Login_assertion_set
+    __swig_getmethods__["assertion"] = _lasso.Login_assertion_get
+    if _newclass:assertion = _swig_property(_lasso.Login_assertion_get, _lasso.Login_assertion_set)
     __swig_getmethods__["artifact"] = _lasso.Login_artifact_get
     if _newclass:artifact = _swig_property(_lasso.Login_artifact_get)
     __swig_setmethods__["artifactMessage"] = _lasso.Login_artifactMessage_set
@@ -2201,9 +2277,18 @@ class Saml2Assertion(_object):
     __swig_setmethods__["advice"] = _lasso.Saml2Assertion_advice_set
     __swig_getmethods__["advice"] = _lasso.Saml2Assertion_advice_get
     if _newclass:advice = _swig_property(_lasso.Saml2Assertion_advice_get, _lasso.Saml2Assertion_advice_set)
+    __swig_setmethods__["statement"] = _lasso.Saml2Assertion_statement_set
+    __swig_getmethods__["statement"] = _lasso.Saml2Assertion_statement_get
+    if _newclass:statement = _swig_property(_lasso.Saml2Assertion_statement_get, _lasso.Saml2Assertion_statement_set)
     __swig_setmethods__["authnStatement"] = _lasso.Saml2Assertion_authnStatement_set
     __swig_getmethods__["authnStatement"] = _lasso.Saml2Assertion_authnStatement_get
     if _newclass:authnStatement = _swig_property(_lasso.Saml2Assertion_authnStatement_get, _lasso.Saml2Assertion_authnStatement_set)
+    __swig_setmethods__["authzDecisionStatement"] = _lasso.Saml2Assertion_authzDecisionStatement_set
+    __swig_getmethods__["authzDecisionStatement"] = _lasso.Saml2Assertion_authzDecisionStatement_get
+    if _newclass:authzDecisionStatement = _swig_property(_lasso.Saml2Assertion_authzDecisionStatement_get, _lasso.Saml2Assertion_authzDecisionStatement_set)
+    __swig_setmethods__["attributeStatement"] = _lasso.Saml2Assertion_attributeStatement_set
+    __swig_getmethods__["attributeStatement"] = _lasso.Saml2Assertion_attributeStatement_get
+    if _newclass:attributeStatement = _swig_property(_lasso.Saml2Assertion_attributeStatement_get, _lasso.Saml2Assertion_attributeStatement_set)
     def __init__(self, *args): 
         this = _lasso.new_Saml2Assertion(*args)
         try: self.this.append(this)
@@ -2270,6 +2355,12 @@ class Saml2Conditions(_object):
     __swig_setmethods__["audienceRestriction"] = _lasso.Saml2Conditions_audienceRestriction_set
     __swig_getmethods__["audienceRestriction"] = _lasso.Saml2Conditions_audienceRestriction_get
     if _newclass:audienceRestriction = _swig_property(_lasso.Saml2Conditions_audienceRestriction_get, _lasso.Saml2Conditions_audienceRestriction_set)
+    __swig_setmethods__["oneTimeUse"] = _lasso.Saml2Conditions_oneTimeUse_set
+    __swig_getmethods__["oneTimeUse"] = _lasso.Saml2Conditions_oneTimeUse_get
+    if _newclass:oneTimeUse = _swig_property(_lasso.Saml2Conditions_oneTimeUse_get, _lasso.Saml2Conditions_oneTimeUse_set)
+    __swig_setmethods__["proxyRestriction"] = _lasso.Saml2Conditions_proxyRestriction_set
+    __swig_getmethods__["proxyRestriction"] = _lasso.Saml2Conditions_proxyRestriction_get
+    if _newclass:proxyRestriction = _swig_property(_lasso.Saml2Conditions_proxyRestriction_get, _lasso.Saml2Conditions_proxyRestriction_set)
     def __init__(self, *args): 
         this = _lasso.new_Saml2Conditions(*args)
         try: self.this.append(this)
@@ -2286,6 +2377,18 @@ class Saml2Evidence(_object):
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, Saml2Evidence, name)
     __repr__ = _swig_repr
+    __swig_setmethods__["assertionIDRef"] = _lasso.Saml2Evidence_assertionIDRef_set
+    __swig_getmethods__["assertionIDRef"] = _lasso.Saml2Evidence_assertionIDRef_get
+    if _newclass:assertionIDRef = _swig_property(_lasso.Saml2Evidence_assertionIDRef_get, _lasso.Saml2Evidence_assertionIDRef_set)
+    __swig_setmethods__["assertionURIRef"] = _lasso.Saml2Evidence_assertionURIRef_set
+    __swig_getmethods__["assertionURIRef"] = _lasso.Saml2Evidence_assertionURIRef_get
+    if _newclass:assertionURIRef = _swig_property(_lasso.Saml2Evidence_assertionURIRef_get, _lasso.Saml2Evidence_assertionURIRef_set)
+    __swig_setmethods__["assertion"] = _lasso.Saml2Evidence_assertion_set
+    __swig_getmethods__["assertion"] = _lasso.Saml2Evidence_assertion_get
+    if _newclass:assertion = _swig_property(_lasso.Saml2Evidence_assertion_get, _lasso.Saml2Evidence_assertion_set)
+    __swig_setmethods__["encryptedAssertion"] = _lasso.Saml2Evidence_encryptedAssertion_set
+    __swig_getmethods__["encryptedAssertion"] = _lasso.Saml2Evidence_encryptedAssertion_get
+    if _newclass:encryptedAssertion = _swig_property(_lasso.Saml2Evidence_encryptedAssertion_get, _lasso.Saml2Evidence_encryptedAssertion_set)
     def __init__(self, *args): 
         this = _lasso.new_Saml2Evidence(*args)
         try: self.this.append(this)
@@ -2308,9 +2411,9 @@ class Saml2NameID(_object):
     __swig_setmethods__["format"] = _lasso.Saml2NameID_format_set
     __swig_getmethods__["format"] = _lasso.Saml2NameID_format_get
     if _newclass:format = _swig_property(_lasso.Saml2NameID_format_get, _lasso.Saml2NameID_format_set)
-    __swig_setmethods__["SPProvidedID"] = _lasso.Saml2NameID_SPProvidedID_set
-    __swig_getmethods__["SPProvidedID"] = _lasso.Saml2NameID_SPProvidedID_get
-    if _newclass:SPProvidedID = _swig_property(_lasso.Saml2NameID_SPProvidedID_get, _lasso.Saml2NameID_SPProvidedID_set)
+    __swig_setmethods__["spProvidedId"] = _lasso.Saml2NameID_spProvidedId_set
+    __swig_getmethods__["spProvidedId"] = _lasso.Saml2NameID_spProvidedId_get
+    if _newclass:spProvidedId = _swig_property(_lasso.Saml2NameID_spProvidedId_get, _lasso.Saml2NameID_spProvidedId_set)
     __swig_setmethods__["nameQualifier"] = _lasso.Saml2NameID_nameQualifier_set
     __swig_getmethods__["nameQualifier"] = _lasso.Saml2NameID_nameQualifier_get
     if _newclass:nameQualifier = _swig_property(_lasso.Saml2NameID_nameQualifier_get, _lasso.Saml2NameID_nameQualifier_set)
@@ -2412,6 +2515,18 @@ class Saml2Advice(_object):
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, Saml2Advice, name)
     __repr__ = _swig_repr
+    __swig_setmethods__["assertionIDRef"] = _lasso.Saml2Advice_assertionIDRef_set
+    __swig_getmethods__["assertionIDRef"] = _lasso.Saml2Advice_assertionIDRef_get
+    if _newclass:assertionIDRef = _swig_property(_lasso.Saml2Advice_assertionIDRef_get, _lasso.Saml2Advice_assertionIDRef_set)
+    __swig_setmethods__["assertionURIRef"] = _lasso.Saml2Advice_assertionURIRef_set
+    __swig_getmethods__["assertionURIRef"] = _lasso.Saml2Advice_assertionURIRef_get
+    if _newclass:assertionURIRef = _swig_property(_lasso.Saml2Advice_assertionURIRef_get, _lasso.Saml2Advice_assertionURIRef_set)
+    __swig_setmethods__["assertion"] = _lasso.Saml2Advice_assertion_set
+    __swig_getmethods__["assertion"] = _lasso.Saml2Advice_assertion_get
+    if _newclass:assertion = _swig_property(_lasso.Saml2Advice_assertion_get, _lasso.Saml2Advice_assertion_set)
+    __swig_setmethods__["encryptedAssertion"] = _lasso.Saml2Advice_encryptedAssertion_set
+    __swig_getmethods__["encryptedAssertion"] = _lasso.Saml2Advice_encryptedAssertion_get
+    if _newclass:encryptedAssertion = _swig_property(_lasso.Saml2Advice_encryptedAssertion_get, _lasso.Saml2Advice_encryptedAssertion_set)
     def __init__(self, *args): 
         this = _lasso.new_Saml2Advice(*args)
         try: self.this.append(this)
@@ -2456,9 +2571,9 @@ class Saml2AuthnContext(_object):
     __swig_setmethods__["authnContextDeclRef"] = _lasso.Saml2AuthnContext_authnContextDeclRef_set
     __swig_getmethods__["authnContextDeclRef"] = _lasso.Saml2AuthnContext_authnContextDeclRef_get
     if _newclass:authnContextDeclRef = _swig_property(_lasso.Saml2AuthnContext_authnContextDeclRef_get, _lasso.Saml2AuthnContext_authnContextDeclRef_set)
-    __swig_setmethods__["AuthenticatingAuthority"] = _lasso.Saml2AuthnContext_AuthenticatingAuthority_set
-    __swig_getmethods__["AuthenticatingAuthority"] = _lasso.Saml2AuthnContext_AuthenticatingAuthority_get
-    if _newclass:AuthenticatingAuthority = _swig_property(_lasso.Saml2AuthnContext_AuthenticatingAuthority_get, _lasso.Saml2AuthnContext_AuthenticatingAuthority_set)
+    __swig_setmethods__["authenticatingAuthority"] = _lasso.Saml2AuthnContext_authenticatingAuthority_set
+    __swig_getmethods__["authenticatingAuthority"] = _lasso.Saml2AuthnContext_authenticatingAuthority_get
+    if _newclass:authenticatingAuthority = _swig_property(_lasso.Saml2AuthnContext_authenticatingAuthority_get, _lasso.Saml2AuthnContext_authenticatingAuthority_set)
     def __init__(self, *args): 
         this = _lasso.new_Saml2AuthnContext(*args)
         try: self.this.append(this)
@@ -2478,9 +2593,9 @@ class Saml2SubjectLocality(_object):
     __swig_setmethods__["address"] = _lasso.Saml2SubjectLocality_address_set
     __swig_getmethods__["address"] = _lasso.Saml2SubjectLocality_address_get
     if _newclass:address = _swig_property(_lasso.Saml2SubjectLocality_address_get, _lasso.Saml2SubjectLocality_address_set)
-    __swig_setmethods__["dnsName"] = _lasso.Saml2SubjectLocality_dnsName_set
-    __swig_getmethods__["dnsName"] = _lasso.Saml2SubjectLocality_dnsName_get
-    if _newclass:dnsName = _swig_property(_lasso.Saml2SubjectLocality_dnsName_get, _lasso.Saml2SubjectLocality_dnsName_set)
+    __swig_setmethods__["dNSName"] = _lasso.Saml2SubjectLocality_dNSName_set
+    __swig_getmethods__["dNSName"] = _lasso.Saml2SubjectLocality_dNSName_get
+    if _newclass:dNSName = _swig_property(_lasso.Saml2SubjectLocality_dNSName_get, _lasso.Saml2SubjectLocality_dNSName_set)
     def __init__(self, *args): 
         this = _lasso.new_Saml2SubjectLocality(*args)
         try: self.this.append(this)
@@ -2628,6 +2743,12 @@ class Saml2AttributeStatement(_object):
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, Saml2AttributeStatement, name)
     __repr__ = _swig_repr
+    __swig_setmethods__["attribute"] = _lasso.Saml2AttributeStatement_attribute_set
+    __swig_getmethods__["attribute"] = _lasso.Saml2AttributeStatement_attribute_get
+    if _newclass:attribute = _swig_property(_lasso.Saml2AttributeStatement_attribute_get, _lasso.Saml2AttributeStatement_attribute_set)
+    __swig_setmethods__["encryptedAttribute"] = _lasso.Saml2AttributeStatement_encryptedAttribute_set
+    __swig_getmethods__["encryptedAttribute"] = _lasso.Saml2AttributeStatement_encryptedAttribute_get
+    if _newclass:encryptedAttribute = _swig_property(_lasso.Saml2AttributeStatement_encryptedAttribute_get, _lasso.Saml2AttributeStatement_encryptedAttribute_set)
     def __init__(self, *args): 
         this = _lasso.new_Saml2AttributeStatement(*args)
         try: self.this.append(this)
@@ -2644,9 +2765,9 @@ class Samlp2IDPEntry(_object):
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, Samlp2IDPEntry, name)
     __repr__ = _swig_repr
-    __swig_setmethods__["providerId"] = _lasso.Samlp2IDPEntry_providerId_set
-    __swig_getmethods__["providerId"] = _lasso.Samlp2IDPEntry_providerId_get
-    if _newclass:providerId = _swig_property(_lasso.Samlp2IDPEntry_providerId_get, _lasso.Samlp2IDPEntry_providerId_set)
+    __swig_setmethods__["providerID"] = _lasso.Samlp2IDPEntry_providerID_set
+    __swig_getmethods__["providerID"] = _lasso.Samlp2IDPEntry_providerID_get
+    if _newclass:providerID = _swig_property(_lasso.Samlp2IDPEntry_providerID_get, _lasso.Samlp2IDPEntry_providerID_set)
     __swig_setmethods__["name"] = _lasso.Samlp2IDPEntry_name_set
     __swig_getmethods__["name"] = _lasso.Samlp2IDPEntry_name_get
     if _newclass:name = _swig_property(_lasso.Samlp2IDPEntry_name_get, _lasso.Samlp2IDPEntry_name_set)
@@ -2750,6 +2871,12 @@ class Samlp2Response(_object):
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, Samlp2Response, name)
     __repr__ = _swig_repr
+    __swig_setmethods__["assertion"] = _lasso.Samlp2Response_assertion_set
+    __swig_getmethods__["assertion"] = _lasso.Samlp2Response_assertion_get
+    if _newclass:assertion = _swig_property(_lasso.Samlp2Response_assertion_get, _lasso.Samlp2Response_assertion_set)
+    __swig_setmethods__["encryptedAssertion"] = _lasso.Samlp2Response_encryptedAssertion_set
+    __swig_getmethods__["encryptedAssertion"] = _lasso.Samlp2Response_encryptedAssertion_get
+    if _newclass:encryptedAssertion = _swig_property(_lasso.Samlp2Response_encryptedAssertion_get, _lasso.Samlp2Response_encryptedAssertion_set)
     __swig_setmethods__["issuer"] = _lasso.Samlp2Response_issuer_set
     __swig_getmethods__["issuer"] = _lasso.Samlp2Response_issuer_get
     if _newclass:issuer = _swig_property(_lasso.Samlp2Response_issuer_get, _lasso.Samlp2Response_issuer_set)
@@ -2777,9 +2904,6 @@ class Samlp2Response(_object):
     __swig_setmethods__["consent"] = _lasso.Samlp2Response_consent_set
     __swig_getmethods__["consent"] = _lasso.Samlp2Response_consent_get
     if _newclass:consent = _swig_property(_lasso.Samlp2Response_consent_get, _lasso.Samlp2Response_consent_set)
-    __swig_setmethods__["assertion"] = _lasso.Samlp2Response_assertion_set
-    __swig_getmethods__["assertion"] = _lasso.Samlp2Response_assertion_get
-    if _newclass:assertion = _swig_property(_lasso.Samlp2Response_assertion_get, _lasso.Samlp2Response_assertion_set)
     def __init__(self, *args): 
         this = _lasso.new_Samlp2Response(*args)
         try: self.this.append(this)
@@ -2879,9 +3003,9 @@ class Samlp2AssertionIDRequest(_object):
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, Samlp2AssertionIDRequest, name)
     __repr__ = _swig_repr
-    __swig_setmethods__["assertionIdRef"] = _lasso.Samlp2AssertionIDRequest_assertionIdRef_set
-    __swig_getmethods__["assertionIdRef"] = _lasso.Samlp2AssertionIDRequest_assertionIdRef_get
-    if _newclass:assertionIdRef = _swig_property(_lasso.Samlp2AssertionIDRequest_assertionIdRef_get, _lasso.Samlp2AssertionIDRequest_assertionIdRef_set)
+    __swig_setmethods__["assertionIDRef"] = _lasso.Samlp2AssertionIDRequest_assertionIDRef_set
+    __swig_getmethods__["assertionIDRef"] = _lasso.Samlp2AssertionIDRequest_assertionIDRef_get
+    if _newclass:assertionIDRef = _swig_property(_lasso.Samlp2AssertionIDRequest_assertionIDRef_get, _lasso.Samlp2AssertionIDRequest_assertionIDRef_set)
     __swig_setmethods__["issuer"] = _lasso.Samlp2AssertionIDRequest_issuer_set
     __swig_getmethods__["issuer"] = _lasso.Samlp2AssertionIDRequest_issuer_get
     if _newclass:issuer = _swig_property(_lasso.Samlp2AssertionIDRequest_issuer_get, _lasso.Samlp2AssertionIDRequest_issuer_set)
@@ -3020,15 +3144,15 @@ class Samlp2AuthnRequest(_object):
     __swig_setmethods__["assertionConsumerServiceIndex"] = _lasso.Samlp2AuthnRequest_assertionConsumerServiceIndex_set
     __swig_getmethods__["assertionConsumerServiceIndex"] = _lasso.Samlp2AuthnRequest_assertionConsumerServiceIndex_get
     if _newclass:assertionConsumerServiceIndex = _swig_property(_lasso.Samlp2AuthnRequest_assertionConsumerServiceIndex_get, _lasso.Samlp2AuthnRequest_assertionConsumerServiceIndex_set)
-    __swig_setmethods__["AssertionConsumerServiceURL"] = _lasso.Samlp2AuthnRequest_AssertionConsumerServiceURL_set
-    __swig_getmethods__["AssertionConsumerServiceURL"] = _lasso.Samlp2AuthnRequest_AssertionConsumerServiceURL_get
-    if _newclass:AssertionConsumerServiceURL = _swig_property(_lasso.Samlp2AuthnRequest_AssertionConsumerServiceURL_get, _lasso.Samlp2AuthnRequest_AssertionConsumerServiceURL_set)
+    __swig_setmethods__["assertionConsumerServiceURL"] = _lasso.Samlp2AuthnRequest_assertionConsumerServiceURL_set
+    __swig_getmethods__["assertionConsumerServiceURL"] = _lasso.Samlp2AuthnRequest_assertionConsumerServiceURL_get
+    if _newclass:assertionConsumerServiceURL = _swig_property(_lasso.Samlp2AuthnRequest_assertionConsumerServiceURL_get, _lasso.Samlp2AuthnRequest_assertionConsumerServiceURL_set)
     __swig_setmethods__["attributeConsumingServiceIndex"] = _lasso.Samlp2AuthnRequest_attributeConsumingServiceIndex_set
     __swig_getmethods__["attributeConsumingServiceIndex"] = _lasso.Samlp2AuthnRequest_attributeConsumingServiceIndex_get
     if _newclass:attributeConsumingServiceIndex = _swig_property(_lasso.Samlp2AuthnRequest_attributeConsumingServiceIndex_get, _lasso.Samlp2AuthnRequest_attributeConsumingServiceIndex_set)
-    __swig_setmethods__["ProviderName"] = _lasso.Samlp2AuthnRequest_ProviderName_set
-    __swig_getmethods__["ProviderName"] = _lasso.Samlp2AuthnRequest_ProviderName_get
-    if _newclass:ProviderName = _swig_property(_lasso.Samlp2AuthnRequest_ProviderName_get, _lasso.Samlp2AuthnRequest_ProviderName_set)
+    __swig_setmethods__["providerName"] = _lasso.Samlp2AuthnRequest_providerName_set
+    __swig_getmethods__["providerName"] = _lasso.Samlp2AuthnRequest_providerName_get
+    if _newclass:providerName = _swig_property(_lasso.Samlp2AuthnRequest_providerName_get, _lasso.Samlp2AuthnRequest_providerName_set)
     __swig_setmethods__["subject"] = _lasso.Samlp2AuthnRequest_subject_set
     __swig_getmethods__["subject"] = _lasso.Samlp2AuthnRequest_subject_get
     if _newclass:subject = _swig_property(_lasso.Samlp2AuthnRequest_subject_get, _lasso.Samlp2AuthnRequest_subject_set)
@@ -3483,9 +3607,9 @@ class Samlp2ManageNameIDRequest(_object):
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, Samlp2ManageNameIDRequest, name)
     __repr__ = _swig_repr
-    __swig_setmethods__["newId"] = _lasso.Samlp2ManageNameIDRequest_newId_set
-    __swig_getmethods__["newId"] = _lasso.Samlp2ManageNameIDRequest_newId_get
-    if _newclass:newId = _swig_property(_lasso.Samlp2ManageNameIDRequest_newId_get, _lasso.Samlp2ManageNameIDRequest_newId_set)
+    __swig_setmethods__["newID"] = _lasso.Samlp2ManageNameIDRequest_newID_set
+    __swig_getmethods__["newID"] = _lasso.Samlp2ManageNameIDRequest_newID_get
+    if _newclass:newID = _swig_property(_lasso.Samlp2ManageNameIDRequest_newID_get, _lasso.Samlp2ManageNameIDRequest_newID_set)
     __swig_setmethods__["nameID"] = _lasso.Samlp2ManageNameIDRequest_nameID_set
     __swig_getmethods__["nameID"] = _lasso.Samlp2ManageNameIDRequest_nameID_get
     if _newclass:nameID = _swig_property(_lasso.Samlp2ManageNameIDRequest_nameID_get, _lasso.Samlp2ManageNameIDRequest_nameID_set)
@@ -3535,9 +3659,9 @@ class Samlp2Scoping(_object):
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, Samlp2Scoping, name)
     __repr__ = _swig_repr
-    __swig_setmethods__["requesterId"] = _lasso.Samlp2Scoping_requesterId_set
-    __swig_getmethods__["requesterId"] = _lasso.Samlp2Scoping_requesterId_get
-    if _newclass:requesterId = _swig_property(_lasso.Samlp2Scoping_requesterId_get, _lasso.Samlp2Scoping_requesterId_set)
+    __swig_setmethods__["requesterID"] = _lasso.Samlp2Scoping_requesterID_set
+    __swig_getmethods__["requesterID"] = _lasso.Samlp2Scoping_requesterID_get
+    if _newclass:requesterID = _swig_property(_lasso.Samlp2Scoping_requesterID_get, _lasso.Samlp2Scoping_requesterID_set)
     __swig_setmethods__["proxyCount"] = _lasso.Samlp2Scoping_proxyCount_set
     __swig_getmethods__["proxyCount"] = _lasso.Samlp2Scoping_proxyCount_get
     if _newclass:proxyCount = _swig_property(_lasso.Samlp2Scoping_proxyCount_get, _lasso.Samlp2Scoping_proxyCount_set)

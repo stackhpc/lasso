@@ -1,8 +1,8 @@
-/* $Id: saml_subject_confirmation.c,v 1.19 2007/01/06 22:55:01 fpeters Exp $
+/* $Id: saml_subject_confirmation.c 3237 2007-05-30 17:17:45Z dlaniel $
  *
- * Lasso - A free implementation of the Samlerty Alliance specifications.
+ * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.

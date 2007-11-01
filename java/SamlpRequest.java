@@ -98,12 +98,12 @@ public class SamlpRequest extends SamlpRequestAbstract {
     return lassoJNI.SamlpRequest_signMethod_get(swigCPtr, this);
   }
 
-  public void setSignType(SWIGTYPE_p_LassoSignatureType value) {
-    lassoJNI.SamlpRequest_signType_set(swigCPtr, this, SWIGTYPE_p_LassoSignatureType.getCPtr(value));
+  public void setSignType(int value) {
+    lassoJNI.SamlpRequest_signType_set(swigCPtr, this, value);
   }
 
-  public SWIGTYPE_p_LassoSignatureType getSignType() {
-    return new SWIGTYPE_p_LassoSignatureType(lassoJNI.SamlpRequest_signType_get(swigCPtr, this), true);
+  public int getSignType() {
+    return lassoJNI.SamlpRequest_signType_get(swigCPtr, this);
   }
 
   public SamlpRequest() {

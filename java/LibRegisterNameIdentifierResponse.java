@@ -63,8 +63,8 @@ public class LibRegisterNameIdentifierResponse extends LibStatusResponse {
     this(lassoJNI.new_LibRegisterNameIdentifierResponse(), true);
   }
 
-  public static LibRegisterNameIdentifierResponse newFull(String providerID, String statusCodeValue, LibRegisterNameIdentifierRequest request, SWIGTYPE_p_LassoSignatureType sign_type, int sign_method) {
-    long cPtr = lassoJNI.LibRegisterNameIdentifierResponse_newFull(providerID, statusCodeValue, LibRegisterNameIdentifierRequest.getCPtr(request), request, SWIGTYPE_p_LassoSignatureType.getCPtr(sign_type), sign_method);
+  public static LibRegisterNameIdentifierResponse newFull(String providerID, String statusCodeValue, LibRegisterNameIdentifierRequest request, int sign_type, int sign_method) {
+    long cPtr = lassoJNI.LibRegisterNameIdentifierResponse_newFull(providerID, statusCodeValue, LibRegisterNameIdentifierRequest.getCPtr(request), request, sign_type, sign_method);
     return (cPtr == 0) ? null : new LibRegisterNameIdentifierResponse(cPtr, true);
   }
 

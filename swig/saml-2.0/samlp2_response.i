@@ -1,60 +1,89 @@
+/* $Id: samlp2_response.i 3385 2007-08-21 11:17:52Z fpeters $ 
+ *
+ * Lasso - A free implementation of the Liberty Alliance specifications.
+ *
+ * Copyright (C) 2004-2007 Entr'ouvert
+ * http://lasso.entrouvert.org
+ * 
+ * Authors: See AUTHORS file in top-level directory.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(Samlp2Response) LassoSamlp2Response;
 #endif
 typedef struct {
 } LassoSamlp2Response;
 %extend LassoSamlp2Response {
 
+#ifndef SWIG_PHP_RENAMES
+	%rename(assertion) Assertion;
+#endif
+	%newobject Assertion_get;
+	LassoNodeList *Assertion;
+
+#ifndef SWIG_PHP_RENAMES
+	%rename(encryptedAssertion) EncryptedAssertion;
+#endif
+	%newobject EncryptedAssertion_get;
+	LassoNodeList *EncryptedAssertion;
+
 	/* inherited from Samlp2StatusResponse */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(issuer) Issuer;
 #endif
 	%newobject *Issuer_get;
 	LassoSaml2NameID *Issuer;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(extensions) Extensions;
 #endif
 	%newobject *Extensions_get;
 	LassoSamlp2Extensions *Extensions;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(status) Status;
 #endif
 	%newobject *Status_get;
 	LassoSamlp2Status *Status;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(iD) ID;
 #endif
 	char *ID;
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(inResponseTo) InResponseTo;
 #endif
 	char *InResponseTo;
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(version) Version;
 #endif
 	char *Version;
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(issueInstant) IssueInstant;
 #endif
 	char *IssueInstant;
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(destination) Destination;
 #endif
 	char *Destination;
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(consent) Consent;
 #endif
 	char *Consent;
-
-#ifndef SWIGPHP4
-	%rename(assertion) Assertion;
-#endif
-	%newobject Assertion_get;
-	LassoNodeList *Assertion;
 
 	/* Constructor, Destructor & Static Methods */
 	LassoSamlp2Response();
@@ -66,6 +95,22 @@ typedef struct {
 }
 
 %{
+
+/* Assertion */
+
+#define LassoSamlp2Response_get_Assertion(self) get_node_list((self)->Assertion)
+#define LassoSamlp2Response_Assertion_get(self) get_node_list((self)->Assertion)
+#define LassoSamlp2Response_set_Assertion(self,value) set_node_list(&(self)->Assertion, (value))
+#define LassoSamlp2Response_Assertion_set(self,value) set_node_list(&(self)->Assertion, (value))
+                    
+
+/* EncryptedAssertion */
+
+#define LassoSamlp2Response_get_EncryptedAssertion(self) get_node_list((self)->EncryptedAssertion)
+#define LassoSamlp2Response_EncryptedAssertion_get(self) get_node_list((self)->EncryptedAssertion)
+#define LassoSamlp2Response_set_EncryptedAssertion(self,value) set_node_list(&(self)->EncryptedAssertion, (value))
+#define LassoSamlp2Response_EncryptedAssertion_set(self,value) set_node_list(&(self)->EncryptedAssertion, (value))
+                    
 
 /* inherited from StatusResponse */
 
@@ -140,14 +185,6 @@ typedef struct {
 
 #define LassoSamlp2Response_set_Consent(self,value) set_string(&LASSO_SAMLP2_STATUS_RESPONSE(self)->Consent, (value))
 #define LassoSamlp2Response_Consent_set(self,value) set_string(&LASSO_SAMLP2_STATUS_RESPONSE(self)->Consent, (value))
-
-
-/* Assertion */
-
-#define LassoSamlp2Response_get_Assertion(self) get_node_list((self)->Assertion)
-#define LassoSamlp2Response_Assertion_get(self) get_node_list((self)->Assertion)
-#define LassoSamlp2Response_set_Assertion(self, value) set_node_list(&(self)->Assertion, (value))
-#define LassoSamlp2Response_Assertion_set(self, value) set_node_list(&(self)->Assertion, (value))
 
 
 /* Constructors, destructors & static methods implementations */

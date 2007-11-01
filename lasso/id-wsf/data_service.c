@@ -1,8 +1,8 @@
-/* $Id: data_service.c,v 1.33 2007/01/05 11:40:10 fpeters Exp $
+/* $Id: data_service.c 3374 2007-08-12 22:19:32Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -310,7 +310,7 @@ lasso_data_service_process_query_msg(LassoDataService *service, const char *mess
 
 	g_return_val_if_fail(message != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
 
-	doc = xmlParseMemory(message, strlen(message));
+	doc = lasso_xml_parse_memory(message, strlen(message));
 	if (doc == NULL) {
 		return critical_error(LASSO_PROFILE_ERROR_INVALID_MSG);
 	}
@@ -574,7 +574,6 @@ lasso_data_service_get_answer_for_item_id(LassoDataService *service, const char 
 	GList *iter;
 
 	response = LASSO_DST_QUERY_RESPONSE(LASSO_WSF_PROFILE(service)->response);
-	iter = LASSO_DST_QUERY(LASSO_WSF_PROFILE(service)->request)->QueryItem;
 
 	iter = response->Data;
 	while (iter && item_id) {

@@ -5,9 +5,9 @@ Writing a Liberty service Provider in PHP
 :author: Romain Chantereau
 :author: Damien Laniel
 :contact: dlaniel@entrouvert.com
-:date: $Date: 2006/09/21 08:51:32 $
-:revision: $Revision: 1.7 $
-:copyright: Copyright © 2005, 2006 Entr'ouvert
+:date: $Date: 2007-06-14 19:50:40 +0200 (jeu, 14 jun 2007) $
+:revision: $Revision: 3322 $
+:copyright: Copyright © 2004-2007 Entr'ouvert
 
 .. contents:: Table of Contents
 .. section-numbering::
@@ -27,6 +27,7 @@ in your ``php.ini`` configuration file, which can be found in something like
 ``/etc/php4/apache2/php.ini`` (if you're using apache2 and php4 on Debian,
 otherwise you may need to adapt the path to your local configuration).
 
+Then restart Apache 2.
 
 The other way is to load it dynamically, like::
 
@@ -36,7 +37,6 @@ The other way is to load it dynamically, like::
   }
 
 You can easily include this code every time you need lasso.
-
 
 The first thing to do is to call ``lasso_init()``. Similarly, the last thing
 should be to call ``lasso_shutdown()``.
@@ -50,6 +50,81 @@ therefore be::
 
 If your PHP code is used in HTML script environment, it could be difficult to
 call ``lasso_shutdown()``, this is not mandatory.
+
+Service Provider keys and metadata files
+========================================
+
+Liberty key files
+-----------------
+
+Service Provider needs private and public keys to sign sent messages. Private and
+public keys are loaded from PEM files by Lasso.
+
+If you don't have PEM format keys, you need to create them. To create a couple public key/private key with OpenSSL, use the following commands:
+
+Create a private key in a file named name-of-the-private-key.pem::
+
+  openssl genrsa -out name-of-the-private-key.pem 2048
+
+Extract the public key from the private key in a file named name-of-the-public-key.pem::
+
+  openssl rsa -in name-of-the-private-key.pem -pubout \
+    -out name-of-the-public-key.pem
+
+Your Service Provider also needs Identity Provider public key to verify received messages. You must get it from your Identity Provider.
+
+Liberty Metadata files
+----------------------
+
+Metadata are xml document describing provider configuration, that is its identifier, urls where to send him
+requests and supported Liberty Alliance profiles (that is methods describing how to send or process
+requests).
+
+Your Service Provider needs Identity Provider metadata to know where to send
+requests and how to process the requests he receives from the Identity Provider.
+You must get them from your Identity Provider. Then, you must create some metadata for your
+Service Provider and give them to your Identity Provider as well.
+
+Here is an example service provider metadata that you will have to adapt to your needs::
+
+  <?xml version="1.0"?>
+  <EntityDescriptor
+    providerID="http://sp.example.com/liberty/metadata" 
+    xmlns="urn:liberty:metadata:2003-08">
+    <SPDescriptor protocolSupportEnumeration="urn:liberty:iff:2003-08">
+        <SoapEndpoint>http://sp.example.com/liberty/soap-endpoint</SoapEndpoint>
+        <SingleLogoutServiceURL>sp.example.com/liberty/single-logout</SingleLogoutServiceURL>
+        <AssertionConsumerServiceURL id="AssertionConsumerService1"isDefault="true">http://sp.example.com/liberty/assertion-consumer-service</AssertionConsumerServiceURL>
+        <FederationTerminationNotificationProtocolProfile>http://projectliberty.org/profiles/fedterm-idp-soap</FederationTerminationNotificationProtocolProfile>
+        <FederationTerminationNotificationProtocolProfile>http://projectliberty.org/profiles/fedterm-idp-http</FederationTerminationNotificationProtocolProfile>
+        <SingleLogoutProtocolProfile>http://projectliberty.org/profiles/slo-idp-soap</SingleLogoutProtocolProfile>
+        <SingleLogoutProtocolProfile>http://projectliberty.org/profiles/slo-idp-http</SingleLogoutProtocolProfile>
+        <SingleLogoutProtocolProfile>http://projectliberty.org/profiles/slo-sp-soap</SingleLogoutProtocolProfile>
+        <AuthnRequestsSigned>true</AuthnRequestsSigned>
+    </SPDescriptor>
+    <Organization>
+        <OrganizationName>Example Organization</OrganizationName>
+    </Organization>
+  </EntityDescriptor>
+
+Where sp.example.com is the domain name of Service Provider.
+
+``http://sp.example.com/liberty/metadata`` is the Service Provider Liberty
+identifier.
+
+``http://sp.example.com/liberty/soap-endpoint`` is the Service Provider SOAP
+endpoint where Identity Provider send SOAP single logout or defederation
+requests.
+
+``http://sp.example.com/liberty/assertion-consumer-service`` is the Service
+Provider assertion consumer url where Identity Provider must return single sign
+on authentication response.
+
+``http://sp.example.com/liberty/single-logout`` is the Service Provider single
+logout url. Service Provider can initiate single logout from this url or
+process HTTP single logout request from Identity Provider.  `
+
+More information about these metadata can be found in Liberty Alliance specifications.
 
 Liberty and Lasso profiles
 ==========================
@@ -154,14 +229,13 @@ service.
 .. note:: the login URL is not normative; any name will do.
 
 
-``$server`` is a instantiated ``LassoServer`` as seen earlier and
-``$idpProviderId`` is a string with the identity provider Id (the string must
-match a providerID defined in the metadata file).
+``$server`` is an instantiated ``LassoServer`` as seen earlier
 
 ::
 
-
   $lassoLogin = new LassoLogin($server);
+  $providerIdList = $server->providerIds;
+  $idpProviderId = $provider_id_list->getItem(0);
   $lassoLogin->initAuthnRequest($idpProviderId, LASSO_HTTP_METHOD_REDIRECT);
   $lassoRequest = $lassoLogin->request;
   $lassoRequest->NameIDPolicy = LASSO_LIB_NAMEID_POLICY_TYPE_FEDERATED;
@@ -272,8 +346,8 @@ Identity and session dumps should be restored to prepare the logout request.
   $lassoLogout->buildRequestMsg();
 
 
-The service provider must then make a SOAP request to the identity provider;
-``$msgUrl`` and ``$msgBody``.  You should then pass the answer to Lasso::
+The service provider must then make a SOAP request to the identity provider as above with
+$lassoLogout->msgUrl and $lassoLogout->msgBody values.  You should then pass the answer to Lasso::
 
   $lassoLogout->processResponseMsg($answer));
 
@@ -296,13 +370,13 @@ and to set up the script to use it::
 
   set_error_handler("userErrorHandler");
 
-Most Lasso functions returns 0 on success and a negative number on failure.  It
+Most Lasso functions return 0 on success and a negative number on failure.  It
 is strongly advised to check this return code on each call. If the error raise a
 PHP warning, the code resume after the call to the error handler function.
 
 ::
 
-  $lrv = $lassoLogin->processResponseMsg($responseMsg);
+  $lrv = $lassoLogin->processResponseMsg($answer);
   if ($lrv > 0) {
       print("Lasso Error: ".$lrv."\n");
       /* handling error; most probably bailing out */
@@ -372,7 +446,7 @@ API Reference
 
 
 .. _Liberty ID-FF Bindings and Profiles Specification:
-   http://www.projectliberty.org/specs/draft-liberty-idff-bindings-profiles-1.2-errata-v1.0.pdf
+   http://www.projectliberty.org/liberty/content/download/319/2369/file/draft-liberty-idff-bindings-profiles-1.2-errata-v2.0.pdf
 
 .. _LassoLogin: /documentation/api-reference/lassologin.html
 .. _LassoLogout: /documentation/api-reference/lassologout.html

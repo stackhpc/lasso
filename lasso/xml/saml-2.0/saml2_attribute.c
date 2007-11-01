@@ -1,8 +1,8 @@
-/* $Id: saml2_attribute.c,v 1.2 2005/11/21 18:51:52 fpeters Exp $ 
+/* $Id: saml2_attribute.c 3237 2007-05-30 17:17:45Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -44,7 +44,7 @@
 
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "AttributeValue", SNIPPET_NODE,
+	{ "AttributeValue", SNIPPET_LIST_NODES,
 		G_STRUCT_OFFSET(LassoSaml2Attribute, AttributeValue) },
 	{ "Name", SNIPPET_ATTRIBUTE,
 		G_STRUCT_OFFSET(LassoSaml2Attribute, Name) },

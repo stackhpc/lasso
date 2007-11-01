@@ -114,12 +114,12 @@ public class LibFederationTerminationNotification extends SamlpRequestAbstract {
     return lassoJNI.LibFederationTerminationNotification_signMethod_get(swigCPtr, this);
   }
 
-  public void setSignType(SWIGTYPE_p_LassoSignatureType value) {
-    lassoJNI.LibFederationTerminationNotification_signType_set(swigCPtr, this, SWIGTYPE_p_LassoSignatureType.getCPtr(value));
+  public void setSignType(int value) {
+    lassoJNI.LibFederationTerminationNotification_signType_set(swigCPtr, this, value);
   }
 
-  public SWIGTYPE_p_LassoSignatureType getSignType() {
-    return new SWIGTYPE_p_LassoSignatureType(lassoJNI.LibFederationTerminationNotification_signType_get(swigCPtr, this), true);
+  public int getSignType() {
+    return lassoJNI.LibFederationTerminationNotification_signType_get(swigCPtr, this);
   }
 
   public void setExtension(StringList value) {
@@ -144,8 +144,8 @@ public class LibFederationTerminationNotification extends SamlpRequestAbstract {
     this(lassoJNI.new_LibFederationTerminationNotification(), true);
   }
 
-  public static LibFederationTerminationNotification newFull(String providerID, SamlNameIdentifier nameIdentifier, SWIGTYPE_p_LassoSignatureType sign_type, int sign_method) {
-    long cPtr = lassoJNI.LibFederationTerminationNotification_newFull(providerID, SamlNameIdentifier.getCPtr(nameIdentifier), nameIdentifier, SWIGTYPE_p_LassoSignatureType.getCPtr(sign_type), sign_method);
+  public static LibFederationTerminationNotification newFull(String providerID, SamlNameIdentifier nameIdentifier, int sign_type, int sign_method) {
+    long cPtr = lassoJNI.LibFederationTerminationNotification_newFull(providerID, SamlNameIdentifier.getCPtr(nameIdentifier), nameIdentifier, sign_type, sign_method);
     return (cPtr == 0) ? null : new LibFederationTerminationNotification(cPtr, true);
   }
 

@@ -1,8 +1,8 @@
-/* $Id: server.c,v 1.124 2007/01/05 11:40:10 fpeters Exp $
+/* $Id: server.c 3374 2007-08-12 22:19:32Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -32,6 +32,10 @@
 
 #include <lasso/saml-2.0/serverprivate.h>
 
+#ifdef LASSO_WSF_ENABLED
+#include <lasso/id-wsf-2.0/server.h>
+#include <lasso/xml/id-wsf-2.0/disco_service_context.h>
+#endif
 
 /*****************************************************************************/
 /* public methods                                                            */
@@ -92,19 +96,101 @@ lasso_server_add_provider(LassoServer *server, LassoProviderRole role,
  * Return value: 0 on success; a negative value if an error occured.
  **/
 gint
-lasso_server_add_service(LassoServer *server, LassoDiscoServiceInstance *service)
+lasso_server_add_service(LassoServer *server, LassoNode *service)
 {
 #ifdef LASSO_WSF_ENABLED
 	g_return_val_if_fail(LASSO_IS_SERVER(server), LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
-	g_return_val_if_fail(LASSO_IS_DISCO_SERVICE_INSTANCE(service),
+	g_return_val_if_fail(service != NULL, LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
+
+	if (LASSO_IS_DISCO_SERVICE_INSTANCE(service)) {
+		g_hash_table_insert(server->services,
+				g_strdup(LASSO_DISCO_SERVICE_INSTANCE(service)->ServiceType),
+				g_object_ref(service));
+	} else if (LASSO_IS_IDWSF2_DISCO_SVC_METADATA(service)) {
+		return lasso_server_add_svc_metadata(server,
+				LASSO_IDWSF2_DISCO_SVC_METADATA(service));
+	} else {
+		return LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ;
+	}
+#endif
+	return 0;
+}
+
+
+gint
+lasso_server_add_service_from_dump(LassoServer *server, const gchar *dump)
+{
+	LassoNode *node;
+
+	g_return_val_if_fail(dump != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
+
+	node = lasso_node_new_from_dump(dump);
+
+	return lasso_server_add_service(server, node);
+}
+
+#ifdef LASSO_WSF_ENABLED
+gint
+lasso_server_add_svc_metadata(LassoServer *server, LassoIdWsf2DiscoSvcMetadata *metadata)
+{
+
+	g_return_val_if_fail(LASSO_IS_SERVER(server), LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
+	g_return_val_if_fail(LASSO_IS_IDWSF2_DISCO_SVC_METADATA(metadata),
 			LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
 
-	g_hash_table_insert(server->services, g_strdup(service->ServiceType),
-			g_object_ref(service));
-#endif
+	server->private_data->svc_metadatas = g_list_append(
+		server->private_data->svc_metadatas, g_object_ref(metadata));
 
 	return 0;
 }
+
+GList *
+lasso_server_get_svc_metadatas(LassoServer *server)
+{
+	g_return_val_if_fail(LASSO_IS_SERVER(server), NULL);
+
+	return server->private_data->svc_metadatas;
+}
+
+GList *
+lasso_server_get_svc_metadatas_with_id_and_type(LassoServer *server, GList *svcMDIDs,
+	const gchar *service_type)
+{
+	gchar *svcMDID;
+	LassoIdWsf2DiscoSvcMetadata *md;
+	GList *result = NULL;
+	GList *i;
+	GList *j;
+
+	g_return_val_if_fail(LASSO_IS_SERVER(server), NULL);
+	g_return_val_if_fail(service_type != NULL, NULL);
+
+	for (i = g_list_first(server->private_data->svc_metadatas); i != NULL; i = g_list_next(i)) {
+		md = LASSO_IDWSF2_DISCO_SVC_METADATA(i->data);
+		/* FIXME: this assumes there is one and only one service
+		 * context, and service type, this should be fixed to iterate
+		 * properly on the GList */
+		if (md->ServiceContext == NULL || strcmp((char*)(LASSO_IDWSF2_DISCO_SERVICE_CONTEXT(
+				md->ServiceContext->data)->ServiceType)->data, service_type) != 0) {
+			continue;
+		}
+		if (svcMDIDs == NULL) {
+			/* If no svcMDID is given, return all the metadatas with given */
+			/* service type */
+			result = g_list_append(result, g_object_ref(md));
+		} else {
+			for (j = g_list_first(svcMDIDs); j != NULL; j = g_list_next(j)) {
+				svcMDID = (gchar *)(j->data);
+				if (strcmp(svcMDID, md->svcMDID) == 0) {
+					result = g_list_append(result, g_object_ref(md));
+				}
+			}
+		}
+	}
+
+	return result;
+}
+#endif
 
 
 /**
@@ -212,11 +298,19 @@ add_provider_childnode(gchar *key, LassoProvider *value, xmlNode *xmlnode)
 	xmlAddChild(xmlnode, lasso_node_get_xmlNode(LASSO_NODE(value), TRUE));
 }
 
+#ifdef LASSO_WSF_ENABLED
 static void
 add_service_childnode(gchar *key, LassoNode *value, xmlNode *xmlnode)
 {
 	xmlAddChild(xmlnode, lasso_node_get_xmlNode(LASSO_NODE(value), TRUE));
 }
+
+static void
+add_childnode_from_list(LassoNode *value, xmlNode *xmlnode)
+{
+	xmlAddChild(xmlnode, lasso_node_get_xmlNode(LASSO_NODE(value), TRUE));
+}
+#endif
 
 static xmlNode*
 get_xmlNode(LassoNode *node, gboolean lasso_dump)
@@ -238,6 +332,7 @@ get_xmlNode(LassoNode *node, gboolean lasso_dump)
 				(GHFunc)add_provider_childnode, t);
 	}
 
+#ifdef LASSO_WSF_ENABLED
 	/* Services */
 	if (g_hash_table_size(server->services)) {
 		xmlNode *t;
@@ -245,6 +340,15 @@ get_xmlNode(LassoNode *node, gboolean lasso_dump)
 		g_hash_table_foreach(server->services,
 				(GHFunc)add_service_childnode, t);
 	}
+
+	/* Service Metadatas (SvcMD) */
+	if (server->private_data->svc_metadatas != NULL) {
+		xmlNode *t;
+		t = xmlNewTextChild(xmlnode, NULL, (xmlChar*)"SvcMDs", NULL);
+		g_list_foreach(server->private_data->svc_metadatas,
+				(GFunc)add_childnode_from_list, t);
+	}
+#endif
 
 	xmlCleanNs(xmlnode);
 
@@ -281,6 +385,7 @@ init_from_xml(LassoNode *node, xmlNode *xmlnode)
 			continue;
 		}
 
+		/* Providers */
 		if (strcmp((char*)t->name, "Providers") == 0) {
 			while (t2) {
 				LassoProvider *p;
@@ -303,6 +408,7 @@ init_from_xml(LassoNode *node, xmlNode *xmlnode)
 		}
 		
 #ifdef LASSO_WSF_ENABLED
+		/* Services */
 		if (strcmp((char*)t->name, "Services") == 0) {
 			while (t2) {
 				LassoDiscoServiceInstance *s;
@@ -313,6 +419,22 @@ init_from_xml(LassoNode *node, xmlNode *xmlnode)
 				s = g_object_new(LASSO_TYPE_DISCO_SERVICE_INSTANCE, NULL);
 				LASSO_NODE_GET_CLASS(s)->init_from_xml(LASSO_NODE(s), t2);
 				g_hash_table_insert(server->services, g_strdup(s->ServiceType), s);
+				t2 = t2->next;
+			}
+		}
+
+		/* Service Metadatas (SvcMD) */		
+		if (strcmp((char*)t->name, "SvcMDs") == 0) {
+			while (t2) {
+				LassoIdWsf2DiscoSvcMetadata *svcMD;
+				if (t2->type != XML_ELEMENT_NODE) {
+					t2 = t2->next;
+					continue;
+				}
+				svcMD = lasso_idwsf2_disco_svc_metadata_new();
+				LASSO_NODE_GET_CLASS(svcMD)->init_from_xml(LASSO_NODE(svcMD), t2);
+				server->private_data->svc_metadatas = g_list_append(
+					server->private_data->svc_metadatas, svcMD);
 				t2 = t2->next;
 			}
 		}
@@ -442,6 +564,17 @@ dispose(GObject *object)
 	}
 	server->private_data->dispose_has_run = TRUE;
 
+	/* FIXME : Probably necessary, must be tested */
+/* 	if (server->private_data->encryption_private_key != NULL) { */
+/* 		xmlSecKeyDestroy(server->private_data->encryption_private_key); */
+/* 		server->private_data->encryption_private_key = NULL; */
+/* 	} */
+
+	if (server->private_data->svc_metadatas != NULL) {
+		g_list_free(server->private_data->svc_metadatas);
+		server->private_data->svc_metadatas = NULL;
+	}
+
 	/* free allocated memory for hash tables */
 	g_hash_table_destroy(server->providers);
 	server->providers = NULL;
@@ -479,6 +612,7 @@ instance_init(LassoServer *server)
 	server->private_data = g_new(LassoServerPrivate, 1);
 	server->private_data->dispose_has_run = FALSE;
 	server->private_data->encryption_private_key = NULL;
+	server->private_data->svc_metadatas = NULL;
 
 	server->providers = g_hash_table_new_full(
 			g_str_hash, g_str_equal, g_free,

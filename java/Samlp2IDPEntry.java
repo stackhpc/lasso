@@ -25,12 +25,12 @@ public class Samlp2IDPEntry extends Node {
   super.delete();
 }
 
-  public void setProviderId(String value) {
-    lassoJNI.Samlp2IDPEntry_providerId_set(swigCPtr, this, value);
+  public void setProviderID(String value) {
+    lassoJNI.Samlp2IDPEntry_providerID_set(swigCPtr, this, value);
   }
 
-  public String getProviderId() {
-    return lassoJNI.Samlp2IDPEntry_providerId_get(swigCPtr, this);
+  public String getProviderID() {
+    return lassoJNI.Samlp2IDPEntry_providerID_get(swigCPtr, this);
   }
 
   public void setName(String value) {

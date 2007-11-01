@@ -1,8 +1,8 @@
-/* $Id: federation.c,v 1.20 2005/11/21 18:51:52 fpeters Exp $
+/* $Id: federation.c 3285 2007-06-11 15:27:03Z dlaniel $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -42,11 +42,10 @@ lasso_federation_build_name_identifier(const gchar *nameQualifier,
 {
 	LassoSamlNameIdentifier *nameIdentifier;
 
+	nameIdentifier = LASSO_SAML_NAME_IDENTIFIER(lasso_saml_name_identifier_new());
 	if (content == NULL) {
-		nameIdentifier = LASSO_SAML_NAME_IDENTIFIER(lasso_saml_name_identifier_new());
 		nameIdentifier->content = lasso_build_unique_id(32);
 	} else {
-		nameIdentifier = LASSO_SAML_NAME_IDENTIFIER(lasso_saml_name_identifier_new());
 		nameIdentifier->content = g_strdup(content);
 	}
 	nameIdentifier->NameQualifier = g_strdup(nameQualifier);

@@ -125,12 +125,12 @@ public class LibAssertion extends SamlAssertion {
     return lassoJNI.LibAssertion_signMethod_get(swigCPtr, this);
   }
 
-  public void setSignType(SWIGTYPE_p_LassoSignatureType value) {
-    lassoJNI.LibAssertion_signType_set(swigCPtr, this, SWIGTYPE_p_LassoSignatureType.getCPtr(value));
+  public void setSignType(int value) {
+    lassoJNI.LibAssertion_signType_set(swigCPtr, this, value);
   }
 
-  public SWIGTYPE_p_LassoSignatureType getSignType() {
-    return new SWIGTYPE_p_LassoSignatureType(lassoJNI.LibAssertion_signType_get(swigCPtr, this), true);
+  public int getSignType() {
+    return lassoJNI.LibAssertion_signType_get(swigCPtr, this);
   }
 
   public void setSubjectStatement(SamlSubjectStatement value) {

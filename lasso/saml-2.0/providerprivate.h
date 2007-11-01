@@ -1,8 +1,8 @@
-/* $Id: providerprivate.h,v 1.4 2006/11/15 23:58:28 fpeters Exp $
+/* $Id: providerprivate.h 3237 2007-05-30 17:17:45Z dlaniel $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.

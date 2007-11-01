@@ -1,8 +1,8 @@
-/* $Id: lib_request_authn_context.c,v 1.18 2005/02/10 13:53:36 nclapies Exp $
+/* $Id: lib_request_authn_context.c 3237 2007-05-30 17:17:45Z dlaniel $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
