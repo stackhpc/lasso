@@ -1,4 +1,4 @@
-/* $Id: xml.c 3374 2007-08-12 22:19:32Z fpeters $ 
+/* $Id: xml.c 3524 2008-04-18 16:54:36Z bdauvergne $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -1375,6 +1375,22 @@ class_init(LassoNodeClass *class)
 	class->node_data = NULL;
 }
 
+static void
+base_class_finalize(LassoNodeClass *class)
+{
+    if (class->node_data) {
+        LassoNodeClassData *data = class->node_data;
+
+        if (data->ns) {
+            xmlFreeNs(data->ns);
+        }
+        if (data->node_name) {
+            g_free(data->node_name);
+        }
+        g_free(class->node_data);
+    }
+}
+
 GType
 lasso_node_get_type()
 {
@@ -1384,7 +1400,7 @@ lasso_node_get_type()
 		static const GTypeInfo this_info = {
 			sizeof (LassoNodeClass),
 			NULL,
-			NULL,
+			(GBaseFinalizeFunc) base_class_finalize,
 			(GClassInitFunc) class_init,
 			NULL,
 			NULL,

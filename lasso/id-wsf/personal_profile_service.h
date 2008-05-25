@@ -1,4 +1,4 @@
-/* $Id: personal_profile_service.h 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: personal_profile_service.h 3400 2007-09-18 17:08:11Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -65,8 +65,10 @@ struct _LassoPersonalProfileServiceClass {
 
 LASSO_EXPORT GType lasso_personal_profile_service_get_type(void);
 
-LASSO_EXPORT LassoPersonalProfileService* lasso_personal_profile_service_new(
-		LassoServer *server, LassoDiscoResourceOffering *offering);
+LASSO_EXPORT LassoPersonalProfileService* lasso_personal_profile_service_new(LassoServer *server);
+
+LASSO_EXPORT LassoPersonalProfileService* lasso_personal_profile_service_new_full(
+	LassoServer *server, LassoDiscoResourceOffering *offering);
 
 LASSO_EXPORT gchar* lasso_personal_profile_service_get_email(LassoPersonalProfileService *service);
 

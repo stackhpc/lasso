@@ -1,4 +1,4 @@
-/* $Id: saml2_condition_abstract.i 3378 2007-08-13 10:43:37Z fpeters $ 
+/* $Id: saml2_condition_abstract.i,v 1.0 2005/10/14 15:17:55 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *

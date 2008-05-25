@@ -1,4 +1,4 @@
-/* $Id: samlp2_attribute_query.h 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: samlp2_attribute_query.h 3526 2008-04-21 17:02:35Z bdauvergne $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -56,7 +56,7 @@ struct _LassoSamlp2AttributeQuery {
 
 	/*< public >*/
 	/* elements */
-	LassoSaml2Attribute *Attribute;
+	GList *Attribute; /* of LassoSaml2Attribute */
 };
 
 

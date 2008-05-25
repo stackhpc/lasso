@@ -15,23 +15,24 @@ dnl - Second number is the number of supported API versions where API version >
 dnl   first number.
 dnl - Third number is the current API version implementation version number.
 dnl See libtool explanations about current, age and release, later in this file.
-AC_INIT([Liberty Alliance Single Sign On], 2.1.1, lasso-devel@lists.labs.libre-entreprise.org)
+AC_INIT([Liberty Alliance Single Sign On], 2.1.98, lasso-devel@lists.labs.libre-entreprise.org)
 dnl Check if autoconf ver > 2.53
 AC_PREREQ(2.53)
+dnl Perform only subset commands and variable relevant to the host type.
+AC_CANONICAL_HOST
+AC_CANONICAL_SYSTEM
 dnl Check existence of a relative pathed source file.
 AC_CONFIG_SRCDIR(lasso/lasso.c)
 dnl Copy stamp REVISIO-INFO in the configure script.
-AC_REVISION($Revision: 3386 $)
+AC_REVISION($Revision: 3531 $)
 
 dnl Run many macros mostly needed by configure.ac.
-AM_INIT_AUTOMAKE(lasso, 2.1.1)
+AM_INIT_AUTOMAKE(lasso, 2.1.98)
 dnl Create rules to automaticaly regenerate the config header.
 AM_CONFIG_HEADER(lasso/lasso_config.h)
 dnl Add --enable-maintainer-mode option to configure.
 AM_MAINTAINER_MODE
 
-dnl Perform only subset commands and variable relevant to the host type.
-AC_CANONICAL_HOST
 dnl ==========================================================================
 dnl Perform host specific configuration
 dnl ==========================================================================
@@ -84,7 +85,6 @@ dnl
 AC_PROG_CC
 AC_HEADER_STDC
 LT_AC_PROG_RC
-AM_PROG_GCJ
 AC_EXEEXT
 AC_PROG_CC_C_O
 AM_SANITY_CHECK
@@ -98,9 +98,26 @@ dnl Find tar command for make dist
 AC_CHECK_PROGS(TAR, gnutar gtar tar)
 
 dnl Check existence of binding programs
-AC_CHECK_PROGS(JAVA, java)
-AC_CHECK_PROGS(JAVAC, gcj javac)
-AC_CHECK_PROGS(JAR, fastjar jar)
+AC_CHECK_CLASSPATH
+AC_PROG_JAVAC
+AC_PROG_JAVA
+AC_PROG_JAVAH
+AC_PROG_JAR
+DPS_XTRA_CLASSPATH(CLASSPATH_JUNIT, junit.framework.Test, junit.jar)
+old_cp=$CLASSPATH
+export CLASSPATH=${CLASSPATH}:${CLASSPATH_JUNIT}
+AC_CHECK_JUNIT
+if test "x$old_cp" = "x"; then
+    unset CLASSPATH
+else
+    $CLASSPATH=$old_cp
+fi
+unset old_cp
+dnl AC_CHECK_PROGS(JAVA, gij java)
+dnl AC_CHECK_PROGS(JAVAC, gcj javac)
+dnl AC_CHECK_PROGS(JAVAH, gjavah gcjh javah)
+dnl AC_CHECK_PROGS(JAR, fastjar jar)
+
 AC_CHECK_PROGS(PERL, perl)
 AC_CHECK_PROGS(PHP4, php4 php)
 AC_CHECK_PROGS(PHP5, php5 php)
@@ -161,7 +178,7 @@ dnl - interfaces removed -> AGE = 0
 # m = a
 # r = r
 current=`expr $VERSION_MAJOR + $VERSION_MINOR`
-LASSO_VERSION_INFO="8:1:5"
+LASSO_VERSION_INFO="9:0:6"
 AC_SUBST(LASSO_VERSION_INFO)
 
 dnl Compute the minimal supported ABI version for Win32 scripts and resources files.
@@ -222,15 +239,14 @@ AC_ARG_ENABLE(java, [  --disable-java          disable the Java binding],,
               enable_java="yes")
 AC_ARG_WITH(java-home,
             [  --with-java-home=(JAVA_HOME)  set the full path to the java home directory.])
-JAVAC_FLAGS=
-JDK_INCLUDE=
 SUN=no
-if test "X$with_java_home" != "X"; then
-    JDK_INCLUDE="$with_java_home/include"
-fi
 
 dnl If the java compiler seems to be a Sun JDK-like compile (Kaffe, Sun JDK...)
-if test "x$JAVA" = "xjava" && test "x$JAVAC" = "xjavac"; then
+if test "x$JAVAC" = "xjavac"; then
+    JAVAC_PATH=`which $JAVAC`
+    if test "x$with_java_home" = "x"; then
+	    with_java_home=`readlink -f $JAVAC_PATH | sed s#/bin/.*##`
+    fi
     dnl If we have a java compiler
     dnl need to change quotes to allow square brackets
     changequote(<<, >>)dnl
@@ -239,44 +255,61 @@ if test "x$JAVA" = "xjava" && test "x$JAVAC" = "xjavac"; then
     dnl If no java version found, perphas it is a kaffee environment...
     if test "x$JAVA_VERSION" = x; then
         JAVA_VERSION=`$JAVA -version 2>&1 | grep "Java Version" | $SED 's/^.*Java Version: //g'`
-        dnl If the java environment is kaffe, specify the JDK_INCLUDE directory.
-        if test "x$JAVA_VERSION" != "x"; then
-            JDK_INCLUDE="/usr/lib/kaffe/include"
-        fi
+        dnl If the java environment is kaffe, specify the JAVA_INCLUDE directory.
     else
         dnl We assume it is a SUN environment.
         SUN=yes
     fi
-    if ! test -f "$JDK_INCLUDE/jni.h"; then
-        JAVA_VERSION=""
-    fi
+    JAVAC_FLAGS="-target 1.4 -source 1.4"
+    CLASSPATH_OPT="-classpath"
+fi
+
+if test "x$with_java_home" != x; then
+    JAVA_INCLUDE="$with_java_home/include"
+fi
+
+if ! test -f "$JAVA_INCLUDE/jni.h"; then
+    JAVA_VERSION=""
+fi
+
+dnl GNU java environment
+if test "x$JAVAH" = "xgcjh" || test "x$JAVAH" = "xgjavah"  ; then
+    dnl JNI compatible header files. (not used with SWIG.)
+    JAVAH_FLAGS="-jni"
+    JAVA_INCLUDE=""
 fi
 
 dnl If the java compiler is the GNU Java Compiler.
-if test "x$JAVAC" = "xgcj"; then
+if echo "$JAVAC" | grep -q "gcj"; then
     changequote(<<, >>)dnl
-    JAVA_VERSION=`$JAVAC --version 2>&1 | $SED -ne 's/gcj (GCC) \([^"]*\) (.*/\1/p' 2>/dev/null`
+    JAVA_VERSION=`$JAVAC --version 2>&1 | $SED -ne 's/gcj[^[:blank:]]* ([^)]*) \([^ ]*\).*/\1/p' 2>/dev/null`
+    MAJOR=`echo $JAVA_VERSION | sed 's/.*[^[:digit:]]\?\([[:digit:]]\+\)\.[[:digit:]]\+\.[[:digit:]]\+/\1/'`
+    MINOR=`echo $JAVA_VERSION | sed 's/.*[^[:digit:]]\?[[:digit:]]\+\.\([[:digit:]]\+\)\.[[:digit:]]\+/\1/'`
+    RELEASE=`echo $JAVA_VERSION | sed 's/.*[^[:digit:]]\?[[:digit:]]\+\.[[:digit:]]\+\.\([[:digit:]]\+\).*/\1/'`
     changequote([, ])dnl
-    
     dnl Byte-compiled .class file
-    JAVAC_FLAGS="-C"
-    dnl JNI compatible header files. (not used with SWIG.)
-    dnl JAVAH_FLAGS="-jni"
+    if test $MAJOR -gt 4 -o \( $MAJOR -eq 4 -a $MINOR -gt 1 \) -o \( $MAJOR -eq 4 -a $MINOR -eq 1 -a $RELEASE -ge 3 \); then
+        JAVAC_FLAGS="-fsource=1.4 -ftarget=1.4"
+    fi
+    unset MAJOR
+    unset MINOR
+    unset RELEASE
     dnl Checking for jni.h if gcj is the java interpreter.
     AC_CHECK_HEADERS([jni.h], [], [JAVA_VERSION=""])
+    CLASSPATH_OPT="--classpath"
 fi
 
-dnl Now transform JDK_INCLUDE in CFLAG option if applicable.
-if test "X$JDK_INCLUDE" != "X"; then
+dnl Now transform JAVA_INCLUDE in CFLAG option if applicable.
+if test "X$JAVA_INCLUDE" != "X"; then
     dnl If it is a sun environment
     if test "x$SUN" = "xyes"; then
-        JDK_INCLUDE="$JDK_INCLUDE -I$JDK_INCLUDE/$SUN_EXTRA_INCLUDE"
+        JAVA_INCLUDE="$JAVA_INCLUDE -I$JAVA_INCLUDE/$SUN_EXTRA_INCLUDE"
     fi
-    JDK_INCLUDE=-I$JDK_INCLUDE
+    JAVA_INCLUDE=-I$JAVA_INCLUDE
 fi
 
 dnl If we found a java version information, we have java compilation environment.
-if test "X$JAVA_VERSION" != "X" && test "X$JAR" != "X"; then
+if test "X$JAVA_VERSION" != "X" && test "X$JAR" != "X" && test "x$JAVAH" != "x"; then
   languages_available="$languages_available $JAVA($JAVA_VERSION)"
 else
   enable_java=no
@@ -285,8 +318,13 @@ fi
 
 dnl Conditional java sub dir test.
 AM_CONDITIONAL([JAVA_ENABLED],[test "x$enable_java" = "xyes"])
+AM_CONDITIONAL([JUNIT_ENABLED],[test "x$JUNIT" != "x"])
 AC_SUBST(JAVA_VERSION)
 AC_SUBST(JAVAC_FLAGS)
+AC_SUBST(JAVAH_FLAGS)
+AC_SUBST(JAVA_INCLUDE)
+AC_SUBST(CLASSPATH_OPT)
+JDK_INCLUDE=$JAVA_INCLUDE
 AC_SUBST(JDK_INCLUDE)
 
 
@@ -379,8 +417,9 @@ if test "X$PHP4_CONFIG" != "X" ; then
   PHP4_INCLUDES=`$PHP4_CONFIG --includes`
   PHP4_LDFLAGS=`$PHP4_CONFIG --ldflags`
   PHP4_LIBS=`$PHP4_CONFIG --libs`
-  PHP4_UNPREFIXED_EXTENSION_DIR=`$PHP4_CONFIG --extension-dir | $SED 's/\/usr//g'`
   PHP4_PREFIX=`$PHP4_CONFIG --prefix`
+  PHP4_QUOTED_PREFIX=$(echo $PHP4_PREFIX | $SED 's/\//\\\//g')
+  PHP4_UNPREFIXED_EXTENSION_DIR=$($PHP4_CONFIG --extension-dir | $SED "s/$PHP4_QUOTED_PREFIX//g")
 else
   # We assume PHP are in /usr/local directory.
   if test $MINGW -eq 1; then 
@@ -408,11 +447,11 @@ else
 fi
   
 if test x$have_expat_lib = xno; then
-    enable_php4=no
+    enable_php4="no (missing expat)"
 fi
 
 AC_MSG_CHECKING(for PHP 4 development files)
-if $PHP4_CONFIG --version | grep -q 4 || test "x$ENABLE_PHP4_FORCE" == "xyes"
+if $PHP4_CONFIG --version | grep -q "^4" || test "x$ENABLE_PHP4_FORCE" == "xyes"
 then
 	PHP4_VERSION=`$PHP4_CONFIG --version 2> /dev/null`
 	languages_available="$languages_available php4($PHP4_VERSION)"
@@ -430,18 +469,15 @@ AC_SUBST(PHP4_VERSION)
 
 dnl Check if php is explicitly enabled.
 AC_ARG_ENABLE(php5, [  --enable-php5          enable the PHP 5 binding],,
-              enable_php5="no")
+              enable_php5="yes")
+
+AC_ARG_WITH(php5-config,
+            [  --with-php5-config=(PHP5_CONFIG)      Specify full path to php-config5.])
 
 AC_ARG_ENABLE(php5-force, [  --enable-php5-force     always enable of the PHP 5 binding (win32)],
               [ENABLE_PHP5_FORCE="yes"],
               [ENABLE_PHP5_FORCE="no"])
 
-AC_ARG_WITH(php5-config,
-            [  --with-php5-config=(PHP5_CONFIG)      Specify full path to php-config5.])
-
-AC_ARG_WITH(php5-extension-dir,
-            [  --with-php5-extension-dir=(PHP5_EXTENSION_DIR)      Specify full path to php 5 extension dir.],
-            [PHP5_EXTENSION_DIR="$withval"],[PHP5_EXTENSION_DIR=])
 
 dnl Check if user passed a specific php-config program.
 if test "X$with_php5_config" != "X" ; then
@@ -452,8 +488,9 @@ if test "X$PHP5_CONFIG" != "X" ; then
   PHP5_INCLUDES=`$PHP5_CONFIG --includes`
   PHP5_LDFLAGS=`$PHP5_CONFIG --ldflags`
   PHP5_LIBS=`$PHP5_CONFIG --libs`
-  PHP5_UNPREFIXED_EXTENSION_DIR=`$PHP5_CONFIG --extension-dir | $SED 's/\/usr//g'`
   PHP5_PREFIX=`$PHP5_CONFIG --prefix`
+  PHP5_QUOTED_PREFIX=$(echo $PHP5_PREFIX | $SED 's/\//\\\//g')
+  PHP5_UNPREFIXED_EXTENSION_DIR=$($PHP5_CONFIG --extension-dir | $SED "s/$PHP5_QUOTED_PREFIX//g")
 else
   # We assume PHP are in /usr/local directory.
   if test $MINGW -eq 1; then 
@@ -465,12 +502,23 @@ else
   PHP5_UNPREFIXED_EXTENSION_DIR=
   PHP5_PREFIX=
 fi
+
+AC_ARG_WITH(php5-include-dir,
+            [  --with-php5-include-dir=(PHP5_INCLUDE_DIR)      Specify full path to php 5 include dir.],
+            [PHP5_INCLUDE_DIR="$withval"],[PHP5_INCLUDE_DIR=${datadir}/php])
+
+AC_ARG_WITH(php5-config-dir,
+            [  --with-php5-config-dir=(PHP5_CONFIG_DIR)      Specify full path to php 5 config dir.],
+            [PHP5_CONFIG_DIR="$withval"],[PHP5_CONFIG_DIR=${sysconfdir}/php5/conf.d/])
+
 AC_SUBST(PHP5_INCLUDES)
 AC_SUBST(PHP5_LDFLAGS)
 AC_SUBST(PHP5_LIBS)
 AC_SUBST(PHP5_UNPREFIXED_EXTENSION_DIR)
 AC_SUBST(PHP5_EXTENSION_DIR)
 AC_SUBST(PHP5_PREFIX)
+AC_SUBST(PHP5_INCLUDE_DIR)
+AC_SUBST(PHP5_CONFIG_DIR)
 
 dnl Check for expat
 have_expat_include=no
@@ -485,7 +533,7 @@ if test x$have_expat_lib = xno; then
 fi
 
 AC_MSG_CHECKING(for PHP 5 development files)
-if $PHP5_CONFIG --version | grep -q 5 || test "x$ENABLE_PHP5_FORCE" == "xyes"
+if $PHP5_CONFIG --version | grep -q "^5" || test "x$ENABLE_PHP5_FORCE" == "xyes"
 then
 	PHP5_VERSION=`$PHP5_CONFIG --version 2> /dev/null`
 	languages_available="$languages_available php5($PHP5_VERSION)"
@@ -633,21 +681,23 @@ AC_ARG_WITH(zlib,
     LDFLAGS="${LDFLAGS} -L$withval/lib"
   fi
 ]) 
+saved_LIB=$LIBS
+LIBS=
 AC_CHECK_HEADERS(zlib.h,
-    AC_CHECK_LIB(z, gzread,[
+    AC_SEARCH_LIBS(gzread, [z zlib1],[
         AC_DEFINE([HAVE_LIBZ], [], [Have compression library])
         if test "x${Z_DIR}" != "x"; then
             Z_CFLAGS="-I${Z_DIR}/include"
-            Z_LIBS="-L${Z_DIR}/lib -lz"
+            Z_LIBS="-L${Z_DIR}/lib $LIBS"
             [case ${host} in
                 *-*-solaris*)
-                    Z_LIBS="-L${Z_DIR}/lib -R${Z_DIR}/lib -lz"
+                    Z_LIBS="-L${Z_DIR}/lib -R${Z_DIR}/lib $LIBS"
                     ;;
             esac]
         else
-            Z_LIBS="-lz"
+            Z_LIBS="$LIBS"
         fi]))
-
+LIBS=$saved_LIB
 test "z$Z_LIBS" != "z" || AC_MSG_ERROR(missing zlib)
 
 AC_SUBST(Z_CFLAGS)
@@ -742,7 +792,7 @@ if test "z$PKG_CONFIG_PATH" != "z"; then
     export PKG_CONFIG_PATH
 fi
 
-PKG_CHECK_MODULES(LASSO, glib-2.0 >= 2.4.0 gobject-2.0 >= 2.4.0 libxml-2.0 libxslt xmlsec1 >= 1.2.6 xmlsec1-openssl >= 1.2.6 openssl)
+PKG_CHECK_MODULES(LASSO, glib-2.0 >= 2.4.0 gobject-2.0 >= 2.4.0 libxml-2.0 xmlsec1 >= 1.2.6 xmlsec1-openssl >= 1.2.6 openssl)
 
 AC_ARG_WITH(sasl2, [  --with-sasl2[=PFX]         Use Cyrus SASL library version 2 for WSF-Auth])
 if test "x$enable_wsf" = "xyes"; then
@@ -853,10 +903,13 @@ AC_SUBST(LASSO_APP_DEFINES)
 AC_SUBST(CFLAGS)
 AC_SUBST(CPPFLAGS)
 AC_SUBST(LDFLAGS)
+AC_SUBST(CLASSPATH_JUNIT)
 
 dnl Dirty system often means dirty hacks...
 AM_CONDITIONAL(MINGW, test $MINGW == 1)
 AM_CONDITIONAL(DARWIN, test $DARWIN == 1)
+
+dnl bindings
 
 
 dnl ==========================================================================
@@ -870,7 +923,6 @@ docs/lasso-book/Makefile
 docs/lasso-book/figures/Makefile
 docs/reference/Makefile
 docs/reference/version.xml
-java/Makefile
 lasso/Makefile
 lasso/id-ff/Makefile
 lasso/id-wsf/Makefile
@@ -882,8 +934,6 @@ lasso/xml/id-wsf-2.0/Makefile
 lasso/xml/ws/Makefile
 perl/Makefile
 php/Makefile
-php5/Makefile
-python/Makefile
 swig/Makefile
 swig/wsf-support.i
 swig/saml-2.0/Makefile
@@ -914,6 +964,12 @@ win32/nsis/lasso-deps.nsi
 win32/nsis/lasso-full.nsi
 win32/nsis/lasso-lite.nsi
 win32/nsis/python.nsi
+bindings/Makefile
+bindings/java/Makefile
+bindings/python/Makefile
+bindings/python/tests/Makefile
+bindings/php5/Makefile
+bindings/php5/examples/Makefile
 ])
 
 languages_available=`echo $languages_available | sed -e "s/^ //" `

@@ -1,4 +1,4 @@
-/* $Id: strings.h 3339 2007-07-06 18:47:55Z fpeters $ 
+/* $Id: strings.h 3483 2008-02-18 17:29:50Z bdauvergne $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -210,7 +210,6 @@
 #define LASSO_DST_STATUS_CODE_DATA_TOO_LONG "DataTooLong"
 #define LASSO_DST_STATUS_CODE_EXISTS_ALREADY "ExistsAlready"
 #define LASSO_DST_STATUS_CODE_EXTENSION_NOT_SUPPORTED "ExtensionNotSupported"
-#define LASSO_DST_STATUS_CODE_FAILED "Failed"
 #define LASSO_DST_STATUS_CODE_INVALID_DATA "InvalidData"
 #define LASSO_DST_STATUS_CODE_INVALID_RESOURCE_ID "InvalidResourceID"
 #define LASSO_DST_STATUS_CODE_INVALID_SELECT "InvalidSelect"
@@ -364,6 +363,14 @@
 /* Name Identifier Format */
 
 /* note that SAML 2.0 can also use SAML 1.1 name identifier formats */
+#define LASSO_SAML2_NAME_IDENTIFIER_FORMAT_UNSPECIFIED \
+		"urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified"
+#define LASSO_SAML2_NAME_IDENTIFIER_FORMAT_EMAIL \
+		"urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress"
+#define LASSO_SAML2_NAME_IDENTIFIER_FORMAT_X509 \
+		"urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName"
+#define LASSO_SAML2_NAME_IDENTIFIER_FORMAT_WINDOWS \
+		"urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName"
 #define LASSO_SAML2_NAME_IDENTIFIER_FORMAT_KERBEROS \
 		"urn:oasis:names:tc:SAML:2.0:nameid-format:kerberos"
 #define LASSO_SAML2_NAME_IDENTIFIER_FORMAT_ENTITY \
@@ -378,7 +385,7 @@
 /* Attribute Name */
 #define LASSO_SAML2_ATTRIBUTE_NAME_EPR "urn:liberty:disco:2006-08:DiscoveryEPR"
 
-/* Attribute Name Format*/
+/* Attribute Name Format */
 #define LASSO_SAML2_ATTRIBUTE_NAME_FORMAT_URI "urn:oasis:names:tc:SAML:2.0:attrname-format:uri"
 
 /* Consent */
@@ -494,12 +501,6 @@
 
 #define LASSO_IDWSF2_DISCO_HREF   "urn:liberty:disco:2006-08"
 #define LASSO_IDWSF2_DISCO_PREFIX "disco"
-
-#define LASSO_EP_HREF   "urn:liberty:id-sis-ep:2003-08"
-#define LASSO_EP_PREFIX "ep"
-
-#define LASSO_PP_HREF   "urn:liberty:id-sis-pp:2003-08"
-#define LASSO_PP_PREFIX "pp"
 
 #define LASSO_IDWSF2_DST_HREF "urn:liberty:dst:2006-08"
 #define LASSO_IDWSF2_DST_PREFIX "dst"

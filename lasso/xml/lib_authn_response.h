@@ -1,4 +1,4 @@
-/* $Id: lib_authn_response.h 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: lib_authn_response.h 3437 2007-11-03 21:23:50Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -54,7 +54,7 @@ struct _LassoLibAuthnResponse {
 
 	/*< public >*/
 	/* <xs:element ref="Extension" minOccurs="0" maxOccurs="unbounded"/> */
-	GList *Extension;
+	GList *Extension; /* of xmlNode* */
 	/* <xs:element ref="ProviderID"/> */
 	char *ProviderID;
 	/* <xs:element ref="RelayState" minOccurs="0"/> */

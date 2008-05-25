@@ -1,4 +1,4 @@
-/* $Id: provider.c 3293 2007-06-12 14:15:55Z dlaniel $
+/* $Id: provider.c 3473 2008-01-23 12:17:46Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -47,7 +47,9 @@ load_descriptor(xmlNode *xmlnode, GHashTable *descriptor, LassoProvider *provide
 	xmlNode *t;
 	GList *elements;
 	char *name, *binding, *response_name;
-	xmlChar *value, *response_value;
+	xmlChar *value;
+	xmlChar *response_value;
+	xmlChar *use;
 
 	t = xmlnode->children;
 	while (t) {
@@ -56,15 +58,17 @@ load_descriptor(xmlNode *xmlnode, GHashTable *descriptor, LassoProvider *provide
 			continue;
 		}
 		if (strcmp((char*)t->name, "KeyDescriptor") == 0) {
-			char *use = (char*)xmlGetProp(t, (xmlChar*)"use");
-			if (use && strcmp(use, "signing") == 0) {
+			use = xmlGetProp(t, (xmlChar*)"use");
+			if (use && strcmp((char*)use, "signing") == 0) {
 				provider->private_data->signing_key_descriptor = xmlCopyNode(t, 1);
 			}
-			if (use && strcmp(use, "encryption") == 0) {
+			if (use && strcmp((char*)use, "encryption") == 0) {
 				provider->private_data->encryption_key_descriptor = 
 					xmlCopyNode(t, 1);
 			}
-			xmlFree(use);
+			if (use) {
+				xmlFree(use);
+			}
 			t = t->next;
 			continue;
 		}
@@ -241,7 +245,7 @@ lasso_saml20_provider_get_assertion_consumer_service_url(LassoProvider *provider
 	char *sid;
 	char *name;
 	const char *possible_bindings[] = {
-		"HTTP-Artifact", "HTTP-Post", "HTTP-POST", "SOAP", NULL
+		"HTTP-Artifact", "HTTP-Post", "HTTP-POST", "HTTP-Redirect", "SOAP", NULL
 	};
 	int i;
 
@@ -341,7 +345,7 @@ lasso_saml20_provider_get_assertion_consumer_service_binding(LassoProvider *prov
 	char *name;
 	char *binding = NULL;
 	const char *possible_bindings[] = {
-		"HTTP-Artifact", "HTTP-Post", "HTTP-POST", "SOAP", NULL
+		"HTTP-Artifact", "HTTP-Post", "HTTP-POST", "HTTP-Redirect", "SOAP", NULL
 	};
 	int i;
 

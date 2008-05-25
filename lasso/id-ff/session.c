@@ -1,4 +1,4 @@
-/* $Id: session.c 3342 2007-07-10 08:50:56Z fpeters $
+/* $Id: session.c 3481 2008-02-18 13:03:05Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -63,7 +63,8 @@ lasso_session_add_assertion(LassoSession *session, char *providerID, LassoNode *
 	g_return_val_if_fail(providerID != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
 	g_return_val_if_fail(assertion != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
 
-	g_hash_table_insert(session->assertions, g_strdup(providerID), assertion);
+	g_hash_table_insert(session->assertions, g_strdup(providerID),
+			g_object_ref(assertion));
 
 	session->is_dirty = TRUE;
 

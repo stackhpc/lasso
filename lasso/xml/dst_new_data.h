@@ -1,4 +1,4 @@
-/* $Id: dst_new_data.h 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: dst_new_data.h 3437 2007-11-03 21:23:50Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -48,7 +48,7 @@ typedef struct _LassoDstNewDataClass LassoDstNewDataClass;
 struct _LassoDstNewData {
 	LassoNode parent;
 
-	GList *any;
+	GList *any; /* of xmlNode* */
 };
 
 struct _LassoDstNewDataClass {

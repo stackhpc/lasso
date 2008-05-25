@@ -1,4 +1,4 @@
-/* $Id: saml2_attribute.i 3378 2007-08-13 10:43:37Z fpeters $ 
+/* $Id: saml2_attribute.i 3466 2008-01-14 11:20:16Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -30,17 +30,26 @@ typedef struct {
 	%rename(name) Name;
 #endif
 	char *Name;
+
 #ifndef SWIG_PHP_RENAMES
 	%rename(nameFormat) NameFormat;
 #endif
 	char *NameFormat;
+
 #ifndef SWIG_PHP_RENAMES
 	%rename(friendlyName) FriendlyName;
 #endif
 	char *FriendlyName;
+
 } LassoSaml2Attribute;
 %extend LassoSaml2Attribute {
 
+	/* Attribute */
+#ifndef SWIG_PHP_RENAMES
+	%rename(attributeValue) AttributeValue;
+#endif
+	%newobject AttributeValue_get;
+	LassoNodeList *AttributeValue;
 
 	/* Constructor, Destructor & Static Methods */
 	LassoSaml2Attribute();
@@ -53,6 +62,12 @@ typedef struct {
 
 %{
 
+/* Attributes */
+
+#define LassoSaml2Attribute_get_AttributeValue(self) get_node_list((self)->AttributeValue)
+#define LassoSaml2Attribute_AttributeValue_get(self) get_node_list((self)->AttributeValue)
+#define LassoSaml2Attribute_set_AttributeValue(self,value) set_node_list(&(self)->AttributeValue, (value))
+#define LassoSaml2Attribute_AttributeValue_set(self,value) set_node_list(&(self)->AttributeValue, (value))
 
 /* Constructors, destructors & static methods implementations */
 

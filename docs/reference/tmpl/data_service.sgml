@@ -51,7 +51,6 @@ principal_name = lasso_data_service_get_answer(service, "/pp:PP/pp:InformalName"
 
 </para>
 
-@parent: 
 @resource_id: 
 @encrypted_resource_id: 
 @resource_data: 

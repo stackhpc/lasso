@@ -1,4 +1,4 @@
-/* $Id: name_id_management.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: name_id_management.c 3498 2008-03-03 17:59:03Z bdauvergne $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -58,10 +58,11 @@ lasso_name_id_management_init_request(LassoNameIdManagement *name_id_management,
 	LassoFederation *federation;
 	LassoSaml2NameID *name_id, *name_id_n;
 	LassoSamlp2RequestAbstract *request;
+	LassoSession *session = NULL;
+	LassoNode *oldNameIdentifier;
 
 	g_return_val_if_fail(LASSO_IS_NAME_ID_MANAGEMENT(name_id_management),
 			LASSO_PARAM_ERROR_INVALID_VALUE);
-	g_return_val_if_fail(remote_provider_id != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
 
 	profile = LASSO_PROFILE(name_id_management);
 
@@ -71,7 +72,17 @@ lasso_name_id_management_init_request(LassoNameIdManagement *name_id_management,
 	}
 
 	/* set the remote provider id */
-	profile->remote_providerID = g_strdup(remote_provider_id);
+	g_free (profile->remote_providerID);
+	if (remote_provider_id == NULL) {
+		/* verify if session exists */
+		session = lasso_profile_get_session(profile);
+		if (session == NULL) {
+			return critical_error(LASSO_PROFILE_ERROR_SESSION_NOT_FOUND);
+		}
+		profile->remote_providerID = lasso_session_get_provider_index(session, 0);
+	} else {
+		profile->remote_providerID = g_strdup(remote_provider_id);
+	}
 
 	remote_provider = g_hash_table_lookup(profile->server->providers,
 			profile->remote_providerID);
@@ -88,14 +99,15 @@ lasso_name_id_management_init_request(LassoNameIdManagement *name_id_management,
 
 	/* get the current NameID */
 	name_id_n = LASSO_SAML2_NAME_ID(lasso_profile_get_nameIdentifier(profile));
-
 	name_id = LASSO_SAML2_NAME_ID(name_id_n);
-
+	oldNameIdentifier = profile->nameIdentifier;
 	if (federation->local_nameIdentifier) {
 		profile->nameIdentifier = g_object_ref(federation->local_nameIdentifier);
 	} else {
 		profile->nameIdentifier = g_object_ref(name_id_n);
 	}
+	if (oldNameIdentifier != NULL) 
+		g_object_unref(oldNameIdentifier);
 
 	/* XXX: check HTTP method is supported */
 
@@ -208,6 +220,8 @@ lasso_name_id_management_process_request_msg(LassoNameIdManagement *name_id_mana
 	xmlSecKey *encryption_private_key = NULL;
 
 	g_return_val_if_fail(LASSO_IS_NAME_ID_MANAGEMENT(name_id_management),
+			LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
+	g_return_val_if_fail(request_msg != NULL, 
 			LASSO_PARAM_ERROR_INVALID_VALUE);
 	
 	profile = LASSO_PROFILE(name_id_management);

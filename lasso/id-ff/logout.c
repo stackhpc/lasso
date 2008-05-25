@@ -1,4 +1,4 @@
-/* $Id: logout.c 3237 2007-05-30 17:17:45Z dlaniel $
+/* $Id: logout.c 3520 2008-04-09 10:21:37Z dlaniel $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -252,7 +252,7 @@ lasso_logout_build_response_msg(LassoLogout *logout)
 void
 lasso_logout_destroy(LassoLogout *logout)
 {
-	g_object_unref(G_OBJECT(logout));
+	lasso_node_destroy(LASSO_NODE(logout));
 }
 
 /**
@@ -273,7 +273,10 @@ lasso_logout_get_next_providerID(LassoLogout *logout)
 	g_return_val_if_fail(LASSO_IS_LOGOUT(logout), NULL);
 	profile = LASSO_PROFILE(logout);
 
-	g_return_val_if_fail(LASSO_IS_SESSION(profile->session), NULL);
+	if (profile->session == NULL) {
+		return NULL;
+	}
+
 	providerID = lasso_session_get_provider_index(
 			profile->session, logout->providerID_index);
 	logout->providerID_index++;
@@ -306,10 +309,11 @@ lasso_logout_init_request(LassoLogout *logout, char *remote_providerID,
 {
 	LassoProfile      *profile;
 	LassoProvider     *remote_provider;
-	LassoSamlNameIdentifier *nameIdentifier;
+	LassoSamlNameIdentifier *nameIdentifier = NULL;
+	LassoSaml2EncryptedElement *encryptedNameIdentifier = NULL;
 	LassoNode *assertion_n, *name_identifier_n;
 	LassoSamlAssertion *assertion;
-	LassoSamlSubjectStatementAbstract *subject_statement;
+	LassoSamlSubjectStatementAbstract *subject_statement = NULL;
 	LassoFederation   *federation = NULL;
 	gboolean           is_http_redirect_get_method = FALSE;
 	LassoSession *session;
@@ -327,6 +331,7 @@ lasso_logout_init_request(LassoLogout *logout, char *remote_providerID,
 
 	/* get the remote provider id
 	   If remote_providerID is NULL, then get the first remote provider id in session */
+	g_free(profile->remote_providerID);
 	if (remote_providerID == NULL) {
 		profile->remote_providerID = lasso_session_get_provider_index(session, 0);
 	} else {
@@ -365,19 +370,21 @@ lasso_logout_init_request(LassoLogout *logout, char *remote_providerID,
 
 	/* if format is one time, then get name identifier from assertion,
 	   else get name identifier from federation */
-	subject_statement = NULL;
-	nameIdentifier = NULL;
 	if (LASSO_IS_SAML_SUBJECT_STATEMENT_ABSTRACT(assertion->AuthenticationStatement)) {
 		subject_statement = LASSO_SAML_SUBJECT_STATEMENT_ABSTRACT(
 				assertion->AuthenticationStatement);
 		if (subject_statement && subject_statement->Subject) {
 			nameIdentifier = subject_statement->Subject->NameIdentifier;
+			encryptedNameIdentifier = subject_statement->Subject->EncryptedNameIdentifier;
 		}
 	}
 
+	/* FIXME: Should first decrypt the EncryptedNameIdentifier */
 
-	if (nameIdentifier && strcmp(nameIdentifier->Format,
-				LASSO_LIB_NAME_IDENTIFIER_FORMAT_ONE_TIME) != 0) {
+	if ((nameIdentifier && strcmp(nameIdentifier->Format,
+				LASSO_LIB_NAME_IDENTIFIER_FORMAT_ONE_TIME) != 0)
+				|| encryptedNameIdentifier) {
+
 		if (LASSO_IS_IDENTITY(profile->identity) == FALSE) {
 			return critical_error(LASSO_PROFILE_ERROR_IDENTITY_NOT_FOUND);
 		}
@@ -438,7 +445,7 @@ lasso_logout_init_request(LassoLogout *logout, char *remote_providerID,
 	}
 
 	/* before setting profile->request, verify it is not already set */
-	if (LASSO_IS_LIB_LOGOUT_REQUEST(profile->request) == TRUE) {
+	if (LASSO_IS_NODE(profile->request) == TRUE) {
 		lasso_node_destroy(LASSO_NODE(profile->request));
 		profile->request = NULL;
 	}
@@ -459,6 +466,8 @@ lasso_logout_init_request(LassoLogout *logout, char *remote_providerID,
 				LASSO_SIGNATURE_TYPE_NONE,
 				0);
 	}
+
+	/* FIXME: Should encrypt nameIdentifier in the request here */
 
 	if (lasso_provider_get_protocol_conformance(remote_provider) < LASSO_PROTOCOL_LIBERTY_1_2) {
 		LASSO_SAMLP_REQUEST_ABSTRACT(profile->request)->MajorVersion = 1;
@@ -765,24 +774,29 @@ gint lasso_logout_reset_providerID_index(LassoLogout *logout)
  * @logout: a #LassoLogout
  * 
  * <itemizedlist>
- * <listitem>
+ * <listitem><para>
  *   Sets the remote provider id
- * </listitem><listitem>
+ * </para></listitem>
+ * <listitem><para>
  *   Sets a logout response with status code value to success.
- * </listitem><listitem>
+ * </para></listitem>
+ * <listitem><para>
  *   Verifies federation and authentication.
- * </listitem><listitem>
+ * </para></listitem>
+ * <listitem><para>
  *   If the request http method is a SOAP method, then verifies every other
  *   Service Providers supports SOAP method : if not, then sets status code
  *   value to UnsupportedProfile and returns a code error with
  *   LASSO_LOGOUT_ERROR_UNSUPPORTED_PROFILE.
- * </listitem><listitem>
+ * </para></listitem>
+ * <listitem><para>
  *   Every tests are ok, then removes assertion.
- * </listitem><listitem>
+ * </para></listitem>
+ * <listitem><para>
  *   If local server is an Identity Provider and if there is more than one
  *   Service Provider (except the initial Service Provider), then saves the
  *   initial request, response and remote provider id.
- * </listitem>
+ * </para></listitem>
  * </itemizedlist>
  *
  * Return value: 0 on success; or a negative value otherwise.

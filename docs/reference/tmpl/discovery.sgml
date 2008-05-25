@@ -55,7 +55,6 @@ service = lasso_discovery_get_service(discovery);
 
 </para>
 
-@parent: 
 @resource_id: 
 @encrypted_resource_id: 
 

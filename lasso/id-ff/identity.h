@@ -1,4 +1,4 @@
-/* $Id: identity.h 3237 2007-05-30 17:17:45Z dlaniel $
+/* $Id: identity.h 3442 2007-11-13 16:12:25Z dlaniel $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -49,7 +49,7 @@ struct _LassoIdentity {
 	LassoNode parent;
 
 	/*< public >*/
-	GHashTable *federations;
+	GHashTable *federations; /* of LassoFederation */
 	gboolean is_dirty;
 
 	/*< private >*/

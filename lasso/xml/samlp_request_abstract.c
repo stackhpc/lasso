@@ -1,4 +1,4 @@
-/* $Id: samlp_request_abstract.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: samlp_request_abstract.c 3444 2007-11-13 19:04:58Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -54,7 +54,7 @@
 /*****************************************************************************/
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "RespondWith", SNIPPET_LIST_NODES,
+	{ "RespondWith", SNIPPET_LIST_CONTENT,
 		G_STRUCT_OFFSET(LassoSamlpRequestAbstract, RespondWith) },
 	{ "Signature", SNIPPET_SIGNATURE,
 		G_STRUCT_OFFSET(LassoSamlpRequestAbstract, RequestID) },
