@@ -1,4 +1,4 @@
-/* $Id: data_service.h 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: data_service.h 3513 2008-03-20 19:13:39Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -40,17 +40,17 @@ extern "C" {
 #include <lasso/xml/xml.h>
 #include <lasso/xml/saml_assertion.h>
 
-#define LASSO_TYPE_PROFILE_SERVICE (lasso_data_service_get_type())
+#define LASSO_TYPE_DATA_SERVICE (lasso_data_service_get_type())
 #define LASSO_DATA_SERVICE(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), \
-       LASSO_TYPE_PROFILE_SERVICE, LassoDataService))
+       LASSO_TYPE_DATA_SERVICE, LassoDataService))
 #define LASSO_DATA_SERVICE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), \
-       LASSO_TYPE_PROFILE_SERVICE, LassoDataServiceClass))
-#define LASSO_IS_PROFILE_SERVICE(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), \
-       LASSO_TYPE_PROFILE_SERVICE))
-#define LASSO_IS_PROFILE_SERVICE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), \
-       LASSO_TYPE_PROFILE_SERVICE))
+       LASSO_TYPE_DATA_SERVICE, LassoDataServiceClass))
+#define LASSO_IS_DATA_SERVICE(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), \
+       LASSO_TYPE_DATA_SERVICE))
+#define LASSO_IS_DATA_SERVICE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), \
+       LASSO_TYPE_DATA_SERVICE))
 #define LASSO_DATA_SERVICE_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), \
-       LASSO_TYPE_PROFILE_SERVICE, LassoDataServiceClass)) 
+       LASSO_TYPE_DATA_SERVICE, LassoDataServiceClass)) 
 
 typedef struct _LassoDataService LassoDataService;
 typedef struct _LassoDataServiceClass LassoDataServiceClass;
@@ -121,6 +121,9 @@ LASSO_EXPORT gboolean lasso_data_service_need_redirect_user(LassoDataService *se
 							    const char *redirectUrl);
 
 LASSO_EXPORT  gchar* lasso_data_service_get_redirect_request_url(LassoDataService *service);
+
+LASSO_EXPORT LassoDiscoResourceOffering* lasso_data_service_get_resource_offering(
+		LassoDataService *service);
 
 
 #ifdef __cplusplus

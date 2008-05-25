@@ -1,4 +1,4 @@
-/* $Id: saml_name_identifier.h 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: saml_name_identifier.h 3422 2007-10-04 21:31:19Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -65,7 +65,8 @@ struct _LassoSamlNameIdentifierClass {
 LASSO_EXPORT GType lasso_saml_name_identifier_get_type(void);
 LASSO_EXPORT LassoSamlNameIdentifier* lasso_saml_name_identifier_new(void);
 
-LASSO_EXPORT LassoSamlNameIdentifier* lasso_saml_name_identifier_new_from_xmlNode(xmlNode*);
+LASSO_EXPORT LassoSamlNameIdentifier* lasso_saml_name_identifier_new_from_xmlNode(
+		xmlNode *xmlnode);
 
 #ifdef __cplusplus
 }

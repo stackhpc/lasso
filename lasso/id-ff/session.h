@@ -1,4 +1,4 @@
-/* $Id: session.h 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: session.h 3442 2007-11-13 16:12:25Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -50,7 +50,8 @@ struct _LassoSession {
 	LassoNode parent;
 
 	/*< public >*/
-	GHashTable *assertions;
+	/* Can actually contain LassoSamlAssertion or LassoSaml2Assertion */
+	GHashTable *assertions; /* of LassoSamlAssertion */
 	gboolean is_dirty;
 
 	/*< private >*/

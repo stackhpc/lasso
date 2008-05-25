@@ -1,4 +1,4 @@
-/* $Id: dst_modify.h 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: dst_modify.h 3437 2007-11-03 21:23:50Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -54,7 +54,7 @@ struct _LassoDstModify {
 	LassoDiscoResourceID *ResourceID;
 	LassoDiscoEncryptedResourceID *EncryptedResourceID;
 	GList *Modification;
-	GList *Extension;
+	GList *Extension; /* of xmlNode* */
 
 	char *id;
 	char *itemID;

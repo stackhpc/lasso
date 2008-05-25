@@ -1,4 +1,4 @@
-/* $Id: dst_modify_response.h 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: dst_modify_response.h 3437 2007-11-03 21:23:50Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -51,7 +51,7 @@ struct _LassoDstModifyResponse {
 	LassoNode parent;
 
 	/*< public >*/
-	GList *Extension;
+	GList *Extension; /* of xmlNode* */
 	LassoUtilityStatus *Status;
 
 	char *id;

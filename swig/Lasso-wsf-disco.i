@@ -1,6 +1,6 @@
 /* -*- Mode: c; c-basic-offset: 8 -*-
  *
- * $Id: Lasso-wsf-disco.i 3334 2007-07-02 16:39:58Z dlaniel $
+ * $Id: Lasso-wsf-disco.i 3529 2008-04-23 14:28:57Z fpeters $
  *
  * SWIG bindings for Lasso Library
  *
@@ -1152,9 +1152,9 @@ typedef struct {
 typedef struct {
 	/* Attributes */
 
-#ifndef SWIG_PHP_RENAMES
-  /* XXX: SWIG 1.3.31 fails to compile the PHP binding it generates if this
-   * part is present */
+#ifndef SWIGPHP4
+  /* XXX: SWIG 1.3.31 and more fails to compile the PHP 4 binding it
+     generates if this * part is present */
 
 #if !defined(SWIG_PHP_RENAMES) && !defined(SWIGCSHARP) && !defined(SWIGJAVA)
 	/* "abstract" is a reserved word in PHP, C# and Java. */
@@ -1162,7 +1162,7 @@ typedef struct {
 #endif
 	char *Abstract;
 
-#endif /* !SWIG_PHP_RENAMES */
+#endif /* !SWIGPHP4 */
 
 #ifndef SWIG_PHP_RENAMES
 	%rename(entryId) entryID;

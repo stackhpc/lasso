@@ -1,4 +1,4 @@
-/* $Id: authentication.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: authentication.c 3448 2007-11-22 12:42:47Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -163,7 +163,7 @@ lasso_authentication_client_step(LassoAuthentication *authentication)
 void
 lasso_authentication_destroy(LassoAuthentication *authentication)
 {
-	g_object_unref(G_OBJECT(authentication));
+	lasso_node_destroy(LASSO_NODE(authentication));
 }
 
 char*
