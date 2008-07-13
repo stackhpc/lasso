@@ -1,8 +1,8 @@
-/* $Id: lib_idp_entry.c,v 1.16 2005/01/22 15:57:55 eraviart Exp $
+/* $Id: lib_idp_entry.c 3704 2008-05-15 21:17:44Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,9 +24,12 @@
 
 #include <lasso/xml/lib_idp_entry.h>
 
-/*
- * Schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
+/**
+ * SECTION:lib_idp_entry
+ * @short_description: &lt;lib:IDPEntry&gt;
  * 
+ * <figure><title>Schema fragment for lib:IDPEntry</title>
+ * <programlisting><![CDATA[
  * <xs:element name="IDPEntry">
  *   <xs:complexType>
  *     <xs:sequence>
@@ -36,6 +39,8 @@
  *     </xs:sequence>
  *   </xs:complexType>
  * </xs:element>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

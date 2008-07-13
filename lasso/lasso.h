@@ -1,8 +1,8 @@
-/* $Id: lasso.h,v 1.23 2005/02/21 14:16:59 fpeters Exp $ 
+/* $Id: lasso.h 3237 2007-05-30 17:17:45Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -44,6 +44,8 @@ extern "C" {
 #include <lasso/id-ff/logout.h>
 #include <lasso/id-ff/name_identifier_mapping.h>
 #include <lasso/id-ff/name_registration.h>
+#include <lasso/saml-2.0/name_id_management.h>
+#include <lasso/saml-2.0/ecp.h>
 
 LASSO_EXPORT int lasso_init(void);
 LASSO_EXPORT int lasso_shutdown(void);

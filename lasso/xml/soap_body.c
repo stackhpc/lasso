@@ -1,8 +1,8 @@
-/* $Id: soap_body.c,v 1.3 2005/09/19 14:16:34 nclapies Exp $ 
+/* $Id: soap_body.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/soap_body.h>
 
-/*
- * Schema fragments (http://www.w3.org/2001/06/soap-envelope):
+/**
+ * SECTION:soap_body
+ * @short_description: &lt;soap:Body&gt;
+ *
+ * <figure><title>Schema fragment for soap:Body</title>
+ * <programlisting><![CDATA[
  * 
  * <xs:element name="Body" type="tns:Body"/>
  *   <xs:complexType name="Body">
@@ -40,6 +44,8 @@
  *      </xs:annotation>
  *   </xs:anyAttribute>
  * </xs:complexType>
+ * ]]></programlisting>
+ * </figure>
  */ 
 
 /*****************************************************************************/

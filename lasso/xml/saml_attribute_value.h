@@ -1,8 +1,8 @@
-/* $Id: saml_attribute_value.h,v 1.2 2005/01/27 23:41:05 eraviart Exp $ 
+/* $Id: saml_attribute_value.h 3237 2007-05-30 17:17:45Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: Nicolas Clapies <nclapies@entrouvert.com>

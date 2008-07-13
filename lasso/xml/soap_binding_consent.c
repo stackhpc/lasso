@@ -1,8 +1,8 @@
-/* $Id: soap_binding_consent.c,v 1.1 2005/03/11 17:15:15 nclapies Exp $ 
+/* $Id: soap_binding_consent.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/soap_binding_consent.h>
 
-/*
- * Schema fragments (liberty-idwsf-soap-binding-v1.1.xsd):
+/**
+ * SECTION:soap_binding_consent
+ * @short_description: &lt;soapbinding:ConsentType&gt;
+ *
+ * <figure><title>Schema fragment for soapbinding:ConsentType</title>
+ * <programlisting><![CDATA[
  *
  * <xs:complexType name="ConsentType">
  *   <xs:attribute name="uri" type="xs:anyURI" use="required"/>
@@ -36,6 +40,8 @@
  * </xs:complexType>
  * <xs:element name="Consent" type="ConsentType"/>
  *
+ * ]]></programlisting>
+ * </figure>
  */ 
 
 /*****************************************************************************/

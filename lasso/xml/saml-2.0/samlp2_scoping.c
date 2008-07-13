@@ -1,8 +1,8 @@
-/* $Id: samlp2_scoping.c,v 1.2 2005/11/21 18:51:52 fpeters Exp $ 
+/* $Id: samlp2_scoping.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include "samlp2_scoping.h"
 
-/*
- * Schema fragment (saml-schema-protocol-2.0.xsd):
+/**
+ * SECTION:samlp2_scoping
+ * @short_description: &lt;samlp2:Scoping&gt;
+ *
+ * <figure><title>Schema fragment for samlp2:Scoping</title>
+ * <programlisting><![CDATA[
  *
  * <complexType name="ScopingType">
  *   <sequence>
@@ -34,6 +38,8 @@
  *   </sequence>
  *   <attribute name="ProxyCount" type="nonNegativeInteger" use="optional"/>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

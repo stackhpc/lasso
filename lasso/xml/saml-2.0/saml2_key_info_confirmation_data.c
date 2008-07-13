@@ -1,8 +1,8 @@
-/* $Id: saml2_key_info_confirmation_data.c,v 1.2 2005/11/21 18:51:52 fpeters Exp $ 
+/* $Id: saml2_key_info_confirmation_data.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include "saml2_key_info_confirmation_data.h"
 
-/*
- * Schema fragment (saml-schema-assertion-2.0.xsd):
+/**
+ * SECTION:saml2_key_info_confirmation_data
+ * @short_description: &lt;saml2:KeyInfoConfirmationData&gt;
+ *
+ * <figure><title>Schema fragment for saml2:KeyInfoConfirmationData</title>
+ * <programlisting><![CDATA[
  *
  * <complexType name="KeyInfoConfirmationDataType" mixed="false">
  *   <complexContent>
@@ -36,6 +40,8 @@
  *     </restriction>
  *   </complexContent>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

@@ -1,8 +1,8 @@
-/* $Id: saml2_assertion.c,v 1.2 2005/11/21 18:51:52 fpeters Exp $ 
+/* $Id: saml2_assertion.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -28,8 +28,12 @@
 
 #include "saml2_assertion.h"
 
-/*
- * Schema fragment (saml-schema-assertion-2.0.xsd):
+/**
+ * SECTION:saml2_assertion
+ * @short_description: &lt;saml2:Assertion&gt;
+ *
+ * <figure><title>Schema fragment for saml2:Assertion</title>
+ * <programlisting><![CDATA[
  *
  * <complexType name="AssertionType">
  *   <sequence>
@@ -49,6 +53,8 @@
  *   <attribute name="ID" type="ID" use="required"/>
  *   <attribute name="IssueInstant" type="dateTime" use="required"/>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/
@@ -60,6 +66,8 @@ static struct XmlSnippet schema_snippets[] = {
 	{ "Issuer", SNIPPET_NODE,
 		G_STRUCT_OFFSET(LassoSaml2Assertion, Issuer),
 		"LassoSaml2NameID" },
+	{ "Signature", SNIPPET_SIGNATURE,
+		G_STRUCT_OFFSET(LassoSaml2Assertion, ID) },
 	{ "Subject", SNIPPET_NODE,
 		G_STRUCT_OFFSET(LassoSaml2Assertion, Subject) },
 	{ "Conditions", SNIPPET_NODE,
@@ -80,8 +88,6 @@ static struct XmlSnippet schema_snippets[] = {
 		G_STRUCT_OFFSET(LassoSaml2Assertion, ID) },
 	{ "IssueInstant", SNIPPET_ATTRIBUTE,
 		G_STRUCT_OFFSET(LassoSaml2Assertion, IssueInstant) },
-	{ "Signature", SNIPPET_SIGNATURE,
-		G_STRUCT_OFFSET(LassoSaml2Assertion, ID) },
 
 	/* hidden fields; used in lasso dumps */
 	{ "SignType", SNIPPET_ATTRIBUTE | SNIPPET_INTEGER | SNIPPET_LASSO_DUMP,
@@ -92,6 +98,12 @@ static struct XmlSnippet schema_snippets[] = {
 		G_STRUCT_OFFSET(LassoSaml2Assertion, private_key_file) },
 	{ "CertificateFile", SNIPPET_CONTENT | SNIPPET_LASSO_DUMP,
 		G_STRUCT_OFFSET(LassoSaml2Assertion, certificate_file) },
+	{ "EncryptionActivated", SNIPPET_ATTRIBUTE | SNIPPET_BOOLEAN | SNIPPET_LASSO_DUMP,
+		G_STRUCT_OFFSET(LassoSaml2Assertion, encryption_activated) },
+	{ "EncryptionPublicKeyStr", SNIPPET_CONTENT | SNIPPET_LASSO_DUMP,
+		G_STRUCT_OFFSET(LassoSaml2Assertion, encryption_public_key_str) },
+	{ "EncryptionSymKeyType", SNIPPET_ATTRIBUTE | SNIPPET_INTEGER | SNIPPET_LASSO_DUMP,
+		G_STRUCT_OFFSET(LassoSaml2Assertion, encryption_sym_key_type) },
 
 	{NULL, 0, 0}
 };
@@ -110,9 +122,14 @@ get_xmlNode(LassoNode *node, gboolean lasso_dump)
 	xmlnode = parent_class->get_xmlNode(node, lasso_dump);
 
 	if (lasso_dump == FALSE && request->sign_type) {
-		rc = lasso_sign_node(xmlnode, "ID", request->ID,
+		if (request->private_key_file == NULL) {
+			message(G_LOG_LEVEL_WARNING,
+					"No Private Key set for signing samlp2:RequestAbstract");
+		} else {
+			rc = lasso_sign_node(xmlnode, "ID", request->ID,
 				request->private_key_file, request->certificate_file);
-		/* signature may have failed; what to do ? */
+			/* signature may have failed; what to do ? */
+		}
 	}
 
 	return xmlnode;
@@ -138,6 +155,11 @@ instance_init(LassoSaml2Assertion *node)
 	node->ID = NULL;
 	node->IssueInstant = NULL;
 	node->sign_type = LASSO_SIGNATURE_TYPE_NONE;
+	node->private_key_file = NULL;
+	node->certificate_file = NULL;
+	node->encryption_activated = FALSE;
+	node->encryption_public_key_str = NULL;
+	node->encryption_sym_key_type = LASSO_ENCRYPTION_SYM_KEY_TYPE_DEFAULT;
 }
 
 static void

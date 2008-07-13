@@ -1,8 +1,8 @@
-/* $Id: saml_advice.c,v 1.18 2005/01/22 15:57:55 eraviart Exp $
+/* $Id: saml_advice.c 3704 2008-05-15 21:17:44Z fpeters $
  *
- * Lasso - A free implementation of the Samlerty Alliance specifications.
+ * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -25,9 +25,12 @@
 #include <lasso/xml/saml_advice.h>
 #include <lasso/xml/saml_assertion.h>
 
-/*
- * Schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
- * 
+/**
+ * SECTION:saml_advice
+ * @short_description: &lt;saml:Advice&gt;
+ *
+ * <figure><title>Schema fragment for saml:Advice</title>
+ * <programlisting><![CDATA[
  * <element name="Advice" type="saml:AdviceType"/>
  * <complexType name="AdviceType">
  *   <choice minOccurs="0" maxOccurs="unbounded">
@@ -41,6 +44,8 @@
  * <simpleType name="IDReferenceType">
  *   <restriction base="string"/>
  * </simpleType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

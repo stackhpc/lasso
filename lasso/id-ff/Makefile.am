@@ -1,9 +1,9 @@
+MAINTAINERCLEANFILES = Makefile.in
 liblassoincludedir = $(includedir)/lasso/id-ff
 
 INCLUDES = \
-	-I$(top_srcdir) \
-	-I$(top_srcdir)/lasso \
 	-I$(top_builddir) \
+	-I$(top_srcdir) \
 	$(LASSO_CORE_CFLAGS) \
 	-DG_LOG_DOMAIN=\"lasso\"
 
@@ -20,8 +20,8 @@ liblasso_id_ff_la_SOURCES = \
 	name_registration.c \
 	profile.c \
 	provider.c \
-	server.c \
-	session.c
+	session.c \
+	server.c
 
 lasso_private_h_sources = \
 	identityprivate.h \
@@ -29,7 +29,8 @@ lasso_private_h_sources = \
 	providerprivate.h \
 	serverprivate.h \
 	sessionprivate.h \
-	logoutprivate.h
+	logoutprivate.h \
+	loginprivate.h
 
 liblassoinclude_HEADERS = \
 	defederation.h \

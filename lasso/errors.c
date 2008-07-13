@@ -1,8 +1,8 @@
-/* $Id: errors.c,v 1.9 2005/11/20 15:38:18 fpeters Exp $ 
+/* $Id: errors.c 3693 2008-04-30 10:14:06Z bdauvergne $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -31,6 +31,8 @@ const char*
 lasso_strerror(int error_code)
 {
 	switch (error_code) {
+		case LASSO_ERROR_UNDEFINED:
+			return "Undefined error case";
 		case LASSO_ERROR_UNIMPLEMENTED:
 			return "Unimplemented part of Lasso";
 		case LASSO_XML_ERROR_NODE_NOT_FOUND:
@@ -41,6 +43,9 @@ lasso_strerror(int error_code)
 			return "Unable to get attribute of element.";
 		case LASSO_XML_ERROR_ATTR_VALUE_NOT_FOUND:
 			return "Unable to get attribute value of element.";
+		case LASSO_XML_ERROR_INVALID_FILE:
+			return "Invalid XML file";
+
 		case LASSO_DS_ERROR_SIGNATURE_NOT_FOUND:
 			return "Signature element not found.";
 		case LASSO_DS_ERROR_INVALID_SIGNATURE:
@@ -72,11 +77,18 @@ lasso_strerror(int error_code)
 			return "Failed to add new provider.";
 		case LASSO_SERVER_ERROR_ADD_PROVIDER_PROTOCOL_MISMATCH:
 			return "Failed to add new provider (protocol mismatch).";
+		case LASSO_SERVER_ERROR_SET_ENCRYPTION_PRIVATE_KEY_FAILED:
+			return "Failed to load encryption private key.";
 
 		case LASSO_LOGOUT_ERROR_UNSUPPORTED_PROFILE:
 			return "Unsupported protocol profile";
 		case LASSO_LOGOUT_ERROR_REQUEST_DENIED:
 			return "Request denied by identity provider";
+		case LASSO_LOGOUT_ERROR_FEDERATION_NOT_FOUND:
+			return "Federation not found on logout";
+		case LASSO_LOGOUT_ERROR_UNKNOWN_PRINCIPAL:
+			return "Unknown principal on logout";
+
 		case LASSO_PROFILE_ERROR_INVALID_QUERY:
 			return "Invalid URL query";
 		case LASSO_PROFILE_ERROR_INVALID_POST_MSG:
@@ -117,6 +129,38 @@ lasso_strerror(int error_code)
 			return "Failed to create identity from dump";
 		case LASSO_PROFILE_ERROR_BAD_SESSION_DUMP:
 			return "Failed to create session from dump";
+		case LASSO_PROFILE_ERROR_MISSING_RESPONSE:
+			return "Missing response";
+		case LASSO_PROFILE_ERROR_MISSING_STATUS_CODE:
+			return "Missing status code";
+		case LASSO_PROFILE_ERROR_MISSING_ARTIFACT:
+			return "Missing SAML artifact";
+		case LASSO_PROFILE_ERROR_MISSING_RESOURCE_OFFERING:
+			return "Missing ressource offering";
+		case LASSO_PROFILE_ERROR_MISSING_SERVICE_DESCRIPTION:
+			return "Missing service description";
+		case LASSO_PROFILE_ERROR_MISSING_SERVICE_TYPE:
+			return "Missing service type";
+		case LASSO_PROFILE_ERROR_MISSING_ASSERTION:
+			return "Missing assertion";
+		case LASSO_PROFILE_ERROR_MISSING_SUBJECT:
+			return "Missing subject";
+		case LASSO_PROFILE_ERROR_MISSING_NAME_IDENTIFIER:
+			return "Missing name identifier";
+		case LASSO_PROFILE_ERROR_INVALID_ARTIFACT:
+			return "Invalid artifact";
+		case LASSO_PROFILE_ERROR_MISSING_ENCRYPTION_PRIVATE_KEY:
+			return "Found an encrypted element but encryption private key is not set";
+		case LASSO_PROFILE_ERROR_STATUS_NOT_SUCCESS:
+			return "Status code is not success";
+		case LASSO_PROFILE_ERROR_MISSING_ISSUER:
+		        return "Missing issuer";
+		case LASSO_PROFILE_ERROR_MISSING_SERVICE_INSTANCE:
+		        return "Missing service instance";
+		case LASSO_PROFILE_ERROR_MISSING_ENDPOINT_REFERENCE:
+		        return "Missing endpoint reference";
+		case LASSO_PROFILE_ERROR_MISSING_ENDPOINT_REFERENCE_ADDRESS:
+			return "Missing endpoint reference address";
 
 		case LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ:
 			return "An object type provided as parameter "\
@@ -134,11 +178,54 @@ lasso_strerror(int error_code)
 			return "Name identifier not found in request";
 		case LASSO_LOGIN_ERROR_UNKNOWN_PRINCIPAL:
 			return "Unknown principal";
+		case LASSO_LOGIN_ERROR_FEDERATION_NOT_FOUND:
+			return "Federation not found on login";
+		case LASSO_LOGIN_ERROR_REQUEST_DENIED:
+			return "Request denied";
+		case LASSO_LOGIN_ERROR_NO_DEFAULT_ENDPOINT:
+			return "No default endpoint";
+		case LASSO_LOGIN_ERROR_ASSERTION_REPLAY:
+			return "Assertion replay";
+                case LASSO_LOGIN_ERROR_STATUS_NOT_SUCCESS:
+			return "Status code is not success";
 
-	        case LASSO_SOAP_FAULT_REDIRECT_REQUEST:
-		        return "Redirect request from Attribute Provider";
+		case LASSO_SOAP_FAULT_REDIRECT_REQUEST:
+			return "Redirect request from Attribute Provider";
+		case LASSO_SOAP_ERROR_MISSING_ENVELOPE:
+			return "Missing SOAP envelope";
+		case LASSO_SOAP_ERROR_MISSING_HEADER:
+			return "Missing SOAP header";
+		case LASSO_SOAP_ERROR_MISSING_BODY:
+			return "Missing SOAP body";
+		case LASSO_SOAP_ERROR_MISSING_SOAP_FAULT_DETAIL:
+			return "Missing SOAP fault detail";
+
+		case LASSO_NAME_IDENTIFIER_MAPPING_ERROR_MISSING_TARGET_NAMESPACE:
+			return "Target name space not found";
+
+		case LASSO_DISCOVERY_ERROR_SVC_METADATA_REGISTER_FAILED:
+			return "Service metadata registration failed";
+		case LASSO_DISCOVERY_ERROR_SVC_METADATA_ASSOCIATION_ADD_FAILED:
+		        return "Service metadata association failed";
+		case LASSO_DISCOVERY_ERROR_MISSING_REQUESTED_SERVICE:
+		        return "Missing requested service";
+		case LASSO_DISCOVERY_ERROR_FAILED_TO_BUILD_ENDPOINT_REFERENCE:
+			return "Failed to build Endpoint Reference";
+
+		case LASSO_DST_ERROR_MISSING_SERVICE_DATA:
+			return "Missing service data";
+		case LASSO_DST_ERROR_QUERY_FAILED:
+			return "Query failed";
+		case LASSO_DST_ERROR_QUERY_PARTIALLY_FAILED:
+			return "Query partially failed : some items were correctly processed";
+		case LASSO_DST_ERROR_MODIFY_FAILED:
+			return "Modify failed";
+		case LASSO_DST_ERROR_MODIFY_PARTIALLY_FAILED:
+			return "Modify partially failed : some items were correctly processed";
+		case LASSO_DST_ERROR_NEW_DATA_MISSING:
+			return "Missing new data";
 
 		default:
-			return "Undefined error code.";
+			return "Error";
 	}
 }

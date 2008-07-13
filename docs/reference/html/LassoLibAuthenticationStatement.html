@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>LassoLibAuthenticationStatement</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.71.0">
+<link rel="start" href="index.html" title="Lasso Reference Manual">
+<link rel="up" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
+<link rel="prev" href="LassoLibAssertion.html" title="LassoLibAssertion">
+<link rel="next" href="LassoLibAuthnContext.html" title="LassoLibAuthnContext">
+<meta name="generator" content="GTK-Doc V1.10 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
+<link rel="chapter" href="architecture.html" title="Lasso Architecture">
+<link rel="chapter" href="idff.html" title="Identity Federation Framework">
+<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework">
+<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
+<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
+<link rel="chapter" href="misc.html" title="Misc">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="LassoLibAssertion.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="xml-idff.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Lasso Reference Manual</th>
+<td><a accesskey="n" href="LassoLibAuthnContext.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts"><nobr><a href="#LassoLibAuthenticationStatement.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#LassoLibAuthenticationStatement.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#LassoLibAuthenticationStatement.object-hierarchy" class="shortcut">Object Hierarchy</a></nobr></td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="LassoLibAuthenticationStatement"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="LassoLibAuthenticationStatement.top_of_page"></a>LassoLibAuthenticationStatement</span></h2>
+<p>LassoLibAuthenticationStatement — &lt;lib:AuthenticationStatement&gt;</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="LassoLibAuthenticationStatement.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+
+#include &lt;lasso/lasso.h&gt;
+
+                    <a href="LassoLibAuthenticationStatement.html#LassoLibAuthenticationStatement-struct" title="LassoLibAuthenticationStatement">LassoLibAuthenticationStatement</a>;
+<a href="LassoLibAuthenticationStatement.html" title="LassoLibAuthenticationStatement">LassoLibAuthenticationStatement</a>* <a href="LassoLibAuthenticationStatement.html#lasso-lib-authentication-statement-new" title="lasso_lib_authentication_statement_new ()">lasso_lib_authentication_statement_new</a>
+                                                        (void);
+<a href="LassoLibAuthenticationStatement.html" title="LassoLibAuthenticationStatement">LassoLibAuthenticationStatement</a>* <a href="LassoLibAuthenticationStatement.html#lasso-lib-authentication-statement-new-full" title="lasso_lib_authentication_statement_new_full ()">lasso_lib_authentication_statement_new_full</a>
+                                                        (const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *authenticationMethod,
+                                                         const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *authenticationInstant,
+                                                         const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *reauthenticateOnOrAfter,
+                                                         <a href="LassoSamlNameIdentifier.html" title="LassoSamlNameIdentifier">LassoSamlNameIdentifier</a> *sp_identifier,
+                                                         <a href="LassoSamlNameIdentifier.html" title="LassoSamlNameIdentifier">LassoSamlNameIdentifier</a> *idp_identifier);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="LassoLibAuthenticationStatement.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <GTKDOCLINK HREF="GObject">GObject</GTKDOCLINK>
+   +----<a href="LassoNode.html" title="LassoNode">LassoNode</a>
+         +----<a href="LassoSamlStatementAbstract.html" title="LassoSamlStatementAbstract">LassoSamlStatementAbstract</a>
+               +----<a href="LassoSamlSubjectStatementAbstract.html" title="LassoSamlSubjectStatementAbstract">LassoSamlSubjectStatementAbstract</a>
+                     +----<a href="LassoSamlAuthenticationStatement.html" title="LassoSamlAuthenticationStatement">LassoSamlAuthenticationStatement</a>
+                           +----LassoLibAuthenticationStatement
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="LassoLibAuthenticationStatement.description"></a><h2>Description</h2>
+<p>
+</p>
+<div class="figure">
+<a name="id2598110"></a><p class="title"><b>Figure 2. Schema fragment for lib:AuthenticationStatement</b></p>
+<div class="figure-contents"><pre class="programlisting">
+&lt;xs:element name="AuthenticationStatement" type="AuthenticationStatementType"
+  substitutionGroup="saml:Statement"/&gt;
+&lt;xs:complexType name="AuthenticationStatementType"&gt;
+  &lt;xs:complexContent&gt;
+    &lt;xs:extension base="saml:AuthenticationStatementType"&gt;
+      &lt;xs:sequence&gt;
+        &lt;xs:element ref="AuthnContext" minOccurs="0"/&gt;
+      &lt;/xs:sequence&gt;
+      &lt;xs:attribute name="ReauthenticateOnOrAfter" type="xs:dateTime" use="optional"/&gt;
+      &lt;xs:attribute name="SessionIndex" type="xs:string" use="required"/&gt;
+    &lt;/xs:extension&gt;
+  &lt;/xs:complexContent&gt;
+&lt;/xs:complexType&gt;
+</pre></div>
+</div>
+<p><br class="figure-break"></p>
+<p>
+
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="LassoLibAuthenticationStatement.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="LassoLibAuthenticationStatement-struct"></a><h3>LassoLibAuthenticationStatement</h3>
+<pre class="programlisting">typedef struct {
+	/* &lt;xs:element ref="AuthnContext" minOccurs="0"/&gt; */
+	LassoLibAuthnContext *AuthnContext;
+	/* &lt;xs:attribute name="ReauthenticateOnOrAfter" type="xs:dateTime" use="optional"/&gt; */
+	char *ReauthenticateOnOrAfter;
+	/* &lt;xs:attribute name="SessionIndex" type="xs:string" use="required"/&gt; */
+	char *SessionIndex;
+} LassoLibAuthenticationStatement;
+</pre>
+<p>
+
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="lasso-lib-authentication-statement-new"></a><h3>lasso_lib_authentication_statement_new ()</h3>
+<pre class="programlisting"><a href="LassoLibAuthenticationStatement.html" title="LassoLibAuthenticationStatement">LassoLibAuthenticationStatement</a>* lasso_lib_authentication_statement_new
+                                                        (void);</pre>
+<p>
+Creates a new <a href="LassoLibAuthenticationStatement.html" title="LassoLibAuthenticationStatement"><span class="type">LassoLibAuthenticationStatement</span></a> object.</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td>
+<td> a newly created <a href="LassoLibAuthenticationStatement.html" title="LassoLibAuthenticationStatement"><span class="type">LassoLibAuthenticationStatement</span></a> object
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="lasso-lib-authentication-statement-new-full"></a><h3>lasso_lib_authentication_statement_new_full ()</h3>
+<pre class="programlisting"><a href="LassoLibAuthenticationStatement.html" title="LassoLibAuthenticationStatement">LassoLibAuthenticationStatement</a>* lasso_lib_authentication_statement_new_full
+                                                        (const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *authenticationMethod,
+                                                         const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *authenticationInstant,
+                                                         const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *reauthenticateOnOrAfter,
+                                                         <a href="LassoSamlNameIdentifier.html" title="LassoSamlNameIdentifier">LassoSamlNameIdentifier</a> *sp_identifier,
+                                                         <a href="LassoSamlNameIdentifier.html" title="LassoSamlNameIdentifier">LassoSamlNameIdentifier</a> *idp_identifier);</pre>
+<p>
+Creates a new <a href="LassoLibAuthenticationStatement.html" title="LassoLibAuthenticationStatement"><span class="type">LassoLibAuthenticationStatement</span></a> object and initializes it
+with the parameters.</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><span class="term"><em class="parameter"><code>authenticationMethod</code></em> :</span></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><span class="term"><em class="parameter"><code>authenticationInstant</code></em> :</span></td>
+<td> AuthenticationInstant (NULL to get current time)
+</td>
+</tr>
+<tr>
+<td><span class="term"><em class="parameter"><code>reauthenticateOnOrAfter</code></em> :</span></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><span class="term"><em class="parameter"><code>sp_identifier</code></em> :</span></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><span class="term"><em class="parameter"><code>idp_identifier</code></em> :</span></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td>
+<td> a newly created <a href="LassoLibAuthenticationStatement.html" title="LassoLibAuthenticationStatement"><span class="type">LassoLibAuthenticationStatement</span></a> object
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.10</div>
+</body>
+</html>

@@ -1,8 +1,8 @@
-/* $Id: is_user_interaction.c,v 1.2 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: is_user_interaction.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/is_user_interaction.h>
 
-/*
- * Schema fragments (liberty-idwsf-interaction-svc-v1.0.xsd):
+/**
+ * SECTION:is_user_interaction
+ * @short_description: &lt;is:UserInteraction&gt;
+ *
+ * <figure><title>Schema fragment for is:UserInteraction</title>
+ * <programlisting><![CDATA[
  *
  * <xs:element name="UserInteraction" type="UserInteractionHeaderType"/>
  * <xs:complexType name="UserInteractionHeaderType">
@@ -40,6 +44,8 @@
  *   <xs:attribute ref="soap:actor" use="optional"/>
  *   <xs:attribute ref="soap:mustUnderstand" use="optional"/>
  * </xs:complexType>
+ * ]]></programlisting>
+ * </figure>
  */ 
 
 /*****************************************************************************/

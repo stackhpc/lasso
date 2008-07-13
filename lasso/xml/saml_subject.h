@@ -1,8 +1,8 @@
-/* $Id: saml_subject.h,v 1.6 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: saml_subject.h 3458 2007-12-05 13:50:41Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -32,6 +32,7 @@ extern "C" {
 #include <lasso/xml/xml.h>
 #include <lasso/xml/saml_name_identifier.h>
 #include <lasso/xml/saml_subject_confirmation.h>
+#include <lasso/xml/saml-2.0/saml2_encrypted_element.h>
 
 #define LASSO_TYPE_SAML_SUBJECT (lasso_saml_subject_get_type())
 #define LASSO_SAML_SUBJECT(obj) \
@@ -53,6 +54,7 @@ struct _LassoSamlSubject {
 	/*< public >*/
 	LassoSamlNameIdentifier *NameIdentifier;
 	LassoSamlSubjectConfirmation *SubjectConfirmation;
+	LassoSaml2EncryptedElement *EncryptedNameIdentifier;
 };
 
 struct _LassoSamlSubjectClass {

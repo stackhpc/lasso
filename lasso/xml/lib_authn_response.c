@@ -1,8 +1,8 @@
-/* $Id: lib_authn_response.c,v 1.19 2005/11/20 15:38:19 fpeters Exp $ 
+/* $Id: lib_authn_response.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,9 +24,12 @@
 
 #include <lasso/xml/lib_authn_response.h>
 
-/*
- * Schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
- * 
+/**
+ * SECTION:lib_authn_response
+ * @short_description: &lt;lib:AuthnResponse&gt;
+ *
+ * <figure><title>Schema fragment for lib:AuthnResponse</title>
+ * <programlisting><![CDATA[
  * <xs:element name="AuthnResponse" type="AuthnResponseType"/>
  * <xs:complexType name="AuthnResponseType">
  *   <xs:complexContent>
@@ -42,14 +45,9 @@
  * </xs:complexType>
  * 
  * <xs:element name="ProviderID" type="md:entityIDType"/>
- * From liberty-metadata-v1.0.xsd:
- * <xs:simpleType name="entityIDType">
- *   <xs:restriction base="xs:anyURI">
- *     <xs:maxLength value="1024" id="maxlengthid"/>
- *   </xs:restriction>
- * </xs:simpleType>
  * <xs:element name="RelayState" type="xs:string"/>
- * 
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/
@@ -128,7 +126,7 @@ lasso_lib_authn_response_new(char *providerID, LassoLibAuthnRequest *request)
 	LassoLibAuthnResponse *response;
 
 	response = g_object_new(LASSO_TYPE_LIB_AUTHN_RESPONSE, NULL);
- 
+
 	if (providerID) {
 		lasso_samlp_response_abstract_fill(
 				LASSO_SAMLP_RESPONSE_ABSTRACT(response),

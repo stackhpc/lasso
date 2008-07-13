@@ -1,8 +1,8 @@
-/* $Id: saml_subject_confirmation.c,v 1.18 2005/10/05 15:59:59 nclapies Exp $
+/* $Id: saml_subject_confirmation.c 3704 2008-05-15 21:17:44Z fpeters $
  *
- * Lasso - A free implementation of the Samlerty Alliance specifications.
+ * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/saml_subject_confirmation.h>
 
-/*
- * Schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
+/**
+ * SECTION:saml_subject_confirmation
+ * @short_description: &lt;saml:SubjectConfirmation&gt;
+ *
+ * <figure><title>Schema fragment for saml:SubjectConfirmation</title>
+ * <programlisting><![CDATA[
  * 
  * <element name="SubjectConfirmation" type="saml:SubjectConfirmationType"/>
  * <complexType name="SubjectConfirmationType">
@@ -38,6 +42,8 @@
  * 
  * <element name="SubjectConfirmationData" type="anyType"/>
  * <element name="ConfirmationMethod" type="anyURI"/>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/
@@ -61,9 +67,9 @@ static struct XmlSnippet schema_snippets[] = {
 static void
 instance_init(LassoSamlSubjectConfirmation *node)
 {
-  node->ConfirmationMethod = NULL;
-  node->SubjectConfirmationData = NULL;
-  node->KeyInfo = NULL;
+	node->ConfirmationMethod = NULL;
+	node->SubjectConfirmationData = NULL;
+	node->KeyInfo = NULL;
 }
 
 static void

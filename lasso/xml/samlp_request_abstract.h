@@ -1,8 +1,8 @@
-/* $Id: samlp_request_abstract.h,v 1.16 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: samlp_request_abstract.h 3435 2007-10-30 18:15:41Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -54,7 +54,7 @@ struct _LassoSamlpRequestAbstract {
 
 	/*< public >*/
 	/* <element ref="samlp:RespondWith" minOccurs="0" maxOccurs="unbounded"/> */
-	GList *RespondWith; /* of char* */
+	GList *RespondWith; /* of strings */
 	/* <attribute name="RequestID" type="saml:IDType" use="required"/> */
 	char *RequestID;
 	/* <attribute name="MajorVersion" type="integer" use="required"/> */

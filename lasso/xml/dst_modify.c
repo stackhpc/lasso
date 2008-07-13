@@ -1,8 +1,8 @@
-/* $Id: dst_modify.c,v 1.9 2005/09/11 09:08:30 fpeters Exp $ 
+/* $Id: dst_modify.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/dst_modify.h>
 
-/*
- * Schema fragment (liberty-idwsf-dst-v1.0.xsd):
+/**
+ * SECTION:dst_modify
+ * @short_description: &lt;dst:Modify&gt;
+ *
+ * <figure><title>Schema fragment for dst:Modify</title>
+ * <programlisting><![CDATA[
  *
  * <xs:element name="Modify" type="ModifyType"/>
  * <xs:complexType name="ModifyType">
@@ -53,6 +57,8 @@
  *     <xs:attribute name="id" type="xs:ID"/>
  *     <xs:attribute name="itemID" type="IDType"/>
  * </xs:complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/
@@ -80,8 +86,9 @@ insure_namespace(xmlNode *xmlnode, xmlNs *ns)
 
 	xmlSetNs(xmlnode, ns);
 	while (t) {
-		if (t->type == XML_ELEMENT_NODE && t->ns == NULL)
+		if (t->type == XML_ELEMENT_NODE && t->ns == NULL) {
 			insure_namespace(t, ns);
+		}
 		t = t->next;
 	}
 }
@@ -103,16 +110,18 @@ get_xmlNode(LassoNode *node, gboolean lasso_dump)
 static int
 init_from_xml(LassoNode *node, xmlNode *xmlnode)
 {
+	LassoDstModify *modify = LASSO_DST_MODIFY(node);
 	int rc;
-	LassoDstModify *query = LASSO_DST_MODIFY(node);
 
 	rc = parent_class->init_from_xml(node, xmlnode);
-	if (rc) return rc;
+	if (rc) {
+		return rc;
+	}
 
-	query->hrefServiceType = g_strdup((char*)xmlnode->ns->href);
-	query->prefixServiceType = lasso_get_prefix_for_dst_service_href(
-			query->hrefServiceType);
-	if (query->prefixServiceType == NULL) {
+	modify->hrefServiceType = g_strdup((char*)xmlnode->ns->href);
+	modify->prefixServiceType = lasso_get_prefix_for_dst_service_href(
+			modify->hrefServiceType);
+	if (modify->prefixServiceType == NULL) {
 		/* XXX: what to do here ? */
 	}
 

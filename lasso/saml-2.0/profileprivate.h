@@ -1,8 +1,8 @@
-/* $Id: profileprivate.h,v 1.1 2005/11/20 15:38:19 fpeters Exp $
+/* $Id: profileprivate.h 3237 2007-05-30 17:17:45Z dlaniel $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -38,6 +38,7 @@ int lasso_saml20_profile_init_artifact_resolve(LassoProfile *profile,
 int lasso_saml20_profile_process_artifact_resolve(LassoProfile *profile, const char *msg);
 int lasso_saml20_profile_build_artifact_response(LassoProfile *profile);
 int lasso_saml20_profile_process_artifact_response(LassoProfile *profile, const char *msg);
+gint lasso_saml20_profile_set_session_from_dump(LassoProfile *profile);
 
 #ifdef __cplusplus
 }

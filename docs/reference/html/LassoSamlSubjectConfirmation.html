@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>LassoSamlSubjectConfirmation</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.71.0">
+<link rel="start" href="index.html" title="Lasso Reference Manual">
+<link rel="up" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
+<link rel="prev" href="LassoSamlSubject.html" title="LassoSamlSubject">
+<link rel="next" href="LassoSamlSubjectLocality.html" title="LassoSamlSubjectLocality">
+<meta name="generator" content="GTK-Doc V1.10 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
+<link rel="chapter" href="architecture.html" title="Lasso Architecture">
+<link rel="chapter" href="idff.html" title="Identity Federation Framework">
+<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework">
+<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
+<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
+<link rel="chapter" href="misc.html" title="Misc">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="LassoSamlSubject.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="xml-idff.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Lasso Reference Manual</th>
+<td><a accesskey="n" href="LassoSamlSubjectLocality.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts"><nobr><a href="#LassoSamlSubjectConfirmation.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#LassoSamlSubjectConfirmation.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#LassoSamlSubjectConfirmation.object-hierarchy" class="shortcut">Object Hierarchy</a></nobr></td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="LassoSamlSubjectConfirmation"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="LassoSamlSubjectConfirmation.top_of_page"></a>LassoSamlSubjectConfirmation</span></h2>
+<p>LassoSamlSubjectConfirmation — &lt;saml:SubjectConfirmation&gt;</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="LassoSamlSubjectConfirmation.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+
+#include &lt;lasso/lasso.h&gt;
+
+                    <a href="LassoSamlSubjectConfirmation.html#LassoSamlSubjectConfirmation-struct" title="LassoSamlSubjectConfirmation">LassoSamlSubjectConfirmation</a>;
+<a href="LassoSamlSubjectConfirmation.html" title="LassoSamlSubjectConfirmation">LassoSamlSubjectConfirmation</a>* <a href="LassoSamlSubjectConfirmation.html#lasso-saml-subject-confirmation-new" title="lasso_saml_subject_confirmation_new ()">lasso_saml_subject_confirmation_new</a>
+                                                        (void);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="LassoSamlSubjectConfirmation.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <GTKDOCLINK HREF="GObject">GObject</GTKDOCLINK>
+   +----<a href="LassoNode.html" title="LassoNode">LassoNode</a>
+         +----LassoSamlSubjectConfirmation
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="LassoSamlSubjectConfirmation.description"></a><h2>Description</h2>
+<p>
+</p>
+<div class="figure">
+<a name="id2620199"></a><p class="title"><b>Figure 30. Schema fragment for saml:SubjectConfirmation</b></p>
+<div class="figure-contents"><pre class="programlisting">
+
+&lt;element name="SubjectConfirmation" type="saml:SubjectConfirmationType"/&gt;
+&lt;complexType name="SubjectConfirmationType"&gt;
+  &lt;sequence&gt;
+    &lt;element ref="saml:ConfirmationMethod" maxOccurs="unbounded"/&gt;
+    &lt;element ref="saml:SubjectConfirmationData" minOccurs="0"/&gt;
+    &lt;element ref="ds:KeyInfo" minOccurs="0"/&gt;
+  &lt;/sequence&gt;
+&lt;/complexType&gt;
+
+&lt;element name="SubjectConfirmationData" type="anyType"/&gt;
+&lt;element name="ConfirmationMethod" type="anyURI"/&gt;
+</pre></div>
+</div>
+<p><br class="figure-break"></p>
+<p>
+
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="LassoSamlSubjectConfirmation.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="LassoSamlSubjectConfirmation-struct"></a><h3>LassoSamlSubjectConfirmation</h3>
+<pre class="programlisting">typedef struct {
+	/* &lt;element ref="saml:ConfirmationMethod" maxOccurs="unbounded"/&gt; */
+	GList *ConfirmationMethod;
+	/* &lt;element ref="saml:SubjectConfirmationData" minOccurs="0"/&gt; */
+	char *SubjectConfirmationData;
+	LassoDsKeyInfo *KeyInfo;
+} LassoSamlSubjectConfirmation;
+</pre>
+<p>
+
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="lasso-saml-subject-confirmation-new"></a><h3>lasso_saml_subject_confirmation_new ()</h3>
+<pre class="programlisting"><a href="LassoSamlSubjectConfirmation.html" title="LassoSamlSubjectConfirmation">LassoSamlSubjectConfirmation</a>* lasso_saml_subject_confirmation_new
+                                                        (void);</pre>
+<p>
+Creates a new <a href="LassoSamlSubjectConfirmation.html" title="LassoSamlSubjectConfirmation"><span class="type">LassoSamlSubjectConfirmation</span></a> object.</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td>
+<td> a newly created <a href="LassoSamlSubjectConfirmation.html" title="LassoSamlSubjectConfirmation"><span class="type">LassoSamlSubjectConfirmation</span></a> object
+</td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.10</div>
+</body>
+</html>

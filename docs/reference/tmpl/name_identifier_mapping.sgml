@@ -2,7 +2,7 @@
 LassoNameIdentifierMapping
 
 <!-- ##### SECTION Short_Description ##### -->
-Name Identifier Mapping
+
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
@@ -65,7 +65,7 @@ Name Identifier Mapping
 </para>
 
 @mapping: 
-@targetNameSpace: 
+@targetNamespace: 
 @remote_providerID: 
 @Returns: 
 

@@ -1,8 +1,8 @@
-/* $Id: wsf_profile_private.h,v 1.4 2005/10/06 15:03:56 nclapies Exp $ 
+/* $Id: wsf_profile_private.h 3712 2008-05-20 13:14:06Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -39,6 +39,12 @@ void lasso_wsf_profile_set_security_mech_id(LassoWsfProfile *profile,
 LassoSoapFault* lasso_wsf_profile_get_fault(LassoWsfProfile *profile);
 
 void lasso_wsf_profile_set_public_key(LassoWsfProfile *profile, const char *public_key); 
+
+LassoDsKeyInfo* lasso_wsf_profile_get_key_info_node(LassoWsfProfile *profile,
+	const gchar *providerID);
+
+LassoDiscoDescription* lasso_wsf_profile_get_description_auto(LassoDiscoServiceInstance *si,
+	const gchar *security_mech_id);
 
 #ifdef __cplusplus
 }

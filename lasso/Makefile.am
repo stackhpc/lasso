@@ -1,8 +1,8 @@
-SUBDIRS = xml id-ff id-wsf saml-2.0
+SUBDIRS = xml id-ff id-wsf saml-2.0 id-wsf-2.0
 
 liblassoincludedir = $(includedir)/lasso
 
-INCLUDES = -I$(top_srcdir) -I$(top_builddir) $(LASSO_CORE_CFLAGS)
+INCLUDES = -I$(top_builddir) -I$(top_srcdir) $(LASSO_CORE_CFLAGS)
 
 ## Added to activate libtool 1.5.6 windows resources partial support
 LTRCCOMPILE = $(LIBTOOL) --tag=RC --mode=compile $(RC) \
@@ -31,13 +31,21 @@ types.c:
 symbols.sym:
 	$(PYTHON) $(srcdir)/extract_symbols.py $(srcdir) $(SYMBOLS_ARGS) > symbols.sym
 
+MAINTAINERCLEANFILES = \
+	Makefile.in \
+	lasso_config.h.in
+
 clean-local:
 	-rm types.c symbols.sym
 
-EXTRA_DIST = extract_types.py extract_symbols.py
+EXTRA_DIST = utils.h extract_types.py extract_symbols.py
 
 if WSF_ENABLED
 WSF_LIB_FILE = $(top_builddir)/lasso/id-wsf/liblasso-id-wsf.la
+
+WSF2_LIB_FILES = $(top_builddir)/lasso/id-wsf-2.0/liblasso-id-wsf2.la \
+	$(top_builddir)/lasso/xml/id-wsf-2.0/liblasso-xml-id-wsf-2.la \
+	$(top_builddir)/lasso/xml/ws/liblasso-xml-ws.la
 endif
 
 if MINGW
@@ -47,6 +55,7 @@ liblasso_la_LIBADD = \
 	$(top_builddir)/lasso/id-ff/liblasso-id-ff.la \
 	$(top_builddir)/lasso/saml-2.0/liblasso-saml-20.la \
 	$(WSF_LIB_FILE) \
+	$(WSF2_LIB_FILES) \
 	$(LASSO_LIBS) \
 	lasso.rc.lo
 # Just make damn sure the ABI stays the same between
@@ -61,6 +70,7 @@ liblasso_la_LIBADD = \
 	$(top_builddir)/lasso/id-ff/liblasso-id-ff.la \
 	$(top_builddir)/lasso/saml-2.0/liblasso-saml-20.la \
 	$(WSF_LIB_FILE) \
+	$(WSF2_LIB_FILES) \
 	$(LASSO_LIBS)
 # Just make damn sure the ABI stays the same between
 # upgrades.

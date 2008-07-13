@@ -1,8 +1,8 @@
-/* $Id: samlp_response.h,v 1.11 2005/11/20 15:38:19 fpeters Exp $ 
+/* $Id: samlp_response.h 3443 2007-11-13 16:13:39Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -55,7 +55,7 @@ struct _LassoSamlpResponse {
 	/* <element ref="samlp:Status"/> */
 	LassoSamlpStatus *Status;
 	/* <element ref="saml:Assertion" minOccurs="0" maxOccurs="unbounded"/> */
-	GList *Assertion; /* of LassoSamlAssertion* */
+	GList *Assertion; /* of LassoSamlAssertion */
 };
 
 struct _LassoSamlpResponseClass {

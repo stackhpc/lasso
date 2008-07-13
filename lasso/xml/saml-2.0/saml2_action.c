@@ -1,8 +1,8 @@
-/* $Id: saml2_action.c,v 1.2 2005/11/21 18:51:52 fpeters Exp $ 
+/* $Id: saml2_action.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include "saml2_action.h"
 
-/*
- * Schema fragment (saml-schema-assertion-2.0.xsd):
+/**
+ * SECTION:saml2_action
+ * @short_description: &lt;saml2:Action&gt;
+ *
+ * <figure><title>Schema fragment for saml2:Action</title>
+ * <programlisting><![CDATA[
  *
  * <complexType name="ActionType">
  *   <simpleContent>
@@ -34,6 +38,8 @@
  *     </extension>
  *   </simpleContent>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

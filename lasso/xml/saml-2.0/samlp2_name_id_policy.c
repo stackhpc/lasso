@@ -1,8 +1,8 @@
-/* $Id: samlp2_name_id_policy.c,v 1.2 2005/11/21 18:51:52 fpeters Exp $ 
+/* $Id: samlp2_name_id_policy.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,14 +24,20 @@
 
 #include "samlp2_name_id_policy.h"
 
-/*
- * Schema fragment (saml-schema-protocol-2.0.xsd):
+/**
+ * SECTION:samlp2_name_id_policy
+ * @short_description: &lt;samlp2:NameIDPolicy&gt;
+ *
+ * <figure><title>Schema fragment for samlp2:NameIDPolicy</title>
+ * <programlisting><![CDATA[
  *
  * <complexType name="NameIDPolicyType">
  *   <attribute name="Format" type="anyURI" use="optional"/>
  *   <attribute name="SPNameQualifier" type="string" use="optional"/>
  *   <attribute name="AllowCreate" type="boolean" use="optional"/>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

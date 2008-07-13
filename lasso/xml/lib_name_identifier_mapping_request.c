@@ -1,8 +1,8 @@
-/* $Id: lib_name_identifier_mapping_request.c,v 1.21 2005/11/20 15:38:19 fpeters Exp $ 
+/* $Id: lib_name_identifier_mapping_request.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,9 +24,12 @@
 
 #include <lasso/xml/lib_name_identifier_mapping_request.h>
 
-/*
- * Schema fragment (oasis-sstc-saml-schema-protocol-1.0.xsd):
- * 
+/**
+ * SECTION:lib_name_identifier_mapping_request
+ * @short_description: &lt;lib:NameIdentifierMappingRequest&gt;
+ *
+ * <figure><title>Schema fragment for lib:NameIdentifierMappingRequest</title>
+ * <programlisting><![CDATA[
  * <xs:element name="NameIdentifierMappingRequest" type="NameIdentifierMappingRequestType"/>
  * <xs:complexType name="NameIdentifierMappingRequestType">
  *   <xs:complexContent>
@@ -43,13 +46,8 @@
  * </xs:complexType>
  * 
  * <xs:element name="ProviderID" type="md:entityIDType"/>
- * 
- * From liberty-metadata-v1.0.xsd:
- * <xs:simpleType name="entityIDType">
- *   <xs:restriction base="xs:anyURI">
- *     <xs:maxLength value="1024" id="maxlengthid"/>
- *   </xs:restriction>
- * </xs:simpleType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

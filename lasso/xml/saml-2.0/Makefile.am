@@ -1,8 +1,9 @@
+MAINTAINERCLEANFILES = Makefile.in
 liblassoincludedir = $(includedir)/lasso/xml/saml-2.0
 
 INCLUDES = \
+	-I$(top_builddir) \
 	-I$(top_srcdir) \
-	-I$(top_srcdir)/lasso \
 	$(LASSO_CORE_CFLAGS) \
 	-DG_LOG_DOMAIN=\"lasso\"
 
@@ -14,6 +15,7 @@ liblasso_xml_saml2_la_SOURCES = \
 	saml2_assertion.c \
 	saml2_attribute.c \
 	saml2_attribute_statement.c \
+	saml2_attribute_value.c \
 	saml2_audience_restriction.c \
 	saml2_authn_context.c \
 	saml2_authn_statement.c \
@@ -34,7 +36,7 @@ liblasso_xml_saml2_la_SOURCES = \
 	saml2_subject_locality.c \
 	samlp2_artifact_resolve.c \
 	samlp2_artifact_response.c \
-	samlp2_assertion_idrequest.c \
+	samlp2_assertion_id_request.c \
 	samlp2_attribute_query.c \
 	samlp2_authn_query.c \
 	samlp2_authn_request.c \
@@ -66,6 +68,7 @@ liblassoinclude_HEADERS = \
 	saml2_assertion.h \
 	saml2_attribute.h \
 	saml2_attribute_statement.h \
+	saml2_attribute_value.h \
 	saml2_audience_restriction.h \
 	saml2_authn_context.h \
 	saml2_authn_statement.h \
@@ -86,7 +89,7 @@ liblassoinclude_HEADERS = \
 	saml2_subject_locality.h \
 	samlp2_artifact_resolve.h \
 	samlp2_artifact_response.h \
-	samlp2_assertion_idrequest.h \
+	samlp2_assertion_id_request.h \
 	samlp2_attribute_query.h \
 	samlp2_authn_query.h \
 	samlp2_authn_request.h \

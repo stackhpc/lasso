@@ -1,8 +1,8 @@
-/* $Id: lib_request_authn_context.h,v 1.10 2005/02/10 13:53:36 nclapies Exp $ 
+/* $Id: lib_request_authn_context.h 3435 2007-10-30 18:15:41Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -54,9 +54,9 @@ struct _LassoLibRequestAuthnContext {
 
 	/*< public >*/
 	/* <xs:element name="AuthnContextClassRef" type="xs:anyURI" maxOccurs="unbounded"/> */
-	GList *AuthnContextClassRef;
+	GList *AuthnContextClassRef; /* of strings */
 	/* <xs:element name="AuthnContextStatementRef" type="xs:anyURI" maxOccurs="unbounded"/> */
-	GList *AuthnContextStatementRef;
+	GList *AuthnContextStatementRef; /* of strings */
 	/* <xs:element name="AuthnContextComparison" type="AuthnContextComparisonType" 
 	 *   minOccurs="0"/> */
 	char *AuthnContextComparison;

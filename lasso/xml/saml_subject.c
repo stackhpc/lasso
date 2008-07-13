@@ -1,8 +1,8 @@
-/* $Id: saml_subject.c,v 1.16 2005/01/22 15:57:55 eraviart Exp $
+/* $Id: saml_subject.c 3704 2008-05-15 21:17:44Z fpeters $
  *
- * Lasso - A free implementation of the Samlerty Alliance specifications.
+ * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/saml_subject.h>
 
-/*
- * Schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
+/**
+ * SECTION:saml_subject
+ * @short_description: &lt;saml:Subject&gt;
+ *
+ * <figure><title>Schema fragment for saml:Subject</title>
+ * <programlisting><![CDATA[
  * 
  * <element name="Subject" type="saml:SubjectType"/>
  * <complexType name="SubjectType">
@@ -37,6 +41,8 @@
  *     <element ref="saml:SubjectConfirmation"/>
  *   </choice>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/
@@ -46,6 +52,9 @@
 static struct XmlSnippet schema_snippets[] = {
 	{ "NameIdentifier", SNIPPET_NODE,
 		G_STRUCT_OFFSET(LassoSamlSubject, NameIdentifier) },
+	{ "EncryptedNameIdentifier", SNIPPET_NODE,
+		G_STRUCT_OFFSET(LassoSamlSubject, EncryptedNameIdentifier),
+		"LassoSaml2EncryptedElement" },
 	{ "SubjectConfirmation", SNIPPET_NODE,
 		G_STRUCT_OFFSET(LassoSamlSubject, SubjectConfirmation) },
 	{ NULL, 0, 0}
@@ -59,6 +68,7 @@ static void
 instance_init(LassoSamlSubject *node)
 {
 	node->NameIdentifier = NULL;
+	node->EncryptedNameIdentifier = NULL;
 	node->SubjectConfirmation = NULL;
 }
 

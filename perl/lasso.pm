@@ -1,4 +1,4 @@
-# This file was created automatically by SWIG 1.3.28.
+# This file was created automatically by SWIG 1.3.29.
 # Don't modify this file, modify the SWIG interface instead.
 package lasso;
 require Exporter;
@@ -50,8 +50,10 @@ package lasso;
 *shutdown = *lassoc::shutdown;
 *checkVersion = *lassoc::checkVersion;
 *registerDstService = *lassoc::registerDstService;
+*registerIdWsf2DstService = *lassoc::registerIdWsf2DstService;
 *getRequestTypeFromSoapMsg = *lassoc::getRequestTypeFromSoapMsg;
 *isLibertyQuery = *lassoc::isLibertyQuery;
+*isSamlQuery = *lassoc::isSamlQuery;
 
 ############# Class : lasso::Node ##############
 
@@ -164,6 +166,95 @@ sub DESTROY {
 *getItem = *lassoc::StringList_getItem;
 *length = *lassoc::StringList_length;
 *setItem = *lassoc::StringList_setItem;
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : lasso::StringDict ##############
+
+package lasso::StringDict;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( lasso );
+%OWNER = ();
+%ITERATORS = ();
+sub new {
+    my $pkg = shift;
+    my $self = lassoc::new_StringDict(@_);
+    bless $self, $pkg if defined($self);
+}
+
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        lassoc::delete_StringDict($self);
+        delete $OWNER{$self};
+    }
+}
+
+*cast = *lassoc::StringDict_cast;
+*frompointer = *lassoc::StringDict_frompointer;
+*getItem = *lassoc::StringDict_getItem;
+*setItem = *lassoc::StringDict_setItem;
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : lasso::MiscTextNode ##############
+
+package lasso::MiscTextNode;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( lasso );
+%OWNER = ();
+%ITERATORS = ();
+*swig_content_get = *lassoc::MiscTextNode_content_get;
+*swig_content_set = *lassoc::MiscTextNode_content_set;
+*swig_name_get = *lassoc::MiscTextNode_name_get;
+*swig_name_set = *lassoc::MiscTextNode_name_set;
+*swig_ns_href_get = *lassoc::MiscTextNode_ns_href_get;
+*swig_ns_href_set = *lassoc::MiscTextNode_ns_href_set;
+*swig_ns_prefix_get = *lassoc::MiscTextNode_ns_prefix_get;
+*swig_ns_prefix_set = *lassoc::MiscTextNode_ns_prefix_set;
+*swig_text_child_get = *lassoc::MiscTextNode_text_child_get;
+*swig_text_child_set = *lassoc::MiscTextNode_text_child_set;
+sub new {
+    my $pkg = shift;
+    my $self = lassoc::new_MiscTextNode(@_);
+    bless $self, $pkg if defined($self);
+}
+
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        lassoc::delete_MiscTextNode($self);
+        delete $OWNER{$self};
+    }
+}
+
+*dump = *lassoc::MiscTextNode_dump;
 sub DISOWN {
     my $self = shift;
     my $ptr = tied(%$self);
@@ -1814,6 +1905,8 @@ sub DESTROY {
 *getMetadataOne = *lassoc::Provider_getMetadataOne;
 *hasProtocolProfile = *lassoc::Provider_hasProtocolProfile;
 *getProtocolConformance = *lassoc::Provider_getProtocolConformance;
+*setEncryptionMode = *lassoc::Provider_setEncryptionMode;
+*setEncryptionSymKeyType = *lassoc::Provider_setEncryptionSymKeyType;
 sub DISOWN {
     my $self = shift;
     my $ptr = tied(%$self);
@@ -1881,6 +1974,8 @@ sub DESTROY {
 *hasProtocolProfile = *lassoc::Server_hasProtocolProfile;
 *getProtocolConformance = *lassoc::Server_getProtocolConformance;
 *addProvider = *lassoc::Server_addProvider;
+*setEncryptionPrivateKey = *lassoc::Server_setEncryptionPrivateKey;
+*loadAffiliation = *lassoc::Server_loadAffiliation;
 *dump = *lassoc::Server_dump;
 *getProvider = *lassoc::Server_getProvider;
 sub DISOWN {
@@ -2112,6 +2207,8 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 *swig_assertionArtifact_set = *lassoc::Login_assertionArtifact_set;
 *swig_protocolProfile_get = *lassoc::Login_protocolProfile_get;
 *swig_protocolProfile_set = *lassoc::Login_protocolProfile_set;
+*swig_assertion_get = *lassoc::Login_assertion_get;
+*swig_assertion_set = *lassoc::Login_assertion_set;
 *swig_artifact_get = *lassoc::Login_artifact_get;
 *swig_artifact_set = *lassoc::Login_artifact_set;
 *swig_artifactMessage_get = *lassoc::Login_artifactMessage_get;
@@ -2179,6 +2276,7 @@ sub DESTROY {
 *processResponseMsg = *lassoc::Login_processResponseMsg;
 *setResourceId = *lassoc::Login_setResourceId;
 *validateRequestMsg = *lassoc::Login_validateRequestMsg;
+*processPaosResponseMsg = *lassoc::Login_processPaosResponseMsg;
 sub DISOWN {
     my $self = shift;
     my $ptr = tied(%$self);
@@ -2497,6 +2595,132 @@ sub ACQUIRE {
 }
 
 
+############# Class : lasso::NameIdManagement ##############
+
+package lasso::NameIdManagement;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( lasso );
+%OWNER = ();
+%ITERATORS = ();
+*swig_artifact_get = *lassoc::NameIdManagement_artifact_get;
+*swig_artifact_set = *lassoc::NameIdManagement_artifact_set;
+*swig_artifactMessage_get = *lassoc::NameIdManagement_artifactMessage_get;
+*swig_artifactMessage_set = *lassoc::NameIdManagement_artifactMessage_set;
+*swig_identity_get = *lassoc::NameIdManagement_identity_get;
+*swig_identity_set = *lassoc::NameIdManagement_identity_set;
+*swig_isIdentityDirty_get = *lassoc::NameIdManagement_isIdentityDirty_get;
+*swig_isIdentityDirty_set = *lassoc::NameIdManagement_isIdentityDirty_set;
+*swig_isSessionDirty_get = *lassoc::NameIdManagement_isSessionDirty_get;
+*swig_isSessionDirty_set = *lassoc::NameIdManagement_isSessionDirty_set;
+*swig_msgBody_get = *lassoc::NameIdManagement_msgBody_get;
+*swig_msgBody_set = *lassoc::NameIdManagement_msgBody_set;
+*swig_msgRelayState_get = *lassoc::NameIdManagement_msgRelayState_get;
+*swig_msgRelayState_set = *lassoc::NameIdManagement_msgRelayState_set;
+*swig_msgUrl_get = *lassoc::NameIdManagement_msgUrl_get;
+*swig_msgUrl_set = *lassoc::NameIdManagement_msgUrl_set;
+*swig_nameIdentifier_get = *lassoc::NameIdManagement_nameIdentifier_get;
+*swig_nameIdentifier_set = *lassoc::NameIdManagement_nameIdentifier_set;
+*swig_remoteProviderId_get = *lassoc::NameIdManagement_remoteProviderId_get;
+*swig_remoteProviderId_set = *lassoc::NameIdManagement_remoteProviderId_set;
+*swig_request_get = *lassoc::NameIdManagement_request_get;
+*swig_request_set = *lassoc::NameIdManagement_request_set;
+*swig_response_get = *lassoc::NameIdManagement_response_get;
+*swig_response_set = *lassoc::NameIdManagement_response_set;
+*swig_server_get = *lassoc::NameIdManagement_server_get;
+*swig_server_set = *lassoc::NameIdManagement_server_set;
+*swig_session_get = *lassoc::NameIdManagement_session_get;
+*swig_session_set = *lassoc::NameIdManagement_session_set;
+sub new {
+    my $pkg = shift;
+    my $self = lassoc::new_NameIdManagement(@_);
+    bless $self, $pkg if defined($self);
+}
+
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        lassoc::delete_NameIdManagement($self);
+        delete $OWNER{$self};
+    }
+}
+
+*newFromDump = *lassoc::NameIdManagement_newFromDump;
+*setIdentityFromDump = *lassoc::NameIdManagement_setIdentityFromDump;
+*setSessionFromDump = *lassoc::NameIdManagement_setSessionFromDump;
+*buildRequestMsg = *lassoc::NameIdManagement_buildRequestMsg;
+*buildResponseMsg = *lassoc::NameIdManagement_buildResponseMsg;
+*dump = *lassoc::NameIdManagement_dump;
+*initRequest = *lassoc::NameIdManagement_initRequest;
+*processRequestMsg = *lassoc::NameIdManagement_processRequestMsg;
+*processResponseMsg = *lassoc::NameIdManagement_processResponseMsg;
+*validateRequest = *lassoc::NameIdManagement_validateRequest;
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
+############# Class : lasso::Ecp ##############
+
+package lasso::Ecp;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( lasso );
+%OWNER = ();
+%ITERATORS = ();
+*swig_msgBody_get = *lassoc::Ecp_msgBody_get;
+*swig_msgBody_set = *lassoc::Ecp_msgBody_set;
+*swig_msgRelayState_get = *lassoc::Ecp_msgRelayState_get;
+*swig_msgRelayState_set = *lassoc::Ecp_msgRelayState_set;
+*swig_msgUrl_get = *lassoc::Ecp_msgUrl_get;
+*swig_msgUrl_set = *lassoc::Ecp_msgUrl_set;
+*swig_request_get = *lassoc::Ecp_request_get;
+*swig_request_set = *lassoc::Ecp_request_set;
+*swig_response_get = *lassoc::Ecp_response_get;
+*swig_response_set = *lassoc::Ecp_response_set;
+*swig_assertionConsumerURL_get = *lassoc::Ecp_assertionConsumerURL_get;
+*swig_assertionConsumerURL_set = *lassoc::Ecp_assertionConsumerURL_set;
+sub new {
+    my $pkg = shift;
+    my $self = lassoc::new_Ecp(@_);
+    bless $self, $pkg if defined($self);
+}
+
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        lassoc::delete_Ecp($self);
+        delete $OWNER{$self};
+    }
+}
+
+*processAuthnRequestMsg = *lassoc::Ecp_processAuthnRequestMsg;
+*processResponseMsg = *lassoc::Ecp_processResponseMsg;
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
 ############# Class : lasso::Samlp2NameIDPolicy ##############
 
 package lasso::Samlp2NameIDPolicy;
@@ -2506,8 +2730,8 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 %ITERATORS = ();
 *swig_format_get = *lassoc::Samlp2NameIDPolicy_format_get;
 *swig_format_set = *lassoc::Samlp2NameIDPolicy_format_set;
-*swig_SPNameQualifier_get = *lassoc::Samlp2NameIDPolicy_SPNameQualifier_get;
-*swig_SPNameQualifier_set = *lassoc::Samlp2NameIDPolicy_SPNameQualifier_set;
+*swig_spNameQualifier_get = *lassoc::Samlp2NameIDPolicy_spNameQualifier_get;
+*swig_spNameQualifier_set = *lassoc::Samlp2NameIDPolicy_spNameQualifier_set;
 *swig_allowCreate_get = *lassoc::Samlp2NameIDPolicy_allowCreate_get;
 *swig_allowCreate_set = *lassoc::Samlp2NameIDPolicy_allowCreate_set;
 sub new {
@@ -2548,12 +2772,12 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( lasso );
 %OWNER = ();
 %ITERATORS = ();
-*swig_AuthnContextClassRef_get = *lassoc::Samlp2RequestedAuthnContext_AuthnContextClassRef_get;
-*swig_AuthnContextClassRef_set = *lassoc::Samlp2RequestedAuthnContext_AuthnContextClassRef_set;
-*swig_AuthnContextDeclRef_get = *lassoc::Samlp2RequestedAuthnContext_AuthnContextDeclRef_get;
-*swig_AuthnContextDeclRef_set = *lassoc::Samlp2RequestedAuthnContext_AuthnContextDeclRef_set;
-*swig_Comparison_get = *lassoc::Samlp2RequestedAuthnContext_Comparison_get;
-*swig_Comparison_set = *lassoc::Samlp2RequestedAuthnContext_Comparison_set;
+*swig_comparison_get = *lassoc::Samlp2RequestedAuthnContext_comparison_get;
+*swig_comparison_set = *lassoc::Samlp2RequestedAuthnContext_comparison_set;
+*swig_authnContextClassRef_get = *lassoc::Samlp2RequestedAuthnContext_authnContextClassRef_get;
+*swig_authnContextClassRef_set = *lassoc::Samlp2RequestedAuthnContext_authnContextClassRef_set;
+*swig_authnContextDeclRef_get = *lassoc::Samlp2RequestedAuthnContext_authnContextDeclRef_get;
+*swig_authnContextDeclRef_set = *lassoc::Samlp2RequestedAuthnContext_authnContextDeclRef_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Samlp2RequestedAuthnContext(@_);
@@ -2592,10 +2816,10 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( lasso );
 %OWNER = ();
 %ITERATORS = ();
-*swig_Version_get = *lassoc::Saml2Assertion_Version_get;
-*swig_Version_set = *lassoc::Saml2Assertion_Version_set;
-*swig_ID_get = *lassoc::Saml2Assertion_ID_get;
-*swig_ID_set = *lassoc::Saml2Assertion_ID_set;
+*swig_version_get = *lassoc::Saml2Assertion_version_get;
+*swig_version_set = *lassoc::Saml2Assertion_version_set;
+*swig_iD_get = *lassoc::Saml2Assertion_iD_get;
+*swig_iD_set = *lassoc::Saml2Assertion_iD_set;
 *swig_issueInstant_get = *lassoc::Saml2Assertion_issueInstant_get;
 *swig_issueInstant_set = *lassoc::Saml2Assertion_issueInstant_set;
 *swig_issuer_get = *lassoc::Saml2Assertion_issuer_get;
@@ -2606,6 +2830,14 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 *swig_conditions_set = *lassoc::Saml2Assertion_conditions_set;
 *swig_advice_get = *lassoc::Saml2Assertion_advice_get;
 *swig_advice_set = *lassoc::Saml2Assertion_advice_set;
+*swig_statement_get = *lassoc::Saml2Assertion_statement_get;
+*swig_statement_set = *lassoc::Saml2Assertion_statement_set;
+*swig_authnStatement_get = *lassoc::Saml2Assertion_authnStatement_get;
+*swig_authnStatement_set = *lassoc::Saml2Assertion_authnStatement_set;
+*swig_authzDecisionStatement_get = *lassoc::Saml2Assertion_authzDecisionStatement_get;
+*swig_authzDecisionStatement_set = *lassoc::Saml2Assertion_authzDecisionStatement_set;
+*swig_attributeStatement_get = *lassoc::Saml2Assertion_attributeStatement_get;
+*swig_attributeStatement_set = *lassoc::Saml2Assertion_attributeStatement_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Saml2Assertion(@_);
@@ -2644,8 +2876,8 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( lasso );
 %OWNER = ();
 %ITERATORS = ();
-*swig_GetComplete_get = *lassoc::Samlp2IDPList_GetComplete_get;
-*swig_GetComplete_set = *lassoc::Samlp2IDPList_GetComplete_set;
+*swig_getComplete_get = *lassoc::Samlp2IDPList_getComplete_get;
+*swig_getComplete_set = *lassoc::Samlp2IDPList_getComplete_set;
 *swig_iDPEntry_get = *lassoc::Samlp2IDPList_iDPEntry_get;
 *swig_iDPEntry_set = *lassoc::Samlp2IDPList_iDPEntry_set;
 sub new {
@@ -2728,6 +2960,14 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 *swig_notBefore_set = *lassoc::Saml2Conditions_notBefore_set;
 *swig_notOnOrAfter_get = *lassoc::Saml2Conditions_notOnOrAfter_get;
 *swig_notOnOrAfter_set = *lassoc::Saml2Conditions_notOnOrAfter_set;
+*swig_condition_get = *lassoc::Saml2Conditions_condition_get;
+*swig_condition_set = *lassoc::Saml2Conditions_condition_set;
+*swig_audienceRestriction_get = *lassoc::Saml2Conditions_audienceRestriction_get;
+*swig_audienceRestriction_set = *lassoc::Saml2Conditions_audienceRestriction_set;
+*swig_oneTimeUse_get = *lassoc::Saml2Conditions_oneTimeUse_get;
+*swig_oneTimeUse_set = *lassoc::Saml2Conditions_oneTimeUse_set;
+*swig_proxyRestriction_get = *lassoc::Saml2Conditions_proxyRestriction_get;
+*swig_proxyRestriction_set = *lassoc::Saml2Conditions_proxyRestriction_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Saml2Conditions(@_);
@@ -2766,6 +3006,14 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( lasso );
 %OWNER = ();
 %ITERATORS = ();
+*swig_assertionIDRef_get = *lassoc::Saml2Evidence_assertionIDRef_get;
+*swig_assertionIDRef_set = *lassoc::Saml2Evidence_assertionIDRef_set;
+*swig_assertionURIRef_get = *lassoc::Saml2Evidence_assertionURIRef_get;
+*swig_assertionURIRef_set = *lassoc::Saml2Evidence_assertionURIRef_set;
+*swig_assertion_get = *lassoc::Saml2Evidence_assertion_get;
+*swig_assertion_set = *lassoc::Saml2Evidence_assertion_set;
+*swig_encryptedAssertion_get = *lassoc::Saml2Evidence_encryptedAssertion_get;
+*swig_encryptedAssertion_set = *lassoc::Saml2Evidence_encryptedAssertion_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Saml2Evidence(@_);
@@ -2808,12 +3056,12 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 *swig_content_set = *lassoc::Saml2NameID_content_set;
 *swig_format_get = *lassoc::Saml2NameID_format_get;
 *swig_format_set = *lassoc::Saml2NameID_format_set;
-*swig_SPProvidedID_get = *lassoc::Saml2NameID_SPProvidedID_get;
-*swig_SPProvidedID_set = *lassoc::Saml2NameID_SPProvidedID_set;
+*swig_spProvidedId_get = *lassoc::Saml2NameID_spProvidedId_get;
+*swig_spProvidedId_set = *lassoc::Saml2NameID_spProvidedId_set;
 *swig_nameQualifier_get = *lassoc::Saml2NameID_nameQualifier_get;
 *swig_nameQualifier_set = *lassoc::Saml2NameID_nameQualifier_set;
-*swig_SPNameQualifier_get = *lassoc::Saml2NameID_SPNameQualifier_get;
-*swig_SPNameQualifier_set = *lassoc::Saml2NameID_SPNameQualifier_set;
+*swig_spNameQualifier_get = *lassoc::Saml2NameID_spNameQualifier_get;
+*swig_spNameQualifier_set = *lassoc::Saml2NameID_spNameQualifier_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Saml2NameID(@_);
@@ -3014,6 +3262,14 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( lasso );
 %OWNER = ();
 %ITERATORS = ();
+*swig_assertionIDRef_get = *lassoc::Saml2Advice_assertionIDRef_get;
+*swig_assertionIDRef_set = *lassoc::Saml2Advice_assertionIDRef_set;
+*swig_assertionURIRef_get = *lassoc::Saml2Advice_assertionURIRef_get;
+*swig_assertionURIRef_set = *lassoc::Saml2Advice_assertionURIRef_set;
+*swig_assertion_get = *lassoc::Saml2Advice_assertion_get;
+*swig_assertion_set = *lassoc::Saml2Advice_assertion_set;
+*swig_encryptedAssertion_get = *lassoc::Saml2Advice_encryptedAssertion_get;
+*swig_encryptedAssertion_set = *lassoc::Saml2Advice_encryptedAssertion_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Saml2Advice(@_);
@@ -3054,8 +3310,8 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 %ITERATORS = ();
 *swig_nameQualifier_get = *lassoc::Saml2BaseIDAbstract_nameQualifier_get;
 *swig_nameQualifier_set = *lassoc::Saml2BaseIDAbstract_nameQualifier_set;
-*swig_SPNameQualifier_get = *lassoc::Saml2BaseIDAbstract_SPNameQualifier_get;
-*swig_SPNameQualifier_set = *lassoc::Saml2BaseIDAbstract_SPNameQualifier_set;
+*swig_spNameQualifier_get = *lassoc::Saml2BaseIDAbstract_spNameQualifier_get;
+*swig_spNameQualifier_set = *lassoc::Saml2BaseIDAbstract_spNameQualifier_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Saml2BaseIDAbstract(@_);
@@ -3094,12 +3350,12 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( lasso );
 %OWNER = ();
 %ITERATORS = ();
-*swig_AuthnContextClassRef_get = *lassoc::Saml2AuthnContext_AuthnContextClassRef_get;
-*swig_AuthnContextClassRef_set = *lassoc::Saml2AuthnContext_AuthnContextClassRef_set;
-*swig_AuthnContextDeclRef_get = *lassoc::Saml2AuthnContext_AuthnContextDeclRef_get;
-*swig_AuthnContextDeclRef_set = *lassoc::Saml2AuthnContext_AuthnContextDeclRef_set;
-*swig_AuthenticatingAuthority_get = *lassoc::Saml2AuthnContext_AuthenticatingAuthority_get;
-*swig_AuthenticatingAuthority_set = *lassoc::Saml2AuthnContext_AuthenticatingAuthority_set;
+*swig_authnContextClassRef_get = *lassoc::Saml2AuthnContext_authnContextClassRef_get;
+*swig_authnContextClassRef_set = *lassoc::Saml2AuthnContext_authnContextClassRef_set;
+*swig_authnContextDeclRef_get = *lassoc::Saml2AuthnContext_authnContextDeclRef_get;
+*swig_authnContextDeclRef_set = *lassoc::Saml2AuthnContext_authnContextDeclRef_set;
+*swig_authenticatingAuthority_get = *lassoc::Saml2AuthnContext_authenticatingAuthority_get;
+*swig_authenticatingAuthority_set = *lassoc::Saml2AuthnContext_authenticatingAuthority_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Saml2AuthnContext(@_);
@@ -3138,10 +3394,10 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( lasso );
 %OWNER = ();
 %ITERATORS = ();
-*swig_Address_get = *lassoc::Saml2SubjectLocality_Address_get;
-*swig_Address_set = *lassoc::Saml2SubjectLocality_Address_set;
-*swig_DNSName_get = *lassoc::Saml2SubjectLocality_DNSName_get;
-*swig_DNSName_set = *lassoc::Saml2SubjectLocality_DNSName_set;
+*swig_address_get = *lassoc::Saml2SubjectLocality_address_get;
+*swig_address_set = *lassoc::Saml2SubjectLocality_address_set;
+*swig_dNSName_get = *lassoc::Saml2SubjectLocality_dNSName_get;
+*swig_dNSName_set = *lassoc::Saml2SubjectLocality_dNSName_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Saml2SubjectLocality(@_);
@@ -3188,8 +3444,8 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 *swig_recipient_set = *lassoc::Saml2SubjectConfirmationData_recipient_set;
 *swig_inResponseTo_get = *lassoc::Saml2SubjectConfirmationData_inResponseTo_get;
 *swig_inResponseTo_set = *lassoc::Saml2SubjectConfirmationData_inResponseTo_set;
-*swig_Address_get = *lassoc::Saml2SubjectConfirmationData_Address_get;
-*swig_Address_set = *lassoc::Saml2SubjectConfirmationData_Address_set;
+*swig_address_get = *lassoc::Saml2SubjectConfirmationData_address_get;
+*swig_address_set = *lassoc::Saml2SubjectConfirmationData_address_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Saml2SubjectConfirmationData(@_);
@@ -3228,8 +3484,8 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( lasso );
 %OWNER = ();
 %ITERATORS = ();
-*swig_Method_get = *lassoc::Saml2SubjectConfirmation_Method_get;
-*swig_Method_set = *lassoc::Saml2SubjectConfirmation_Method_set;
+*swig_method_get = *lassoc::Saml2SubjectConfirmation_method_get;
+*swig_method_set = *lassoc::Saml2SubjectConfirmation_method_set;
 *swig_baseID_get = *lassoc::Saml2SubjectConfirmation_baseID_get;
 *swig_baseID_set = *lassoc::Saml2SubjectConfirmation_baseID_set;
 *swig_nameID_get = *lassoc::Saml2SubjectConfirmation_nameID_get;
@@ -3276,10 +3532,10 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( lasso );
 %OWNER = ();
 %ITERATORS = ();
-*swig_Audience_get = *lassoc::Saml2ProxyRestriction_Audience_get;
-*swig_Audience_set = *lassoc::Saml2ProxyRestriction_Audience_set;
-*swig_Count_get = *lassoc::Saml2ProxyRestriction_Count_get;
-*swig_Count_set = *lassoc::Saml2ProxyRestriction_Count_set;
+*swig_audience_get = *lassoc::Saml2ProxyRestriction_audience_get;
+*swig_audience_set = *lassoc::Saml2ProxyRestriction_audience_set;
+*swig_count_get = *lassoc::Saml2ProxyRestriction_count_get;
+*swig_count_set = *lassoc::Saml2ProxyRestriction_count_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Saml2ProxyRestriction(@_);
@@ -3356,12 +3612,12 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( lasso );
 %OWNER = ();
 %ITERATORS = ();
-*swig_AuthnInstant_get = *lassoc::Saml2AuthnStatement_AuthnInstant_get;
-*swig_AuthnInstant_set = *lassoc::Saml2AuthnStatement_AuthnInstant_set;
+*swig_authnInstant_get = *lassoc::Saml2AuthnStatement_authnInstant_get;
+*swig_authnInstant_set = *lassoc::Saml2AuthnStatement_authnInstant_set;
 *swig_sessionIndex_get = *lassoc::Saml2AuthnStatement_sessionIndex_get;
 *swig_sessionIndex_set = *lassoc::Saml2AuthnStatement_sessionIndex_set;
-*swig_SessionNotOnOrAfter_get = *lassoc::Saml2AuthnStatement_SessionNotOnOrAfter_get;
-*swig_SessionNotOnOrAfter_set = *lassoc::Saml2AuthnStatement_SessionNotOnOrAfter_set;
+*swig_sessionNotOnOrAfter_get = *lassoc::Saml2AuthnStatement_sessionNotOnOrAfter_get;
+*swig_sessionNotOnOrAfter_set = *lassoc::Saml2AuthnStatement_sessionNotOnOrAfter_set;
 *swig_subjectLocality_get = *lassoc::Saml2AuthnStatement_subjectLocality_get;
 *swig_subjectLocality_set = *lassoc::Saml2AuthnStatement_subjectLocality_set;
 *swig_authnContext_get = *lassoc::Saml2AuthnStatement_authnContext_get;
@@ -3404,6 +3660,10 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( lasso );
 %OWNER = ();
 %ITERATORS = ();
+*swig_attribute_get = *lassoc::Saml2AttributeStatement_attribute_get;
+*swig_attribute_set = *lassoc::Saml2AttributeStatement_attribute_set;
+*swig_encryptedAttribute_get = *lassoc::Saml2AttributeStatement_encryptedAttribute_get;
+*swig_encryptedAttribute_set = *lassoc::Saml2AttributeStatement_encryptedAttribute_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Saml2AttributeStatement(@_);
@@ -3435,6 +3695,46 @@ sub ACQUIRE {
 }
 
 
+############# Class : lasso::Saml2AttributeValue ##############
+
+package lasso::Saml2AttributeValue;
+use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
+@ISA = qw( lasso );
+%OWNER = ();
+%ITERATORS = ();
+*swig_any_get = *lassoc::Saml2AttributeValue_any_get;
+*swig_any_set = *lassoc::Saml2AttributeValue_any_set;
+sub new {
+    my $pkg = shift;
+    my $self = lassoc::new_Saml2AttributeValue(@_);
+    bless $self, $pkg if defined($self);
+}
+
+sub DESTROY {
+    return unless $_[0]->isa('HASH');
+    my $self = tied(%{$_[0]});
+    return unless defined $self;
+    delete $ITERATORS{$self};
+    if (exists $OWNER{$self}) {
+        lassoc::delete_Saml2AttributeValue($self);
+        delete $OWNER{$self};
+    }
+}
+
+*dump = *lassoc::Saml2AttributeValue_dump;
+sub DISOWN {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    delete $OWNER{$ptr};
+}
+
+sub ACQUIRE {
+    my $self = shift;
+    my $ptr = tied(%$self);
+    $OWNER{$ptr} = 1;
+}
+
+
 ############# Class : lasso::Samlp2IDPEntry ##############
 
 package lasso::Samlp2IDPEntry;
@@ -3442,12 +3742,12 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( lasso );
 %OWNER = ();
 %ITERATORS = ();
-*swig_providerId_get = *lassoc::Samlp2IDPEntry_providerId_get;
-*swig_providerId_set = *lassoc::Samlp2IDPEntry_providerId_set;
-*swig_Name_get = *lassoc::Samlp2IDPEntry_Name_get;
-*swig_Name_set = *lassoc::Samlp2IDPEntry_Name_set;
-*swig_Loc_get = *lassoc::Samlp2IDPEntry_Loc_get;
-*swig_Loc_set = *lassoc::Samlp2IDPEntry_Loc_set;
+*swig_providerID_get = *lassoc::Samlp2IDPEntry_providerID_get;
+*swig_providerID_set = *lassoc::Samlp2IDPEntry_providerID_set;
+*swig_name_get = *lassoc::Samlp2IDPEntry_name_get;
+*swig_name_set = *lassoc::Samlp2IDPEntry_name_set;
+*swig_loc_get = *lassoc::Samlp2IDPEntry_loc_get;
+*swig_loc_set = *lassoc::Samlp2IDPEntry_loc_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Samlp2IDPEntry(@_);
@@ -3526,8 +3826,8 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 %ITERATORS = ();
 *swig_content_get = *lassoc::Saml2Action_content_get;
 *swig_content_set = *lassoc::Saml2Action_content_set;
-*swig_Namespace_get = *lassoc::Saml2Action_Namespace_get;
-*swig_Namespace_set = *lassoc::Saml2Action_Namespace_set;
+*swig_namespace_get = *lassoc::Saml2Action_namespace_get;
+*swig_namespace_set = *lassoc::Saml2Action_namespace_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Saml2Action(@_);
@@ -3566,18 +3866,18 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( lasso );
 %OWNER = ();
 %ITERATORS = ();
-*swig_ID_get = *lassoc::Samlp2StatusResponse_ID_get;
-*swig_ID_set = *lassoc::Samlp2StatusResponse_ID_set;
+*swig_iD_get = *lassoc::Samlp2StatusResponse_iD_get;
+*swig_iD_set = *lassoc::Samlp2StatusResponse_iD_set;
 *swig_inResponseTo_get = *lassoc::Samlp2StatusResponse_inResponseTo_get;
 *swig_inResponseTo_set = *lassoc::Samlp2StatusResponse_inResponseTo_set;
-*swig_Version_get = *lassoc::Samlp2StatusResponse_Version_get;
-*swig_Version_set = *lassoc::Samlp2StatusResponse_Version_set;
+*swig_version_get = *lassoc::Samlp2StatusResponse_version_get;
+*swig_version_set = *lassoc::Samlp2StatusResponse_version_set;
 *swig_issueInstant_get = *lassoc::Samlp2StatusResponse_issueInstant_get;
 *swig_issueInstant_set = *lassoc::Samlp2StatusResponse_issueInstant_set;
-*swig_Destination_get = *lassoc::Samlp2StatusResponse_Destination_get;
-*swig_Destination_set = *lassoc::Samlp2StatusResponse_Destination_set;
-*swig_Consent_get = *lassoc::Samlp2StatusResponse_Consent_get;
-*swig_Consent_set = *lassoc::Samlp2StatusResponse_Consent_set;
+*swig_destination_get = *lassoc::Samlp2StatusResponse_destination_get;
+*swig_destination_set = *lassoc::Samlp2StatusResponse_destination_set;
+*swig_consent_get = *lassoc::Samlp2StatusResponse_consent_get;
+*swig_consent_set = *lassoc::Samlp2StatusResponse_consent_set;
 *swig_issuer_get = *lassoc::Samlp2StatusResponse_issuer_get;
 *swig_issuer_set = *lassoc::Samlp2StatusResponse_issuer_set;
 *swig_extensions_get = *lassoc::Samlp2StatusResponse_extensions_get;
@@ -3622,24 +3922,28 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( lasso );
 %OWNER = ();
 %ITERATORS = ();
+*swig_assertion_get = *lassoc::Samlp2Response_assertion_get;
+*swig_assertion_set = *lassoc::Samlp2Response_assertion_set;
+*swig_encryptedAssertion_get = *lassoc::Samlp2Response_encryptedAssertion_get;
+*swig_encryptedAssertion_set = *lassoc::Samlp2Response_encryptedAssertion_set;
 *swig_issuer_get = *lassoc::Samlp2Response_issuer_get;
 *swig_issuer_set = *lassoc::Samlp2Response_issuer_set;
-*swig_Extensions_get = *lassoc::Samlp2Response_Extensions_get;
-*swig_Extensions_set = *lassoc::Samlp2Response_Extensions_set;
-*swig_Status_get = *lassoc::Samlp2Response_Status_get;
-*swig_Status_set = *lassoc::Samlp2Response_Status_set;
-*swig_ID_get = *lassoc::Samlp2Response_ID_get;
-*swig_ID_set = *lassoc::Samlp2Response_ID_set;
+*swig_extensions_get = *lassoc::Samlp2Response_extensions_get;
+*swig_extensions_set = *lassoc::Samlp2Response_extensions_set;
+*swig_status_get = *lassoc::Samlp2Response_status_get;
+*swig_status_set = *lassoc::Samlp2Response_status_set;
+*swig_iD_get = *lassoc::Samlp2Response_iD_get;
+*swig_iD_set = *lassoc::Samlp2Response_iD_set;
 *swig_inResponseTo_get = *lassoc::Samlp2Response_inResponseTo_get;
 *swig_inResponseTo_set = *lassoc::Samlp2Response_inResponseTo_set;
-*swig_Version_get = *lassoc::Samlp2Response_Version_get;
-*swig_Version_set = *lassoc::Samlp2Response_Version_set;
+*swig_version_get = *lassoc::Samlp2Response_version_get;
+*swig_version_set = *lassoc::Samlp2Response_version_set;
 *swig_issueInstant_get = *lassoc::Samlp2Response_issueInstant_get;
 *swig_issueInstant_set = *lassoc::Samlp2Response_issueInstant_set;
-*swig_Destination_get = *lassoc::Samlp2Response_Destination_get;
-*swig_Destination_set = *lassoc::Samlp2Response_Destination_set;
-*swig_Consent_get = *lassoc::Samlp2Response_Consent_get;
-*swig_Consent_set = *lassoc::Samlp2Response_Consent_set;
+*swig_destination_get = *lassoc::Samlp2Response_destination_get;
+*swig_destination_set = *lassoc::Samlp2Response_destination_set;
+*swig_consent_get = *lassoc::Samlp2Response_consent_get;
+*swig_consent_set = *lassoc::Samlp2Response_consent_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Samlp2Response(@_);
@@ -3682,22 +3986,22 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 *swig_any_set = *lassoc::Samlp2ArtifactResponse_any_set;
 *swig_issuer_get = *lassoc::Samlp2ArtifactResponse_issuer_get;
 *swig_issuer_set = *lassoc::Samlp2ArtifactResponse_issuer_set;
-*swig_Extensions_get = *lassoc::Samlp2ArtifactResponse_Extensions_get;
-*swig_Extensions_set = *lassoc::Samlp2ArtifactResponse_Extensions_set;
-*swig_Status_get = *lassoc::Samlp2ArtifactResponse_Status_get;
-*swig_Status_set = *lassoc::Samlp2ArtifactResponse_Status_set;
-*swig_ID_get = *lassoc::Samlp2ArtifactResponse_ID_get;
-*swig_ID_set = *lassoc::Samlp2ArtifactResponse_ID_set;
+*swig_extensions_get = *lassoc::Samlp2ArtifactResponse_extensions_get;
+*swig_extensions_set = *lassoc::Samlp2ArtifactResponse_extensions_set;
+*swig_status_get = *lassoc::Samlp2ArtifactResponse_status_get;
+*swig_status_set = *lassoc::Samlp2ArtifactResponse_status_set;
+*swig_iD_get = *lassoc::Samlp2ArtifactResponse_iD_get;
+*swig_iD_set = *lassoc::Samlp2ArtifactResponse_iD_set;
 *swig_inResponseTo_get = *lassoc::Samlp2ArtifactResponse_inResponseTo_get;
 *swig_inResponseTo_set = *lassoc::Samlp2ArtifactResponse_inResponseTo_set;
-*swig_Version_get = *lassoc::Samlp2ArtifactResponse_Version_get;
-*swig_Version_set = *lassoc::Samlp2ArtifactResponse_Version_set;
+*swig_version_get = *lassoc::Samlp2ArtifactResponse_version_get;
+*swig_version_set = *lassoc::Samlp2ArtifactResponse_version_set;
 *swig_issueInstant_get = *lassoc::Samlp2ArtifactResponse_issueInstant_get;
 *swig_issueInstant_set = *lassoc::Samlp2ArtifactResponse_issueInstant_set;
-*swig_Destination_get = *lassoc::Samlp2ArtifactResponse_Destination_get;
-*swig_Destination_set = *lassoc::Samlp2ArtifactResponse_Destination_set;
-*swig_Consent_get = *lassoc::Samlp2ArtifactResponse_Consent_get;
-*swig_Consent_set = *lassoc::Samlp2ArtifactResponse_Consent_set;
+*swig_destination_get = *lassoc::Samlp2ArtifactResponse_destination_get;
+*swig_destination_set = *lassoc::Samlp2ArtifactResponse_destination_set;
+*swig_consent_get = *lassoc::Samlp2ArtifactResponse_consent_get;
+*swig_consent_set = *lassoc::Samlp2ArtifactResponse_consent_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Samlp2ArtifactResponse(@_);
@@ -3736,16 +4040,16 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( lasso );
 %OWNER = ();
 %ITERATORS = ();
-*swig_ID_get = *lassoc::Samlp2RequestAbstract_ID_get;
-*swig_ID_set = *lassoc::Samlp2RequestAbstract_ID_set;
-*swig_Version_get = *lassoc::Samlp2RequestAbstract_Version_get;
-*swig_Version_set = *lassoc::Samlp2RequestAbstract_Version_set;
+*swig_iD_get = *lassoc::Samlp2RequestAbstract_iD_get;
+*swig_iD_set = *lassoc::Samlp2RequestAbstract_iD_set;
+*swig_version_get = *lassoc::Samlp2RequestAbstract_version_get;
+*swig_version_set = *lassoc::Samlp2RequestAbstract_version_set;
 *swig_issueInstant_get = *lassoc::Samlp2RequestAbstract_issueInstant_get;
 *swig_issueInstant_set = *lassoc::Samlp2RequestAbstract_issueInstant_set;
-*swig_Destination_get = *lassoc::Samlp2RequestAbstract_Destination_get;
-*swig_Destination_set = *lassoc::Samlp2RequestAbstract_Destination_set;
-*swig_Consent_get = *lassoc::Samlp2RequestAbstract_Consent_get;
-*swig_Consent_set = *lassoc::Samlp2RequestAbstract_Consent_set;
+*swig_destination_get = *lassoc::Samlp2RequestAbstract_destination_get;
+*swig_destination_set = *lassoc::Samlp2RequestAbstract_destination_set;
+*swig_consent_get = *lassoc::Samlp2RequestAbstract_consent_get;
+*swig_consent_set = *lassoc::Samlp2RequestAbstract_consent_set;
 *swig_issuer_get = *lassoc::Samlp2RequestAbstract_issuer_get;
 *swig_issuer_set = *lassoc::Samlp2RequestAbstract_issuer_set;
 *swig_extensions_get = *lassoc::Samlp2RequestAbstract_extensions_get;
@@ -3788,22 +4092,22 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( lasso );
 %OWNER = ();
 %ITERATORS = ();
-*swig_AssertionIDRef_get = *lassoc::Samlp2AssertionIDRequest_AssertionIDRef_get;
-*swig_AssertionIDRef_set = *lassoc::Samlp2AssertionIDRequest_AssertionIDRef_set;
+*swig_assertionIDRef_get = *lassoc::Samlp2AssertionIDRequest_assertionIDRef_get;
+*swig_assertionIDRef_set = *lassoc::Samlp2AssertionIDRequest_assertionIDRef_set;
 *swig_issuer_get = *lassoc::Samlp2AssertionIDRequest_issuer_get;
 *swig_issuer_set = *lassoc::Samlp2AssertionIDRequest_issuer_set;
-*swig_Extensions_get = *lassoc::Samlp2AssertionIDRequest_Extensions_get;
-*swig_Extensions_set = *lassoc::Samlp2AssertionIDRequest_Extensions_set;
-*swig_ID_get = *lassoc::Samlp2AssertionIDRequest_ID_get;
-*swig_ID_set = *lassoc::Samlp2AssertionIDRequest_ID_set;
-*swig_Version_get = *lassoc::Samlp2AssertionIDRequest_Version_get;
-*swig_Version_set = *lassoc::Samlp2AssertionIDRequest_Version_set;
+*swig_extensions_get = *lassoc::Samlp2AssertionIDRequest_extensions_get;
+*swig_extensions_set = *lassoc::Samlp2AssertionIDRequest_extensions_set;
+*swig_iD_get = *lassoc::Samlp2AssertionIDRequest_iD_get;
+*swig_iD_set = *lassoc::Samlp2AssertionIDRequest_iD_set;
+*swig_version_get = *lassoc::Samlp2AssertionIDRequest_version_get;
+*swig_version_set = *lassoc::Samlp2AssertionIDRequest_version_set;
 *swig_issueInstant_get = *lassoc::Samlp2AssertionIDRequest_issueInstant_get;
 *swig_issueInstant_set = *lassoc::Samlp2AssertionIDRequest_issueInstant_set;
-*swig_Destination_get = *lassoc::Samlp2AssertionIDRequest_Destination_get;
-*swig_Destination_set = *lassoc::Samlp2AssertionIDRequest_Destination_set;
-*swig_Consent_get = *lassoc::Samlp2AssertionIDRequest_Consent_get;
-*swig_Consent_set = *lassoc::Samlp2AssertionIDRequest_Consent_set;
+*swig_destination_get = *lassoc::Samlp2AssertionIDRequest_destination_get;
+*swig_destination_set = *lassoc::Samlp2AssertionIDRequest_destination_set;
+*swig_consent_get = *lassoc::Samlp2AssertionIDRequest_consent_get;
+*swig_consent_set = *lassoc::Samlp2AssertionIDRequest_consent_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Samlp2AssertionIDRequest(@_);
@@ -3842,22 +4146,22 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( lasso );
 %OWNER = ();
 %ITERATORS = ();
-*swig_Artifact_get = *lassoc::Samlp2ArtifactResolve_Artifact_get;
-*swig_Artifact_set = *lassoc::Samlp2ArtifactResolve_Artifact_set;
+*swig_artifact_get = *lassoc::Samlp2ArtifactResolve_artifact_get;
+*swig_artifact_set = *lassoc::Samlp2ArtifactResolve_artifact_set;
 *swig_issuer_get = *lassoc::Samlp2ArtifactResolve_issuer_get;
 *swig_issuer_set = *lassoc::Samlp2ArtifactResolve_issuer_set;
-*swig_Extensions_get = *lassoc::Samlp2ArtifactResolve_Extensions_get;
-*swig_Extensions_set = *lassoc::Samlp2ArtifactResolve_Extensions_set;
-*swig_ID_get = *lassoc::Samlp2ArtifactResolve_ID_get;
-*swig_ID_set = *lassoc::Samlp2ArtifactResolve_ID_set;
-*swig_Version_get = *lassoc::Samlp2ArtifactResolve_Version_get;
-*swig_Version_set = *lassoc::Samlp2ArtifactResolve_Version_set;
+*swig_extensions_get = *lassoc::Samlp2ArtifactResolve_extensions_get;
+*swig_extensions_set = *lassoc::Samlp2ArtifactResolve_extensions_set;
+*swig_iD_get = *lassoc::Samlp2ArtifactResolve_iD_get;
+*swig_iD_set = *lassoc::Samlp2ArtifactResolve_iD_set;
+*swig_version_get = *lassoc::Samlp2ArtifactResolve_version_get;
+*swig_version_set = *lassoc::Samlp2ArtifactResolve_version_set;
 *swig_issueInstant_get = *lassoc::Samlp2ArtifactResolve_issueInstant_get;
 *swig_issueInstant_set = *lassoc::Samlp2ArtifactResolve_issueInstant_set;
-*swig_Destination_get = *lassoc::Samlp2ArtifactResolve_Destination_get;
-*swig_Destination_set = *lassoc::Samlp2ArtifactResolve_Destination_set;
-*swig_Consent_get = *lassoc::Samlp2ArtifactResolve_Consent_get;
-*swig_Consent_set = *lassoc::Samlp2ArtifactResolve_Consent_set;
+*swig_destination_get = *lassoc::Samlp2ArtifactResolve_destination_get;
+*swig_destination_set = *lassoc::Samlp2ArtifactResolve_destination_set;
+*swig_consent_get = *lassoc::Samlp2ArtifactResolve_consent_get;
+*swig_consent_set = *lassoc::Samlp2ArtifactResolve_consent_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Samlp2ArtifactResolve(@_);
@@ -3906,18 +4210,18 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 *swig_nameIDPolicy_set = *lassoc::Samlp2NameIDMappingRequest_nameIDPolicy_set;
 *swig_issuer_get = *lassoc::Samlp2NameIDMappingRequest_issuer_get;
 *swig_issuer_set = *lassoc::Samlp2NameIDMappingRequest_issuer_set;
-*swig_Extensions_get = *lassoc::Samlp2NameIDMappingRequest_Extensions_get;
-*swig_Extensions_set = *lassoc::Samlp2NameIDMappingRequest_Extensions_set;
-*swig_ID_get = *lassoc::Samlp2NameIDMappingRequest_ID_get;
-*swig_ID_set = *lassoc::Samlp2NameIDMappingRequest_ID_set;
-*swig_Version_get = *lassoc::Samlp2NameIDMappingRequest_Version_get;
-*swig_Version_set = *lassoc::Samlp2NameIDMappingRequest_Version_set;
+*swig_extensions_get = *lassoc::Samlp2NameIDMappingRequest_extensions_get;
+*swig_extensions_set = *lassoc::Samlp2NameIDMappingRequest_extensions_set;
+*swig_iD_get = *lassoc::Samlp2NameIDMappingRequest_iD_get;
+*swig_iD_set = *lassoc::Samlp2NameIDMappingRequest_iD_set;
+*swig_version_get = *lassoc::Samlp2NameIDMappingRequest_version_get;
+*swig_version_set = *lassoc::Samlp2NameIDMappingRequest_version_set;
 *swig_issueInstant_get = *lassoc::Samlp2NameIDMappingRequest_issueInstant_get;
 *swig_issueInstant_set = *lassoc::Samlp2NameIDMappingRequest_issueInstant_set;
-*swig_Destination_get = *lassoc::Samlp2NameIDMappingRequest_Destination_get;
-*swig_Destination_set = *lassoc::Samlp2NameIDMappingRequest_Destination_set;
-*swig_Consent_get = *lassoc::Samlp2NameIDMappingRequest_Consent_get;
-*swig_Consent_set = *lassoc::Samlp2NameIDMappingRequest_Consent_set;
+*swig_destination_get = *lassoc::Samlp2NameIDMappingRequest_destination_get;
+*swig_destination_set = *lassoc::Samlp2NameIDMappingRequest_destination_set;
+*swig_consent_get = *lassoc::Samlp2NameIDMappingRequest_consent_get;
+*swig_consent_set = *lassoc::Samlp2NameIDMappingRequest_consent_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Samlp2NameIDMappingRequest(@_);
@@ -3960,16 +4264,16 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 *swig_forceAuthn_set = *lassoc::Samlp2AuthnRequest_forceAuthn_set;
 *swig_isPassive_get = *lassoc::Samlp2AuthnRequest_isPassive_get;
 *swig_isPassive_set = *lassoc::Samlp2AuthnRequest_isPassive_set;
-*swig_ProtocolBinding_get = *lassoc::Samlp2AuthnRequest_ProtocolBinding_get;
-*swig_ProtocolBinding_set = *lassoc::Samlp2AuthnRequest_ProtocolBinding_set;
+*swig_protocolBinding_get = *lassoc::Samlp2AuthnRequest_protocolBinding_get;
+*swig_protocolBinding_set = *lassoc::Samlp2AuthnRequest_protocolBinding_set;
 *swig_assertionConsumerServiceIndex_get = *lassoc::Samlp2AuthnRequest_assertionConsumerServiceIndex_get;
 *swig_assertionConsumerServiceIndex_set = *lassoc::Samlp2AuthnRequest_assertionConsumerServiceIndex_set;
-*swig_AssertionConsumerServiceURL_get = *lassoc::Samlp2AuthnRequest_AssertionConsumerServiceURL_get;
-*swig_AssertionConsumerServiceURL_set = *lassoc::Samlp2AuthnRequest_AssertionConsumerServiceURL_set;
+*swig_assertionConsumerServiceURL_get = *lassoc::Samlp2AuthnRequest_assertionConsumerServiceURL_get;
+*swig_assertionConsumerServiceURL_set = *lassoc::Samlp2AuthnRequest_assertionConsumerServiceURL_set;
 *swig_attributeConsumingServiceIndex_get = *lassoc::Samlp2AuthnRequest_attributeConsumingServiceIndex_get;
 *swig_attributeConsumingServiceIndex_set = *lassoc::Samlp2AuthnRequest_attributeConsumingServiceIndex_set;
-*swig_ProviderName_get = *lassoc::Samlp2AuthnRequest_ProviderName_get;
-*swig_ProviderName_set = *lassoc::Samlp2AuthnRequest_ProviderName_set;
+*swig_providerName_get = *lassoc::Samlp2AuthnRequest_providerName_get;
+*swig_providerName_set = *lassoc::Samlp2AuthnRequest_providerName_set;
 *swig_subject_get = *lassoc::Samlp2AuthnRequest_subject_get;
 *swig_subject_set = *lassoc::Samlp2AuthnRequest_subject_set;
 *swig_nameIDPolicy_get = *lassoc::Samlp2AuthnRequest_nameIDPolicy_get;
@@ -3982,18 +4286,18 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 *swig_scoping_set = *lassoc::Samlp2AuthnRequest_scoping_set;
 *swig_issuer_get = *lassoc::Samlp2AuthnRequest_issuer_get;
 *swig_issuer_set = *lassoc::Samlp2AuthnRequest_issuer_set;
-*swig_Extensions_get = *lassoc::Samlp2AuthnRequest_Extensions_get;
-*swig_Extensions_set = *lassoc::Samlp2AuthnRequest_Extensions_set;
-*swig_ID_get = *lassoc::Samlp2AuthnRequest_ID_get;
-*swig_ID_set = *lassoc::Samlp2AuthnRequest_ID_set;
-*swig_Version_get = *lassoc::Samlp2AuthnRequest_Version_get;
-*swig_Version_set = *lassoc::Samlp2AuthnRequest_Version_set;
+*swig_extensions_get = *lassoc::Samlp2AuthnRequest_extensions_get;
+*swig_extensions_set = *lassoc::Samlp2AuthnRequest_extensions_set;
+*swig_iD_get = *lassoc::Samlp2AuthnRequest_iD_get;
+*swig_iD_set = *lassoc::Samlp2AuthnRequest_iD_set;
+*swig_version_get = *lassoc::Samlp2AuthnRequest_version_get;
+*swig_version_set = *lassoc::Samlp2AuthnRequest_version_set;
 *swig_issueInstant_get = *lassoc::Samlp2AuthnRequest_issueInstant_get;
 *swig_issueInstant_set = *lassoc::Samlp2AuthnRequest_issueInstant_set;
-*swig_Destination_get = *lassoc::Samlp2AuthnRequest_Destination_get;
-*swig_Destination_set = *lassoc::Samlp2AuthnRequest_Destination_set;
-*swig_Consent_get = *lassoc::Samlp2AuthnRequest_Consent_get;
-*swig_Consent_set = *lassoc::Samlp2AuthnRequest_Consent_set;
+*swig_destination_get = *lassoc::Samlp2AuthnRequest_destination_get;
+*swig_destination_set = *lassoc::Samlp2AuthnRequest_destination_set;
+*swig_consent_get = *lassoc::Samlp2AuthnRequest_consent_get;
+*swig_consent_set = *lassoc::Samlp2AuthnRequest_consent_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Samlp2AuthnRequest(@_);
@@ -4036,18 +4340,18 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 *swig_subject_set = *lassoc::Samlp2SubjectQueryAbstract_subject_set;
 *swig_issuer_get = *lassoc::Samlp2SubjectQueryAbstract_issuer_get;
 *swig_issuer_set = *lassoc::Samlp2SubjectQueryAbstract_issuer_set;
-*swig_Extensions_get = *lassoc::Samlp2SubjectQueryAbstract_Extensions_get;
-*swig_Extensions_set = *lassoc::Samlp2SubjectQueryAbstract_Extensions_set;
-*swig_ID_get = *lassoc::Samlp2SubjectQueryAbstract_ID_get;
-*swig_ID_set = *lassoc::Samlp2SubjectQueryAbstract_ID_set;
-*swig_Version_get = *lassoc::Samlp2SubjectQueryAbstract_Version_get;
-*swig_Version_set = *lassoc::Samlp2SubjectQueryAbstract_Version_set;
+*swig_extensions_get = *lassoc::Samlp2SubjectQueryAbstract_extensions_get;
+*swig_extensions_set = *lassoc::Samlp2SubjectQueryAbstract_extensions_set;
+*swig_iD_get = *lassoc::Samlp2SubjectQueryAbstract_iD_get;
+*swig_iD_set = *lassoc::Samlp2SubjectQueryAbstract_iD_set;
+*swig_version_get = *lassoc::Samlp2SubjectQueryAbstract_version_get;
+*swig_version_set = *lassoc::Samlp2SubjectQueryAbstract_version_set;
 *swig_issueInstant_get = *lassoc::Samlp2SubjectQueryAbstract_issueInstant_get;
 *swig_issueInstant_set = *lassoc::Samlp2SubjectQueryAbstract_issueInstant_set;
-*swig_Destination_get = *lassoc::Samlp2SubjectQueryAbstract_Destination_get;
-*swig_Destination_set = *lassoc::Samlp2SubjectQueryAbstract_Destination_set;
-*swig_Consent_get = *lassoc::Samlp2SubjectQueryAbstract_Consent_get;
-*swig_Consent_set = *lassoc::Samlp2SubjectQueryAbstract_Consent_set;
+*swig_destination_get = *lassoc::Samlp2SubjectQueryAbstract_destination_get;
+*swig_destination_set = *lassoc::Samlp2SubjectQueryAbstract_destination_set;
+*swig_consent_get = *lassoc::Samlp2SubjectQueryAbstract_consent_get;
+*swig_consent_set = *lassoc::Samlp2SubjectQueryAbstract_consent_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Samlp2SubjectQueryAbstract(@_);
@@ -4086,28 +4390,28 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( lasso );
 %OWNER = ();
 %ITERATORS = ();
-*swig_Resource_get = *lassoc::Samlp2AuthzDecisionQuery_Resource_get;
-*swig_Resource_set = *lassoc::Samlp2AuthzDecisionQuery_Resource_set;
+*swig_resource_get = *lassoc::Samlp2AuthzDecisionQuery_resource_get;
+*swig_resource_set = *lassoc::Samlp2AuthzDecisionQuery_resource_set;
 *swig_action_get = *lassoc::Samlp2AuthzDecisionQuery_action_get;
 *swig_action_set = *lassoc::Samlp2AuthzDecisionQuery_action_set;
 *swig_evidence_get = *lassoc::Samlp2AuthzDecisionQuery_evidence_get;
 *swig_evidence_set = *lassoc::Samlp2AuthzDecisionQuery_evidence_set;
-*swig_Subject_get = *lassoc::Samlp2AuthzDecisionQuery_Subject_get;
-*swig_Subject_set = *lassoc::Samlp2AuthzDecisionQuery_Subject_set;
+*swig_subject_get = *lassoc::Samlp2AuthzDecisionQuery_subject_get;
+*swig_subject_set = *lassoc::Samlp2AuthzDecisionQuery_subject_set;
 *swig_issuer_get = *lassoc::Samlp2AuthzDecisionQuery_issuer_get;
 *swig_issuer_set = *lassoc::Samlp2AuthzDecisionQuery_issuer_set;
-*swig_Extensions_get = *lassoc::Samlp2AuthzDecisionQuery_Extensions_get;
-*swig_Extensions_set = *lassoc::Samlp2AuthzDecisionQuery_Extensions_set;
-*swig_ID_get = *lassoc::Samlp2AuthzDecisionQuery_ID_get;
-*swig_ID_set = *lassoc::Samlp2AuthzDecisionQuery_ID_set;
-*swig_Version_get = *lassoc::Samlp2AuthzDecisionQuery_Version_get;
-*swig_Version_set = *lassoc::Samlp2AuthzDecisionQuery_Version_set;
+*swig_extensions_get = *lassoc::Samlp2AuthzDecisionQuery_extensions_get;
+*swig_extensions_set = *lassoc::Samlp2AuthzDecisionQuery_extensions_set;
+*swig_iD_get = *lassoc::Samlp2AuthzDecisionQuery_iD_get;
+*swig_iD_set = *lassoc::Samlp2AuthzDecisionQuery_iD_set;
+*swig_version_get = *lassoc::Samlp2AuthzDecisionQuery_version_get;
+*swig_version_set = *lassoc::Samlp2AuthzDecisionQuery_version_set;
 *swig_issueInstant_get = *lassoc::Samlp2AuthzDecisionQuery_issueInstant_get;
 *swig_issueInstant_set = *lassoc::Samlp2AuthzDecisionQuery_issueInstant_set;
-*swig_Destination_get = *lassoc::Samlp2AuthzDecisionQuery_Destination_get;
-*swig_Destination_set = *lassoc::Samlp2AuthzDecisionQuery_Destination_set;
-*swig_Consent_get = *lassoc::Samlp2AuthzDecisionQuery_Consent_get;
-*swig_Consent_set = *lassoc::Samlp2AuthzDecisionQuery_Consent_set;
+*swig_destination_get = *lassoc::Samlp2AuthzDecisionQuery_destination_get;
+*swig_destination_set = *lassoc::Samlp2AuthzDecisionQuery_destination_set;
+*swig_consent_get = *lassoc::Samlp2AuthzDecisionQuery_consent_get;
+*swig_consent_set = *lassoc::Samlp2AuthzDecisionQuery_consent_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Samlp2AuthzDecisionQuery(@_);
@@ -4148,22 +4452,22 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 %ITERATORS = ();
 *swig_attribute_get = *lassoc::Samlp2AttributeQuery_attribute_get;
 *swig_attribute_set = *lassoc::Samlp2AttributeQuery_attribute_set;
-*swig_Subject_get = *lassoc::Samlp2AttributeQuery_Subject_get;
-*swig_Subject_set = *lassoc::Samlp2AttributeQuery_Subject_set;
+*swig_subject_get = *lassoc::Samlp2AttributeQuery_subject_get;
+*swig_subject_set = *lassoc::Samlp2AttributeQuery_subject_set;
 *swig_issuer_get = *lassoc::Samlp2AttributeQuery_issuer_get;
 *swig_issuer_set = *lassoc::Samlp2AttributeQuery_issuer_set;
-*swig_Extensions_get = *lassoc::Samlp2AttributeQuery_Extensions_get;
-*swig_Extensions_set = *lassoc::Samlp2AttributeQuery_Extensions_set;
-*swig_ID_get = *lassoc::Samlp2AttributeQuery_ID_get;
-*swig_ID_set = *lassoc::Samlp2AttributeQuery_ID_set;
-*swig_Version_get = *lassoc::Samlp2AttributeQuery_Version_get;
-*swig_Version_set = *lassoc::Samlp2AttributeQuery_Version_set;
+*swig_extensions_get = *lassoc::Samlp2AttributeQuery_extensions_get;
+*swig_extensions_set = *lassoc::Samlp2AttributeQuery_extensions_set;
+*swig_iD_get = *lassoc::Samlp2AttributeQuery_iD_get;
+*swig_iD_set = *lassoc::Samlp2AttributeQuery_iD_set;
+*swig_version_get = *lassoc::Samlp2AttributeQuery_version_get;
+*swig_version_set = *lassoc::Samlp2AttributeQuery_version_set;
 *swig_issueInstant_get = *lassoc::Samlp2AttributeQuery_issueInstant_get;
 *swig_issueInstant_set = *lassoc::Samlp2AttributeQuery_issueInstant_set;
-*swig_Destination_get = *lassoc::Samlp2AttributeQuery_Destination_get;
-*swig_Destination_set = *lassoc::Samlp2AttributeQuery_Destination_set;
-*swig_Consent_get = *lassoc::Samlp2AttributeQuery_Consent_get;
-*swig_Consent_set = *lassoc::Samlp2AttributeQuery_Consent_set;
+*swig_destination_get = *lassoc::Samlp2AttributeQuery_destination_get;
+*swig_destination_set = *lassoc::Samlp2AttributeQuery_destination_set;
+*swig_consent_get = *lassoc::Samlp2AttributeQuery_consent_get;
+*swig_consent_set = *lassoc::Samlp2AttributeQuery_consent_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Samlp2AttributeQuery(@_);
@@ -4202,8 +4506,8 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( lasso );
 %OWNER = ();
 %ITERATORS = ();
-*swig_Audience_get = *lassoc::Saml2AudienceRestriction_Audience_get;
-*swig_Audience_set = *lassoc::Saml2AudienceRestriction_Audience_set;
+*swig_audience_get = *lassoc::Saml2AudienceRestriction_audience_get;
+*swig_audience_set = *lassoc::Saml2AudienceRestriction_audience_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Saml2AudienceRestriction(@_);
@@ -4244,8 +4548,8 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 %ITERATORS = ();
 *swig_sessionIndex_get = *lassoc::Samlp2LogoutRequest_sessionIndex_get;
 *swig_sessionIndex_set = *lassoc::Samlp2LogoutRequest_sessionIndex_set;
-*swig_Reason_get = *lassoc::Samlp2LogoutRequest_Reason_get;
-*swig_Reason_set = *lassoc::Samlp2LogoutRequest_Reason_set;
+*swig_reason_get = *lassoc::Samlp2LogoutRequest_reason_get;
+*swig_reason_set = *lassoc::Samlp2LogoutRequest_reason_set;
 *swig_notOnOrAfter_get = *lassoc::Samlp2LogoutRequest_notOnOrAfter_get;
 *swig_notOnOrAfter_set = *lassoc::Samlp2LogoutRequest_notOnOrAfter_set;
 *swig_baseID_get = *lassoc::Samlp2LogoutRequest_baseID_get;
@@ -4256,18 +4560,18 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 *swig_encryptedID_set = *lassoc::Samlp2LogoutRequest_encryptedID_set;
 *swig_issuer_get = *lassoc::Samlp2LogoutRequest_issuer_get;
 *swig_issuer_set = *lassoc::Samlp2LogoutRequest_issuer_set;
-*swig_Extensions_get = *lassoc::Samlp2LogoutRequest_Extensions_get;
-*swig_Extensions_set = *lassoc::Samlp2LogoutRequest_Extensions_set;
-*swig_ID_get = *lassoc::Samlp2LogoutRequest_ID_get;
-*swig_ID_set = *lassoc::Samlp2LogoutRequest_ID_set;
-*swig_Version_get = *lassoc::Samlp2LogoutRequest_Version_get;
-*swig_Version_set = *lassoc::Samlp2LogoutRequest_Version_set;
+*swig_extensions_get = *lassoc::Samlp2LogoutRequest_extensions_get;
+*swig_extensions_set = *lassoc::Samlp2LogoutRequest_extensions_set;
+*swig_iD_get = *lassoc::Samlp2LogoutRequest_iD_get;
+*swig_iD_set = *lassoc::Samlp2LogoutRequest_iD_set;
+*swig_version_get = *lassoc::Samlp2LogoutRequest_version_get;
+*swig_version_set = *lassoc::Samlp2LogoutRequest_version_set;
 *swig_issueInstant_get = *lassoc::Samlp2LogoutRequest_issueInstant_get;
 *swig_issueInstant_set = *lassoc::Samlp2LogoutRequest_issueInstant_set;
-*swig_Destination_get = *lassoc::Samlp2LogoutRequest_Destination_get;
-*swig_Destination_set = *lassoc::Samlp2LogoutRequest_Destination_set;
-*swig_Consent_get = *lassoc::Samlp2LogoutRequest_Consent_get;
-*swig_Consent_set = *lassoc::Samlp2LogoutRequest_Consent_set;
+*swig_destination_get = *lassoc::Samlp2LogoutRequest_destination_get;
+*swig_destination_set = *lassoc::Samlp2LogoutRequest_destination_set;
+*swig_consent_get = *lassoc::Samlp2LogoutRequest_consent_get;
+*swig_consent_set = *lassoc::Samlp2LogoutRequest_consent_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Samlp2LogoutRequest(@_);
@@ -4310,22 +4614,22 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 *swig_sessionIndex_set = *lassoc::Samlp2AuthnQuery_sessionIndex_set;
 *swig_requestedAuthnContext_get = *lassoc::Samlp2AuthnQuery_requestedAuthnContext_get;
 *swig_requestedAuthnContext_set = *lassoc::Samlp2AuthnQuery_requestedAuthnContext_set;
-*swig_Subject_get = *lassoc::Samlp2AuthnQuery_Subject_get;
-*swig_Subject_set = *lassoc::Samlp2AuthnQuery_Subject_set;
+*swig_subject_get = *lassoc::Samlp2AuthnQuery_subject_get;
+*swig_subject_set = *lassoc::Samlp2AuthnQuery_subject_set;
 *swig_issuer_get = *lassoc::Samlp2AuthnQuery_issuer_get;
 *swig_issuer_set = *lassoc::Samlp2AuthnQuery_issuer_set;
-*swig_Extensions_get = *lassoc::Samlp2AuthnQuery_Extensions_get;
-*swig_Extensions_set = *lassoc::Samlp2AuthnQuery_Extensions_set;
-*swig_ID_get = *lassoc::Samlp2AuthnQuery_ID_get;
-*swig_ID_set = *lassoc::Samlp2AuthnQuery_ID_set;
-*swig_Version_get = *lassoc::Samlp2AuthnQuery_Version_get;
-*swig_Version_set = *lassoc::Samlp2AuthnQuery_Version_set;
+*swig_extensions_get = *lassoc::Samlp2AuthnQuery_extensions_get;
+*swig_extensions_set = *lassoc::Samlp2AuthnQuery_extensions_set;
+*swig_iD_get = *lassoc::Samlp2AuthnQuery_iD_get;
+*swig_iD_set = *lassoc::Samlp2AuthnQuery_iD_set;
+*swig_version_get = *lassoc::Samlp2AuthnQuery_version_get;
+*swig_version_set = *lassoc::Samlp2AuthnQuery_version_set;
 *swig_issueInstant_get = *lassoc::Samlp2AuthnQuery_issueInstant_get;
 *swig_issueInstant_set = *lassoc::Samlp2AuthnQuery_issueInstant_set;
-*swig_Destination_get = *lassoc::Samlp2AuthnQuery_Destination_get;
-*swig_Destination_set = *lassoc::Samlp2AuthnQuery_Destination_set;
-*swig_Consent_get = *lassoc::Samlp2AuthnQuery_Consent_get;
-*swig_Consent_set = *lassoc::Samlp2AuthnQuery_Consent_set;
+*swig_destination_get = *lassoc::Samlp2AuthnQuery_destination_get;
+*swig_destination_set = *lassoc::Samlp2AuthnQuery_destination_set;
+*swig_consent_get = *lassoc::Samlp2AuthnQuery_consent_get;
+*swig_consent_set = *lassoc::Samlp2AuthnQuery_consent_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Samlp2AuthnQuery(@_);
@@ -4364,12 +4668,14 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( lasso );
 %OWNER = ();
 %ITERATORS = ();
-*swig_Name_get = *lassoc::Saml2Attribute_Name_get;
-*swig_Name_set = *lassoc::Saml2Attribute_Name_set;
-*swig_NameFormat_get = *lassoc::Saml2Attribute_NameFormat_get;
-*swig_NameFormat_set = *lassoc::Saml2Attribute_NameFormat_set;
-*swig_FriendlyName_get = *lassoc::Saml2Attribute_FriendlyName_get;
-*swig_FriendlyName_set = *lassoc::Saml2Attribute_FriendlyName_set;
+*swig_name_get = *lassoc::Saml2Attribute_name_get;
+*swig_name_set = *lassoc::Saml2Attribute_name_set;
+*swig_nameFormat_get = *lassoc::Saml2Attribute_nameFormat_get;
+*swig_nameFormat_set = *lassoc::Saml2Attribute_nameFormat_set;
+*swig_friendlyName_get = *lassoc::Saml2Attribute_friendlyName_get;
+*swig_friendlyName_set = *lassoc::Saml2Attribute_friendlyName_set;
+*swig_attributeValue_get = *lassoc::Saml2Attribute_attributeValue_get;
+*swig_attributeValue_set = *lassoc::Saml2Attribute_attributeValue_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Saml2Attribute(@_);
@@ -4484,10 +4790,10 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( lasso );
 %OWNER = ();
 %ITERATORS = ();
-*swig_Resource_get = *lassoc::Saml2AuthzDecisionStatement_Resource_get;
-*swig_Resource_set = *lassoc::Saml2AuthzDecisionStatement_Resource_set;
-*swig_Decision_get = *lassoc::Saml2AuthzDecisionStatement_Decision_get;
-*swig_Decision_set = *lassoc::Saml2AuthzDecisionStatement_Decision_set;
+*swig_resource_get = *lassoc::Saml2AuthzDecisionStatement_resource_get;
+*swig_resource_set = *lassoc::Saml2AuthzDecisionStatement_resource_set;
+*swig_decision_get = *lassoc::Saml2AuthzDecisionStatement_decision_get;
+*swig_decision_set = *lassoc::Saml2AuthzDecisionStatement_decision_set;
 *swig_action_get = *lassoc::Saml2AuthzDecisionStatement_action_get;
 *swig_action_set = *lassoc::Saml2AuthzDecisionStatement_action_set;
 *swig_evidence_get = *lassoc::Saml2AuthzDecisionStatement_evidence_get;
@@ -4536,22 +4842,22 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 *swig_encryptedID_set = *lassoc::Samlp2NameIDMappingResponse_encryptedID_set;
 *swig_issuer_get = *lassoc::Samlp2NameIDMappingResponse_issuer_get;
 *swig_issuer_set = *lassoc::Samlp2NameIDMappingResponse_issuer_set;
-*swig_Extensions_get = *lassoc::Samlp2NameIDMappingResponse_Extensions_get;
-*swig_Extensions_set = *lassoc::Samlp2NameIDMappingResponse_Extensions_set;
-*swig_Status_get = *lassoc::Samlp2NameIDMappingResponse_Status_get;
-*swig_Status_set = *lassoc::Samlp2NameIDMappingResponse_Status_set;
-*swig_ID_get = *lassoc::Samlp2NameIDMappingResponse_ID_get;
-*swig_ID_set = *lassoc::Samlp2NameIDMappingResponse_ID_set;
+*swig_extensions_get = *lassoc::Samlp2NameIDMappingResponse_extensions_get;
+*swig_extensions_set = *lassoc::Samlp2NameIDMappingResponse_extensions_set;
+*swig_status_get = *lassoc::Samlp2NameIDMappingResponse_status_get;
+*swig_status_set = *lassoc::Samlp2NameIDMappingResponse_status_set;
+*swig_iD_get = *lassoc::Samlp2NameIDMappingResponse_iD_get;
+*swig_iD_set = *lassoc::Samlp2NameIDMappingResponse_iD_set;
 *swig_inResponseTo_get = *lassoc::Samlp2NameIDMappingResponse_inResponseTo_get;
 *swig_inResponseTo_set = *lassoc::Samlp2NameIDMappingResponse_inResponseTo_set;
-*swig_Version_get = *lassoc::Samlp2NameIDMappingResponse_Version_get;
-*swig_Version_set = *lassoc::Samlp2NameIDMappingResponse_Version_set;
+*swig_version_get = *lassoc::Samlp2NameIDMappingResponse_version_get;
+*swig_version_set = *lassoc::Samlp2NameIDMappingResponse_version_set;
 *swig_issueInstant_get = *lassoc::Samlp2NameIDMappingResponse_issueInstant_get;
 *swig_issueInstant_set = *lassoc::Samlp2NameIDMappingResponse_issueInstant_set;
-*swig_Destination_get = *lassoc::Samlp2NameIDMappingResponse_Destination_get;
-*swig_Destination_set = *lassoc::Samlp2NameIDMappingResponse_Destination_set;
-*swig_Consent_get = *lassoc::Samlp2NameIDMappingResponse_Consent_get;
-*swig_Consent_set = *lassoc::Samlp2NameIDMappingResponse_Consent_set;
+*swig_destination_get = *lassoc::Samlp2NameIDMappingResponse_destination_get;
+*swig_destination_set = *lassoc::Samlp2NameIDMappingResponse_destination_set;
+*swig_consent_get = *lassoc::Samlp2NameIDMappingResponse_consent_get;
+*swig_consent_set = *lassoc::Samlp2NameIDMappingResponse_consent_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Samlp2NameIDMappingResponse(@_);
@@ -4628,8 +4934,8 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( lasso );
 %OWNER = ();
 %ITERATORS = ();
-*swig_NewID_get = *lassoc::Samlp2ManageNameIDRequest_NewID_get;
-*swig_NewID_set = *lassoc::Samlp2ManageNameIDRequest_NewID_set;
+*swig_newID_get = *lassoc::Samlp2ManageNameIDRequest_newID_get;
+*swig_newID_set = *lassoc::Samlp2ManageNameIDRequest_newID_set;
 *swig_nameID_get = *lassoc::Samlp2ManageNameIDRequest_nameID_get;
 *swig_nameID_set = *lassoc::Samlp2ManageNameIDRequest_nameID_set;
 *swig_encryptedID_get = *lassoc::Samlp2ManageNameIDRequest_encryptedID_get;
@@ -4640,18 +4946,18 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 *swig_terminate_set = *lassoc::Samlp2ManageNameIDRequest_terminate_set;
 *swig_issuer_get = *lassoc::Samlp2ManageNameIDRequest_issuer_get;
 *swig_issuer_set = *lassoc::Samlp2ManageNameIDRequest_issuer_set;
-*swig_Extensions_get = *lassoc::Samlp2ManageNameIDRequest_Extensions_get;
-*swig_Extensions_set = *lassoc::Samlp2ManageNameIDRequest_Extensions_set;
-*swig_ID_get = *lassoc::Samlp2ManageNameIDRequest_ID_get;
-*swig_ID_set = *lassoc::Samlp2ManageNameIDRequest_ID_set;
-*swig_Version_get = *lassoc::Samlp2ManageNameIDRequest_Version_get;
-*swig_Version_set = *lassoc::Samlp2ManageNameIDRequest_Version_set;
+*swig_extensions_get = *lassoc::Samlp2ManageNameIDRequest_extensions_get;
+*swig_extensions_set = *lassoc::Samlp2ManageNameIDRequest_extensions_set;
+*swig_iD_get = *lassoc::Samlp2ManageNameIDRequest_iD_get;
+*swig_iD_set = *lassoc::Samlp2ManageNameIDRequest_iD_set;
+*swig_version_get = *lassoc::Samlp2ManageNameIDRequest_version_get;
+*swig_version_set = *lassoc::Samlp2ManageNameIDRequest_version_set;
 *swig_issueInstant_get = *lassoc::Samlp2ManageNameIDRequest_issueInstant_get;
 *swig_issueInstant_set = *lassoc::Samlp2ManageNameIDRequest_issueInstant_set;
-*swig_Destination_get = *lassoc::Samlp2ManageNameIDRequest_Destination_get;
-*swig_Destination_set = *lassoc::Samlp2ManageNameIDRequest_Destination_set;
-*swig_Consent_get = *lassoc::Samlp2ManageNameIDRequest_Consent_get;
-*swig_Consent_set = *lassoc::Samlp2ManageNameIDRequest_Consent_set;
+*swig_destination_get = *lassoc::Samlp2ManageNameIDRequest_destination_get;
+*swig_destination_set = *lassoc::Samlp2ManageNameIDRequest_destination_set;
+*swig_consent_get = *lassoc::Samlp2ManageNameIDRequest_consent_get;
+*swig_consent_set = *lassoc::Samlp2ManageNameIDRequest_consent_set;
 sub new {
     my $pkg = shift;
     my $self = lassoc::new_Samlp2ManageNameIDRequest(@_);
@@ -4690,10 +4996,10 @@ use vars qw(@ISA %OWNER %ITERATORS %BLESSEDMEMBERS);
 @ISA = qw( lasso );
 %OWNER = ();
 %ITERATORS = ();
-*swig_RequesterID_get = *lassoc::Samlp2Scoping_RequesterID_get;
-*swig_RequesterID_set = *lassoc::Samlp2Scoping_RequesterID_set;
-*swig_ProxyCount_get = *lassoc::Samlp2Scoping_ProxyCount_get;
-*swig_ProxyCount_set = *lassoc::Samlp2Scoping_ProxyCount_set;
+*swig_requesterID_get = *lassoc::Samlp2Scoping_requesterID_get;
+*swig_requesterID_set = *lassoc::Samlp2Scoping_requesterID_set;
+*swig_proxyCount_get = *lassoc::Samlp2Scoping_proxyCount_get;
+*swig_proxyCount_set = *lassoc::Samlp2Scoping_proxyCount_set;
 *swig_iDPList_get = *lassoc::Samlp2Scoping_iDPList_get;
 *swig_iDPList_set = *lassoc::Samlp2Scoping_iDPList_set;
 sub new {
@@ -4778,9 +5084,6 @@ sub ACQUIRE {
 package lasso;
 
 *WSF_SUPPORT = *lassoc::WSF_SUPPORT;
-*SAML2_SUPPORT = *lassoc::SAML2_SUPPORT;
-*SAML2_NAME_IDENTIFIER_FORMAT_PERSISTENT = *lassoc::SAML2_NAME_IDENTIFIER_FORMAT_PERSISTENT;
-*SAML2_NAME_IDENTIFIER_FORMAT_TRANSIENT = *lassoc::SAML2_NAME_IDENTIFIER_FORMAT_TRANSIENT;
 *HTTP_METHOD_NONE = *lassoc::HTTP_METHOD_NONE;
 *HTTP_METHOD_ANY = *lassoc::HTTP_METHOD_ANY;
 *HTTP_METHOD_IDP_INITIATED = *lassoc::HTTP_METHOD_IDP_INITIATED;
@@ -4826,6 +5129,7 @@ package lasso;
 *LOGIN_PROTOCOL_PROFILE_BRWS_ART = *lassoc::LOGIN_PROTOCOL_PROFILE_BRWS_ART;
 *LOGIN_PROTOCOL_PROFILE_BRWS_POST = *lassoc::LOGIN_PROTOCOL_PROFILE_BRWS_POST;
 *LOGIN_PROTOCOL_PROFILE_BRWS_LECP = *lassoc::LOGIN_PROTOCOL_PROFILE_BRWS_LECP;
+*LOGIN_PROTOCOL_PROFILE_REDIRECT = *lassoc::LOGIN_PROTOCOL_PROFILE_REDIRECT;
 *PROVIDER_ROLE_NONE = *lassoc::PROVIDER_ROLE_NONE;
 *PROVIDER_ROLE_SP = *lassoc::PROVIDER_ROLE_SP;
 *PROVIDER_ROLE_IDP = *lassoc::PROVIDER_ROLE_IDP;
@@ -4845,6 +5149,10 @@ package lasso;
 *REQUEST_TYPE_DST_QUERY = *lassoc::REQUEST_TYPE_DST_QUERY;
 *REQUEST_TYPE_DST_MODIFY = *lassoc::REQUEST_TYPE_DST_MODIFY;
 *REQUEST_TYPE_SASL_REQUEST = *lassoc::REQUEST_TYPE_SASL_REQUEST;
+*REQUEST_TYPE_NAME_ID_MANAGEMENT = *lassoc::REQUEST_TYPE_NAME_ID_MANAGEMENT;
+*REQUEST_TYPE_IDWSF2_DISCO_SVCMD_REGISTER = *lassoc::REQUEST_TYPE_IDWSF2_DISCO_SVCMD_REGISTER;
+*REQUEST_TYPE_IDWSF2_DISCO_SVCMD_ASSOCIATION_ADD = *lassoc::REQUEST_TYPE_IDWSF2_DISCO_SVCMD_ASSOCIATION_ADD;
+*REQUEST_TYPE_IDWSF2_DISCO_QUERY = *lassoc::REQUEST_TYPE_IDWSF2_DISCO_QUERY;
 *LIB_AUTHN_CONTEXT_CLASS_REF_INTERNET_PROTOCOL = *lassoc::LIB_AUTHN_CONTEXT_CLASS_REF_INTERNET_PROTOCOL;
 *LIB_AUTHN_CONTEXT_CLASS_REF_INTERNET_PROTOCOL_PASSWORD = *lassoc::LIB_AUTHN_CONTEXT_CLASS_REF_INTERNET_PROTOCOL_PASSWORD;
 *LIB_AUTHN_CONTEXT_CLASS_REF_MOBILE_ONE_FACTOR_UNREGISTERED = *lassoc::LIB_AUTHN_CONTEXT_CLASS_REF_MOBILE_ONE_FACTOR_UNREGISTERED;
@@ -4874,14 +5182,27 @@ package lasso;
 *SAML_AUTHENTICATION_METHOD_XMLD_SIG = *lassoc::SAML_AUTHENTICATION_METHOD_XMLD_SIG;
 *SAML_AUTHENTICATION_METHOD_UNSPECIFIED = *lassoc::SAML_AUTHENTICATION_METHOD_UNSPECIFIED;
 *SAML_AUTHENTICATION_METHOD_LIBERTY = *lassoc::SAML_AUTHENTICATION_METHOD_LIBERTY;
+*SIGNATURE_TYPE_NONE = *lassoc::SIGNATURE_TYPE_NONE;
+*SIGNATURE_TYPE_SIMPLE = *lassoc::SIGNATURE_TYPE_SIMPLE;
+*SIGNATURE_TYPE_WITHX509 = *lassoc::SIGNATURE_TYPE_WITHX509;
 *SIGNATURE_METHOD_RSA_SHA1 = *lassoc::SIGNATURE_METHOD_RSA_SHA1;
 *SIGNATURE_METHOD_DSA_SHA1 = *lassoc::SIGNATURE_METHOD_DSA_SHA1;
+*ENCRYPTION_MODE_NONE = *lassoc::ENCRYPTION_MODE_NONE;
+*ENCRYPTION_MODE_NAMEID = *lassoc::ENCRYPTION_MODE_NAMEID;
+*ENCRYPTION_MODE_ASSERTION = *lassoc::ENCRYPTION_MODE_ASSERTION;
+*ENCRYPTION_SYM_KEY_TYPE_DEFAULT = *lassoc::ENCRYPTION_SYM_KEY_TYPE_DEFAULT;
+*ENCRYPTION_SYM_KEY_TYPE_AES_256 = *lassoc::ENCRYPTION_SYM_KEY_TYPE_AES_256;
+*ENCRYPTION_SYM_KEY_TYPE_AES_128 = *lassoc::ENCRYPTION_SYM_KEY_TYPE_AES_128;
+*ENCRYPTION_SYM_KEY_TYPE_3DES = *lassoc::ENCRYPTION_SYM_KEY_TYPE_3DES;
 *ERROR_UNDEFINED = *lassoc::ERROR_UNDEFINED;
 *ERROR_UNIMPLEMENTED = *lassoc::ERROR_UNIMPLEMENTED;
 *XML_ERROR_NODE_NOT_FOUND = *lassoc::XML_ERROR_NODE_NOT_FOUND;
 *XML_ERROR_NODE_CONTENT_NOT_FOUND = *lassoc::XML_ERROR_NODE_CONTENT_NOT_FOUND;
 *XML_ERROR_ATTR_NOT_FOUND = *lassoc::XML_ERROR_ATTR_NOT_FOUND;
 *XML_ERROR_ATTR_VALUE_NOT_FOUND = *lassoc::XML_ERROR_ATTR_VALUE_NOT_FOUND;
+*LASSO_XML_ERROR_INVALID_FILE = *lassoc::LASSO_XML_ERROR_INVALID_FILE;
+*LASSO_XML_ERROR_OBJECT_CONSTRUCTION_FAILED = *lassoc::LASSO_XML_ERROR_OBJECT_CONSTRUCTION_FAILED;
+*LASSO_XML_ERROR_MISSING_NAMESPACE = *lassoc::LASSO_XML_ERROR_MISSING_NAMESPACE;
 *DS_ERROR_SIGNATURE_NOT_FOUND = *lassoc::DS_ERROR_SIGNATURE_NOT_FOUND;
 *DS_ERROR_INVALID_SIGNATURE = *lassoc::DS_ERROR_INVALID_SIGNATURE;
 *DS_ERROR_SIGNATURE_TMPL_CREATION_FAILED = *lassoc::DS_ERROR_SIGNATURE_TMPL_CREATION_FAILED;
@@ -4896,12 +5217,16 @@ package lasso;
 *DS_ERROR_CA_CERT_CHAIN_LOAD_FAILED = *lassoc::DS_ERROR_CA_CERT_CHAIN_LOAD_FAILED;
 *DS_ERROR_INVALID_SIGALG = *lassoc::DS_ERROR_INVALID_SIGALG;
 *DS_ERROR_DIGEST_COMPUTE_FAILED = *lassoc::DS_ERROR_DIGEST_COMPUTE_FAILED;
-*LASSO_DS_ERROR_SIGNATURE_TEMPLATE_NOT_FOUND = *lassoc::LASSO_DS_ERROR_SIGNATURE_TEMPLATE_NOT_FOUND;
+*DS_ERROR_SIGNATURE_TEMPLATE_NOT_FOUND = *lassoc::DS_ERROR_SIGNATURE_TEMPLATE_NOT_FOUND;
 *SERVER_ERROR_PROVIDER_NOT_FOUND = *lassoc::SERVER_ERROR_PROVIDER_NOT_FOUND;
 *SERVER_ERROR_ADD_PROVIDER_FAILED = *lassoc::SERVER_ERROR_ADD_PROVIDER_FAILED;
-*LASSO_SERVER_ERROR_ADD_PROVIDER_PROTOCOL_MISMATCH = *lassoc::LASSO_SERVER_ERROR_ADD_PROVIDER_PROTOCOL_MISMATCH;
+*SERVER_ERROR_ADD_PROVIDER_PROTOCOL_MISMATCH = *lassoc::SERVER_ERROR_ADD_PROVIDER_PROTOCOL_MISMATCH;
+*SERVER_ERROR_SET_ENCRYPTION_PRIVATE_KEY_FAILED = *lassoc::SERVER_ERROR_SET_ENCRYPTION_PRIVATE_KEY_FAILED;
+*LASSO_SERVER_ERROR_INVALID_XML = *lassoc::LASSO_SERVER_ERROR_INVALID_XML;
 *LOGOUT_ERROR_UNSUPPORTED_PROFILE = *lassoc::LOGOUT_ERROR_UNSUPPORTED_PROFILE;
 *LOGOUT_ERROR_REQUEST_DENIED = *lassoc::LOGOUT_ERROR_REQUEST_DENIED;
+*LOGOUT_ERROR_FEDERATION_NOT_FOUND = *lassoc::LOGOUT_ERROR_FEDERATION_NOT_FOUND;
+*LOGOUT_ERROR_UNKNOWN_PRINCIPAL = *lassoc::LOGOUT_ERROR_UNKNOWN_PRINCIPAL;
 *PROFILE_ERROR_INVALID_QUERY = *lassoc::PROFILE_ERROR_INVALID_QUERY;
 *PROFILE_ERROR_INVALID_POST_MSG = *lassoc::PROFILE_ERROR_INVALID_POST_MSG;
 *PROFILE_ERROR_INVALID_SOAP_MSG = *lassoc::PROFILE_ERROR_INVALID_SOAP_MSG;
@@ -4922,6 +5247,22 @@ package lasso;
 *PROFILE_ERROR_SESSION_NOT_FOUND = *lassoc::PROFILE_ERROR_SESSION_NOT_FOUND;
 *PROFILE_ERROR_BAD_IDENTITY_DUMP = *lassoc::PROFILE_ERROR_BAD_IDENTITY_DUMP;
 *PROFILE_ERROR_BAD_SESSION_DUMP = *lassoc::PROFILE_ERROR_BAD_SESSION_DUMP;
+*PROFILE_ERROR_MISSING_RESPONSE = *lassoc::PROFILE_ERROR_MISSING_RESPONSE;
+*PROFILE_ERROR_MISSING_STATUS_CODE = *lassoc::PROFILE_ERROR_MISSING_STATUS_CODE;
+*PROFILE_ERROR_MISSING_ARTIFACT = *lassoc::PROFILE_ERROR_MISSING_ARTIFACT;
+*PROFILE_ERROR_MISSING_RESOURCE_OFFERING = *lassoc::PROFILE_ERROR_MISSING_RESOURCE_OFFERING;
+*PROFILE_ERROR_MISSING_SERVICE_DESCRIPTION = *lassoc::PROFILE_ERROR_MISSING_SERVICE_DESCRIPTION;
+*PROFILE_ERROR_MISSING_SERVICE_TYPE = *lassoc::PROFILE_ERROR_MISSING_SERVICE_TYPE;
+*PROFILE_ERROR_MISSING_ASSERTION = *lassoc::PROFILE_ERROR_MISSING_ASSERTION;
+*PROFILE_ERROR_MISSING_SUBJECT = *lassoc::PROFILE_ERROR_MISSING_SUBJECT;
+*PROFILE_ERROR_MISSING_NAME_IDENTIFIER = *lassoc::PROFILE_ERROR_MISSING_NAME_IDENTIFIER;
+*PROFILE_ERROR_INVALID_ARTIFACT = *lassoc::PROFILE_ERROR_INVALID_ARTIFACT;
+*PROFILE_ERROR_MISSING_ENCRYPTION_PRIVATE_KEY = *lassoc::PROFILE_ERROR_MISSING_ENCRYPTION_PRIVATE_KEY;
+*PROFILE_ERROR_STATUS_NOT_SUCCESS = *lassoc::PROFILE_ERROR_STATUS_NOT_SUCCESS;
+*PROFILE_ERROR_MISSING_ISSUER = *lassoc::PROFILE_ERROR_MISSING_ISSUER;
+*PROFILE_ERROR_MISSING_SERVICE_INSTANCE = *lassoc::PROFILE_ERROR_MISSING_SERVICE_INSTANCE;
+*PROFILE_ERROR_MISSING_ENDPOINT_REFERENCE = *lassoc::PROFILE_ERROR_MISSING_ENDPOINT_REFERENCE;
+*PROFILE_ERROR_MISSING_ENDPOINT_REFERENCE_ADDRESS = *lassoc::PROFILE_ERROR_MISSING_ENDPOINT_REFERENCE_ADDRESS;
 *LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ = *lassoc::LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ;
 *PARAM_ERROR_INVALID_VALUE = *lassoc::PARAM_ERROR_INVALID_VALUE;
 *LASSO_PARAM_ERROR_CHECK_FAILED = *lassoc::LASSO_PARAM_ERROR_CHECK_FAILED;
@@ -4933,9 +5274,72 @@ package lasso;
 *LOGIN_ERROR_UNSIGNED_AUTHN_REQUEST = *lassoc::LOGIN_ERROR_UNSIGNED_AUTHN_REQUEST;
 *LOGIN_ERROR_STATUS_NOT_SUCCESS = *lassoc::LOGIN_ERROR_STATUS_NOT_SUCCESS;
 *LOGIN_ERROR_UNKNOWN_PRINCIPAL = *lassoc::LOGIN_ERROR_UNKNOWN_PRINCIPAL;
+*LOGIN_ERROR_NO_DEFAULT_ENDPOINT = *lassoc::LOGIN_ERROR_NO_DEFAULT_ENDPOINT;
+*LOGIN_ERROR_ASSERTION_REPLAY = *lassoc::LOGIN_ERROR_ASSERTION_REPLAY;
 *DEFEDERATION_ERROR_MISSING_NAME_IDENTIFIER = *lassoc::DEFEDERATION_ERROR_MISSING_NAME_IDENTIFIER;
-*LASSO_SOAP_FAULT_REDIRECT_REQUEST = *lassoc::LASSO_SOAP_FAULT_REDIRECT_REQUEST;
+*SOAP_FAULT_REDIRECT_REQUEST = *lassoc::SOAP_FAULT_REDIRECT_REQUEST;
+*LASSO_SOAP_ERROR_MISSING_ENVELOPE = *lassoc::LASSO_SOAP_ERROR_MISSING_ENVELOPE;
+*SOAP_ERROR_MISSING_HEADER = *lassoc::SOAP_ERROR_MISSING_HEADER;
+*SOAP_ERROR_MISSING_BODY = *lassoc::SOAP_ERROR_MISSING_BODY;
+*LASSO_SOAP_ERROR_MISSING_SOAP_FAULT_DETAIL = *lassoc::LASSO_SOAP_ERROR_MISSING_SOAP_FAULT_DETAIL;
+*NAME_IDENTIFIER_MAPPING_ERROR_MISSING_TARGET_NAMESPACE = *lassoc::NAME_IDENTIFIER_MAPPING_ERROR_MISSING_TARGET_NAMESPACE;
+*NAME_IDENTIFIER_MAPPING_ERROR_FORBIDDEN_CALL_ON_THIS_SIDE = *lassoc::NAME_IDENTIFIER_MAPPING_ERROR_FORBIDDEN_CALL_ON_THIS_SIDE;
+*NAME_IDENTIFIER_MAPPING_ERROR_MISSING_TARGET_IDENTIFIER = *lassoc::NAME_IDENTIFIER_MAPPING_ERROR_MISSING_TARGET_IDENTIFIER;
+*DATA_SERVICE_ERROR_UNREGISTERED_DST = *lassoc::DATA_SERVICE_ERROR_UNREGISTERED_DST;
+*WSF_PROFILE_ERROR_MISSING_CORRELATION = *lassoc::WSF_PROFILE_ERROR_MISSING_CORRELATION;
+*WSF_PROFILE_ERROR_MISSING_SECURITY = *lassoc::WSF_PROFILE_ERROR_MISSING_SECURITY;
+*DISCOVERY_ERROR_SVC_METADATA_REGISTER_FAILED = *lassoc::DISCOVERY_ERROR_SVC_METADATA_REGISTER_FAILED;
+*DISCOVERY_ERROR_SVC_METADATA_ASSOCIATION_ADD_FAILED = *lassoc::DISCOVERY_ERROR_SVC_METADATA_ASSOCIATION_ADD_FAILED;
+*DISCOVERY_ERROR_MISSING_REQUESTED_SERVICE = *lassoc::DISCOVERY_ERROR_MISSING_REQUESTED_SERVICE;
+*DISCOVERY_ERROR_FAILED_TO_BUILD_ENDPOINT_REFERENCE = *lassoc::DISCOVERY_ERROR_FAILED_TO_BUILD_ENDPOINT_REFERENCE;
+*DST_ERROR_MISSING_SERVICE_DATA = *lassoc::DST_ERROR_MISSING_SERVICE_DATA;
+*DST_ERROR_QUERY_FAILED = *lassoc::DST_ERROR_QUERY_FAILED;
+*DST_ERROR_QUERY_PARTIALLY_FAILED = *lassoc::DST_ERROR_QUERY_PARTIALLY_FAILED;
+*DST_ERROR_MODIFY_FAILED = *lassoc::DST_ERROR_MODIFY_FAILED;
+*DST_ERROR_MODIFY_PARTIALLY_FAILED = *lassoc::DST_ERROR_MODIFY_PARTIALLY_FAILED;
+*DST_ERROR_NEW_DATA_MISSING = *lassoc::DST_ERROR_NEW_DATA_MISSING;
 *CHECK_VERSION_EXACT = *lassoc::CHECK_VERSION_EXACT;
 *CHECK_VERSIONABI_COMPATIBLE = *lassoc::CHECK_VERSIONABI_COMPATIBLE;
 *CHECK_VERSION_NUMERIC = *lassoc::CHECK_VERSION_NUMERIC;
+*SAML2_SUPPORT = *lassoc::SAML2_SUPPORT;
+*SAML2_NAME_IDENTIFIER_FORMAT_UNSPECIFIED = *lassoc::SAML2_NAME_IDENTIFIER_FORMAT_UNSPECIFIED;
+*SAML2_NAME_IDENTIFIER_FORMAT_EMAIL = *lassoc::SAML2_NAME_IDENTIFIER_FORMAT_EMAIL;
+*SAML2_NAME_IDENTIFIER_FORMAT_X509 = *lassoc::SAML2_NAME_IDENTIFIER_FORMAT_X509;
+*SAML2_NAME_IDENTIFIER_FORMAT_WINDOWS = *lassoc::SAML2_NAME_IDENTIFIER_FORMAT_WINDOWS;
+*SAML2_NAME_IDENTIFIER_FORMAT_KERBEROS = *lassoc::SAML2_NAME_IDENTIFIER_FORMAT_KERBEROS;
+*SAML2_NAME_IDENTIFIER_FORMAT_ENTITY = *lassoc::SAML2_NAME_IDENTIFIER_FORMAT_ENTITY;
+*SAML2_NAME_IDENTIFIER_FORMAT_PERSISTENT = *lassoc::SAML2_NAME_IDENTIFIER_FORMAT_PERSISTENT;
+*SAML2_NAME_IDENTIFIER_FORMAT_TRANSIENT = *lassoc::SAML2_NAME_IDENTIFIER_FORMAT_TRANSIENT;
+*SAML2_NAME_IDENTIFIER_FORMAT_ENCRYPTED = *lassoc::SAML2_NAME_IDENTIFIER_FORMAT_ENCRYPTED;
+*SAML2_ATTRIBUTE_NAME_EPR = *lassoc::SAML2_ATTRIBUTE_NAME_EPR;
+*SAML2_ATTRIBUTE_NAME_FORMAT_URI = *lassoc::SAML2_ATTRIBUTE_NAME_FORMAT_URI;
+*SAML2_METADATA_BINDING_SOAP = *lassoc::SAML2_METADATA_BINDING_SOAP;
+*SAML2_METADATA_BINDING_REDIRECT = *lassoc::SAML2_METADATA_BINDING_REDIRECT;
+*SAML2_METADATA_BINDING_POST = *lassoc::SAML2_METADATA_BINDING_POST;
+*SAML2_METADATA_BINDING_ARTIFACT = *lassoc::SAML2_METADATA_BINDING_ARTIFACT;
+*SAML2_METADATA_BINDING_PAOS = *lassoc::SAML2_METADATA_BINDING_PAOS;
+*SAML2_AUTHN_CONTEXT_AUTHENTICATED_TELEPHONY = *lassoc::SAML2_AUTHN_CONTEXT_AUTHENTICATED_TELEPHONY;
+*SAML2_AUTHN_CONTEXT_INTERNET_PROTOCOL = *lassoc::SAML2_AUTHN_CONTEXT_INTERNET_PROTOCOL;
+*SAML2_AUTHN_CONTEXT_INTERNET_PROTOCOL_PASSWORD = *lassoc::SAML2_AUTHN_CONTEXT_INTERNET_PROTOCOL_PASSWORD;
+*SAML2_AUTHN_CONTEXT_KERBEROS = *lassoc::SAML2_AUTHN_CONTEXT_KERBEROS;
+*SAML2_AUTHN_CONTEXT_MOBILE_ONE_FACTOR_CONTRACT = *lassoc::SAML2_AUTHN_CONTEXT_MOBILE_ONE_FACTOR_CONTRACT;
+*SAML2_AUTHN_CONTEXT_MOBILE_ONE_FACTOR_UNREGISTERED = *lassoc::SAML2_AUTHN_CONTEXT_MOBILE_ONE_FACTOR_UNREGISTERED;
+*SAML2_AUTHN_CONTEXT_MOBILE_TWO_FACTOR_CONTRACT = *lassoc::SAML2_AUTHN_CONTEXT_MOBILE_TWO_FACTOR_CONTRACT;
+*SAML2_AUTHN_CONTEXT_MOBILE_TWO_FACTOR_UNREGISTERED = *lassoc::SAML2_AUTHN_CONTEXT_MOBILE_TWO_FACTOR_UNREGISTERED;
+*SAML2_AUTHN_CONTEXT_NOMAD_TELEPHONY = *lassoc::SAML2_AUTHN_CONTEXT_NOMAD_TELEPHONY;
+*SAML2_AUTHN_CONTEXT_PERSONALIZED_TELEPHONY = *lassoc::SAML2_AUTHN_CONTEXT_PERSONALIZED_TELEPHONY;
+*SAML2_AUTHN_CONTEXT_PGP = *lassoc::SAML2_AUTHN_CONTEXT_PGP;
+*SAML2_AUTHN_CONTEXT_PASSWORD_PROTECTED_TRANSPORT = *lassoc::SAML2_AUTHN_CONTEXT_PASSWORD_PROTECTED_TRANSPORT;
+*SAML2_AUTHN_CONTEXT_PASSWORD = *lassoc::SAML2_AUTHN_CONTEXT_PASSWORD;
+*SAML2_AUTHN_CONTEXT_PREVIOUS_SESSION = *lassoc::SAML2_AUTHN_CONTEXT_PREVIOUS_SESSION;
+*SAML2_AUTHN_CONTEXT_SMARTCARD = *lassoc::SAML2_AUTHN_CONTEXT_SMARTCARD;
+*SAML2_AUTHN_CONTEXT_SMARTCARD_PKI = *lassoc::SAML2_AUTHN_CONTEXT_SMARTCARD_PKI;
+*SAML2_AUTHN_CONTEXT_SOFTWARE_PKI = *lassoc::SAML2_AUTHN_CONTEXT_SOFTWARE_PKI;
+*SAML2_AUTHN_CONTEXT_SPKI = *lassoc::SAML2_AUTHN_CONTEXT_SPKI;
+*SAML2_AUTHN_CONTEXT_SECURE_REMOTE_PASSWORD = *lassoc::SAML2_AUTHN_CONTEXT_SECURE_REMOTE_PASSWORD;
+*SAML2_AUTHN_CONTEXT_TLS_CLIENT = *lassoc::SAML2_AUTHN_CONTEXT_TLS_CLIENT;
+*SAML2_AUTHN_CONTEXT_X509 = *lassoc::SAML2_AUTHN_CONTEXT_X509;
+*SAML2_AUTHN_CONTEXT_TELEPHONY = *lassoc::SAML2_AUTHN_CONTEXT_TELEPHONY;
+*SAML2_AUTHN_CONTEXT_TIME_SYNC_TOKEN = *lassoc::SAML2_AUTHN_CONTEXT_TIME_SYNC_TOKEN;
+*SAML2_AUTHN_CONTEXT_XMLDSIG = *lassoc::SAML2_AUTHN_CONTEXT_XMLDSIG;
 1;

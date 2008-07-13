@@ -1,8 +1,8 @@
-/* $Id: identity.h,v 1.17 2005/01/26 07:55:52 fpeters Exp $
+/* $Id: identity.h 3442 2007-11-13 16:12:25Z dlaniel $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -49,7 +49,7 @@ struct _LassoIdentity {
 	LassoNode parent;
 
 	/*< public >*/
-	GHashTable *federations;
+	GHashTable *federations; /* of LassoFederation */
 	gboolean is_dirty;
 
 	/*< private >*/

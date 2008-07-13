@@ -12,6 +12,18 @@
 DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
 
+DEB_TARGET_ARCH     := $(shell dpkg-architecture -qDEB_HOST_ARCH)
+
+with_java := yes
+no_java_archs := alpha arm hppa hurd-i386
+ifneq ($(DEB_TARGET_ARCH),i386)
+ ifneq ($(DEB_TARGET_ARCH),amd64)
+  ifeq ($(DEB_TARGET_ARCH), $(findstring $(DEB_TARGET_ARCH),$(no_java_archs)))
+   with_java := disabled for architecture $(DEB_TARGET_ARCH)
+  endif
+ endif
+endif
+
 PYDEF		:= $(shell pyversions -vd)
 PYVERS		:= $(shell pyversions -vr debian/control)
 OTHERPYVERS	:= $(filter-out $(PYDEF), $(PYVERS))
@@ -32,17 +44,30 @@ version=`ls src/.libs/lib*.so.* | \
 major=`ls src/.libs/lib*.so.* | \
  awk '{if (match($$0,/\.so\.[0-9]+$$/)) print substr($$0,RSTART+4)}'`
 
-phpapiver=$(shell php-config --phpapi)
+CONFIGURE_ARGS := \
+	--prefix=/usr \
+	--mandir=\$${prefix}/share/man \
+	--infodir=\$${prefix}/share/info \
+	--enable-tests=no \
+	--disable-gtk-doc \
+	--enable-perl \
+	--disable-csharp \
+	--disable-php4 \
+	--with-php5-config-dir=/etc/php5/conf.d/
+
+
+ifeq ($(with_java),yes)
+  CONFIGURE_ARGS += --enable-java
+else
+  CONFIGURE_ARGS += --disable-java
+endif
+
 
 config.status: configure
 	dh_testdir
 	# Add here commands to configure the package.
-	CFLAGS="$(CFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --enable-tests=no --disable-gtk-doc --disable-perl --disable-csharp
-	# be sure not to call swig:
-	touch php/lasso_wrap.c php/php_lasso.h php/lasso.php
-	touch python/lasso_wrap.c python/lasso.py
+	CC=gcc-4.3 CFLAGS="$(CFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) $(CONFIGURE_ARGS)
 	touch perl/lasso_wrap.c perl/lasso.pm
-	touch java/lasso_wrap.c java/lasso.java
 
 
 build: build-stamp
@@ -53,11 +78,11 @@ build-stamp:  config.status
 	$(MAKE)
 	set -e; \
 	for v in $(OTHERPYVERS); do \
-	  rm -rf python$$v; \
-	  cp -a python python$$v; \
-	  sed "s/$(PYDEF)/$$v/g" python/Makefile > python$$v/Makefile; \
-	  $(MAKE) -C python$$v clean; \
-	  $(MAKE) -C python$$v; \
+	  rm -rf bindings/python$$v; \
+	  cp -a bindings/python bindings/python$$v; \
+	  sed "s/$(PYDEF)/$$v/g" bindings/python/Makefile > bindings/python$$v/Makefile; \
+	  $(MAKE) -C bindings/python$$v clean; \
+	  $(MAKE) -C bindings/python$$v; \
 	done
 
 	touch build-stamp
@@ -67,8 +92,14 @@ clean:
 	dh_testroot
 	rm -f build-stamp 
 
-	# Add here commands to clean up after the build process.
-	-$(MAKE) distclean
+ifeq ($(with_java),yes)
+	sed -e 's/^#JAVA#//' < debian/control.in > debian/control
+else
+	sed -e 's/^#JAVA#.*//' < debian/control.in > debian/control
+endif
+
+
+	[ ! -f Makefile ] || $(MAKE) distclean
 ifneq "$(wildcard /usr/share/misc/config.sub)" ""
 	cp -f /usr/share/misc/config.sub config.sub
 endif
@@ -77,8 +108,10 @@ ifneq "$(wildcard /usr/share/misc/config.guess)" ""
 endif
 
 	for v in $(OTHERPYVERS); do \
-	  rm -rf python$$v; \
+	  rm -rf bindings/python$$v; \
 	done
+
+	rm -f config.log
 
 	dh_clean 
 
@@ -93,11 +126,16 @@ install: build
 		GACUTIL="/usr/bin/gacutil -root $(CURDIR)/debian/tmp/usr/lib"
 	set -e; \
 	for v in $(OTHERPYVERS); do \
-	  $(MAKE) -C python$$v install DESTDIR=$(CURDIR)/debian/tmp; \
+	  $(MAKE) -C bindings/python$$v install DESTDIR=$(CURDIR)/debian/tmp; \
 	done
 
 	mkdir $(CURDIR)/debian/tmp/usr/lib/jni/
-	mv $(CURDIR)/debian/tmp/usr/lib/java/*.so $(CURDIR)/debian/tmp/usr/lib/jni/
+	if [ -e $(CURDIR)/debian/tmp/usr/lib/java ]; then \
+	  mv $(CURDIR)/debian/tmp/usr/lib/java/*.so $(CURDIR)/debian/tmp/usr/lib/jni/ ; \
+	fi
+
+	# remove id-wsf directory if it is empty
+	-rmdir $(CURDIR)/debian/tmp/usr/include/lasso/id-wsf/
 
 
 # Build architecture-independent files here.
@@ -112,18 +150,17 @@ binary-arch: build install
 	dh_installdocs
 	dh_installexamples -XCVS
 	dh_installman
-	dh_movefiles
+	dh_install
 	dh_link
 	dh_strip
+	dh_perl
 	dh_pycentral -ppython-lasso
 	dh_python
 	dh_compress
 	dh_fixperms
 	dh_makeshlibs -a -V
-	#dh_clideps -L liblasso-cil -r -d
 	dh_installdeb
 	dh_shlibdeps -a
-	echo "php:Depends=phpapi-$(phpapiver)" >> debian/php4-lasso.substvars
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb

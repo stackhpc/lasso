@@ -1,8 +1,8 @@
-/* $Id: utility_status.c,v 1.6 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: utility_status.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/utility_status.h>
 
-/*
- * Schema fragment
+/**
+ * SECTION:utility_status
+ * @short_description: &lt;utility:Status&gt;
+ *
+ * <figure><title>Schema fragment for utility:Status</title>
+ * <programlisting><![CDATA[
  *
  * <xs:element name="Status" type="StatusType">
  *   <xs:annotation>
@@ -43,6 +47,8 @@
  *   <xs:attribute name="ref" type="xs:NCName" use="optional"/>
  *   <xs:attribute name="comment" type="xs:string" use="optional"/>
  * </xs:complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

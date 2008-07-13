@@ -1,8 +1,8 @@
-/* $Id: lib_logout_response.c,v 1.15 2005/11/20 15:38:19 fpeters Exp $ 
+/* $Id: lib_logout_response.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,12 +24,16 @@
 
 #include <lasso/xml/lib_logout_response.h>
 
-/*
- * Schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
- * 
+/**
+ * SECTION:lib_logout_response
+ * @short_description: &lt;lib:LogoutResponse&gt;
+ *
+ * <figure><title>Schema fragment for lib:LogoutResponse</title>
+ * <programlisting><![CDATA[
  * <xs:element name="LogoutResponse" type="StatusResponseType"/>
+ * ]]></programlisting>
+ * </figure>
  */
-
 
 /*****************************************************************************/
 /* private methods                                                           */

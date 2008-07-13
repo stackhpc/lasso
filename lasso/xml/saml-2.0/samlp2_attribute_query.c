@@ -1,8 +1,8 @@
-/* $Id: samlp2_attribute_query.c,v 1.2 2005/11/21 18:51:52 fpeters Exp $ 
+/* $Id: samlp2_attribute_query.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include "samlp2_attribute_query.h"
 
-/*
- * Schema fragment (saml-schema-protocol-2.0.xsd):
+/**
+ * SECTION:samlp2_attribute_query
+ * @short_description: &lt;samlp2:AttributeQuery&gt;
+ *
+ * <figure><title>Schema fragment for samlp2:AttributeQuery</title>
+ * <programlisting><![CDATA[
  *
  * <complexType name="AttributeQueryType">
  *   <complexContent>
@@ -36,6 +40,8 @@
  *     </extension>
  *   </complexContent>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/
@@ -44,7 +50,7 @@
 
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "Attribute", SNIPPET_NODE,
+	{ "Attribute", SNIPPET_LIST_NODES ,
 		G_STRUCT_OFFSET(LassoSamlp2AttributeQuery, Attribute) },
 	{NULL, 0, 0}
 };

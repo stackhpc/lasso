@@ -1,8 +1,8 @@
-/* $Id: soap_binding_processing_context.c,v 1.2 2005/10/06 13:42:54 nclapies Exp $ 
+/* $Id: soap_binding_processing_context.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/soap_binding_processing_context.h>
 
-/*
- * Schema fragments (liberty-idwsf-soap-binding-v1.1.xsd):
+/**
+ * SECTION:soap_binding_processing_context
+ * @short_description: &lt;soapbinding:ProcessingContextType&gt;
+ *
+ * <figure><title>Schema fragment for soapbinding:ProcessingContextType</title>
+ * <programlisting><![CDATA[
  *
  * <xs:complexType name="ProcessingContextType">
  *   <xs:simpleContent>
@@ -38,6 +42,8 @@
  * </xs:complexType>
  * <xs:element name="ProcessingContext" type="ProcessingContextType"/>
  *
+ * ]]></programlisting>
+ * </figure>
  */ 
 
 /*****************************************************************************/

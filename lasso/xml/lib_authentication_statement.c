@@ -1,8 +1,8 @@
-/* $Id: lib_authentication_statement.c,v 1.25 2005/04/25 14:25:03 fpeters Exp $
+/* $Id: lib_authentication_statement.c 3704 2008-05-15 21:17:44Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -25,9 +25,12 @@
 #include <lasso/xml/lib_authentication_statement.h>
 #include <lasso/xml/lib_subject.h>
 
-/*
- * Schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
+/**
+ * SECTION:lib_authentication_statement
+ * @short_description: &lt;lib:AuthenticationStatement&gt;
  *
+ * <figure><title>Schema fragment for lib:AuthenticationStatement</title>
+ * <programlisting><![CDATA[
  * <xs:element name="AuthenticationStatement" type="AuthenticationStatementType"
  *   substitutionGroup="saml:Statement"/>
  * <xs:complexType name="AuthenticationStatementType">
@@ -41,6 +44,8 @@
  *     </xs:extension>
  *   </xs:complexContent>
  * </xs:complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/
@@ -156,10 +161,11 @@ lasso_lib_authentication_statement_new_full(const char *authenticationMethod,
 	statement = g_object_new(LASSO_TYPE_LIB_AUTHENTICATION_STATEMENT, NULL);
 	statement->AuthenticationMethod = g_strdup(authenticationMethod);
 
-	if (authenticationInstant == NULL)
+	if (authenticationInstant == NULL) {
 		time = lasso_get_current_time();
-	else
+	} else {
 		time = g_strdup(authenticationInstant);
+	}
 
 	statement->AuthenticationInstant = time;
 

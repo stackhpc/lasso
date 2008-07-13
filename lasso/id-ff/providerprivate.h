@@ -1,8 +1,8 @@
-/* $Id: providerprivate.h,v 1.7 2005/11/20 15:38:19 fpeters Exp $ 
+/* $Id: providerprivate.h 3237 2007-05-30 17:17:45Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -29,23 +29,47 @@
 extern "C" {
 #endif /* __cplusplus */ 
 
+/**
+ * LassoPublicKeyType:
+ * LASSO_PUBLIC_KEY_SIGNING: Signing public key
+ * LASSO_PUBLIC_KEY_ENCRYPTION: Encryption public key
+ *
+ * Public key type.
+ **/
+typedef enum {
+	LASSO_PUBLIC_KEY_SIGNING,
+	LASSO_PUBLIC_KEY_ENCRYPTION,
+} LassoPublicKeyType;
+
+
 struct _LassoProviderPrivate
 {
 	gboolean dispose_has_run;
+
 	LassoProtocolConformance conformance;
 	GHashTable *SPDescriptor;
 	char *default_assertion_consumer;
 	GHashTable *IDPDescriptor;
 	xmlNode *organization;
+
+	char *affiliation_owner_id;
+	char *affiliation_id;
+
 	xmlSecKey *public_key;
 	xmlNode *signing_key_descriptor;
+	xmlNode *encryption_key_descriptor;
+	char *encryption_public_key_str;
+	xmlSecKey *encryption_public_key;
+	LassoEncryptionMode encryption_mode;
+	LassoEncryptionSymKeyType encryption_sym_key_type;
 };
 
 
 gboolean lasso_provider_load_metadata(LassoProvider *provider, const gchar *metadata);
 int lasso_provider_verify_signature(LassoProvider *provider,
 		const char *message, const char *id_attr_name, LassoMessageFormat format);
-gboolean lasso_provider_load_public_key(LassoProvider *provider);
+gboolean lasso_provider_load_public_key(LassoProvider *provider,
+		LassoPublicKeyType public_key_type);
 xmlSecKey* lasso_provider_get_public_key(LassoProvider *provider);
 
 

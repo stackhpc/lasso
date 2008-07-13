@@ -1,8 +1,8 @@
-/* $Id: name_identifier_mapping.h,v 1.19 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: name_identifier_mapping.h 3450 2007-11-22 14:46:42Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -81,7 +81,7 @@ LASSO_EXPORT void lasso_name_identifier_mapping_destroy(
 
 LASSO_EXPORT gint lasso_name_identifier_mapping_init_request(
 		LassoNameIdentifierMapping *mapping,
-		gchar *targetNameSpace, gchar *remote_providerID);
+		gchar *targetNamespace, gchar *remote_providerID);
 
 LASSO_EXPORT gint lasso_name_identifier_mapping_process_request_msg(
 		LassoNameIdentifierMapping *mapping, gchar *request_msg); 

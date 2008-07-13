@@ -1,8 +1,8 @@
-/* $Id: tools.c,v 1.77 2005/11/20 15:38:19 fpeters Exp $ 
+/* $Id: tools.c 3237 2007-05-30 17:17:45Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -36,10 +36,17 @@
 #include <xmlsec/templates.h>
 #include <xmlsec/xmldsig.h>
 #include <xmlsec/xmltree.h>
+#include <xmlsec/errors.h>
+#include <xmlsec/openssl/x509.h>
+#include <xmlsec/openssl/crypto.h>
 
 #include <zlib.h>
 
 #include <lasso/xml/xml.h>
+#include <lasso/xml/xml_enc.h>
+#include <lasso/xml/saml-2.0/saml2_assertion.h>
+
+LassoNode* lasso_assertion_encrypt(LassoSaml2Assertion *assertion);
 
 /**
  * lasso_build_random_sequence:
@@ -142,7 +149,7 @@ lasso_get_pem_file_type(const char *pem_file)
 	bio = BIO_new_file(pem_file, "rb");
 	if (bio == NULL) {
 		message(G_LOG_LEVEL_CRITICAL, "Failed to open %s pem file", pem_file);
-		return -1;
+		return LASSO_PEM_FILE_TYPE_UNKNOWN;
 	}
 
 	pkey = PEM_read_bio_PUBKEY(bio, NULL, NULL, NULL);
@@ -150,17 +157,19 @@ lasso_get_pem_file_type(const char *pem_file)
 		type = LASSO_PEM_FILE_TYPE_PUB_KEY;
 		EVP_PKEY_free(pkey);
 	} else {
-		BIO_reset(bio);
-		pkey = PEM_read_bio_PrivateKey(bio, NULL, NULL, NULL);
-		if (pkey != NULL) {
-			type = LASSO_PEM_FILE_TYPE_PRIVATE_KEY;
-			EVP_PKEY_free(pkey);
-		} else {
-			BIO_reset(bio);
-			cert = PEM_read_bio_X509(bio, NULL, NULL, NULL);
-			if (cert != NULL) {
-				type = LASSO_PEM_FILE_TYPE_CERT;
-				X509_free(cert);
+		if (BIO_reset(bio) == 0) {
+			pkey = PEM_read_bio_PrivateKey(bio, NULL, NULL, NULL);
+			if (pkey != NULL) {
+				type = LASSO_PEM_FILE_TYPE_PRIVATE_KEY;
+				EVP_PKEY_free(pkey);
+			} else {
+				if (BIO_reset(bio) == 0) {
+					cert = PEM_read_bio_X509(bio, NULL, NULL, NULL);
+					if (cert != NULL) {
+						type = LASSO_PEM_FILE_TYPE_CERT;
+						X509_free(cert);
+					}
+				}
 			}
 		}
 	}
@@ -362,8 +371,7 @@ lasso_query_sign(char *query, LassoSignatureMethod sign_method, const char *priv
 		/* sign digest message */
 		status = RSA_sign(NID_sha1, (unsigned char*)digest, 20, sigret, &siglen, rsa);
 		RSA_free(rsa);
-	}
-	else if (sign_method == LASSO_SIGNATURE_METHOD_DSA_SHA1) {
+	} else if (sign_method == LASSO_SIGNATURE_METHOD_DSA_SHA1) {
 		dsa = PEM_read_bio_DSAPrivateKey(bio, NULL, NULL, NULL);
 		if (dsa == NULL) {
 			goto done;
@@ -372,6 +380,7 @@ lasso_query_sign(char *query, LassoSignatureMethod sign_method, const char *priv
 		status = DSA_sign(NID_sha1, (unsigned char*)digest, 20, sigret, &siglen, dsa);
 		DSA_free(dsa);
 	}
+
 	if (status == 0) {
 		goto done;
 	}
@@ -401,6 +410,61 @@ done:
 
 	return s_new_query;
 }
+
+LassoNode*
+lasso_assertion_encrypt(LassoSaml2Assertion *assertion)
+{
+	LassoNode *encrypted_element = NULL;
+	gchar *b64_value;
+	xmlSecByte *value;
+	int length;
+	int rc;
+	xmlSecKey *encryption_public_key = NULL;
+	int i;
+	xmlSecKeyDataFormat key_formats[] = {
+		xmlSecKeyDataFormatDer,
+		xmlSecKeyDataFormatCertDer,
+		xmlSecKeyDataFormatPkcs8Der,
+		xmlSecKeyDataFormatCertPem,
+		xmlSecKeyDataFormatPkcs8Pem,
+		xmlSecKeyDataFormatPem,
+		xmlSecKeyDataFormatBinary,
+		0
+	};
+
+	if (assertion->encryption_activated == FALSE ||
+			assertion->encryption_public_key_str == NULL) {
+		return NULL;
+	}
+
+	b64_value = g_strdup(assertion->encryption_public_key_str);
+	length = strlen(b64_value);
+	value = g_malloc(length*4); /* enough place for decoding */
+	rc = xmlSecBase64Decode((xmlChar*)b64_value, value, length);
+	if (rc < 0) {
+		/* bad base-64 */
+		g_free(value);
+		g_free(b64_value);
+		return NULL;
+	}
+
+	xmlSecErrorsDefaultCallbackEnableOutput(FALSE);
+	for (i = 0; key_formats[i] && encryption_public_key == NULL; i++) {
+		encryption_public_key = xmlSecCryptoAppKeyLoadMemory(value, rc,
+				key_formats[i], NULL, NULL, NULL);
+	}
+	xmlSecErrorsDefaultCallbackEnableOutput(TRUE);
+
+	/* Finally encrypt the assertion */
+	encrypted_element = LASSO_NODE(lasso_node_encrypt(LASSO_NODE(assertion),
+		encryption_public_key, assertion->encryption_sym_key_type));
+
+	g_free(b64_value);
+	g_free(value);	
+
+	return encrypted_element;
+}
+
 
 /**
  * lasso_query_verify_signature:
@@ -609,6 +673,7 @@ lasso_sign_node(xmlNode *xmlnode, const char *id_attr_name, const char *id_value
 	xmlDoc *doc;
 	xmlNode *sign_tmpl, *old_parent;
 	xmlSecDSigCtx *dsig_ctx;
+	xmlAttr *id_attr = NULL;
 
 	sign_tmpl = NULL;
 	for (sign_tmpl = xmlnode->children; sign_tmpl; sign_tmpl = sign_tmpl->next) {
@@ -625,11 +690,9 @@ lasso_sign_node(xmlNode *xmlnode, const char *id_attr_name, const char *id_value
 	xmlnode->parent = NULL;
 	xmlDocSetRootElement(doc, xmlnode);
 	xmlSetTreeDoc(sign_tmpl, doc);
-	if (id_attr_name) {
-		xmlAttr *id_attr = xmlHasProp(xmlnode, (xmlChar*)id_attr_name);
-		if (id_value) {
-			xmlAddID(NULL, doc, (xmlChar*)id_value, id_attr);
-		}
+	if (id_attr_name && id_value) {
+		id_attr = xmlHasProp(xmlnode, (xmlChar*)id_attr_name);
+		xmlAddID(NULL, doc, (xmlChar*)id_value, id_attr);
 	}
 
 	dsig_ctx = xmlSecDSigCtxCreate(NULL);
@@ -653,8 +716,15 @@ lasso_sign_node(xmlNode *xmlnode, const char *id_attr_name, const char *id_value
 	}
 	xmlSecDSigCtxDestroy(dsig_ctx);
 	xmlUnlinkNode(xmlnode);
+	xmlRemoveID(doc, id_attr);
+
 	xmlnode->parent = old_parent;
+#if 0
+	/* memory leak since we don't free doc but it causes some little memory
+	 * corruption; probably caused by the direct manipulation of xmlnode
+	 * parent attribute. */
 	xmlFreeDoc(doc);
+#endif
 
 	return 0;
 }
@@ -663,61 +733,65 @@ gchar*
 lasso_node_build_deflated_query(LassoNode *node)
 {
 	/* actually deflated and b64'ed and url-escaped */
-	xmlNode *message;
+	xmlNode *xmlnode;
 	xmlOutputBufferPtr buf;
 	xmlCharEncodingHandlerPtr handler = NULL;
 	xmlChar *buffer;
-	xmlChar *ret, *orig_ret, *b64_ret;
-	z_stream zstr;
-	int z_err;
-	int buf_size;
+	xmlChar *ret, *b64_ret;
 	char *rret;
+	unsigned long in_len;
+	int rc;
+	z_stream stream;
 
-	message = lasso_node_get_xmlNode(node, FALSE);
-
+	xmlnode = lasso_node_get_xmlNode(node, FALSE);
+	
 	handler = xmlFindCharEncodingHandler("utf-8");
 	buf = xmlAllocOutputBuffer(handler);
-	xmlNodeDumpOutput(buf, NULL, message, 0, 0, "utf-8");
+	xmlNodeDumpOutput(buf, NULL, xmlnode, 0, 0, "utf-8");
 	xmlOutputBufferFlush(buf);
 	buffer = buf->conv ? buf->conv->content : buf->buffer->content;
 
+	xmlFreeNode(xmlnode);
+	xmlnode = NULL;
 
-	zstr.zalloc = NULL;
-	zstr.zfree = NULL;
-	zstr.opaque = NULL;
-
-	zstr.avail_in = strlen((char*)buffer);
-	buf_size = zstr.avail_in*2;
-	ret = orig_ret = g_malloc(buf_size);
+	in_len = strlen((char*)buffer);
+	ret = g_malloc(in_len * 2);
 		/* deflating should never increase the required size but we are
 		 * more conservative than that.  Twice the size should be
 		 * enough. */
-	zstr.next_in = buffer;
-	zstr.total_in = 0;
-	zstr.next_out = ret;
 
-	z_err = deflateInit(&zstr, 6);
-	if (z_err != Z_OK) {
-		message(G_LOG_LEVEL_CRITICAL, "Failed to deflateInit");
-		return NULL;
-	}
-	do {
-		z_err = deflate(&zstr, Z_FINISH);
-		if (z_err == Z_OK) {
-			buf_size *= 2;
-			ret = g_realloc(ret, buf_size);
-			zstr.next_out = (xmlChar*) orig_ret-zstr.next_out+ret;
-			orig_ret = ret;
+	stream.next_in = buffer;
+	stream.avail_in = in_len;
+	stream.next_out = ret;
+	stream.avail_out = in_len * 2;
+
+	stream.zalloc = NULL;
+	stream.zfree = NULL;
+	stream.opaque = NULL;
+
+	/* -MAX_WBITS to disable zib headers */
+	rc = deflateInit2(&stream, Z_DEFAULT_COMPRESSION,
+		Z_DEFLATED, -MAX_WBITS, 5, 0);
+	if (rc == Z_OK) {
+		rc = deflate(&stream, Z_FINISH);
+		if (rc != Z_STREAM_END) {
+			deflateEnd(&stream);
+			if (rc == Z_OK) {
+				rc = Z_BUF_ERROR;
+			}
+		} else {
+			rc = deflateEnd(&stream);
 		}
-	} while (z_err == Z_OK);
-	if (z_err != Z_STREAM_END) {
+	}
+	if (rc != Z_OK) {
+		g_free(ret);
 		message(G_LOG_LEVEL_CRITICAL, "Failed to deflate");
 		return NULL;
 	}
 
-	b64_ret = xmlSecBase64Encode(ret, zstr.total_out, 0);
+	b64_ret = xmlSecBase64Encode(ret, stream.total_out, 0);
 	xmlOutputBufferClose(buf);
-	free(ret);
+	g_free(ret);
 
 	ret = xmlURIEscapeStr(b64_ret, NULL);
 	rret = g_strdup((char*)ret);
@@ -755,7 +829,7 @@ lasso_node_init_from_deflated_query_part(LassoNode *node, char *deflate_string)
 	zstr.total_out = 0;
 	zstr.next_out = re;
 
-	z_err = inflateInit(&zstr);
+	z_err = inflateInit2(&zstr, -MAX_WBITS);
 	if (z_err != Z_OK) {
 		message(G_LOG_LEVEL_CRITICAL, "Failed to inflateInit");
 		xmlFree(zre);
@@ -782,5 +856,15 @@ lasso_node_init_from_deflated_query_part(LassoNode *node, char *deflate_string)
 	xmlFreeDoc(doc);
 
 	return TRUE;
+}
+
+char*
+lasso_concat_url_query(char *url, char *query)
+{
+	if (strchr(url, '?')) {
+		return g_strdup_printf("%s&%s", url, query);
+	} else {
+		return g_strdup_printf("%s?%s", url, query);
+	}
 }
 

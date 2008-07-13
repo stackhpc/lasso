@@ -1,8 +1,8 @@
-/* $Id: dst_modification.c,v 1.3 2005/01/23 16:36:44 eraviart Exp $ 
+/* $Id: dst_modification.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/dst_modification.h>
 
-/*
- * Schema fragment (liberty-idwsf-dst-v1.0.xsd):
+/**
+ * SECTION:dst_modification
+ * @short_description: &lt;dst:Modification&gt;
+ *
+ * <figure><title>Schema fragment for dst:Modification</title>
+ * <programlisting><![CDATA[
  *
  * <xs:element name="Modification" maxOccurs="unbounded">
  * <xs:complexType>
@@ -44,6 +48,8 @@
  *     <xs:attribute name="overrideAllowed" type="xs:boolean" default="0"/>
  * </xs:complexType>
  * </xs:element>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

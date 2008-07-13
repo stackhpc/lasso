@@ -1,8 +1,8 @@
-/* $Id: defederation.c,v 1.67 2006/01/23 15:30:00 fpeters Exp $ 
+/* $Id: defederation.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -22,11 +22,19 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/**
+ * SECTION:defederation
+ * @short_description: Federation Termination Notification Profile (ID-FF)
+ *
+ **/
+
 #include <lasso/id-ff/defederation.h>
 
 #include <lasso/id-ff/providerprivate.h>
 #include <lasso/id-ff/sessionprivate.h>
 #include <lasso/id-ff/identityprivate.h>
+#include <lasso/id-ff/profileprivate.h>
+#include <lasso/id-ff/serverprivate.h>
 
 /*****************************************************************************/
 /* public methods                                                            */
@@ -68,9 +76,10 @@ lasso_defederation_build_notification_msg(LassoDefederation *defederation)
 			LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
 
 	profile = LASSO_PROFILE(defederation);
+	lasso_profile_clean_msg_info(profile);
 
 	if (profile->remote_providerID == NULL) {
-		/* this means lasso_logout_init_request was not called before */
+		/* this means lasso_defederation_init_notification was not called before */
 		return critical_error(LASSO_PROFILE_ERROR_MISSING_REMOTE_PROVIDERID);
 	}
 
@@ -113,7 +122,7 @@ lasso_defederation_build_notification_msg(LassoDefederation *defederation)
 			return critical_error(LASSO_PROFILE_ERROR_BUILDING_QUERY_FAILED);
 		}
 
-		profile->msg_url = g_strdup_printf("%s?%s", url, query);
+		profile->msg_url = lasso_concat_url_query(url, query);
 		profile->msg_body = NULL;
 		g_free(url);
 		g_free(query);
@@ -133,7 +142,7 @@ lasso_defederation_build_notification_msg(LassoDefederation *defederation)
 void
 lasso_defederation_destroy(LassoDefederation *defederation)
 {
-	g_object_unref(G_OBJECT(defederation));
+	lasso_node_destroy(LASSO_NODE(defederation));
 }
 
 /**
@@ -162,14 +171,21 @@ lasso_defederation_init_notification(LassoDefederation *defederation, gchar *rem
 	g_return_val_if_fail(LASSO_IS_DEFEDERATION(defederation),
 			LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
 
-	if (remote_providerID == NULL) {
-		return critical_error(LASSO_PROFILE_ERROR_MISSING_REMOTE_PROVIDERID);
-	}
-
 	profile = LASSO_PROFILE(defederation);
 
-	/* set the remote provider id */
-	profile->remote_providerID = g_strdup(remote_providerID);
+	if (profile->remote_providerID)
+		g_free(profile->remote_providerID);
+	if (profile->request)
+		lasso_node_destroy(LASSO_NODE(profile->request));
+
+	if (remote_providerID != NULL) {
+		profile->remote_providerID = g_strdup(remote_providerID);
+	} else {
+		profile->remote_providerID = lasso_server_get_first_providerID(profile->server);
+		if (profile->remote_providerID == NULL) {
+			return critical_error(LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND);
+		}
+	}
 
 	remote_provider = g_hash_table_lookup(
 			profile->server->providers, profile->remote_providerID);
@@ -190,7 +206,7 @@ lasso_defederation_init_notification(LassoDefederation *defederation, gchar *rem
 
 	/* get the nameIdentifier to send the federation termination notification */
 	nameIdentifier_n = lasso_profile_get_nameIdentifier(profile);
-	if (nameIdentifier == NULL) {
+	if (nameIdentifier_n == NULL) {
 		return critical_error(LASSO_PROFILE_ERROR_NAME_IDENTIFIER_NOT_FOUND);
 	}
 	nameIdentifier = LASSO_SAML_NAME_IDENTIFIER(nameIdentifier_n);
@@ -285,7 +301,7 @@ lasso_defederation_process_notification_msg(LassoDefederation *defederation, cha
 
 	g_return_val_if_fail(LASSO_IS_DEFEDERATION(defederation),
 			LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
-	g_return_val_if_fail(request_msg != NULL, LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
+	g_return_val_if_fail(request_msg != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
 
 	profile = LASSO_PROFILE(defederation);
 
@@ -375,9 +391,10 @@ lasso_defederation_validate_notification(LassoDefederation *defederation)
 		/* if a relay state, then build the query part */
 		if (profile->msg_relayState) {
 			gchar *url;
-			url = g_strdup_printf("%s?RelayState=%s",
-					profile->msg_url, profile->msg_relayState);
+			gchar *query = g_strdup_printf("RelayState=%s", profile->msg_relayState);
+			url = lasso_concat_url_query(profile->msg_url, query);
 			g_free(profile->msg_url);
+			g_free(query);
 			profile->msg_url = url;
 		}
 	}
