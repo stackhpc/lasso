@@ -1,8 +1,8 @@
-/* $Id: profileprivate.h,v 1.3 2005/11/20 15:38:19 fpeters Exp $ 
+/* $Id: profileprivate.h 3324 2007-06-19 11:16:17Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -32,6 +32,8 @@ extern "C" {
 
 #include <lasso/id-ff/profile.h>
 
+#include <lasso/xml/soap_envelope.h>
+
 struct _LassoProfilePrivate
 {
 	char *artifact;
@@ -40,6 +42,7 @@ struct _LassoProfilePrivate
 };
 
 void lasso_profile_set_response_status(LassoProfile *profile, const gchar *statusCodeValue);
+void lasso_profile_clean_msg_info(LassoProfile *profile);
 
 #ifdef __cplusplus
 }

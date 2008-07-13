@@ -1,8 +1,8 @@
-/* $Id: lib_authn_response_envelope.h,v 1.8 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: lib_authn_response_envelope.h 3437 2007-11-03 21:23:50Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -52,7 +52,7 @@ struct _LassoLibAuthnResponseEnvelope {
 	LassoNode parent;
 
 	/*< public >*/
-	GList *Extension;
+	GList *Extension; /* of xmlNode* */
 	LassoLibAuthnResponse *AuthnResponse;
 	char *AssertionConsumerServiceURL;
 };

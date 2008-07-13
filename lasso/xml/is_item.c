@@ -1,8 +1,8 @@
-/* $Id: is_item.c,v 1.3 2005/01/23 16:36:44 eraviart Exp $ 
+/* $Id: is_item.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/is_item.h>
 
-/*
- * Schema fragments (liberty-idwsf-interaction-svc-v1.0.xsd):
+/**
+ * SECTION:is_item
+ * @short_description: &lt;is:Hint&gt;
+ *
+ * <figure><title>Schema fragment for is:Hint</title>
+ * <programlisting><![CDATA[
  *
  * <xs:element name="Hint" type="xs:string"/>
  * <xs:element name="Item" minOccurs="2" maxOccurs="unbounded">
@@ -38,6 +42,8 @@
  *   </xs:complexType>
  * </xs:element>
  *
+ * ]]></programlisting>
+ * </figure>
  */ 
 
 /*****************************************************************************/

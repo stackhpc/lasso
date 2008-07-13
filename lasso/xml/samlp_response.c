@@ -1,8 +1,8 @@
-/* $Id: samlp_response.c,v 1.28 2005/11/20 15:38:19 fpeters Exp $ 
+/* $Id: samlp_response.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -25,8 +25,12 @@
 #include <lasso/xml/samlp_response.h>
 #include <libxml/tree.h>
 
-/*
- * Schema fragment (oasis-sstc-saml-schema-protocol-1.0.xsd):
+/**
+ * SECTION:samlp_response
+ * @short_description: &lt;samlp:Response&gt;
+ *
+ * <figure><title>Schema fragment for samlp:Response</title>
+ * <programlisting><![CDATA[
  * 
  * <element name="Response" type="samlp:ResponseType"/>
  * <complexType name="ResponseType">
@@ -39,6 +43,8 @@
  *     </extension>
  *   </complexContent>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

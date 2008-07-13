@@ -1,8 +1,8 @@
-/* $Id: provider.h,v 1.23 2006/02/21 09:51:49 fpeters Exp $ 
+/* $Id: provider.h 3533 2008-04-23 17:10:05Z bdauvergne $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -30,6 +30,7 @@ extern "C" {
 #endif /* __cplusplus */ 
 
 #include <lasso/xml/xml.h>
+#include <lasso/xml/xml_enc.h>
 
 #define LASSO_TYPE_PROVIDER (lasso_provider_get_type())
 #define LASSO_PROVIDER(obj) \
@@ -115,19 +116,35 @@ typedef enum {
 
 /**
  * LassoProtocolConformance:
- * LASSO_PROTOCOL_LIBERTY_1_0: Liberty ID-FF 1.0
- * LASSO_PROTOCOL_LIBERTY_1_1: Liberty ID-FF 1.1
- * LASSO_PROTOCOL_LIBERTY_1_2: Liberty ID-FF 1.2 / ID-WSF 1.0
- * LASSO_PROTOCOL_SAML_2_0: SAML 2.0
+ * @LASSO_PROTOCOL_LIBERTY_1_0: Liberty ID-FF 1.0
+ * @LASSO_PROTOCOL_LIBERTY_1_1: Liberty ID-FF 1.1
+ * @LASSO_PROTOCOL_LIBERTY_1_2: Liberty ID-FF 1.2 / ID-WSF 1.0
+ * @LASSO_PROTOCOL_SAML_2_0: SAML 2.0
  *
  * Provider protocol conformance.
  **/
 typedef enum {
+        LASSO_PROTOCOL_NONE = -1,
 	LASSO_PROTOCOL_LIBERTY_1_0,
 	LASSO_PROTOCOL_LIBERTY_1_1,
 	LASSO_PROTOCOL_LIBERTY_1_2,
 	LASSO_PROTOCOL_SAML_2_0
 } LassoProtocolConformance;
+
+
+/**
+ * LassoEncryptionMode:
+ * @LASSO_ENCRYPTION_MODE_NONE: Encrypt nothing
+ * @LASSO_ENCRYPTION_MODE_NAMEID: Encrypt NameIDs
+ * @LASSO_ENCRYPTION_MODE_ASSERTION : Encrypt Assertions
+ *
+ * Encryption mode.
+ **/
+typedef enum {
+	LASSO_ENCRYPTION_MODE_NONE,
+	LASSO_ENCRYPTION_MODE_NAMEID,
+	LASSO_ENCRYPTION_MODE_ASSERTION,
+} LassoEncryptionMode;
 
 
 struct _LassoProvider {
@@ -175,6 +192,12 @@ LASSO_EXPORT xmlNode* lasso_provider_get_organization(LassoProvider *provider);
 
 LASSO_EXPORT LassoProtocolConformance lasso_provider_get_protocol_conformance(
 		LassoProvider *provider);
+
+LASSO_EXPORT void lasso_provider_set_encryption_mode(LassoProvider *provider,
+		LassoEncryptionMode encryption_mode);
+
+LASSO_EXPORT void lasso_provider_set_encryption_sym_key_type(LassoProvider *provider,
+		LassoEncryptionSymKeyType encryption_sym_key_type);
 
 #ifdef __cplusplus
 }

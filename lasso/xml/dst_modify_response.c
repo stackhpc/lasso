@@ -1,8 +1,8 @@
-/* $Id: dst_modify_response.c,v 1.9 2005/09/11 09:08:30 fpeters Exp $ 
+/* $Id: dst_modify_response.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/dst_modify_response.h>
 
-/*
- * Schema fragment (liberty-idwsf-dst-v1.0.xsd):
+/**
+ * SECTION:dst_modify_response
+ * @short_description: &lt;dst:ModifyResponse&gt;
+ *
+ * <figure><title>Schema fragment for dst:ModifyResponse</title>
+ * <programlisting><![CDATA[
  *
  * <xs:element name="ModifyResponse" type="ResponseType"/>
  * <xs:complexType name="ResponseType">
@@ -37,6 +41,8 @@
  *     <xs:attribute name="itemIDRef" type="IDReferenceType"/>
  *     <xs:attribute name="timeStamp" type="xs:dateTime"/>
  * </xs:complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

@@ -1,8 +1,8 @@
-/* $Id: saml2_attribute.c,v 1.2 2005/11/21 18:51:52 fpeters Exp $ 
+/* $Id: saml2_attribute.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include "saml2_attribute.h"
 
-/*
- * Schema fragment (saml-schema-assertion-2.0.xsd):
+/**
+ * SECTION:saml2_attribute
+ * @short_description: &lt;saml2:Attribute&gt;
+ *
+ * <figure><title>Schema fragment for saml2:Attribute</title>
+ * <programlisting><![CDATA[
  *
  * <complexType name="AttributeType">
  *   <sequence>
@@ -36,6 +40,8 @@
  *   <attribute name="FriendlyName" type="string" use="optional"/>
  *   <anyAttribute namespace="##other" processContents="lax"/>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/
@@ -44,7 +50,7 @@
 
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "AttributeValue", SNIPPET_NODE,
+	{ "AttributeValue", SNIPPET_LIST_NODES,
 		G_STRUCT_OFFSET(LassoSaml2Attribute, AttributeValue) },
 	{ "Name", SNIPPET_ATTRIBUTE,
 		G_STRUCT_OFFSET(LassoSaml2Attribute, Name) },

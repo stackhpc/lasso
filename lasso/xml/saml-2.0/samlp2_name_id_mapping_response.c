@@ -1,8 +1,8 @@
-/* $Id: samlp2_name_id_mapping_response.c,v 1.2 2005/11/21 18:51:52 fpeters Exp $ 
+/* $Id: samlp2_name_id_mapping_response.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include "samlp2_name_id_mapping_response.h"
 
-/*
- * Schema fragment (saml-schema-protocol-2.0.xsd):
+/**
+ * SECTION:samlp2_name_id_mapping_response
+ * @short_description: &lt;samlp2:NameIDMappingResponse&gt;
+ *
+ * <figure><title>Schema fragment for samlp2:NameIDMappingResponse</title>
+ * <programlisting><![CDATA[
  *
  * <complexType name="NameIDMappingResponseType">
  *   <complexContent>
@@ -37,6 +41,8 @@
  *     </extension>
  *   </complexContent>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/
@@ -62,6 +68,9 @@ build_query(LassoNode *node)
 	char *ret, *deflated_message;
 
 	deflated_message = lasso_node_build_deflated_query(node);
+	if (deflated_message == NULL) {
+		return NULL;
+	}
 	ret = g_strdup_printf("SAMLResponse=%s", deflated_message);
 	/* XXX: must support RelayState (which profiles?) */
 	g_free(deflated_message);

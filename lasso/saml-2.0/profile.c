@@ -1,8 +1,8 @@
-/* $Id: profile.c,v 1.2 2005/11/21 18:51:52 fpeters Exp $
+/* $Id: profile.c 3726 2008-05-21 22:13:16Z dlaniel $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -26,6 +26,7 @@
 
 #include <lasso/saml-2.0/providerprivate.h>
 #include <lasso/saml-2.0/profileprivate.h>
+#include <lasso/saml-2.0/profile.h>
 
 #include <lasso/id-ff/providerprivate.h>
 #include <lasso/id-ff/profile.h>
@@ -38,7 +39,7 @@
 #include <lasso/xml/saml-2.0/samlp2_name_id_mapping_response.h>
 #include <lasso/xml/saml-2.0/samlp2_status_response.h>
 #include <lasso/xml/saml-2.0/samlp2_response.h>
-
+#include <lasso/xml/saml-2.0/saml2_assertion.h>
 
 static char* lasso_saml20_profile_build_artifact(LassoProvider *provider);
 
@@ -72,7 +73,7 @@ lasso_saml20_profile_generate_artifact(LassoProfile *profile, int part)
 static char*
 lasso_saml20_profile_build_artifact(LassoProvider *provider)
 {
-	xmlSecByte samlArt[42], *b64_samlArt;
+	xmlSecByte samlArt[44], *b64_samlArt;
 	char *source_succinct_id;
 	char *ret;
 
@@ -80,11 +81,12 @@ lasso_saml20_profile_build_artifact(LassoProvider *provider)
 
 	/* Artifact Format is described in saml-bindings-2.0-os, 3.6.4.2. */
 	memcpy(samlArt, "\000\004", 2); /* type code */
-	memcpy(samlArt+2, source_succinct_id, 20);
-	lasso_build_random_sequence((char*)samlArt+22, 20);
+	memcpy(samlArt+2, "\000\000", 2); /* XXX: Endpoint index */
+	memcpy(samlArt+4, source_succinct_id, 20);
+	lasso_build_random_sequence((char*)samlArt+24, 20);
 
 	xmlFree(source_succinct_id);
-	b64_samlArt = xmlSecBase64Encode(samlArt, 42, 0);
+	b64_samlArt = xmlSecBase64Encode(samlArt, 44, 0);
 
 	ret = g_strdup((char*)b64_samlArt);
 	xmlFree(b64_samlArt);
@@ -102,7 +104,8 @@ lasso_saml20_profile_set_response_status(LassoProfile *profile, const char *stat
 	status->StatusCode->Value = g_strdup(status_code_value);
 
 	if (strcmp(status_code_value, LASSO_SAML2_STATUS_CODE_SUCCESS) != 0 &&
-			strcmp(status_code_value, LASSO_SAML2_STATUS_CODE_VERSION_MISMATCH) != 0) {
+			strcmp(status_code_value, LASSO_SAML2_STATUS_CODE_VERSION_MISMATCH) != 0 &&
+			strcmp(status_code_value, LASSO_SAML2_STATUS_CODE_REQUESTER) != 0) {
 		status->StatusCode->Value = g_strdup(LASSO_SAML2_STATUS_CODE_RESPONDER);
 		status->StatusCode->StatusCode = LASSO_SAMLP2_STATUS_CODE(
 				lasso_samlp2_status_code_new());
@@ -133,14 +136,14 @@ lasso_saml20_profile_init_artifact_resolve(LassoProfile *profile,
 	char **query_fields;
 	char *artifact_b64 = NULL, *provider_succinct_id_b64;
 	char provider_succinct_id[21];
-	char artifact[43];
+	char artifact[45];
 	LassoSamlp2RequestAbstract *request;
 	int i;
 
 	if (method == LASSO_HTTP_METHOD_ARTIFACT_GET) {
 		query_fields = urlencoded_to_strings(msg);
 		for (i=0; query_fields[i]; i++) {
-			if (strncmp(query_fields[i], "SAMLArt=", 8) != 0) {
+			if (strncmp(query_fields[i], "SAMLart=", 8) != 0) {
 				xmlFree(query_fields[i]);
 				continue;
 			}
@@ -148,22 +151,27 @@ lasso_saml20_profile_init_artifact_resolve(LassoProfile *profile,
 			xmlFree(query_fields[i]);
 		}
 		g_free(query_fields);
+		if (artifact_b64 == NULL) {
+			return LASSO_PROFILE_ERROR_MISSING_ARTIFACT;
+		}
 	} else {
 		artifact_b64 = g_strdup(msg);
 	}
 
-	i = xmlSecBase64Decode((xmlChar*)artifact_b64, (xmlChar*)artifact, 43);
-	if (i < 0 || i > 42) {
+	i = xmlSecBase64Decode((xmlChar*)artifact_b64, (xmlChar*)artifact, 45);
+	if (i < 0 || i > 44) {
 		g_free(artifact_b64);
-		return LASSO_ERROR_UNDEFINED;
+		return LASSO_PROFILE_ERROR_INVALID_ARTIFACT;
 	}
 
 	if (artifact[0] != 0 || artifact[1] != 4) { /* wrong type code */
 		g_free(artifact_b64);
-		return LASSO_ERROR_UNDEFINED;
+		return LASSO_PROFILE_ERROR_INVALID_ARTIFACT;
 	}
 
-	memcpy(provider_succinct_id, artifact+2, 20);
+	/* XXX: index endpoint */
+
+	memcpy(provider_succinct_id, artifact+4, 20);
 	provider_succinct_id[20] = 0;
 
 	provider_succinct_id_b64 = (char*)xmlSecBase64Encode((xmlChar*)provider_succinct_id, 20, 0);
@@ -232,12 +240,14 @@ int
 lasso_saml20_profile_build_artifact_response(LassoProfile *profile)
 {
 	LassoSamlp2StatusResponse *response;
-	LassoNode *resp = lasso_node_new_from_dump(profile->private_data->artifact_message);
-	if (resp == NULL)
-		return LASSO_ERROR_UNDEFINED;
+	LassoNode *resp = NULL;
+
 
 	response = LASSO_SAMLP2_STATUS_RESPONSE(lasso_samlp2_artifact_response_new());
-	LASSO_SAMLP2_ARTIFACT_RESPONSE(response)->any = resp;
+	if (profile->private_data->artifact_message) {
+		resp = lasso_node_new_from_dump(profile->private_data->artifact_message);
+		LASSO_SAMLP2_ARTIFACT_RESPONSE(response)->any = resp;
+	}
 	response->ID = lasso_build_unique_id(32);
 	response->Version = g_strdup("2.0");
 	response->Issuer = LASSO_SAML2_NAME_ID(lasso_saml2_name_id_new_with_string(
@@ -252,10 +262,15 @@ lasso_saml20_profile_build_artifact_response(LassoProfile *profile)
 	}
 	response->private_key_file = g_strdup(profile->server->private_key);
 	response->certificate_file = g_strdup(profile->server->certificate);
-	
-	profile->response = LASSO_NODE(response);
-	lasso_saml20_profile_set_response_status(profile, LASSO_SAML2_STATUS_CODE_SUCCESS);
 
+	profile->response = LASSO_NODE(response);
+	
+	if (resp == NULL) {
+		lasso_saml20_profile_set_response_status(profile,
+				LASSO_SAML2_STATUS_CODE_REQUESTER);
+	} else {
+		lasso_saml20_profile_set_response_status(profile, LASSO_SAML2_STATUS_CODE_SUCCESS);
+	}
 	profile->msg_body = lasso_node_export_to_soap(profile->response);
 	return 0;
 }
@@ -264,14 +279,78 @@ int
 lasso_saml20_profile_process_artifact_response(LassoProfile *profile, const char *msg)
 {
 	LassoNode *response;
+	LassoSamlp2ArtifactResponse *artifact_response;
+
+	/* XXX: handle errors properly */
 
 	response = lasso_node_new_from_soap(msg);
-	/* XXX: check status code */
+	if (!LASSO_IS_SAMLP2_ARTIFACT_RESPONSE(response)) {
+		profile->response = lasso_samlp2_response_new();
+		return LASSO_PROFILE_ERROR_INVALID_ARTIFACT;
+	}
+	artifact_response = LASSO_SAMLP2_ARTIFACT_RESPONSE(response);
 
-	profile->response = g_object_ref(LASSO_SAMLP2_ARTIFACT_RESPONSE(response)->any);
+	if (artifact_response->any == NULL) {
+		profile->response = lasso_samlp2_response_new();
+		return LASSO_PROFILE_ERROR_MISSING_RESPONSE;
+	}
+	
+	profile->response = g_object_ref(artifact_response->any);
 	lasso_node_destroy(response);
 
 	return 0;
 }
 
+/**
+ * lasso_saml20_profile_is_saml_query:
+ * @query: HTTP query string
+ *
+ * Tests the query string to know if the URL is called as the result of a
+ * SAML redirect (action initiated elsewhere) or not.
+ *
+ * Return value: TRUE if SAML query, FALSE otherwise
+ **/
+gboolean
+lasso_profile_is_saml_query(const gchar *query)
+{
+	gchar *parameters[] = {
+		"SAMLRequest=", "SAMLResponse=", "SAMLart=", NULL };
+	gint i;
 
+	g_return_val_if_fail(query, FALSE);
+	for (i=0; parameters[i]; i++) {
+		if (strstr(query, parameters[i]))
+			return TRUE;
+	}
+
+	return FALSE;
+}
+
+
+static void
+lasso_saml20_profile_set_session_from_dump_decrypt(
+		gpointer key, LassoSaml2Assertion *assertion, gpointer data)
+{
+	if (LASSO_IS_SAML2_ASSERTION(assertion) == FALSE) {
+		return;
+	}
+
+	if (assertion->Subject != NULL && assertion->Subject->EncryptedID != NULL) {
+		assertion->Subject->NameID = g_object_ref(
+			assertion->Subject->EncryptedID->original_data);
+		g_object_unref(assertion->Subject->EncryptedID);
+		assertion->Subject->EncryptedID = NULL;
+	}
+}
+
+gint
+lasso_saml20_profile_set_session_from_dump(LassoProfile *profile)
+{
+	if (profile->session != NULL && profile->session->assertions != NULL) {
+		g_hash_table_foreach(profile->session->assertions,
+				(GHFunc)lasso_saml20_profile_set_session_from_dump_decrypt,
+				NULL);
+	}
+
+	return 0;
+}

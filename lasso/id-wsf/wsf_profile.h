@@ -1,8 +1,8 @@
-/* $Id: wsf_profile.h,v 1.12 2005/12/06 13:15:31 nclapies Exp $ 
+/* $Id: wsf_profile.h 3745 2008-05-26 22:58:18Z bdauvergne $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -36,6 +36,7 @@ extern "C" {
 #include <lasso/xml/soap_envelope.h>
 #include <lasso/xml/soap_binding_provider.h>
 #include <lasso/xml/saml_assertion.h>
+#include <lasso/xml/disco_description.h>
 
 #define LASSO_TYPE_WSF_PROFILE (lasso_wsf_profile_get_type())
 #define LASSO_WSF_PROFILE(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), \
@@ -115,6 +116,10 @@ LASSO_EXPORT LassoWsfProfile* lasso_wsf_profile_new(LassoServer *server);
 
 LASSO_EXPORT gboolean lasso_wsf_profile_principal_is_online(LassoWsfProfile *profile);
 
+LASSO_EXPORT gint lasso_wsf_profile_add_credential(LassoWsfProfile *profile, xmlNode *credential);
+
+LASSO_EXPORT void lasso_wsf_profile_set_description(LassoWsfProfile *profile,
+		LassoDiscoDescription *description);
 LASSO_EXPORT void lasso_wsf_profile_set_principal_status(LassoWsfProfile *profile,
 							 const char *status);
 

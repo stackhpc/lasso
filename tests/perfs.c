@@ -1,7 +1,7 @@
 /*
  * Lasso library performance tests
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,7 +24,7 @@
 #include <sys/time.h>
 #include <time.h>
 
-#include <lasso.h>
+#include <lasso/lasso.h>
 
 char* create_authn_response_msg(char *query);
 
@@ -146,6 +146,8 @@ main(int argc, char *argv[])
 			(double)usec/1000000,
 			(double)n/usec*1000000,
 			(double)usec/1000/n);
+	
+	g_free(authn_response_msg);
 
 
 

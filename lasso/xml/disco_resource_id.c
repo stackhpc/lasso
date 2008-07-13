@@ -1,8 +1,8 @@
-/* $Id: disco_resource_id.c,v 1.2 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: disco_resource_id.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/disco_resource_id.h>
 
-/*
- * Schema fragment (liberty-idwsf-disco-svc-1.0-errata-v1.0.xsd):
+/**
+ * SECTION:disco_resource_id
+ * @short_description: &lt;disco:ResourceID&gt;
+ *
+ * <figure><title>Schema fragment for disco:ResourceID</title>
+ * <programlisting><![CDATA[
  * 
  * <xs:element name="ResourceID" type="ResourceIDType"/>
  * <xs:complexType name="ResourceIDType">
@@ -35,6 +39,8 @@
  *        </xs:extension>
  *     </xs:simpleContent>
  *  </xs:complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

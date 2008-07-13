@@ -1,8 +1,8 @@
-/* $Id: session.c,v 1.59 2005/11/21 18:51:52 fpeters Exp $
+/* $Id: session.c 3725 2008-05-21 17:28:44Z dlaniel $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -22,14 +22,30 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/**
+ * SECTION:session
+ * @short_description: Principal Session
+ *
+ **/
+
 #include <lasso/id-ff/session.h>
 #include <lasso/id-ff/sessionprivate.h>
+
+#ifdef LASSO_WSF_ENABLED
+#include <lasso/id-wsf-2.0/session.h>
+#include <lasso/xml/misc_text_node.h>
+#include <lasso/xml/id-wsf-2.0/disco_svc_metadata.h>
+#include <lasso/xml/id-wsf-2.0/disco_service_type.h>
+#include <lasso/xml/id-wsf-2.0/disco_security_context.h>
+#include <lasso/xml/id-wsf-2.0/sec_token.h>
+#endif
 
 struct _LassoSessionPrivate
 {
 	gboolean dispose_has_run;
 	GList *providerIDs;
 	GHashTable *status; /* hold temporary response status for sso-art */
+	GHashTable *eprs;
 };
 
 /*****************************************************************************/
@@ -49,11 +65,12 @@ struct _LassoSessionPrivate
 gint
 lasso_session_add_assertion(LassoSession *session, char *providerID, LassoNode *assertion)
 {
-	g_return_val_if_fail(session != NULL, -1);
-	g_return_val_if_fail(providerID != NULL, -2);
-	g_return_val_if_fail(assertion != NULL, -3);
+	g_return_val_if_fail(LASSO_IS_SESSION(session), LASSO_PARAM_ERROR_INVALID_VALUE);
+	g_return_val_if_fail(providerID != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
+	g_return_val_if_fail(assertion != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
 
-	g_hash_table_insert(session->assertions, g_strdup(providerID), assertion);
+	g_hash_table_insert(session->assertions, g_strdup(providerID),
+			g_object_ref(assertion));
 
 	session->is_dirty = TRUE;
 
@@ -71,11 +88,11 @@ lasso_session_add_assertion(LassoSession *session, char *providerID, LassoNode *
  * Return value: 0 on success; or a negative value otherwise.
  **/
 gint
-lasso_session_add_status(LassoSession *session, char *providerID, LassoSamlpStatus *status)
+lasso_session_add_status(LassoSession *session, char *providerID, LassoNode *status)
 {
-	g_return_val_if_fail(session != NULL, -1);
-	g_return_val_if_fail(providerID != NULL, -2);
-	g_return_val_if_fail(status != NULL, -3);
+	g_return_val_if_fail(LASSO_IS_SESSION(session), LASSO_PARAM_ERROR_INVALID_VALUE);
+	g_return_val_if_fail(providerID != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
+	g_return_val_if_fail(status != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
 
 	g_hash_table_insert(session->private_data->status, g_strdup(providerID), status);
 
@@ -99,6 +116,8 @@ lasso_session_add_status(LassoSession *session, char *providerID, LassoSamlpStat
 LassoNode*
 lasso_session_get_assertion(LassoSession *session, gchar *providerID)
 {
+	g_return_val_if_fail(LASSO_IS_SESSION(session), NULL);
+
 	return g_hash_table_lookup(session->assertions, providerID);
 }
 
@@ -108,7 +127,6 @@ add_assertion_to_list(gchar *key, LassoLibAssertion *value, GList **list)
 	*list = g_list_append(*list, value);
 }
 
-
 /**
  * lasso_session_get_assertions
  * @session: a #LassoSession
@@ -117,7 +135,7 @@ add_assertion_to_list(gchar *key, LassoLibAssertion *value, GList **list)
  * Gets the assertions for the given @provider_id.
  *
  * Return value: a GList* of #LassoSamlAssertion.  Caller must free the GList
- *     and the assertions it contains.
+ *     but NOT the assertions it contains.
  **/
 GList*
 lasso_session_get_assertions(LassoSession *session, const char *provider_id)
@@ -125,12 +143,16 @@ lasso_session_get_assertions(LassoSession *session, const char *provider_id)
 	GList *r = NULL;
 	LassoSamlAssertion *assertion;
 
+	if (session == NULL) {
+		return NULL;
+	}
+
 	if (provider_id == NULL) {
 		g_hash_table_foreach(session->assertions, (GHFunc)add_assertion_to_list, &r);
 	} else {
 		assertion = g_hash_table_lookup(session->assertions, provider_id);
 		if (assertion)
-			r = g_list_append(r, g_object_ref(assertion));
+			r = g_list_append(r, assertion);
 	}
 	return r;
 }
@@ -146,9 +168,12 @@ lasso_session_get_assertions(LassoSession *session, const char *provider_id)
  * Return value: the status or NULL if it didn't exist.  This #LassoSamlpStatus
  *      is internally allocated and must not be freed by the caller.
  **/
-LassoSamlpStatus*
+LassoNode*
 lasso_session_get_status(LassoSession *session, gchar *providerID)
 {
+	if (session == NULL) {
+		return NULL;
+	}
 	return g_hash_table_lookup(session->private_data->status, providerID);
 }
 
@@ -174,6 +199,10 @@ lasso_session_get_provider_index(LassoSession *session, gint index)
 {
 	GList *element;
 	int length;
+
+	if (session == NULL) {
+		return NULL;
+	}
 
 	length = g_hash_table_size(session->assertions);
 
@@ -202,6 +231,10 @@ lasso_session_get_provider_index(LassoSession *session, gint index)
 void
 lasso_session_init_provider_ids(LassoSession *session)
 {
+	if (session == NULL) {
+		return;
+	}
+
 	if (session->private_data->providerIDs) {
 		g_list_free(session->private_data->providerIDs);
 		session->private_data->providerIDs = NULL;
@@ -221,12 +254,16 @@ lasso_session_init_provider_ids(LassoSession *session)
 gboolean
 lasso_session_is_empty(LassoSession *session)
 {
-	if (session == NULL) return TRUE;
+	if (session == NULL) {
+		return TRUE;
+	}
 
-	if (g_hash_table_size(session->assertions))
+	if (g_hash_table_size(session->assertions)) {
 		return FALSE;
-	if (g_hash_table_size(session->private_data->status))
+	}
+	if (g_hash_table_size(session->private_data->status)) {
 		return FALSE;
+	}
 
 	return TRUE;
 }
@@ -243,12 +280,15 @@ lasso_session_is_empty(LassoSession *session)
 gint
 lasso_session_remove_assertion(LassoSession *session, gchar *providerID)
 {
+	g_return_val_if_fail(LASSO_IS_SESSION(session), LASSO_PARAM_ERROR_INVALID_VALUE);
+	g_return_val_if_fail(providerID != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
+
 	if (g_hash_table_remove(session->assertions, providerID)) {
 		session->is_dirty = TRUE;
 		return 0;
 	}
 
-	return LASSO_ERROR_UNDEFINED; /* assertion not found */
+	return LASSO_PROFILE_ERROR_MISSING_ASSERTION;
 }
 
 /**
@@ -263,13 +303,92 @@ lasso_session_remove_assertion(LassoSession *session, gchar *providerID)
 gint
 lasso_session_remove_status(LassoSession *session, gchar *providerID)
 {
+	g_return_val_if_fail(session != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
+	g_return_val_if_fail(providerID != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
+
 	if (g_hash_table_remove(session->private_data->status, providerID)) {
 		session->is_dirty = TRUE;
 		return 0;
 	}
 
-	return LASSO_ERROR_UNDEFINED; /* status not found */
+	return LASSO_PROFILE_ERROR_MISSING_STATUS_CODE;
 }
+
+#ifdef LASSO_WSF_ENABLED
+gint
+lasso_session_add_endpoint_reference(LassoSession *session, LassoWsAddrEndpointReference *epr)
+{
+	GList *i;
+
+	g_return_val_if_fail(LASSO_IS_SESSION(session), LASSO_PARAM_ERROR_INVALID_VALUE);
+	g_return_val_if_fail(LASSO_IS_WSA_ENDPOINT_REFERENCE(epr), LASSO_PARAM_ERROR_INVALID_VALUE);
+
+	for (i = g_list_first(epr->Metadata->any); i != NULL; i = g_list_next(i)) {
+		if (LASSO_IS_IDWSF2_DISCO_SERVICE_TYPE(i->data)) {
+			g_hash_table_insert(session->private_data->eprs,
+				g_strdup(LASSO_IDWSF2_DISCO_SERVICE_TYPE(i->data)->content),
+				g_object_ref(epr));
+			session->is_dirty = TRUE;
+			break;
+		}
+	}
+
+	return 0;
+}
+
+LassoWsAddrEndpointReference*
+lasso_session_get_endpoint_reference(LassoSession *session, const gchar *service_type)
+{
+	LassoWsAddrEndpointReference* epr;
+
+	g_return_val_if_fail(LASSO_IS_SESSION(session), NULL);
+	g_return_val_if_fail(service_type != NULL, NULL);
+	
+	epr = g_hash_table_lookup(session->private_data->eprs, service_type);
+	if (LASSO_IS_WSA_ENDPOINT_REFERENCE(epr)) {
+		return LASSO_WSA_ENDPOINT_REFERENCE(epr);
+	} else {
+		return NULL;
+	}
+}
+
+LassoSaml2Assertion*
+lasso_session_get_assertion_identity_token(LassoSession *session, const gchar *service_type)
+{
+	LassoWsAddrEndpointReference* epr;
+	GList *metadata_item;
+	GList *i;
+	LassoIdWsf2DiscoSecurityContext *security_context;
+	LassoIdWsf2SecToken *sec_token;
+	LassoSaml2Assertion *assertion = NULL;
+
+	if (LASSO_IS_SESSION(session) == FALSE) {
+		return NULL;
+	}
+
+	epr = lasso_session_get_endpoint_reference(session, service_type);
+	if (epr == NULL || epr->Metadata == NULL) {
+		return NULL;
+	}
+
+	metadata_item = epr->Metadata->any;
+	for (i = g_list_first(metadata_item); i != NULL; i = g_list_next(i)) {
+		if (LASSO_IS_IDWSF2_DISCO_SECURITY_CONTEXT(i->data)) {
+			security_context = LASSO_IDWSF2_DISCO_SECURITY_CONTEXT(i->data);
+			if (security_context->Token != NULL) {
+				sec_token = security_context->Token->data;
+				if (LASSO_IS_SAML2_ASSERTION(sec_token->any)) {
+					assertion = LASSO_SAML2_ASSERTION(
+						g_object_ref(sec_token->any));
+					break;
+				}
+			}
+		}
+	}
+
+	return assertion;
+}
+#endif
 
 /*****************************************************************************/
 /* private methods                                                           */
@@ -295,11 +414,22 @@ add_status_childnode(gchar *key, LassoSamlpStatus *value, xmlNode *xmlnode)
 	xmlAddChild(t, lasso_node_get_xmlNode(LASSO_NODE(value), TRUE));
 }
 
+#ifdef LASSO_WSF_ENABLED
+static void
+add_childnode_from_hashtable(gchar *key, LassoNode *value, xmlNode *xmlnode)
+{
+	xmlAddChild(xmlnode, lasso_node_get_xmlNode(LASSO_NODE(value), TRUE));
+}
+#endif
+
 static xmlNode*
 get_xmlNode(LassoNode *node, gboolean lasso_dump)
 {
 	xmlNode *xmlnode;
 	LassoSession *session = LASSO_SESSION(node);
+#ifdef LASSO_WSF_ENABLED
+	xmlNode *t;
+#endif
 
 	xmlnode = xmlNewNode(NULL, (xmlChar*)"Session");
 	xmlSetNs(xmlnode, xmlNewNs(xmlnode, (xmlChar*)LASSO_LASSO_HREF, NULL));
@@ -312,6 +442,16 @@ get_xmlNode(LassoNode *node, gboolean lasso_dump)
 		g_hash_table_foreach(session->private_data->status,
 				(GHFunc)add_status_childnode, xmlnode);
 
+#ifdef LASSO_WSF_ENABLED
+	/* Endpoint References */
+	if (session->private_data->eprs != NULL
+			&& g_hash_table_size(session->private_data->eprs)) {
+		t = xmlNewTextChild(xmlnode, NULL, (xmlChar*)"EndpointReferences", NULL);
+		g_hash_table_foreach(session->private_data->eprs,
+				(GHFunc)add_childnode_from_hashtable, t);
+	}
+#endif
+
 	return xmlnode;
 }
 
@@ -319,7 +459,11 @@ static int
 init_from_xml(LassoNode *node, xmlNode *xmlnode)
 {
 	LassoSession *session = LASSO_SESSION(node);
-	xmlNode *t, *n;
+	xmlNode *t;
+	xmlNode *n;
+#ifdef LASSO_WSF_ENABLED
+	xmlNode *t2;
+#endif
 
 	t = xmlnode->children;
 	while (t) {
@@ -346,13 +490,34 @@ init_from_xml(LassoNode *node, xmlNode *xmlnode)
 			while (n && n->type != XML_ELEMENT_NODE) n = n->next;
 			
 			if (n) {
-				LassoSamlpStatus *status;
-				status = LASSO_SAMLP_STATUS(lasso_node_new_from_xmlNode(n));
+				LassoNode *status;
+				status = lasso_node_new_from_xmlNode(n);
 				g_hash_table_insert(session->private_data->status,
 						xmlGetProp(t, (xmlChar*)"RemoteProviderID"),
 						status);
 			}
 		}
+
+#ifdef LASSO_WSF_ENABLED		
+		/* Endpoint References */
+		if (strcmp((char*)t->name, "EndpointReferences") == 0) {
+			t2 = t->children;
+			while (t2) {
+				LassoWsAddrEndpointReference *epr;
+				if (t2->type != XML_ELEMENT_NODE) {
+					t2 = t2->next;
+					continue;
+				}
+				epr = LASSO_WSA_ENDPOINT_REFERENCE(
+					lasso_wsa_endpoint_reference_new());
+				LASSO_NODE_GET_CLASS(epr)->init_from_xml(LASSO_NODE(epr), t2);
+				lasso_session_add_endpoint_reference(session, epr);
+				g_object_unref(epr);
+				t2 = t2->next;
+			}
+		}
+#endif
+
 		t = t->next;
 	}
 	return 0;
@@ -383,6 +548,11 @@ dispose(GObject *object)
 	g_list_free(session->private_data->providerIDs);
 	session->private_data->providerIDs = NULL;
 
+#ifdef LASSO_WSF_ENABLED	
+	g_hash_table_destroy(session->private_data->eprs);
+	session->private_data->eprs = NULL;
+#endif
+
 	G_OBJECT_CLASS(parent_class)->dispose(object);
 }
 
@@ -410,7 +580,11 @@ instance_init(LassoSession *session)
 	session->private_data->status = g_hash_table_new_full(g_str_hash, g_str_equal,
 			(GDestroyNotify)g_free,
 			(GDestroyNotify)lasso_node_destroy);
-
+#ifdef LASSO_WSF_ENABLED
+	session->private_data->eprs = g_hash_table_new_full(g_str_hash, g_str_equal,
+			(GDestroyNotify)g_free,
+			(GDestroyNotify)lasso_node_destroy);
+#endif
 	session->assertions = g_hash_table_new_full(g_str_hash, g_str_equal,
 			(GDestroyNotify)g_free,
 			(GDestroyNotify)lasso_node_destroy);

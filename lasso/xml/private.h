@@ -1,8 +1,8 @@
-/* $Id: private.h,v 1.19 2005/11/21 18:51:52 fpeters Exp $ 
+/* $Id: private.h 3374 2007-08-12 22:19:32Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -44,6 +44,7 @@ typedef enum {
 	SNIPPET_EXTENSION,
 	SNIPPET_SIGNATURE,
 	SNIPPET_LIST_XMLNODES,
+	SNIPPET_XMLNODE,
 
 	/* transformers for content transformation */
 	SNIPPET_STRING  = 1 << 0, /* default, can be omitted */
@@ -53,6 +54,7 @@ typedef enum {
 	SNIPPET_OPTIONAL = 1 << 23, /* optional, ignored if 0 */
 	SNIPPET_OPTIONAL_NEG = 1 << 24, /* optional, ignored if -1 */
 	SNIPPET_ANY = 1 << 25, /* ##any node */
+	SNIPPET_ALLOW_TEXT = 1 << 26, /* allow text childs in list of nodes */
 } SnippetType;
 
 struct XmlSnippet {
@@ -60,6 +62,8 @@ struct XmlSnippet {
 	SnippetType type;
 	guint offset;
 	char *class_name;
+	char *ns_name;
+	char *ns_uri;
 };
 
 struct QuerySnippet {
@@ -115,9 +119,16 @@ int lasso_sign_node(xmlNode *xmlnode, const char *id_attr_name, const char *id_v
 
 void xmlCleanNs(xmlNode *root_node);
 
+void xml_insure_namespace(xmlNode *xmlnode, xmlNs *ns, gboolean force,
+		gchar *ns_href, gchar *ns_prefix);
+
 gchar* lasso_node_build_deflated_query(LassoNode *node);
 
 gboolean lasso_node_init_from_deflated_query_part(LassoNode *node, char *deflate_string);
+
+char* lasso_concat_url_query(char *url, char *query);
+
+xmlDocPtr lasso_xml_parse_memory(const char *buffer, int size);
 
 void _debug(GLogLevelFlags level, const char *filename, int line,
 		const char *function, const char *format, ...);

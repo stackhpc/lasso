@@ -1,3 +1,4 @@
+MAINTAINERCLEANFILES = Makefile.in
 EXTRA_DIST = \
 	lasso-sections.txt \
 	lasso.sgml \
@@ -79,6 +80,7 @@ templates: scan
 # CFLAGS and LDFLAGS for compiling scan program.
 GTKDOC_CFLAGS = 		\
 	$(LASSO_CFLAGS) 	\
+	-I$(top_builddir)       \
 	-I$(top_srcdir)
 
 GTKDOC_LIBS = 	\
@@ -147,6 +149,7 @@ clean-local: clean-sources
 	-rm -f $(SCANOBJ_FILES) index.sgml lasso-index.sgml
 	-rm -rf  $(SCANOBJ_FILES) *.o *~ *.bak *.stamp
 	-rm -f lasso.types
+	-rm -rf tmpl
 
 clean-sources:
 	-rm -rf code

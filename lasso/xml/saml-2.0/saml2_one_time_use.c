@@ -1,8 +1,8 @@
-/* $Id: saml2_one_time_use.c,v 1.2 2005/11/21 18:51:52 fpeters Exp $ 
+/* $Id: saml2_one_time_use.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,14 +24,20 @@
 
 #include "saml2_one_time_use.h"
 
-/*
- * Schema fragment (saml-schema-assertion-2.0.xsd):
+/**
+ * SECTION:saml2_one_time_use
+ * @short_description: &lt;saml2:OneTimeUse&gt;
+ *
+ * <figure><title>Schema fragment for saml2:OneTimeUse</title>
+ * <programlisting><![CDATA[
  *
  * <complexType name="OneTimeUseType">
  *   <complexContent>
  *     <extension base="saml:ConditionAbstractType"/>
  *   </complexContent>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

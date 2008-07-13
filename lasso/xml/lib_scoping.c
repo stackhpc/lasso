@@ -1,8 +1,8 @@
-/* $Id: lib_scoping.c,v 1.20 2005/01/22 15:57:55 eraviart Exp $
+/* $Id: lib_scoping.c 3704 2008-05-15 21:17:44Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,9 +24,12 @@
 
 #include <lasso/xml/lib_scoping.h>
 
-/*
- * Schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
- * 
+/**
+ * SECTION:lib_scoping
+ * @short_description: &lt;lib:Scoping&gt;
+ *
+ * <figure><title>Schema fragment for lib:Scoping</title>
+ * <programlisting><![CDATA[
  * <xs:complexType name="ScopingType">
  *   <xs:sequence>
  *     <xs:element name="ProxyCount" type="xs:nonNegativeInteger" minOccurs="0"/>
@@ -34,6 +37,8 @@
  *   </xs:sequence>
  * </xs:complexType>
  * <xs:element name="Scoping" type="ScopingType"/>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

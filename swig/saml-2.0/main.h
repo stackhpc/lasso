@@ -21,6 +21,7 @@
 #include <lasso/xml/saml-2.0/saml2_statement_abstract.h>
 #include <lasso/xml/saml-2.0/saml2_authn_statement.h>
 #include <lasso/xml/saml-2.0/saml2_attribute_statement.h>
+#include <lasso/xml/saml-2.0/saml2_attribute_value.h>
 #include <lasso/xml/saml-2.0/samlp2_idp_entry.h>
 #include <lasso/xml/saml-2.0/samlp2_extensions.h>
 #include <lasso/xml/saml-2.0/saml2_action.h>
@@ -28,7 +29,7 @@
 #include <lasso/xml/saml-2.0/samlp2_response.h>
 #include <lasso/xml/saml-2.0/samlp2_artifact_response.h>
 #include <lasso/xml/saml-2.0/samlp2_request_abstract.h>
-#include <lasso/xml/saml-2.0/samlp2_assertion_idrequest.h>
+#include <lasso/xml/saml-2.0/samlp2_assertion_id_request.h>
 #include <lasso/xml/saml-2.0/samlp2_artifact_resolve.h>
 #include <lasso/xml/saml-2.0/samlp2_name_id_mapping_request.h>
 #include <lasso/xml/saml-2.0/samlp2_authn_request.h>
@@ -70,6 +71,7 @@
 %include saml2_statement_abstract.i
 %include saml2_authn_statement.i
 %include saml2_attribute_statement.i
+%include saml2_attribute_value.i
 %include samlp2_idp_entry.i
 %include samlp2_extensions.i
 %include saml2_action.i
@@ -77,7 +79,7 @@
 %include samlp2_response.i
 %include samlp2_artifact_response.i
 %include samlp2_request_abstract.i
-%include samlp2_assertion_idrequest.i
+%include samlp2_assertion_id_request.i
 %include samlp2_artifact_resolve.i
 %include samlp2_name_id_mapping_request.i
 %include samlp2_authn_request.i

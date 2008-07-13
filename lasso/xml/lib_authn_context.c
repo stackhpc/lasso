@@ -1,8 +1,8 @@
-/* $Id: lib_authn_context.c,v 1.14 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: lib_authn_context.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,9 +24,12 @@
 
 #include <lasso/xml/lib_authn_context.h>
 
-/*
- * Schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
- * 
+/**
+ * SECTION:lib_authn_context
+ * @short_description: &lt;lib:AuthnContext&gt;
+ *
+ * <figure><title>Schema fragment for lib:AuthnContext</title>
+ * <programlisting><![CDATA[
  * <xs:element name="AuthnContext">
  *   <xs:complexType>
  *     <xs:sequence>
@@ -38,17 +41,8 @@
  *     </xs:sequence>
  *   </xs:complexType>
  * </xs:element>
- * 
- * From schema liberty-authentication-context-v1.2.xsd:
- * <xs:element name="AuthenticationContextStatement" type="AuthenticationContextStatementType">
- *   <xs:annotation>
- *     <xs:documentation>
- *       A particular assertion on an identity
- *       provider's part with respect to the authentication
- *       context associated with an authentication assertion. 
- *     </xs:documentation>
- *   </xs:annotation>
- * </xs:element>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

@@ -1,8 +1,8 @@
-/* $Id: samlp_status_code.c,v 1.17 2005/01/22 15:57:55 eraviart Exp $
+/* $Id: samlp_status_code.c 3704 2008-05-15 21:17:44Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/samlp_status_code.h>
 
-/*
- * Schema fragment (oasis-sstc-saml-schema-protocol-1.0.xsd):
+/**
+ * SECTION:samlp_status_code
+ * @short_description: &lt;samlp:StatusCode&gt;
+ *
+ * <figure><title>Schema fragment for samlp:StatusCode</title>
+ * <programlisting><![CDATA[
  * 
  * <element name="StatusCode" type="samlp:StatusCodeType"/>
  * <complexType name="StatusCodeType">
@@ -34,6 +38,8 @@
  *   </sequence>
  *   <attribute name="Value" type="QName" use="required"/>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

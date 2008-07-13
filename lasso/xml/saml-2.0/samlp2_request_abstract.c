@@ -1,8 +1,8 @@
-/* $Id: samlp2_request_abstract.c,v 1.2 2005/11/21 18:51:52 fpeters Exp $ 
+/* $Id: samlp2_request_abstract.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -28,8 +28,12 @@
 
 #include "samlp2_request_abstract.h"
 
-/*
- * Schema fragment (saml-schema-protocol-2.0.xsd):
+/**
+ * SECTION:samlp2_request_abstract
+ * @short_description: &lt;samlp2:RequestAbstract&gt;
+ *
+ * <figure><title>Schema fragment for samlp2:RequestAbstract</title>
+ * <programlisting><![CDATA[
  *
  * <complexType name="RequestAbstractType" abstract="true">
  *   <sequence>
@@ -43,6 +47,8 @@
  *   <attribute name="Destination" type="anyURI" use="optional"/>
  *   <attribute name="Consent" type="anyURI" use="optional"/>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/
@@ -54,6 +60,8 @@ static struct XmlSnippet schema_snippets[] = {
 	{ "Issuer", SNIPPET_NODE,
 		G_STRUCT_OFFSET(LassoSamlp2RequestAbstract, Issuer),
 		"LassoSaml2NameID" },
+	{ "Signature", SNIPPET_SIGNATURE,
+		G_STRUCT_OFFSET(LassoSamlp2RequestAbstract, ID) },
 	{ "Extensions", SNIPPET_NODE,
 		G_STRUCT_OFFSET(LassoSamlp2RequestAbstract, Extensions) },
 	{ "ID", SNIPPET_ATTRIBUTE,
@@ -66,8 +74,6 @@ static struct XmlSnippet schema_snippets[] = {
 		G_STRUCT_OFFSET(LassoSamlp2RequestAbstract, Destination) },
 	{ "Consent", SNIPPET_ATTRIBUTE,
 		G_STRUCT_OFFSET(LassoSamlp2RequestAbstract, Consent) },
-	{ "Signature", SNIPPET_SIGNATURE,
-		G_STRUCT_OFFSET(LassoSamlp2RequestAbstract, ID) },
 
 	/* hidden fields; used in lasso dumps */
 	{ "SignType", SNIPPET_ATTRIBUTE | SNIPPET_INTEGER | SNIPPET_LASSO_DUMP,
@@ -96,9 +102,14 @@ get_xmlNode(LassoNode *node, gboolean lasso_dump)
 	xmlnode = parent_class->get_xmlNode(node, lasso_dump);
 
 	if (lasso_dump == FALSE && request->sign_type) {
-		rc = lasso_sign_node(xmlnode, "ID", request->ID,
+		if (request->private_key_file == NULL) {
+			message(G_LOG_LEVEL_WARNING,
+					"No Private Key set for signing samlp2:RequestAbstract");
+		} else {
+			rc = lasso_sign_node(xmlnode, "ID", request->ID,
 				request->private_key_file, request->certificate_file);
-		/* signature may have failed; what to do ? */
+			/* signature may have failed; what to do ? */
+		}
 	}
 
 	return xmlnode;
@@ -120,6 +131,8 @@ instance_init(LassoSamlp2RequestAbstract *node)
 	node->Destination = NULL;
 	node->Consent = NULL;
 	node->sign_type = LASSO_SIGNATURE_TYPE_NONE;
+	node->private_key_file = NULL;
+	node->certificate_file = NULL;
 }
 
 static void

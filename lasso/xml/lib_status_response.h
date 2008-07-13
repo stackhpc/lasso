@@ -1,8 +1,8 @@
-/* $Id: lib_status_response.h,v 1.10 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: lib_status_response.h 3437 2007-11-03 21:23:50Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -54,7 +54,7 @@ struct _LassoLibStatusResponse {
 
 	/*< public >*/
 	/* <xs:element ref="Extension" minOccurs="0" maxOccurs="unbounded"/> */
-	GList *Extension;
+	GList *Extension; /* of xmlNode* */
 	/* <xs:element ref="ProviderID"/> */
 	char *ProviderID;
 	/* <xs:element ref="samlp:Status"/> */

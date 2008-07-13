@@ -1,8 +1,8 @@
-/* $Id: is_redirect_request.c,v 1.3 2005/11/15 11:08:44 nclapies Exp $ 
+/* $Id: is_redirect_request.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,14 +24,20 @@
 
 #include <lasso/xml/is_redirect_request.h>
 
-/*
- * Schema fragments (liberty-idwsf-interaction-svc-v1.0.xsd):
+/**
+ * SECTION:is_redirect_request
+ * @short_description: &lt;is:RedirectRequest&gt;
+ *
+ * <figure><title>Schema fragment for is:RedirectRequest</title>
+ * <programlisting><![CDATA[
  *
  * <xs:element name="RedirectRequest" type="RedirectRequestType"/>
  * <xs:complexType name="RedirectRequestType">
  *    <xs:attribute name="redirectURL" type="xs:anyURI" use="required"/>
  * </xs:complexType>
  *
+ * ]]></programlisting>
+ * </figure>
  */ 
 
 /*****************************************************************************/

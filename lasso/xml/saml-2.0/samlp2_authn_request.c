@@ -1,8 +1,8 @@
-/* $Id: samlp2_authn_request.c,v 1.2 2005/11/21 18:51:52 fpeters Exp $ 
+/* $Id: samlp2_authn_request.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include "samlp2_authn_request.h"
 
-/*
- * Schema fragment (saml-schema-protocol-2.0.xsd):
+/**
+ * SECTION:samlp2_authn_request
+ * @short_description: &lt;samlp2:AuthnRequest&gt;
+ *
+ * <figure><title>Schema fragment for samlp2:AuthnRequest</title>
+ * <programlisting><![CDATA[
  *
  * <complexType name="AuthnRequestType">
  *   <complexContent>
@@ -47,6 +51,8 @@
  *     </extension>
  *   </complexContent>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/
@@ -71,11 +77,13 @@ static struct XmlSnippet schema_snippets[] = {
 		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, IsPassive) },
 	{ "ProtocolBinding", SNIPPET_ATTRIBUTE,
 		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, ProtocolBinding) },
-	{ "AssertionConsumerServiceIndex", SNIPPET_ATTRIBUTE | SNIPPET_INTEGER,
+	{ "AssertionConsumerServiceIndex",
+		SNIPPET_ATTRIBUTE | SNIPPET_INTEGER | SNIPPET_OPTIONAL_NEG,
 		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, AssertionConsumerServiceIndex) },
 	{ "AssertionConsumerServiceURL", SNIPPET_ATTRIBUTE,
 		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, AssertionConsumerServiceURL) },
-	{ "AttributeConsumingServiceIndex", SNIPPET_ATTRIBUTE | SNIPPET_INTEGER,
+	{ "AttributeConsumingServiceIndex",
+		SNIPPET_ATTRIBUTE | SNIPPET_INTEGER | SNIPPET_OPTIONAL_NEG,
 		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, AttributeConsumingServiceIndex) },
 	{ "ProviderName", SNIPPET_ATTRIBUTE,
 		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, ProviderName) },
@@ -91,6 +99,9 @@ build_query(LassoNode *node)
 	char *ret, *deflated_message;
 
 	deflated_message = lasso_node_build_deflated_query(node);
+	if (deflated_message == NULL) {
+		return NULL;
+	}
 	ret = g_strdup_printf("SAMLRequest=%s", deflated_message);
 	/* XXX: must support RelayState (which profiles?) */
 	g_free(deflated_message);
@@ -103,9 +114,11 @@ init_from_query(LassoNode *node, char **query_fields)
 {
 	gboolean rc;
 	char *relay_state = NULL;
+	LassoSamlp2AuthnRequest *request = LASSO_SAMLP2_AUTHN_REQUEST(node);
+
 	rc = lasso_node_init_from_saml2_query_fields(node, query_fields, &relay_state);
 	if (rc && relay_state != NULL) {
-		/* XXX: support RelayState? */
+		request->relayState = relay_state;
 	}
 	return rc;
 }
@@ -126,10 +139,11 @@ instance_init(LassoSamlp2AuthnRequest *node)
 	node->ForceAuthn = FALSE;
 	node->IsPassive = FALSE;
 	node->ProtocolBinding = NULL;
-	node->AssertionConsumerServiceIndex = 0;
+	node->AssertionConsumerServiceIndex = -1;
 	node->AssertionConsumerServiceURL = NULL;
-	node->AttributeConsumingServiceIndex = 0;
+	node->AttributeConsumingServiceIndex = -1;
 	node->ProviderName = NULL;
+	node->relayState = NULL;
 }
 
 static void

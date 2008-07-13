@@ -1,8 +1,8 @@
-/* $Id: soap_binding_ext_credential.c,v 1.2 2005/03/11 21:48:54 fpeters Exp $ 
+/* $Id: soap_binding_ext_credential.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/soap_binding_ext_credential.h>
 
-/*
- * Schema fragments (liberty-idwsf-soap-binding-v1.1.xsd - extension avril 2004):
+/**
+ * SECTION:soap_binding_ext_credential
+ * @short_description: &lt;soapbinding:Credential&gt;
+ *
+ * <figure><title>Schema fragment for soapbinding:Credential</title>
+ * <programlisting><![CDATA[
  *
  * <xs:element name="Credential" minOccurs="0" maxOccurs="unbounded">
  *   <xs:complexType>
@@ -36,6 +40,8 @@
  *   </xs:complexType>
  * </xs:element>
  * 
+ * ]]></programlisting>
+ * </figure>
  */ 
 
 /*****************************************************************************/
@@ -43,10 +49,10 @@
 /*****************************************************************************/
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "any", SNIPPET_LIST_NODES,
-	  G_STRUCT_OFFSET(LassoSoapBindingExtCredential, any) },
+	{ "", SNIPPET_LIST_NODES,
+		G_STRUCT_OFFSET(LassoSoapBindingExtCredential, any) },
 	{ "notOnOrAfter", SNIPPET_ATTRIBUTE,
-	  G_STRUCT_OFFSET(LassoSoapBindingExtCredential, notOnOrAfter) },
+		G_STRUCT_OFFSET(LassoSoapBindingExtCredential, notOnOrAfter) },
 	{ NULL, 0, 0}
 };
 

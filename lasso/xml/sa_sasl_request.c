@@ -1,8 +1,8 @@
-/* $Id: sa_sasl_request.c,v 1.3 2005/03/02 08:31:22 nclapies Exp $
+/* $Id: sa_sasl_request.c 3704 2008-05-15 21:17:44Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/sa_sasl_request.h>
 
-/*
- * Schema fragments (liberty-idwsf-authn-svc-v1.0.xsd):
+/**
+ * SECTION:sa_sasl_request
+ * @short_description: &lt;sa:SASLRequest&gt;
+ *
+ * <figure><title>Schema fragment for sa:SASLRequest</title>
+ * <programlisting><![CDATA[
  * 
  *  <xs:element name="SASLRequest">
  *    <xs:complexType>
@@ -45,6 +49,8 @@
  *      <xs:attribute name="id" type="xs:ID"use="optional"/>
  *    </xs:complexType>
  *  </xs:element>
+ * ]]></programlisting>
+ * </figure>
  */ 
 
 /*****************************************************************************/

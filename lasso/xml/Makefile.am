@@ -1,10 +1,11 @@
-SUBDIRS = saml-2.0
+MAINTAINERCLEANFILES = Makefile.in
+SUBDIRS = saml-2.0 id-wsf-2.0 ws
 
 liblassoincludedir = $(includedir)/lasso/xml
 
 INCLUDES = \
+	-I$(top_builddir) \
 	-I$(top_srcdir) \
-	-I$(top_srcdir)/lasso \
 	$(LASSO_CORE_CFLAGS) \
 	-DG_LOG_DOMAIN=\"lasso\"
 
@@ -32,9 +33,6 @@ WSF_C_FILES = \
 	disco_resource_offering.c \
 	disco_send_single_logout.c \
 	disco_service_instance.c \
-	ds_key_info.c \
-	ds_key_value.c \
-	ds_rsa_key_value.c \
 	dst_data.c \
 	dst_modification.c \
 	dst_modify.c \
@@ -100,9 +98,6 @@ WSF_H_FILES = \
 	disco_resource_offering.h \
 	disco_send_single_logout.h \
 	disco_service_instance.h \
-	ds_key_info.h \
-	ds_key_value.h \
-	ds_rsa_key_value.h \
 	dst_data.h \
 	dst_modification.h \
 	dst_modify.h \
@@ -151,6 +146,9 @@ endif
 liblasso_xml_la_SOURCES = \
 	tools.c \
 	xml.c \
+	ds_key_info.c \
+	ds_key_value.c \
+	ds_rsa_key_value.c \
 	lib_assertion.c	\
 	lib_authentication_statement.c \
 	lib_authn_context.c	\
@@ -172,6 +170,7 @@ liblasso_xml_la_SOURCES = \
 	lib_scoping.c \
 	lib_status_response.c \
 	lib_subject.c \
+	misc_text_node.c \
 	saml_advice.c \
 	saml_assertion.c \
 	saml_attribute.c \
@@ -201,6 +200,9 @@ liblasso_xml_la_SOURCES = \
 liblassoinclude_HEADERS = \
 	strings.h \
 	xml.h \
+	ds_key_info.h \
+	ds_key_value.h \
+	ds_rsa_key_value.h \
 	lib_assertion.h	\
 	lib_authentication_statement.h \
 	lib_authn_context.h	\
@@ -222,6 +224,7 @@ liblassoinclude_HEADERS = \
 	lib_scoping.h \
 	lib_status_response.h \
 	lib_subject.h \
+	misc_text_node.h \
 	saml_advice.h \
 	saml_assertion.h \
 	saml_attribute.h \
@@ -246,6 +249,7 @@ liblassoinclude_HEADERS = \
 	samlp_response_abstract.h \
 	samlp_status.h \
 	samlp_status_code.h \
+	xml_enc.h \
 	$(WSF_H_FILES)
 
 lasso_private_h_sources = \

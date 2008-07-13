@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>LassoLibAuthnRequestEnvelope</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.71.0">
+<link rel="start" href="index.html" title="Lasso Reference Manual">
+<link rel="up" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
+<link rel="prev" href="LassoLibAuthnRequest.html" title="LassoLibAuthnRequest">
+<link rel="next" href="LassoLibAuthnResponse.html" title="LassoLibAuthnResponse">
+<meta name="generator" content="GTK-Doc V1.10 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
+<link rel="chapter" href="architecture.html" title="Lasso Architecture">
+<link rel="chapter" href="idff.html" title="Identity Federation Framework">
+<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework">
+<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
+<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
+<link rel="chapter" href="misc.html" title="Misc">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="LassoLibAuthnRequest.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="xml-idff.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Lasso Reference Manual</th>
+<td><a accesskey="n" href="LassoLibAuthnResponse.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts"><nobr><a href="#lasso-LassoLibAuthnRequestEnvelope.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#lasso-LassoLibAuthnRequestEnvelope.description" class="shortcut">Description</a></nobr></td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="lasso-LassoLibAuthnRequestEnvelope"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="lasso-LassoLibAuthnRequestEnvelope.top_of_page"></a>LassoLibAuthnRequestEnvelope</span></h2>
+<p>LassoLibAuthnRequestEnvelope — &lt;lib:AuthnRequestEnvelope&gt;</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="lasso-LassoLibAuthnRequestEnvelope.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+
+#include &lt;lasso/lasso.h&gt;
+
+                    <a href="lasso-LassoLibAuthnRequestEnvelope.html#LassoLibAuthnRequestEnvelope" title="LassoLibAuthnRequestEnvelope">LassoLibAuthnRequestEnvelope</a>;
+<a href="lasso-LassoLibAuthnRequestEnvelope.html#LassoLibAuthnRequestEnvelope" title="LassoLibAuthnRequestEnvelope">LassoLibAuthnRequestEnvelope</a>* <a href="lasso-LassoLibAuthnRequestEnvelope.html#lasso-lib-authn-request-envelope-new" title="lasso_lib_authn_request_envelope_new ()">lasso_lib_authn_request_envelope_new</a>
+                                                        (void);
+<a href="lasso-LassoLibAuthnRequestEnvelope.html#LassoLibAuthnRequestEnvelope" title="LassoLibAuthnRequestEnvelope">LassoLibAuthnRequestEnvelope</a>* <a href="lasso-LassoLibAuthnRequestEnvelope.html#lasso-lib-authn-request-envelope-new-full" title="lasso_lib_authn_request_envelope_new_full ()">lasso_lib_authn_request_envelope_new_full</a>
+                                                        (<a href="LassoLibAuthnRequest.html" title="LassoLibAuthnRequest">LassoLibAuthnRequest</a> *authnRequest,
+                                                         <GTKDOCLINK HREF="char">char</GTKDOCLINK> *providerID,
+                                                         <GTKDOCLINK HREF="char">char</GTKDOCLINK> *assertionConsumerServiceURL);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="lasso-LassoLibAuthnRequestEnvelope.description"></a><h2>Description</h2>
+<p>
+</p>
+<div class="figure">
+<a name="id2600753"></a><p class="title"><b>Figure 5. Schema fragment for lib:AuthnRequestEnvelope</b></p>
+<div class="figure-contents"><pre class="programlisting">
+&lt;xs:element name="AuthnRequestEnvelope" type="AuthnRequestEnvelopeType"/&gt;
+&lt;xs:complexType name="AuthnRequestEnvelopeType"&gt;
+  &lt;xs:complexContent&gt;
+    &lt;xs:extension base="RequestEnvelopeType"&gt;
+      &lt;xs:sequence&gt;
+        &lt;xs:element ref="AuthnRequest"/&gt;
+        &lt;xs:element ref="ProviderID"/&gt;
+        &lt;xs:element name="ProviderName" type="xs:string" minOccurs="0"/&gt;
+        &lt;xs:element name="AssertionConsumerServiceURL" type="xs:anyURI"/&gt;
+        &lt;xs:element ref="IDPList" minOccurs="0"/&gt;
+        &lt;xs:element name="IsPassive" type="xs:boolean" minOccurs="0"/&gt;
+      &lt;/xs:sequence&gt;
+    &lt;/xs:extension&gt;
+  &lt;/xs:complexContent&gt;
+&lt;/xs:complexType&gt;
+&lt;xs:complexType name="RequestEnvelopeType"&gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:element ref="Extension" minOccurs="0" maxOccurs="unbounded"/&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+&lt;xs:element name="IDPList" type="IDPListType"/&gt;
+&lt;xs:complexType name="IDPListType"&gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:element ref="IDPEntries"/&gt;
+    &lt;xs:element ref="GetComplete" minOccurs="0"/&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+&lt;xs:complexType name="ResponseEnvelopeType"&gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:element ref="Extension" minOccurs="0" maxOccurs="unbounded"/&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+</pre></div>
+</div>
+<p><br class="figure-break"></p>
+<p>
+
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="lasso-LassoLibAuthnRequestEnvelope.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="LassoLibAuthnRequestEnvelope"></a><h3>LassoLibAuthnRequestEnvelope</h3>
+<pre class="programlisting">typedef struct {
+	LassoNode parent;
+
+	/* &lt;xs:element ref="Extension" minOccurs="0" maxOccurs="unbounded"/&gt; */
+	GList *Extension; /* of xmlNode* */
+	/* &lt;xs:element ref="AuthnRequest"/&gt; */
+	LassoLibAuthnRequest *AuthnRequest;
+	/* &lt;xs:element ref="ProviderID"/&gt; */
+	char *ProviderID;
+	/* &lt;xs:element name="ProviderName" type="xs:string" minOccurs="0"/&gt; */
+	char *ProviderName;
+	/* &lt;xs:element name="AssertionConsumerServiceURL" type="xs:anyURI"/&gt; */
+	char *AssertionConsumerServiceURL;
+	/* &lt;xs:element ref="IDPList" minOccurs="0"/&gt; */
+	LassoLibIDPList *IDPList;
+	/* &lt;xs:element name="IsPassive" type="xs:boolean" minOccurs="0"/&gt; */
+	gboolean IsPassive;
+} LassoLibAuthnRequestEnvelope;
+</pre>
+<p>
+
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="lasso-lib-authn-request-envelope-new"></a><h3>lasso_lib_authn_request_envelope_new ()</h3>
+<pre class="programlisting"><a href="lasso-LassoLibAuthnRequestEnvelope.html#LassoLibAuthnRequestEnvelope" title="LassoLibAuthnRequestEnvelope">LassoLibAuthnRequestEnvelope</a>* lasso_lib_authn_request_envelope_new
+                                                        (void);</pre>
+<p>
+Creates a new <a href="lasso-LassoLibAuthnRequestEnvelope.html#LassoLibAuthnRequestEnvelope" title="LassoLibAuthnRequestEnvelope"><span class="type">LassoLibAuthnRequestEnvelope</span></a> object.</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td>
+<td> a newly created <a href="lasso-LassoLibAuthnRequestEnvelope.html#LassoLibAuthnRequestEnvelope" title="LassoLibAuthnRequestEnvelope"><span class="type">LassoLibAuthnRequestEnvelope</span></a> object
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="lasso-lib-authn-request-envelope-new-full"></a><h3>lasso_lib_authn_request_envelope_new_full ()</h3>
+<pre class="programlisting"><a href="lasso-LassoLibAuthnRequestEnvelope.html#LassoLibAuthnRequestEnvelope" title="LassoLibAuthnRequestEnvelope">LassoLibAuthnRequestEnvelope</a>* lasso_lib_authn_request_envelope_new_full
+                                                        (<a href="LassoLibAuthnRequest.html" title="LassoLibAuthnRequest">LassoLibAuthnRequest</a> *authnRequest,
+                                                         <GTKDOCLINK HREF="char">char</GTKDOCLINK> *providerID,
+                                                         <GTKDOCLINK HREF="char">char</GTKDOCLINK> *assertionConsumerServiceURL);</pre>
+<p>
+Creates a new <a href="lasso-LassoLibAuthnRequestEnvelope.html#LassoLibAuthnRequestEnvelope" title="LassoLibAuthnRequestEnvelope"><span class="type">LassoLibAuthnRequestEnvelope</span></a> object and initializes it with
+the parameters.</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><span class="term"><em class="parameter"><code>authnRequest</code></em> :</span></td>
+<td> the <a href="LassoLibAuthnRequest.html" title="LassoLibAuthnRequest"><span class="type">LassoLibAuthnRequest</span></a> to envelop
+</td>
+</tr>
+<tr>
+<td><span class="term"><em class="parameter"><code>providerID</code></em> :</span></td>
+<td> service provider ID
+</td>
+</tr>
+<tr>
+<td><span class="term"><em class="parameter"><code>assertionConsumerServiceURL</code></em> :</span></td>
+<td> assertion consumer service URL on the service
+     provider
+</td>
+</tr>
+<tr>
+<td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td>
+<td> a newly created <a href="lasso-LassoLibAuthnRequestEnvelope.html#LassoLibAuthnRequestEnvelope" title="LassoLibAuthnRequestEnvelope"><span class="type">LassoLibAuthnRequestEnvelope</span></a> object
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.10</div>
+</body>
+</html>

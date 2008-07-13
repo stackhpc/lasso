@@ -1,7 +1,7 @@
 /*
  * Lasso library C unit tests
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -26,11 +26,12 @@
 #include <lasso_config.h>
 
 #include <check.h>
-#include <lasso.h>
+#include <lasso/lasso.h>
 
 extern Suite* basic_suite();
 extern Suite* login_suite();
 extern Suite* random_suite();
+extern Suite* metadata_suite();
 
 typedef Suite* (*SuiteFunction) ();
 
@@ -38,6 +39,7 @@ SuiteFunction suites[] = {
 	basic_suite,
 	login_suite,
 	random_suite,
+	metadata_suite,
 	NULL
 };
 

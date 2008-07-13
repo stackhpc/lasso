@@ -1,8 +1,8 @@
-/* $Id: providerprivate.h,v 1.2 2005/11/21 18:51:52 fpeters Exp $
+/* $Id: providerprivate.h 3237 2007-05-30 17:17:45Z dlaniel $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -45,6 +45,10 @@ char* lasso_saml20_provider_build_artifact(LassoProvider *provider);
 
 gchar* lasso_saml20_provider_get_assertion_consumer_service_url(LassoProvider *provider,
 		int service_id);
+gchar* lasso_saml20_provider_get_assertion_consumer_service_binding(LassoProvider *provider,
+		int service_id);
+gchar* lasso_saml20_provider_get_assertion_consumer_service_url_by_binding(LassoProvider *provider,
+		gchar *binding);
 
 #ifdef __cplusplus
 }

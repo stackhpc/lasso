@@ -1,8 +1,8 @@
-/* $Id: is_interaction_response.c,v 1.3 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: is_interaction_response.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/is_interaction_response.h>
 
-/*
- * Schema fragments (liberty-idwsf-interaction-svc-v1.0.xsd):
+/**
+ * SECTION:is_interaction_response
+ * @short_description: &lt;is:InteractionResponse&gt;
+ *
+ * <figure><title>Schema fragment for is:InteractionResponse</title>
+ * <programlisting><![CDATA[
  *
  * <xs:element name="InteractionResponse" type="InteractionResponseType"/>
  * <xs:complexType name="InteractionResponseType">
@@ -39,6 +43,8 @@
  *   </xs:sequence>
  * </xs:complexType>
  *
+ * ]]></programlisting>
+ * </figure>
  */ 
 
 /*****************************************************************************/

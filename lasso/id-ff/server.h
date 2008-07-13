@@ -1,8 +1,8 @@
-/* $Id: server.h,v 1.45 2005/08/24 14:54:55 fpeters Exp $ 
+/* $Id: server.h 3442 2007-11-13 16:12:25Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -36,6 +36,7 @@ extern "C" {
 #else
 typedef void LassoDiscoServiceInstance;
 #endif
+
 #include <lasso/id-ff/provider.h>
 
 
@@ -56,8 +57,9 @@ struct _LassoServer {
 	LassoProvider parent;
 
 	/*< public >*/
-	GHashTable *providers;
-	GHashTable *services;
+	GHashTable *providers; /* of LassoProvider */
+	/* Can actually contain LassoDataService or LassoIdWsf2DataService or any subclass */
+	GHashTable *services; /* of LassoDataService */
 
 	gchar *private_key;
 	gchar *private_key_password;
@@ -85,16 +87,23 @@ LASSO_EXPORT gint lasso_server_add_provider (LassoServer *server,
 		LassoProviderRole role, const gchar *metadata,
 		const gchar *public_key, const gchar *ca_cert_chain);
 
-LASSO_EXPORT gint lasso_server_add_service(LassoServer *server, LassoDiscoServiceInstance *service);
+LASSO_EXPORT gint lasso_server_add_service(LassoServer *server, LassoNode *service);
+LASSO_EXPORT gint lasso_server_add_service_from_dump(LassoServer *server, const gchar *dump);
 
 LASSO_EXPORT void lasso_server_destroy(LassoServer *server);
 
 LASSO_EXPORT gchar* lasso_server_dump(LassoServer *server);
 
-LASSO_EXPORT LassoProvider* lasso_server_get_provider(LassoServer *server, gchar *providerID);
+LASSO_EXPORT LassoProvider* lasso_server_get_provider(LassoServer *server,
+		const gchar *providerID);
 
 LASSO_EXPORT LassoDiscoServiceInstance* lasso_server_get_service(LassoServer *server,
-								 gchar *serviceType);
+		const gchar *serviceType);
+
+LASSO_EXPORT int lasso_server_set_encryption_private_key(LassoServer *server,
+		const gchar *filename);
+
+LASSO_EXPORT int lasso_server_load_affiliation(LassoServer *server, const gchar* filename);
 
 #ifdef __cplusplus
 }

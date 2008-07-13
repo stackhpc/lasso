@@ -1,8 +1,8 @@
-/* $Id: sa_credentials.c,v 1.1 2005/03/02 17:09:14 nclapies Exp $
+/* $Id: sa_credentials.c 3704 2008-05-15 21:17:44Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/sa_credentials.h>
 
-/*
- * Schema fragments (liberty-idwsf-authn-svc-v1.0.xsd):
+/**
+ * SECTION:sa_credentials
+ * @short_description: &lt;sa:Credentials&gt;
+ *
+ * <figure><title>Schema fragment for sa:Credentials</title>
+ * <programlisting><![CDATA[
  * 
  *     <xs:element name="Credentials" minOccurs="0">
  *     <xs:complexType>
@@ -34,6 +38,8 @@
  *       </xs:sequence>
  *     </xs:complexType>
  *     </xs:element>
+ * ]]></programlisting>
+ * </figure>
  */ 
 
 /*****************************************************************************/

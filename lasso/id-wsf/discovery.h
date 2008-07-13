@@ -1,8 +1,8 @@
-/* $Id: discovery.h,v 1.30 2006/02/21 09:51:49 fpeters Exp $ 
+/* $Id: discovery.h 3712 2008-05-20 13:14:06Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -119,7 +119,8 @@ LASSO_EXPORT LassoDataService* lasso_discovery_get_service(LassoDiscovery *disco
 LASSO_EXPORT GList* lasso_discovery_get_services(LassoDiscovery *discovery);
 
 LASSO_EXPORT LassoDiscoDescription* lasso_discovery_get_description_auto(
-		LassoDiscoResourceOffering *offering, const gchar *security_mech);
+		LassoDiscoResourceOffering *offering, const gchar *security_mech_id);
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

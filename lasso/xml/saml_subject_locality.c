@@ -1,8 +1,8 @@
-/* $Id: saml_subject_locality.c,v 1.14 2005/01/22 15:57:55 eraviart Exp $
+/* $Id: saml_subject_locality.c 3704 2008-05-15 21:17:44Z fpeters $
  *
- * Lasso - A free implementation of the Samlerty Alliance specifications.
+ * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,14 +24,20 @@
 
 #include <lasso/xml/saml_subject_locality.h>
 
-/*
- * Schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
+/**
+ * SECTION:saml_subject_locality
+ * @short_description: &lt;saml:SubjectLocality&gt;
+ *
+ * <figure><title>Schema fragment for saml:SubjectLocality</title>
+ * <programlisting><![CDATA[
  * 
  * <element name="SubjectLocality" type="saml:SubjectLocalityType"/>
  * <complexType name="SubjectLocalityType">
  *   <attribute name="IPAddress" type="string" use="optional"/>
  *   <attribute name="DNSAddress" type="string" use="optional"/>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

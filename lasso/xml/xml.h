@@ -1,8 +1,8 @@
-/* $Id: xml.h,v 1.67 2005/09/11 09:08:31 fpeters Exp $ 
+/* $Id: xml.h 3289 2007-06-12 14:05:38Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -137,6 +137,14 @@ LASSO_EXPORT char* lasso_node_export_to_query(LassoNode *node,
 
 LASSO_EXPORT char* lasso_node_export_to_soap(LassoNode *node);
 
+LASSO_EXPORT gchar* lasso_node_export_to_xml(LassoNode *node);
+
+LASSO_EXPORT char* lasso_node_export_to_paos_request(LassoNode *node, const char *issuer,
+				const char *responseConsumerURL, const char *relay_state);
+
+LASSO_EXPORT char* lasso_node_export_to_ecp_soap_response(LassoNode *node,
+				const char *assertionConsumerURL);
+
 LASSO_EXPORT xmlNode* lasso_node_get_xmlNode(LassoNode *node, gboolean lasso_dump);
 
 LASSO_EXPORT LassoMessageFormat lasso_node_init_from_message(LassoNode *node, const char *message);
@@ -148,6 +156,8 @@ LASSO_EXPORT const char* lasso_strerror(int error_code);
 LASSO_EXPORT void lasso_register_dst_service(const char *prefix, const char *href);
 LASSO_EXPORT char* lasso_get_prefix_for_dst_service_href(const char *href);
 
+LASSO_EXPORT void lasso_register_idwsf2_dst_service(const gchar *prefix, const gchar *href);
+LASSO_EXPORT gchar* lasso_get_prefix_for_idwsf2_dst_service_href(const gchar *href);
 
 #ifdef LASSO_INTERNALS
 #include <lasso/xml/private.h>

@@ -1,8 +1,8 @@
-/* $Id: disco_modify_response.c,v 1.9 2005/07/30 22:36:53 fpeters Exp $ 
+/* $Id: disco_modify_response.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/disco_modify_response.h>
 
-/*
- * Schema fragment (liberty-idwsf-disco-svc-1.0-errata-v1.0.xsd):
+/**
+ * SECTION:disco_modify_response
+ * @short_description: &lt;disco:ModifyResponse&gt;
+ *
+ * <figure><title>Schema fragment for disco:ModifyResponse</title>
+ * <programlisting><![CDATA[
  * 
  * <xs:element name="ModifyResponse" type="ModifyResponseType"/>
  * <xs:complexType name="ModifyResponseType">
@@ -50,6 +54,8 @@
  *     </xs:annotation>
  *   <xs:restriction base="xs:string"/>
  * </xs:simpleType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

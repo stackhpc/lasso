@@ -1,8 +1,8 @@
-/* $Id: session.h,v 1.16 2005/01/26 10:05:45 fpeters Exp $ 
+/* $Id: session.h 3442 2007-11-13 16:12:25Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -29,6 +29,8 @@
 extern "C" {
 #endif /* __cplusplus */ 
 
+#include <lasso/lasso_config.h>
+
 #include <lasso/xml/xml.h>
 
 #define LASSO_TYPE_SESSION (lasso_session_get_type())
@@ -48,7 +50,8 @@ struct _LassoSession {
 	LassoNode parent;
 
 	/*< public >*/
-	GHashTable *assertions;
+	/* Can actually contain LassoSamlAssertion or LassoSaml2Assertion */
+	GHashTable *assertions; /* of LassoSamlAssertion */
 	gboolean is_dirty;
 
 	/*< private >*/

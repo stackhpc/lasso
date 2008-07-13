@@ -1,8 +1,8 @@
-/* $Id: dst_query_response.c,v 1.20 2005/09/11 09:08:30 fpeters Exp $ 
+/* $Id: dst_query_response.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/dst_query_response.h>
 
-/*
- * Schema fragment (liberty-idwsf-dst-v1.0.xsd):
+/**
+ * SECTION:dst_query_response
+ * @short_description: &lt;dst:QueryResponse&gt;
+ *
+ * <figure><title>Schema fragment for dst:QueryResponse</title>
+ * <programlisting><![CDATA[
  *
  * <xs:element name="QueryResponse" type="QueryResponseType"/>
  * <xs:complexType name="QueryResponseType">
@@ -48,6 +52,8 @@
  *     </xs:annotation>
  *   <xs:restriction base="xs:string"/>
  * </xs:simpleType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

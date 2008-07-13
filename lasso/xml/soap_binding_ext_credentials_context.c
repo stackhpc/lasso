@@ -1,8 +1,8 @@
-/* $Id: soap_binding_ext_credentials_context.c,v 1.1 2005/03/11 16:24:02 nclapies Exp $ 
+/* $Id: soap_binding_ext_credentials_context.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/soap_binding_ext_credentials_context.h>
 
-/*
- * Schema fragments (liberty-idwsf-soap-binding-v1.1.xsd - extension avril 2004):
+/**
+ * SECTION:soap_binding_ext_credentials_context
+ * @short_description: &lt;soapbinding:CredentialsContextType&gt;
+ *
+ * <figure><title>Schema fragment for soapbinding:CredentialsContextType</title>
+ * <programlisting><![CDATA[
  *
  * <xs:complexType name="CredentialsContextType">
  *   <xs:sequence>
@@ -38,6 +42,8 @@
  * </xs:complexType>
  * <xs:element name="CredentialsContext" type="CredentialsContextType"/>
  * 
+ * ]]></programlisting>
+ * </figure>
  */ 
 
 /*****************************************************************************/

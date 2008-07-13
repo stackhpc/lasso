@@ -1,8 +1,8 @@
-/* $Id: dst_new_data.c,v 1.3 2005/02/08 00:34:58 eraviart Exp $ 
+/* $Id: dst_new_data.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/dst_new_data.h>
 
-/*
- * Schema fragment (liberty-idwsf-dst-v1.0.xsd):
+/**
+ * SECTION:dst_new_data
+ * @short_description: &lt;dst:NewData&gt;
+ *
+ * <figure><title>Schema fragment for dst:NewData</title>
+ * <programlisting><![CDATA[
  *
  * <xs:element name="NewData" minOccurs="0">
  *     <xs:complexType>
@@ -34,6 +38,8 @@
  *         </xs:sequence>
  *     </xs:complexType>
  * </xs:element>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

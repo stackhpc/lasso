@@ -1,8 +1,8 @@
-/* $Id: lib_authn_response_envelope.c,v 1.13 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: lib_authn_response_envelope.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,6 +24,11 @@
 
 #include <lasso/xml/lib_authn_response_envelope.h>
 
+/**
+ * SECTION:lib_authn_response_envelope
+ * @short_description: &lt;lib:AuthnResponseEnvelope&gt;
+ *
+ */
 
 
 /*****************************************************************************/

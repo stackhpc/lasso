@@ -1,8 +1,8 @@
-/* $Id: soap_binding_usage_directive.c,v 1.1 2005/03/11 17:15:15 nclapies Exp $ 
+/* $Id: soap_binding_usage_directive.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/soap_binding_usage_directive.h>
 
-/*
- * Schema fragments (liberty-idwsf-soap-binding-v1.1.xsd):
+/**
+ * SECTION:soap_binding_usage_directive
+ * @short_description: &lt;soapbinding:UsageDirectiveType&gt;
+ *
+ * <figure><title>Schema fragment for soapbinding:UsageDirectiveType</title>
+ * <programlisting><![CDATA[
  * <xs:complexType name="UsageDirectiveType">
  *     <xs:sequence>
  *         <xs:any namespace="##other" processContents="lax" maxOccurs="unbounded"/>
@@ -37,6 +41,8 @@
  * </xs:complexType>
  * <xs:element name="UsageDirective" type="UsageDirectiveType"/>
  *
+ * ]]></programlisting>
+ * </figure>
  */ 
 
 /*****************************************************************************/

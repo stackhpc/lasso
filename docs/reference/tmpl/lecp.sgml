@@ -2,7 +2,7 @@
 LassoLecp
 
 <!-- ##### SECTION Short_Description ##### -->
-Liberty-Enabled Client Profile
+
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
@@ -33,6 +33,14 @@ Liberty-Enabled Client Profile
 
 @server: 
 @Returns: 
+
+
+<!-- ##### FUNCTION lasso_lecp_destroy ##### -->
+<para>
+
+</para>
+
+@lecp: 
 
 
 <!-- ##### FUNCTION lasso_lecp_build_authn_request_envelope_msg ##### -->
@@ -69,14 +77,6 @@ Liberty-Enabled Client Profile
 
 @lecp: 
 @Returns: 
-
-
-<!-- ##### FUNCTION lasso_lecp_destroy ##### -->
-<para>
-
-</para>
-
-@lecp: 
 
 
 <!-- ##### FUNCTION lasso_lecp_init_authn_request ##### -->

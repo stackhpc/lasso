@@ -1,8 +1,8 @@
-/* $Id: saml_name_identifier.h,v 1.9 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: saml_name_identifier.h 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -49,6 +49,21 @@ extern "C" {
 typedef struct _LassoSamlNameIdentifier LassoSamlNameIdentifier;
 typedef struct _LassoSamlNameIdentifierClass LassoSamlNameIdentifierClass;
 
+/**
+ * LassoSamlNameIdentifier:
+ *
+ * @NameQualifier is the provider ID of the provider that created the name
+ * identifier.
+ *
+ * @Format is a string constant defined by the Liberty
+ * Alliance.  The following constants are defined:
+ * #LASSO_LIB_NAME_IDENTIFIER_FORMAT_FEDERATED,
+ * #LASSO_LIB_NAME_IDENTIFIER_FORMAT_ONE_TIME,
+ * #LASSO_LIB_NAME_IDENTIFIER_FORMAT_ENCRYPTED (when providers transmit name
+ * identifiers) and
+ * #LASSO_LIB_NAME_IDENTIFIER_FORMAT_ENTITYID.
+ *
+ */
 struct _LassoSamlNameIdentifier {
 	LassoNode parent;
 	
@@ -65,7 +80,8 @@ struct _LassoSamlNameIdentifierClass {
 LASSO_EXPORT GType lasso_saml_name_identifier_get_type(void);
 LASSO_EXPORT LassoSamlNameIdentifier* lasso_saml_name_identifier_new(void);
 
-LASSO_EXPORT LassoSamlNameIdentifier* lasso_saml_name_identifier_new_from_xmlNode(xmlNode*);
+LASSO_EXPORT LassoSamlNameIdentifier* lasso_saml_name_identifier_new_from_xmlNode(
+		xmlNode *xmlnode);
 
 #ifdef __cplusplus
 }

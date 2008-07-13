@@ -1,8 +1,8 @@
-/* $Id: samlp2_idp_list.c,v 1.2 2005/11/21 18:51:52 fpeters Exp $ 
+/* $Id: samlp2_idp_list.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include "samlp2_idp_list.h"
 
-/*
- * Schema fragment (saml-schema-protocol-2.0.xsd):
+/**
+ * SECTION:samlp2_idp_list
+ * @short_description: &lt;samlp2:IDPList&gt;
+ *
+ * <figure><title>Schema fragment for samlp2:IDPList</title>
+ * <programlisting><![CDATA[
  *
  * <complexType name="IDPListType">
  *   <sequence>
@@ -33,6 +37,8 @@
  *     <element ref="samlp:GetComplete" minOccurs="0"/>
  *   </sequence>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

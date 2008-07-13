@@ -4,9 +4,9 @@ Writing a Liberty service provider in C
 
 :author: Frederic Peters
 :contact: fpeters@entrouvert.com
-:date: $Date: 2006/03/19 19:40:22 $
-:revision: $Revision: 1.39 $
-:copyright: Copyright © 2004, 2005, 2006 Entr'ouvert
+:date: $Date: 2007-06-14 19:50:40 +0200 (Thu, 14 Jun 2007) $
+:revision: $Revision: 3322 $
+:copyright: Copyright © 2004-2007 Entr'ouvert
 
 .. contents:: Table of Contents
 .. section-numbering::
@@ -60,6 +60,80 @@ support.  It is possible to workaround the bug::
   $ ./hello
  Hello world.
 
+Service Provider keys and metadata files
+========================================
+
+Liberty key files
+-----------------
+
+Service Provider needs private and public keys to sign sent messages. Private and
+public keys are loaded from PEM files by Lasso.
+
+If you don't have PEM format keys, you need to create them. To create a couple public key/private key with OpenSSL, use the following commands:
+
+Create a private key in a file named name-of-the-private-key.pem::
+
+  openssl genrsa -out name-of-the-private-key.pem 2048
+
+Extract the public key from the private key in a file named name-of-the-public-key.pem::
+
+  openssl rsa -in name-of-the-private-key.pem -pubout \
+    -out name-of-the-public-key.pem
+
+Your Service Provider also needs Identity Provider public key to verify received messages. You must get it from your Identity Provider.
+
+Liberty Metadata files
+----------------------
+
+Metadata are xml document describing provider configuration, that is its identifier, urls where to send him
+requests and supported Liberty Alliance profiles (that is methods describing how to send or process
+requests).
+
+Your Service Provider needs Identity Provider metadata to know where to send
+requests and how to process the requests he receives from the Identity Provider.
+You must get them from your Identity Provider. Then, you must create some metadata for your
+Service Provider and give them to your Identity Provider as well.
+
+Here is an example service provider metadata that you will have to adapt to your needs::
+
+  <?xml version="1.0"?>
+  <EntityDescriptor
+    providerID="http://sp.example.com/liberty/metadata" 
+    xmlns="urn:liberty:metadata:2003-08">
+    <SPDescriptor protocolSupportEnumeration="urn:liberty:iff:2003-08">
+        <SoapEndpoint>http://sp.example.com/liberty/soap-endpoint</SoapEndpoint>
+        <SingleLogoutServiceURL>sp.example.com/liberty/single-logout</SingleLogoutServiceURL>
+        <AssertionConsumerServiceURL id="AssertionConsumerService1"isDefault="true">http://sp.example.com/liberty/assertion-consumer-service</AssertionConsumerServiceURL>
+        <FederationTerminationNotificationProtocolProfile>http://projectliberty.org/profiles/fedterm-idp-soap</FederationTerminationNotificationProtocolProfile>
+        <FederationTerminationNotificationProtocolProfile>http://projectliberty.org/profiles/fedterm-idp-http</FederationTerminationNotificationProtocolProfile>
+        <SingleLogoutProtocolProfile>http://projectliberty.org/profiles/slo-idp-soap</SingleLogoutProtocolProfile>
+        <SingleLogoutProtocolProfile>http://projectliberty.org/profiles/slo-idp-http</SingleLogoutProtocolProfile>
+        <SingleLogoutProtocolProfile>http://projectliberty.org/profiles/slo-sp-soap</SingleLogoutProtocolProfile>
+        <AuthnRequestsSigned>true</AuthnRequestsSigned>
+    </SPDescriptor>
+    <Organization>
+        <OrganizationName>Example Organization</OrganizationName>
+    </Organization>
+  </EntityDescriptor>
+
+Where sp.example.com is the domain name of Service Provider.
+
+``http://sp.example.com/liberty/metadata`` is the Service Provider Liberty
+identifier.
+
+``http://sp.example.com/liberty/soap-endpoint`` is the Service Provider SOAP
+endpoint where Identity Provider send SOAP single logout or defederation
+requests.
+
+``http://sp.example.com/liberty/assertion-consumer-service`` is the Service
+Provider assertion consumer url where Identity Provider must return single sign
+on authentication response.
+
+``http://sp.example.com/liberty/single-logout`` is the Service Provider single
+logout url. Service Provider can initiate single logout from this url or
+process HTTP single logout request from Identity Provider.  `
+
+More information about these metadatas can be found in Liberty Alliance specifications.
 
 Liberty and Lasso profiles
 ==========================
@@ -86,8 +160,8 @@ The ``LassoServer`` object may be created as follows:
 
   LassoServer *server;
   server = lasso_server_new("sp-metadata.xml",
-  		"sp-private-key.pem", "sp-crt.pem",
-		LASSO_SIGNATURE_METHOD_RSA_SHA1);
+  		"sp-private-key.pem", NULL, "sp-crt.pem");
+
   lasso_server_add_provider(server, LASSO_PROVIDER_ROLE_IDP,
   		"idp-metadata.xml", "idp-public-key.pem", "ca-crt.pem");
 
@@ -100,7 +174,9 @@ The ``LassoServer`` object may be created as follows:
 - ``idp-public-key.pem`` is the identity provider public key; used to verify
   signature in documents sent by the identity provider
 - ``ca-crt.pem`` is the certificate of the certification authority used by the
-  identity provider.
+  identity provider
+- NULL, the third argument, would be used if the private key was protected by a
+  password.
 
 It is of course possible to have several calls so ``lasso_server_add_provider``
 if there are more than one identity provider.
@@ -195,7 +271,7 @@ defined in the metadata file).
   LASSO_LIB_AUTHN_REQUEST(LASSO_PROFILE(login)->request)->ForceAuthn = TRUE;
   LASSO_LIB_AUTHN_REQUEST(LASSO_PROFILE(login)->request)->IsPassive = FALSE;
   LASSO_LIB_AUTHN_REQUEST(LASSO_PROFILE(login)->request)->NameIDPolicy =
-      strdup(LASSO_LIB_NAME_ID_POLICY_TYPE_FEDERATED);
+      strdup(LASSO_LIB_NAMEID_POLICY_TYPE_FEDERATED);
   LASSO_LIB_AUTHN_REQUEST(LASSO_PROFILE(login)->request)->consent =
       strdup(LASSO_LIB_CONSENT_OBTAINED);
   lasso_login_build_authn_request_msg(login);
@@ -313,8 +389,9 @@ Identity and session dumps should be restored to prepare the logout request.
   lasso_logout_build_request_msg(logout);
 
 
-The service provider must then make a SOAP request to the identity provider;
-``msg_url`` and ``msg_body``.  You should then pass the answer to Lasso::
+The service provider must then make a SOAP request to the identity provider as above with
+LASSO_PROFILE(logout)->msg_url and LASSO_PROFILE(logout)->msg_body values.
+You should then pass the answer to Lasso::
 
   lasso_logout_process_response_msg(logout, answer);
 
@@ -325,7 +402,7 @@ end of the single sign on profile.
 Proper Error Checking
 =====================
 
-Most Lasso functions returns 0 on success and a negative number on failure.  It
+Most Lasso functions return 0 on success and a negative number on failure.  It
 is strongly advised to check this return code on each call.
 
 ::
@@ -401,7 +478,7 @@ API Reference
 
 
 .. _Liberty ID-FF Bindings and Profiles Specification:
-   http://www.projectliberty.org/specs/draft-liberty-idff-bindings-profiles-1.2-errata-v1.0.pdf
+   http://www.projectliberty.org/liberty/content/download/319/2369/file/draft-liberty-idff-bindings-profiles-1.2-errata-v2.0.pdf
 
 .. _LassoLogin: /documentation/api-reference/lassologin.html
 .. _LassoLogout: /documentation/api-reference/lassologout.html

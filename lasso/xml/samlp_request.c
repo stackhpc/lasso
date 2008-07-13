@@ -1,8 +1,8 @@
-/* $Id: samlp_request.c,v 1.16 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: samlp_request.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,7 +24,12 @@
 
 #include <lasso/xml/samlp_request.h>
 
-/*
+/**
+ * SECTION:samlp_request
+ * @short_description: &lt;samlp:Request&gt;
+ *
+ * <figure><title>Schema fragment for lib:Scoping</title>
+ * <programlisting><![CDATA[
  * <element name="Request" type="samlp:RequestType"/>
  * <complexType name="RequestType">
  *    <complexContent>
@@ -43,6 +48,8 @@
  * </complexType>
  * 
  * <element name="AssertionArtifact" type="string"/>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

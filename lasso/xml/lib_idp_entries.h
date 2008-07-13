@@ -1,8 +1,8 @@
-/* $Id: lib_idp_entries.h,v 1.7 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: lib_idp_entries.h 3483 2008-02-18 17:29:50Z bdauvergne $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -52,7 +52,7 @@ struct _LassoLibIDPEntries{
 	
 	/*< public >*/
 	/* <xs:element ref="IDPEntry" maxOccurs="unbounded"/> */
-	GList *IDPEntry;
+	GList *IDPEntry; /* of LassoLibIDPEntry */
 };
 
 struct _LassoLibIDPEntriesClass {

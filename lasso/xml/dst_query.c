@@ -1,8 +1,8 @@
-/* $Id: dst_query.c,v 1.15 2005/09/11 09:08:30 fpeters Exp $ 
+/* $Id: dst_query.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/dst_query.h>
 
-/*
- * Schema fragment (liberty-idwsf-dst-v1.0.xsd):
+/**
+ * SECTION:dst_query
+ * @short_description: &lt;dst:Query&gt;
+ *
+ * <figure><title>Schema fragment for dst:Query</title>
+ * <programlisting><![CDATA[
  *
  * <xs:element name="Query" type="QueryType"/>
  * <xs:complexType name="QueryType">
@@ -45,6 +49,8 @@
  *     </xs:annotation>
  *   <xs:restriction base="xs:string"/>
  * </xs:simpleType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/
@@ -71,8 +77,9 @@ insure_namespace(xmlNode *xmlnode, xmlNs *ns)
 
 	xmlSetNs(xmlnode, ns);
 	while (t) {
-		if (t->type == XML_ELEMENT_NODE && t->ns == NULL)
+		if (t->type == XML_ELEMENT_NODE && t->ns == NULL) {
 			insure_namespace(t, ns);
+		}
 		t = t->next;
 	}
 }
@@ -94,11 +101,13 @@ get_xmlNode(LassoNode *node, gboolean lasso_dump)
 static int
 init_from_xml(LassoNode *node, xmlNode *xmlnode)
 {
-	int rc;
 	LassoDstQuery *query = LASSO_DST_QUERY(node);
+	int rc;
 
 	rc = parent_class->init_from_xml(node, xmlnode);
-	if (rc) return rc;
+	if (rc) {
+	        return rc;
+	}
 
 	query->hrefServiceType = g_strdup((char*)xmlnode->ns->href);
 	query->prefixServiceType = lasso_get_prefix_for_dst_service_href(
@@ -180,8 +189,9 @@ lasso_dst_query_new(LassoDstQueryItem *queryItem)
 
 	query = g_object_new(LASSO_TYPE_DST_QUERY, NULL);
 
-	if (queryItem)
+	if (queryItem) {
 		query->QueryItem = g_list_append(query->QueryItem, queryItem);
+	}
 
 	return query;
 }

@@ -1,8 +1,8 @@
-/* $Id: samlp2_logout_response.c,v 1.1 2005/11/21 18:51:52 fpeters Exp $ 
+/* $Id: samlp2_logout_response.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,10 +24,16 @@
 
 #include "samlp2_logout_response.h"
 
-/*
- * Schema fragment (saml-schema-protocol-2.0.xsd):
+/**
+ * SECTION:samlp2_logout_response
+ * @short_description: &lt;samlp2:LogoutResponse&gt;
+ *
+ * <figure><title>Schema fragment for samlp2:LogoutResponse</title>
+ * <programlisting><![CDATA[
  *
  * <element name="LogoutResponse" type="samlp:StatusResponseType"/>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/
@@ -46,9 +52,18 @@ static gchar*
 build_query(LassoNode *node)
 {
 	char *ret, *deflated_message;
+	LassoSamlp2LogoutResponse *response = LASSO_SAMLP2_LOGOUT_RESPONSE(node);
 
 	deflated_message = lasso_node_build_deflated_query(node);
-	ret = g_strdup_printf("SAMLResponse=%s", deflated_message);
+	if (deflated_message == NULL) {
+		return NULL;
+	}
+	if (response->relayState) {
+		ret = g_strdup_printf("SAMLResponse=%s&RelayState=%s",
+				deflated_message, response->relayState);
+	} else {
+		ret = g_strdup_printf("SAMLResponse=%s", deflated_message);
+	}
 	/* XXX: must support RelayState (which profiles?) */
 	g_free(deflated_message);
 	return ret;
@@ -75,6 +90,7 @@ init_from_query(LassoNode *node, char **query_fields)
 static void
 instance_init(LassoSamlp2LogoutResponse *node)
 {
+	node->relayState = NULL; /* XXX: free me sometimes */
 }
 
 static void

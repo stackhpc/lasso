@@ -1,8 +1,8 @@
-/* $Id: saml_assertion.c,v 1.35 2005/07/30 22:36:54 fpeters Exp $
+/* $Id: saml_assertion.c 3704 2008-05-15 21:17:44Z fpeters $
  *
- * Lasso - A free implementation of the Samlerty Alliance specifications.
+ * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -28,8 +28,12 @@
 
 #include <lasso/xml/saml_assertion.h>
 
-/*
- * Schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
+/**
+ * SECTION:saml_assertion
+ * @short_description: &lt;saml:Assertion&gt;
+ *
+ * <figure><title>Schema fragment for saml:Assertion</title>
+ * <programlisting><![CDATA[
  * 
  * <element name="Assertion" type="saml:AssertionType"/>
  * <complexType name="AssertionType">
@@ -56,6 +60,8 @@
  * <simpleType name="IDType">
  *   <restriction base="string"/>
  * </simpleType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 

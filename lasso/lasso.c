@@ -1,8 +1,8 @@
-/* $Id: lasso.c,v 1.28 2005/02/17 13:35:15 fpeters Exp $
+/* $Id: lasso.c 3704 2008-05-15 21:17:44Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -21,6 +21,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
+/**
+ * SECTION:lasso
+ * @short_description: Initialization functions
+ *
+ **/
 
 #include <xmlsec/xmlsec.h>
 #include <xmlsec/crypto.h>
@@ -82,7 +88,7 @@ int lasso_init()
 	/* Init xmlsec library */
 	if (xmlSecInit() < 0) {
 		message(G_LOG_LEVEL_CRITICAL, "XMLSec initialization failed.");
-		return -1;
+		return LASSO_ERROR_UNDEFINED;
 	}
 
 	/* Load default crypto engine if we are supporting dynamic
@@ -96,20 +102,20 @@ int lasso_init()
 				"Unable to load default xmlsec-crypto library. Make sure"
 				"that you have it installed and check shared libraries path"
 				"(LD_LIBRARY_PATH) environment variable.");
-		return -1;	
+		return LASSO_ERROR_UNDEFINED;
 	}
 #endif /* XMLSEC_CRYPTO_DYNAMIC_LOADING */
 
 	/* Init crypto library */
 	if (xmlSecCryptoAppInit(NULL) < 0) {
 		message(G_LOG_LEVEL_CRITICAL, "Crypto initialization failed.");
-		return -1;
+		return LASSO_ERROR_UNDEFINED;
 	}
 
 	/* Init xmlsec-crypto library */
 	if (xmlSecCryptoInit() < 0) {
 		message(G_LOG_LEVEL_CRITICAL, "xmlsec-crypto initialization failed.");
-		return -1;
+		return LASSO_ERROR_UNDEFINED;
 	}
 	return 0;
 }
@@ -197,7 +203,7 @@ lasso_check_version(int major, int minor, int subminor, LassoCheckVersionMode mo
 	}
 
 	if (mode > LASSO_CHECK_VERSION_NUMERIC)
-		return -1;
+		return LASSO_ERROR_UNDEFINED;
 
 	return 1;
 }

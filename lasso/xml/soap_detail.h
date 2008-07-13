@@ -1,8 +1,8 @@
-/* $Id: soap_detail.h,v 1.1 2005/11/15 11:01:17 nclapies Exp $ 
+/* $Id: soap_detail.h 3237 2007-05-30 17:17:45Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -58,6 +58,7 @@ struct _LassoSoapDetailClass {
 LASSO_EXPORT GType lasso_soap_detail_get_type(void);
 
 LASSO_EXPORT LassoSoapDetail* lasso_soap_detail_new(void);
+LASSO_EXPORT LassoSoapDetail* lasso_soap_detail_new_from_message(const gchar *message);
 
 #ifdef __cplusplus
 }

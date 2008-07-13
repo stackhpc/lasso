@@ -1,8 +1,8 @@
-/* $Id: is_interaction_request.c,v 1.4 2005/01/23 16:36:44 eraviart Exp $ 
+/* $Id: is_interaction_request.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/is_interaction_request.h>
 
-/*
- * Schema fragments (liberty-idwsf-interaction-svc-v1.0.xsd):
+/**
+ * SECTION:is_interaction_request
+ * @short_description: &lt;is:InteractionRequest&gt;
+ *
+ * <figure><title>Schema fragment for is:InteractionRequest</title>
+ * <programlisting><![CDATA[
  *
  * <xs:element name="InteractionRequest" type="InteractionRequestType"/>
  * <xs:complexType name="InteractionRequestType">
@@ -39,6 +43,8 @@
  *   <xs:attribute name="maxInteractTime" type="xs:integer" use="optional"/>
  *   <xs:attribute name="signed" type="xs:token" use="optional"/>
  * </xs:complexType>
+ * ]]></programlisting>
+ * </figure>
  */ 
 
 /*****************************************************************************/
@@ -46,15 +52,19 @@
 /*****************************************************************************/
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "ResourceID", SNIPPET_NODE, G_STRUCT_OFFSET(LassoIsInteractionRequest, ResourceID) },
-	{ "EncryptedResourceID", SNIPPET_NODE, G_STRUCT_OFFSET(LassoIsInteractionRequest,
-							       EncryptedResourceID) },
-	{ "Inquiry", SNIPPET_LIST_NODES, G_STRUCT_OFFSET(LassoIsInteractionRequest, Inquiry) },
+	{ "ResourceID", SNIPPET_NODE,
+		G_STRUCT_OFFSET(LassoIsInteractionRequest, ResourceID) },
+	{ "EncryptedResourceID", SNIPPET_NODE,
+		G_STRUCT_OFFSET(LassoIsInteractionRequest, EncryptedResourceID) },
+	{ "Inquiry", SNIPPET_LIST_NODES,
+		G_STRUCT_OFFSET(LassoIsInteractionRequest, Inquiry) },
 	/* TODO : KeyInfo */
-	{ "id", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoIsInteractionRequest, id) },
-	{ "language", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoIsInteractionRequest, language) },
-	{ "maxInteractTime", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoIsInteractionRequest,
-								maxInteractTime) },
+	{ "id", SNIPPET_ATTRIBUTE,
+		G_STRUCT_OFFSET(LassoIsInteractionRequest, id) },
+	{ "language", SNIPPET_ATTRIBUTE,
+		G_STRUCT_OFFSET(LassoIsInteractionRequest, language) },
+	{ "maxInteractTime", SNIPPET_ATTRIBUTE | SNIPPET_OPTIONAL,
+		G_STRUCT_OFFSET(LassoIsInteractionRequest, maxInteractTime) },
 	/* TODO : signed */
 	{ NULL, 0, 0}
 };
@@ -72,7 +82,7 @@ instance_init(LassoIsInteractionRequest *node)
 	/* TODO : KeyInfo */
 	node->id = NULL;
 	node->language = NULL;
-	node->maxInteractTime = 0; /* FIXME : optional integer attribute */
+	node->maxInteractTime = 0;
 	/* TODO : signed */
 }
 
