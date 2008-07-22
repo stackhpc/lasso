@@ -1,4 +1,4 @@
-/* $Id: login.c 3725 2008-05-21 17:28:44Z dlaniel $
+/* $Id: login.c 3792 2008-07-22 12:07:18Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -800,7 +800,7 @@ lasso_login_accept_sso(LassoLogin *login)
 	}
 
 	/* create federation, only if nameidentifier format is Federated */
-	if (strcmp(ni->Format, LASSO_LIB_NAME_IDENTIFIER_FORMAT_FEDERATED) == 0) {
+	if (ni->Format && strcmp(ni->Format, LASSO_LIB_NAME_IDENTIFIER_FORMAT_FEDERATED) == 0) {
 		federation = lasso_federation_new(LASSO_PROFILE(login)->remote_providerID);
 		if (ni != NULL && idp_ni != NULL) {
 			federation->local_nameIdentifier = g_object_ref(ni);
@@ -1276,6 +1276,11 @@ lasso_login_build_response_msg(LassoLogin *login, gchar *remote_providerID)
 		g_free(login->private_data->soap_request_msg);
 		login->private_data->soap_request_msg = NULL;
 
+		/* lasso_profile_set_session_from_dump has not been called */
+		if (profile->session == NULL) {
+			ret = LASSO_PROFILE_ERROR_SESSION_NOT_FOUND;
+		}
+
 		/* change status code into RequestDenied if signature is
 		 * invalid or not found or if an error occurs during
 		 * verification */
@@ -1284,7 +1289,7 @@ lasso_login_build_response_msg(LassoLogin *login, gchar *remote_providerID)
 					LASSO_SAML_STATUS_CODE_REQUEST_DENIED);
 		}
 
-		if (profile->session && ret == 0) {
+		if (ret == 0) {
 			/* get assertion in session and add it in response */
 			LassoSamlAssertion *assertion;
 			LassoSamlpStatus *status;
@@ -1553,7 +1558,8 @@ lasso_login_init_idp_initiated_authn_request(LassoLogin *login,
 	/* no RequestID attribute or it would be used in response assertion */
 	g_free(LASSO_SAMLP_REQUEST_ABSTRACT(profile->request)->RequestID);
 	LASSO_SAMLP_REQUEST_ABSTRACT(profile->request)->RequestID = NULL;
-	LASSO_LIB_AUTHN_REQUEST(profile->request)->NameIDPolicy = LASSO_LIB_NAMEID_POLICY_TYPE_ANY;
+	LASSO_LIB_AUTHN_REQUEST(profile->request)->NameIDPolicy = g_strdup(
+			LASSO_LIB_NAMEID_POLICY_TYPE_ANY);
 
 	return 0;
 }
@@ -1678,14 +1684,10 @@ lasso_login_must_authenticate(LassoLogin *login)
 
 	} else {
 		/* if nothing specific was asked; don't look for any
-		 * assertions, a session is enough
+		 * particular assertions, one is enough
 		 */
-		matched = (profile->session != NULL);
-		if (matched) {
-			matched = profile->remote_providerID 
-				&& lasso_session_get_assertion(profile->session, 
-					profile->remote_providerID) != NULL;
-		}
+		matched = (profile->session != NULL && \
+				g_hash_table_size(profile->session->assertions) > 0);
 	}
 	g_list_free(assertions);
 

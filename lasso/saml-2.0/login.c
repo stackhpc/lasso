@@ -1,4 +1,4 @@
-/* $Id: login.c 3724 2008-05-21 14:20:33Z dlaniel $
+/* $Id: login.c 3792 2008-07-22 12:07:18Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -387,14 +387,10 @@ lasso_saml20_login_must_authenticate(LassoLogin *login)
 
 	} else {
 		/* if nothing specific was asked; don't look for any
-		 * assertions, a session is enough
+		 * particular assertions, one is enough
 		 */
-		matched = (profile->session != NULL);
-		if (matched) {
-			matched = profile->remote_providerID 
-				&& lasso_session_get_assertion(profile->session, 
-					profile->remote_providerID) != NULL;
-		}
+		matched = (profile->session != NULL && \
+				g_hash_table_size(profile->session->assertions) > 0);
 	}
 	g_list_free(assertions);
 
@@ -1460,6 +1456,11 @@ lasso_saml20_login_build_authn_response_msg(LassoLogin *login)
 		profile->msg_body = lasso_node_export_to_base64(LASSO_NODE(profile->response));
 	} else {
 		char *url, *query;
+
+		/* don't include signature stuff in XML when exporting to a
+		 * query string */
+		LASSO_SAMLP2_STATUS_RESPONSE(profile->response)->sign_type =
+			LASSO_SIGNATURE_TYPE_NONE;
 
 		url = profile->msg_url;
 		query = lasso_node_export_to_query(profile->response,

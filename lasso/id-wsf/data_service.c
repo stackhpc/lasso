@@ -1,4 +1,4 @@
-/* $Id: data_service.c 3712 2008-05-20 13:14:06Z dlaniel $
+/* $Id: data_service.c 3783 2008-05-30 12:08:24Z dlaniel $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -854,7 +854,8 @@ lasso_data_service_process_modify_response_msg(LassoDataService *service, const 
 	g_return_val_if_fail(soap_msg != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
 
 	envelope = LASSO_SOAP_ENVELOPE(lasso_node_new_from_dump(soap_msg));
-	if (envelope == NULL || ! envelope->Body || ! envelope->Body->any || ! LASSO_IS_NODE(envelope->Body->any->data)) {
+	if (envelope == NULL || ! envelope->Body || ! envelope->Body->any ||
+			! LASSO_IS_NODE(envelope->Body->any->data)) {
 		return critical_error(LASSO_PROFILE_ERROR_INVALID_MSG);
 	}
 
