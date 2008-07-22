@@ -1,4 +1,4 @@
-/* $Id: logout.c 3725 2008-05-21 17:28:44Z dlaniel $
+/* $Id: logout.c 3778 2008-05-29 14:14:48Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -211,6 +211,12 @@ lasso_saml20_logout_build_request_msg(LassoLogout *logout, LassoProvider *remote
 	
 	if (logout->initial_http_request_method == LASSO_HTTP_METHOD_REDIRECT) {
 		char *url, *query;
+
+		/* don't include signature stuff in XML when exporting to a
+		 * query string */
+		LASSO_SAMLP2_REQUEST_ABSTRACT(profile->request)->sign_type =
+			LASSO_SIGNATURE_TYPE_NONE;
+
 		url = lasso_provider_get_metadata_one(remote_provider,
 				"SingleLogoutService HTTP-Redirect");
 		if (url == NULL) {
@@ -542,6 +548,11 @@ lasso_saml20_logout_build_response_msg(LassoLogout *logout)
 	}
 
 	if (profile->http_request_method == LASSO_HTTP_METHOD_REDIRECT) {
+		/* don't include signature stuff in XML when exporting to a
+		 * query string */
+		LASSO_SAMLP2_STATUS_RESPONSE(profile->response)->sign_type =
+			LASSO_SIGNATURE_TYPE_NONE;
+
 		/* get the provider */
 		provider = g_hash_table_lookup(profile->server->providers,
 				profile->remote_providerID);

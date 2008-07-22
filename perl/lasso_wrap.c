@@ -63274,6 +63274,11 @@ XS(SWIG_init) {
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
   /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "LASSO_PARAM_ERROR_NON_INITIALIZED_OBJECT", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(-504)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "LOGIN_ERROR_FEDERATION_NOT_FOUND", TRUE | 0x2);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(601)));
     SvREADONLY_on(sv);
@@ -63381,6 +63386,26 @@ XS(SWIG_init) {
   /*@SWIG:%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "WSF_PROFILE_ERROR_MISSING_SECURITY", TRUE | 0x2);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(-1101)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "LASSO_WSF_PROFILE_ERROR_MISSING_ASSERTION_ID", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(-1102)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "LASSO_WSF_PROFILE_ERROR_MISSING_ENDPOINT", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(-1103)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "LASSO_WSF_PROFILE_ERROR_SOAP_FAULT", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(1104)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "LASSO_WSF_PROFILE_ERROR_UNSUPPORTED_SECURITY_MECHANISM", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(1105)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
   /*@SWIG:%set_constant@*/ do {
