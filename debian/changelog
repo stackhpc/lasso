@@ -1,3 +1,9 @@
+lasso (2.2.1-2) unstable; urgency=high
+
+  * Correctly check for signature validity (CVE-2009-0050) (Closes: #511262)
+
+ -- Frederic Peters <fpeters@debian.org>  Fri, 09 Jan 2009 10:30:58 +0100
+
 lasso (2.2.1-1) unstable; urgency=low
 
   * New upstream release.
