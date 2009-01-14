@@ -1,3 +1,12 @@
+lasso (0.6.3-4ubuntu1.1) dapper-security; urgency=low
+
+  * SECURITY UPDATE: lasso does not properly check the return value from the
+    OpenSSL DSA_verify function (LP: #317181).
+    - lasso/xml/tools.c: Correctly check for signature validity.
+    - CVE-2009-0050
+
+ -- Stefan Lesicnik <stefan@lsd.co.za>  Wed, 14 Jan 2009 20:26:34 +0200
+
 lasso (0.6.3-4ubuntu1) dapper; urgency=low
 
   * Resynchronise with Debian.
