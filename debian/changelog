@@ -1,3 +1,9 @@
+lasso (2.2.1-2build1) jaunty; urgency=low
+
+  * No change rebuild to build with Python 2.6.
+
+ -- Alessio Treglia <quadrispro@ubuntu.com>  Mon, 09 Mar 2009 22:18:41 +0100
+
 lasso (2.2.1-2) unstable; urgency=high
 
   * Correctly check for signature validity (CVE-2009-0050) (Closes: #511262)

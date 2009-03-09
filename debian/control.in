@@ -1,7 +1,8 @@
 Source: lasso
 Priority: optional
 Section: libs
-Maintainer: Frederic Peters <fpeters@debian.org>
+Maintainer: Ubuntu MOTU Developers <ubuntu-motu@lists.ubuntu.com>
+XSBC-Original-Maintainer: Frederic Peters <fpeters@debian.org>
 Build-Depends: debhelper (>= 5.0.37.2), libxml2-dev, libxslt1-dev, libxmlsec1-dev, libxmlsec1-openssl, libglib2.0-dev, python-all-dev (>= 2.3.5-11), libexpat1-dev, fastjar, python-central (>= 0.5), gcc-4.3, java-gcj-compat [!alpha !arm !hppa !hurd-i386], gcj [!alpha !arm !hppa !hurd-i386], gcj-4.3 [!alpha !arm !hppa !hurd-i386], php5-dev, python-lxml
 XS-Python-Version: all
 Standards-Version: 3.8.0
