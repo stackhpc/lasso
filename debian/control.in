@@ -75,7 +75,7 @@ Description: Library for Liberty Alliance and SAML protocols - Perl bindings
 Package: php5-lasso
 Section: web
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:depends}
+Depends: ${shlibs:Depends}, ${php:Depends}, ${misc:depends}
 Description: Library for Liberty Alliance and SAML protocols - PHP 5 bindings
  Lasso is an implementation of Liberty Alliance and related protocols, for
  network identity federations, single sign-on and other web services protocols.
