@@ -1,3 +1,10 @@
+lasso (2.2.1-3) unstable; urgency=low
+
+  * debian/control, debian/rules: add missing dependency on phpapi-$foo.
+    (Closes: #566288)
+
+ -- Frederic Peters <fpeters@debian.org>  Sun, 24 Jan 2010 16:25:18 +0100
+
 lasso (2.2.1-2) unstable; urgency=high
 
   * Correctly check for signature validity (CVE-2009-0050) (Closes: #511262)

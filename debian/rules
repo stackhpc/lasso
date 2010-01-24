@@ -161,6 +161,7 @@ binary-arch: build install
 	dh_makeshlibs -a -V
 	dh_installdeb
 	dh_shlibdeps -a
+	echo "php:Depends=phpapi-`php-config5 --phpapi`" >> $(CURDIR)/debian/php5-lasso.substvars
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
