@@ -1,3 +1,9 @@
+lasso (2.2.1-4build1) lucid; urgency=low
+
+  * No-change rebuild against php5 5.3.
+
+ -- Michael Bienia <geser@ubuntu.com>  Fri, 12 Mar 2010 16:40:27 +0100
+
 lasso (2.2.1-4) unstable; urgency=low
 
   * debian/control, debian/rules: updated build-depends for recent gcj
