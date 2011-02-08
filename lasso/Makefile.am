@@ -1,4 +1,7 @@
-SUBDIRS = xml id-ff id-wsf saml-2.0 id-wsf-2.0
+SUBDIRS = xml id-ff saml-2.0
+if WSF_ENABLED
+SUBDIRS +=  id-wsf-2.0 id-wsf
+endif
 
 liblassoincludedir = $(includedir)/lasso
 
@@ -13,22 +16,23 @@ LTRCCOMPILE = $(LIBTOOL) --tag=RC --mode=compile $(RC) \
 lasso.rc.lo: $(top_srcdir)/win32/lasso.rc
 	$(LTRCCOMPILE) -i $< -o $@
 
-
 lib_LTLIBRARIES = liblasso.la
 
-liblassoinclude_HEADERS = export.h lasso.h lasso_config.h errors.h
+liblassoinclude_HEADERS = export.h lasso.h lasso_config.h errors.h \
+			  registry.h ctypes.h
+nodist_liblassoinclude_HEADERS = debug.h utils.h registry-private.h logging.h backward_comp.h
 BUILT_SOURCES = types.c errors.c symbols.sym
 
-liblasso_la_SOURCES = lasso.c errors.c
+liblasso_la_SOURCES = lasso.c errors.c registry.c utils.c logging.c
 
 if WSF_ENABLED
 SYMBOLS_ARGS = -wsf
 endif
 
-types.c:
+types.c: $(srcdir)/*.h $(srcdir)/*/*.h $(srcdir)/*/*/*.h
 	$(PYTHON) $(srcdir)/extract_types.py $(srcdir) $(SYMBOLS_ARGS)
 
-symbols.sym:
+symbols.sym: $(srcdir)/*.h $(srcdir)/*/*.h $(srcdir)/*/*/*.h
 	$(PYTHON) $(srcdir)/extract_symbols.py $(srcdir) $(SYMBOLS_ARGS) > symbols.sym
 
 MAINTAINERCLEANFILES = \
@@ -36,9 +40,10 @@ MAINTAINERCLEANFILES = \
 	lasso_config.h.in
 
 clean-local:
-	-rm types.c symbols.sym errors.c
+	-rm -f types.c symbols.sym errors.c
 
-EXTRA_DIST = utils.h extract_types.py extract_symbols.py build_strerror.py
+EXTRA_DIST = $(nodist_liblassoinclude_HEADERS) extract_types.py extract_symbols.py build_strerror.py \
+	     errors.c.in extract_sections.py errors.c
 
 if WSF_ENABLED
 WSF_LIB_FILE = $(top_builddir)/lasso/id-wsf/liblasso-id-wsf.la
@@ -67,6 +72,7 @@ else
 liblasso_la_LIBADD = \
 	$(top_builddir)/lasso/xml/liblasso-xml.la \
 	$(top_builddir)/lasso/xml/saml-2.0/liblasso-xml-saml2.la \
+	$(top_builddir)/lasso/xml/soap-1.1/liblasso-xml-soap11.la \
 	$(top_builddir)/lasso/id-ff/liblasso-id-ff.la \
 	$(top_builddir)/lasso/saml-2.0/liblasso-saml-20.la \
 	$(WSF_LIB_FILE) \
@@ -79,10 +85,8 @@ liblasso_la_LDFLAGS = -no-undefined -version-info @LASSO_VERSION_INFO@  \
 	-export-symbols symbols.sym
 endif
 
-errors.c: errors.h
-	python build_strerror.py >$(srcdir)/.errors.c.new 
-	if ! cmp -s $(srcdir)/errors.c $(srcdir)/.errors.c.new; then \
-	mv -f $(srcdir)/.errors.c.new $(srcdir)/errors.c; else \
-	rm $(srcdir)/.errors.c.new; fi
-
-.PHONY: types.c symbols.sym
+$(srcdir)/errors.c: $(srcdir)/errors.h $(srcdir)/build_strerror.py
+	python $(srcdir)/build_strerror.py $(srcdir) >.errors.c.new
+	if ! cmp -s $(srcdir)/errors.c .errors.c.new; then \
+	mv -f .errors.c.new $@; else \
+	rm .errors.c.new; fi

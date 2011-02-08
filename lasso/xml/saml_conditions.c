@@ -1,28 +1,29 @@
-/* $Id: saml_conditions.c 3704 2008-05-15 21:17:44Z fpeters $
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/saml_conditions.h>
+#include "private.h"
+#include "saml_conditions.h"
 
 /**
  * SECTION:saml_conditions
@@ -30,7 +31,7 @@
  *
  * <figure><title>Schema fragment for saml:Conditions</title>
  * <programlisting><![CDATA[
- * 
+ *
  * <element name="Conditions" type="saml:ConditionsType"/>
  * <complexType name="ConditionsType">
  *   <choice minOccurs="0" maxOccurs="unbounded">
@@ -50,26 +51,18 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "AudienceRestrictionCondition", SNIPPET_LIST_NODES,
-		G_STRUCT_OFFSET(LassoSamlConditions, AudienceRestrictionCondition) },
+		G_STRUCT_OFFSET(LassoSamlConditions, AudienceRestrictionCondition), NULL, NULL, NULL},
 	{ "NotBefore", SNIPPET_ATTRIBUTE,
-		G_STRUCT_OFFSET(LassoSamlConditions, NotBefore) },
+		G_STRUCT_OFFSET(LassoSamlConditions, NotBefore), NULL, NULL, NULL},
 	{ "NotOnOrAfter", SNIPPET_ATTRIBUTE,
-		G_STRUCT_OFFSET(LassoSamlConditions, NotOnOrAfter) },
-	{ NULL, 0, 0 }
+		G_STRUCT_OFFSET(LassoSamlConditions, NotOnOrAfter), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoSamlConditions *node)
-{
-	node->Condition = NULL;
-	node->AudienceRestrictionCondition = NULL;
-	node->NotBefore = NULL;
-	node->NotOnOrAfter = NULL;
-}
 
 static void
 class_init(LassoSamlConditionsClass *klass)
@@ -97,7 +90,8 @@ lasso_saml_conditions_get_type()
 			NULL,
 			sizeof(LassoSamlConditions),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,
@@ -108,7 +102,7 @@ lasso_saml_conditions_get_type()
 
 /**
  * lasso_saml_conditions_new:
- * 
+ *
  * Creates a new #LassoSamlConditions object.
  *
  * Return value: a newly created #LassoSamlConditions object

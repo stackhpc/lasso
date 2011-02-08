@@ -1,28 +1,32 @@
-/* $Id: disco_description.c 3704 2008-05-15 21:17:44Z fpeters $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/disco_description.h>
+#include "private.h"
+#include "disco_description.h"
+#include "./idwsf_strings.h"
+#include "../id-wsf/wsf_utils.h"
+#include "../utils.h"
 
 /**
  * SECTION:disco_description
@@ -30,7 +34,7 @@
  *
  * <figure><title>Schema fragment for disco:DescriptionType</title>
  * <programlisting><![CDATA[
- * 
+ *
  * <xs:complexType name="DescriptionType">
  *   <xs:sequence>
  *     <xs:element name="SecurityMechID" type="xs:anyURI" minOccurs="1" maxOccurs="unbounded"/>
@@ -42,14 +46,14 @@
  *   </xs:sequence>
  *   <xs:attribute name="id" type="xs:ID"/>
  * </xs:complexType>
- * 
+ *
  * <xs:group name="WsdlRef">
  *   <xs:sequence>
  *     <xs:element name="WsdlURI" type="xs:anyURI"/>
  *     <xs:element name="ServiceNameRef" type="xs:QName"/>
  *   </xs:sequence>
  * </xs:group>
- * 
+ *
  * <xs:group name="BriefSoapHttpDescription">
  *   <xs:sequence>
  *     <xs:element name="Endpoint" type="xs:anyURI"/>
@@ -66,36 +70,21 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "SecurityMechID", SNIPPET_LIST_CONTENT,
-	  G_STRUCT_OFFSET(LassoDiscoDescription, SecurityMechID) },
+		G_STRUCT_OFFSET(LassoDiscoDescription, SecurityMechID), NULL, NULL, NULL},
 	{ "CredentialRef", SNIPPET_LIST_CONTENT,
-	  G_STRUCT_OFFSET(LassoDiscoDescription, CredentialRef) },
-	{ "WsdlURI", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoDiscoDescription, WsdlURI) },
+		G_STRUCT_OFFSET(LassoDiscoDescription, CredentialRef), NULL, NULL, NULL},
+	{ "WsdlURI", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoDiscoDescription, WsdlURI), NULL, NULL, NULL},
 	{ "ServiceNameRef", SNIPPET_CONTENT,
-	  G_STRUCT_OFFSET(LassoDiscoDescription, ServiceNameRef) },
-	{ "Endpoint", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoDiscoDescription, Endpoint) },
-	{ "SoapAction", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoDiscoDescription, SoapAction) },
-	{ "id", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoDiscoDescription, id) },
-	{ NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoDiscoDescription, ServiceNameRef), NULL, NULL, NULL},
+	{ "Endpoint", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoDiscoDescription, Endpoint), NULL, NULL, NULL},
+	{ "SoapAction", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoDiscoDescription, SoapAction), NULL, NULL, NULL},
+	{ "id", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoDiscoDescription, id), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
-
-static void
-instance_init(LassoDiscoDescription *node)
-{
-	node->SecurityMechID = NULL;
-	node->CredentialRef = NULL;
-
-	node->WsdlURI= NULL;
-	node->ServiceNameRef = NULL;
-
-	node->Endpoint = NULL;
-	node->SoapAction = NULL;
-
-	node->id = NULL;
-}
 
 static void
 class_init(LassoDiscoDescriptionClass *klass)
@@ -123,11 +112,12 @@ lasso_disco_description_get_type()
 			NULL,
 			sizeof(LassoDiscoDescription),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,
-						   "LassoDiscoDescription", &this_info, 0);
+				"LassoDiscoDescription", &this_info, 0);
 	}
 	return this_type;
 }
@@ -144,8 +134,8 @@ lasso_disco_description_new()
 
 LassoDiscoDescription*
 lasso_disco_description_new_with_WsdlRef(const gchar *securityMechID,
-					 const gchar *wsdlURI,
-					 const gchar *serviceNameRef)
+		const gchar *wsdlURI,
+		const gchar *serviceNameRef)
 {
 	LassoDiscoDescription *description;
 
@@ -156,7 +146,7 @@ lasso_disco_description_new_with_WsdlRef(const gchar *securityMechID,
 	description = g_object_new(LASSO_TYPE_DISCO_DESCRIPTION, NULL);
 
 	description->SecurityMechID = g_list_append(description->SecurityMechID,
-						    g_strdup(securityMechID));
+			g_strdup(securityMechID));
 	description->WsdlURI = g_strdup(wsdlURI);
 	description->ServiceNameRef = g_strdup(serviceNameRef);
 
@@ -165,18 +155,18 @@ lasso_disco_description_new_with_WsdlRef(const gchar *securityMechID,
 
 LassoDiscoDescription*
 lasso_disco_description_new_with_BriefSoapHttpDescription(const gchar *securityMechID,
-							  const gchar *endpoint,
-							  const gchar *soapAction)
+		const gchar *endpoint,
+		const gchar *soapAction)
 {
 	LassoDiscoDescription *description;
 
 	g_return_val_if_fail(securityMechID != NULL, NULL);
 	g_return_val_if_fail(endpoint != NULL, NULL);
-	
+
 	description = g_object_new(LASSO_TYPE_DISCO_DESCRIPTION, NULL);
 
 	description->SecurityMechID = g_list_append(description->SecurityMechID,
-						    g_strdup(securityMechID));
+			g_strdup(securityMechID));
 	description->Endpoint = g_strdup(endpoint);
 	if (soapAction != NULL) {
 		description->SoapAction = g_strdup(soapAction);
@@ -196,14 +186,14 @@ lasso_disco_description_copy(LassoDiscoDescription *description)
 	securityMechIds = description->SecurityMechID;
 	while (securityMechIds) {
 		newDescription->SecurityMechID = g_list_append(newDescription->SecurityMechID,
-							       g_strdup(securityMechIds->data));
+				g_strdup(securityMechIds->data));
 		securityMechIds = securityMechIds->next;
 	}
 
 	credentialRefs = description->CredentialRef;
 	while (credentialRefs) {
 		newDescription->CredentialRef = g_list_append(newDescription->CredentialRef,
-							      g_strdup(credentialRefs->data));
+				g_strdup(credentialRefs->data));
 		credentialRefs = credentialRefs->next;
 	}
 
@@ -211,15 +201,80 @@ lasso_disco_description_copy(LassoDiscoDescription *description)
 	newDescription->ServiceNameRef = g_strdup(description->ServiceNameRef);
 
 	if (description->Endpoint) {
-		newDescription->Endpoint = g_strdup(description->Endpoint);	
+		newDescription->Endpoint = g_strdup(description->Endpoint);
 	}
 	if (description->SoapAction) {
-		newDescription->SoapAction = g_strdup(description->SoapAction);	
+		newDescription->SoapAction = g_strdup(description->SoapAction);
 	}
-	
+
 	if (description->id) {
 		newDescription->id = g_strdup(description->id);
 	}
 
 	return newDescription;
 }
+
+/**
+ * lasso_disco_description_has_saml_authentication:
+ * @profile: a #LassoDiscoDescription
+ *
+ * Checks if the given description supports any security mechanism using
+ * SAML authentication.
+ *
+ * Returns: %TRUE if SAML is supported by the service description, FALSE if it
+ * is not supported of if description is not a valid #LassoDiscoDescription.
+ */
+gboolean
+lasso_disco_description_has_saml_authentication(LassoDiscoDescription *description)
+{
+	GList *iter;
+	gchar *security_mech_id;
+
+	lasso_return_val_if_invalid_param(DISCO_DESCRIPTION, description,
+			FALSE);
+
+	iter = description->SecurityMechID;
+	while (iter) {
+		security_mech_id = iter->data;
+		if (lasso_security_mech_id_is_saml_authentication(
+				security_mech_id)) {
+			return TRUE;
+		}
+		iter = g_list_next(iter);
+	}
+
+	return FALSE;
+}
+
+/**
+ * lasso_disco_description_has_x509_authentication:
+ * @profile: a #LassoDiscoDescription
+ *
+ * Checks if the given description supports any security mechanism using
+ * X509 authentication.
+ *
+ * Returns: %TRUE if X509 is supported by the service description, FALSE if it
+ * is not supported of if description is not a valid #LassoDiscoDescription.
+ */
+gboolean
+lasso_disco_description_has_x509_authentication(LassoDiscoDescription *description)
+{
+	GList *iter;
+	gchar *security_mech_id;
+
+	lasso_return_val_if_invalid_param(DISCO_DESCRIPTION, description,
+			FALSE);
+
+	iter = description->SecurityMechID;
+	while (iter) {
+		security_mech_id = iter->data;
+		if (lasso_security_mech_id_is_x509_authentication(
+				security_mech_id)) {
+			return TRUE;
+		}
+		iter = g_list_next(iter);
+	}
+
+	return FALSE;
+}
+

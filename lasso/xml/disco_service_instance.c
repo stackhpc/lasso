@@ -1,28 +1,30 @@
-/* $Id: disco_service_instance.c 3704 2008-05-15 21:17:44Z fpeters $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/disco_service_instance.h>
+#include "private.h"
+#include "disco_service_instance.h"
+#include "./idwsf_strings.h"
 
 /**
  * SECTION:disco_service_instance
@@ -30,7 +32,7 @@
  *
  * <figure><title>Schema fragment for disco:ServiceInstanceType</title>
  * <programlisting><![CDATA[
- * 
+ *
  * <xs:complexType name="ServiceInstanceType">
  *   <xs:sequence>
  *     <xs:element ref="ServiceType"/>
@@ -38,7 +40,7 @@
  *     <xs:element name="Description" type="DescriptionType" minOccurs="1" maxOccurs="unbounded"/>
  *   </xs:sequence>
  * </xs:complexType>
- * 
+ *
  * <xs:element name="ServiceType" type="xs:anyURI"/>
  * ]]></programlisting>
  * </figure>
@@ -50,25 +52,17 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "ServiceType", SNIPPET_CONTENT,
-	  G_STRUCT_OFFSET(LassoDiscoServiceInstance, ServiceType) },
+		G_STRUCT_OFFSET(LassoDiscoServiceInstance, ServiceType), NULL, NULL, NULL},
 	{ "ProviderID",  SNIPPET_CONTENT,
-	  G_STRUCT_OFFSET(LassoDiscoServiceInstance, ProviderID) },
+		G_STRUCT_OFFSET(LassoDiscoServiceInstance, ProviderID), NULL, NULL, NULL},
 	{ "Description", SNIPPET_LIST_NODES,
-	  G_STRUCT_OFFSET(LassoDiscoServiceInstance, Description) },
-	{ NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoDiscoServiceInstance, Description), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
-
-static void
-instance_init(LassoDiscoServiceInstance *node)
-{
-	node->ServiceType = NULL;
-	node->ProviderID = NULL;
-	node->Description = NULL;
-}
 
 static void
 class_init(LassoDiscoServiceInstanceClass *klass)
@@ -96,7 +90,8 @@ lasso_disco_service_instance_get_type()
 			NULL,
 			sizeof(LassoDiscoServiceInstance),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,
@@ -107,8 +102,8 @@ lasso_disco_service_instance_get_type()
 
 LassoDiscoServiceInstance*
 lasso_disco_service_instance_new(const gchar *serviceType,
-				 const gchar *providerID,
-				 LassoDiscoDescription *description)
+		const gchar *providerID,
+		LassoDiscoDescription *description)
 {
 	LassoDiscoServiceInstance *service_instance;
 
@@ -124,7 +119,7 @@ lasso_disco_service_instance_new(const gchar *serviceType,
 	service_instance->ProviderID = g_strdup(providerID);
 
 	service_instance->Description = g_list_append(service_instance->Description,
-						      description);
+			description);
 
 	return service_instance;
 }
@@ -137,12 +132,12 @@ lasso_disco_service_instance_copy(LassoDiscoServiceInstance *serviceInstance)
 	GList *description;
 
 	g_return_val_if_fail(LASSO_IS_DISCO_SERVICE_INSTANCE(serviceInstance) == TRUE, NULL);
-	
+
 	newServiceInstance = g_object_new(LASSO_TYPE_DISCO_SERVICE_INSTANCE, NULL);
 
 	newServiceInstance->ServiceType = g_strdup(serviceInstance->ServiceType);
 	newServiceInstance->ProviderID = g_strdup(serviceInstance->ProviderID);
-	
+
 	description = serviceInstance->Description;
 	while (description) {
 		newDescription = lasso_disco_description_copy(

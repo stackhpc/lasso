@@ -4,950 +4,1015 @@
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/**
+ * SECTION:idwsf2_data_service
+ * @short_description: ID-WSF 2.0 Data Service profile
+ *
+ * DataService allows Attribute Consumers (WSC) to request an Attribute Provider (WSP) to get
+ * or modify data about users with their consent.
+ */
+
+#include "../xml/private.h"
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
 
-#include <lasso/id-wsf-2.0/discovery.h>
-#include <lasso/id-wsf-2.0/data_service.h>
+#include "./data_service.h"
+#include "../xml/id-wsf-2.0/idwsf2_strings.h"
 
-#include <lasso/xml/id-wsf-2.0/disco_service_type.h>
-#include <lasso/xml/id-wsf-2.0/dstref_query.h>
-#include <lasso/xml/id-wsf-2.0/dstref_query_response.h>
-#include <lasso/xml/id-wsf-2.0/dstref_data.h>
-#include <lasso/xml/id-wsf-2.0/util_status.h>
-#include <lasso/xml/id-wsf-2.0/sb2_redirect_request.h>
-#include <lasso/xml/id-wsf-2.0/dstref_modify.h>
-#include <lasso/xml/id-wsf-2.0/dstref_modify_item.h>
-#include <lasso/xml/id-wsf-2.0/dstref_modify_response.h>
+#include "../xml/id-wsf-2.0/disco_service_type.h"
+#include "../xml/id-wsf-2.0/dstref_query.h"
+#include "../xml/id-wsf-2.0/dstref_query_response.h"
+#include "../xml/id-wsf-2.0/dstref_data.h"
+#include "../xml/id-wsf-2.0/util_status.h"
+#include "../xml/id-wsf-2.0/util_response.h"
+#include "../xml/id-wsf-2.0/sb2_redirect_request.h"
+#include "../xml/id-wsf-2.0/dstref_modify.h"
+#include "../xml/id-wsf-2.0/dstref_modify_item.h"
+#include "../xml/id-wsf-2.0/dstref_modify_response.h"
+#include "../xml/id-wsf-2.0/dstref_create.h"
+#include "../xml/id-wsf-2.0/dstref_delete.h"
 
-#include <lasso/xml/soap_fault.h>
+#include "../xml/soap-1.1/soap_envelope.h"
+#include "../xml/soap-1.1/soap_fault.h"
+#include "../xml/private.h"
+#include "../utils.h"
+#include "./private.h"
+#include "./idwsf2_helper.h"
+#include "./soap_binding.h"
 
 struct _LassoIdWsf2DataServicePrivate
 {
 	gboolean dispose_has_run;
-	LassoWsAddrEndpointReference *epr;
-	GList *credentials;
+	GList *query_items; /* of LassoIdWsf2DstRefQueryItem */
+	GList *query_datas; /* of LassoIdWsf2DstRefData */
+	GList *modify_items; /* of LassoIdWsf2DstRefModifyItem */
+	gchar *service_type;
+	gchar *service_type_prefix;
+	GHashTable *namespaces;
 };
 
 extern GHashTable *idwsf2_dst_services_by_prefix; /* cf xml/xml.c */
 
-static void lasso_register_idwsf2_xpath_namespaces(xmlXPathContext *xpathCtx);
+#define lasso_idwsf2_data_service_set_dst_service_type(dst_node, service_type, prefix) \
+	lasso_assign_string(dst_node->hrefServiceType, service_type); \
+	lasso_assign_string(dst_node->prefixServiceType, prefix); \
 
-static GList* duplicate_glist_of_xmlnodes(GList*);
+static void
+lasso_idwsf2_data_service_clean_private_data(LassoIdWsf2DataService *service)
+{
+	LassoIdWsf2DataServicePrivate *pdata = service->private_data;
 
-/*****************************************************************************/
-/* public methods                                                            */
-/*****************************************************************************/
+	lasso_release_string(pdata->service_type);
+	lasso_release_string(pdata->service_type_prefix);
+	lasso_release_list_of_gobjects(pdata->query_items);
+	lasso_release_list_of_gobjects(pdata->modify_items);
+	lasso_release_ghashtable(pdata->namespaces);
+}
 
+
+/**
+ * lasso_idwsf2_data_service_set_service_type:
+ * @service: a #LassoIdWsf2DataService object
+ * @prefix: a prefix to use in producing XML documents
+ * @service_type: the service type URI
+ *
+ * Fix a service type for this @service.
+ */
+gint
+lasso_idwsf2_data_service_set_service_type(LassoIdWsf2DataService *service, const char *prefix,
+		const char *service_type)
+{
+	if (!LASSO_IS_IDWSF2_DATA_SERVICE(service) || lasso_strisempty(prefix)
+			|| lasso_strisempty(service_type))
+		return LASSO_PARAM_ERROR_INVALID_VALUE;
+	lasso_assign_string(service->private_data->service_type_prefix, prefix);
+	lasso_assign_string(service->private_data->service_type, service_type);
+	return 0;
+}
+
+/**
+ * lasso_idwsf2_data_service_get_service_type:
+ * @service: a #LassoIdWsf2DataService object
+ *
+ * Return the service type of the received request
+ *
+ * Return value:(allow-none)(transfer none): the URI of the service type or NULL.
+ */
+const char*
+lasso_idwsf2_data_service_get_service_type(LassoIdWsf2DataService *service)
+{
+	if (! LASSO_IS_IDWSF2_DATA_SERVICE(service))
+		return NULL;
+	return service->private_data->service_type;
+}
+
+/**
+ * lasso_idwsf2_data_service_get_service_type_prefix:
+ * @service: a #LassoIdWsf2DataService object
+ *
+ * Return the service type prefix of the received request
+ *
+ * Return value:(allow-none)(transfer none): the URI of the service type prefix or NULL.
+ */
+const char*
+lasso_idwsf2_data_service_get_service_type_prefix(LassoIdWsf2DataService *service)
+{
+	if (! LASSO_IS_IDWSF2_DATA_SERVICE(service))
+		return NULL;
+	return service->private_data->service_type_prefix;
+}
+
+static gint
+lasso_idwsf2_data_service_init_request(LassoIdWsf2DataService *service,
+		LassoNode *(*constructor)())
+{
+	int rc = 0;
+	LassoNode *request;
+	LassoSoapEnvelope *envelope;
+	
+	lasso_bad_param(IDWSF2_DATA_SERVICE, service);
+	lasso_release_list_of_gobjects(service->private_data->query_items);
+	lasso_release_list_of_gobjects(service->private_data->modify_items);
+	lasso_check_good_rc(lasso_idwsf2_profile_init_request(&service->parent));
+	request = (LassoNode*)constructor();
+	envelope = lasso_idwsf2_profile_get_soap_envelope_request(&service->parent);
+	lasso_assign_new_gobject(service->parent.parent.request, request);
+	lasso_soap_envelope_add_to_body(envelope, request);
+
+cleanup:
+	return rc;
+}
+
+/**
+ * lasso_idwsf2_data_service_init_query:
+ * @service: a #LassoIdWsf2DataService
+ *
+ * Initialise an ID-WSF 2.0 DataService query request.
+ *
+ * Return value: 0 on success; or a negative value otherwise.
+ **/
 gint
 lasso_idwsf2_data_service_init_query(LassoIdWsf2DataService *service)
 {
-	LassoIdWsf2Profile *profile = LASSO_IDWSF2_PROFILE(service);
-	LassoIdWsf2DstRefQuery *query;
-	LassoWsAddrEndpointReference *epr;
-	GList *metadata_item;
-	GList *i;
-	gchar *service_type = NULL;
-
-	g_return_val_if_fail(LASSO_IS_IDWSF2_DATA_SERVICE(service),
-		LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
-
-	query = lasso_idwsf2_dstref_query_new();
-
-	if (LASSO_PROFILE(profile)->request) {
-		lasso_node_destroy(LASSO_NODE(LASSO_PROFILE(profile)->request));
-	}
-	LASSO_PROFILE(profile)->request = LASSO_NODE(query);
-
-	if (service == NULL || service->private_data == NULL
-			|| service->private_data->epr == NULL
-			|| service->private_data->epr->Metadata == NULL) {
-		return LASSO_PROFILE_ERROR_MISSING_ENDPOINT_REFERENCE;
-	}
-
-	epr = service->private_data->epr;
-
-	/* Get the service type from the EPR */
-	metadata_item = epr->Metadata->any;
-	for (i = g_list_first(metadata_item); i != NULL; i = g_list_next(i)) {
-		if (LASSO_IS_IDWSF2_DISCO_SERVICE_TYPE(i->data)) {
-			service_type = LASSO_IDWSF2_DISCO_SERVICE_TYPE(i->data)->content;
-			break;
-		}
-	}
-
-	/* Set hrefServiceType and prefixServiceType in query in order to set the profile */
-	/* namespace in the request */
-	if (service_type != NULL) {
-		query->hrefServiceType = g_strdup(service_type);
-		query->prefixServiceType = lasso_get_prefix_for_idwsf2_dst_service_href(
-			query->hrefServiceType);
-	}
-	if (query->prefixServiceType == NULL) {
-		return LASSO_DATA_SERVICE_ERROR_UNREGISTERED_DST;
-	}
-
-	lasso_idwsf2_profile_init_soap_request(profile, LASSO_NODE(query), service_type);
-
-	/* Set msg_url as epr address, which is the SoapEndpoint */
-	if (epr->Address != NULL) {
-		LASSO_PROFILE(profile)->msg_url = g_strdup(epr->Address->content);
-	} else {
-		return LASSO_PROFILE_ERROR_MISSING_ENDPOINT_REFERENCE_ADDRESS;
-	}
-
-	return 0;
+	return lasso_idwsf2_data_service_init_request(service,
+			(LassoNode *(*)())lasso_idwsf2_dstref_query_new);
 }
 
-gint
-lasso_idwsf2_data_service_add_query_item(LassoIdWsf2DataService *service, const gchar *item_xpath,
-	const gchar *item_id)
-{
-	LassoIdWsf2Profile *profile = LASSO_IDWSF2_PROFILE(service);
-	LassoIdWsf2DstRefQuery *query;
-	LassoIdWsf2DstRefQueryItem *item;
-
-	g_return_val_if_fail(LASSO_IS_IDWSF2_DATA_SERVICE(service),
-		LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
-	g_return_val_if_fail(item_xpath != NULL, LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
-	g_return_val_if_fail(item_id != NULL, LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
-
-	if (! LASSO_IS_IDWSF2_DSTREF_QUERY(LASSO_PROFILE(profile)->request)) {
-		return LASSO_PROFILE_ERROR_MISSING_REQUEST;
-	}
-
-	query = LASSO_IDWSF2_DSTREF_QUERY(LASSO_PROFILE(profile)->request);
-
-	item = lasso_idwsf2_dstref_query_item_new_full(item_xpath, item_id);
-	query->QueryItem = g_list_append(query->QueryItem, item);
-
-	return 0;
-}
-
-gint
-lasso_idwsf2_data_service_process_query_msg(LassoIdWsf2DataService *service, const gchar *message)
-{
-	LassoIdWsf2Profile *profile = LASSO_IDWSF2_PROFILE(service);
-	LassoIdWsf2DstRefQuery *request = NULL;
-	LassoIdWsf2DstRefResultQuery *item = NULL;
-	GList *i;
-	int res = 0;
-
-	g_return_val_if_fail(LASSO_IS_IDWSF2_DATA_SERVICE(service),
-		LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
-	g_return_val_if_fail(message != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
-
-	res = lasso_idwsf2_profile_process_soap_request_msg(profile, message);
-
-	if (! LASSO_IS_IDWSF2_DSTREF_QUERY(LASSO_PROFILE(profile)->request)) {
-		res = LASSO_PROFILE_ERROR_INVALID_SOAP_MSG;
-	} else {
-		request = LASSO_IDWSF2_DSTREF_QUERY(LASSO_PROFILE(profile)->request);
-		service->type = g_strdup(request->hrefServiceType);
-	}
-
-	if (res == 0) {
-		/* Parse QueryItems to get a list of Xpath strings */
-		for (i = g_list_first(request->QueryItem); i != NULL; i = g_list_next(i)) {
-			item = LASSO_IDWSF2_DSTREF_RESULT_QUERY(i->data);
-			if (item->Select != NULL) {
-				service->query_items = g_list_append(
-					service->query_items, g_strdup(item->Select));
-			}
-		}
-	}
-
-	return res;
-}
-
-gint
-lasso_idwsf2_data_service_parse_query_items(LassoIdWsf2DataService *service)
-{
-	LassoIdWsf2Profile *profile = LASSO_IDWSF2_PROFILE(service);
-	LassoIdWsf2DstRefQuery *request;
-	LassoIdWsf2DstRefQueryResponse *response;
-	LassoIdWsf2UtilResponse *response2;
-	LassoSoapEnvelope *envelope;
-	xmlDoc *doc;
-	xmlXPathContext *xpathCtx;
-	xmlXPathObject *xpathObj;
-	LassoIdWsf2DstRefQueryItem *item;
-	LassoIdWsf2DstRefResultQuery *item_result_query;
-	LassoIdWsf2DstResultQueryBase *item_result_query_base;
-	LassoIdWsf2DstRefData *data;
-	LassoIdWsf2DstRefItemData *data_item;
-	xmlNode *node;
-	GList *iter;
-	int i;
-	/* Default is Failed, will be OK or Partial when some items are successfully parsed */
-	char *status_code = LASSO_DST_STATUS_CODE_FAILED;
-
-	g_return_val_if_fail(LASSO_IS_IDWSF2_DATA_SERVICE(service),
-		LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
-
-	if (! LASSO_IS_IDWSF2_DSTREF_QUERY(LASSO_PROFILE(profile)->request)) {
-		return LASSO_PROFILE_ERROR_MISSING_REQUEST;
-	}
-	request = LASSO_IDWSF2_DSTREF_QUERY(LASSO_PROFILE(profile)->request);
-
-	if (service->data == NULL) {
-		return LASSO_DST_ERROR_MISSING_SERVICE_DATA;
-	}
-
-	/* Response envelope and body */
-	envelope = profile->soap_envelope_response;
-	if (envelope == NULL) {
-		return LASSO_SOAP_ERROR_MISSING_ENVELOPE;
-	}
-	response = lasso_idwsf2_dstref_query_response_new();
-	response->prefixServiceType = g_strdup(request->prefixServiceType);
-	response->hrefServiceType = g_strdup(request->hrefServiceType);
-	LASSO_PROFILE(profile)->response = LASSO_NODE(response);
-	envelope->Body->any = g_list_append(envelope->Body->any, response);
-
-	/* Initialise XML parsing */
-	doc = xmlNewDoc((xmlChar*)"1.0");
-	xmlDocSetRootElement(doc, service->data);
-	xpathCtx = xmlXPathNewContext(doc);
-	lasso_register_idwsf2_xpath_namespaces(xpathCtx);
-
-	/* Parse request QueryItems and fill response Data accordingly */
-	/* XXX: needs another level, since there may be more than one <dst:Query> */
-	for (iter = g_list_first(request->QueryItem); iter != NULL; iter = g_list_next(iter)) {
-		item = iter->data;
-		item_result_query = LASSO_IDWSF2_DSTREF_RESULT_QUERY(item);
-		item_result_query_base = LASSO_IDWSF2_DST_RESULT_QUERY_BASE(item);
-		xpathObj = xmlXPathEvalExpression((xmlChar*)item_result_query->Select, xpathCtx);
-		if (xpathObj && xpathObj->nodesetval && xpathObj->nodesetval->nodeNr) {
-			/* XXX: assuming there is only one matching node */
-			data = lasso_idwsf2_dstref_data_new();
-			data_item = LASSO_IDWSF2_DSTREF_ITEM_DATA(data);
-			for (i = 0; i < xpathObj->nodesetval->nodeNr; i++) {
-				node = xpathObj->nodesetval->nodeTab[i];
-				if (node->type == XML_ATTRIBUTE_NODE) {
-					LASSO_IDWSF2_DSTREF_APP_DATA(data_item)->any = g_list_append(
-						LASSO_IDWSF2_DSTREF_APP_DATA(data_item)->any,
-						xmlNewText(xmlGetProp(node->parent, node->name)));
-				} else {
-					LASSO_IDWSF2_DSTREF_APP_DATA(data_item)->any = g_list_append(
-						LASSO_IDWSF2_DSTREF_APP_DATA(data_item)->any, xmlCopyNode(node, 1));
-				}
-			}
-		} else if (xpathObj && xpathObj->type == XPATH_STRING) {
-			data = lasso_idwsf2_dstref_data_new();
-			data_item = LASSO_IDWSF2_DSTREF_ITEM_DATA(data);
-			LASSO_IDWSF2_DSTREF_APP_DATA(data_item)->any = g_list_append(
-					LASSO_IDWSF2_DSTREF_APP_DATA(data_item)->any,
-					xmlNewText(xpathObj->stringval));
-		} else {
-			/* If status was OK, change it to Partial, else keep it Failed */
-			if (strcmp(status_code, LASSO_DST_STATUS_CODE_OK) == 0) {
-				status_code = LASSO_DST_STATUS_CODE_PARTIAL;
-			}
-			if (xpathObj != NULL) {
-				xmlXPathFreeObject(xpathObj);
-				xpathObj = NULL;
-			}
-			/* Stop processing at first error */
-			break;
-		}
-
-		/* Finish handling of a successful item parsing */
-		status_code = LASSO_DST_STATUS_CODE_OK;
-		if (item_result_query_base->itemID != NULL) {
-			data_item->itemIDRef = g_strdup(item_result_query_base->itemID);
-		}
-		response->Data = g_list_append(response->Data, data);
-
-		xmlXPathFreeObject(xpathObj);
-		xpathObj = NULL;
-	}
-
-	/* Free XML parsing objects */
-	xmlUnlinkNode(service->data);
-	xmlXPathFreeContext(xpathCtx);
-	xmlFreeDoc(doc);
-
-	response2 = LASSO_IDWSF2_UTIL_RESPONSE(response);
-	response2->Status = lasso_idwsf2_util_status_new();
-	response2->Status->code = g_strdup(status_code);
-
-	if (strcmp(status_code, LASSO_DST_STATUS_CODE_FAILED) == 0) {
-		return LASSO_DST_ERROR_QUERY_FAILED;
-	}
-
-	return 0;
-}
-
-static gint
-lasso_idwsf2_data_service_process_query_response_soap_fault_msg(LassoIdWsf2DataService *service,
-	const gchar *message)
-{
-	LassoIdWsf2Profile *profile = LASSO_IDWSF2_PROFILE(service);
-	LassoSoapFault *fault;
-	LassoIdWsf2Sb2RedirectRequest *redirect_request = NULL;
-	GList *iter;
-	int res;
-
-	if (! LASSO_IS_SOAP_FAULT(LASSO_PROFILE(profile)->response)) {
-		/* Should not happen as it should be checked in caller */
-		return 0;
-	}
-
-	fault = LASSO_SOAP_FAULT(LASSO_PROFILE(profile)->response);
-
-	if (fault->Detail == NULL || fault->Detail->any == NULL) {
-		return LASSO_SOAP_ERROR_MISSING_SOAP_FAULT_DETAIL;
-	}
-
-	/* Get RedirectRequest element from soap fault detail */
-	for (iter = fault->Detail->any; iter != NULL; iter = iter->next) {
-		if (LASSO_IS_IDWSF2_SB2_REDIRECT_REQUEST(iter->data) == TRUE) {
-			redirect_request = LASSO_IDWSF2_SB2_REDIRECT_REQUEST(iter->data);
-			break;
-		}
-	}
-
-	if (redirect_request != NULL) {
-		/* This is not a failure, this exception code indicates the WSP needs to ask */
-		/* user consent to get an attribute */
-		res = LASSO_SOAP_FAULT_REDIRECT_REQUEST;
-		/* Get redirect request url */
-		service->redirect_url = g_strdup(redirect_request->redirectURL);
-	}
-
-	return res;
-}
-
-gint
-lasso_idwsf2_data_service_process_query_response_msg(LassoIdWsf2DataService *service,
-	const gchar *message)
-{
-	LassoIdWsf2Profile *profile = LASSO_IDWSF2_PROFILE(service);
-	LassoIdWsf2UtilResponse *response;
-	int res;
-
-	g_return_val_if_fail(LASSO_IS_IDWSF2_DATA_SERVICE(service),
-		LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
-	g_return_val_if_fail(message != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
-
-	res = lasso_idwsf2_profile_process_soap_response_msg(profile, message);
-	if (res != 0) {
-		return res;
-	}
-
-	/* Message can be either a SoapFault or a QueryResponse */
-	if (LASSO_IS_SOAP_FAULT(LASSO_PROFILE(profile)->response)) {
-		return lasso_idwsf2_data_service_process_query_response_soap_fault_msg(
-			service, message);
-	}
-
-	if (! LASSO_IS_IDWSF2_DSTREF_QUERY_RESPONSE(LASSO_PROFILE(profile)->response)) {
-		return LASSO_PROFILE_ERROR_INVALID_SOAP_MSG;
-	}
-
-	/* Check response status code */
-	response = LASSO_IDWSF2_UTIL_RESPONSE(LASSO_PROFILE(profile)->response);
-	if (response->Status == NULL || response->Status->code == NULL) {
-		return LASSO_PROFILE_ERROR_MISSING_STATUS_CODE;
-	}
-	if (strcmp(response->Status->code, LASSO_DST_STATUS_CODE_PARTIAL) == 0) {
-		return LASSO_DST_ERROR_QUERY_PARTIALLY_FAILED;
-	} else if (strcmp(response->Status->code, LASSO_DST_STATUS_CODE_OK) != 0) {
-		return LASSO_DST_ERROR_QUERY_FAILED;
-	}
-
-	return 0;
-}
-
-
-GList*
-lasso_idwsf2_data_service_get_attribute_nodes(LassoIdWsf2DataService *service, const gchar *item_id)
-{
-	LassoIdWsf2Profile *profile = LASSO_IDWSF2_PROFILE(service);
-	LassoIdWsf2DstRefQueryResponse *response;
-	LassoIdWsf2DstRefAppData *data = NULL;
-	GList *iter;
-
-	g_return_val_if_fail(LASSO_IS_IDWSF2_DATA_SERVICE(service), NULL);
-
-	g_return_val_if_fail(LASSO_IS_IDWSF2_DSTREF_QUERY_RESPONSE(
-				LASSO_PROFILE(profile)->response), NULL);
-
-	response = LASSO_IDWSF2_DSTREF_QUERY_RESPONSE(LASSO_PROFILE(profile)->response);
-
-	/* If no item_id is given, return the first item */
-	if (item_id == NULL && response->Data != NULL && response->Data->data != NULL) {
-		data = LASSO_IDWSF2_DSTREF_APP_DATA(response->Data->data);
-		if (data->any != NULL && data->any->data != NULL) {
-			return duplicate_glist_of_xmlnodes(data->any);
-		}
-	}
-	if (item_id == NULL) {
-		return NULL;
-	}
-
-	/* Find the item which has the given item_id */
-	for (iter = g_list_first(response->Data); iter != NULL; iter = g_list_next(iter)) {
-		if (! LASSO_IS_IDWSF2_DSTREF_ITEM_DATA(iter->data)) {
-			continue;
-		}
-		if (strcmp(LASSO_IDWSF2_DSTREF_ITEM_DATA(iter->data)->itemIDRef, item_id) == 0) {
-			data = LASSO_IDWSF2_DSTREF_APP_DATA(iter->data);
-			break;
-		}
-	}
-
-	if (data == NULL || data->any == NULL || data->any->data == NULL) {
-		/* Item not found */
-		return NULL;
-	}
-
-	return duplicate_glist_of_xmlnodes(data->any);
-}
-
-xmlNode*
-lasso_idwsf2_data_service_get_attribute_node(LassoIdWsf2DataService *service, const gchar *item_id)
-{
-	LassoIdWsf2Profile *profile = LASSO_IDWSF2_PROFILE(service);
-	LassoIdWsf2DstRefQueryResponse *response;
-	LassoIdWsf2DstRefAppData *data = NULL;
-	GList *iter;
-
-	g_return_val_if_fail(LASSO_IS_IDWSF2_DATA_SERVICE(service), NULL);
-
-	g_return_val_if_fail(LASSO_IS_IDWSF2_DSTREF_QUERY_RESPONSE(
-				LASSO_PROFILE(profile)->response), NULL);
-
-	response = LASSO_IDWSF2_DSTREF_QUERY_RESPONSE(LASSO_PROFILE(profile)->response);
-
-	/* If no item_id is given, return the first item */
-	if (item_id == NULL && response->Data != NULL && response->Data->data != NULL) {
-		data = LASSO_IDWSF2_DSTREF_APP_DATA(response->Data->data);
-		if (data->any != NULL && data->any->data != NULL) {
-			return xmlCopyNode(data->any->data, 1);
-		}
-	}
-	if (item_id == NULL) {
-		return NULL;
-	}
-
-	/* Find the item which has the given item_id */
-	for (iter = g_list_first(response->Data); iter != NULL; iter = g_list_next(iter)) {
-		if (! LASSO_IS_IDWSF2_DSTREF_ITEM_DATA(iter->data)) {
-			continue;
-		}
-		if (strcmp(LASSO_IDWSF2_DSTREF_ITEM_DATA(iter->data)->itemIDRef, item_id) == 0) {
-			data = LASSO_IDWSF2_DSTREF_APP_DATA(iter->data);
-			break;
-		}
-	}
-
-	if (data == NULL || data->any == NULL || data->any->data == NULL) {
-		/* Item not found */
-		return NULL;
-	}
-
-	/* XXX: there may be more than one xmlnode */
-	return xmlCopyNode(data->any->data, 1);
-}
-
-GList*
-lasso_idwsf2_data_service_get_attribute_strings(LassoIdWsf2DataService *service,
-	const gchar *item_id)
-{
-	GList *nodes = NULL;
-	xmlChar *xml_content = NULL;
-	GList *contents = NULL;
-	GList *iter;
-
-	g_return_val_if_fail(LASSO_IS_IDWSF2_DATA_SERVICE(service), NULL);
-
-	nodes = lasso_idwsf2_data_service_get_attribute_nodes(service, item_id);
-	for (iter = nodes; iter; iter = g_list_next(iter)) {
-		xml_content = xmlNodeGetContent(iter->data);
-		contents = g_list_append(contents, g_strdup((gchar*)xml_content));
-		xmlFree(xml_content);
-		xmlFreeNode(iter->data);
-	}
-
-	g_list_free(nodes);
-
-	return contents;
-}
-
-gchar*
-lasso_idwsf2_data_service_get_attribute_string(LassoIdWsf2DataService *service,
-	const gchar *item_id)
-{
-	xmlNode *node;
-	xmlChar *xml_content;
-	gchar *content;
-	
-	g_return_val_if_fail(LASSO_IS_IDWSF2_DATA_SERVICE(service), NULL);
-	
-	node = lasso_idwsf2_data_service_get_attribute_node(service, item_id);
-	xml_content = xmlNodeGetContent(node);
-	content = g_strdup((gchar*)xml_content);
-
-	xmlFree(xml_content);
-	xmlFreeNode(node);
-
-	return content;
-}
-
-gint
-lasso_idwsf2_data_service_init_redirect_user_for_consent(LassoIdWsf2DataService *service,
-	const gchar *redirect_url)
-{
-	LassoIdWsf2Profile *profile = LASSO_IDWSF2_PROFILE(service);
-	LassoSoapEnvelope *envelope;
-	LassoSoapFault *fault;
-	LassoSoapDetail *detail;
-
-	g_return_val_if_fail(LASSO_IS_IDWSF2_DATA_SERVICE(service),
-		LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
-	g_return_val_if_fail(redirect_url != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
-
-	/* Response envelope */
-	envelope = profile->soap_envelope_response;
-	if (envelope == NULL) {
-		return LASSO_SOAP_ERROR_MISSING_ENVELOPE;
-	}
-
-	/* Build soap fault node */
-	fault = lasso_soap_fault_new();
-	fault->faultcode = g_strdup(LASSO_SOAP_FAULT_CODE_SERVER);
-	fault->faultstring = g_strdup(LASSO_SOAP_FAULT_STRING_SERVER);
-	detail = lasso_soap_detail_new();
-	detail->any = g_list_append(
-		detail->any, lasso_idwsf2_sb2_redirect_request_new_full(redirect_url));
-	fault->Detail = detail;
-
-	/* Response envelope body */
-	envelope->Body->any = g_list_append(envelope->Body->any, fault);
-
-	return 0;
-}
-
+/**
+ * lasso_idwsf2_data_service_init_modify:
+ * @service: a #LassoIdWsf2DataService
+ *
+ * Initialise an ID-WSF 2.0 DataService modify request.
+ *
+ * Return value: 0 on success; or a negative value otherwise.
+ **/
 gint
 lasso_idwsf2_data_service_init_modify(LassoIdWsf2DataService *service)
 {
-	LassoIdWsf2Profile *profile = LASSO_IDWSF2_PROFILE(service);
-	LassoIdWsf2DstRefModify *modify;
-	LassoWsAddrEndpointReference *epr;
-	GList *metadata_item;
+	return lasso_idwsf2_data_service_init_request(service,
+			(LassoNode *(*)())lasso_idwsf2_dstref_modify_new);
+}
+
+gint
+lasso_idwsf2_data_service_init_create(LassoIdWsf2DataService *service)
+{
+	return lasso_idwsf2_data_service_init_request(service,
+			(LassoNode *(*)())lasso_idwsf2_dstref_create_new);
+}
+
+gint
+lasso_idwsf2_data_service_init_delete(LassoIdWsf2DataService *service)
+{
+	return lasso_idwsf2_data_service_init_request(service,
+			(LassoNode *(*)())lasso_idwsf2_dstref_delete_new);
+}
+
+/**
+ * lasso_idwsf2_data_service_get_request_type:
+ * @service: a #LassoIdWsf2DataService object
+ *
+ * Return the type of the currently handled request.
+ */
+LassoIdWsf2DataServiceRequestType
+lasso_idwsf2_data_service_get_request_type(LassoIdWsf2DataService *service)
+{
+	GType request_type = 0;
+
+#define check_request_type(a, b) \
+		if (request_type == a) { \
+			return b ;\
+		}
+	if (! LASSO_IS_IDWSF2_DATA_SERVICE(service))
+		return LASSO_IDWSF2_DATA_SERVICE_REQUEST_TYPE_UNKNOWN;
+	request_type = G_TYPE_FROM_INSTANCE(service->parent.parent.request);
+	check_request_type(LASSO_TYPE_IDWSF2_DSTREF_QUERY,
+			LASSO_IDWSF2_DATA_SERVICE_REQUEST_TYPE_QUERY);
+	check_request_type(LASSO_TYPE_IDWSF2_DSTREF_MODIFY,
+			LASSO_IDWSF2_DATA_SERVICE_REQUEST_TYPE_MODIFY);
+#undef check_request_type
+	return LASSO_IDWSF2_DATA_SERVICE_REQUEST_TYPE_UNKNOWN;
+}
+
+/**
+ * lasso_idwsf2_data_service_add_query_item:
+ * @service: a #LassoIdWsf2DataService
+ * @item_query: a query string
+ * @item_id:(allow-none): identifier of the queried item, which will allow to retrieve it in the
+ * response
+ *
+ * Add an item in the query request.
+ *
+ * Return value: 0 on success; or a negative value otherwise.
+ **/
+gint
+lasso_idwsf2_data_service_add_query_item(LassoIdWsf2DataService *service, const gchar *item_query,
+	const gchar *item_id)
+{
+	LassoIdWsf2DstRefQueryItem *item;
 	GList *i;
-	gchar *service_type = NULL;
+	int rc = 0;
 
-	g_return_val_if_fail(LASSO_IS_IDWSF2_DATA_SERVICE(service),
-		LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
+	lasso_bad_param(IDWSF2_DATA_SERVICE, service);
+	lasso_check_non_empty_string(item_query);
 
-	modify = lasso_idwsf2_dstref_modify_new();
-
-	if (LASSO_PROFILE(profile)->request) {
-		lasso_node_destroy(LASSO_NODE(LASSO_PROFILE(profile)->request));
+	if (item_id == NULL) {
+		item_id = lasso_build_unique_id(32);
 	}
-	LASSO_PROFILE(profile)->request = LASSO_NODE(modify);
-
-	if (service == NULL || service->private_data == NULL
-			|| service->private_data->epr == NULL
-			|| service->private_data->epr->Metadata == NULL) {
-		return LASSO_PROFILE_ERROR_MISSING_ENDPOINT_REFERENCE;
-	}
-
-	epr = service->private_data->epr;
-
-	/* Get the service type from the EPR */
-	metadata_item = epr->Metadata->any;
-	for (i = g_list_first(metadata_item); i != NULL; i = g_list_next(i)) {
-		if (LASSO_IS_IDWSF2_DISCO_SERVICE_TYPE(i->data)) {
-			service_type = LASSO_IDWSF2_DISCO_SERVICE_TYPE(i->data)->content;
-			break;
+	/* Check duplicates */
+	lasso_foreach(i, service->private_data->query_items) {
+		LassoIdWsf2DstRefQueryItem *old_item = (LassoIdWsf2DstRefQueryItem *)i->data;
+		if (lasso_strisequal(old_item->parent.parent.itemID,item_id)) {
+			return LASSO_IDWSF2_DST_ERROR_DUPLICATE_ITEM;
 		}
 	}
-
-	/* Set hrefServiceType and prefixServiceType in query in order to set the profile */
-	/* namespace in the request */
-	if (service_type != NULL) {
-		modify->hrefServiceType = g_strdup(service_type);
-		modify->prefixServiceType = lasso_get_prefix_for_idwsf2_dst_service_href(
-			modify->hrefServiceType);
-	}
-	if (modify->prefixServiceType == NULL) {
-		return LASSO_DATA_SERVICE_ERROR_UNREGISTERED_DST;
-	}
-
-	lasso_idwsf2_profile_init_soap_request(profile, LASSO_NODE(modify), service_type);
-
-	/* Set msg_url as epr address, which is the SoapEndpoint */
-	if (epr->Address != NULL) {
-		LASSO_PROFILE(profile)->msg_url = g_strdup(epr->Address->content);
-	} else {
-		return LASSO_PROFILE_ERROR_MISSING_ENDPOINT_REFERENCE_ADDRESS;
-	}
-
-	return 0;
+	item = lasso_idwsf2_dstref_query_item_new_full(item_query, item_id);
+	lasso_list_add_gobject(service->private_data->query_items, item);
+cleanup:
+	return rc;
 }
 
-static void set_xml_string(xmlNode **xmlnode, const char* string)
-{
-	xmlDoc *doc;
-	xmlNode *node;
-
-	doc = xmlReadDoc((xmlChar*)string, NULL, NULL, XML_PARSE_NONET);
-	node = xmlDocGetRootElement(doc);
-	if (node != NULL) {
-		node = xmlCopyNode(node, 1);
-	}
-	xmlFreeDoc(doc);
-
-	if (*xmlnode) {
-		xmlFreeNode(*xmlnode);
-	}
-
-	*xmlnode = node;
-}
-
+/**
+ * lasso_idwsf2_data_service_add_modify_item:
+ * @service: a #LassoIdWsf2DataService
+ * @item_query: XPATH of the item to modify
+ * @new_data:(allow-none):new value for the selected item
+ * @overrideAllowed:(allow-none)(default FALSE): FALSE means only allowing to create a new item, but
+ * not modify existing one, TRUE means allowing to modify existing item
+ * @item_id:(allow-none): identifier of the item to modify
+ *
+ * Add an item in the modification request.
+ *
+ * Return value: 0 on success; or a negative value otherwise.
+ **/
 gint
-lasso_idwsf2_data_service_add_modify_item(LassoIdWsf2DataService *service, const gchar *item_xpath,
-	const gchar *item_id, const gchar *new_data, gboolean overrideAllowed)
+lasso_idwsf2_data_service_add_modify_item(LassoIdWsf2DataService *service, const gchar *item_query,
+	xmlNode *new_data, gboolean overrideAllowed, const gchar *item_id)
 {
-	LassoIdWsf2Profile *profile = LASSO_IDWSF2_PROFILE(service);
-	LassoIdWsf2DstRefModify *modify;
 	LassoIdWsf2DstRefModifyItem *item;
-	xmlNode *new_data_node = NULL;
+	int rc = 0;
+	GList *i;
 
-	g_return_val_if_fail(LASSO_IS_IDWSF2_DATA_SERVICE(service),
-		LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
-	g_return_val_if_fail(item_xpath != NULL, LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
-	g_return_val_if_fail(item_id != NULL, LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
+	lasso_bad_param(IDWSF2_DATA_SERVICE, service);
+	lasso_check_non_empty_string(item_query);
 
-	if (! LASSO_IS_IDWSF2_DSTREF_MODIFY(LASSO_PROFILE(profile)->request)) {
-		return LASSO_PROFILE_ERROR_MISSING_REQUEST;
+	if (item_id == NULL) {
+		item_id = lasso_build_unique_id(10);
+	}
+	lasso_foreach(i, service->private_data->modify_items) {
+		LassoIdWsf2DstRefModifyItem *old_item = (LassoIdWsf2DstRefModifyItem *)i->data;
+		if (lasso_strisequal(old_item->id,item_id)) {
+			return LASSO_IDWSF2_DST_ERROR_DUPLICATE_ITEM;
+		}
+	}
+	item = lasso_idwsf2_dstref_modify_item_new_full(
+		item_query, item_id, new_data, overrideAllowed);
+	lasso_list_add_gobject(service->private_data->modify_items, item);
+
+cleanup:
+	return rc;
+}
+
+/**
+ * lasso_idwsf2_data_service_get_item_ids:
+ * @service: a #LassoIdWsf2DataService object
+ *
+ * Return the list of items ids for the currently handled request.
+ *
+ * Return value:(element-type utf8)(transfer full): a list of string ids, or NULL if none is found.
+ * The caller must free the return value.
+ */
+GList*
+lasso_idwsf2_data_service_get_item_ids(LassoIdWsf2DataService *service)
+{
+	GList *i, *result = NULL;
+
+	switch (lasso_idwsf2_data_service_get_request_type(service)) {
+		case LASSO_IDWSF2_DATA_SERVICE_REQUEST_TYPE_QUERY:
+			lasso_foreach(i, service->private_data->query_items) {
+				LassoIdWsf2DstRefQueryItem *old_item = (LassoIdWsf2DstRefQueryItem *)i->data;
+				lasso_list_add_string(result, old_item->parent.parent.itemID);
+			}
+			break;
+		case LASSO_IDWSF2_DATA_SERVICE_REQUEST_TYPE_MODIFY:
+			lasso_foreach(i, service->private_data->modify_items) {
+				LassoIdWsf2DstRefModifyItem *old_item = (LassoIdWsf2DstRefModifyItem *)i->data;
+				lasso_list_add_string(result, old_item->id);
+			}
+			break;
+		default:
+			break;
+	}
+	return result;
+}
+
+/**
+ * lasso_idwsf2_data_service_get_items:
+ * @service: a #LassoIdWsf2DataService object
+ *
+ * Return value:(element-type LassoNode)(transfer none): a list of Query or Modify items, or NULL if
+ * none is found.
+ */
+GList*
+lasso_idwsf2_data_service_get_items(LassoIdWsf2DataService *service)
+{
+	switch (lasso_idwsf2_data_service_get_request_type(service)) {
+		case LASSO_IDWSF2_DATA_SERVICE_REQUEST_TYPE_QUERY:
+			return service->private_data->query_items;
+		case LASSO_IDWSF2_DATA_SERVICE_REQUEST_TYPE_MODIFY:
+			return service->private_data->modify_items;
+		default:
+			break;
+	}
+	return NULL;
+}
+
+/**
+ * lasso_idwsf2_data_service_get_item:
+ * @service: a #LassoIdWsf2DataService object
+ * @item_id: the itemID of the item to return, if NULL try to get the only one item (if there is
+ * more than one, it returns NULL).
+ *
+ * Retrieve a specific item from a request.
+ *
+ * Return value:(transfer none)(allow-none): a #LassoIdWsf2DstRefQueryItem or a #LassoIdWsf2DstRefModifyItem object, or NULL if
+ * no item for the given item_id exists.
+ */
+LassoNode*
+lasso_idwsf2_data_service_get_item(LassoIdWsf2DataService *service,
+		const char *item_id)
+{
+	GList *i;
+
+	switch (lasso_idwsf2_data_service_get_request_type(service)) {
+		case LASSO_IDWSF2_DATA_SERVICE_REQUEST_TYPE_QUERY:
+			if (item_id == NULL) {
+				if (g_list_length(service->private_data->query_items) == 1)
+					return (LassoNode*)service->private_data->query_items->data;
+				else
+					return NULL;
+			}
+			lasso_foreach(i, service->private_data->query_items) {
+				LassoIdWsf2DstRefQueryItem *old_item = (LassoIdWsf2DstRefQueryItem *)i->data;
+				if (lasso_strisequal(old_item->parent.parent.itemID,item_id)) {
+					return (LassoNode*)old_item;
+				}
+			}
+			break;
+		case LASSO_IDWSF2_DATA_SERVICE_REQUEST_TYPE_MODIFY:
+			if (item_id == NULL) {
+				if (g_list_length(service->private_data->modify_items) == 1)
+					return (LassoNode*)service->private_data->modify_items->data;
+				else
+					return NULL;
+			}
+			lasso_foreach(i, service->private_data->modify_items) {
+				LassoIdWsf2DstRefModifyItem *old_item = (LassoIdWsf2DstRefModifyItem *)i->data;
+				if (lasso_strisequal(old_item->id,item_id)) {
+					return (LassoNode*)old_item;
+				}
+			}
+			break;
+		default:
+			break;
+	}
+	return NULL;
+}
+
+/**
+ * lasso_idwsf2_data_service_add_namespace:
+ * @service: a #LassoIdWsf2DataService object
+ *
+ * Add a new namespace to use for example in XPath elements or in Data or NewData objects.
+ *
+ * Return value: 0 if successful, an error code otherwise.
+ */
+gint
+lasso_idwsf2_data_service_add_namespace(LassoIdWsf2DataService *service, const char *prefix,
+		const char *href)
+{
+	if (xmlValidateNCName(BAD_CAST prefix, 0) && ! lasso_strisempty(href))
+		return LASSO_PARAM_ERROR_INVALID_VALUE;
+
+	if (g_hash_table_lookup(service->private_data->namespaces, prefix) != NULL ||
+			lasso_strisequal(service->private_data->service_type_prefix,prefix) ||
+			lasso_strisequal(prefix,LASSO_IDWSF2_DSTREF_PREFIX)) {
+		return LASSO_PARAM_ERROR_INVALID_VALUE;
 	}
 
-	modify = LASSO_IDWSF2_DSTREF_MODIFY(LASSO_PROFILE(profile)->request);
-
-	set_xml_string(&new_data_node, new_data);
-	item = lasso_idwsf2_dstref_modify_item_new_full(
-		item_xpath, item_id, new_data_node, overrideAllowed);
-	modify->ModifyItem = g_list_append(modify->ModifyItem, item);
-
+	g_hash_table_insert(service->private_data->namespaces, g_strdup(prefix), g_strdup(href));
 	return 0;
 }
 
-gint
-lasso_idwsf2_data_service_process_modify_msg(LassoIdWsf2DataService *service, const gchar *message)
+static void
+add_custom_namespace(const char *prefix, const char *href, LassoNode *node)
 {
-	LassoIdWsf2Profile *profile = LASSO_IDWSF2_PROFILE(service);
-	LassoIdWsf2DstRefModify *request = NULL;
-	int res = 0;
+	lasso_node_add_custom_namespace(node, prefix, href);
+}
 
-	g_return_val_if_fail(LASSO_IS_IDWSF2_DATA_SERVICE(service),
-		LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
-	g_return_val_if_fail(message != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
+/**
+ * lasso_idwsf2_data_service_build_request_msg:
+ * @service: a #LassoIdWsf2DataService object
+ * @security_mech_id:(allow-none): the security mechanism to employ, default is Bearer mechanism.
+ *
+ * Build the request message.
+ *
+ * Return value: 0 if successful, an error code otherwise.
+ */
+gint
+lasso_idwsf2_data_service_build_request_msg(LassoIdWsf2DataService *service,
+		const char *security_mech_id)
+{
+	int rc = 0;
+	LassoSoapEnvelope *envelope;
+	LassoIdWsf2DstRefQuery *query = (LassoIdWsf2DstRefQuery*)service->parent.parent.request;
+	LassoIdWsf2DstRefModify *modify = (LassoIdWsf2DstRefModify*)service->parent.parent.request;
+	const char *service_type = NULL;
+	const char *prefix = NULL;
 
-	res = lasso_idwsf2_profile_process_soap_request_msg(profile, message);
+	lasso_bad_param(IDWSF2_DATA_SERVICE, service);
 
-	if (! LASSO_IS_IDWSF2_DSTREF_MODIFY(LASSO_PROFILE(profile)->request)) {
-		res = LASSO_PROFILE_ERROR_INVALID_SOAP_MSG;
+	envelope = lasso_idwsf2_profile_get_soap_envelope_request(&service->parent);
+	service_type = lasso_wsa_endpoint_reference_get_idwsf2_service_type(
+			lasso_idwsf2_profile_get_epr(&service->parent));
+	if (service_type) {
+		const char *prefix = lasso_get_prefix_for_idwsf2_dst_service_href(service_type);
+		if (! prefix)
+			prefix = "dstref";
 	} else {
-		request = LASSO_IDWSF2_DSTREF_MODIFY(LASSO_PROFILE(profile)->request);
-		service->type = g_strdup(request->hrefServiceType);
+		service_type = service->private_data->service_type;
+		prefix = service->private_data->service_type_prefix;
 	}
 
-	return res;
+	switch (lasso_idwsf2_data_service_get_request_type(service)) {
+		case LASSO_IDWSF2_DATA_SERVICE_REQUEST_TYPE_QUERY:
+			if (service_type) {
+				lasso_idwsf2_data_service_set_dst_service_type(query, service_type, prefix);
+			}
+			lasso_assign_list_of_gobjects(query->QueryItem, service->private_data->query_items);
+			g_hash_table_foreach(service->private_data->namespaces,
+					(GHFunc)add_custom_namespace,
+					query);
+			break;
+		case LASSO_IDWSF2_DATA_SERVICE_REQUEST_TYPE_MODIFY:
+			if (service_type) {
+				lasso_idwsf2_data_service_set_dst_service_type(modify, service_type, prefix);
+			}
+			lasso_assign_list_of_gobjects(modify->ModifyItem, service->private_data->modify_items);
+			break;
+		default:
+			goto_cleanup_with_rc(LASSO_PROFILE_ERROR_INVALID_REQUEST);
+			break;
+	}
+	rc = lasso_idwsf2_profile_build_request_msg(&service->parent, security_mech_id);
+cleanup:
+	return rc;
 }
 
 static gint
-lasso_idwsf2_data_service_parse_one_modify_item(LassoIdWsf2DstRefModifyItem *item,
-	LassoIdWsf2DstRefModifyResponse *response, xmlDoc *cur_doc, xmlXPathContext *cur_xpathCtx)
+lasso_idwsf2_data_service_process_query(LassoIdWsf2DataService *service)
 {
-	xmlXPathObject *cur_xpathObj;
-	xmlNode *new_node;
-	xmlNode *cur_node;
-	int res = 0;
+	LassoIdWsf2DstRefQuery *query;
+	GList *i;
+	int rc = 0;
 
-	if (item == NULL) {
-		return LASSO_DST_ERROR_MODIFY_FAILED;
-	}
+	query = (LassoIdWsf2DstRefQuery*)service->parent.parent.request;
+	lasso_check_good_rc(lasso_idwsf2_data_service_set_service_type(
+			service,
+			query->prefixServiceType,
+			query->hrefServiceType));
 
-	/* Check NewData existence */
-	if (item->NewData == NULL || item->NewData->any == NULL
-			|| item->NewData->any->data == NULL) {
-		if (item->overrideAllowed == TRUE) {
-			new_node = NULL;
-		} else {
-			return LASSO_DST_ERROR_NEW_DATA_MISSING;
+	/* Parse QueryItems to get a list of Query strings */
+	/* FIXME: extract TestItems */
+	lasso_foreach(i, query->QueryItem)
+	{
+		LassoIdWsf2DstRefQueryItem *item = (LassoIdWsf2DstRefQueryItem *)i->data;
+		/* FIXME: check more query items invariants. */
+		if (! LASSO_IS_IDWSF2_DSTREF_QUERY_ITEM(item)) {
+			lasso_release_list_of_gobjects(service->private_data->query_items);
+			goto_cleanup_with_rc(LASSO_PROFILE_ERROR_INVALID_REQUEST);
 		}
-	} else {
-		new_node = (xmlNode*)item->NewData->any->data;
+		lasso_list_add_gobject(service->private_data->query_items,
+				item);
 	}
-
-	if (item->overrideAllowed == FALSE) {
-		/* Add the new item and add it to the current data */
-		/* FIXME : when the ancestor nodes of the new node do not */
-		/* exist either, they MUST be added */
-		xmlAddChild(xmlDocGetRootElement(cur_doc), xmlCopyNode(new_node, 1));
-	} else {
-		/* Modify an existing node */
-		cur_xpathObj = xmlXPathEvalExpression((xmlChar*)item->Select, cur_xpathCtx);
-		if (cur_xpathObj && cur_xpathObj->nodesetval && cur_xpathObj->nodesetval->nodeNr) {
-			/* XXX: assuming there is only one matching node */
-			cur_node = cur_xpathObj->nodesetval->nodeTab[0];
-			if (new_node != NULL) {
-				/* Replace old node with new data */
-				xmlReplaceNode(cur_node, xmlCopyNode(new_node, 1));
-			} else {
-				/* Remove old node as new data is empty */
-				xmlUnlinkNode(cur_node);
-				xmlFreeNode(cur_node);
-			}
-		} else {
-			res = LASSO_DST_ERROR_MODIFY_FAILED;
-		}
-		xmlXPathFreeObject(cur_xpathObj);
-	}
-
-	return res;
+cleanup:
+	return rc;
 }
 
-gint
-lasso_idwsf2_data_service_parse_modify_items(LassoIdWsf2DataService *service)
+static gint
+lasso_idwsf2_data_service_process_modify(LassoIdWsf2DataService *service)
 {
-	LassoIdWsf2Profile *profile = LASSO_IDWSF2_PROFILE(service);
-	LassoIdWsf2DstRefModify *request;
-	LassoIdWsf2DstRefModifyResponse *response;
-	LassoIdWsf2UtilResponse *response2;
-	LassoSoapEnvelope *envelope;
-	xmlDoc *cur_doc;
-	xmlXPathContext *cur_xpathCtx;
-	LassoIdWsf2DstRefModifyItem *item;
-	xmlNode *cur_data;
-	LassoIdWsf2UtilStatus *secondary_status;
-	GList *iter;
-	int res = 0;
+	LassoIdWsf2DstRefModify *modify;
+	GList *i;
+	int rc = 0;
 
-	g_return_val_if_fail(LASSO_IS_IDWSF2_DATA_SERVICE(service),
-		LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
-
-	if (! LASSO_IS_IDWSF2_DSTREF_MODIFY(LASSO_PROFILE(profile)->request)) {
-		return LASSO_PROFILE_ERROR_MISSING_REQUEST;
+	modify = (LassoIdWsf2DstRefModify*)service->parent.parent.request;
+	lasso_foreach(i, modify->ModifyItem)
+	{
+		LassoIdWsf2DstRefModifyItem *item = (LassoIdWsf2DstRefModifyItem*)i->data;
+		/* FIXME: check more Modify Item invariants */
+		if (! LASSO_IS_IDWSF2_DSTREF_MODIFY_ITEM(item)) {
+			lasso_release_list_of_gobjects(service->private_data->modify_items);
+			goto_cleanup_with_rc(LASSO_PROFILE_ERROR_INVALID_REQUEST);
+		}
+		lasso_list_add_gobject(service->private_data->modify_items, item);
 	}
-	request = LASSO_IDWSF2_DSTREF_MODIFY(LASSO_PROFILE(profile)->request);
+cleanup:
+	return rc;
+}
 
-	if (service->data == NULL) {
-		return LASSO_DST_ERROR_MISSING_SERVICE_DATA;
-	} else {
-		cur_data = xmlCopyNode(service->data, 1);
-	}
+/**
+ * lasso_idwsf2_data_service_process_request_msg:
+ * @service: a #LassoIdWsf2DataService object
+ * @msg: the message string
+ *
+ * Process a newly received requests.
+ */
+gint
+lasso_idwsf2_data_service_process_request_msg(LassoIdWsf2DataService *service, const char *msg)
+{
+	int rc = 0;
 
-	/* Response envelope and body */
-	envelope = profile->soap_envelope_response;
-	if (envelope == NULL) {
-		return LASSO_SOAP_ERROR_MISSING_ENVELOPE;
-	}
-	response = lasso_idwsf2_dstref_modify_response_new();
-	response->prefixServiceType = g_strdup(request->prefixServiceType);
-	response->hrefServiceType = g_strdup(request->hrefServiceType);
-	LASSO_PROFILE(profile)->response = LASSO_NODE(response);
-	envelope->Body->any = g_list_append(envelope->Body->any, response);
+	lasso_bad_param(IDWSF2_DATA_SERVICE, service);
 
-	response2 = LASSO_IDWSF2_UTIL_RESPONSE(response);
-	response2->Status = lasso_idwsf2_util_status_new();
-
-	/* Initialise XML parsing */
-	cur_doc = xmlNewDoc((xmlChar*)"1.0");
-	xmlDocSetRootElement(cur_doc, cur_data);
-	cur_xpathCtx = xmlXPathNewContext(cur_doc);
-	lasso_register_idwsf2_xpath_namespaces(cur_xpathCtx);
-
-	/* Parse request ModifyItems and modify user current data accordingly */
-	/* XXX: needs another level, since there may be more than one <dst:Modify> */
-	for (iter = g_list_first(request->ModifyItem); iter != NULL; iter = g_list_next(iter)) {
-		item = iter->data;
-		res = lasso_idwsf2_data_service_parse_one_modify_item(
-			item, response, cur_doc, cur_xpathCtx);
-		if (res != 0) {
-			/* If one item fails, stop and roll back */
+	lasso_check_good_rc(lasso_idwsf2_profile_process_request_msg(&service->parent, msg));
+	lasso_idwsf2_data_service_clean_private_data(service);
+	switch (lasso_idwsf2_data_service_get_request_type(service)) {
+		case LASSO_IDWSF2_DATA_SERVICE_REQUEST_TYPE_QUERY:
+			rc = lasso_idwsf2_data_service_process_query(service);
 			break;
-		}
+		case LASSO_IDWSF2_DATA_SERVICE_REQUEST_TYPE_MODIFY:
+			rc = lasso_idwsf2_data_service_process_modify(service);
+			break;
+		default:
+			rc = LASSO_PROFILE_ERROR_INVALID_REQUEST;
+			break;
 	}
-
-	if (res == 0) {
-		response2->Status->code = g_strdup(LASSO_DST_STATUS_CODE_OK);
-		/* Save new service data */
-		xmlFreeNode(service->data);
-		service->data = xmlCopyNode(cur_data, 1);
-	} else {
-		response2->Status->code = g_strdup(LASSO_DST_STATUS_CODE_FAILED);
-		if (res == LASSO_DST_ERROR_NEW_DATA_MISSING) {
-			secondary_status = lasso_idwsf2_util_status_new();
-			secondary_status->code = g_strdup(
-				LASSO_DST_STATUS_CODE_MISSING_NEW_DATA_ELEMENT);
-			response2->Status->Status = g_list_append(
-				response2->Status->Status, secondary_status);
-		}
+	if (rc == LASSO_PROFILE_ERROR_INVALID_REQUEST) {
+		lasso_idwsf2_data_service_set_status_code(service,
+				LASSO_DST2_STATUS_CODE1_FAILED,
+				"InvalidRequest");
 	}
-
-	/* Free XML parsing objects */
-	xmlXPathFreeContext(cur_xpathCtx);
-	xmlFreeDoc(cur_doc);
-
-	return res;
+cleanup:
+	return rc;
 }
 
+/**
+ * lasso_idwsf2_data_service_validate_request:
+ * @service: a #LassoIdWsf2DataService object
+ *
+ * Initialize a new response object corresponding to the current request. If not request if found or
+ * the request is invalid, a failure response is created.
+ *
+ * Return value: 0 if successful, or LASSO_PROFILE_ERROR_INVALID_REQUEST.
+ */
 gint
-lasso_idwsf2_data_service_process_modify_response_msg(LassoIdWsf2DataService *service,
-	const gchar *message)
+lasso_idwsf2_data_service_validate_request(LassoIdWsf2DataService *service)
 {
-	LassoIdWsf2Profile *profile = LASSO_IDWSF2_PROFILE(service);
-	LassoIdWsf2UtilResponse *response;
-	int res;
+	LassoIdWsf2DstRefQueryResponse *query_response;
+	LassoIdWsf2DstRefModifyResponse *modify_response;
+	LassoNode *response = NULL;
+	int rc = 0;
+	const char *service_type = NULL;
+	const char *prefix = NULL;
 
-	g_return_val_if_fail(LASSO_IS_IDWSF2_DATA_SERVICE(service),
-		LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
-	g_return_val_if_fail(message != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
+	lasso_bad_param(IDWSF2_DATA_SERVICE, service);
 
-	res = lasso_idwsf2_profile_process_soap_response_msg(profile, message);
-	if (res != 0) {
-		return res;
+	lasso_check_good_rc(lasso_idwsf2_profile_init_response(&service->parent));
+	if (service_type) {
+		const char *prefix = lasso_get_prefix_for_idwsf2_dst_service_href(service_type);
+		if (! prefix)
+			prefix = "dstref";
+	} else {
+		service_type = service->private_data->service_type;
+		prefix = service->private_data->service_type_prefix;
 	}
-
-	if (! LASSO_IS_IDWSF2_DSTREF_MODIFY_RESPONSE(LASSO_PROFILE(profile)->response)) {
-		return LASSO_PROFILE_ERROR_INVALID_SOAP_MSG;
+	switch (lasso_idwsf2_data_service_get_request_type(service)) {
+		case LASSO_IDWSF2_DATA_SERVICE_REQUEST_TYPE_QUERY:
+			query_response = lasso_idwsf2_dstref_query_response_new();
+			if (service_type) {
+				lasso_idwsf2_data_service_set_dst_service_type(query_response,
+						service_type, prefix);
+			}
+			response = (LassoNode*)query_response;
+			break;
+		case LASSO_IDWSF2_DATA_SERVICE_REQUEST_TYPE_MODIFY:
+			modify_response = lasso_idwsf2_dstref_modify_response_new();
+			if (service_type) {
+				lasso_idwsf2_data_service_set_dst_service_type(modify_response,
+						service_type, prefix);
+			}
+			response = (LassoNode*)modify_response;
+			break;
+		default:
+			lasso_idwsf2_data_service_set_status_code(service,
+					LASSO_DST2_STATUS_CODE1_FAILED, "InvalidRequest");
+			return LASSO_PROFILE_ERROR_INVALID_REQUEST;
 	}
-
-	/* Check response status code */
-	response = LASSO_IDWSF2_UTIL_RESPONSE(LASSO_PROFILE(profile)->response);
-	if (response->Status == NULL || response->Status->code == NULL) {
-		return LASSO_PROFILE_ERROR_MISSING_STATUS_CODE;
+	if (response) {
+		LassoSoapEnvelope *envelope =
+			lasso_idwsf2_profile_get_soap_envelope_response(&service->parent);
+		lasso_assign_new_gobject(service->parent.parent.response, response);
+		lasso_soap_envelope_add_to_body(envelope, response);
+		lasso_idwsf2_data_service_set_status_code(service, LASSO_DST2_STATUS_CODE1_OK, NULL);
 	}
-	if (strcmp(response->Status->code, LASSO_DST_STATUS_CODE_PARTIAL) == 0) {
-		return LASSO_DST_ERROR_MODIFY_PARTIALLY_FAILED;
-	} else if (strcmp(response->Status->code, LASSO_DST_STATUS_CODE_OK) != 0) {
-		return LASSO_DST_ERROR_MODIFY_FAILED;
-	}
-
-	return 0;
+cleanup:
+	return rc;
 }
 
-/*****************************************************************************/
-/* private methods                                                           */
-/*****************************************************************************/
+/**
+ * lasso_idwsf2_data_service_set_status_code:
+ * @service: a #LassoIdWsf2DataService
+ * @status_code: a first level status code
+ * @status_code2: a second level status code
+ *
+ * Set the status code for the current response, if no response exists, it starts one using
+ * lasso_idwsf2_data_service_validate_request(), if it fails, report a SOAP Fault.
+ */
+gint
+lasso_idwsf2_data_service_set_status_code(LassoIdWsf2DataService *service,
+		const char *status_code, const char *status_code2)
+{
+	LassoNode *response;
+	LassoIdWsf2UtilStatus **status = NULL;
+	LassoIdWsf2UtilStatus *new_status = NULL;
+	int rc = 0;
+
+
+	response = service->parent.parent.response;
+	if (LASSO_IS_IDWSF2_UTIL_RESPONSE(response)) {
+		switch (lasso_idwsf2_data_service_get_request_type(service)) {
+			case LASSO_IDWSF2_DATA_SERVICE_REQUEST_TYPE_QUERY:
+				status = &LASSO_IDWSF2_UTIL_RESPONSE(response)->Status;
+				break;
+			case LASSO_IDWSF2_DATA_SERVICE_REQUEST_TYPE_MODIFY:
+				status = &LASSO_IDWSF2_UTIL_RESPONSE(response)->Status;
+				break;
+			default:
+				break;
+		}
+	}
+
+	new_status = lasso_idwsf2_util_status_new_with_code(status_code, status_code2);
+
+	if (! LASSO_IS_IDWSF2_UTIL_RESPONSE(response) || ! status) {
+		GList details = { .data = new_status, .next = NULL, .prev = NULL };
+
+		lasso_check_good_rc(lasso_idwsf2_profile_init_soap_fault_response(&service->parent,
+					LASSO_SOAP_FAULT_CODE_CLIENT, "Unknown Request Type",
+					&details));
+	} else {
+		lasso_assign_gobject(*status, new_status);
+	}
+cleanup:
+	lasso_release_gobject(new_status);
+	return rc;
+}
+
+/**
+ * lasso_idwsf2_data_service_set_query_item_result:
+ * @service: a #LassoIdWsf2DataService object
+ * @item_id:(allow-none): target a certain QueryItem if NULL, means there is only one query item
+ * @xml_data:(allow-none): the data to add
+ * @add:(allow-none)(default FALSE): add data to existing datas
+ *
+ * Set result data for a certain query-item.
+ */
+gint
+lasso_idwsf2_data_service_set_query_item_result(LassoIdWsf2DataService *service,
+		const char *item_id, xmlNode *xml_data, gboolean add)
+{
+	LassoIdWsf2DstRefQueryItem *item;
+	LassoIdWsf2DstRefData *data;
+	int rc = 0;
+
+	if (lasso_idwsf2_data_service_get_request_type(service)
+			!= LASSO_IDWSF2_DATA_SERVICE_REQUEST_TYPE_QUERY) {
+		goto_cleanup_with_rc(LASSO_IDWSF2_DST_ERROR_ITEM_NOT_FOUND);
+	}
+	lasso_bad_param(IDWSF2_DATA_SERVICE, service);
+	item = (LassoIdWsf2DstRefQueryItem*)lasso_idwsf2_data_service_get_item(service, item_id);
+	if (! LASSO_IS_IDWSF2_DSTREF_QUERY_ITEM(item)) {
+		goto_cleanup_with_rc(LASSO_IDWSF2_DST_ERROR_ITEM_NOT_FOUND);
+	}
+	data = lasso_idwsf2_data_service_get_query_item_result(service, item_id);
+	if (data == NULL) {
+		data = lasso_idwsf2_dstref_data_new();
+	}
+	if (xml_data) {
+		if (! add) {
+			lasso_release_list_of_xml_node(data->parent.parent.any);
+		}
+		lasso_list_add_xml_node(data->parent.parent.any, xml_data);
+	}
+	if (item_id) {
+		lasso_assign_string(data->parent.itemIDRef, item_id);
+	}
+	if (g_list_find(service->private_data->query_datas, data) == NULL) {
+		lasso_list_add_gobject(service->private_data->query_datas, data);
+	}
+cleanup:
+	return rc;
+}
+
+/**
+ * lasso_idwsf2_data_service_build_response_msg:
+ * @service: a #LassoIdWsf2DataService object
+ *
+ * Build the response message corresponding to the current request.
+ *
+ * Return value: 0 if successfull, an error code otherwise.
+ */
+gint
+lasso_idwsf2_data_service_build_response_msg(LassoIdWsf2DataService *service)
+{
+	LassoIdWsf2DstRefQueryResponse *query_response;
+	GList *datas;
+	int rc = 0;
+
+	lasso_bad_param(IDWSF2_DATA_SERVICE, service);
+	if (! LASSO_IS_SOAP_FAULT(service->parent.parent.response)) {
+		switch (lasso_idwsf2_data_service_get_request_type(service)) {
+			case LASSO_IDWSF2_DATA_SERVICE_REQUEST_TYPE_QUERY:
+				goto_cleanup_if_fail_with_rc(
+						LASSO_IS_IDWSF2_DSTREF_QUERY_RESPONSE(
+							service->parent.parent.response),
+						LASSO_PROFILE_ERROR_INVALID_RESPONSE);
+				query_response = (LassoIdWsf2DstRefQueryResponse*)service->parent.parent.response;
+				datas = lasso_idwsf2_data_service_get_query_item_results(service);
+				lasso_assign_list_of_gobjects(query_response->Data, datas);
+				break;
+			case LASSO_IDWSF2_DATA_SERVICE_REQUEST_TYPE_MODIFY:
+				goto_cleanup_with_rc(LASSO_ERROR_UNIMPLEMENTED);
+				break;
+			default:
+				break;
+		}
+	}
+	rc = lasso_idwsf2_profile_build_response_msg(&service->parent);
+cleanup:
+	return rc;
+}
+
+static gint
+_lasso_idwsf2_data_service_process_query_response(LassoIdWsf2DataService * service,
+		LassoIdWsf2DstRefQueryResponse *response)
+{
+	int rc = 0;
+
+	goto_cleanup_if_fail_with_rc(LASSO_IS_IDWSF2_DSTREF_QUERY_RESPONSE(response),
+			LASSO_PROFILE_ERROR_INVALID_RESPONSE);
+
+	if (service->private_data) {
+		lasso_assign_list_of_gobjects(service->private_data->query_datas, response->Data);
+	}
+cleanup:
+	return rc;
+}
+
+/**
+ * lasso_idwsf2_data_service_process_response_msg:
+ * @service: a #LassoIdWsf2DataService object
+ * @msg: (allow-none): the message content
+ *
+ * Process a received SOAP message response.
+ *
+ * Return value: 0 if successful, an error code otherwise.
+ */
+gint
+lasso_idwsf2_data_service_process_response_msg(
+	LassoIdWsf2DataService *service, const char *msg)
+{
+	LassoIdWsf2DstRefQueryResponse *query_response;
+	LassoIdWsf2UtilStatus *status;
+	int rc = 0;
+
+	lasso_bad_param(IDWSF2_DATA_SERVICE, service);
+
+	lasso_check_good_rc(lasso_idwsf2_profile_process_response_msg(&service->parent, msg));
+
+	status = lasso_idwsf2_data_service_get_response_status(service);
+
+	if (! status || ! status->code) {
+		goto_cleanup_with_rc(LASSO_PROFILE_ERROR_MISSING_STATUS_CODE);
+	}
+	if (lasso_strisequal(status->code,LASSO_DST2_STATUS_CODE1_FAILED)) {
+		goto_cleanup_with_rc(LASSO_PROFILE_ERROR_STATUS_NOT_SUCCESS);
+	}
+	if (lasso_strisequal(status->code,LASSO_DST2_STATUS_CODE1_PARTIAL)) {
+		rc = LASSO_IDWSF2_DST_ERROR_PARTIAL_FAILURE;
+	}
+	if (lasso_strisnotequal(status->code,LASSO_DST2_STATUS_CODE1_OK)) {
+		rc = LASSO_IDWSF2_DST_ERROR_UNKNOWN_STATUS_CODE;
+	}
+
+	switch (lasso_idwsf2_data_service_get_request_type(service)) {
+		case LASSO_IDWSF2_DATA_SERVICE_REQUEST_TYPE_QUERY:
+			query_response = (LassoIdWsf2DstRefQueryResponse*)service->parent.parent.response;
+			lasso_check_good_rc(_lasso_idwsf2_data_service_process_query_response(service, query_response));
+			break;
+		case LASSO_IDWSF2_DATA_SERVICE_REQUEST_TYPE_MODIFY:
+			rc = LASSO_ERROR_UNIMPLEMENTED;
+			break;
+		default:
+			rc = LASSO_ERROR_UNDEFINED;
+			break;
+	}
+
+cleanup:
+	return rc;
+}
+
+/**
+ * lasso_idwsf2_data_service_get_response_status:
+ * @service: a #LassoIdWsf2UtilStatus object
+ *
+ * Return the status from the current response.
+ *
+ * Return value:(transfer none)(allow-none): a #LassoIdWsf2UtilStatus object, or NULL.
+ */
+LassoIdWsf2UtilStatus*
+lasso_idwsf2_data_service_get_response_status(LassoIdWsf2DataService *service)
+{
+	LassoIdWsf2UtilResponse *response;
+	LassoSoapFault *fault;
+
+	response = (void*)(fault = (void*)service->parent.parent.response);
+	if (LASSO_IS_IDWSF2_UTIL_RESPONSE(response)) {
+		return response->Status;
+	}
+	if (LASSO_IS_SOAP_FAULT(fault)) {
+		if (LASSO_IS_SOAP_DETAIL(fault->Detail) && fault->Detail->any
+				&& LASSO_IS_IDWSF2_UTIL_STATUS(fault->Detail->any->data)) {
+			return (LassoIdWsf2UtilStatus*)fault->Detail->any->data;
+		}
+	}
+	return NULL;
+}
+
+/**
+ * lasso_idwsf2_data_service_get_query_item_result:
+ * @service: a #LassoIdWsf2DataService object
+ * @item_id:(allow-none): an item_id or NULL if only one data is present
+ *
+ * Return value:(allow-none)(transfer none): a #LassoIdWsf2DstRefData or NULL if none is found.
+ */
+LassoIdWsf2DstRefData*
+lasso_idwsf2_data_service_get_query_item_result(LassoIdWsf2DataService *service,
+		const char *item_id)
+{
+	GList *i;
+
+	if (! LASSO_IS_IDWSF2_DATA_SERVICE(service))
+		return NULL;
+	if (! item_id) {
+		if (g_list_length(service->private_data->query_datas) == 1) {
+			return (LassoIdWsf2DstRefData*)service->private_data->query_datas->data;
+		}
+		return NULL;
+	}
+	lasso_foreach(i, service->private_data->query_datas) {
+		LassoIdWsf2DstRefData *data = (LassoIdWsf2DstRefData*)i->data;
+		if (lasso_strisequal(data->parent.itemIDRef,item_id)) {
+			return data;
+		}
+	}
+	return NULL;
+}
+
+/**
+ * lasso_idwsf2_data_service_get_query_item_result_content:
+ * @service: a #LassoIdWsf2DataService object
+ * @item_id:(allow-none): the identifier of the result asked, if NULL and there is only one respone,
+ * returns it.
+ *
+ * Returns the text content of the query item result identified by @item_id or the only query item
+ * result if @item_id is NULL.
+ * <para>If @item_id is NULL and there is multiple results, returns NULL.</para>
+ *
+ * Return value:(transfer full): the text content of the query item result.
+ */
+char*
+lasso_idwsf2_data_service_get_query_item_result_content(LassoIdWsf2DataService *service,
+		const char *item_id)
+{
+	LassoIdWsf2DstRefData *data = NULL;
+	LassoIdWsf2DstRefAppData *app_data = NULL;
+	GList *i = NULL;
+	GString *gstr = NULL;
+	char *result = NULL;
+
+	data = lasso_idwsf2_data_service_get_query_item_result(service, item_id);
+	if (! data)
+		return NULL;
+	app_data = (LassoIdWsf2DstRefAppData*)data;
+	gstr = g_string_sized_new(128);
+	lasso_foreach(i, app_data->any) {
+		xmlNode *node = (xmlNode*)i->data;
+		xmlChar *content;
+		content = xmlNodeGetContent(node);
+		g_string_append(gstr, (char*)content);
+		xmlFree(content);
+	}
+	result = gstr->str;
+	lasso_release_gstring(gstr, FALSE);
+	return result;
+}
+
+/**
+ * lasso_idwsf2_data_service_get_query_item_results:
+ * @service: a #LassoIdWsf2DataService object
+ *
+ * Return value:(allow-none)(transfer none)(element-type LassoIdWsf2DstRefData): the list of
+ * #LassoIdWsf2DstRefData or NULL if none is found.
+ */
+GList*
+lasso_idwsf2_data_service_get_query_item_results(LassoIdWsf2DataService *service)
+{
+
+	if (LASSO_IS_IDWSF2_DATA_SERVICE(service) && service->private_data) {
+		return service->private_data->query_datas;
+	}
+	return NULL;
+}
 
 static LassoNodeClass *parent_class = NULL;
-
-static void
-register_xpath_namespace(gchar *prefix, gchar *href, xmlXPathContext *xpathCtx)
-{
-	xmlXPathRegisterNs(xpathCtx, (xmlChar*)prefix, (xmlChar*)href);
-}
-
-static void
-lasso_register_idwsf2_xpath_namespaces(xmlXPathContext *xpathCtx)
-{
-	if (idwsf2_dst_services_by_prefix == NULL)
-		return;
-	g_hash_table_foreach(idwsf2_dst_services_by_prefix,
-			(GHFunc)register_xpath_namespace, xpathCtx);
-}
-
-static GList*
-duplicate_glist_of_xmlnodes(GList *list)
-{
-	GList *r = NULL;
-	GList *t;
-
-	for (t = list; t; t = g_list_next(t)) {
-		r = g_list_append(r, xmlCopyNode(t->data, 1));
-	}
-
-	return r;
-}
-
-
-/*****************************************************************************/
-/* overrided parent class methods */
-/*****************************************************************************/
 
 static void
 dispose(GObject *object)
 {
 	LassoIdWsf2DataService *service = LASSO_IDWSF2_DATA_SERVICE(object);
+	LassoIdWsf2DataServicePrivate *pdata = service->private_data;
 
-	if (service->private_data->dispose_has_run == TRUE)
+	if (!pdata || pdata->dispose_has_run == TRUE)
 		return;
-	service->private_data->dispose_has_run = TRUE;
+	pdata->dispose_has_run = TRUE;
 
-	g_free(service->type);
-	service->type = NULL;
-
-	g_free(service->redirect_url);
-	service->redirect_url = NULL;
-
-	if (service->query_items != NULL) {
-		g_list_foreach(service->query_items, (GFunc)g_free, NULL);
-		g_list_free(service->query_items);
-		service->query_items = NULL;
-	}
-
-	lasso_node_destroy(LASSO_NODE(service->private_data->epr));
-	service->private_data->epr = NULL;
-
+	lasso_idwsf2_data_service_clean_private_data(service);
 	G_OBJECT_CLASS(parent_class)->dispose(object);
 }
 
 static void
 finalize(GObject *object)
-{ 
+{
 	LassoIdWsf2DataService *service = LASSO_IDWSF2_DATA_SERVICE(object);
-	g_free(service->private_data);
+	lasso_release(service->private_data);
 	service->private_data = NULL;
 	G_OBJECT_CLASS(parent_class)->finalize(object);
 }
 
-
-/*****************************************************************************/
-/* instance and class init functions                                         */
-/*****************************************************************************/
-
 static void
 instance_init(LassoIdWsf2DataService *service)
 {
-	service->data = NULL;
-	service->type = NULL;
-	service->redirect_url = NULL;
-	service->query_items = NULL;
 	service->private_data = g_new0(LassoIdWsf2DataServicePrivate, 1);
-	service->private_data->epr = NULL;
-	service->private_data->credentials = NULL;
+	service->private_data->namespaces = g_hash_table_new_full(g_str_hash, g_str_equal,
+			(GDestroyNotify)g_free, (GDestroyNotify)g_free);
 }
 
 static void
 class_init(LassoIdWsf2DataServiceClass *klass)
 {
 	parent_class = g_type_class_peek_parent(klass);
-	
+
+	lasso_node_class_set_nodename(LASSO_NODE_CLASS(klass), "IdWsf2DataService");
+	lasso_node_class_set_ns(LASSO_NODE_CLASS(klass), LASSO_LASSO_HREF, LASSO_LASSO_PREFIX);
 	G_OBJECT_CLASS(klass)->dispose = dispose;
 	G_OBJECT_CLASS(klass)->finalize = finalize;
 }
@@ -968,6 +1033,7 @@ lasso_idwsf2_data_service_get_type()
 			sizeof(LassoIdWsf2DataService),
 			0,
 			(GInstanceInitFunc) instance_init,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_IDWSF2_PROFILE,
@@ -979,8 +1045,9 @@ lasso_idwsf2_data_service_get_type()
 
 /**
  * lasso_idwsf2_data_service_new:
+ * @server:(allow-none): a #LassoServer object, for resolving ProviderIDs
  *
- * Creates a new #LassoIdWsf2DataService.
+ * Create a new #LassoIdWsf2DataService.
  *
  * Return value: a newly created #LassoIdWsf2DataService object
  **/
@@ -989,27 +1056,8 @@ lasso_idwsf2_data_service_new(LassoServer *server)
 {
 	LassoIdWsf2DataService *service;
 
-	g_return_val_if_fail(LASSO_IS_SERVER(server), NULL);
-
 	service = g_object_new(LASSO_TYPE_IDWSF2_DATA_SERVICE, NULL);
-
-	LASSO_PROFILE(service)->server = g_object_ref(server);
-
-	return service;
-}
-
-LassoIdWsf2DataService*
-lasso_idwsf2_data_service_new_full(LassoServer *server, LassoWsAddrEndpointReference *epr)
-{
-	LassoIdWsf2DataService *service;
-
-	g_return_val_if_fail(LASSO_IS_SERVER(server), NULL);
-	g_return_val_if_fail(LASSO_IS_WSA_ENDPOINT_REFERENCE(epr), NULL);
-
-	service = lasso_idwsf2_data_service_new(server);
-
-	service->private_data->epr = g_object_ref(epr);
+	service->parent.parent.server = lasso_ref(server);
 
 	return service;
 }
-

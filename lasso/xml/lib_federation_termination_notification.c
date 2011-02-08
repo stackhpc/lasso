@@ -1,28 +1,29 @@
-/* $Id: lib_federation_termination_notification.c 3704 2008-05-15 21:17:44Z fpeters $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
-#include <lasso/xml/lib_federation_termination_notification.h>
+#include "../utils.h"
+#include "private.h"
+#include "lib_federation_termination_notification.h"
 #include <libxml/uri.h>
 
 /**
@@ -31,7 +32,7 @@
  *
  * <figure><title>Schema fragment for lib:FederationTerminationNotification</title>
  * <programlisting><![CDATA[
- * <xs:element name="FederationTerminationNotification" 
+ * <xs:element name="FederationTerminationNotification"
  *     type="FederationTerminationNotificationType"/>
  *   <xs:complexType name="FederationTerminationNotificationType">
  *     <xs:complexContent>
@@ -45,7 +46,7 @@
  *     </xs:extension>
  *   </xs:complexContent>
  * </xs:complexType>
- * 
+ *
  * <xs:element name="ProviderID" type="md:entityIDType"/>
  * ]]></programlisting>
  * </figure>
@@ -57,14 +58,14 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "Extension", SNIPPET_EXTENSION,
-		G_STRUCT_OFFSET(LassoLibFederationTerminationNotification, Extension) },
+		G_STRUCT_OFFSET(LassoLibFederationTerminationNotification, Extension), NULL, NULL, NULL},
 	{ "ProviderID", SNIPPET_CONTENT,
-		G_STRUCT_OFFSET(LassoLibFederationTerminationNotification, ProviderID) },
+		G_STRUCT_OFFSET(LassoLibFederationTerminationNotification, ProviderID), NULL, NULL, NULL},
 	{ "NameIdentifier", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoLibFederationTerminationNotification, NameIdentifier) },
+		G_STRUCT_OFFSET(LassoLibFederationTerminationNotification, NameIdentifier), NULL, NULL, NULL},
 	{ "consent", SNIPPET_ATTRIBUTE,
-		G_STRUCT_OFFSET(LassoLibFederationTerminationNotification, consent) },
-	{ NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoLibFederationTerminationNotification, consent), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 static struct QuerySnippet query_snippets[] = {
@@ -97,7 +98,7 @@ build_query(LassoNode *node)
 		t = xmlURIEscapeStr((xmlChar*)request->RelayState, NULL);
 		s = g_strdup_printf((char*)t, "%s&RelayState=%s", query, request->RelayState);
 		xmlFree(t);
-		g_free(query);
+		lasso_release(query);
 		query = s;
 	}
 
@@ -108,23 +109,12 @@ static gboolean
 init_from_query(LassoNode *node, char **query_fields)
 {
 	LassoLibFederationTerminationNotification *request;
-	int i;
-	char *t;
+	gboolean rc;
 
 	request = LASSO_LIB_FEDERATION_TERMINATION_NOTIFICATION(node);
-
 	request->NameIdentifier = lasso_saml_name_identifier_new();
-	
-	for (i=0; (t=query_fields[i]); i++) {
-		/* RelayState is not part of <lib:FederationTerminationNotification>
-		 * but can exists nevertheless */
-		if (g_str_has_prefix(t, "RelayState=")) {
-			request->RelayState = g_strdup(t+11);
-			continue;
-		}
-	}
 
-	lasso_node_init_from_query_fields(node, query_fields);
+	rc = parent_class->init_from_query(node, query_fields);
 
 	if (request->ProviderID == NULL ||
 			request->NameIdentifier->content == NULL ||
@@ -133,8 +123,8 @@ init_from_query(LassoNode *node, char **query_fields)
 		request->NameIdentifier = NULL;
 		return FALSE;
 	}
-	
-	return TRUE;
+
+	return rc;
 }
 
 
@@ -144,14 +134,6 @@ init_from_query(LassoNode *node, char **query_fields)
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoLibFederationTerminationNotification *node)
-{
-	node->ProviderID = NULL;
-	node->NameIdentifier = NULL;
-	node->consent = NULL;
-	node->RelayState = NULL;
-}
 
 static void
 class_init(LassoLibFederationTerminationNotificationClass *klass)
@@ -183,7 +165,8 @@ lasso_lib_federation_termination_notification_get_type()
 			NULL,
 			sizeof(LassoLibFederationTerminationNotification),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_SAMLP_REQUEST_ABSTRACT,
@@ -211,8 +194,8 @@ lasso_lib_federation_termination_notification_new()
  * lasso_lib_federation_termination_notification_new_full:
  * @providerID: the provider ID doing the notification
  * @nameIdentifier: the name identifier for the federation to terminate.
- * @sign_type:
- * @sign_method:
+ * @sign_type: a #LassoSignatureType value
+ * @sign_method: a #LassoSignatureMethod value
  *
  * Creates a new #LassoLibFederationTerminationNotification object and
  * initializes it with the parameters.

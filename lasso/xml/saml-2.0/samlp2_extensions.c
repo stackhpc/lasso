@@ -1,27 +1,28 @@
-/* $Id: samlp2_extensions.c 3704 2008-05-15 21:17:44Z fpeters $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include "../private.h"
 #include "samlp2_extensions.h"
 
 /**
@@ -38,6 +39,11 @@
  * </complexType>
  * ]]></programlisting>
  * </figure>
+ *
+ * To specify the content of this object you must attach an <type>xmlNode</type> to it using
+ * lasso_node_set_original_xmlnode(). The content (attributes, children and namespaces) of this node
+ * will be copied to the result node returned by calls to lasso_node_get_xmlNode().
+ *
  */
 
 /*****************************************************************************/
@@ -46,19 +52,25 @@
 
 
 static struct XmlSnippet schema_snippets[] = {
-	{NULL, 0, 0}
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 static LassoNodeClass *parent_class = NULL;
-
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoSamlp2Extensions *node)
+static xmlNode*
+get_xmlNode(LassoNode *node, gboolean lasso_dump)
 {
+	LassoNodeClass *parent_class = NULL;
+	xmlNode *cur;
+
+	parent_class = g_type_class_peek_parent(LASSO_NODE_GET_CLASS(node));
+	cur = parent_class->get_xmlNode(node, lasso_dump);
+
+	return lasso_node_get_xmlnode_for_any_type(node, cur);
 }
 
 static void
@@ -68,7 +80,9 @@ class_init(LassoSamlp2ExtensionsClass *klass)
 
 	parent_class = g_type_class_peek_parent(klass);
 	nclass->node_data = g_new0(LassoNodeClassData, 1);
-	lasso_node_class_set_nodename(nclass, "Extensions"); 
+	nclass->node_data->keep_xmlnode = TRUE;
+	nclass->get_xmlNode = get_xmlNode;
+	lasso_node_class_set_nodename(nclass, "Extensions");
 	lasso_node_class_set_ns(nclass, LASSO_SAML2_PROTOCOL_HREF, LASSO_SAML2_PROTOCOL_PREFIX);
 	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
@@ -88,7 +102,8 @@ lasso_samlp2_extensions_get_type()
 			NULL,
 			sizeof(LassoSamlp2Extensions),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,

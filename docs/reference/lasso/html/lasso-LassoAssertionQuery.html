@@ -1,0 +1,432 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>LassoAssertionQuery</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="Lasso Reference Manual">
+<link rel="up" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
+<link rel="prev" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
+<link rel="next" href="lasso-LassoNameIdManagement.html" title="LassoNameIdManagement">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
+<link rel="reference" href="rn01.html" title="Application Programming Interface">
+<link rel="chapter" href="architecture.html" title="Lasso Architecture">
+<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
+<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
+<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
+<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
+<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
+<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
+<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
+<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
+<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
+<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
+<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
+<link rel="part" href="pt01.html" title="Part II. Appendix">
+<link rel="index" href="api-index.html" title="API Index">
+<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="saml2.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="saml2.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Lasso Reference Manual</th>
+<td><a accesskey="n" href="lasso-LassoNameIdManagement.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#lasso-LassoAssertionQuery.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#lasso-LassoAssertionQuery.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" title="LassoAssertionQuery">
+<a name="lasso-LassoAssertionQuery"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="lasso-LassoAssertionQuery.top_of_page"></a>LassoAssertionQuery</span></h2>
+<p>LassoAssertionQuery</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="lasso-LassoAssertionQuery.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+enum                LassoAssertionQueryRequestType;
+                    LassoAssertionQuery;
+LassoAssertionQuery * lasso_assertion_query_new         (LassoServer *server);
+void                lasso_assertion_query_destroy       (LassoAssertionQuery *assertion_query);
+lasso_error_t       lasso_assertion_query_init_request  (LassoAssertionQuery *assertion_query,
+                                                         char *remote_provider_id,
+                                                         LassoHttpMethod http_method,
+                                                         LassoAssertionQueryRequestType query_request_type);
+lasso_error_t       lasso_assertion_query_validate_request
+                                                        (LassoAssertionQuery *assertion_query);
+lasso_error_t       lasso_assertion_query_build_request_msg
+                                                        (LassoAssertionQuery *assertion_query);
+lasso_error_t       lasso_assertion_query_process_request_msg
+                                                        (LassoAssertionQuery *assertion_query,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *request_msg);
+lasso_error_t       lasso_assertion_query_build_response_msg
+                                                        (LassoAssertionQuery *assertion_query);
+lasso_error_t       lasso_assertion_query_process_response_msg
+                                                        (LassoAssertionQuery *assertion_query,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *response_msg);
+lasso_error_t       lasso_assertion_query_add_attribute_request
+                                                        (LassoAssertionQuery *assertion_query,
+                                                         char *format,
+                                                         char *name);
+LassoAssertionQueryRequestType  lasso_assertion_query_get_request_type
+                                                        (LassoAssertionQuery *assertion_query);
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="lasso-LassoAssertionQuery.description"></a><h2>Description</h2>
+</div>
+<div class="refsect1" title="Details">
+<a name="lasso-LassoAssertionQuery.details"></a><h2>Details</h2>
+<div class="refsect2" title="enum LassoAssertionQueryRequestType">
+<a name="LassoAssertionQueryRequestType"></a><h3>enum LassoAssertionQueryRequestType</h3>
+<pre class="programlisting">typedef enum {
+	LASSO_ASSERTION_QUERY_REQUEST_TYPE_UNSET = 0,
+	LASSO_ASSERTION_QUERY_REQUEST_TYPE_ASSERTION_ID,
+	LASSO_ASSERTION_QUERY_REQUEST_TYPE_AUTHN,
+	LASSO_ASSERTION_QUERY_REQUEST_TYPE_ATTRIBUTE,
+	LASSO_ASSERTION_QUERY_REQUEST_TYPE_AUTHZ_DECISION,
+	LASSO_ASSERTION_QUERY_REQUEST_TYPE_LAST
+} LassoAssertionQueryRequestType;
+</pre>
+<p>
+Enumerate the existing kind of AssertionQuery requests.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="LASSO-ASSERTION-QUERY-REQUEST-TYPE-UNSET--CAPS"></a><span class="term"><code class="literal">LASSO_ASSERTION_QUERY_REQUEST_TYPE_UNSET</code></span></p></td>
+<td> the unknown value
+</td>
+</tr>
+<tr>
+<td><p><a name="LASSO-ASSERTION-QUERY-REQUEST-TYPE-ASSERTION-ID--CAPS"></a><span class="term"><code class="literal">LASSO_ASSERTION_QUERY_REQUEST_TYPE_ASSERTION_ID</code></span></p></td>
+<td> an AssertionID request, to retrieve an
+assertion by its ID.
+</td>
+</tr>
+<tr>
+<td><p><a name="LASSO-ASSERTION-QUERY-REQUEST-TYPE-AUTHN--CAPS"></a><span class="term"><code class="literal">LASSO_ASSERTION_QUERY_REQUEST_TYPE_AUTHN</code></span></p></td>
+<td> an AuthnQuery request, which is used to request existing authentication assertions about a given subject from an Authentication Authority
+</td>
+</tr>
+<tr>
+<td><p><a name="LASSO-ASSERTION-QUERY-REQUEST-TYPE-ATTRIBUTE--CAPS"></a><span class="term"><code class="literal">LASSO_ASSERTION_QUERY_REQUEST_TYPE_ATTRIBUTE</code></span></p></td>
+<td> an AttributeQuery, which is used to retrieve
+attribute an a principal.
+</td>
+</tr>
+<tr>
+<td><p><a name="LASSO-ASSERTION-QUERY-REQUEST-TYPE-AUTHZ-DECISION--CAPS"></a><span class="term"><code class="literal">LASSO_ASSERTION_QUERY_REQUEST_TYPE_AUTHZ_DECISION</code></span></p></td>
+<td> an AuthzDecisionQuery, which is used to
+request authorisation to let a principal access a certain resource.
+</td>
+</tr>
+<tr>
+<td><p><a name="LASSO-ASSERTION-QUERY-REQUEST-TYPE-LAST--CAPS"></a><span class="term"><code class="literal">LASSO_ASSERTION_QUERY_REQUEST_TYPE_LAST</code></span></p></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="LassoAssertionQuery">
+<a name="LassoAssertionQuery"></a><h3>LassoAssertionQuery</h3>
+<pre class="programlisting">typedef struct {
+	LassoProfile parent;
+} LassoAssertionQuery;
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_assertion_query_new ()">
+<a name="lasso-assertion-query-new"></a><h3>lasso_assertion_query_new ()</h3>
+<pre class="programlisting">LassoAssertionQuery * lasso_assertion_query_new         (LassoServer *server);</pre>
+<p>
+Creates a new <span class="type">LassoAssertionQuery</span>.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td> the <span class="type">LassoServer</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a newly created <span class="type">LassoAssertionQuery</span> object; or NULL if
+    an error occured
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_assertion_query_destroy ()">
+<a name="lasso-assertion-query-destroy"></a><h3>lasso_assertion_query_destroy ()</h3>
+<pre class="programlisting">void                lasso_assertion_query_destroy       (LassoAssertionQuery *assertion_query);</pre>
+<p>
+Destroys a <span class="type">LassoAssertionQuery</span> object.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>assertion_query</code></em> :</span></p></td>
+<td> a <span class="type">LassoAssertionQuery</span>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_assertion_query_init_request ()">
+<a name="lasso-assertion-query-init-request"></a><h3>lasso_assertion_query_init_request ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_assertion_query_init_request  (LassoAssertionQuery *assertion_query,
+                                                         char *remote_provider_id,
+                                                         LassoHttpMethod http_method,
+                                                         LassoAssertionQueryRequestType query_request_type);</pre>
+<p>
+Initializes a new Assertion Query Request.
+For the AssertionID request type, the remote_provider_id is mandatory, for all other kind of
+request it is optional if we can find a provider supporting the associated role, i.e.
+IDP; authentication, attribute and authorization authority.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>assertion_query</code></em> :</span></p></td>
+<td> a <span class="type">LassoAssertionQuery</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>remote_provider_id</code></em> :</span></p></td>
+<td> the providerID of the remote provider.. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=allow-none"><span class="acronym">allow-none</span></a>. </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>http_method</code></em> :</span></p></td>
+<td> if set, then it get the protocol profile in metadata
+    corresponding of this HTTP request method.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>query_request_type</code></em> :</span></p></td>
+<td> the type of request.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_assertion_query_validate_request ()">
+<a name="lasso-assertion-query-validate-request"></a><h3>lasso_assertion_query_validate_request ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_assertion_query_validate_request
+                                                        (LassoAssertionQuery *assertion_query);</pre>
+<p>
+Processes a Assertion query or request; caller must add assertions to the
+response afterwards.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>assertion_query</code></em> :</span></p></td>
+<td> a <span class="type">LassoAssertionQuery</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_assertion_query_build_request_msg ()">
+<a name="lasso-assertion-query-build-request-msg"></a><h3>lasso_assertion_query_build_request_msg ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_assertion_query_build_request_msg
+                                                        (LassoAssertionQuery *assertion_query);</pre>
+<p>
+Build an Assertion Query profile request message.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>assertion_query</code></em> :</span></p></td>
+<td> a <span class="type">LassoAssertionQuery</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_assertion_query_process_request_msg ()">
+<a name="lasso-assertion-query-process-request-msg"></a><h3>lasso_assertion_query_process_request_msg ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_assertion_query_process_request_msg
+                                                        (LassoAssertionQuery *assertion_query,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *request_msg);</pre>
+<p>
+Processes a Assertion query or request message.  Rebuilds a request object
+from the message and check its signature.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>assertion_query</code></em> :</span></p></td>
+<td> a <span class="type">LassoAssertionQuery</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request_msg</code></em> :</span></p></td>
+<td> the Assertion query or request message
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_assertion_query_build_response_msg ()">
+<a name="lasso-assertion-query-build-response-msg"></a><h3>lasso_assertion_query_build_response_msg ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_assertion_query_build_response_msg
+                                                        (LassoAssertionQuery *assertion_query);</pre>
+<p>
+Builds the Response message.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>assertion_query</code></em> :</span></p></td>
+<td> a <span class="type">LassoAssertionQuery</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_assertion_query_process_response_msg ()">
+<a name="lasso-assertion-query-process-response-msg"></a><h3>lasso_assertion_query_process_response_msg ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_assertion_query_process_response_msg
+                                                        (LassoAssertionQuery *assertion_query,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *response_msg);</pre>
+<p>
+Parses the response message and builds the corresponding response object.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>assertion_query</code></em> :</span></p></td>
+<td> a <span class="type">LassoAssertionQuery</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response_msg</code></em> :</span></p></td>
+<td> the response message
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_assertion_query_add_attribute_request ()">
+<a name="lasso-assertion-query-add-attribute-request"></a><h3>lasso_assertion_query_add_attribute_request ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_assertion_query_add_attribute_request
+                                                        (LassoAssertionQuery *assertion_query,
+                                                         char *format,
+                                                         char *name);</pre>
+<p>
+Append a new attribute designator to the current attribute request.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>assertion_query</code></em> :</span></p></td>
+<td> a <span class="type">LassoAssertionQuery</span> object
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>attribute_format</code></em> :</span></p></td>
+<td> the attribute designator format
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>attribute_name</code></em> :</span></p></td>
+<td> the attribute designator name
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 if successful, an error code otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_assertion_query_get_request_type ()">
+<a name="lasso-assertion-query-get-request-type"></a><h3>lasso_assertion_query_get_request_type ()</h3>
+<pre class="programlisting">LassoAssertionQueryRequestType  lasso_assertion_query_get_request_type
+                                                        (LassoAssertionQuery *assertion_query);</pre>
+<p>
+Return the type of the last processed request.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>assertion_query</code></em> :</span></p></td>
+<td> a <span class="type">LassoAssertionQuery</span> object
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a <span class="type">LassoAssertionQueryRequestType</span> value
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

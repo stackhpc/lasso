@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>LassoEcp</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="Lasso Reference Manual">
+<link rel="up" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
+<link rel="prev" href="lasso-LassoNameIdManagement.html" title="LassoNameIdManagement">
+<link rel="next" href="lasso-Utility-functions-for-SAML-20.html" title="Utility functions for SAML 2.0">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
+<link rel="reference" href="rn01.html" title="Application Programming Interface">
+<link rel="chapter" href="architecture.html" title="Lasso Architecture">
+<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
+<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
+<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
+<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
+<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
+<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
+<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
+<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
+<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
+<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
+<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
+<link rel="part" href="pt01.html" title="Part II. Appendix">
+<link rel="index" href="api-index.html" title="API Index">
+<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="lasso-LassoNameIdManagement.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="saml2.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Lasso Reference Manual</th>
+<td><a accesskey="n" href="lasso-Utility-functions-for-SAML-20.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#lasso-LassoEcp.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#lasso-LassoEcp.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" title="LassoEcp">
+<a name="lasso-LassoEcp"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="lasso-LassoEcp.top_of_page"></a>LassoEcp</span></h2>
+<p>LassoEcp — Enhanced Client or Proxy Profile (SAMLv2)</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="lasso-LassoEcp.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    LassoEcp;
+LassoEcp*           lasso_ecp_new                       (LassoServer *server);
+lasso_error_t       lasso_ecp_process_authn_request_msg (LassoEcp *ecp,
+                                                         const char *authn_request_msg);
+lasso_error_t       lasso_ecp_process_response_msg      (LassoEcp *ecp,
+                                                         const char *response_msg);
+void                lasso_ecp_destroy                   (LassoEcp *ecp);
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="lasso-LassoEcp.description"></a><h2>Description</h2>
+<p>
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="lasso-LassoEcp.details"></a><h2>Details</h2>
+<div class="refsect2" title="LassoEcp">
+<a name="LassoEcp"></a><h3>LassoEcp</h3>
+<pre class="programlisting">typedef struct {
+	LassoProfile parent;
+
+	gchar *assertionConsumerURL;
+} LassoEcp;
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_ecp_new ()">
+<a name="lasso-ecp-new"></a><h3>lasso_ecp_new ()</h3>
+<pre class="programlisting">LassoEcp*           lasso_ecp_new                       (LassoServer *server);</pre>
+<p>
+Creates a new <span class="type">LassoEcp</span>.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a newly created <span class="type">LassoEcp</span> object; or NULL if an error
+    occured
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_ecp_process_authn_request_msg ()">
+<a name="lasso-ecp-process-authn-request-msg"></a><h3>lasso_ecp_process_authn_request_msg ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_ecp_process_authn_request_msg (LassoEcp *ecp,
+                                                         const char *authn_request_msg);</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_ecp_process_response_msg ()">
+<a name="lasso-ecp-process-response-msg"></a><h3>lasso_ecp_process_response_msg ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_ecp_process_response_msg      (LassoEcp *ecp,
+                                                         const char *response_msg);</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_ecp_destroy ()">
+<a name="lasso-ecp-destroy"></a><h3>lasso_ecp_destroy ()</h3>
+<pre class="programlisting">void                lasso_ecp_destroy                   (LassoEcp *ecp);</pre>
+<p>
+Destroys a <span class="type">LassoEcp</span> object</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>ecp</code></em> :</span></p></td>
+<td> a <span class="type">LassoEcp</span>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

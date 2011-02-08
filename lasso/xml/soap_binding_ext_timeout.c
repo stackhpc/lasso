@@ -1,28 +1,30 @@
-/* $Id: soap_binding_ext_timeout.c 3704 2008-05-15 21:17:44Z fpeters $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/soap_binding_ext_timeout.h>
+#include "private.h"
+#include "soap_binding_ext_timeout.h"
+#include "./idwsf_strings.h"
 
 /**
  * SECTION:soap_binding_ext_timeout
@@ -41,7 +43,7 @@
  *
  * ]]></programlisting>
  * </figure>
- */ 
+ */
 
 /*****************************************************************************/
 /* private methods                                                           */
@@ -49,26 +51,18 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "maxProcessingTime", SNIPPET_ATTRIBUTE | SNIPPET_INTEGER, \
-	  G_STRUCT_OFFSET(LassoSoapBindingExtTimeout, maxProcessingTime) },
-	{ "id", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoSoapBindingExtTimeout, id) },
+		G_STRUCT_OFFSET(LassoSoapBindingExtTimeout, maxProcessingTime), NULL, NULL, NULL},
+	{ "id", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoSoapBindingExtTimeout, id), NULL, NULL, NULL},
 	{ "mustUnderstand", SNIPPET_ATTRIBUTE,
-	  G_STRUCT_OFFSET(LassoSoapBindingExtTimeout, mustUnderstand) },
-	{ "actor", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoSoapBindingExtTimeout, actor) },
-	{ NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoSoapBindingExtTimeout, mustUnderstand), NULL, NULL, NULL},
+	{ "actor", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoSoapBindingExtTimeout, actor), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoSoapBindingExtTimeout *node)
-{
-	node->maxProcessingTime = 0;
-	node->id = NULL;
-	node->mustUnderstand = NULL;
-	node->actor = NULL;
-}
 
 static void
 class_init(LassoSoapBindingExtTimeoutClass *klass)
@@ -96,7 +90,8 @@ lasso_soap_binding_ext_timeout_get_type()
 			NULL,
 			sizeof(LassoSoapBindingExtTimeout),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,
@@ -113,19 +108,6 @@ lasso_soap_binding_ext_timeout_new(gint maxProcessingTime)
 	node = g_object_new(LASSO_TYPE_SOAP_BINDING_EXT_TIMEOUT, NULL);
 
 	node->maxProcessingTime = maxProcessingTime;
-
-	return node;
-}
-
-LassoSoapBindingExtTimeout*
-lasso_soap_binding_ext_timeout_new_from_message(const gchar *message)
-{
-	LassoSoapBindingExtTimeout *node;
-
-	g_return_val_if_fail(message != NULL, NULL);
-
-	node = g_object_new(LASSO_TYPE_SOAP_BINDING_EXT_TIMEOUT, NULL);
-	lasso_node_init_from_message(LASSO_NODE(node), message);
 
 	return node;
 }

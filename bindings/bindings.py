@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 #
 # Lasso - A free implementation of the Liberty Alliance specifications.
-# 
+#
 # Copyright (C) 2004-2007 Entr'ouvert
 # http://lasso.entrouvert.org
 #
@@ -25,7 +25,7 @@
 import os
 import re
 import sys
-import utils
+from utils import *
 
 from optparse import OptionParser
 
@@ -40,11 +40,33 @@ except ImportError:
         except ImportError:
             import xml.etree.ElementTree as ET
 
+sys.path.append(os.path.dirname(__file__))
+
+# monkey patch os.path to include relpath if python version is < 2.6
+if not hasattr(os.path, "relpath"):
+    def relpath(longPath, basePath):
+        if not longPath.startswith(basePath):
+            raise RuntimeError("Unexpected arguments")
+        if longPath == basePath:
+            return "."
+        i = len(basePath)
+        if not basePath.endswith(os.path.sep):
+            i += len(os.path.sep)
+        return longPath[i:]
+
+    os.path.relpath = relpath
+
+
+
 class BindingData:
     src_dir = os.path.dirname(__file__)
 
     def __init__(self, options = None):
         self.headers = []
+        # [(char,string)]
+        # where char is:
+        # - i: integer
+        # - s: string
         self.constants = []
         self.structs = []
         self.struct_dict = {}
@@ -52,6 +74,15 @@ class BindingData:
         self.enums = []
         self.options = options
         self.overrides = ET.parse(os.path.join(self.src_dir, 'overrides.xml'))
+        self.functions_toskip = dict()
+        self.structs_toskip = dict()
+
+        for func in self.overrides.findall('func'):
+            if func.attrib.get('skip') == 'true':
+                self.functions_toskip[func.attrib.get('name')] = 1
+        for struct in self.overrides.findall('struct'):
+            if struct.attrib.get('skip') == 'true':
+                self.structs_toskip[struct.attrib.get('name')] = 1
 
     def match_tag_language(self,tag):
         if self.options and self.options.language:
@@ -102,6 +133,7 @@ class BindingData:
             arg_type = f.args[0][0]
             if arg_type[-1] == '*':
                 arg_type = arg_type[:-1]
+            arg_type = arg_type.replace('const ','')
             c = self.struct_dict.get(arg_type)
             if not c:
                 continue
@@ -119,7 +151,7 @@ class BindingData:
                 return None
             else:
                 return funcs[0]
-        regex = re.compile(r'\/\*\*\s(.*?)\*\*\/', re.DOTALL)
+        regex = re.compile(r'\/\*\*\s(.*?)\*\/', re.DOTALL)
         for base, dirnames, filenames in os.walk(srcdir):
             if base.endswith('/.svn'):
                 # ignore svn directories
@@ -138,7 +170,7 @@ class BindingData:
                     func = getfunc(function_name)
                     if not func:
                         continue
-                    func.docstring = DocString(func, docstring)
+                    func.docstring = DocString(func, docstring, self)
         if exception_doc:
             lines = os.popen('perl ../utility-scripts/error-analyzer.pl %s' % srcdir, 'r').readlines()
             for line in lines:
@@ -165,10 +197,27 @@ class Struct:
         for m in self.methods:
             print '  ', m
 
+    def getMember(self, name):
+        l = [m for m in self.members if arg_name(m) == name]
+        if l:
+            return l[0]
+        else:
+            return None
+
+    def getMethod(self, name):
+        l = [m for m in self.methods if m.name == name]
+        if l:
+            return l[0]
+        else:
+            return None
+
+toskip = None
+
 
 class Function:
     return_type = None
     return_type_qualifier = None
+    return_arg = None
     name = None
     rename = None
     args = None
@@ -176,10 +225,10 @@ class Function:
     return_owner = True
     skip = False
     errors = None
-    
+
     def __repr__(self):
         return '<Function return_type:%s name:%s args:%r>' % (
-                self.return_type, self.name, self.args)
+                self.return_arg, self.name, self.args)
 
     def apply_overrides(self):
         for func in binding.overrides.findall('func'):
@@ -201,7 +250,7 @@ class Function:
                 if param.attrib.get('type'):
                     arg[0] = param.attrib.get('type')
                 if param.attrib.get('elem_type'):
-                    arg[2]['elem_type'] = param.attrib.get('elem_type')
+                    arg[2]['element-type'] = param.attrib.get('elem_type')
             if func.attrib.get('rename'):
                 self.rename = func.attrib.get('rename')
             if func.attrib.get('return_owner'):
@@ -226,17 +275,21 @@ class Function:
             if arg_name and arg_sub:
                 args = [ x for x in self.args if x[1] == arg_name]
                 for arg in args:
+                    arg[2]['original-name'] = arg[1]
                     arg[1] = arg_sub
 
 
 class DocString:
     orig_docstring = None
-    parameters = []
+    parameters = None
     return_value = None
     description = None
 
-    def __init__(self, function, docstring):
+    def __init__(self, function, docstring, binding_data):
+        self.binding_data = binding_data
         self.orig_docstring = docstring
+        self.parameters = []
+        self.params = {}
         lines = docstring.splitlines()
         # ignore the first line, it has the symbol name
         lines = lines[1:]
@@ -250,8 +303,25 @@ class DocString:
                 self.parameters = []
 
             if lines[0][0] == '@':
-                param_name, param_desc = lines[0][1:].split(':', 1)
-                self.parameters.append([param_name, param_desc])
+
+                splits = lines[0][1:].split(':', 2)
+                param_name = splits[0]
+                if len(splits) > 2:
+                    param_options = splits[1]
+                    param_desc = splits[2]
+                    self.parameters.append([param_name, param_desc, param_options])
+                    self.params[param_name] = { 'desc': param_desc, 'options': param_options }
+                    for a in function.args:
+                        if a[1] == param_name or a[2].get('original-name') == param_name:
+                            arg = a
+                            break
+                    else:
+                        raise Exception('should not happen ' + param_name + ' ' + lines[0] + repr(function))
+                    self.annotation2arg(arg, param_options)
+                else:
+                    param_desc = splits[1]
+                    self.parameters.append([param_name, param_desc])
+                    self.params[param_name] = { 'desc': param_desc }
             else:
                 # continuation of previous description
                 self.parameters[-1][1] = self.parameters[-1][1] + ' ' + lines[0].strip()
@@ -270,17 +340,52 @@ class DocString:
         self.description = self.description.strip()
 
         # return value
-        if lines[0].startswith('Return value'):
+        if lines[0].startswith('Return value') or lines[0].startswith('Returns'):
             lines[0] = lines[0].split(':', 1)[1]
-            self.return_value = ''
+            accu = ''
             while lines[0].strip():
-                self.return_value = self.return_value + ' ' + lines[0].strip()
+                accu = accu + ' ' + lines[0].strip()
                 if len(lines) == 1:
                     break
                 lines = lines[1:]
-            self.return_value = self.return_value[1:] # remove leading space
+            # find GObject-introspection annotations
+            if re.match(r'\s*\(', accu):
+                annotation, accu = accu.split(':', 1)
+                self.annotation2arg(function.return_arg, annotation)
+            self.return_value = accu.strip() # remove leading space
+    def annotation2arg(self, arg, annotation):
+        '''Convert GObject-introspection annotations to arg options'''
 
-
+        if 'allow-none' in annotation:
+            arg[2]['optional'] = True
+        if re.search(r'\(\s*out\s*\)', annotation):
+            arg[2]['out'] = True
+        if re.search(r'\(\s*in\s*\)', annotation):
+            arg[2]['in'] = True
+        m = re.search(r'\(\s*default\s*([^ )]*)\s*\)', annotation)
+        if m:
+            prefix = ''
+            if is_boolean(arg):
+                prefix = 'b:'
+            elif is_int(arg, self.binding_data):
+                prefix = 'c:'
+            else:
+                raise Exception('should not happen: could not found type for default: ' + annotation)
+            arg[2]['default'] = prefix + m.group(1)
+            arg[2]['optional'] = True
+        m = re.search(r'\(\s*element-type\s+(\w+)(?:\s+(\w+))?', annotation)
+        if m:
+            if len(m.groups()) > 2:
+                arg[2]['key-type'] = \
+                        convert_type_from_gobject_annotation(m.group(1))
+                arg[2]['value-type'] = \
+                        convert_type_from_gobject_annotation(m.group(2))
+            else:
+                arg[2]['element-type'] = \
+                        convert_type_from_gobject_annotation(m.group(1))
+        m = re.search(r'\(\s*transfer\s+(\w+)', annotation)
+        if m:
+            arg[2]['transfer'] = m.group(1)
 
 def normalise_var(type, name):
     if name[0] == '*':
@@ -288,6 +393,7 @@ def normalise_var(type, name):
         name = name[1:]
     return type, name
 
+exclude_private = True
 
 def parse_header(header_file):
     global binding
@@ -328,16 +434,23 @@ def parse_header(header_file):
                 if m:
                     binding.constants.append(('i', m.group(1)))
         elif line.startswith('#define'):
-            m = re.match(r'#define\s+([a-zA-Z0-9_]+)\s+[-\w"]', line)
+            m = re.match(r'#define\s+([a-zA-Z0-9_]+)\s+([-\w"]+)', line)
             if m:
-                constant = m.group(1)
-                if constant[0] != '_':
+                constant_name = m.group(1)
+                if constant_name[0] != '_':
                     # ignore private constants
                     if '"' in line:
                         constant_type = 's'
+                    elif m.group(2).startswith('LASSO_'):
+                        l = [ c for c in binding.constants if m.group(2) == c[1] ]
+                        if l:
+                            contant_type = l[0][0]
+                        else:
+                            raise Exception()
                     else:
                         constant_type = 'i'
-                    binding.constants.append((constant_type, constant))
+                    constant = (constant_type, constant_name)
+                    binding.constants.append(constant)
         elif line.startswith('typedef enum {'):
             in_enum = True
         elif line.startswith('typedef struct'):
@@ -349,79 +462,104 @@ def parse_header(header_file):
         elif line.startswith('struct _'):
             m = re.match('struct ([a-zA-Z0-9_]+)', line)
             struct_name = m.group(1)
-            #print struct_name
             if struct_name in struct_names:
-                #print struct_name
                 in_struct = Struct(struct_name)
                 in_struct_private = False
         elif in_struct:
             if line.startswith('}'):
-                binding.structs.append(in_struct)
+                if not in_struct.name in binding.structs_toskip:
+                    binding.structs.append(in_struct)
+                else:
+                    print >>sys.stderr, 'W: skipping structure %s due to overrides.xml' % in_struct.name
                 in_struct = None
             elif '/*< public >*/' in line:
                 in_struct_private = False
             elif '/*< private >*/' in line:
                 in_struct_private = True
-            elif in_struct_private:
+            elif in_struct_private and exclude_private:
+                pass
+            elif 'DEPRECATED' in line and exclude_private:
                 pass
             else:
+                # TODO: Add parsing of OFTYPE
                 member_match = re.match('\s+(\w+)\s+(\*?\w+)', line)
                 if member_match:
-                    member_type = member_match.group(1)
-                    member_name = member_match.group(2)
-                    if member_name == 'parent':
-                        in_struct.parent = member_type
+                    member_type, member_name = normalise_var(member_match.group(1), member_match.group(2))
+                    field = (member_type, member_name, {})
+                    if member_type == 'void*':
+                        print >>sys.stderr, 'W: skipping field %s.%s' % (in_struct.name, member_name)
                     else:
-                        in_struct.members.append(
-                                list(normalise_var(member_type, member_name)) + [{}])
-                    if member_type == 'GList':
-                        options = in_struct.members[-1][-1]
-                        if '/* of' in line:
-                            of_type = line[line.index('/* of')+6:].split()[0]
-                            if of_type == 'strings':
-                                of_type = 'char*'
-                            options['elem_type'] = of_type
+                        if is_glist(field) or is_hashtable(field):
+                            found = re.search(r' of ([^*]*)', line)
+                            if found:
+                                field[2]['element-type'] = clean_type(found.group(1))
+                        if member_name == 'parent':
+                            in_struct.parent = member_type
+                        else:
+                            in_struct.members.append(field) 
         elif line.startswith('LASSO_EXPORT '):
             while not line.strip().endswith(';'):
                 i += 1
-                line = line[:-1] + lines[i].lstrip()
+                line = line[:-1] + ' ' + lines[i].lstrip()
 
-            m = re.match(r'LASSO_EXPORT\s+((?:const |)[\w]+\*?)\s+(\*?\w+)\s*\((.*?)\)', line)
-            if m and not m.group(2).endswith('_get_type'):
-                f = Function()
+            # parse the type, then the name, then argument list
+            m = re.match(r'LASSO_EXPORT\s+([^(]*(?:\s|\*))(\w+)\s*\(\s*(.*?)\s*\)\s*;', line)
+            if m and (not exclude_private or not m.group(2).endswith('_get_type')):
                 return_type, function_name, args = m.groups()
+                return_type = return_type.strip()
+                f = Function()
                 if function_name[0] == '*':
                     return_type += '*'
                     function_name = function_name[1:]
-                if return_type != 'void':
-                    f.return_type = return_type
-                if function_name.endswith('_destroy'):
-                    # skip the _destroy functions, they are just wrapper over
-                    # g_object_unref
-                    pass
-                else:
-                    f.name = function_name
-                    f.args = []
-                    for arg in [x.strip() for x in args.split(',')]:
-                        if arg == 'void' or arg == '':
-                            continue
-                        m = re.match(r'((const\s+)?\w+\*?)\s+(\*?\w+)', arg)
-                        if m:
-                            f.args.append(list(normalise_var(m.group(1), m.group(3))) + [{}])
+                if binding.functions_toskip.get(function_name) != 1:
+                    if re.search(r'\<const\>', return_type):
+                        f.return_owner = False
+                    # clean the type
+                    return_type = clean_type(return_type)
+                    if return_type != 'void':
+                        f.return_type = return_type
+                        f.return_arg = (return_type, None, {})
+                    if function_name.endswith('_destroy') and exclude_private:
+                        # skip the _destroy functions, they are just wrapper over
+                        # g_object_unref
+                        pass
+                    else:
+                        f.name = function_name
+                        f.args = []
+                        for arg in [x.strip() for x in args.split(',')]:
+                            arg = clean_type(arg)
+                            if arg == 'void' or arg == '':
+                                continue
+                            m = re.match(r'(.*(?:\s|\*))(\w+)', arg)
+                            if m:
+                                type, name = m.groups()
+                                type = clean_type(type)
+                                f.args.append(list((type, name, {})))
+                            else:
+                                print >>sys.stderr, 'failed to process:', arg, 'in line:', line
+                                f.skip = True
+                        f.apply_overrides()
+                        if not f.skip:
+                            binding.functions.append(f)
                         else:
-                            print 'failed to process:', arg, 'in line:', line
-                    f.apply_overrides()
-                    if not f.skip:
-                        binding.functions.append(f)
+                            print >>sys.stderr, 'W: skipping function', f
 
         i += 1
 
 
 def parse_headers(srcdir):
-    wsf_prefixes = ['disco', 'dst', 'is', 'profile_service', 'discovery',
-            'wsf', 'interaction', 'utility', 'sa', 'soap', 'authentication',
-            'wsse', 'sec', 'idwsf2', 'wsf2', 'wsa', 'wsu']
+    wsf_prefixes = ['disco_', 'dst_', 'is_', 'profile_service_', 'discovery_',
+            'wsf_', 'interaction_', 'utility_', 'sa_', 'authentication_',
+            'wsse_', 'sec_', 'idwsf2_', 'wsf2_', 'wsa_', 'wsu', 'soap_binding']
 
+    srcdir = os.path.abspath(srcdir)
+    parentdir = os.path.dirname(srcdir)
+
+    exclusion = ('xml_idff.h', 'xml_idwsf.h', 'xml_saml2.h', \
+            'xml_idwsf2.h', 'xml_soap11.h',
+            'lasso_config.h', 'saml2_xsd.h' )
+    if not binding.options.idwsf:
+        exclusion += ( 'idwsf_strings.h', )
     for base, dirnames, filenames in os.walk(srcdir):
         if base.endswith('/.svn'):
             # ignore svn directories
@@ -436,13 +574,18 @@ def parse_headers(srcdir):
         makefile_am = open(os.path.join(base, 'Makefile.am')).read()
         filenames = [x for x in filenames if x.endswith('.h') if x in makefile_am]
         for filename in filenames:
-            if filename == 'lasso_config.h' or 'private' in filename:
+            if filename in exclusion:
                 continue
-            if not binding.options.idwsf and filename.split('_')[0] in wsf_prefixes:
+            if 'private' in filename:
                 continue
-            binding.headers.append(os.path.join(base, filename)[3:])
-            parse_header(os.path.join(base, filename))
-        binding.headers.insert(0, 'lasso/xml/saml-2.0/saml2_assertion.h')
+            if not binding.options.idwsf:
+                if True in (filename.startswith(wsf_prefix) for wsf_prefix in wsf_prefixes):
+                    continue
+            header_path = os.path.join(base, filename)
+            header_relpath = os.path.relpath(header_path, parentdir)
+
+            binding.headers.append(header_relpath)
+            parse_header(header_path)
     binding.constants.append(('b', 'LASSO_WSF_ENABLED'))
 
 def main():
@@ -466,31 +609,29 @@ def main():
     binding.attach_methods()
 
     if options.language == 'python':
-        import lang_python
+        from python import lang
 
-        python_binding = lang_python.PythonBinding(binding)
+        python_binding = lang.Binding(binding)
         python_binding.generate()
-    elif options.language == 'php4':
-        from php4 import lang
-
-        php4_binding = lang.Binding(binding)
-        php4_binding.generate()
     elif options.language == 'php5':
-        import lang_php5
+        from php5 import lang
 
-        php5_binding = lang_php5.Php5Binding(binding)
+        php5_binding = lang.Binding(binding)
         php5_binding.generate()
     elif options.language == 'java':
-        import lang_java
+        from java import lang
 
-	java_binding = lang_java.JavaBinding(binding)
-	java_binding.generate();
+        java_binding = lang.Binding(binding)
+        java_binding.generate()
     elif options.language == 'java-list':
-        import lang_java
+        from java import lang
 
-	java_binding = lang_java.JavaBinding(binding)
-	java_binding.print_list_of_files();
-        
+        java_binding = lang.Binding(binding)
+        java_binding.print_list_of_files()
+    elif options.language == 'perl':
+        from perl import lang
+        perl_binding = lang.Binding(binding)
+        perl_binding.generate()
 
 if __name__ == '__main__':
     main()

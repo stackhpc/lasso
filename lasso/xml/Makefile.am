@@ -1,5 +1,8 @@
 MAINTAINERCLEANFILES = Makefile.in
-SUBDIRS = saml-2.0 id-wsf-2.0 ws
+SUBDIRS = saml-2.0 soap-1.1
+if WSF_ENABLED
+SUBDIRS += id-wsf-2.0 ws
+endif
 
 liblassoincludedir = $(includedir)/lasso/xml
 
@@ -69,15 +72,11 @@ WSF_C_FILES = \
 	soap_binding_ext_credentials_context.c \
 	soap_binding_ext_service_instance_update.c \
 	soap_binding_ext_timeout.c \
-	soap_body.c \
-	soap_detail.c \
-	soap_fault.c \
-	soap_envelope.c \
-	soap_header.c \
-	utility_status.c \
-	wsse_security.c
+	soap_binding.c \
+	utility_status.c
 
 WSF_H_FILES = \
+	idwsf_strings.h \
 	disco_authenticate_requester.h \
 	disco_authenticate_session_context.h \
 	disco_authorize_requester.h \
@@ -134,13 +133,9 @@ WSF_H_FILES = \
 	soap_binding_ext_credentials_context.h \
 	soap_binding_ext_service_instance_update.h \
 	soap_binding_ext_timeout.h \
-	soap_body.h \
-	soap_detail.h \
-	soap_fault.h \
-	soap_envelope.h \
-	soap_header.h \
+	soap_binding.h \
 	utility_status.h \
-	wsse_security.h
+	tools.h
 endif
 
 liblasso_xml_la_SOURCES = \
@@ -255,4 +250,4 @@ liblassoinclude_HEADERS = \
 lasso_private_h_sources = \
 	private.h
 
-EXTRA_DIST = $(lasso_private_h_sources)
+EXTRA_DIST = $(lasso_private_h_sources) xml_idff.h xml_idwsf.h

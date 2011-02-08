@@ -1,28 +1,30 @@
-/* $Id: disco_requested_service_type.c 3704 2008-05-15 21:17:44Z fpeters $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/disco_requested_service_type.h>
+#include "private.h"
+#include "disco_requested_service_type.h"
+#include "./idwsf_strings.h"
 
 /**
  * SECTION:disco_requested_service_type
@@ -51,22 +53,15 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "ServiceType", SNIPPET_CONTENT,
-	  G_STRUCT_OFFSET(LassoDiscoRequestedServiceType, ServiceType) },
+		G_STRUCT_OFFSET(LassoDiscoRequestedServiceType, ServiceType), NULL, NULL, NULL},
 	{ "Options", SNIPPET_NODE,
-	  G_STRUCT_OFFSET(LassoDiscoRequestedServiceType, Options) },
-	{ NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoDiscoRequestedServiceType, Options), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
-
-static void
-instance_init(LassoDiscoRequestedServiceType *node)
-{
-	node->ServiceType = NULL;
-	node->Options = NULL;
-}
 
 static void
 class_init(LassoDiscoRequestedServiceTypeClass *klass)
@@ -94,7 +89,8 @@ lasso_disco_requested_service_type_get_type()
 			NULL,
 			sizeof(LassoDiscoRequestedServiceType),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,

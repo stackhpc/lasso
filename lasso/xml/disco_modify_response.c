@@ -1,28 +1,30 @@
-/* $Id: disco_modify_response.c 3704 2008-05-15 21:17:44Z fpeters $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/disco_modify_response.h>
+#include "private.h"
+#include "disco_modify_response.h"
+#include "./idwsf_strings.h"
 
 /**
  * SECTION:disco_modify_response
@@ -30,7 +32,7 @@
  *
  * <figure><title>Schema fragment for disco:ModifyResponse</title>
  * <programlisting><![CDATA[
- * 
+ *
  * <xs:element name="ModifyResponse" type="ModifyResponseType"/>
  * <xs:complexType name="ModifyResponseType">
  *   <xs:sequence>
@@ -63,11 +65,11 @@
 /*****************************************************************************/
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "Status", SNIPPET_NODE, G_STRUCT_OFFSET(LassoDiscoModifyResponse, Status) },
-	{ "id", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoDiscoModifyResponse, id) },
+	{ "Status", SNIPPET_NODE, G_STRUCT_OFFSET(LassoDiscoModifyResponse, Status), NULL, NULL, NULL},
+	{ "id", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoDiscoModifyResponse, id), NULL, NULL, NULL},
 	{ "newEntryIDs", SNIPPET_ATTRIBUTE,
-	  G_STRUCT_OFFSET(LassoDiscoModifyResponse, newEntryIDs) },
-	{ NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoDiscoModifyResponse, newEntryIDs), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 static LassoNodeClass *parent_class = NULL;
@@ -103,14 +105,6 @@ get_xmlNode(LassoNode *node, gboolean lasso_dump)
 /*****************************************************************************/
 
 static void
-instance_init(LassoDiscoModifyResponse *node)
-{
-	node->Status = NULL;
-	node->id = NULL;
-	node->newEntryIDs = NULL;
-}
-
-static void
 class_init(LassoDiscoModifyResponseClass *klass)
 {
 	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
@@ -137,12 +131,13 @@ lasso_disco_modify_response_get_type()
 			NULL,
 			sizeof(LassoDiscoModifyResponse),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,
-						   "LassoDiscoModifyResponse",
-						   &this_info, 0);
+				"LassoDiscoModifyResponse",
+				&this_info, 0);
 	}
 	return this_type;
 }
@@ -151,25 +146,12 @@ LassoDiscoModifyResponse*
 lasso_disco_modify_response_new(LassoUtilityStatus *status)
 {
 	LassoDiscoModifyResponse *response;
-	
+
 	g_return_val_if_fail(LASSO_IS_UTILITY_STATUS(status), NULL);
-	
+
 	response = g_object_new(LASSO_TYPE_DISCO_MODIFY_RESPONSE, NULL);
-	
+
 	response->Status = status;
-	
-	return response;
-}
-
-LassoDiscoModifyResponse*
-lasso_disco_modify_response_new_from_message(const gchar *message)
-{
-	LassoDiscoModifyResponse *response;
-
-	g_return_val_if_fail(message != NULL, NULL);
-
-	response = g_object_new(LASSO_TYPE_DISCO_MODIFY_RESPONSE, NULL);
-	lasso_node_init_from_message(LASSO_NODE(response), message);
 
 	return response;
 }

@@ -1,28 +1,30 @@
-/* $Id: dst_modify.c 3704 2008-05-15 21:17:44Z fpeters $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/dst_modify.h>
+#include "private.h"
+#include "dst_modify.h"
+#include "./idwsf_strings.h"
 
 /**
  * SECTION:dst_modify
@@ -66,15 +68,15 @@
 /*****************************************************************************/
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "ResourceID", SNIPPET_NODE, G_STRUCT_OFFSET(LassoDstModify, ResourceID) },
+	{ "ResourceID", SNIPPET_NODE, G_STRUCT_OFFSET(LassoDstModify, ResourceID), NULL, NULL, NULL},
 	{ "EncryptedResourceID", SNIPPET_NODE, G_STRUCT_OFFSET(LassoDstModify,
-			EncryptedResourceID) },
+			EncryptedResourceID), NULL, NULL, NULL },
 	{ "Modification", SNIPPET_LIST_NODES, G_STRUCT_OFFSET(LassoDstModify,
-			Modification) },
-	{ "Extension", SNIPPET_EXTENSION, G_STRUCT_OFFSET(LassoDstModify, Extension) },
-	{ "id", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoDstModify, id) },
-	{ "itemID", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoDstModify, itemID) },
-	{NULL, 0, 0}
+			Modification), NULL, NULL, NULL },
+	{ "Extension", SNIPPET_EXTENSION, G_STRUCT_OFFSET(LassoDstModify, Extension), NULL, NULL, NULL},
+	{ "id", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoDstModify, id), NULL, NULL, NULL},
+	{ "itemID", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoDstModify, itemID), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 static LassoNodeClass *parent_class = NULL;
@@ -111,7 +113,7 @@ static int
 init_from_xml(LassoNode *node, xmlNode *xmlnode)
 {
 	LassoDstModify *modify = LASSO_DST_MODIFY(node);
-	int rc;
+	int rc = 0;
 
 	rc = parent_class->init_from_xml(node, xmlnode);
 	if (rc) {
@@ -132,12 +134,6 @@ init_from_xml(LassoNode *node, xmlNode *xmlnode)
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoDstModify *node)
-{
-	node->prefixServiceType = NULL;
-	node->hrefServiceType = NULL;
-}
 
 static void
 class_init(LassoDstModifyClass *klass)
@@ -167,7 +163,8 @@ lasso_dst_modify_get_type()
 			NULL,
 			sizeof(LassoDstModify),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,
@@ -177,15 +174,11 @@ lasso_dst_modify_get_type()
 }
 
 LassoDstModify*
-lasso_dst_modify_new(LassoDstModification *modification)
+lasso_dst_modify_new()
 {
 	LassoDstModify *modify;
 
-	g_return_val_if_fail(LASSO_IS_DST_MODIFICATION(modification) == TRUE, NULL);
-
 	modify = g_object_new(LASSO_TYPE_DST_MODIFY, NULL);
-
-	modify->Modification = g_list_append(modify->Modification, modification);
 
 	return modify;
 }

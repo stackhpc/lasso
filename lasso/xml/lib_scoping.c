@@ -1,28 +1,29 @@
-/* $Id: lib_scoping.c 3704 2008-05-15 21:17:44Z fpeters $
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/lib_scoping.h>
+#include "private.h"
+#include "lib_scoping.h"
 
 /**
  * SECTION:lib_scoping
@@ -47,9 +48,9 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "ProxyCount", SNIPPET_CONTENT | SNIPPET_INTEGER | SNIPPET_OPTIONAL_NEG,
-		G_STRUCT_OFFSET(LassoLibScoping, ProxyCount) },
-	{ "IDPList", SNIPPET_NODE, G_STRUCT_OFFSET(LassoLibScoping, IDPList) },
-	{ NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoLibScoping, ProxyCount), NULL, NULL, NULL},
+	{ "IDPList", SNIPPET_NODE, G_STRUCT_OFFSET(LassoLibScoping, IDPList), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 /*****************************************************************************/
@@ -60,7 +61,6 @@ static void
 instance_init(LassoLibScoping *node)
 {
 	node->ProxyCount = -1;
-	node->IDPList = NULL;
 }
 
 static void
@@ -90,6 +90,7 @@ lasso_lib_scoping_get_type()
 			sizeof(LassoLibScoping),
 			0,
 			(GInstanceInitFunc) instance_init,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,

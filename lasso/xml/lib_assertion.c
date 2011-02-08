@@ -1,28 +1,30 @@
-/* $Id: lib_assertion.c 3704 2008-05-15 21:17:44Z fpeters $
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/lib_assertion.h>
+#include "private.h"
+#include "lib_assertion.h"
+#include "../registry.h"
 
 /**
  * SECTION:lib_assertion
@@ -62,19 +64,14 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "InResponseTo", SNIPPET_ATTRIBUTE,
-		G_STRUCT_OFFSET(LassoLibAssertion, InResponseTo) },
-	{ NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoLibAssertion, InResponseTo), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoLibAssertion *node)
-{
-	node->InResponseTo = NULL;
-}
 
 static void
 class_init(LassoLibAssertionClass *klass)
@@ -102,11 +99,14 @@ lasso_lib_assertion_get_type()
 			NULL,
 			sizeof(LassoLibAssertion),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_SAML_ASSERTION,
 				"LassoLibAssertion", &this_info, 0);
+		lasso_registry_default_add_direct_mapping(LASSO_LIB_HREF, "AssertionType",
+				LASSO_LASSO_HREF, "LassoLibAssertion");
 	}
 	return this_type;
 }
@@ -126,14 +126,15 @@ lasso_lib_assertion_new()
 
 /**
  * lasso_lib_assertion_new_full:
- * @issuer:
- * @requestID:
- * @audience:
- * @notBefore:
- * @notOnOrAfter:
+ * @issuer: the issuer entityID string
+ * @requestID:(allow-none): the identifier of the request which initiated the creation of this
+ * assertion
+ * @audience:(allow-none): the entityID of the receiver of this assertion
+ * @notBefore: a timestamp formatted as iso-8601
+ * @notOnOrAfter: a timestamp formatted as iso-8601
  *
- * Creates a new #LassoLibAssertion object and initializes it with the
- * parameters.
+ * Creates a new #LassoLibAssertion object and initializes its Issuer, InResponseTo,
+ * AudienceRestrictionCondition, notBefore and notOnOrAfter fields or attributes.
  *
  * Return value: a newly created #LassoLibAssertion object
  **/

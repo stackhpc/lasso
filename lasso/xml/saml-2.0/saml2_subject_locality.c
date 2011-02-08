@@ -1,27 +1,28 @@
-/* $Id: saml2_subject_locality.c 3704 2008-05-15 21:17:44Z fpeters $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include "../private.h"
 #include "saml2_subject_locality.h"
 
 /**
@@ -46,10 +47,10 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "Address", SNIPPET_ATTRIBUTE,
-		G_STRUCT_OFFSET(LassoSaml2SubjectLocality, Address) },
+		G_STRUCT_OFFSET(LassoSaml2SubjectLocality, Address), NULL, NULL, NULL},
 	{ "DNSName", SNIPPET_ATTRIBUTE,
-		G_STRUCT_OFFSET(LassoSaml2SubjectLocality, DNSName) },
-	{NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoSaml2SubjectLocality, DNSName), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 static LassoNodeClass *parent_class = NULL;
@@ -59,12 +60,6 @@ static LassoNodeClass *parent_class = NULL;
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoSaml2SubjectLocality *node)
-{
-	node->Address = NULL;
-	node->DNSName = NULL;
-}
 
 static void
 class_init(LassoSaml2SubjectLocalityClass *klass)
@@ -73,7 +68,7 @@ class_init(LassoSaml2SubjectLocalityClass *klass)
 
 	parent_class = g_type_class_peek_parent(klass);
 	nclass->node_data = g_new0(LassoNodeClassData, 1);
-	lasso_node_class_set_nodename(nclass, "SubjectLocality"); 
+	lasso_node_class_set_nodename(nclass, "SubjectLocality");
 	lasso_node_class_set_ns(nclass, LASSO_SAML2_ASSERTION_HREF, LASSO_SAML2_ASSERTION_PREFIX);
 	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
@@ -93,7 +88,8 @@ lasso_saml2_subject_locality_get_type()
 			NULL,
 			sizeof(LassoSaml2SubjectLocality),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,

@@ -1,0 +1,362 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>LassoNameIdentifierMapping</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="Lasso Reference Manual">
+<link rel="up" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
+<link rel="prev" href="lasso-LassoNameRegistration.html" title="LassoNameRegistration">
+<link rel="next" href="lasso-LassoLecp.html" title="LassoLecp">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
+<link rel="reference" href="rn01.html" title="Application Programming Interface">
+<link rel="chapter" href="architecture.html" title="Lasso Architecture">
+<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
+<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
+<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
+<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
+<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
+<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
+<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
+<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
+<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
+<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
+<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
+<link rel="part" href="pt01.html" title="Part II. Appendix">
+<link rel="index" href="api-index.html" title="API Index">
+<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="lasso-LassoNameRegistration.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="idff.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Lasso Reference Manual</th>
+<td><a accesskey="n" href="lasso-LassoLecp.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#lasso-LassoNameIdentifierMapping.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#lasso-LassoNameIdentifierMapping.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" title="LassoNameIdentifierMapping">
+<a name="lasso-LassoNameIdentifierMapping"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="lasso-LassoNameIdentifierMapping.top_of_page"></a>LassoNameIdentifierMapping</span></h2>
+<p>LassoNameIdentifierMapping — Liberty Enabled Client and Proxy Profile (ID-FF)</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="lasso-LassoNameIdentifierMapping.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    LassoNameIdentifierMapping;
+LassoNameIdentifierMapping* lasso_name_identifier_mapping_new
+                                                        (LassoServer *server);
+lasso_error_t       lasso_name_identifier_mapping_build_request_msg
+                                                        (LassoNameIdentifierMapping *mapping);
+lasso_error_t       lasso_name_identifier_mapping_build_response_msg
+                                                        (LassoNameIdentifierMapping *mapping);
+void                lasso_name_identifier_mapping_destroy
+                                                        (LassoNameIdentifierMapping *mapping);
+lasso_error_t       lasso_name_identifier_mapping_init_request
+                                                        (LassoNameIdentifierMapping *mapping,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *targetNamespace,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *remote_providerID);
+lasso_error_t       lasso_name_identifier_mapping_process_request_msg
+                                                        (LassoNameIdentifierMapping *mapping,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *request_msg);
+lasso_error_t       lasso_name_identifier_mapping_process_response_msg
+                                                        (LassoNameIdentifierMapping *mapping,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *response_msg);
+lasso_error_t       lasso_name_identifier_mapping_validate_request
+                                                        (LassoNameIdentifierMapping *mapping);
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="lasso-LassoNameIdentifierMapping.description"></a><h2>Description</h2>
+<p>
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="lasso-LassoNameIdentifierMapping.details"></a><h2>Details</h2>
+<div class="refsect2" title="LassoNameIdentifierMapping">
+<a name="LassoNameIdentifierMapping"></a><h3>LassoNameIdentifierMapping</h3>
+<pre class="programlisting">typedef struct {
+	LassoProfile parent;
+
+	gchar *targetNameIdentifier;
+} LassoNameIdentifierMapping;
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_identifier_mapping_new ()">
+<a name="lasso-name-identifier-mapping-new"></a><h3>lasso_name_identifier_mapping_new ()</h3>
+<pre class="programlisting">LassoNameIdentifierMapping* lasso_name_identifier_mapping_new
+                                                        (LassoServer *server);</pre>
+<p>
+Creates a new <span class="type">LassoNameIdentifierMapping</span>.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td> the <span class="type">LassoServer</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a newly created <span class="type">LassoNameIdentifierMapping</span> object; or NULL
+    if an error occured
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_identifier_mapping_build_request_msg ()">
+<a name="lasso-name-identifier-mapping-build-request-msg"></a><h3>lasso_name_identifier_mapping_build_request_msg ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_name_identifier_mapping_build_request_msg
+                                                        (LassoNameIdentifierMapping *mapping);</pre>
+<p>
+Builds a name identifier mapping request message.
+</p>
+<p>
+</p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem"><p>
+  If it is a SOAP method, then it builds the request as a SOAP message,
+  optionally signs his node, sets <em class="parameter"><code>msg_body</code></em> with that message and sets
+  <em class="parameter"><code>msg_url</code></em> with the SOAP Endpoint URL
+</p></li>
+<li class="listitem"><p>
+  If it is a HTTP-Redirect method, then it builds the request as a query
+  string message, optionally signs it and sets <em class="parameter"><code>msg_url</code></em> to that URL.
+</p></li>
+</ul></div>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mapping</code></em> :</span></p></td>
+<td> a <span class="type">LassoNameIdentifierMapping</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_identifier_mapping_build_response_msg ()">
+<a name="lasso-name-identifier-mapping-build-response-msg"></a><h3>lasso_name_identifier_mapping_build_response_msg ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_name_identifier_mapping_build_response_msg
+                                                        (LassoNameIdentifierMapping *mapping);</pre>
+<p>
+Builds a name identifier mapping response message.
+</p>
+<p>
+</p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem"><p>
+  If it is a SOAP method, then it builds the response as a SOAP message,
+  optionally signs his node, sets <em class="parameter"><code>msg_body</code></em> with that message and sets
+  <em class="parameter"><code>msg_url</code></em> with the register name identifier service return URL.
+</p></li>
+<li class="listitem"><p>
+  If it is a HTTP-Redirect method, then it builds the response as a query
+  string message, optionally signs it and sets <em class="parameter"><code>msg_url</code></em> to that URL.
+</p></li>
+</ul></div>
+<p>
+</p>
+<p>
+If private key and certificate are set in server object it will also signs
+the message (either with X509 if SOAP or with a simple signature for query
+strings).</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mapping</code></em> :</span></p></td>
+<td> a <span class="type">LassoNameIdentifierMapping</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_identifier_mapping_destroy ()">
+<a name="lasso-name-identifier-mapping-destroy"></a><h3>lasso_name_identifier_mapping_destroy ()</h3>
+<pre class="programlisting">void                lasso_name_identifier_mapping_destroy
+                                                        (LassoNameIdentifierMapping *mapping);</pre>
+<p>
+Destroys a <span class="type">LassoNameIdentifierMapping</span> object.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>mapping</code></em> :</span></p></td>
+<td> a <span class="type">LassoNameIdentifierMapping</span>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_identifier_mapping_init_request ()">
+<a name="lasso-name-identifier-mapping-init-request"></a><h3>lasso_name_identifier_mapping_init_request ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_name_identifier_mapping_init_request
+                                                        (LassoNameIdentifierMapping *mapping,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *targetNamespace,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *remote_providerID);</pre>
+<p>
+Initializes a new lib:NameIdentifierMappingRequest request.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mapping</code></em> :</span></p></td>
+<td> a <span class="type">LassoNameIdentifierMapping</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>targetNamespace</code></em> :</span></p></td>
+<td> the request targetNamespace
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>remote_providerID</code></em> :</span></p></td>
+<td> the providerID of the identity provider.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_identifier_mapping_process_request_msg ()">
+<a name="lasso-name-identifier-mapping-process-request-msg"></a><h3>lasso_name_identifier_mapping_process_request_msg ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_name_identifier_mapping_process_request_msg
+                                                        (LassoNameIdentifierMapping *mapping,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *request_msg);</pre>
+<p>
+Processes a lib:NameIdentifierMappingRequest message.  Rebuilds a request
+object from the message and optionally verifies its signature.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mapping</code></em> :</span></p></td>
+<td> a <span class="type">LassoNameIdentifierMapping</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request_msg</code></em> :</span></p></td>
+<td> the name identifier mapping request message
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_identifier_mapping_process_response_msg ()">
+<a name="lasso-name-identifier-mapping-process-response-msg"></a><h3>lasso_name_identifier_mapping_process_response_msg ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_name_identifier_mapping_process_response_msg
+                                                        (LassoNameIdentifierMapping *mapping,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *response_msg);</pre>
+<p>
+Processes a lib:NameIdentifierMappingResponse message.  Rebuilds a response
+object from the message and optionally verifies its signature.
+</p>
+<p>
+If the response depicts Success it will also sets <em class="parameter"><code>targetNameIdentifier</code></em>.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mapping</code></em> :</span></p></td>
+<td> a <span class="type">LassoNameIdentifierMapping</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response_msg</code></em> :</span></p></td>
+<td> the name identifier mapping response message
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_identifier_mapping_validate_request ()">
+<a name="lasso-name-identifier-mapping-validate-request"></a><h3>lasso_name_identifier_mapping_validate_request ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_name_identifier_mapping_validate_request
+                                                        (LassoNameIdentifierMapping *mapping);</pre>
+<p>
+Checks profile request with regards to message status and principal
+federations, update them accordingly and prepares a
+lib:NameIdentifierMappingResponse accordingly.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mapping</code></em> :</span></p></td>
+<td> a <span class="type">LassoNameIdentifierMapping</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

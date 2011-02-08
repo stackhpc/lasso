@@ -1,3 +1,9 @@
+lasso (2.3.5-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Frederic Peters <fpeters@debian.org>  Tue, 08 Feb 2011 09:58:03 +0100
+
 lasso (2.2.1-4) unstable; urgency=low
 
   * debian/control, debian/rules: updated build-depends for recent gcj

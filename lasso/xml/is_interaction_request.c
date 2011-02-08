@@ -1,28 +1,30 @@
-/* $Id: is_interaction_request.c 3704 2008-05-15 21:17:44Z fpeters $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/is_interaction_request.h>
+#include "private.h"
+#include "is_interaction_request.h"
+#include "./idwsf_strings.h"
 
 /**
  * SECTION:is_interaction_request
@@ -45,7 +47,7 @@
  * </xs:complexType>
  * ]]></programlisting>
  * </figure>
- */ 
+ */
 
 /*****************************************************************************/
 /* private methods                                                           */
@@ -53,38 +55,26 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "ResourceID", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoIsInteractionRequest, ResourceID) },
+		G_STRUCT_OFFSET(LassoIsInteractionRequest, ResourceID), NULL, NULL, NULL},
 	{ "EncryptedResourceID", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoIsInteractionRequest, EncryptedResourceID) },
+		G_STRUCT_OFFSET(LassoIsInteractionRequest, EncryptedResourceID), NULL, NULL, NULL},
 	{ "Inquiry", SNIPPET_LIST_NODES,
-		G_STRUCT_OFFSET(LassoIsInteractionRequest, Inquiry) },
+		G_STRUCT_OFFSET(LassoIsInteractionRequest, Inquiry), NULL, NULL, NULL},
 	/* TODO : KeyInfo */
 	{ "id", SNIPPET_ATTRIBUTE,
-		G_STRUCT_OFFSET(LassoIsInteractionRequest, id) },
+		G_STRUCT_OFFSET(LassoIsInteractionRequest, id), NULL, NULL, NULL},
 	{ "language", SNIPPET_ATTRIBUTE,
-		G_STRUCT_OFFSET(LassoIsInteractionRequest, language) },
+		G_STRUCT_OFFSET(LassoIsInteractionRequest, language), NULL, NULL, NULL},
 	{ "maxInteractTime", SNIPPET_ATTRIBUTE | SNIPPET_OPTIONAL,
-		G_STRUCT_OFFSET(LassoIsInteractionRequest, maxInteractTime) },
+		G_STRUCT_OFFSET(LassoIsInteractionRequest, maxInteractTime), NULL, NULL, NULL},
 	/* TODO : signed */
-	{ NULL, 0, 0}
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoIsInteractionRequest *node)
-{
-	node->ResourceID = NULL;
-	node->EncryptedResourceID = NULL;
-	node->Inquiry = NULL;
-	/* TODO : KeyInfo */
-	node->id = NULL;
-	node->language = NULL;
-	node->maxInteractTime = 0;
-	/* TODO : signed */
-}
 
 static void
 class_init(LassoIsInteractionRequestClass *klass)
@@ -112,7 +102,8 @@ lasso_is_interaction_request_get_type()
 			NULL,
 			sizeof(LassoIsInteractionRequest),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,
@@ -127,17 +118,6 @@ lasso_is_interaction_request_new()
 	LassoIsInteractionRequest *node;
 
 	node = g_object_new(LASSO_TYPE_IS_INTERACTION_REQUEST, NULL);
-
-	return node;
-}
-
-LassoIsInteractionRequest*
-lasso_is_interaction_request_new_from_message(const char *msg)
-{
-	LassoIsInteractionRequest *node;
-
-	node = g_object_new(LASSO_TYPE_IS_INTERACTION_REQUEST, NULL);
-	lasso_node_init_from_message(LASSO_NODE(node), msg);
 
 	return node;
 }

@@ -1,3 +1,4 @@
+EXTRA_DIST = xml_saml2.h
 MAINTAINERCLEANFILES = Makefile.in
 liblassoincludedir = $(includedir)/lasso/xml/saml-2.0
 
@@ -113,5 +114,6 @@ liblassoinclude_HEADERS = \
 	samlp2_status.h \
 	samlp2_status_response.h \
 	samlp2_subject_query_abstract.h \
-	samlp2_terminate.h
-
+	samlp2_terminate.h \
+	saml2_strings.h \
+	saml2_xsd.h

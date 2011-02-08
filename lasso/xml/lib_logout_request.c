@@ -1,29 +1,31 @@
-/* $Id: lib_logout_request.c 3704 2008-05-15 21:17:44Z fpeters $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include "private.h"
 #include <libxml/uri.h>
-#include <lasso/xml/lib_logout_request.h>
+#include "lib_logout_request.h"
+#include "../utils.h"
 
 /**
  * SECTION:lib_logout_request
@@ -47,7 +49,7 @@
  *     </xs:extension>
  *   </xs:complexContent>
  * </xs:complexType>
- * 
+ *
  * <xs:element name="ProviderID" type="md:entityIDType"/>
  * <xs:element name="RelayState" type="xs:string"/>
  * ]]></programlisting>
@@ -59,15 +61,15 @@
 /*****************************************************************************/
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "Extension", SNIPPET_EXTENSION, G_STRUCT_OFFSET(LassoLibLogoutRequest, Extension) },
-	{ "ProviderID", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoLibLogoutRequest, ProviderID) },
-	{ "NameIdentifier", SNIPPET_NODE, G_STRUCT_OFFSET(LassoLibLogoutRequest, NameIdentifier) },
-	{ "SessionIndex", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoLibLogoutRequest, SessionIndex) },
-	{ "RelayState", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoLibLogoutRequest, RelayState) },
-	{ "consent", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoLibLogoutRequest, consent) },
+	{ "Extension", SNIPPET_EXTENSION, G_STRUCT_OFFSET(LassoLibLogoutRequest, Extension), NULL, NULL, NULL},
+	{ "ProviderID", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoLibLogoutRequest, ProviderID), NULL, NULL, NULL},
+	{ "NameIdentifier", SNIPPET_NODE, G_STRUCT_OFFSET(LassoLibLogoutRequest, NameIdentifier), NULL, NULL, NULL},
+	{ "SessionIndex", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoLibLogoutRequest, SessionIndex), NULL, NULL, NULL},
+	{ "RelayState", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoLibLogoutRequest, RelayState), NULL, NULL, NULL},
+	{ "consent", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoLibLogoutRequest, consent), NULL, NULL, NULL},
 	{ "NotOnOrAfter", SNIPPET_ATTRIBUTE,
-		G_STRUCT_OFFSET(LassoLibLogoutRequest, NotOnOrAfter) },
-	{ NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoLibLogoutRequest, NotOnOrAfter), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 static struct QuerySnippet query_snippets[] = {
@@ -88,45 +90,38 @@ static struct QuerySnippet query_snippets[] = {
 
 static LassoNodeClass *parent_class = NULL;
 
-static gchar*
-build_query(LassoNode *node)
-{
-	return lasso_node_build_query_from_snippets(node);
-}
-
 static gboolean
 init_from_query(LassoNode *node, char **query_fields)
 {
 	LassoLibLogoutRequest *request = LASSO_LIB_LOGOUT_REQUEST(node);
+	gboolean rc;
 
 	request->NameIdentifier = lasso_saml_name_identifier_new();
 
-	lasso_node_init_from_query_fields(node, query_fields);
-	
+	rc = parent_class->init_from_query(node, query_fields);
+	if (! rc)
+		goto cleanup;
+
 	if (request->ProviderID == NULL ||
-			request->NameIdentifier->content == NULL ||
-			request->NameIdentifier->Format == NULL) {
-		lasso_node_destroy(LASSO_NODE(request->NameIdentifier));
-		request->NameIdentifier = NULL;
+			request->NameIdentifier == NULL ||
+			request->NameIdentifier->content == NULL) {
+		lasso_release_gobject(request->NameIdentifier);
 		return FALSE;
 	}
-	
-	return TRUE;
+
+	if (request->NameIdentifier->Format == NULL) {
+		lasso_assign_string(request->NameIdentifier->Format,
+				"LASSO_SAML2_NAME_IDENTIFIER_FORMAT_UNSPECIFIED");
+	}
+cleanup:
+
+	return rc;
 }
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoLibLogoutRequest *node)
-{
-	node->ProviderID = NULL;
-	node->NameIdentifier = NULL;
-	node->SessionIndex = NULL;
-	node->RelayState = NULL;
-	node->consent = NULL;
-}
 
 static void
 class_init(LassoLibLogoutRequestClass *klass)
@@ -134,7 +129,6 @@ class_init(LassoLibLogoutRequestClass *klass)
 	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
 
 	parent_class = g_type_class_peek_parent(klass);
-	nclass->build_query = build_query;
 	nclass->init_from_query = init_from_query;
 	nclass->node_data = g_new0(LassoNodeClassData, 1);
 	lasso_node_class_set_nodename(nclass, "LogoutRequest");
@@ -158,7 +152,8 @@ lasso_lib_logout_request_get_type()
 			NULL,
 			sizeof(LassoLibLogoutRequest),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_SAMLP_REQUEST_ABSTRACT,
@@ -185,8 +180,8 @@ lasso_lib_logout_request_new()
  * lasso_lib_logout_request_new_full:
  * @providerID: the provider ID requesting the logout
  * @nameIdentifier: the name identifier to log out
- * @sign_type:
- * @sign_method:
+ * @sign_type: a #LassoSignatureType value
+ * @sign_method: a #LassoSignatureMethod value
  *
  * Creates a new #LassoLibLogoutRequest object and initializes it with the
  * parameters.

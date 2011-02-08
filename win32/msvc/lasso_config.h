@@ -8,7 +8,7 @@
 #define LASSO_VERSION_SUBMINOR @VERSION_RELEASE@
 
 /* Windows version of the lasso version */
-#define LASSO_WINDOWS_VERSION 2,2,1,0
+#define LASSO_WINDOWS_VERSION 2,3,5,0
 
 /* Define if ID-WSF support is enabled */
 /* #undef LASSO_WSF_ENABLED */
@@ -25,17 +25,17 @@
 #define PACKAGE_BUGREPORT "lasso-devel@lists.labs.libre-entreprise.org"
 
 /* Define to the full name of this package. */
-#define PACKAGE_NAME "Liberty Alliance Single Sign On"
+#define PACKAGE_NAME "lasso"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "Liberty Alliance Single Sign On 2.2.1"
+#define PACKAGE_STRING "lasso 2.3.5"
 
 /* Define to the one symbol short name of this package. */
-#define PACKAGE_TARNAME "liberty-alliance-single-sign-on"
+#define PACKAGE_TARNAME "lasso"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "2.2.1"
+#define PACKAGE_VERSION "2.3.5"
 
 /* Version number of package */
-#define VERSION "2.2.1"
+#define VERSION "2.3.5"
 

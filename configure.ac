@@ -15,21 +15,26 @@ dnl - Second number is the number of supported API versions where API version >
 dnl   first number.
 dnl - Third number is the current API version implementation version number.
 dnl See libtool explanations about current, age and release, later in this file.
-AC_INIT([Liberty Alliance Single Sign On], 2.2.1, lasso-devel@lists.labs.libre-entreprise.org)
+AC_INIT([lasso], 2.3.5, lasso-devel@lists.labs.libre-entreprise.org)
 dnl Check if autoconf ver > 2.53
 AC_PREREQ(2.53)
+AC_CONFIG_MACRO_DIR([m4])
 dnl Perform only subset commands and variable relevant to the host type.
 AC_CANONICAL_HOST
 AC_CANONICAL_SYSTEM
 dnl Check existence of a relative pathed source file.
 AC_CONFIG_SRCDIR(lasso/lasso.c)
 dnl Copy stamp REVISIO-INFO in the configure script.
-AC_REVISION($Revision: 3794 $)
+AC_REVISION($Revision$)
 
 dnl Run many macros mostly needed by configure.ac.
-AM_INIT_AUTOMAKE(lasso, 2.2.1)
+AM_INIT_AUTOMAKE([foreign tar-pax])
+dnl Support automake 1.11 silent mode
+m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
+m4_ifdef([AM_SILENT_RULES],[HAVE_AM_SILENT_RULES=yes])
+AM_CONDITIONAL(HAVE_AM_SILENT_RULES, test x$HAVE_AM_SILENT_RULES != x)
 dnl Create rules to automaticaly regenerate the config header.
-AM_CONFIG_HEADER(lasso/lasso_config.h)
+AM_CONFIG_HEADER([config.h lasso/lasso_config.h])
 dnl Add --enable-maintainer-mode option to configure.
 AM_MAINTAINER_MODE
 
@@ -83,6 +88,8 @@ dnl
 dnl Check for programs
 dnl
 AC_PROG_CC
+CFLAGS=""
+AM_CFLAGS=""
 AC_HEADER_STDC
 LT_AC_PROG_RC
 AC_EXEEXT
@@ -93,6 +100,7 @@ AC_PROG_LN_S
 AC_LIBTOOL_WIN32_DLL
 AM_PROG_LIBTOOL
 AC_SUBST(LIBTOOL_DEPS)
+AS_COMPILER_FLAGS(WARNING_FLAGS, "-Wall -Wextra -Wno-missing-field-initializers -Wno-unused-parameter -Wold-style-definition -Wdeclaration-after-statement -Wmissing-declarations -Wredundant-decls -Wmissing-noreturn -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Winline -Wformat-nonliteral -Wformat-security -Wswitch-enum -Wswitch-default -Winit-self -Wmissing-include-dirs -Wundef -Waggregate-return -Wmissing-format-attribute -Wnested-externs")
 
 dnl Find tar command for make dist
 AC_CHECK_PROGS(TAR, gnutar gtar tar)
@@ -119,9 +127,7 @@ dnl AC_CHECK_PROGS(JAVAH, gjavah gcjh javah)
 dnl AC_CHECK_PROGS(JAR, fastjar jar)
 
 AC_CHECK_PROGS(PERL, perl)
-AC_CHECK_PROGS(PHP4, php4 php)
 AC_CHECK_PROGS(PHP5, php5 php)
-AC_CHECK_PROGS(PHP4_CONFIG, php-config4 php-config)
 AC_CHECK_PROGS(PHP5_CONFIG, php-config5 php-config)
 AC_CHECK_PROGS(PYTHON, python)
 AC_CHECK_PROGS(SWIG, swig)
@@ -178,7 +184,7 @@ dnl - interfaces removed -> AGE = 0
 # m = a
 # r = r
 current=`expr $VERSION_MAJOR + $VERSION_MINOR`
-LASSO_VERSION_INFO="10:1:7"
+LASSO_VERSION_INFO="12:3:9"
 AC_SUBST(LASSO_VERSION_INFO)
 
 dnl Compute the minimal supported ABI version for Win32 scripts and resources files.
@@ -390,80 +396,6 @@ AC_MSG_RESULT($enable_python)
 AC_SUBST(PYTHON_VERSION)
 
 # -----------
-# PHP 4 binding
-# -----------
-
-dnl Check if php is explicitly disabled.
-AC_ARG_ENABLE(php4, [  --disable-php4          disable the PHP 4 binding],,
-              enable_php4="yes")
-
-AC_ARG_ENABLE(php4-force, [  --enable-php4-force     always enable of the PHP 4 binding (win32)],
-              [ENABLE_PHP4_FORCE="yes"],
-              [ENABLE_PHP4_FORCE="no"])
-
-AC_ARG_WITH(php4-config,
-            [  --with-php4-config=(PHP4_CONFIG)      Specify full path to php-config4.])
-
-AC_ARG_WITH(php4-extension-dir,
-            [  --with-php4-extension-dir=(PHP4_EXTENSION_DIR)      Specify full path to php 4 extension dir.],
-            [PHP4_EXTENSION_DIR="$withval"],[PHP4_EXTENSION_DIR=])
-
-dnl Check if user passed a specific php-config program.
-if test "X$with_php4_config" != "X" ; then
-    PHP4_CONFIG=$with_php4_config
-fi
-
-if test "X$PHP4_CONFIG" != "X" ; then
-  PHP4_INCLUDES=`$PHP4_CONFIG --includes`
-  PHP4_LDFLAGS=`$PHP4_CONFIG --ldflags`
-  PHP4_LIBS=`$PHP4_CONFIG --libs`
-  PHP4_PREFIX=`$PHP4_CONFIG --prefix`
-  PHP4_QUOTED_PREFIX=$(echo $PHP4_PREFIX | $SED 's/\//\\\//g')
-  PHP4_UNPREFIXED_EXTENSION_DIR=$($PHP4_CONFIG --extension-dir | $SED "s/$PHP4_QUOTED_PREFIX//g")
-else
-  # We assume PHP are in /usr/local directory.
-  if test $MINGW -eq 1; then 
-    CFLAGS="$CFLAGS -DZTS -DZEND_WIN32 -DWIN32 -D_MBCS"
-  fi
-  PHP4_INCLUDES="-I/usr/local/include/php4 -I/usr/local/include/php4/main -I/usr/local/include/php4/Zend -I/usr/local/include/php4/TSRM -I/usr/local/include/php4/win32"
-  PHP4_LDFLAGS=
-  PHP4_LIBS="-lphp4ts -lxmlparse -lxmltok"
-  PHP4_UNPREFIXED_EXTENSION_DIR=
-  PHP4_PREFIX=
-fi
-AC_SUBST(PHP4_INCLUDES)
-AC_SUBST(PHP4_LDFLAGS)
-AC_SUBST(PHP4_LIBS)
-AC_SUBST(PHP4_UNPREFIXED_EXTENSION_DIR)
-AC_SUBST(PHP4_EXTENSION_DIR)
-AC_SUBST(PHP4_PREFIX)
-
-dnl Check for expat
-have_expat_include=no
-if test $MINGW -eq 1; then 
-    AC_CHECK_LIB(xmlparse, XML_ParserCreate, have_expat_lib=yes, have_expat_lib=no)
-else
-    AC_CHECK_LIB(expat, XML_ParserCreate, have_expat_lib=yes, have_expat_lib=no)
-fi
-  
-if test x$have_expat_lib = xno; then
-    enable_php4="no (missing expat)"
-fi
-
-AC_MSG_CHECKING(for PHP 4 development files)
-if $PHP4_CONFIG --version | grep -q "^4" || test "x$ENABLE_PHP4_FORCE" == "xyes"
-then
-	PHP4_VERSION=`$PHP4_CONFIG --version 2> /dev/null`
-	languages_available="$languages_available php4($PHP4_VERSION)"
-else
-	enable_php4=no
-fi
-
-AC_MSG_RESULT($enable_php4)
-AM_CONDITIONAL([PHP4_ENABLED], [test "x$enable_php4" = "xyes"])
-AC_SUBST(PHP4_VERSION)
-
-# -----------
 # PHP 5 binding
 # -----------
 
@@ -533,7 +465,7 @@ if test x$have_expat_lib = xno; then
 fi
 
 AC_MSG_CHECKING(for PHP 5 development files)
-if $PHP5_CONFIG --version | grep -q "^5" || test "x$ENABLE_PHP5_FORCE" == "xyes"
+if $PHP5_CONFIG --version | grep -q "^5" || test "x$ENABLE_PHP5_FORCE" = "xyes"
 then
 	PHP5_VERSION=`$PHP5_CONFIG --version 2> /dev/null`
 	languages_available="$languages_available php5($PHP5_VERSION)"
@@ -738,41 +670,17 @@ LASSO_WSF_SUPPORT=0
 if test "x$enable_wsf" = "xyes"; then
 	AC_DEFINE(LASSO_WSF_ENABLED, [], [Define if ID-WSF support is enabled])
 	LASSO_WSF_SUPPORT=1
-	if grep -q 'WSF_SUPPORT.*0' $srcdir/*/lasso_wrap.c;
-	then
-		if test "x$SWIG" = "xecho"; then
-			AC_MSG_WARN(Bindings were pre-generated without ID-WSF support)
-			AC_MSG_ERROR(and you don't have SWIG to regenerate their files)
-		fi
-		echo "removing pre-generated language interface files"
-		rm -f $srcdir/*/lasso_wrap.c $srcdir/csharp/liblassosharpglue_wrap.c
-	fi
-else
-	if grep -q 'WSF_SUPPORT.*1' $srcdir/*/lasso_wrap.c;
-	then
-		if test "x$SWIG" = "xecho"; then
-			AC_MSG_WARN(Bindings were pre-generated with ID-WSF support)
-			AC_MSG_ERROR(and you don't have SWIG to regenerate their files)
-		fi
-		echo "removing pre-generated language interface files"
-		rm -f $srcdir/*/lasso_wrap.c $srcdir/csharp/liblassosharpglue_wrap.c
-	fi
 fi
 AC_SUBST(LASSO_WSF_SUPPORT)
 
 
-dnl ==========================================================================
-dnl User specific option.
-dnl ==========================================================================
-dnl Where do we want to install docs
-AC_MSG_CHECKING(for docs folder) 
-AC_ARG_WITH(html-dir, [  --with-html-dir=PATH    path to installed docs ])
+dnl API Reference documentation support
+GTK_DOC_CHECK(1.9)
 if test "z$with_html_dir" != "z" ; then
     LASSO_DOCDIR=$with_html_dir
 else
     LASSO_DOCDIR='$(datadir)/doc/lasso'
 fi
-AC_MSG_RESULT($LASSO_DOCDIR)
 AC_SUBST(LASSO_DOCDIR)
 
 AC_ARG_WITH(html-dir, [  --with-html-dir=PATH path to installed docs ])
@@ -809,19 +717,6 @@ if test "x$enable_wsf" = "xyes"; then
 	LASSO_LIBS="$LASSO_LIBS -lsasl2"
 fi
 
-dnl Let people disable the gtk-doc stuff.
-AC_ARG_ENABLE(gtk-doc, [  --disable-gtk-doc       disable documentation build],,
-              enable_gtk_doc="yes")
-
-if test "x$enable_gtk_doc" = "xyes" ; then
-    GTK_DOC_MIN_VERSION=1.0
-    PKG_CHECK_MODULES(GTK_DOC, gtk-doc >= $GTK_DOC_MIN_VERSION, enable_gtk_doc="yes",
-                      enable_gtk_doc="no")
-fi
-dnl Conditional docs sub dir test.
-AM_CONDITIONAL([GTK_DOC_ENABLED],[test "x$enable_gtk_doc" = "xyes"])
-
-
 AC_CHECK_PROGS(REST2HTML, rest2html rst2html)
 AM_CONDITIONAL(HAVE_REST2HTML, test -n "$ac_cv_prog_REST2HTML")
 
@@ -834,20 +729,24 @@ AM_CONDITIONAL(HAVE_INKSCAPE, test -n "$ac_cv_prog_INKSCAPE")
 
 dnl Debug 
 AC_MSG_CHECKING(for debugging) 
-AC_ARG_ENABLE(debugging,   [  --enable-debugging      enable debuging messages (no)])
+AC_ARG_ENABLE(debugging,   [  --enable-debugging      enable debuging optimization flags (no)])
 if test "z$enable_debugging" = "zyes" ; then
     enable_debugging=yes
     LASSO_DEFINES="$LASSO_DEFINES -DLASSO_DEBUG"
+    AM_CFLAGS="-O0 -g -Wall -Wextra -Werror"
 else
     enable_debugging=no
 fi    
+AM_CONDITIONAL([DEBUGGING],[test "x$enable_debugging" = "xyes"])
 AC_MSG_RESULT($enable_debugging)
+AC_SUBST(DEBUGGING)
+AC_SUBST(AM_CFLAGS)
 
 dnl Profiling 
 AC_MSG_CHECKING(for profiling) 
 AC_ARG_ENABLE(profiling,   [  --enable-profiling      enable profiling compilation flags (no)])
 if test "z$enable_profiling" = "zyes" ; then
-    CFLAGS="$CFLAGS -pg"
+    AM_CFLAGS="$AM_CFLAGS -pg"
     AC_MSG_RESULT(yes)
 else
     AC_MSG_RESULT(no)
@@ -907,8 +806,8 @@ AC_SUBST(CLASSPATH_JUNIT)
 AC_SUBST(SWIG_VERSION)
 
 dnl Dirty system often means dirty hacks...
-AM_CONDITIONAL(MINGW, test $MINGW == 1)
-AM_CONDITIONAL(DARWIN, test $DARWIN == 1)
+AM_CONDITIONAL(MINGW, test $MINGW -eq 1)
+AM_CONDITIONAL(DARWIN, test $DARWIN -eq 1)
 
 dnl bindings
 
@@ -923,7 +822,8 @@ docs/Makefile
 docs/lasso-book/Makefile
 docs/lasso-book/figures/Makefile
 docs/reference/Makefile
-docs/reference/version.xml
+docs/reference/lasso/version.xml
+docs/reference/lasso/Makefile
 lasso/Makefile
 lasso/id-ff/Makefile
 lasso/id-wsf/Makefile
@@ -931,25 +831,11 @@ lasso/saml-2.0/Makefile
 lasso/id-wsf-2.0/Makefile
 lasso/xml/Makefile
 lasso/xml/saml-2.0/Makefile
+lasso/xml/soap-1.1/Makefile
 lasso/xml/id-wsf-2.0/Makefile
 lasso/xml/ws/Makefile
-perl/Makefile
-php/Makefile
-swig/Makefile
-swig/wsf-support.i
-swig/saml-2.0/Makefile
-swig/id-wsf-2.0/Makefile
-swig/ws/Makefile
 tests/Makefile
 tests/data/Makefile
-tests/data/ca1-la/Makefile
-tests/data/idp1-la/Makefile
-tests/data/lecp1-la/Makefile
-tests/data/sp1-la/Makefile
-tests/data/idp5-saml2/Makefile
-tests/data/sp5-saml2/Makefile
-tests/data/sp6-saml2/Makefile
-tests/metadata/Makefile
 lasso.pc
 win32/Makefile
 win32/lasso.rc
@@ -971,6 +857,8 @@ bindings/python/Makefile
 bindings/python/tests/Makefile
 bindings/php5/Makefile
 bindings/php5/examples/Makefile
+bindings/php5/tests/Makefile
+bindings/perl/Makefile
 ])
 
 languages_available=`echo $languages_available | sed -e "s/^ //" `
@@ -984,6 +872,7 @@ Main
 ----
 
 Compiler:                ${CC} 
+CFLAGS:                  ${AM_CFLAGS} ${CFLAGS}
 Install prefix:          ${prefix}
 Debugging:               $enable_debugging
 Experimental ID-WSF:     $enable_wsf
@@ -995,7 +884,6 @@ Available languages:    ${languages_available}
 
 Java binding:           ${enable_java}
 Perl binding:           ${enable_perl}
-PHP 4 binding:          ${enable_php4}
 PHP 5 binding:          ${enable_php5}
 Python binding:         ${enable_python}
 

@@ -1,22 +1,22 @@
-/* $Id: name_id_management.h 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
@@ -27,11 +27,11 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* __cplusplus */ 
+#endif /* __cplusplus */
 
-#include <lasso/id-ff/profile.h>
-#include <lasso/xml/saml-2.0/samlp2_manage_name_id_request.h>
-#include <lasso/xml/saml-2.0/samlp2_manage_name_id_response.h>
+#include "../id-ff/profile.h"
+#include "../xml/saml-2.0/samlp2_manage_name_id_request.h"
+#include "../xml/saml-2.0/samlp2_manage_name_id_response.h"
 
 #define LASSO_TYPE_NAME_ID_MANAGEMENT (lasso_name_id_management_get_type())
 #define LASSO_NAME_ID_MANAGEMENT(obj) \
@@ -45,7 +45,7 @@ extern "C" {
 	(G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_NAME_ID_MANAGEMENT))
 #define LASSO_NAME_ID_MANAGEMENT_GET_CLASS(o) \
 	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_NAME_ID_MANAGEMENT, \
-				    LassoNameIdManagementClass)) 
+				    LassoNameIdManagementClass))
 
 typedef struct _LassoNameIdManagement LassoNameIdManagement;
 typedef struct _LassoNameIdManagementClass LassoNameIdManagementClass;
@@ -66,25 +66,25 @@ LASSO_EXPORT LassoNameIdManagement *lasso_name_id_management_new(LassoServer *se
 LASSO_EXPORT LassoNameIdManagement *lasso_name_id_management_new_from_dump(
 		LassoServer *server, const char *dump);
 LASSO_EXPORT char* lasso_name_id_management_dump(LassoNameIdManagement *name_id_management);
- 
+
 LASSO_EXPORT void lasso_name_id_management_destroy(LassoNameIdManagement *name_id_management);
 
-LASSO_EXPORT gint lasso_name_id_management_init_request(
+LASSO_EXPORT lasso_error_t lasso_name_id_management_init_request(
 		LassoNameIdManagement *name_id_management,
 		char *remote_provider_id,
 		char *new_name_id,
 		LassoHttpMethod http_method);
-LASSO_EXPORT gint lasso_name_id_management_build_request_msg(
+LASSO_EXPORT lasso_error_t lasso_name_id_management_build_request_msg(
 		LassoNameIdManagement *name_id_management);
 
-LASSO_EXPORT gint lasso_name_id_management_process_request_msg(
+LASSO_EXPORT lasso_error_t lasso_name_id_management_process_request_msg(
 		LassoNameIdManagement *name_id_management,
 		gchar *request_msg);
-LASSO_EXPORT gint lasso_name_id_management_validate_request(
+LASSO_EXPORT lasso_error_t lasso_name_id_management_validate_request(
 		LassoNameIdManagement *name_id_management);
-LASSO_EXPORT int lasso_name_id_management_build_response_msg(
+LASSO_EXPORT lasso_error_t lasso_name_id_management_build_response_msg(
 		LassoNameIdManagement *name_id_management);
-LASSO_EXPORT gint lasso_name_id_management_process_response_msg(
+LASSO_EXPORT lasso_error_t lasso_name_id_management_process_response_msg(
 		LassoNameIdManagement *name_id_management,
 		gchar *response_msg);
 

@@ -1,29 +1,30 @@
-/* $Id: lib_register_name_identifier_request.c 3704 2008-05-15 21:17:44Z fpeters $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <libxml/uri.h>
-#include <lasso/xml/lib_register_name_identifier_request.h>
+#include "./private.h"
+#include "./lib_register_name_identifier_request.h"
+#include "../utils.h"
 
 /**
  * SECTION:lib_register_name_identifier_request
@@ -49,7 +50,7 @@
  * <xs:element name="IDPProvidedNameIdentifier" type="saml:NameIdentifierType"/>
  * <xs:element name="SPProvidedNameIdentifier" type="saml:NameIdentifierType"/>
  * <xs:element name="OldProvidedNameIdentifier" type="saml:NameIdentifierType"/>
- * 
+ *
  * <xs:element name="ProviderID" type="md:entityIDType"/>
  * <xs:element name="RelayState" type="xs:string"/>
  * ]]></programlisting>
@@ -62,18 +63,18 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "Extension", SNIPPET_EXTENSION,
-		G_STRUCT_OFFSET(LassoLibRegisterNameIdentifierRequest, Extension) },
+		G_STRUCT_OFFSET(LassoLibRegisterNameIdentifierRequest, Extension), NULL, NULL, NULL},
 	{ "ProviderID", SNIPPET_CONTENT,
-		G_STRUCT_OFFSET(LassoLibRegisterNameIdentifierRequest, ProviderID) },
+		G_STRUCT_OFFSET(LassoLibRegisterNameIdentifierRequest, ProviderID), NULL, NULL, NULL},
 	{ "IDPProvidedNameIdentifier", SNIPPET_NAME_IDENTIFIER,
-		G_STRUCT_OFFSET(LassoLibRegisterNameIdentifierRequest, IDPProvidedNameIdentifier)},
+		G_STRUCT_OFFSET(LassoLibRegisterNameIdentifierRequest, IDPProvidedNameIdentifier), NULL, NULL, NULL},
 	{ "SPProvidedNameIdentifier", SNIPPET_NAME_IDENTIFIER,
-		G_STRUCT_OFFSET(LassoLibRegisterNameIdentifierRequest, SPProvidedNameIdentifier) },
+		G_STRUCT_OFFSET(LassoLibRegisterNameIdentifierRequest, SPProvidedNameIdentifier), NULL, NULL, NULL},
 	{ "OldProvidedNameIdentifier", SNIPPET_NAME_IDENTIFIER,
-		G_STRUCT_OFFSET(LassoLibRegisterNameIdentifierRequest, OldProvidedNameIdentifier)},
+		G_STRUCT_OFFSET(LassoLibRegisterNameIdentifierRequest, OldProvidedNameIdentifier), NULL, NULL, NULL},
 	{ "RelayState", SNIPPET_CONTENT,
-		G_STRUCT_OFFSET(LassoLibRegisterNameIdentifierRequest, RelayState) },
-	{ NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoLibRegisterNameIdentifierRequest, RelayState), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 static struct QuerySnippet query_snippets[] = {
@@ -97,16 +98,11 @@ static struct QuerySnippet query_snippets[] = {
 
 static LassoNodeClass *parent_class = NULL;
 
-static gchar*
-build_query(LassoNode *node)
-{
-	return lasso_node_build_query_from_snippets(node);
-}
-
 static gboolean
 init_from_query(LassoNode *node, char **query_fields)
 {
 	LassoLibRegisterNameIdentifierRequest *request;
+	gboolean rc;
 
 	request = LASSO_LIB_REGISTER_NAME_IDENTIFIER_REQUEST(node);
 
@@ -114,19 +110,16 @@ init_from_query(LassoNode *node, char **query_fields)
 	request->SPProvidedNameIdentifier = lasso_saml_name_identifier_new();
 	request->OldProvidedNameIdentifier = lasso_saml_name_identifier_new();
 
-	lasso_node_init_from_query_fields(node, query_fields);
+	rc = parent_class->init_from_query(node, query_fields);
 
 	if (request->IDPProvidedNameIdentifier->content == NULL) {
-		g_object_unref(request->IDPProvidedNameIdentifier);
-		request->IDPProvidedNameIdentifier = NULL;
+		lasso_release_gobject(request->IDPProvidedNameIdentifier);
 	}
 	if (request->SPProvidedNameIdentifier->content == NULL) {
-		g_object_unref(request->SPProvidedNameIdentifier);
-		request->SPProvidedNameIdentifier = NULL;
+		lasso_release_gobject(request->SPProvidedNameIdentifier);
 	}
 	if (request->OldProvidedNameIdentifier->content == NULL) {
-		g_object_unref(request->OldProvidedNameIdentifier);
-		request->OldProvidedNameIdentifier = NULL;
+		lasso_release_gobject(request->OldProvidedNameIdentifier);
 	}
 
 	if (request->ProviderID == NULL ||
@@ -134,8 +127,8 @@ init_from_query(LassoNode *node, char **query_fields)
 			request->IDPProvidedNameIdentifier == NULL) {
 		return FALSE;
 	}
-	
-	return TRUE;
+
+	return rc;
 }
 
 
@@ -143,15 +136,6 @@ init_from_query(LassoNode *node, char **query_fields)
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoLibRegisterNameIdentifierRequest *node)
-{
-	node->ProviderID = NULL;
-	node->IDPProvidedNameIdentifier = NULL;
-	node->SPProvidedNameIdentifier = NULL;
-	node->OldProvidedNameIdentifier = NULL;
-	node->RelayState = NULL;
-}
 
 static void
 class_init(LassoLibRegisterNameIdentifierRequestClass *klass)
@@ -159,7 +143,6 @@ class_init(LassoLibRegisterNameIdentifierRequestClass *klass)
 	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
 
 	parent_class = g_type_class_peek_parent(klass);
-	nclass->build_query = build_query;
 	nclass->init_from_query = init_from_query;
 	nclass->node_data = g_new0(LassoNodeClassData, 1);
 	lasso_node_class_set_nodename(nclass, "RegisterNameIdentifierRequest");
@@ -183,7 +166,8 @@ lasso_lib_register_name_identifier_request_get_type()
 			NULL,
 			sizeof(LassoLibRegisterNameIdentifierRequest),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_SAMLP_REQUEST_ABSTRACT,
@@ -209,12 +193,13 @@ lasso_lib_register_name_identifier_request_new()
 
 /**
  * lasso_lib_register_name_identifier_request_new_full:
- * @providerID:
- * @idpNameIdentifier:
- * @spNameIdentifier:
- * @oldNameIdentifier:
- * @sign_type:
- * @sign_method:
+ * @providerID: the providerID of the requester
+ * @idpNameIdentifier: a #LassoSamlNameIdentifier object, giving the new idp provided name
+ * identifier
+ * @spNameIdentifier: a #LassoSamlNameIdentifier object, giving the new sp provided name identifier
+ * @oldNameIdentifier: a #LassoSamlNameIdentifier object, giving the old name identifier
+ * @sign_type: a #LassoSignatureType value
+ * @sign_method: a #LassoSignatureMethod value
  *
  * Creates a new #LassoLibRegisterNameIdentifierRequest object and initializes
  * it with the parameters.

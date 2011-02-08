@@ -3,7 +3,7 @@
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,30 +23,43 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <lasso_config.h>
+#include <config.h>
 
 #include <check.h>
-#include <lasso/lasso.h>
+#include "../lasso/lasso.h"
+#include "lasso_config.h"
 
 extern Suite* basic_suite();
 extern Suite* login_suite();
+extern Suite* login_saml2_suite();
 extern Suite* random_suite();
 extern Suite* metadata_suite();
+extern Suite* assertion_query_suite();
+extern Suite* non_regression_suite();
+#ifdef LASSO_WSF_ENABLED
+extern Suite* idwsf2_suite();
+#endif
 
 typedef Suite* (*SuiteFunction) ();
 
 SuiteFunction suites[] = {
 	basic_suite,
 	login_suite,
+	login_saml2_suite,
 	random_suite,
 	metadata_suite,
+	assertion_query_suite,
+	non_regression_suite,
+#ifdef LASSO_WSF_ENABLED
+	idwsf2_suite,
+#endif
 	NULL
 };
 
 int
 main(int argc, char *argv[])
 {
-	int rc;
+	int rc = 0;
 	SRunner *sr;
 	int i;
 	int dont_fork = 0;
@@ -58,7 +71,7 @@ main(int argc, char *argv[])
 	}
 
 	lasso_init();
-	
+
 	sr = srunner_create(suites[0]());
 
 	i = 1;
@@ -75,11 +88,12 @@ main(int argc, char *argv[])
 #endif
 	srunner_run_all (sr, CK_VERBOSE);
 	rc = srunner_ntests_failed(sr);
-	
+
 	srunner_free(sr);
 	/*suite_free(s);  */
 	/* no longer available in check 0.9.0; it will leak a
 	 * bit with previous versions */
+	lasso_shutdown();
 
 	return (rc == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }

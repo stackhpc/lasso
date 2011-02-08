@@ -1,28 +1,30 @@
-/* $Id: dst_modify_response.c 3704 2008-05-15 21:17:44Z fpeters $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/dst_modify_response.h>
+#include "private.h"
+#include "dst_modify_response.h"
+#include "./idwsf_strings.h"
 
 /**
  * SECTION:dst_modify_response
@@ -50,12 +52,12 @@
 /*****************************************************************************/
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "Status", SNIPPET_NODE, G_STRUCT_OFFSET(LassoDstModifyResponse, Status) },
-	{ "Extension", SNIPPET_EXTENSION, G_STRUCT_OFFSET(LassoDstModifyResponse, Extension) },
-	{ "id", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoDstModifyResponse, id) },
-	{ "itemIDRef", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoDstModifyResponse, itemIDRef) },
-	{ "timeStamp", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoDstModifyResponse, timeStamp) },
-	{NULL, 0, 0}
+	{ "Status", SNIPPET_NODE, G_STRUCT_OFFSET(LassoDstModifyResponse, Status), NULL, NULL, NULL},
+	{ "Extension", SNIPPET_EXTENSION, G_STRUCT_OFFSET(LassoDstModifyResponse, Extension), NULL, NULL, NULL},
+	{ "id", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoDstModifyResponse, id), NULL, NULL, NULL},
+	{ "itemIDRef", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoDstModifyResponse, itemIDRef), NULL, NULL, NULL},
+	{ "timeStamp", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoDstModifyResponse, timeStamp), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 static LassoNodeClass *parent_class = NULL;
@@ -90,7 +92,7 @@ get_xmlNode(LassoNode *node, gboolean lasso_dump)
 static int
 init_from_xml(LassoNode *node, xmlNode *xmlnode)
 {
-	int rc;
+	int rc = 0;
 	LassoDstModifyResponse *response = LASSO_DST_MODIFY_RESPONSE(node);
 
 	rc = parent_class->init_from_xml(node, xmlnode);
@@ -110,12 +112,6 @@ init_from_xml(LassoNode *node, xmlNode *xmlnode)
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoDstModifyResponse *node)
-{
-	node->prefixServiceType = NULL;
-	node->hrefServiceType = NULL;
-}
 
 static void
 class_init(LassoDstModifyResponseClass *klass)
@@ -145,7 +141,8 @@ lasso_dst_modify_response_get_type()
 			NULL,
 			sizeof(LassoDstModifyResponse),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,

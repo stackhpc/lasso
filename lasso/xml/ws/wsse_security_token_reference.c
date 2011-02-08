@@ -1,28 +1,30 @@
-/* $Id: wsse_security_token_reference.c,v 1.0 2005/10/14 15:17:55 fpeters Exp $ 
+/* $Id: wsse_security_token_reference.c,v 1.0 2005/10/14 15:17:55 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include "../private.h"
 #include "wsse_security_token_reference.h"
+#include "../idwsf_strings.h"
 
 /*
  * Schema fragment (oasis-200401-wss-wssecurity-secext-1.0.xsd):
@@ -47,12 +49,12 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "Id", SNIPPET_ATTRIBUTE,
-		G_STRUCT_OFFSET(LassoWsSec1SecurityTokenReference, Id) },
+		G_STRUCT_OFFSET(LassoWsSec1SecurityTokenReference, Id), NULL, NULL, NULL},
 	{ "Usage", SNIPPET_ATTRIBUTE,
-		G_STRUCT_OFFSET(LassoWsSec1SecurityTokenReference, Usage) },
+		G_STRUCT_OFFSET(LassoWsSec1SecurityTokenReference, Usage), NULL, NULL, NULL},
 	{ "attributes", SNIPPET_ATTRIBUTE | SNIPPET_ANY,
-		G_STRUCT_OFFSET(LassoWsSec1SecurityTokenReference, attributes) },
-	{NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoWsSec1SecurityTokenReference, attributes), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 static LassoNodeClass *parent_class = NULL;
@@ -65,8 +67,6 @@ static LassoNodeClass *parent_class = NULL;
 static void
 instance_init(LassoWsSec1SecurityTokenReference *node)
 {
-	node->Id = NULL;
-	node->Usage = NULL;
 	node->attributes = g_hash_table_new_full(
 		g_str_hash, g_str_equal, g_free, g_free);
 }
@@ -99,6 +99,7 @@ lasso_wsse_security_token_reference_get_type()
 			sizeof(LassoWsSec1SecurityTokenReference),
 			0,
 			(GInstanceInitFunc) instance_init,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,

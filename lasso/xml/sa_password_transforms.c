@@ -1,28 +1,30 @@
-/* $Id: sa_password_transforms.c 3704 2008-05-15 21:17:44Z fpeters $
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/sa_password_transforms.h>
+#include "private.h"
+#include "sa_password_transforms.h"
+#include "./idwsf_strings.h"
 
 /**
  * SECTION:sa_password_transforms
@@ -60,26 +62,21 @@
  *  </xs:element>
  * ]]></programlisting>
  * </figure>
- */ 
+ */
 
 /*****************************************************************************/
 /* private methods                                                           */
 /*****************************************************************************/
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "Transform", SNIPPET_LIST_NODES, G_STRUCT_OFFSET(LassoSaPasswordTransforms, Transform) },
-	{ NULL, 0, 0}
+	{ "Transform", SNIPPET_LIST_NODES, G_STRUCT_OFFSET(LassoSaPasswordTransforms, Transform), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoSaPasswordTransforms *node)
-{
-	node->Transform = NULL;
-}
 
 static void
 class_init(LassoSaPasswordTransformsClass *klass)
@@ -107,9 +104,10 @@ lasso_sa_password_transforms_get_type()
 			NULL,
 			sizeof(LassoSaPasswordTransforms),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
-		
+
 		this_type = g_type_register_static(LASSO_TYPE_NODE,
 				"LassoSaPasswordTransforms", &this_info, 0);
 	}
@@ -122,19 +120,6 @@ lasso_sa_password_transforms_new()
 	LassoSaPasswordTransforms *node;
 
 	node = g_object_new(LASSO_TYPE_SA_PASSWORD_TRANSFORMS, NULL);
-
-	return node;
-}
-
-LassoSaPasswordTransforms*
-lasso_sa_password_transforms_new_from_message(const gchar *message)
-{
-	LassoSaPasswordTransforms *node;
-
-	g_return_val_if_fail(message != NULL, NULL);
-
-	node = g_object_new(LASSO_TYPE_SA_PASSWORD_TRANSFORMS, NULL);
-	lasso_node_init_from_message(LASSO_NODE(node), message);
 
 	return node;
 }

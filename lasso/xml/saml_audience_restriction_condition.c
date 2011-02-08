@@ -1,32 +1,33 @@
-/* $Id: saml_audience_restriction_condition.c 3237 2007-05-30 17:17:45Z dlaniel $
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/saml_audience_restriction_condition.h>
+#include "private.h"
+#include "saml_audience_restriction_condition.h"
 
 /*
  * schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
- * 
+ *
  * <element name="AudienceRestrictionCondition" type="saml:AudienceRestrictionConditionType"/>
  * <complexType name="AudienceRestrictionConditionType">
  *   <complexContent>
@@ -37,7 +38,7 @@
  *     </extension>
  *   </complexContent>
  * </complexType>
- * 
+ *
  * <element name="Audience" type="anyURI"/>
  */
 
@@ -47,19 +48,14 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "Audience", SNIPPET_LIST_CONTENT,
-		G_STRUCT_OFFSET(LassoSamlAudienceRestrictionCondition, Audience) },
-	{ NULL, 0, 0 }
+		G_STRUCT_OFFSET(LassoSamlAudienceRestrictionCondition, Audience), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoSamlAudienceRestrictionCondition *node)
-{
-	node->Audience = NULL;
-}
 
 static void
 class_init(LassoSamlAudienceRestrictionConditionClass *klass)
@@ -87,7 +83,8 @@ lasso_saml_audience_restriction_condition_get_type()
 			NULL,
 			sizeof(LassoSamlAudienceRestrictionCondition),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_SAML_CONDITION_ABSTRACT,
@@ -98,9 +95,9 @@ lasso_saml_audience_restriction_condition_get_type()
 
 /**
  * lasso_saml_audience_restriction_condition_new:
- * 
+ *
  * Creates a new #LassoSamlAudienceRestrictionCondition object.
- * 
+ *
  * Return value: a newly created #LassoSamlAudienceRestrictionCondition
  **/
 LassoSamlAudienceRestrictionCondition*
@@ -112,11 +109,11 @@ lasso_saml_audience_restriction_condition_new()
 
 /**
  * lasso_saml_audience_restriction_condition_new_full:
- * @audience:
- * 
+ * @audience: a string which specify to which audience the restriction condition applies
+ *
  * Creates a new #LassoSamlAudienceRestrictionCondition object and initializes
  * it with the parameters.
- * 
+ *
  * Return value: a newly created #LassoSamlAudienceRestrictionCondition
  **/
 LassoSamlAudienceRestrictionCondition*

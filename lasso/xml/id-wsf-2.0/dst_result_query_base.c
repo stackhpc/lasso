@@ -1,28 +1,30 @@
-/* $Id: dst_result_query_base.c,v 1.0 2005/10/14 15:17:55 fpeters Exp $ 
+/* $Id: dst_result_query_base.c,v 1.0 2005/10/14 15:17:55 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include "../private.h"
 #include "dst_result_query_base.h"
+#include "./idwsf2_strings.h"
 
 /**
  * SECTION:dst_result_query_base
@@ -54,22 +56,22 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "ChangeFormat", SNIPPET_CONTENT,
-		G_STRUCT_OFFSET(LassoIdWsf2DstResultQueryBase, ChangeFormat) },
+		G_STRUCT_OFFSET(LassoIdWsf2DstResultQueryBase, ChangeFormat), NULL, NULL, NULL},
 	{ "itemIDRef", SNIPPET_ATTRIBUTE | SNIPPET_OPTIONAL,
-		G_STRUCT_OFFSET(LassoIdWsf2DstResultQueryBase, itemIDRef) },
+		G_STRUCT_OFFSET(LassoIdWsf2DstResultQueryBase, itemIDRef), NULL, NULL, NULL},
 	{ "contingency", SNIPPET_ATTRIBUTE | SNIPPET_BOOLEAN | SNIPPET_OPTIONAL,
-		G_STRUCT_OFFSET(LassoIdWsf2DstResultQueryBase, contingency) },
+		G_STRUCT_OFFSET(LassoIdWsf2DstResultQueryBase, contingency), NULL, NULL, NULL},
 	{ "includeCommonAttributes", SNIPPET_ATTRIBUTE | SNIPPET_BOOLEAN | SNIPPET_OPTIONAL,
-		G_STRUCT_OFFSET(LassoIdWsf2DstResultQueryBase, includeCommonAttributes) },
+		G_STRUCT_OFFSET(LassoIdWsf2DstResultQueryBase, includeCommonAttributes), NULL, NULL, NULL},
 	{ "changedSince", SNIPPET_ATTRIBUTE | SNIPPET_OPTIONAL,
-		G_STRUCT_OFFSET(LassoIdWsf2DstResultQueryBase, changedSince) },
+		G_STRUCT_OFFSET(LassoIdWsf2DstResultQueryBase, changedSince), NULL, NULL, NULL},
 	{ "itemID", SNIPPET_ATTRIBUTE | SNIPPET_OPTIONAL,
-		G_STRUCT_OFFSET(LassoIdWsf2DstResultQueryBase, itemID) },
+		G_STRUCT_OFFSET(LassoIdWsf2DstResultQueryBase, itemID), NULL, NULL, NULL},
 	{ "objectType", SNIPPET_ATTRIBUTE,
-		G_STRUCT_OFFSET(LassoIdWsf2DstResultQueryBase, objectType) },
+		G_STRUCT_OFFSET(LassoIdWsf2DstResultQueryBase, objectType), NULL, NULL, NULL},
 	{ "predefined", SNIPPET_ATTRIBUTE,
-		G_STRUCT_OFFSET(LassoIdWsf2DstResultQueryBase, predefined) },
-	{NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoIdWsf2DstResultQueryBase, predefined), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 static LassoNodeClass *parent_class = NULL;
@@ -79,18 +81,6 @@ static LassoNodeClass *parent_class = NULL;
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoIdWsf2DstResultQueryBase *node)
-{
-	node->ChangeFormat = NULL;
-	node->itemIDRef = NULL;
-	node->contingency = FALSE;
-	node->includeCommonAttributes = FALSE;
-	node->changedSince = NULL;
-	node->itemID = NULL;
-	node->objectType = NULL;
-	node->predefined = NULL;
-}
 
 static void
 class_init(LassoIdWsf2DstResultQueryBaseClass *klass)
@@ -119,7 +109,8 @@ lasso_idwsf2_dst_result_query_base_get_type()
 			NULL,
 			sizeof(LassoIdWsf2DstResultQueryBase),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,
