@@ -1,28 +1,29 @@
-/* $Id: saml_subject.c 3704 2008-05-15 21:17:44Z fpeters $
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/saml_subject.h>
+#include "private.h"
+#include "saml_subject.h"
 
 /**
  * SECTION:saml_subject
@@ -30,7 +31,7 @@
  *
  * <figure><title>Schema fragment for saml:Subject</title>
  * <programlisting><![CDATA[
- * 
+ *
  * <element name="Subject" type="saml:SubjectType"/>
  * <complexType name="SubjectType">
  *   <choice>
@@ -51,26 +52,19 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "NameIdentifier", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoSamlSubject, NameIdentifier) },
+		G_STRUCT_OFFSET(LassoSamlSubject, NameIdentifier), NULL, NULL, NULL},
 	{ "EncryptedNameIdentifier", SNIPPET_NODE,
 		G_STRUCT_OFFSET(LassoSamlSubject, EncryptedNameIdentifier),
-		"LassoSaml2EncryptedElement" },
+		"LassoSaml2EncryptedElement", NULL, NULL },
 	{ "SubjectConfirmation", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoSamlSubject, SubjectConfirmation) },
-	{ NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoSamlSubject, SubjectConfirmation), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoSamlSubject *node)
-{
-	node->NameIdentifier = NULL;
-	node->EncryptedNameIdentifier = NULL;
-	node->SubjectConfirmation = NULL;
-}
 
 static void
 class_init(LassoSamlSubjectClass *klass)
@@ -98,7 +92,8 @@ lasso_saml_subject_get_type()
 			NULL,
 			sizeof(LassoSamlSubject),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,
@@ -109,7 +104,7 @@ lasso_saml_subject_get_type()
 
 /**
  * lasso_saml_subject_new:
- * 
+ *
  * Creates a new #LassoSamlSubject object.
  *
  * Return value: a newly created #LassoSamlSubject object

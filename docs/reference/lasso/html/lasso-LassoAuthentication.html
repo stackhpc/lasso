@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>LassoAuthentication</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="Lasso Reference Manual">
+<link rel="up" href="idwsf.html" title="Identity Web Services Framework 1.0">
+<link rel="prev" href="lasso-LassoPersonalProfileService.html" title="LassoPersonalProfileService">
+<link rel="next" href="lasso-LassoWsfProfile.html" title="LassoWsfProfile">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
+<link rel="reference" href="rn01.html" title="Application Programming Interface">
+<link rel="chapter" href="architecture.html" title="Lasso Architecture">
+<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
+<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
+<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
+<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
+<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
+<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
+<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
+<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
+<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
+<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
+<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
+<link rel="part" href="pt01.html" title="Part II. Appendix">
+<link rel="index" href="api-index.html" title="API Index">
+<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="lasso-LassoPersonalProfileService.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="idwsf.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Lasso Reference Manual</th>
+<td><a accesskey="n" href="lasso-LassoWsfProfile.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#lasso-LassoAuthentication.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#lasso-LassoAuthentication.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" title="LassoAuthentication">
+<a name="lasso-LassoAuthentication"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="lasso-LassoAuthentication.top_of_page"></a>LassoAuthentication</span></h2>
+<p>LassoAuthentication</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="lasso-LassoAuthentication.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+typedef             LassoUserAccount;
+enum                LassoSaslMechanisms;
+                    LassoAuthentication;
+LassoAuthentication* lasso_authentication_new           (LassoServer *server);
+void                lasso_authentication_destroy        (LassoAuthentication *authentication);
+lasso_error_t       lasso_authentication_client_start   (LassoAuthentication *authentication);
+lasso_error_t       lasso_authentication_client_step    (LassoAuthentication *authentication);
+char *              lasso_authentication_get_mechanism_list
+                                                        (LassoAuthentication *authentication);
+lasso_error_t       lasso_authentication_init_request   (LassoAuthentication *authentication,
+                                                         LassoDiscoDescription *description,
+                                                         const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *mechanisms,
+                                                         LassoUserAccount *account);
+lasso_error_t       lasso_authentication_process_request_msg
+                                                        (LassoAuthentication *authentication,
+                                                         const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *soap_msg);
+lasso_error_t       lasso_authentication_process_response_msg
+                                                        (LassoAuthentication *authentication,
+                                                         const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *soap_msg);
+lasso_error_t       lasso_authentication_server_start   (LassoAuthentication *authentication);
+lasso_error_t       lasso_authentication_server_step    (LassoAuthentication *authentication);
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="lasso-LassoAuthentication.description"></a><h2>Description</h2>
+</div>
+<div class="refsect1" title="Details">
+<a name="lasso-LassoAuthentication.details"></a><h2>Details</h2>
+<div class="refsect2" title="LassoUserAccount">
+<a name="LassoUserAccount"></a><h3>LassoUserAccount</h3>
+<pre class="programlisting">typedef struct LassoUserAccount LassoUserAccount;
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="enum LassoSaslMechanisms">
+<a name="LassoSaslMechanisms"></a><h3>enum LassoSaslMechanisms</h3>
+<pre class="programlisting">typedef enum {
+	LASSO_SASL_MECH_ANONYMOUS = 1,
+	LASSO_SASL_MECH_PLAIN,
+	LASSO_SASL_MECH_CRAM_MD5,
+}LassoSaslMechanisms;
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LassoAuthentication">
+<a name="LassoAuthentication"></a><h3>LassoAuthentication</h3>
+<pre class="programlisting">typedef struct {
+	LassoWsfProfile parent;
+
+	/* The SASL context kept for the life of the connection */
+	sasl_conn_t *connection;
+	sasl_interact_t **client_interact;
+} LassoAuthentication;
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_authentication_new ()">
+<a name="lasso-authentication-new"></a><h3>lasso_authentication_new ()</h3>
+<pre class="programlisting">LassoAuthentication* lasso_authentication_new           (LassoServer *server);</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_authentication_destroy ()">
+<a name="lasso-authentication-destroy"></a><h3>lasso_authentication_destroy ()</h3>
+<pre class="programlisting">void                lasso_authentication_destroy        (LassoAuthentication *authentication);</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_authentication_client_start ()">
+<a name="lasso-authentication-client-start"></a><h3>lasso_authentication_client_start ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_authentication_client_start   (LassoAuthentication *authentication);</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_authentication_client_step ()">
+<a name="lasso-authentication-client-step"></a><h3>lasso_authentication_client_step ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_authentication_client_step    (LassoAuthentication *authentication);</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_authentication_get_mechanism_list ()">
+<a name="lasso-authentication-get-mechanism-list"></a><h3>lasso_authentication_get_mechanism_list ()</h3>
+<pre class="programlisting">char *              lasso_authentication_get_mechanism_list
+                                                        (LassoAuthentication *authentication);</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_authentication_init_request ()">
+<a name="lasso-authentication-init-request"></a><h3>lasso_authentication_init_request ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_authentication_init_request   (LassoAuthentication *authentication,
+                                                         LassoDiscoDescription *description,
+                                                         const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *mechanisms,
+                                                         LassoUserAccount *account);</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_authentication_process_request_msg ()">
+<a name="lasso-authentication-process-request-msg"></a><h3>lasso_authentication_process_request_msg ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_authentication_process_request_msg
+                                                        (LassoAuthentication *authentication,
+                                                         const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *soap_msg);</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_authentication_process_response_msg ()">
+<a name="lasso-authentication-process-response-msg"></a><h3>lasso_authentication_process_response_msg ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_authentication_process_response_msg
+                                                        (LassoAuthentication *authentication,
+                                                         const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *soap_msg);</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_authentication_server_start ()">
+<a name="lasso-authentication-server-start"></a><h3>lasso_authentication_server_start ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_authentication_server_start   (LassoAuthentication *authentication);</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_authentication_server_step ()">
+<a name="lasso-authentication-server-step"></a><h3>lasso_authentication_server_step ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_authentication_server_step    (LassoAuthentication *authentication);</pre>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

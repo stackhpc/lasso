@@ -1,28 +1,29 @@
-/* $Id: lib_authn_request_envelope.c 3704 2008-05-15 21:17:44Z fpeters $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/lib_authn_request_envelope.h>
+#include "private.h"
+#include "lib_authn_request_envelope.h"
 
 /**
  * SECTION:lib_authn_request_envelope
@@ -72,37 +73,26 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "Extension", SNIPPET_EXTENSION,
-		G_STRUCT_OFFSET(LassoLibAuthnRequestEnvelope, Extension) },
+		G_STRUCT_OFFSET(LassoLibAuthnRequestEnvelope, Extension), NULL, NULL, NULL},
 	{ "AuthnRequest", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoLibAuthnRequestEnvelope, AuthnRequest) },
+		G_STRUCT_OFFSET(LassoLibAuthnRequestEnvelope, AuthnRequest), NULL, NULL, NULL},
 	{ "ProviderID", SNIPPET_CONTENT,
-		G_STRUCT_OFFSET(LassoLibAuthnRequestEnvelope, ProviderID) },
+		G_STRUCT_OFFSET(LassoLibAuthnRequestEnvelope, ProviderID), NULL, NULL, NULL},
 	{ "ProviderName", SNIPPET_CONTENT,
-		G_STRUCT_OFFSET(LassoLibAuthnRequestEnvelope, ProviderName) },
+		G_STRUCT_OFFSET(LassoLibAuthnRequestEnvelope, ProviderName), NULL, NULL, NULL},
 	{ "AssertionConsumerServiceURL", SNIPPET_CONTENT,
-		G_STRUCT_OFFSET(LassoLibAuthnRequestEnvelope, AssertionConsumerServiceURL) },
+		G_STRUCT_OFFSET(LassoLibAuthnRequestEnvelope, AssertionConsumerServiceURL), NULL, NULL, NULL},
 	{ "IDPList", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoLibAuthnRequestEnvelope, IDPList) },
+		G_STRUCT_OFFSET(LassoLibAuthnRequestEnvelope, IDPList), NULL, NULL, NULL},
 	{ "IsPassive", SNIPPET_CONTENT | SNIPPET_BOOLEAN,
-		G_STRUCT_OFFSET(LassoLibAuthnRequestEnvelope, IsPassive) },
-	{ NULL, 0, 0 }
+		G_STRUCT_OFFSET(LassoLibAuthnRequestEnvelope, IsPassive), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoLibAuthnRequestEnvelope *node)
-{
-	node->Extension = NULL;
-	node->AuthnRequest = NULL;
-	node->ProviderID = NULL;
-	node->ProviderName = NULL;
-	node->AssertionConsumerServiceURL = NULL;
-	node->IDPList = NULL;
-	node->IsPassive = FALSE;
-}
 
 static void
 class_init(LassoLibAuthnRequestEnvelopeClass *klass)
@@ -130,7 +120,8 @@ lasso_lib_authn_request_envelope_get_type()
 			NULL,
 			sizeof(LassoLibAuthnRequestEnvelope),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,

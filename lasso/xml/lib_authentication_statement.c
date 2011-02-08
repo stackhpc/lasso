@@ -1,29 +1,30 @@
-/* $Id: lib_authentication_statement.c 3704 2008-05-15 21:17:44Z fpeters $
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/lib_authentication_statement.h>
-#include <lasso/xml/lib_subject.h>
+#include "private.h"
+#include "lib_authentication_statement.h"
+#include "lib_subject.h"
 
 /**
  * SECTION:lib_authentication_statement
@@ -54,25 +55,18 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "AuthnContext", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoLibAuthenticationStatement, AuthnContext) },
+		G_STRUCT_OFFSET(LassoLibAuthenticationStatement, AuthnContext), NULL, NULL, NULL},
 	{ "ReauthenticateOnOrAfter", SNIPPET_ATTRIBUTE,
-		G_STRUCT_OFFSET(LassoLibAuthenticationStatement, ReauthenticateOnOrAfter) },
+		G_STRUCT_OFFSET(LassoLibAuthenticationStatement, ReauthenticateOnOrAfter), NULL, NULL, NULL},
 	{ "SessionIndex", SNIPPET_ATTRIBUTE,
-		G_STRUCT_OFFSET(LassoLibAuthenticationStatement, SessionIndex) },
-	{ NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoLibAuthenticationStatement, SessionIndex), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoLibAuthenticationStatement *node)
-{
-	node->AuthnContext = NULL;
-	node->ReauthenticateOnOrAfter = NULL;
-	node->SessionIndex = g_strdup("1"); /* FIXME: proper SessionIndex usage */
-}
 
 static void
 class_init(LassoLibAuthenticationStatementClass *klass)
@@ -100,7 +94,8 @@ lasso_lib_authentication_statement_get_type()
 			NULL,
 			sizeof(LassoLibAuthenticationStatement),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_SAML_AUTHENTICATION_STATEMENT,
@@ -124,14 +119,16 @@ lasso_lib_authentication_statement_new(void)
 
 /**
  * lasso_lib_authentication_statement_new_full:
- * @authenticationMethod:
- * @authenticationInstant: AuthenticationInstant (NULL to get current time)
- * @reauthenticateOnOrAfter:
- * @sp_identifier:
- * @idp_identifier:
+ * @authenticationMethod: an URI identifier for the authentication method
+ * @authenticationInstant:(allow-none): an ISO-8601 formatted timestamp for the authentication
+ * instant
+ * @reauthenticateOnOrAfter:(allow-none): an ISO-8601 formatted timestamp to set a limit on the value of this
+ * authentication
+ * @sp_identifier:(allow-none) a #LassoSamlNameIdentifier object, the SP qualifier for the subject of this statement
+ * @idp_identifier: a #LassoSamlNameIdentifier object, the IdP qualifier for the subject of this statemtn
  *
- * Creates a new #LassoLibAuthenticationStatement object and initializes it
- * with the parameters.
+ * Creates a new #LassoLibAuthenticationStatement object and initializes its subject,
+ * its AuthenticationMethod, its AuthenticationInstant, 
  *
  * Return value: a newly created #LassoLibAuthenticationStatement object
  **/
@@ -149,7 +146,7 @@ lasso_lib_authentication_statement_new_full(const char *authenticationMethod,
 	char *time;
 
 	g_return_val_if_fail(LASSO_IS_SAML_NAME_IDENTIFIER(idp_identifier), NULL);
-	g_return_val_if_fail(sp_identifier || idp_identifier, NULL);
+	g_return_val_if_fail(authenticationMethod, NULL);
 
 	subject = lasso_lib_subject_new();
 	if (sp_identifier == NULL) {
@@ -169,7 +166,7 @@ lasso_lib_authentication_statement_new_full(const char *authenticationMethod,
 
 	statement->AuthenticationInstant = time;
 
-	LASSO_LIB_AUTHENTICATION_STATEMENT(statement)->ReauthenticateOnOrAfter = 
+	LASSO_LIB_AUTHENTICATION_STATEMENT(statement)->ReauthenticateOnOrAfter =
 		g_strdup(reauthenticateOnOrAfter);
 
 	LASSO_SAML_SUBJECT(subject)->NameIdentifier = g_object_ref(new_identifier);

@@ -1,0 +1,422 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>LassoNameRegistration</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="Lasso Reference Manual">
+<link rel="up" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
+<link rel="prev" href="lasso-LassoDefederation.html" title="LassoDefederation">
+<link rel="next" href="lasso-LassoNameIdentifierMapping.html" title="LassoNameIdentifierMapping">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
+<link rel="reference" href="rn01.html" title="Application Programming Interface">
+<link rel="chapter" href="architecture.html" title="Lasso Architecture">
+<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
+<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
+<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
+<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
+<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
+<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
+<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
+<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
+<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
+<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
+<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
+<link rel="part" href="pt01.html" title="Part II. Appendix">
+<link rel="index" href="api-index.html" title="API Index">
+<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="lasso-LassoDefederation.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="idff.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Lasso Reference Manual</th>
+<td><a accesskey="n" href="lasso-LassoNameIdentifierMapping.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#lasso-LassoNameRegistration.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#lasso-LassoNameRegistration.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" title="LassoNameRegistration">
+<a name="lasso-LassoNameRegistration"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="lasso-LassoNameRegistration.top_of_page"></a>LassoNameRegistration</span></h2>
+<p>LassoNameRegistration — Name Registration Profile (ID-FF)</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="lasso-LassoNameRegistration.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    LassoNameRegistration;
+LassoNameRegistration* lasso_name_registration_new      (LassoServer *server);
+LassoNameRegistration* lasso_name_registration_new_from_dump
+                                                        (LassoServer *server,
+                                                         const char *dump);
+lasso_error_t       lasso_name_registration_build_request_msg
+                                                        (LassoNameRegistration *name_registration);
+lasso_error_t       lasso_name_registration_build_response_msg
+                                                        (LassoNameRegistration *name_registration);
+void                lasso_name_registration_destroy     (LassoNameRegistration *name_registration);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*              lasso_name_registration_dump        (LassoNameRegistration *name_registration);
+lasso_error_t       lasso_name_registration_init_request
+                                                        (LassoNameRegistration *name_registration,
+                                                         char *remote_providerID,
+                                                         LassoHttpMethod http_method);
+lasso_error_t       lasso_name_registration_process_request_msg
+                                                        (LassoNameRegistration *name_registration,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *request_msg);
+lasso_error_t       lasso_name_registration_process_response_msg
+                                                        (LassoNameRegistration *name_registration,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *response_msg);
+lasso_error_t       lasso_name_registration_validate_request
+                                                        (LassoNameRegistration *name_registration);
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="lasso-LassoNameRegistration.description"></a><h2>Description</h2>
+<p>
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="lasso-LassoNameRegistration.details"></a><h2>Details</h2>
+<div class="refsect2" title="LassoNameRegistration">
+<a name="LassoNameRegistration"></a><h3>LassoNameRegistration</h3>
+<pre class="programlisting">typedef struct {
+	LassoProfile parent;
+
+	LassoSamlNameIdentifier *oldNameIdentifier;
+} LassoNameRegistration;
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_registration_new ()">
+<a name="lasso-name-registration-new"></a><h3>lasso_name_registration_new ()</h3>
+<pre class="programlisting">LassoNameRegistration* lasso_name_registration_new      (LassoServer *server);</pre>
+<p>
+Creates a new <span class="type">LassoNameRegistration</span>.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td> the <span class="type">LassoServer</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a newly created <span class="type">LassoNameRegistration</span> object; or NULL if
+    an error occured
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_registration_new_from_dump ()">
+<a name="lasso-name-registration-new-from-dump"></a><h3>lasso_name_registration_new_from_dump ()</h3>
+<pre class="programlisting">LassoNameRegistration* lasso_name_registration_new_from_dump
+                                                        (LassoServer *server,
+                                                         const char *dump);</pre>
+<p>
+Restores the <em class="parameter"><code>dump</code></em> to a new <span class="type">LassoNameRegistration</span>.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td> the <span class="type">LassoServer</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dump</code></em> :</span></p></td>
+<td> XML logout dump
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a newly created <span class="type">LassoNameRegistration</span>; or NULL if an error
+    occured
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_registration_build_request_msg ()">
+<a name="lasso-name-registration-build-request-msg"></a><h3>lasso_name_registration_build_request_msg ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_name_registration_build_request_msg
+                                                        (LassoNameRegistration *name_registration);</pre>
+<p>
+Builds a register name identifier request message.
+</p>
+<p>
+It gets the register name identifier protocol profile and:
+</p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem"><p>
+  if it is a SOAP method, then it builds the register name identifier
+  request SOAP message, optionally signs his node, sets <em class="parameter"><code>msg_body</code></em>,
+  gets the SoapEndpoint url and sets <em class="parameter"><code>msg_url</code></em>.
+</p></li>
+<li class="listitem"><p>
+  if it is a HTTP-Redirect method, then it builds the register name
+  identifier request QUERY message (optionally signs the request message),
+  builds the request url with register name identifier url with register
+  name identifier service url, sets <em class="parameter"><code>msg_url</code></em> in the register name
+  identifier object, sets <em class="parameter"><code>msg_body</code></em> to NULL.
+</p></li>
+</ul></div>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name_registration</code></em> :</span></p></td>
+<td> a <span class="type">LassoNameRegistration</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_registration_build_response_msg ()">
+<a name="lasso-name-registration-build-response-msg"></a><h3>lasso_name_registration_build_response_msg ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_name_registration_build_response_msg
+                                                        (LassoNameRegistration *name_registration);</pre>
+<p>
+Builds the register name idendifier response message.
+</p>
+<p>
+It gets the request message method and:
+</p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem"><p>
+   if it is a SOAP method, then it builds the response SOAP message, sets
+   the msg_body attribute, gets the register name identifier service return
+   url and sets <em class="parameter"><code>msg_url</code></em> of the object.
+</p></li>
+<li class="listitem"><p>
+   if it is a HTTP-Redirect method, then it builds the response QUERY
+   message, builds the response url, sets <em class="parameter"><code>msg_url</code></em> with the response url
+   and sets the msg_body with NULL
+</p></li>
+</ul></div>
+<p>
+</p>
+<p>
+If private key and certificate are set in server object it will also signs
+the message (either with X509 if SOAP or with a simple signature for query
+strings).</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name_registration</code></em> :</span></p></td>
+<td> a <span class="type">LassoNameRegistration</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_registration_destroy ()">
+<a name="lasso-name-registration-destroy"></a><h3>lasso_name_registration_destroy ()</h3>
+<pre class="programlisting">void                lasso_name_registration_destroy     (LassoNameRegistration *name_registration);</pre>
+<p>
+Destroys a <span class="type">LassoNameRegistration</span> object.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>name_registration</code></em> :</span></p></td>
+<td> a <span class="type">LassoNameRegistration</span>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_registration_dump ()">
+<a name="lasso-name-registration-dump"></a><h3>lasso_name_registration_dump ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*              lasso_name_registration_dump        (LassoNameRegistration *name_registration);</pre>
+<p>
+Dumps <em class="parameter"><code>name_registration</code></em> content to an XML string.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name_registration</code></em> :</span></p></td>
+<td> a <span class="type">LassoNameRegistration</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the dump string.  It must be freed by the caller.. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> full. </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_registration_init_request ()">
+<a name="lasso-name-registration-init-request"></a><h3>lasso_name_registration_init_request ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_name_registration_init_request
+                                                        (LassoNameRegistration *name_registration,
+                                                         char *remote_providerID,
+                                                         LassoHttpMethod http_method);</pre>
+<p>
+Initializes a new lib:RegisterNameIdentifierRequest request; it sets
+<em class="parameter"><code>name_registration-&gt;nameIdentifier</code></em> to the new name identifier and
+<em class="parameter"><code>name_registration-&gt;oldNameIdentifier</code></em> to the old one.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name_registration</code></em> :</span></p></td>
+<td> a <span class="type">LassoNameRegistration</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>remote_providerID</code></em> :</span></p></td>
+<td> the providerID of the identity provider.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>http_method</code></em> :</span></p></td>
+<td> if set, then it get the protocol profile in metadata
+    corresponding of this HTTP request method.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_registration_process_request_msg ()">
+<a name="lasso-name-registration-process-request-msg"></a><h3>lasso_name_registration_process_request_msg ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_name_registration_process_request_msg
+                                                        (LassoNameRegistration *name_registration,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *request_msg);</pre>
+<p>
+Processes a lib:RegisterNameIdentifierRequest message.  Rebuilds a request
+object from the message and optionally verifies its signature.  Sets
+profile-&gt;nameIdentifier to local name identifier.  If it changed (when this
+is IdP-initiated and there was no previously defined local name identifier)
+profile-&gt;nameIdentifier will be the new one and profile-&gt;oldNameIdentiifer
+the old one.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name_registration</code></em> :</span></p></td>
+<td> a <span class="type">LassoNameRegistration</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request_msg</code></em> :</span></p></td>
+<td> the register name identifier request message
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_registration_process_response_msg ()">
+<a name="lasso-name-registration-process-response-msg"></a><h3>lasso_name_registration_process_response_msg ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_name_registration_process_response_msg
+                                                        (LassoNameRegistration *name_registration,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *response_msg);</pre>
+<p>
+Processes a lib:RegisterNameIdentifierResponse message.  Rebuilds a response
+object from the message and optionally verifies its signature.
+</p>
+<p>
+If the response depicts Success it will also update Principal federation.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name_registration</code></em> :</span></p></td>
+<td> a <span class="type">LassoNameRegistration</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response_msg</code></em> :</span></p></td>
+<td> the register name identifier response message
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_registration_validate_request ()">
+<a name="lasso-name-registration-validate-request"></a><h3>lasso_name_registration_validate_request ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_name_registration_validate_request
+                                                        (LassoNameRegistration *name_registration);</pre>
+<p>
+Checks profile request with regards to message status and principal
+federations, update them accordingly and prepares a
+lib:RegisterNameIdentifierResponse accordingly.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name_registration</code></em> :</span></p></td>
+<td> a <span class="type">LassoNameRegistration</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

@@ -1,22 +1,22 @@
-/* $Id: sa_sasl_response.h 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -27,13 +27,13 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* __cplusplus */ 
+#endif /* __cplusplus */
 
-#include <lasso/xml/disco_resource_offering.h>
-#include <lasso/xml/utility_status.h>
-#include <lasso/xml/sa_credentials.h>
-#include <lasso/xml/sa_password_transforms.h>
-#include <lasso/xml/xml.h>
+#include "disco_resource_offering.h"
+#include "utility_status.h"
+#include "sa_credentials.h"
+#include "sa_password_transforms.h"
+#include "xml.h"
 
 #define LASSO_TYPE_SA_SASL_RESPONSE (lasso_sa_sasl_response_get_type())
 #define LASSO_SA_SASL_RESPONSE(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), \
@@ -55,11 +55,11 @@ struct _LassoSaSASLResponse {
 
 	/*< public >*/
 	LassoUtilityStatus *Status;
-	GList *PasswordTransforms;
-	GList *Data;
-	GList *ResourceOffering;
-	GList *Credentials;
-	GList *any;
+	GList *PasswordTransforms; /* of LassoNode */
+	GList *Data; /* of strings */
+	GList *ResourceOffering; /* of LassoNode */
+	GList *Credentials; /* of LassoNode */
+	GList *any; /* of LassoNode */
 
 	gchar *serverMechanism;
 	gchar *id;
@@ -72,15 +72,6 @@ struct _LassoSaSASLResponseClass {
 LASSO_EXPORT GType lasso_sa_sasl_response_get_type(void);
 
 LASSO_EXPORT LassoSaSASLResponse* lasso_sa_sasl_response_new(LassoUtilityStatus *status);
-
-LASSO_EXPORT LassoSaSASLResponse* lasso_sa_sasl_response_new_from_message(const gchar *message);
-
-LASSO_EXPORT gint lasso_sa_sasl_response_add_credentials(LassoSaSASLResponse *response,
-							 LassoSaCredentials *credentials);
-
-LASSO_EXPORT gint lasso_sa_sasl_response_add_resource_offering(
-	LassoSaSASLResponse *response,
-	LassoDiscoResourceOffering *resourceOffering);
 
 #ifdef __cplusplus
 }

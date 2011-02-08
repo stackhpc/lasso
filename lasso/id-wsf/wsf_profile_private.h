@@ -1,22 +1,22 @@
-/* $Id: wsf_profile_private.h 3712 2008-05-20 13:14:06Z dlaniel $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -28,23 +28,26 @@
 #ifdef __cplusplus
 extern "C" {
 
-#endif /* __cplusplus */ 
+#endif /* __cplusplus */
 
-#include <lasso/xml/soap_fault.h>
+#include "../xml/soap-1.1/soap_fault.h"
 
-void lasso_wsf_profile_set_description(LassoWsfProfile *profile,
-				       LassoDiscoDescription *description);
-void lasso_wsf_profile_set_security_mech_id(LassoWsfProfile *profile,
-					    const gchar *security_mech_id);
-LassoSoapFault* lasso_wsf_profile_get_fault(LassoWsfProfile *profile);
+struct _LassoWsfProfilePrivate
+{
+	gboolean dispose_has_run;
+	char *security_mech_id;
+	LassoDiscoResourceOffering *offering;
+	LassoDiscoDescription *description;
+	char *remote_provider_id;
+	LassoSoapFault *soap_fault;
+	char *status_code;
+};
 
-void lasso_wsf_profile_set_public_key(LassoWsfProfile *profile, const char *public_key); 
-
-LassoDsKeyInfo* lasso_wsf_profile_get_key_info_node(LassoWsfProfile *profile,
-	const gchar *providerID);
-
-LassoDiscoDescription* lasso_wsf_profile_get_description_auto(LassoDiscoServiceInstance *si,
-	const gchar *security_mech_id);
+LassoSoapFault* lasso_wsf_profile_get_fault(const LassoWsfProfile *profile);
+void lasso_wsf_profile_set_resource_offering(LassoWsfProfile *profile,
+	LassoDiscoResourceOffering *offering);
+gint lasso_wsf_profile_set_msg_url_from_description(LassoWsfProfile *wsf_profile);
+gint lasso_wsf_profile_build_soap_fault_response_msg(LassoWsfProfile *profile, gint rc);
 
 #ifdef __cplusplus
 }

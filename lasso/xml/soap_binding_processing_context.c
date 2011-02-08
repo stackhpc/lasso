@@ -1,28 +1,30 @@
-/* $Id: soap_binding_processing_context.c 3704 2008-05-15 21:17:44Z fpeters $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/soap_binding_processing_context.h>
+#include "private.h"
+#include "soap_binding_processing_context.h"
+#include "./idwsf_strings.h"
 
 /**
  * SECTION:soap_binding_processing_context
@@ -44,33 +46,25 @@
  *
  * ]]></programlisting>
  * </figure>
- */ 
+ */
 
 /*****************************************************************************/
 /* private methods                                                           */
 /*****************************************************************************/
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "id", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoSoapBindingProcessingContext, id) },
+	{ "id", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoSoapBindingProcessingContext, id), NULL, NULL, NULL},
 	{ "mustUnderstand", SNIPPET_ATTRIBUTE,
-	  G_STRUCT_OFFSET(LassoSoapBindingProcessingContext, mustUnderstand) },
-	{ "actor", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoSoapBindingProcessingContext, actor) },
-	{ "", SNIPPET_TEXT_CHILD, G_STRUCT_OFFSET(LassoSoapBindingProcessingContext, content) },
-	{ NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoSoapBindingProcessingContext, mustUnderstand), NULL, NULL, NULL},
+	{ "actor", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoSoapBindingProcessingContext, actor), NULL, NULL, NULL},
+	{ "", SNIPPET_TEXT_CHILD, G_STRUCT_OFFSET(LassoSoapBindingProcessingContext, content), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoSoapBindingProcessingContext *node)
-{
-	node->id = NULL;
-	node->mustUnderstand = NULL;
-	node->actor = NULL;
-	node->content = NULL;
-}
 
 static void
 class_init(LassoSoapBindingProcessingContextClass *klass)
@@ -98,7 +92,8 @@ lasso_soap_binding_processing_context_get_type()
 			NULL,
 			sizeof(LassoSoapBindingProcessingContext),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,
@@ -113,19 +108,6 @@ lasso_soap_binding_processing_context_new()
 	LassoSoapBindingProcessingContext *node;
 
 	node = g_object_new(LASSO_TYPE_SOAP_BINDING_PROCESSING_CONTEXT, NULL);
-
-	return node;
-}
-
-LassoSoapBindingProcessingContext*
-lasso_soap_binding_processing_context_new_from_message(const gchar *message)
-{
-	LassoSoapBindingProcessingContext *node;
-
-	g_return_val_if_fail(message != NULL, NULL);
-
-	node = g_object_new(LASSO_TYPE_SOAP_BINDING_PROCESSING_CONTEXT, NULL);
-	lasso_node_init_from_message(LASSO_NODE(node), message);
 
 	return node;
 }

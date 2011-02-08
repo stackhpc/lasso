@@ -1,28 +1,30 @@
-/* $Id: subs_subscription.c,v 1.0 2005/10/14 15:17:55 fpeters Exp $ 
+/* $Id: subs_subscription.c,v 1.0 2005/10/14 15:17:55 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include "../private.h"
 #include "subs_subscription.h"
+#include "./idwsf2_strings.h"
 
 /**
  * SECTION:subs_subscription
@@ -63,25 +65,25 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "RefItem", SNIPPET_LIST_NODES,
-		G_STRUCT_OFFSET(LassoIdWsf2SubsSubscription, RefItem) },
+		G_STRUCT_OFFSET(LassoIdWsf2SubsSubscription, RefItem), NULL, NULL, NULL},
 	{ "Extension", SNIPPET_LIST_NODES,
 		G_STRUCT_OFFSET(LassoIdWsf2SubsSubscription, Extension),
-		"LassoIdWsf2Utilextension" },
+		"LassoIdWsf2Utilextension", NULL, NULL },
 	{ "subscriptionID", SNIPPET_ATTRIBUTE,
-		G_STRUCT_OFFSET(LassoIdWsf2SubsSubscription, subscriptionID) },
+		G_STRUCT_OFFSET(LassoIdWsf2SubsSubscription, subscriptionID), NULL, NULL, NULL},
 	{ "notifyToRef", SNIPPET_ATTRIBUTE,
-		G_STRUCT_OFFSET(LassoIdWsf2SubsSubscription, notifyToRef) },
+		G_STRUCT_OFFSET(LassoIdWsf2SubsSubscription, notifyToRef), NULL, NULL, NULL},
 	{ "adminNotifyToRef", SNIPPET_ATTRIBUTE | SNIPPET_OPTIONAL,
-		G_STRUCT_OFFSET(LassoIdWsf2SubsSubscription, adminNotifyToRef) },
+		G_STRUCT_OFFSET(LassoIdWsf2SubsSubscription, adminNotifyToRef), NULL, NULL, NULL},
 	{ "starts", SNIPPET_ATTRIBUTE | SNIPPET_OPTIONAL,
-		G_STRUCT_OFFSET(LassoIdWsf2SubsSubscription, starts) },
+		G_STRUCT_OFFSET(LassoIdWsf2SubsSubscription, starts), NULL, NULL, NULL},
 	{ "expires", SNIPPET_ATTRIBUTE | SNIPPET_OPTIONAL,
-		G_STRUCT_OFFSET(LassoIdWsf2SubsSubscription, expires) },
+		G_STRUCT_OFFSET(LassoIdWsf2SubsSubscription, expires), NULL, NULL, NULL},
 	{ "id", SNIPPET_ATTRIBUTE | SNIPPET_OPTIONAL,
-		G_STRUCT_OFFSET(LassoIdWsf2SubsSubscription, id) },
+		G_STRUCT_OFFSET(LassoIdWsf2SubsSubscription, id), NULL, NULL, NULL},
 	{ "includeData", SNIPPET_ATTRIBUTE | SNIPPET_OPTIONAL,
-		G_STRUCT_OFFSET(LassoIdWsf2SubsSubscription, includeData) },
-	{NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoIdWsf2SubsSubscription, includeData), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 static LassoNodeClass *parent_class = NULL;
@@ -91,19 +93,6 @@ static LassoNodeClass *parent_class = NULL;
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoIdWsf2SubsSubscription *node)
-{
-	node->RefItem = NULL;
-	node->Extension = NULL;
-	node->subscriptionID = NULL;
-	node->notifyToRef = NULL;
-	node->adminNotifyToRef = NULL;
-	node->starts = NULL;
-	node->expires = NULL;
-	node->id = NULL;
-	node->includeData = NULL;
-}
 
 static void
 class_init(LassoIdWsf2SubsSubscriptionClass *klass)
@@ -132,7 +121,8 @@ lasso_idwsf2_subs_subscription_get_type()
 			NULL,
 			sizeof(LassoIdWsf2SubsSubscription),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,

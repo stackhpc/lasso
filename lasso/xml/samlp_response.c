@@ -1,28 +1,29 @@
-/* $Id: samlp_response.c 3704 2008-05-15 21:17:44Z fpeters $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/samlp_response.h>
+#include "private.h"
+#include "samlp_response.h"
 #include <libxml/tree.h>
 
 /**
@@ -31,7 +32,7 @@
  *
  * <figure><title>Schema fragment for samlp:Response</title>
  * <programlisting><![CDATA[
- * 
+ *
  * <element name="Response" type="samlp:ResponseType"/>
  * <complexType name="ResponseType">
  *   <complexContent>
@@ -52,9 +53,9 @@
 /*****************************************************************************/
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "Status", SNIPPET_NODE, G_STRUCT_OFFSET(LassoSamlpResponse, Status) },
-	{ "Assertion", SNIPPET_LIST_NODES, G_STRUCT_OFFSET(LassoSamlpResponse, Assertion) },
-	{ NULL, 0, 0}
+	{ "Status", SNIPPET_NODE, G_STRUCT_OFFSET(LassoSamlpResponse, Status), NULL, NULL, NULL},
+	{ "Assertion", SNIPPET_LIST_NODES, G_STRUCT_OFFSET(LassoSamlpResponse, Assertion), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 static LassoNodeClass *parent_class = NULL;
@@ -72,7 +73,7 @@ has_lib_status(LassoSamlpStatusCode *status_code)
 
 static xmlNode*
 get_xmlNode(LassoNode *node, gboolean lasso_dump)
-{ 
+{
 	xmlNode *xmlnode, *t;
 
 	xmlnode = parent_class->get_xmlNode(node, lasso_dump);
@@ -105,12 +106,6 @@ get_xmlNode(LassoNode *node, gboolean lasso_dump)
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoSamlpResponse *node)
-{
-	node->Assertion = NULL;
-	node->Status = NULL;
-}
 
 static void
 class_init(LassoSamlpResponseClass *klass)
@@ -120,6 +115,7 @@ class_init(LassoSamlpResponseClass *klass)
 	parent_class = g_type_class_peek_parent(klass);
 	nclass->get_xmlNode = get_xmlNode;
 	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	nclass->node_data->keep_xmlnode = TRUE;
 	lasso_node_class_set_nodename(nclass, "Response");
 	lasso_node_class_set_ns(nclass, LASSO_SAML_PROTOCOL_HREF, LASSO_SAML_PROTOCOL_PREFIX);
 	lasso_node_class_add_snippets(nclass, schema_snippets);
@@ -140,7 +136,8 @@ lasso_samlp_response_get_type()
 			NULL,
 			sizeof(LassoSamlpResponse),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		response_type = g_type_register_static(LASSO_TYPE_SAMLP_RESPONSE_ABSTRACT ,

@@ -1,28 +1,31 @@
-/* $Id: sb2_user_interaction_header.c,v 1.0 2005/10/14 15:17:55 fpeters Exp $ 
+/* $Id: sb2_user_interaction_header.c,v 1.0 2005/10/14 15:17:55 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include "../private.h"
 #include "sb2_user_interaction_header.h"
+#include "./idwsf2_strings.h"
+#include "../../registry.h"
 
 /**
  * SECTION:sb2_user_interaction_header
@@ -54,18 +57,18 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "InteractionService", SNIPPET_LIST_NODES,
-		G_STRUCT_OFFSET(LassoIdWsf2Sb2UserInteractionHeader, InteractionService) },
+		G_STRUCT_OFFSET(LassoIdWsf2Sb2UserInteractionHeader, InteractionService), NULL, NULL, NULL},
 	{ "interact", SNIPPET_ATTRIBUTE | SNIPPET_OPTIONAL,
-		G_STRUCT_OFFSET(LassoIdWsf2Sb2UserInteractionHeader, interact) },
+		G_STRUCT_OFFSET(LassoIdWsf2Sb2UserInteractionHeader, interact), NULL, NULL, NULL},
 	{ "language", SNIPPET_ATTRIBUTE | SNIPPET_OPTIONAL,
-		G_STRUCT_OFFSET(LassoIdWsf2Sb2UserInteractionHeader, language) },
+		G_STRUCT_OFFSET(LassoIdWsf2Sb2UserInteractionHeader, language), NULL, NULL, NULL},
 	{ "redirect", SNIPPET_ATTRIBUTE | SNIPPET_BOOLEAN | SNIPPET_OPTIONAL,
-		G_STRUCT_OFFSET(LassoIdWsf2Sb2UserInteractionHeader, redirect) },
+		G_STRUCT_OFFSET(LassoIdWsf2Sb2UserInteractionHeader, redirect), NULL, NULL, NULL},
 	{ "maxInteractTime", SNIPPET_ATTRIBUTE | SNIPPET_INTEGER | SNIPPET_OPTIONAL,
-		G_STRUCT_OFFSET(LassoIdWsf2Sb2UserInteractionHeader, maxInteractTime) },
+		G_STRUCT_OFFSET(LassoIdWsf2Sb2UserInteractionHeader, maxInteractTime), NULL, NULL, NULL},
 	{ "attributes", SNIPPET_ATTRIBUTE | SNIPPET_ANY,
-		G_STRUCT_OFFSET(LassoIdWsf2Sb2UserInteractionHeader, attributes) },
-	{NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoIdWsf2Sb2UserInteractionHeader, attributes), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 static LassoNodeClass *parent_class = NULL;
@@ -78,11 +81,6 @@ static LassoNodeClass *parent_class = NULL;
 static void
 instance_init(LassoIdWsf2Sb2UserInteractionHeader *node)
 {
-	node->InteractionService = NULL;
-	node->interact = NULL;
-	node->language = NULL;
-	node->redirect = FALSE;
-	node->maxInteractTime = 0;
 	node->attributes = g_hash_table_new_full(
 		g_str_hash, g_str_equal, g_free, g_free);
 }
@@ -115,10 +113,13 @@ lasso_idwsf2_sb2_user_interaction_header_get_type()
 			sizeof(LassoIdWsf2Sb2UserInteractionHeader),
 			0,
 			(GInstanceInitFunc) instance_init,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,
 				"LassoIdWsf2Sb2UserInteractionHeader", &this_info, 0);
+		lasso_registry_default_add_direct_mapping(LASSO_IDWSF2_SB2_HREF, "UserInteraction",
+				LASSO_LASSO_HREF, "LassoIdWsf2Sb2UserInteractionHeader");
 	}
 	return this_type;
 }

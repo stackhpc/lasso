@@ -18,13 +18,16 @@ liblasso_saml_20_la_SOURCES = \
 	login.c \
 	logout.c \
 	name_id_management.c \
-	server.c
+	server.c \
+	saml2_helper.c
 
 liblassoinclude_HEADERS = \
 	assertion_query.h \
 	ecp.h \
 	profile.h \
-	name_id_management.h
+	name_id_management.h \
+	provider.h \
+	saml2_helper.h
 
 lasso_private_h_sources = \
 	federationprivate.h \

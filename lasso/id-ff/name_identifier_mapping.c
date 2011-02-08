@@ -1,22 +1,22 @@
-/* $Id: name_identifier_mapping.c 3704 2008-05-15 21:17:44Z fpeters $
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -28,10 +28,12 @@
  *
  **/
 
-#include <lasso/id-ff/name_identifier_mapping.h>
+#include "../utils.h"
+#include "../xml/private.h"
+#include "name_identifier_mapping.h"
 
-#include <lasso/id-ff/profileprivate.h>
-#include <lasso/id-ff/providerprivate.h>
+#include "profileprivate.h"
+#include "providerprivate.h"
 
 /*****************************************************************************/
 /* public methods                                                            */
@@ -40,9 +42,9 @@
 /**
  * lasso_name_identifier_mapping_build_request_msg:
  * @mapping: a #LassoNameIdentifierMapping
- * 
+ *
  * Builds a name identifier mapping request message.
- * 
+ *
  * <itemizedlist>
  * <listitem><para>
  *   If it is a SOAP method, then it builds the request as a SOAP message,
@@ -54,7 +56,7 @@
  *   string message, optionally signs it and sets @msg_url to that URL.
  * </para></listitem>
  * </itemizedlist>
- * 
+ *
  * Return value: 0 on success; or a negative value otherwise.
  **/
 gint
@@ -75,8 +77,7 @@ lasso_name_identifier_mapping_build_request_msg(LassoNameIdentifierMapping *mapp
 	}
 
 	/* get provider object */
-	remote_provider = g_hash_table_lookup(profile->server->providers,
-			profile->remote_providerID);
+	remote_provider = lasso_server_get_provider(profile->server, profile->remote_providerID);
 	if (LASSO_IS_PROVIDER(remote_provider) == FALSE) {
 		return critical_error(LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND);
 	}
@@ -91,9 +92,9 @@ lasso_name_identifier_mapping_build_request_msg(LassoNameIdentifierMapping *mapp
 		return critical_error(LASSO_PROFILE_ERROR_UNKNOWN_PROFILE_URL);
 	}
 
-	LASSO_SAMLP_REQUEST_ABSTRACT(profile->request)->private_key_file = 
+	LASSO_SAMLP_REQUEST_ABSTRACT(profile->request)->private_key_file =
 		profile->server->private_key;
-	LASSO_SAMLP_REQUEST_ABSTRACT(profile->request)->certificate_file = 
+	LASSO_SAMLP_REQUEST_ABSTRACT(profile->request)->certificate_file =
 		profile->server->certificate;
 	profile->msg_body = lasso_node_export_to_soap(profile->request);
 	if (profile->msg_body == NULL) {
@@ -107,7 +108,7 @@ lasso_name_identifier_mapping_build_request_msg(LassoNameIdentifierMapping *mapp
 /**
  * lasso_name_identifier_mapping_build_response_msg:
  * @mapping: a #LassoNameIdentifierMapping
- * 
+ *
  * Builds a name identifier mapping response message.
  *
  * <itemizedlist>
@@ -125,7 +126,7 @@ lasso_name_identifier_mapping_build_request_msg(LassoNameIdentifierMapping *mapp
  * If private key and certificate are set in server object it will also signs
  * the message (either with X509 if SOAP or with a simple signature for query
  * strings).
- * 
+ *
  * Return value: 0 on success; or a negative value otherwise.
  **/
 gint
@@ -145,8 +146,7 @@ lasso_name_identifier_mapping_build_response_msg(LassoNameIdentifierMapping *map
 		return critical_error(LASSO_PROFILE_ERROR_MISSING_REMOTE_PROVIDERID);
 	}
 
-	remote_provider = g_hash_table_lookup(profile->server->providers,
-			profile->remote_providerID);
+	remote_provider = lasso_server_get_provider(profile->server, profile->remote_providerID);
 	if (LASSO_IS_PROVIDER(remote_provider) == FALSE) {
 		return critical_error(LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND);
 	}
@@ -176,7 +176,7 @@ lasso_name_identifier_mapping_build_response_msg(LassoNameIdentifierMapping *map
 /**
  * lasso_name_identifier_mapping_destroy:
  * @mapping: a #LassoNameIdentifierMapping
- * 
+ *
  * Destroys a #LassoNameIdentifierMapping object.
  **/
 void
@@ -193,7 +193,7 @@ lasso_name_identifier_mapping_destroy(LassoNameIdentifierMapping *mapping)
  * @remote_providerID: the providerID of the identity provider.
  *
  * Initializes a new lib:NameIdentifierMappingRequest request.
- * 
+ *
  * Return value: 0 on success; or a negative value otherwise.
  **/
 gint
@@ -221,8 +221,7 @@ lasso_name_identifier_mapping_init_request(LassoNameIdentifierMapping *mapping,
 	profile->remote_providerID = g_strdup(remote_providerID);
 
 	/* verify the provider type is a service provider type */
-	remote_provider = g_hash_table_lookup(profile->server->providers,
-			profile->remote_providerID);
+	remote_provider = lasso_server_get_provider(profile->server, profile->remote_providerID);
 	if (LASSO_IS_PROVIDER(remote_provider) == FALSE) {
 		return critical_error(LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND);
 	}
@@ -259,7 +258,7 @@ lasso_name_identifier_mapping_init_request(LassoNameIdentifierMapping *mapping,
 			LASSO_PROVIDER(profile->server)->ProviderID,
 			nameIdentifier,
 			targetNamespace,
-			profile->server->certificate ? 
+			profile->server->certificate ?
 				LASSO_SIGNATURE_TYPE_WITHX509 : LASSO_SIGNATURE_TYPE_SIMPLE,
 			LASSO_SIGNATURE_METHOD_RSA_SHA1);
 	if (LASSO_IS_LIB_NAME_IDENTIFIER_MAPPING_REQUEST(profile->request) == FALSE) {
@@ -281,7 +280,7 @@ lasso_name_identifier_mapping_init_request(LassoNameIdentifierMapping *mapping,
  * lasso_name_identifier_mapping_process_request_msg:
  * @mapping: a #LassoNameIdentifierMapping
  * @request_msg: the name identifier mapping request message
- * 
+ *
  * Processes a lib:NameIdentifierMappingRequest message.  Rebuilds a request
  * object from the message and optionally verifies its signature.
  *
@@ -308,8 +307,7 @@ lasso_name_identifier_mapping_process_request_msg(LassoNameIdentifierMapping *ma
 		return critical_error(LASSO_PROFILE_ERROR_INVALID_MSG);
 	}
 
-	remote_provider = g_hash_table_lookup(profile->server->providers,
-			LASSO_LIB_NAME_IDENTIFIER_MAPPING_REQUEST(profile->request)->ProviderID);
+	remote_provider = lasso_server_get_provider(profile->server, profile->remote_providerID);
 	if (LASSO_IS_PROVIDER(remote_provider) == FALSE) {
 		return critical_error(LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND);
 	}
@@ -340,7 +338,7 @@ lasso_name_identifier_mapping_process_request_msg(LassoNameIdentifierMapping *ma
  * lasso_name_identifier_mapping_process_response_msg:
  * @mapping: a #LassoNameIdentifierMapping
  * @response_msg: the name identifier mapping response message
- * 
+ *
  * Processes a lib:NameIdentifierMappingResponse message.  Rebuilds a response
  * object from the message and optionally verifies its signature.
  *
@@ -356,7 +354,7 @@ lasso_name_identifier_mapping_process_response_msg(LassoNameIdentifierMapping *m
 	LassoProvider *remote_provider;
 	LassoMessageFormat format;
 	LassoLibNameIdentifierMappingResponse *response;
-	int rc;
+	int rc = 0;
 	char *statusCodeValue;
 
 	g_return_val_if_fail(LASSO_IS_NAME_IDENTIFIER_MAPPING(mapping),
@@ -373,7 +371,7 @@ lasso_name_identifier_mapping_process_response_msg(LassoNameIdentifierMapping *m
 
 	response = LASSO_LIB_NAME_IDENTIFIER_MAPPING_RESPONSE(profile->response);
 
-	remote_provider = g_hash_table_lookup(profile->server->providers, response->ProviderID);
+	remote_provider = lasso_server_get_provider(profile->server, profile->remote_providerID);
 	if (LASSO_IS_PROVIDER(remote_provider) == FALSE) {
 		return critical_error(LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND);
 	}
@@ -391,7 +389,7 @@ lasso_name_identifier_mapping_process_response_msg(LassoNameIdentifierMapping *m
 		return LASSO_PROFILE_ERROR_STATUS_NOT_SUCCESS;
 	}
 
-	
+
 	/* Set the target name identifier */
 	if (LASSO_LIB_NAME_IDENTIFIER_MAPPING_REQUEST(profile->request)->NameIdentifier) {
 		mapping->targetNameIdentifier = g_strdup(LASSO_LIB_NAME_IDENTIFIER_MAPPING_REQUEST(
@@ -410,9 +408,9 @@ lasso_name_identifier_mapping_process_response_msg(LassoNameIdentifierMapping *m
  * @mapping: a #LassoNameIdentifierMapping
  *
  * Checks profile request with regards to message status and principal
- * federations, update them accordingly and prepares a 
+ * federations, update them accordingly and prepares a
  * lib:NameIdentifierMappingResponse accordingly.
- * 
+ *
  * Return value: 0 on success; or a negative value otherwise.
  **/
 gint
@@ -433,8 +431,7 @@ lasso_name_identifier_mapping_validate_request(LassoNameIdentifierMapping *mappi
 	if (profile->remote_providerID == NULL) {
 		return critical_error(LASSO_PROFILE_ERROR_MISSING_REMOTE_PROVIDERID);
 	}
-	remote_provider = g_hash_table_lookup(profile->server->providers,
-			profile->remote_providerID);
+	remote_provider = lasso_server_get_provider(profile->server, profile->remote_providerID);
 	if (remote_provider == NULL) {
 		return critical_error(LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND);
 	}
@@ -460,7 +457,7 @@ lasso_name_identifier_mapping_validate_request(LassoNameIdentifierMapping *mappi
 			LASSO_PROVIDER(profile->server)->ProviderID,
 			LASSO_SAML_STATUS_CODE_SUCCESS,
 			request,
-			profile->server->certificate ? 
+			profile->server->certificate ?
 				LASSO_SIGNATURE_TYPE_WITHX509 : LASSO_SIGNATURE_TYPE_SIMPLE,
 			LASSO_SIGNATURE_METHOD_RSA_SHA1);
 
@@ -533,16 +530,6 @@ lasso_name_identifier_mapping_validate_request(LassoNameIdentifierMapping *mappi
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoNameIdentifierMapping *name_identifier_mapping)
-{
-}
-
-static void
-class_init(LassoNameIdentifierMappingClass *klass)
-{
-}
-
 GType
 lasso_name_identifier_mapping_get_type()
 {
@@ -553,12 +540,13 @@ lasso_name_identifier_mapping_get_type()
 			sizeof (LassoNameIdentifierMappingClass),
 			NULL,
 			NULL,
-			(GClassInitFunc) class_init,
+			NULL,
 			NULL,
 			NULL,
 			sizeof(LassoNameIdentifierMapping),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_PROFILE,

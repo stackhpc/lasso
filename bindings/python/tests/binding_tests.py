@@ -14,12 +14,12 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -28,6 +28,9 @@
 import unittest
 import sys
 import os
+import logging
+
+logging.basicConfig()
 
 if not '..' in sys.path:
     sys.path.insert(0, '..')
@@ -39,8 +42,8 @@ import lasso
 try:
     dataDir
 except NameError:
-    srcdir = os.environ.get('srcdir', '.')
-    dataDir = '%s/../../../tests/data' % srcdir
+    srcdir = os.environ.get('TOP_SRCDIR', '.')
+    dataDir = '%s/tests/data' % srcdir
 
 
 class BindingTestCase(unittest.TestCase):
@@ -81,7 +84,7 @@ class BindingTestCase(unittest.TestCase):
 
         authnRequest = lasso.LibAuthnRequest()
 
-        self.failUnlessEqual(authnRequest.respondWith, None)
+        self.failUnlessEqual(authnRequest.respondWith, ())
 
         respondWith = []
         self.failUnlessEqual(len(respondWith), 0)
@@ -117,7 +120,7 @@ class BindingTestCase(unittest.TestCase):
         self.failUnlessEqual(authnRequest.respondWith[1], 'second string')
         self.failUnlessEqual(authnRequest.respondWith[2], 'third string')
         authnRequest.respondWith = None
-        self.failUnlessEqual(authnRequest.respondWith, None)
+        self.failUnlessEqual(authnRequest.respondWith, ())
 
         del authnRequest
 
@@ -126,7 +129,7 @@ class BindingTestCase(unittest.TestCase):
 
         response = lasso.SamlpResponse()
 
-        self.failUnlessEqual(response.assertion, None)
+        self.failUnlessEqual(response.assertion, ())
 
         assertions = []
         self.failUnlessEqual(len(assertions), 0)
@@ -169,7 +172,7 @@ class BindingTestCase(unittest.TestCase):
         self.failUnlessEqual(response.assertion[1].assertionId, 'assertion 2')
         self.failUnlessEqual(response.assertion[2].assertionId, 'assertion 3')
         response.assertion = None
-        self.failUnlessEqual(response.assertion, None)
+        self.failUnlessEqual(response.assertion, ())
 
         del response
 
@@ -178,7 +181,7 @@ class BindingTestCase(unittest.TestCase):
 
         authnRequest = lasso.LibAuthnRequest()
 
-        self.failUnlessEqual(authnRequest.extension, None)
+        self.failUnlessEqual(authnRequest.extension, ())
 
         actionString1 = """\
 <lib:Extension xmlns:lib="urn:liberty:iff:2003-08">
@@ -227,7 +230,7 @@ class BindingTestCase(unittest.TestCase):
         self.failUnlessEqual(authnRequest.extension[1], actionString2)
         self.failUnlessEqual(authnRequest.extension[2], actionString3)
         authnRequest.extension = None
-        self.failUnlessEqual(authnRequest.extension, None)
+        self.failUnlessEqual(authnRequest.extension, ())
 
         del authnRequest
 
@@ -274,6 +277,30 @@ class BindingTestCase(unittest.TestCase):
                 identity.federations['http://idp1.lasso.lan'].localNameIdentifier.content,
                 'first name id')
 
+    def test10(self):
+        '''Test Server.setEncryptionPrivateKeyWithPassword'''
+        pkey_path = os.path.join(
+            dataDir, 'idp5-saml2', 'private-key.pem')
+        server = lasso.Server(os.path.join(dataDir, 'idp5-saml2', 'metadata.xml'),
+                pkey_path)
+        # from file
+        server.setEncryptionPrivateKeyWithPassword(pkey_path)
+        # from buffer
+        server.setEncryptionPrivateKeyWithPassword(open(pkey_path).read())
+        # reset
+        server.setEncryptionPrivateKeyWithPassword()
+
+    def test11(self):
+        '''Test saving and reloading a Server using an encrypted private key'''
+        pkey = os.path.join(dataDir, 'sp7-saml2', 'private-key.pem')
+        mdata = os.path.join(dataDir, 'sp7-saml2', 'metadata.xml')
+        password = file(os.path.join(dataDir, 'sp7-saml2', 'password')).read().strip()
+        server = lasso.Server(mdata, pkey, password)
+        assert isinstance(server, lasso.Server)
+        server_dump = server.dump()
+        assert server_dump
+        server = lasso.Server.newFromDump(server_dump)
+        assert isinstance(server, lasso.Server)
 
 bindingSuite = unittest.makeSuite(BindingTestCase, 'test')
 

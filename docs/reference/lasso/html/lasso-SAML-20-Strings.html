@@ -1,0 +1,847 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>SAML 2.0 Strings</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="Lasso Reference Manual">
+<link rel="up" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
+<link rel="prev" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
+<link rel="next" href="lasso-LassoSaml2Action.html" title="LassoSaml2Action">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
+<link rel="reference" href="rn01.html" title="Application Programming Interface">
+<link rel="chapter" href="architecture.html" title="Lasso Architecture">
+<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
+<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
+<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
+<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
+<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
+<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
+<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
+<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
+<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
+<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
+<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
+<link rel="part" href="pt01.html" title="Part II. Appendix">
+<link rel="index" href="api-index.html" title="API Index">
+<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="xml-samlv2.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="xml-samlv2.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Lasso Reference Manual</th>
+<td><a accesskey="n" href="lasso-LassoSaml2Action.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#lasso-SAML-20-Strings.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#lasso-SAML-20-Strings.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" title="SAML 2.0 Strings">
+<a name="lasso-SAML-20-Strings"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="lasso-SAML-20-Strings.top_of_page"></a>SAML 2.0 Strings</span></h2>
+<p>SAML 2.0 Strings — String constants from SAML 2.0 specifications</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1" title="Stability Level">
+<a name="lasso-SAML-20-Strings.stability-level"></a><h2>Stability Level</h2>
+Stable, unless otherwise indicated
+</div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="lasso-SAML-20-Strings.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+
+#include &lt;lasso/xml/saml-2.0/saml2_strings.h&gt;
+
+#define             LASSO_SAML2_METADATA_HREF
+#define             LASSO_SAML2_METADATA_PREFIX
+#define             LASSO_SAML2_PROTOCOL_HREF
+#define             LASSO_SAML2_PROTOCOL_PREFIX
+#define             LASSO_SAML2_ASSERTION_HREF
+#define             LASSO_SAML2_ASSERTION_PREFIX
+
+#define             LASSO_SAML2_METADATA_BINDING_SOAP
+#define             LASSO_SAML2_METADATA_BINDING_REDIRECT
+#define             LASSO_SAML2_METADATA_BINDING_POST
+#define             LASSO_SAML2_METADATA_BINDING_ARTIFACT
+#define             LASSO_SAML2_METADATA_BINDING_PAOS
+#define             LASSO_SAML2_DEFLATE_ENCODING
+
+#define             LASSO_SAML2_NAME_IDENTIFIER_FORMAT_UNSPECIFIED
+#define             LASSO_SAML2_NAME_IDENTIFIER_FORMAT_EMAIL
+#define             LASSO_SAML2_NAME_IDENTIFIER_FORMAT_X509
+#define             LASSO_SAML2_NAME_IDENTIFIER_FORMAT_WINDOWS
+#define             LASSO_SAML2_NAME_IDENTIFIER_FORMAT_KERBEROS
+#define             LASSO_SAML2_NAME_IDENTIFIER_FORMAT_ENTITY
+#define             LASSO_SAML2_NAME_IDENTIFIER_FORMAT_PERSISTENT
+#define             LASSO_SAML2_NAME_IDENTIFIER_FORMAT_TRANSIENT
+#define             LASSO_SAML2_NAME_IDENTIFIER_FORMAT_ENCRYPTED
+
+#define             LASSO_SAML2_ATTRIBUTE_NAME_EPR
+
+#define             LASSO_SAML2_ATTRIBUTE_NAME_FORMAT_UNSPECIFIED
+#define             LASSO_SAML2_ATTRIBUTE_NAME_FORMAT_URI
+#define             LASSO_SAML2_ATTRIBUTE_NAME_FORMAT_BASIC
+
+#define             LASSO_SAML2_ACTION_NAMESPACE_RWEDC
+#define             LASSO_SAML2_ACTION_NAMESPACE_RWEDC_NEGATION
+#define             LASSO_SAML2_ACTION_NAMESPACE_GHPP
+#define             LASSO_SAML2_ACTION_NAMESPACE_UNIX
+#define             LASSO_SAML2_ACTION_RWEDC_READ
+#define             LASSO_SAML2_ACTION_RWEDC_WRITE
+#define             LASSO_SAML2_ACTION_RWEDC_EXECUTE
+#define             LASSO_SAML2_ACTION_RWEDC_DELETE
+#define             LASSO_SAML2_ACTION_RWEDC_CONTROL
+#define             LASSO_SAML2_ACTION_RWEDC_NEGATION
+#define             LASSO_SAML2_ACTION_GHPP_GET
+#define             LASSO_SAML2_ACTION_GHPP_HEAD
+#define             LASSO_SAML2_ACTION_GHPP_PUT
+#define             LASSO_SAML2_ACTION_GHPP_POST
+
+#define             LASSO_SAML2_CONSENT_OBTAINED
+#define             LASSO_SAML2_CONSENT_PRIOR
+#define             LASSO_SAML2_CONSENT_IMPLICIT
+#define             LASSO_SAML2_CONSENT_EXPLICIT
+#define             LASSO_SAML2_CONSENT_UNAVAILABLE
+#define             LASSO_SAML2_CONSENT_INAPPLICABLE
+
+#define             LASSO_SAML2_STATUS_CODE_SUCCESS
+#define             LASSO_SAML2_STATUS_CODE_REQUESTER
+#define             LASSO_SAML2_STATUS_CODE_RESPONDER
+#define             LASSO_SAML2_STATUS_CODE_VERSION_MISMATCH
+#define             LASSO_SAML2_STATUS_CODE_AUTHN_FAILED
+#define             LASSO_SAML2_STATUS_CODE_INVALID_ATTR_NAME
+#define             LASSO_SAML2_STATUS_CODE_INVALID_NAME_ID_POLICY
+#define             LASSO_SAML2_STATUS_CODE_NO_AUTHN_CONTEXT
+#define             LASSO_SAML2_STATUS_CODE_NO_AVAILABLE_IDP
+#define             LASSO_SAML2_STATUS_CODE_NO_PASSIVE
+#define             LASSO_SAML2_STATUS_CODE_NO_SUPPORTED_IDP
+#define             LASSO_SAML2_STATUS_CODE_PARTIAL_LOGOUT
+#define             LASSO_SAML2_STATUS_CODE_PROXY_COUNT_EXCEEDED
+#define             LASSO_SAML2_STATUS_CODE_REQUEST_DENIED
+#define             LASSO_SAML2_STATUS_CODE_REQUEST_UNSUPPORTED
+#define             LASSO_SAML2_STATUS_CODE_REQUEST_VERSION_DEPRECATED
+#define             LASSO_SAML2_STATUS_CODE_REQUEST_VERSION_TOO_HIGH
+#define             LASSO_SAML2_STATUS_CODE_REQUEST_VERSION_TOO_LOW
+#define             LASSO_SAML2_STATUS_CODE_RESOURCE_NOT_RECOGNIZED
+#define             LASSO_SAML2_STATUS_CODE_TOO_MANY_RESPONSES
+#define             LASSO_SAML2_STATUS_CODE_UNKNOWN_ATTR_PROFILE
+#define             LASSO_SAML2_STATUS_CODE_UNKNOWN_PRINCIPAL
+#define             LASSO_SAML2_STATUS_CODE_UNSUPPORTED_BINDING
+
+#define             LASSO_SAML2_AUTHN_CONTEXT_AUTHENTICATED_TELEPHONY
+#define             LASSO_SAML2_AUTHN_CONTEXT_INTERNET_PROTOCOL
+#define             LASSO_SAML2_AUTHN_CONTEXT_INTERNET_PROTOCOL_PASSWORD
+#define             LASSO_SAML2_AUTHN_CONTEXT_KERBEROS
+#define             LASSO_SAML2_AUTHN_CONTEXT_MOBILE_ONE_FACTOR_CONTRACT
+#define             LASSO_SAML2_AUTHN_CONTEXT_MOBILE_ONE_FACTOR_UNREGISTERED
+#define             LASSO_SAML2_AUTHN_CONTEXT_MOBILE_TWO_FACTOR_CONTRACT
+#define             LASSO_SAML2_AUTHN_CONTEXT_MOBILE_TWO_FACTOR_UNREGISTERED
+#define             LASSO_SAML2_AUTHN_CONTEXT_NOMAD_TELEPHONY
+#define             LASSO_SAML2_AUTHN_CONTEXT_PERSONALIZED_TELEPHONY
+#define             LASSO_SAML2_AUTHN_CONTEXT_PGP
+#define             LASSO_SAML2_AUTHN_CONTEXT_PASSWORD_PROTECTED_TRANSPORT
+#define             LASSO_SAML2_AUTHN_CONTEXT_PASSWORD
+#define             LASSO_SAML2_AUTHN_CONTEXT_PREVIOUS_SESSION
+#define             LASSO_SAML2_AUTHN_CONTEXT_SMARTCARD
+#define             LASSO_SAML2_AUTHN_CONTEXT_SMARTCARD_PKI
+#define             LASSO_SAML2_AUTHN_CONTEXT_SOFTWARE_PKI
+#define             LASSO_SAML2_AUTHN_CONTEXT_SPKI
+#define             LASSO_SAML2_AUTHN_CONTEXT_SECURE_REMOTE_PASSWORD
+#define             LASSO_SAML2_AUTHN_CONTEXT_TLS_CLIENT
+#define             LASSO_SAML2_AUTHN_CONTEXT_X509
+#define             LASSO_SAML2_AUTHN_CONTEXT_TELEPHONY
+#define             LASSO_SAML2_AUTHN_CONTEXT_TIME_SYNC_TOKEN
+#define             LASSO_SAML2_AUTHN_CONTEXT_XMLDSIG
+#define             LASSO_SAML2_AUTHN_CONTEXT_UNSPECIFIED
+
+#define             LASSO_SAML2_CONFIRMATION_METHOD_BEARER
+#define             LASSO_SAML2_CONFIRMATION_METHOD_HOLDER_OF_KEY
+
+#define             LASSO_SAML2_FIELD_RESPONSE
+#define             LASSO_SAML2_FIELD_REQUEST
+#define             LASSO_SAML2_FIELD_ARTIFACT
+#define             LASSO_SAML2_FIELD_RELAYSTATE
+#define             LASSO_SAML2_FIELD_SIGNATURE
+#define             LASSO_SAML2_FIELD_SIGALG
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="lasso-SAML-20-Strings.description"></a><h2>Description</h2>
+<p>
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="lasso-SAML-20-Strings.details"></a><h2>Details</h2>
+<div class="refsect2" title="LASSO_SAML2_METADATA_HREF">
+<a name="LASSO-SAML2-METADATA-HREF--CAPS"></a><h3>LASSO_SAML2_METADATA_HREF</h3>
+<pre class="programlisting">#define LASSO_SAML2_METADATA_HREF "urn:oasis:names:tc:SAML:2.0:metadata"
+</pre>
+<p>
+Namespace for SAML 2.0 metadata</p>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_METADATA_PREFIX">
+<a name="LASSO-SAML2-METADATA-PREFIX--CAPS"></a><h3>LASSO_SAML2_METADATA_PREFIX</h3>
+<pre class="programlisting">#define LASSO_SAML2_METADATA_PREFIX "md"
+</pre>
+<p>
+Preferred prefix for namespace of SAML 2.0 metadata</p>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_PROTOCOL_HREF">
+<a name="LASSO-SAML2-PROTOCOL-HREF--CAPS"></a><h3>LASSO_SAML2_PROTOCOL_HREF</h3>
+<pre class="programlisting">#define LASSO_SAML2_PROTOCOL_HREF "urn:oasis:names:tc:SAML:2.0:protocol"
+</pre>
+<p>
+Namespace for SAML 2.0 protocol.</p>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_PROTOCOL_PREFIX">
+<a name="LASSO-SAML2-PROTOCOL-PREFIX--CAPS"></a><h3>LASSO_SAML2_PROTOCOL_PREFIX</h3>
+<pre class="programlisting">#define LASSO_SAML2_PROTOCOL_PREFIX "samlp"
+</pre>
+<p>
+Preferred prefix for namespace of SAML 2.0 protocol</p>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_ASSERTION_HREF">
+<a name="LASSO-SAML2-ASSERTION-HREF--CAPS"></a><h3>LASSO_SAML2_ASSERTION_HREF</h3>
+<pre class="programlisting">#define LASSO_SAML2_ASSERTION_HREF "urn:oasis:names:tc:SAML:2.0:assertion"
+</pre>
+<p>
+Namespace for SAML 2.0 assertion</p>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_ASSERTION_PREFIX">
+<a name="LASSO-SAML2-ASSERTION-PREFIX--CAPS"></a><h3>LASSO_SAML2_ASSERTION_PREFIX</h3>
+<pre class="programlisting">#define LASSO_SAML2_ASSERTION_PREFIX "saml"
+</pre>
+<p>
+Preferred prefix for namespace of SAML 2.0 assertion</p>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_METADATA_BINDING_SOAP">
+<a name="LASSO-SAML2-METADATA-BINDING-SOAP--CAPS"></a><h3>LASSO_SAML2_METADATA_BINDING_SOAP</h3>
+<pre class="programlisting">#define LASSO_SAML2_METADATA_BINDING_SOAP "urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
+</pre>
+<p>
+URI for the SOAP binding.</p>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_METADATA_BINDING_REDIRECT">
+<a name="LASSO-SAML2-METADATA-BINDING-REDIRECT--CAPS"></a><h3>LASSO_SAML2_METADATA_BINDING_REDIRECT</h3>
+<pre class="programlisting">#define LASSO_SAML2_METADATA_BINDING_REDIRECT "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+</pre>
+<p>
+URI for the HTTP-Redirect binding.</p>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_METADATA_BINDING_POST">
+<a name="LASSO-SAML2-METADATA-BINDING-POST--CAPS"></a><h3>LASSO_SAML2_METADATA_BINDING_POST</h3>
+<pre class="programlisting">#define LASSO_SAML2_METADATA_BINDING_POST "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+</pre>
+<p>
+URI for the HTTP-Post binding.</p>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_METADATA_BINDING_ARTIFACT">
+<a name="LASSO-SAML2-METADATA-BINDING-ARTIFACT--CAPS"></a><h3>LASSO_SAML2_METADATA_BINDING_ARTIFACT</h3>
+<pre class="programlisting">#define LASSO_SAML2_METADATA_BINDING_ARTIFACT "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact"
+</pre>
+<p>
+URI for the HTTP-Artifact binding.</p>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_METADATA_BINDING_PAOS">
+<a name="LASSO-SAML2-METADATA-BINDING-PAOS--CAPS"></a><h3>LASSO_SAML2_METADATA_BINDING_PAOS</h3>
+<pre class="programlisting">#define LASSO_SAML2_METADATA_BINDING_PAOS "urn:oasis:names:tc:SAML:2.0:bindings:PAOS"
+</pre>
+<p>
+URI for the PAOS (or reverse SOAP) binding.</p>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_DEFLATE_ENCODING">
+<a name="LASSO-SAML2-DEFLATE-ENCODING--CAPS"></a><h3>LASSO_SAML2_DEFLATE_ENCODING</h3>
+<pre class="programlisting">#define LASSO_SAML2_DEFLATE_ENCODING "urn:oasis:names:tc:SAML:2.0:bindings:URL-Encoding:DEFLATE"
+</pre>
+<p>
+URI for URL-Encoding of kind DEFLATE (compress message content before encoding in the URI).</p>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_NAME_IDENTIFIER_FORMAT_UNSPECIFIED">
+<a name="LASSO-SAML2-NAME-IDENTIFIER-FORMAT-UNSPECIFIED--CAPS"></a><h3>LASSO_SAML2_NAME_IDENTIFIER_FORMAT_UNSPECIFIED</h3>
+<pre class="programlisting">#define             LASSO_SAML2_NAME_IDENTIFIER_FORMAT_UNSPECIFIED</pre>
+<p>
+</p>
+<p>Name identifier format for local names, or free format name.</p>
+<p>
+</p>
+<p>
+From saml-core-2.0-os.pdf:
+</p>
+<div class="blockquote"><blockquote class="blockquote">The interpretation of the content of the element is left to individual implementations.</blockquote></div>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_NAME_IDENTIFIER_FORMAT_EMAIL">
+<a name="LASSO-SAML2-NAME-IDENTIFIER-FORMAT-EMAIL--CAPS"></a><h3>LASSO_SAML2_NAME_IDENTIFIER_FORMAT_EMAIL</h3>
+<pre class="programlisting">#define             LASSO_SAML2_NAME_IDENTIFIER_FORMAT_EMAIL</pre>
+<p>
+</p>
+<p>Name identifier format for email addresses.</p>
+<p>
+</p>
+<p>
+From saml-core-2.0-os.pdf:
+</p>
+<div class="blockquote"><blockquote class="blockquote">Indicates that the content of the element is in the form of an email address,
+specifically "addr-spec" as defined in IETF RFC 2822 [RFC 2822] Section 3.4.1. An addr-spec has
+the form local-part<em class="parameter"><code>domain</code></em>.  Note that an addr-spec has no phrase (such as a common name) before
+it, has no comment (text surrounded in parentheses) after it, and is not surrounded by "&lt;" and
+"&gt;". </blockquote></div>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_NAME_IDENTIFIER_FORMAT_X509">
+<a name="LASSO-SAML2-NAME-IDENTIFIER-FORMAT-X509--CAPS"></a><h3>LASSO_SAML2_NAME_IDENTIFIER_FORMAT_X509</h3>
+<pre class="programlisting">#define             LASSO_SAML2_NAME_IDENTIFIER_FORMAT_X509</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_NAME_IDENTIFIER_FORMAT_WINDOWS">
+<a name="LASSO-SAML2-NAME-IDENTIFIER-FORMAT-WINDOWS--CAPS"></a><h3>LASSO_SAML2_NAME_IDENTIFIER_FORMAT_WINDOWS</h3>
+<pre class="programlisting">#define             LASSO_SAML2_NAME_IDENTIFIER_FORMAT_WINDOWS</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_NAME_IDENTIFIER_FORMAT_KERBEROS">
+<a name="LASSO-SAML2-NAME-IDENTIFIER-FORMAT-KERBEROS--CAPS"></a><h3>LASSO_SAML2_NAME_IDENTIFIER_FORMAT_KERBEROS</h3>
+<pre class="programlisting">#define             LASSO_SAML2_NAME_IDENTIFIER_FORMAT_KERBEROS</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_NAME_IDENTIFIER_FORMAT_ENTITY">
+<a name="LASSO-SAML2-NAME-IDENTIFIER-FORMAT-ENTITY--CAPS"></a><h3>LASSO_SAML2_NAME_IDENTIFIER_FORMAT_ENTITY</h3>
+<pre class="programlisting">#define             LASSO_SAML2_NAME_IDENTIFIER_FORMAT_ENTITY</pre>
+<p>
+</p>
+<p>Name identifier format for SAML 2.0 entities, i.e. identity and service providers.</p>
+<p>
+</p>
+<p>
+From saml-core-2.0-os.pdf: 
+</p>
+<div class="blockquote"><blockquote class="blockquote">
+<p>Indicates that the content of the element is the
+identifier of an entity that provides SAML-based services
+ (such as a SAML authority, requester, or responder) or is a participant in SAML profiles (such as a
+service provider supporting the browser SSO profile). Such an identifier can be used in the
+&lt;Issuer&gt; element to identify the issuer of a SAML request, response, or assertion, or within the
+&lt;NameID&gt; element to make assertions about system entities that can issue SAML requests,
+responses, and assertions. It can also be used in other elements and attributes whose purpose is
+to identify a system entity in various protocol exchanges.</p>
+<p>The syntax of such an
+identifier is a URI of not more than 1024 characters in length. It is RECOMMENDED that a system
+entity use a URL containing its own domain name to identify itself.</p>
+<p>The
+NameQualifier, SPNameQualifier, and SPProvidedID attributes MUST be omitted.</p>
+</blockquote></div>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_NAME_IDENTIFIER_FORMAT_PERSISTENT">
+<a name="LASSO-SAML2-NAME-IDENTIFIER-FORMAT-PERSISTENT--CAPS"></a><h3>LASSO_SAML2_NAME_IDENTIFIER_FORMAT_PERSISTENT</h3>
+<pre class="programlisting">#define             LASSO_SAML2_NAME_IDENTIFIER_FORMAT_PERSISTENT</pre>
+<p>
+</p>
+<p>Name identifier format for SAML 2.0 federation.</p>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_NAME_IDENTIFIER_FORMAT_TRANSIENT">
+<a name="LASSO-SAML2-NAME-IDENTIFIER-FORMAT-TRANSIENT--CAPS"></a><h3>LASSO_SAML2_NAME_IDENTIFIER_FORMAT_TRANSIENT</h3>
+<pre class="programlisting">#define             LASSO_SAML2_NAME_IDENTIFIER_FORMAT_TRANSIENT</pre>
+<p>
+</p>
+<p>Name identifier format for temporary SAML 2.0 federation.</p>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_NAME_IDENTIFIER_FORMAT_ENCRYPTED">
+<a name="LASSO-SAML2-NAME-IDENTIFIER-FORMAT-ENCRYPTED--CAPS"></a><h3>LASSO_SAML2_NAME_IDENTIFIER_FORMAT_ENCRYPTED</h3>
+<pre class="programlisting">#define             LASSO_SAML2_NAME_IDENTIFIER_FORMAT_ENCRYPTED</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_ATTRIBUTE_NAME_EPR">
+<a name="LASSO-SAML2-ATTRIBUTE-NAME-EPR--CAPS"></a><h3>LASSO_SAML2_ATTRIBUTE_NAME_EPR</h3>
+<pre class="programlisting">#define LASSO_SAML2_ATTRIBUTE_NAME_EPR "urn:liberty:disco:2006-08:DiscoveryEPR"
+</pre>
+<p>
+Attribute name for tranmitting Discovery bootstrap EPR when using ID-WSF 2.0 framework. It must
+be used conjointly with <span class="type">LASSO_SAML2_ATTRIBUTE_NAME_FORMAT_URI</span> as format for the attribute
+element.</p>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_ATTRIBUTE_NAME_FORMAT_UNSPECIFIED">
+<a name="LASSO-SAML2-ATTRIBUTE-NAME-FORMAT-UNSPECIFIED--CAPS"></a><h3>LASSO_SAML2_ATTRIBUTE_NAME_FORMAT_UNSPECIFIED</h3>
+<pre class="programlisting">#define LASSO_SAML2_ATTRIBUTE_NAME_FORMAT_UNSPECIFIED "urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified"
+</pre>
+<p>
+Attribute format whose interpretation is left to individual implementations.</p>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_ATTRIBUTE_NAME_FORMAT_URI">
+<a name="LASSO-SAML2-ATTRIBUTE-NAME-FORMAT-URI--CAPS"></a><h3>LASSO_SAML2_ATTRIBUTE_NAME_FORMAT_URI</h3>
+<pre class="programlisting">#define LASSO_SAML2_ATTRIBUTE_NAME_FORMAT_URI "urn:oasis:names:tc:SAML:2.0:attrname-format:uri"
+</pre>
+<p>
+From saml-core-2.0-os.pdf:
+</p>
+<div class="blockquote"><blockquote class="blockquote">The attribute name follows the convention for URI references [RFC 2396], for example
+as used in XACML attribute identifiers. The interpretation of the URI content or naming
+scheme is
+ application- specific. See [SAMLProf] for attribute profiles that make use of this identifier.</blockquote></div>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_ATTRIBUTE_NAME_FORMAT_BASIC">
+<a name="LASSO-SAML2-ATTRIBUTE-NAME-FORMAT-BASIC--CAPS"></a><h3>LASSO_SAML2_ATTRIBUTE_NAME_FORMAT_BASIC</h3>
+<pre class="programlisting">#define LASSO_SAML2_ATTRIBUTE_NAME_FORMAT_BASIC "urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
+</pre>
+<p>
+Attribute format whose names are in the xs:Name domain.</p>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_ACTION_NAMESPACE_RWEDC">
+<a name="LASSO-SAML2-ACTION-NAMESPACE-RWEDC--CAPS"></a><h3>LASSO_SAML2_ACTION_NAMESPACE_RWEDC</h3>
+<pre class="programlisting">#define LASSO_SAML2_ACTION_NAMESPACE_RWEDC "urn:oasis:names:tc:SAML:1.0:action:rwedc"
+</pre>
+<p>
+Namespace for actions among: Read, Write, Execute, Delete and Control.</p>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_ACTION_NAMESPACE_RWEDC_NEGATION">
+<a name="LASSO-SAML2-ACTION-NAMESPACE-RWEDC-NEGATION--CAPS"></a><h3>LASSO_SAML2_ACTION_NAMESPACE_RWEDC_NEGATION</h3>
+<pre class="programlisting">#define LASSO_SAML2_ACTION_NAMESPACE_RWEDC_NEGATION "urn:oasis:names:tc:SAML:1.0:action:rwedc-negation"
+</pre>
+<p>
+Namespace for actions among: Read, Write, Execute, Delete and Control and their negations, ~Read,
+~Write, ~Execute, ~Delete, ~Control.</p>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_ACTION_NAMESPACE_GHPP">
+<a name="LASSO-SAML2-ACTION-NAMESPACE-GHPP--CAPS"></a><h3>LASSO_SAML2_ACTION_NAMESPACE_GHPP</h3>
+<pre class="programlisting">#define LASSO_SAML2_ACTION_NAMESPACE_GHPP "urn:oasis:names:tc:SAML:1.0:action:ghpp"
+</pre>
+<p>
+Namespace for actions among: GET, HEAD, PUT, POST.</p>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_ACTION_NAMESPACE_UNIX">
+<a name="LASSO-SAML2-ACTION-NAMESPACE-UNIX--CAPS"></a><h3>LASSO_SAML2_ACTION_NAMESPACE_UNIX</h3>
+<pre class="programlisting">#define LASSO_SAML2_ACTION_NAMESPACE_UNIX "urn:oasis:names:tc:SAML:1.0:action:unix"
+</pre>
+<p>
+Namespace for actions represented by a four digit numeric code in octal value, as Unix file
+permissions codes.</p>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_ACTION_RWEDC_READ">
+<a name="LASSO-SAML2-ACTION-RWEDC-READ--CAPS"></a><h3>LASSO_SAML2_ACTION_RWEDC_READ</h3>
+<pre class="programlisting">#define LASSO_SAML2_ACTION_RWEDC_READ "Read"
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_ACTION_RWEDC_WRITE">
+<a name="LASSO-SAML2-ACTION-RWEDC-WRITE--CAPS"></a><h3>LASSO_SAML2_ACTION_RWEDC_WRITE</h3>
+<pre class="programlisting">#define LASSO_SAML2_ACTION_RWEDC_WRITE "Write"
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_ACTION_RWEDC_EXECUTE">
+<a name="LASSO-SAML2-ACTION-RWEDC-EXECUTE--CAPS"></a><h3>LASSO_SAML2_ACTION_RWEDC_EXECUTE</h3>
+<pre class="programlisting">#define LASSO_SAML2_ACTION_RWEDC_EXECUTE "Execute"
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_ACTION_RWEDC_DELETE">
+<a name="LASSO-SAML2-ACTION-RWEDC-DELETE--CAPS"></a><h3>LASSO_SAML2_ACTION_RWEDC_DELETE</h3>
+<pre class="programlisting">#define LASSO_SAML2_ACTION_RWEDC_DELETE "Delete"
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_ACTION_RWEDC_CONTROL">
+<a name="LASSO-SAML2-ACTION-RWEDC-CONTROL--CAPS"></a><h3>LASSO_SAML2_ACTION_RWEDC_CONTROL</h3>
+<pre class="programlisting">#define LASSO_SAML2_ACTION_RWEDC_CONTROL "Control"
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_ACTION_RWEDC_NEGATION">
+<a name="LASSO-SAML2-ACTION-RWEDC-NEGATION--CAPS"></a><h3>LASSO_SAML2_ACTION_RWEDC_NEGATION</h3>
+<pre class="programlisting">#define LASSO_SAML2_ACTION_RWEDC_NEGATION "~"
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_ACTION_GHPP_GET">
+<a name="LASSO-SAML2-ACTION-GHPP-GET--CAPS"></a><h3>LASSO_SAML2_ACTION_GHPP_GET</h3>
+<pre class="programlisting">#define LASSO_SAML2_ACTION_GHPP_GET "GET"
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_ACTION_GHPP_HEAD">
+<a name="LASSO-SAML2-ACTION-GHPP-HEAD--CAPS"></a><h3>LASSO_SAML2_ACTION_GHPP_HEAD</h3>
+<pre class="programlisting">#define LASSO_SAML2_ACTION_GHPP_HEAD "HEAD"
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_ACTION_GHPP_PUT">
+<a name="LASSO-SAML2-ACTION-GHPP-PUT--CAPS"></a><h3>LASSO_SAML2_ACTION_GHPP_PUT</h3>
+<pre class="programlisting">#define LASSO_SAML2_ACTION_GHPP_PUT "PUT"
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_ACTION_GHPP_POST">
+<a name="LASSO-SAML2-ACTION-GHPP-POST--CAPS"></a><h3>LASSO_SAML2_ACTION_GHPP_POST</h3>
+<pre class="programlisting">#define LASSO_SAML2_ACTION_GHPP_POST "POST"
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_CONSENT_OBTAINED">
+<a name="LASSO-SAML2-CONSENT-OBTAINED--CAPS"></a><h3>LASSO_SAML2_CONSENT_OBTAINED</h3>
+<pre class="programlisting">#define LASSO_SAML2_CONSENT_OBTAINED "urn:oasis:names:tc:SAML:2.0:consent:obtained"
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_CONSENT_PRIOR">
+<a name="LASSO-SAML2-CONSENT-PRIOR--CAPS"></a><h3>LASSO_SAML2_CONSENT_PRIOR</h3>
+<pre class="programlisting">#define LASSO_SAML2_CONSENT_PRIOR "urn:oasis:names:tc:SAML:2.0:consent:prior"
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_CONSENT_IMPLICIT">
+<a name="LASSO-SAML2-CONSENT-IMPLICIT--CAPS"></a><h3>LASSO_SAML2_CONSENT_IMPLICIT</h3>
+<pre class="programlisting">#define LASSO_SAML2_CONSENT_IMPLICIT "urn:oasis:names:tc:SAML:2.0:consent:current-implicit"
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_CONSENT_EXPLICIT">
+<a name="LASSO-SAML2-CONSENT-EXPLICIT--CAPS"></a><h3>LASSO_SAML2_CONSENT_EXPLICIT</h3>
+<pre class="programlisting">#define LASSO_SAML2_CONSENT_EXPLICIT "urn:oasis:names:tc:SAML:2.0:consent:current-explicit"
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_CONSENT_UNAVAILABLE">
+<a name="LASSO-SAML2-CONSENT-UNAVAILABLE--CAPS"></a><h3>LASSO_SAML2_CONSENT_UNAVAILABLE</h3>
+<pre class="programlisting">#define LASSO_SAML2_CONSENT_UNAVAILABLE "urn:oasis:names:tc:SAML:2.0:consent:unavailable"
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_CONSENT_INAPPLICABLE">
+<a name="LASSO-SAML2-CONSENT-INAPPLICABLE--CAPS"></a><h3>LASSO_SAML2_CONSENT_INAPPLICABLE</h3>
+<pre class="programlisting">#define LASSO_SAML2_CONSENT_INAPPLICABLE "urn:oasis:names:tc:SAML:2.0:consent:inapplicable"
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_STATUS_CODE_SUCCESS">
+<a name="LASSO-SAML2-STATUS-CODE-SUCCESS--CAPS"></a><h3>LASSO_SAML2_STATUS_CODE_SUCCESS</h3>
+<pre class="programlisting">#define LASSO_SAML2_STATUS_CODE_SUCCESS "urn:oasis:names:tc:SAML:2.0:status:Success"
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_STATUS_CODE_REQUESTER">
+<a name="LASSO-SAML2-STATUS-CODE-REQUESTER--CAPS"></a><h3>LASSO_SAML2_STATUS_CODE_REQUESTER</h3>
+<pre class="programlisting">#define LASSO_SAML2_STATUS_CODE_REQUESTER "urn:oasis:names:tc:SAML:2.0:status:Requester"
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_STATUS_CODE_RESPONDER">
+<a name="LASSO-SAML2-STATUS-CODE-RESPONDER--CAPS"></a><h3>LASSO_SAML2_STATUS_CODE_RESPONDER</h3>
+<pre class="programlisting">#define LASSO_SAML2_STATUS_CODE_RESPONDER "urn:oasis:names:tc:SAML:2.0:status:Responder"
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_STATUS_CODE_VERSION_MISMATCH">
+<a name="LASSO-SAML2-STATUS-CODE-VERSION-MISMATCH--CAPS"></a><h3>LASSO_SAML2_STATUS_CODE_VERSION_MISMATCH</h3>
+<pre class="programlisting">#define             LASSO_SAML2_STATUS_CODE_VERSION_MISMATCH</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_STATUS_CODE_AUTHN_FAILED">
+<a name="LASSO-SAML2-STATUS-CODE-AUTHN-FAILED--CAPS"></a><h3>LASSO_SAML2_STATUS_CODE_AUTHN_FAILED</h3>
+<pre class="programlisting">#define LASSO_SAML2_STATUS_CODE_AUTHN_FAILED "urn:oasis:names:tc:SAML:2.0:status:AuthnFailed"
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_STATUS_CODE_INVALID_ATTR_NAME">
+<a name="LASSO-SAML2-STATUS-CODE-INVALID-ATTR-NAME--CAPS"></a><h3>LASSO_SAML2_STATUS_CODE_INVALID_ATTR_NAME</h3>
+<pre class="programlisting">#define             LASSO_SAML2_STATUS_CODE_INVALID_ATTR_NAME</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_STATUS_CODE_INVALID_NAME_ID_POLICY">
+<a name="LASSO-SAML2-STATUS-CODE-INVALID-NAME-ID-POLICY--CAPS"></a><h3>LASSO_SAML2_STATUS_CODE_INVALID_NAME_ID_POLICY</h3>
+<pre class="programlisting">#define             LASSO_SAML2_STATUS_CODE_INVALID_NAME_ID_POLICY</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_STATUS_CODE_NO_AUTHN_CONTEXT">
+<a name="LASSO-SAML2-STATUS-CODE-NO-AUTHN-CONTEXT--CAPS"></a><h3>LASSO_SAML2_STATUS_CODE_NO_AUTHN_CONTEXT</h3>
+<pre class="programlisting">#define             LASSO_SAML2_STATUS_CODE_NO_AUTHN_CONTEXT</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_STATUS_CODE_NO_AVAILABLE_IDP">
+<a name="LASSO-SAML2-STATUS-CODE-NO-AVAILABLE-IDP--CAPS"></a><h3>LASSO_SAML2_STATUS_CODE_NO_AVAILABLE_IDP</h3>
+<pre class="programlisting">#define             LASSO_SAML2_STATUS_CODE_NO_AVAILABLE_IDP</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_STATUS_CODE_NO_PASSIVE">
+<a name="LASSO-SAML2-STATUS-CODE-NO-PASSIVE--CAPS"></a><h3>LASSO_SAML2_STATUS_CODE_NO_PASSIVE</h3>
+<pre class="programlisting">#define             LASSO_SAML2_STATUS_CODE_NO_PASSIVE</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_STATUS_CODE_NO_SUPPORTED_IDP">
+<a name="LASSO-SAML2-STATUS-CODE-NO-SUPPORTED-IDP--CAPS"></a><h3>LASSO_SAML2_STATUS_CODE_NO_SUPPORTED_IDP</h3>
+<pre class="programlisting">#define             LASSO_SAML2_STATUS_CODE_NO_SUPPORTED_IDP</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_STATUS_CODE_PARTIAL_LOGOUT">
+<a name="LASSO-SAML2-STATUS-CODE-PARTIAL-LOGOUT--CAPS"></a><h3>LASSO_SAML2_STATUS_CODE_PARTIAL_LOGOUT</h3>
+<pre class="programlisting">#define             LASSO_SAML2_STATUS_CODE_PARTIAL_LOGOUT</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_STATUS_CODE_PROXY_COUNT_EXCEEDED">
+<a name="LASSO-SAML2-STATUS-CODE-PROXY-COUNT-EXCEEDED--CAPS"></a><h3>LASSO_SAML2_STATUS_CODE_PROXY_COUNT_EXCEEDED</h3>
+<pre class="programlisting">#define             LASSO_SAML2_STATUS_CODE_PROXY_COUNT_EXCEEDED</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_STATUS_CODE_REQUEST_DENIED">
+<a name="LASSO-SAML2-STATUS-CODE-REQUEST-DENIED--CAPS"></a><h3>LASSO_SAML2_STATUS_CODE_REQUEST_DENIED</h3>
+<pre class="programlisting">#define             LASSO_SAML2_STATUS_CODE_REQUEST_DENIED</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_STATUS_CODE_REQUEST_UNSUPPORTED">
+<a name="LASSO-SAML2-STATUS-CODE-REQUEST-UNSUPPORTED--CAPS"></a><h3>LASSO_SAML2_STATUS_CODE_REQUEST_UNSUPPORTED</h3>
+<pre class="programlisting">#define             LASSO_SAML2_STATUS_CODE_REQUEST_UNSUPPORTED</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_STATUS_CODE_REQUEST_VERSION_DEPRECATED">
+<a name="LASSO-SAML2-STATUS-CODE-REQUEST-VERSION-DEPRECATED--CAPS"></a><h3>LASSO_SAML2_STATUS_CODE_REQUEST_VERSION_DEPRECATED</h3>
+<pre class="programlisting">#define             LASSO_SAML2_STATUS_CODE_REQUEST_VERSION_DEPRECATED</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_STATUS_CODE_REQUEST_VERSION_TOO_HIGH">
+<a name="LASSO-SAML2-STATUS-CODE-REQUEST-VERSION-TOO-HIGH--CAPS"></a><h3>LASSO_SAML2_STATUS_CODE_REQUEST_VERSION_TOO_HIGH</h3>
+<pre class="programlisting">#define             LASSO_SAML2_STATUS_CODE_REQUEST_VERSION_TOO_HIGH</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_STATUS_CODE_REQUEST_VERSION_TOO_LOW">
+<a name="LASSO-SAML2-STATUS-CODE-REQUEST-VERSION-TOO-LOW--CAPS"></a><h3>LASSO_SAML2_STATUS_CODE_REQUEST_VERSION_TOO_LOW</h3>
+<pre class="programlisting">#define             LASSO_SAML2_STATUS_CODE_REQUEST_VERSION_TOO_LOW</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_STATUS_CODE_RESOURCE_NOT_RECOGNIZED">
+<a name="LASSO-SAML2-STATUS-CODE-RESOURCE-NOT-RECOGNIZED--CAPS"></a><h3>LASSO_SAML2_STATUS_CODE_RESOURCE_NOT_RECOGNIZED</h3>
+<pre class="programlisting">#define             LASSO_SAML2_STATUS_CODE_RESOURCE_NOT_RECOGNIZED</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_STATUS_CODE_TOO_MANY_RESPONSES">
+<a name="LASSO-SAML2-STATUS-CODE-TOO-MANY-RESPONSES--CAPS"></a><h3>LASSO_SAML2_STATUS_CODE_TOO_MANY_RESPONSES</h3>
+<pre class="programlisting">#define             LASSO_SAML2_STATUS_CODE_TOO_MANY_RESPONSES</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_STATUS_CODE_UNKNOWN_ATTR_PROFILE">
+<a name="LASSO-SAML2-STATUS-CODE-UNKNOWN-ATTR-PROFILE--CAPS"></a><h3>LASSO_SAML2_STATUS_CODE_UNKNOWN_ATTR_PROFILE</h3>
+<pre class="programlisting">#define             LASSO_SAML2_STATUS_CODE_UNKNOWN_ATTR_PROFILE</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_STATUS_CODE_UNKNOWN_PRINCIPAL">
+<a name="LASSO-SAML2-STATUS-CODE-UNKNOWN-PRINCIPAL--CAPS"></a><h3>LASSO_SAML2_STATUS_CODE_UNKNOWN_PRINCIPAL</h3>
+<pre class="programlisting">#define             LASSO_SAML2_STATUS_CODE_UNKNOWN_PRINCIPAL</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_STATUS_CODE_UNSUPPORTED_BINDING">
+<a name="LASSO-SAML2-STATUS-CODE-UNSUPPORTED-BINDING--CAPS"></a><h3>LASSO_SAML2_STATUS_CODE_UNSUPPORTED_BINDING</h3>
+<pre class="programlisting">#define             LASSO_SAML2_STATUS_CODE_UNSUPPORTED_BINDING</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_AUTHN_CONTEXT_AUTHENTICATED_TELEPHONY">
+<a name="LASSO-SAML2-AUTHN-CONTEXT-AUTHENTICATED-TELEPHONY--CAPS"></a><h3>LASSO_SAML2_AUTHN_CONTEXT_AUTHENTICATED_TELEPHONY</h3>
+<pre class="programlisting">#define             LASSO_SAML2_AUTHN_CONTEXT_AUTHENTICATED_TELEPHONY</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_AUTHN_CONTEXT_INTERNET_PROTOCOL">
+<a name="LASSO-SAML2-AUTHN-CONTEXT-INTERNET-PROTOCOL--CAPS"></a><h3>LASSO_SAML2_AUTHN_CONTEXT_INTERNET_PROTOCOL</h3>
+<pre class="programlisting">#define             LASSO_SAML2_AUTHN_CONTEXT_INTERNET_PROTOCOL</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_AUTHN_CONTEXT_INTERNET_PROTOCOL_PASSWORD">
+<a name="LASSO-SAML2-AUTHN-CONTEXT-INTERNET-PROTOCOL-PASSWORD--CAPS"></a><h3>LASSO_SAML2_AUTHN_CONTEXT_INTERNET_PROTOCOL_PASSWORD</h3>
+<pre class="programlisting">#define             LASSO_SAML2_AUTHN_CONTEXT_INTERNET_PROTOCOL_PASSWORD</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_AUTHN_CONTEXT_KERBEROS">
+<a name="LASSO-SAML2-AUTHN-CONTEXT-KERBEROS--CAPS"></a><h3>LASSO_SAML2_AUTHN_CONTEXT_KERBEROS</h3>
+<pre class="programlisting">#define             LASSO_SAML2_AUTHN_CONTEXT_KERBEROS</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_AUTHN_CONTEXT_MOBILE_ONE_FACTOR_CONTRACT">
+<a name="LASSO-SAML2-AUTHN-CONTEXT-MOBILE-ONE-FACTOR-CONTRACT--CAPS"></a><h3>LASSO_SAML2_AUTHN_CONTEXT_MOBILE_ONE_FACTOR_CONTRACT</h3>
+<pre class="programlisting">#define             LASSO_SAML2_AUTHN_CONTEXT_MOBILE_ONE_FACTOR_CONTRACT</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_AUTHN_CONTEXT_MOBILE_ONE_FACTOR_UNREGISTERED">
+<a name="LASSO-SAML2-AUTHN-CONTEXT-MOBILE-ONE-FACTOR-UNREGISTERED--CAPS"></a><h3>LASSO_SAML2_AUTHN_CONTEXT_MOBILE_ONE_FACTOR_UNREGISTERED</h3>
+<pre class="programlisting">#define             LASSO_SAML2_AUTHN_CONTEXT_MOBILE_ONE_FACTOR_UNREGISTERED</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_AUTHN_CONTEXT_MOBILE_TWO_FACTOR_CONTRACT">
+<a name="LASSO-SAML2-AUTHN-CONTEXT-MOBILE-TWO-FACTOR-CONTRACT--CAPS"></a><h3>LASSO_SAML2_AUTHN_CONTEXT_MOBILE_TWO_FACTOR_CONTRACT</h3>
+<pre class="programlisting">#define             LASSO_SAML2_AUTHN_CONTEXT_MOBILE_TWO_FACTOR_CONTRACT</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_AUTHN_CONTEXT_MOBILE_TWO_FACTOR_UNREGISTERED">
+<a name="LASSO-SAML2-AUTHN-CONTEXT-MOBILE-TWO-FACTOR-UNREGISTERED--CAPS"></a><h3>LASSO_SAML2_AUTHN_CONTEXT_MOBILE_TWO_FACTOR_UNREGISTERED</h3>
+<pre class="programlisting">#define             LASSO_SAML2_AUTHN_CONTEXT_MOBILE_TWO_FACTOR_UNREGISTERED</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_AUTHN_CONTEXT_NOMAD_TELEPHONY">
+<a name="LASSO-SAML2-AUTHN-CONTEXT-NOMAD-TELEPHONY--CAPS"></a><h3>LASSO_SAML2_AUTHN_CONTEXT_NOMAD_TELEPHONY</h3>
+<pre class="programlisting">#define             LASSO_SAML2_AUTHN_CONTEXT_NOMAD_TELEPHONY</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_AUTHN_CONTEXT_PERSONALIZED_TELEPHONY">
+<a name="LASSO-SAML2-AUTHN-CONTEXT-PERSONALIZED-TELEPHONY--CAPS"></a><h3>LASSO_SAML2_AUTHN_CONTEXT_PERSONALIZED_TELEPHONY</h3>
+<pre class="programlisting">#define             LASSO_SAML2_AUTHN_CONTEXT_PERSONALIZED_TELEPHONY</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_AUTHN_CONTEXT_PGP">
+<a name="LASSO-SAML2-AUTHN-CONTEXT-PGP--CAPS"></a><h3>LASSO_SAML2_AUTHN_CONTEXT_PGP</h3>
+<pre class="programlisting">#define             LASSO_SAML2_AUTHN_CONTEXT_PGP</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_AUTHN_CONTEXT_PASSWORD_PROTECTED_TRANSPORT">
+<a name="LASSO-SAML2-AUTHN-CONTEXT-PASSWORD-PROTECTED-TRANSPORT--CAPS"></a><h3>LASSO_SAML2_AUTHN_CONTEXT_PASSWORD_PROTECTED_TRANSPORT</h3>
+<pre class="programlisting">#define             LASSO_SAML2_AUTHN_CONTEXT_PASSWORD_PROTECTED_TRANSPORT</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_AUTHN_CONTEXT_PASSWORD">
+<a name="LASSO-SAML2-AUTHN-CONTEXT-PASSWORD--CAPS"></a><h3>LASSO_SAML2_AUTHN_CONTEXT_PASSWORD</h3>
+<pre class="programlisting">#define             LASSO_SAML2_AUTHN_CONTEXT_PASSWORD</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_AUTHN_CONTEXT_PREVIOUS_SESSION">
+<a name="LASSO-SAML2-AUTHN-CONTEXT-PREVIOUS-SESSION--CAPS"></a><h3>LASSO_SAML2_AUTHN_CONTEXT_PREVIOUS_SESSION</h3>
+<pre class="programlisting">#define             LASSO_SAML2_AUTHN_CONTEXT_PREVIOUS_SESSION</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_AUTHN_CONTEXT_SMARTCARD">
+<a name="LASSO-SAML2-AUTHN-CONTEXT-SMARTCARD--CAPS"></a><h3>LASSO_SAML2_AUTHN_CONTEXT_SMARTCARD</h3>
+<pre class="programlisting">#define             LASSO_SAML2_AUTHN_CONTEXT_SMARTCARD</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_AUTHN_CONTEXT_SMARTCARD_PKI">
+<a name="LASSO-SAML2-AUTHN-CONTEXT-SMARTCARD-PKI--CAPS"></a><h3>LASSO_SAML2_AUTHN_CONTEXT_SMARTCARD_PKI</h3>
+<pre class="programlisting">#define             LASSO_SAML2_AUTHN_CONTEXT_SMARTCARD_PKI</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_AUTHN_CONTEXT_SOFTWARE_PKI">
+<a name="LASSO-SAML2-AUTHN-CONTEXT-SOFTWARE-PKI--CAPS"></a><h3>LASSO_SAML2_AUTHN_CONTEXT_SOFTWARE_PKI</h3>
+<pre class="programlisting">#define             LASSO_SAML2_AUTHN_CONTEXT_SOFTWARE_PKI</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_AUTHN_CONTEXT_SPKI">
+<a name="LASSO-SAML2-AUTHN-CONTEXT-SPKI--CAPS"></a><h3>LASSO_SAML2_AUTHN_CONTEXT_SPKI</h3>
+<pre class="programlisting">#define             LASSO_SAML2_AUTHN_CONTEXT_SPKI</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_AUTHN_CONTEXT_SECURE_REMOTE_PASSWORD">
+<a name="LASSO-SAML2-AUTHN-CONTEXT-SECURE-REMOTE-PASSWORD--CAPS"></a><h3>LASSO_SAML2_AUTHN_CONTEXT_SECURE_REMOTE_PASSWORD</h3>
+<pre class="programlisting">#define             LASSO_SAML2_AUTHN_CONTEXT_SECURE_REMOTE_PASSWORD</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_AUTHN_CONTEXT_TLS_CLIENT">
+<a name="LASSO-SAML2-AUTHN-CONTEXT-TLS-CLIENT--CAPS"></a><h3>LASSO_SAML2_AUTHN_CONTEXT_TLS_CLIENT</h3>
+<pre class="programlisting">#define             LASSO_SAML2_AUTHN_CONTEXT_TLS_CLIENT</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_AUTHN_CONTEXT_X509">
+<a name="LASSO-SAML2-AUTHN-CONTEXT-X509--CAPS"></a><h3>LASSO_SAML2_AUTHN_CONTEXT_X509</h3>
+<pre class="programlisting">#define             LASSO_SAML2_AUTHN_CONTEXT_X509</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_AUTHN_CONTEXT_TELEPHONY">
+<a name="LASSO-SAML2-AUTHN-CONTEXT-TELEPHONY--CAPS"></a><h3>LASSO_SAML2_AUTHN_CONTEXT_TELEPHONY</h3>
+<pre class="programlisting">#define             LASSO_SAML2_AUTHN_CONTEXT_TELEPHONY</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_AUTHN_CONTEXT_TIME_SYNC_TOKEN">
+<a name="LASSO-SAML2-AUTHN-CONTEXT-TIME-SYNC-TOKEN--CAPS"></a><h3>LASSO_SAML2_AUTHN_CONTEXT_TIME_SYNC_TOKEN</h3>
+<pre class="programlisting">#define             LASSO_SAML2_AUTHN_CONTEXT_TIME_SYNC_TOKEN</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_AUTHN_CONTEXT_XMLDSIG">
+<a name="LASSO-SAML2-AUTHN-CONTEXT-XMLDSIG--CAPS"></a><h3>LASSO_SAML2_AUTHN_CONTEXT_XMLDSIG</h3>
+<pre class="programlisting">#define             LASSO_SAML2_AUTHN_CONTEXT_XMLDSIG</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_AUTHN_CONTEXT_UNSPECIFIED">
+<a name="LASSO-SAML2-AUTHN-CONTEXT-UNSPECIFIED--CAPS"></a><h3>LASSO_SAML2_AUTHN_CONTEXT_UNSPECIFIED</h3>
+<pre class="programlisting">#define             LASSO_SAML2_AUTHN_CONTEXT_UNSPECIFIED</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_CONFIRMATION_METHOD_BEARER">
+<a name="LASSO-SAML2-CONFIRMATION-METHOD-BEARER--CAPS"></a><h3>LASSO_SAML2_CONFIRMATION_METHOD_BEARER</h3>
+<pre class="programlisting">#define LASSO_SAML2_CONFIRMATION_METHOD_BEARER "urn:oasis:names:tc:SAML:2.0:cm:bearer"
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_CONFIRMATION_METHOD_HOLDER_OF_KEY">
+<a name="LASSO-SAML2-CONFIRMATION-METHOD-HOLDER-OF-KEY--CAPS"></a><h3>LASSO_SAML2_CONFIRMATION_METHOD_HOLDER_OF_KEY</h3>
+<pre class="programlisting">#define LASSO_SAML2_CONFIRMATION_METHOD_HOLDER_OF_KEY "urn:oasis:names:tc:SAML:2.0:cm:holder-of-key"
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_FIELD_RESPONSE">
+<a name="LASSO-SAML2-FIELD-RESPONSE--CAPS"></a><h3>LASSO_SAML2_FIELD_RESPONSE</h3>
+<pre class="programlisting">#define LASSO_SAML2_FIELD_RESPONSE "SAMLResponse"
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_FIELD_REQUEST">
+<a name="LASSO-SAML2-FIELD-REQUEST--CAPS"></a><h3>LASSO_SAML2_FIELD_REQUEST</h3>
+<pre class="programlisting">#define LASSO_SAML2_FIELD_REQUEST "SAMLRequest"
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_FIELD_ARTIFACT">
+<a name="LASSO-SAML2-FIELD-ARTIFACT--CAPS"></a><h3>LASSO_SAML2_FIELD_ARTIFACT</h3>
+<pre class="programlisting">#define LASSO_SAML2_FIELD_ARTIFACT "SAMLart"
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_FIELD_RELAYSTATE">
+<a name="LASSO-SAML2-FIELD-RELAYSTATE--CAPS"></a><h3>LASSO_SAML2_FIELD_RELAYSTATE</h3>
+<pre class="programlisting">#define LASSO_SAML2_FIELD_RELAYSTATE "RelayState"
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_FIELD_SIGNATURE">
+<a name="LASSO-SAML2-FIELD-SIGNATURE--CAPS"></a><h3>LASSO_SAML2_FIELD_SIGNATURE</h3>
+<pre class="programlisting">#define LASSO_SAML2_FIELD_SIGNATURE "Signature"
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_SAML2_FIELD_SIGALG">
+<a name="LASSO-SAML2-FIELD-SIGALG--CAPS"></a><h3>LASSO_SAML2_FIELD_SIGALG</h3>
+<pre class="programlisting">#define LASSO_SAML2_FIELD_SIGALG "SigAlg"
+</pre>
+</div>
+</div>
+<div class="refsect1" title="See Also">
+<a name="lasso-SAML-20-Strings.see-also"></a><h2>See Also</h2>
+#LassoSamlp2AuthnRequest, <span class="type">LassoSaml2Assertion</span>, <span class="type">LassoLogin</span>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

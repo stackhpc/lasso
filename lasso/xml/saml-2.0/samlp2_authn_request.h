@@ -1,22 +1,22 @@
-/* $Id: samlp2_authn_request.h 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -49,7 +49,7 @@ extern "C" {
 	(G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_SAMLP2_AUTHN_REQUEST))
 #define LASSO_SAMLP2_AUTHN_REQUEST_GET_CLASS(o) \
 	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_SAMLP2_AUTHN_REQUEST, \
-				LassoSamlp2AuthnRequestClass)) 
+				LassoSamlp2AuthnRequestClass))
 
 typedef struct _LassoSamlp2AuthnRequest LassoSamlp2AuthnRequest;
 typedef struct _LassoSamlp2AuthnRequestClass LassoSamlp2AuthnRequestClass;
@@ -74,8 +74,10 @@ struct _LassoSamlp2AuthnRequest {
 	int AttributeConsumingServiceIndex;
 	char *ProviderName;
 
-	/* out of schema */
-	char *relayState;
+	/* This field is deprecated do not use it,
+	 * kept for ABI compatibility */
+	/*< private >*/
+	G_GNUC_DEPRECATED char *relayState;
 };
 
 

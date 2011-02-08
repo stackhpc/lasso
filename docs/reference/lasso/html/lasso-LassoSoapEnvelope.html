@@ -1,0 +1,494 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>LassoSoapEnvelope</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="Lasso Reference Manual">
+<link rel="up" href="soap.html" title="Object from the SOAP 1.1 schemas">
+<link rel="prev" href="lasso-LassoSoapDetail.html" title="LassoSoapDetail">
+<link rel="next" href="lasso-LassoSoapFault.html" title="LassoSoapFault">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
+<link rel="reference" href="rn01.html" title="Application Programming Interface">
+<link rel="chapter" href="architecture.html" title="Lasso Architecture">
+<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
+<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
+<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
+<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
+<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
+<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
+<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
+<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
+<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
+<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
+<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
+<link rel="part" href="pt01.html" title="Part II. Appendix">
+<link rel="index" href="api-index.html" title="API Index">
+<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="lasso-LassoSoapDetail.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="soap.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Lasso Reference Manual</th>
+<td><a accesskey="n" href="lasso-LassoSoapFault.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#lasso-LassoSoapEnvelope.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#lasso-LassoSoapEnvelope.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" title="LassoSoapEnvelope">
+<a name="lasso-LassoSoapEnvelope"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="lasso-LassoSoapEnvelope.top_of_page"></a>LassoSoapEnvelope</span></h2>
+<p>LassoSoapEnvelope — &lt;soap:Envelope&gt;</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="lasso-LassoSoapEnvelope.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    LassoSoapEnvelope;
+LassoSoapEnvelope*  lasso_soap_envelope_new             (LassoSoapBody *body);
+LassoSoapEnvelope*  lasso_soap_envelope_new_from_message
+                                                        (const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *message);
+
+void                lasso_soap_envelope_add_action      (LassoSoapEnvelope *soap_envelope,
+                                                         const char *action);
+void                lasso_soap_envelope_add_security_token
+                                                        (LassoSoapEnvelope *soap_envelope,
+                                                         LassoNode *token);
+void                lasso_soap_envelope_add_to_body     (LassoSoapEnvelope *soap_envelope,
+                                                         LassoNode *content);
+const char*         lasso_soap_envelope_get_action      (LassoSoapEnvelope *soap_envelope);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"
+>GList</a>*              lasso_soap_envelope_get_body_content
+                                                        (LassoSoapEnvelope *soap_envelope);
+LassoWsAddrAttributedURI * lasso_soap_envelope_get_message_id
+                                                        (LassoSoapEnvelope *soap_envelope,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> create);
+LassoWsAddrRelatesTo * lasso_soap_envelope_get_relates_to
+                                                        (LassoSoapEnvelope *envelope,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> create);
+LassoSaml2Assertion * lasso_soap_envelope_get_saml2_security_token
+                                                        (LassoSoapEnvelope *soap_envelope);
+LassoIdWsf2Sb2UserInteractionHint  lasso_soap_envelope_get_sb2_user_interaction_hint
+                                                        (LassoSoapEnvelope *soap_envelope);
+char*               lasso_soap_envelope_sb2_get_provider_id
+                                                        (LassoSoapEnvelope *soap_envelope);
+const char*         lasso_soap_envelope_sb2_get_redirect_request_url
+                                                        (LassoSoapEnvelope *soap_envelope);
+LassoIdWsf2Sb2TargetIdentity* lasso_soap_envelope_sb2_get_target_identity_header
+                                                        (LassoSoapEnvelope *soap_envelope);
+void                lasso_soap_envelope_set_sb2_user_interaction_hint
+                                                        (LassoSoapEnvelope *soap_envelope,
+                                                         LassoIdWsf2Sb2UserInteractionHint hint);
+LassoWsSec1SecurityHeader* lasso_soap_envelope_wssec_get_security_header
+                                                        (LassoSoapEnvelope *soap_envelope);
+LassoSoapFault*     lasso_soap_envelope_get_soap_fault  (LassoSoapEnvelope *soap_envelope,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> create);
+void                lasso_soap_envelope_set_relates_to  (LassoSoapEnvelope *soap_envelope,
+                                                         char *value,
+                                                         char *relationship);
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="lasso-LassoSoapEnvelope.description"></a><h2>Description</h2>
+<p>
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="lasso-LassoSoapEnvelope.details"></a><h2>Details</h2>
+<div class="refsect2" title="LassoSoapEnvelope">
+<a name="LassoSoapEnvelope"></a><h3>LassoSoapEnvelope</h3>
+<pre class="programlisting">typedef struct {
+	LassoNode parent;
+
+	LassoSoapHeader *Header;
+	LassoSoapBody *Body;
+} LassoSoapEnvelope;
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_soap_envelope_new ()">
+<a name="lasso-soap-envelope-new"></a><h3>lasso_soap_envelope_new ()</h3>
+<pre class="programlisting">LassoSoapEnvelope*  lasso_soap_envelope_new             (LassoSoapBody *body);</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_soap_envelope_new_from_message ()">
+<a name="lasso-soap-envelope-new-from-message"></a><h3>lasso_soap_envelope_new_from_message ()</h3>
+<pre class="programlisting">LassoSoapEnvelope*  lasso_soap_envelope_new_from_message
+                                                        (const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *message);</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_soap_envelope_add_action ()">
+<a name="lasso-soap-envelope-add-action"></a><h3>lasso_soap_envelope_add_action ()</h3>
+<pre class="programlisting">void                lasso_soap_envelope_add_action      (LassoSoapEnvelope *soap_envelope,
+                                                         const char *action);</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_soap_envelope_add_security_token ()">
+<a name="lasso-soap-envelope-add-security-token"></a><h3>lasso_soap_envelope_add_security_token ()</h3>
+<pre class="programlisting">void                lasso_soap_envelope_add_security_token
+                                                        (LassoSoapEnvelope *soap_envelope,
+                                                         LassoNode *token);</pre>
+<p>
+Add <em class="parameter"><code>token</code></em> as a security token to the headers of <em class="parameter"><code>soap_envelope</code></em> using a
+<span class="type">LassoWsSec1SecurityHeader</span> element as a container. Eventually create the
+<span class="type">LassoWsSec1SecurityHeader</span> element if it does not exist already.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>soap_envelope</code></em> :</span></p></td>
+<td> a <span class="type">LassoSoapEnvelope</span> object
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>token</code></em> :</span></p></td>
+<td> a <span class="type">LassoNode</span> to use as a security token
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_soap_envelope_add_to_body ()">
+<a name="lasso-soap-envelope-add-to-body"></a><h3>lasso_soap_envelope_add_to_body ()</h3>
+<pre class="programlisting">void                lasso_soap_envelope_add_to_body     (LassoSoapEnvelope *soap_envelope,
+                                                         LassoNode *content);</pre>
+<p>
+Add new content to the SOAP message body.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>soap_envelope</code></em> :</span></p></td>
+<td> a <span class="type">LassoSoapEnvelope</span> object
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>content</code></em> :</span></p></td>
+<td> a <span class="type">LassoNode</span> object to add to the body of the SOAP message
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_soap_envelope_get_action ()">
+<a name="lasso-soap-envelope-get-action"></a><h3>lasso_soap_envelope_get_action ()</h3>
+<pre class="programlisting">const char*         lasso_soap_envelope_get_action      (LassoSoapEnvelope *soap_envelope);</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_soap_envelope_get_body_content ()">
+<a name="lasso-soap-envelope-get-body-content"></a><h3>lasso_soap_envelope_get_body_content ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"
+>GList</a>*              lasso_soap_envelope_get_body_content
+                                                        (LassoSoapEnvelope *soap_envelope);</pre>
+<p>
+Return the body content of the <em class="parameter"><code>soap_envelope</code></em> object.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>soap_envelope</code></em> :</span></p></td>
+<td> a <span class="type">LassoSoapEnvelope</span> object
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the content or NULL if the concent is empty or the object invalid.. <acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> LassoNode. </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_soap_envelope_get_message_id ()">
+<a name="lasso-soap-envelope-get-message-id"></a><h3>lasso_soap_envelope_get_message_id ()</h3>
+<pre class="programlisting">LassoWsAddrAttributedURI * lasso_soap_envelope_get_message_id
+                                                        (LassoSoapEnvelope *soap_envelope,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> create);</pre>
+<p>
+Return the WS-Addressing header MessageID content.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>soap_envelope</code></em> :</span></p></td>
+<td> a <span class="type">LassoSoapEnvelope</span> object
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>create</code></em> :</span></p></td>
+<td> whether to create the node if it is not found. <acronym title="Default parameter value (for in case the shadows-to function has less parameters)."><span class="acronym">default</span></acronym> FALSE. </td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>transfer none. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> none. </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_soap_envelope_get_relates_to ()">
+<a name="lasso-soap-envelope-get-relates-to"></a><h3>lasso_soap_envelope_get_relates_to ()</h3>
+<pre class="programlisting">LassoWsAddrRelatesTo * lasso_soap_envelope_get_relates_to
+                                                        (LassoSoapEnvelope *envelope,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> create);</pre>
+<p>
+Returns the RelatesTo WS-Addressing header, if it exists.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>soap_envelope</code></em> :</span></p></td>
+<td> a <span class="type">LassoSoapEnvelope</span> object
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>create</code></em> :</span></p></td>
+<td> whether to create the node if it is not found. <acronym title="Default parameter value (for in case the shadows-to function has less parameters)."><span class="acronym">default</span></acronym> FALSE. </td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a <span class="type">LassoWsAddrAttributedURI</span> object or NULL if none is found, and creation was not allowed.. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> none. </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_soap_envelope_get_saml2_security_token ()">
+<a name="lasso-soap-envelope-get-saml2-security-token"></a><h3>lasso_soap_envelope_get_saml2_security_token ()</h3>
+<pre class="programlisting">LassoSaml2Assertion * lasso_soap_envelope_get_saml2_security_token
+                                                        (LassoSoapEnvelope *soap_envelope);</pre>
+<p>
+Return a SAML2 Assertion used as a security token if one is found in the headers of
+<em class="parameter"><code>soap_envelope</code></em>.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>soap_envelope</code></em> :</span></p></td>
+<td> a <span class="type">LassoSoapEnvelope</span> object
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a <span class="type">LassoSaml2Assertion</span>, or NULL if none is found.. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> none. </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_soap_envelope_get_sb2_user_interaction_hint ()">
+<a name="lasso-soap-envelope-get-sb2-user-interaction-hint"></a><h3>lasso_soap_envelope_get_sb2_user_interaction_hint ()</h3>
+<pre class="programlisting">LassoIdWsf2Sb2UserInteractionHint  lasso_soap_envelope_get_sb2_user_interaction_hint
+                                                        (LassoSoapEnvelope *soap_envelope);</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_soap_envelope_sb2_get_provider_id ()">
+<a name="lasso-soap-envelope-sb2-get-provider-id"></a><h3>lasso_soap_envelope_sb2_get_provider_id ()</h3>
+<pre class="programlisting">char*               lasso_soap_envelope_sb2_get_provider_id
+                                                        (LassoSoapEnvelope *soap_envelope);</pre>
+<p>
+Return the providerID contained in the sb2:Sender header.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>soap_envelope</code></em> :</span></p></td>
+<td> a <span class="type">LassoSoapEnvelope</span> object
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the providerID string or NULL if no sb2:Sender header is present.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_soap_envelope_sb2_get_redirect_request_url ()">
+<a name="lasso-soap-envelope-sb2-get-redirect-request-url"></a><h3>lasso_soap_envelope_sb2_get_redirect_request_url ()</h3>
+<pre class="programlisting">const char*         lasso_soap_envelope_sb2_get_redirect_request_url
+                                                        (LassoSoapEnvelope *soap_envelope);</pre>
+<p>
+</p>
+<p>Return the redirect request URL from the sb2:RedirectRequest SOAP Fault detail.</p>
+<p>
+</p>
+<p>
+</p>
+<p>The WSC MUST verify that this URL belong to the WSP. You can do this by comparing the domain
+with the one in the <em class="parameter"><code>LassoProfile.msg_url</code></em> field</p>
+<p>
+</p>
+<p>The WSC MUST redirect the User Agent to this URL with a GET or POST request. It MUST add a
+parameter named ReturnToURL giving the URL where the WSP will send the User Agent after the
+interaction. It MAY add an IDP parameter indicating to the WSP how to authenticate the principal
+if no preexisting session with the User Agent exists</p>
+<p>
+</p>
+<p>The WSP must check that the ReturnToURL belon to the WSP, by using the providerID URL for example.</p>
+<p>
+  </p>
+<p>After the interaction the WSC must redirect the User Agent to the ReturnToURL URL adding a parameter named ResendMessage. If ResendMessage is 0 or false, it means that the principal refused to continue the process. Any other value means that the prinicpal accepted and so the WSC can try again its request.</p>
+<p>
+  </p>
+<p>In order to succeed the request need to refer to the SOAP Fault response containing the RedirectRequest element. See <code class="function">lasso_soap_envelope_get_relates_to()</code>, and <span class="type">LassoWsAddrAttributedURI</span>.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>soap_envelope</code></em> :</span></p></td>
+<td> a <span class="type">LassoSoapEnvelope</span> object
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the redirect URL string or NULL if no sb2:RedirectRequest detail is present.. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> none. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=allow-none"><span class="acronym">allow-none</span></a> none. </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_soap_envelope_sb2_get_target_identity_header ()">
+<a name="lasso-soap-envelope-sb2-get-target-identity-header"></a><h3>lasso_soap_envelope_sb2_get_target_identity_header ()</h3>
+<pre class="programlisting">LassoIdWsf2Sb2TargetIdentity* lasso_soap_envelope_sb2_get_target_identity_header
+                                                        (LassoSoapEnvelope *soap_envelope);</pre>
+<p>
+Return the first sb2:TargetIdentity header.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>soap_envelope</code></em> :</span></p></td>
+<td> a <span class="type">LassoSoapEnvelope</span> object.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>transfer none. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> none. </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_soap_envelope_set_sb2_user_interaction_hint ()">
+<a name="lasso-soap-envelope-set-sb2-user-interaction-hint"></a><h3>lasso_soap_envelope_set_sb2_user_interaction_hint ()</h3>
+<pre class="programlisting">void                lasso_soap_envelope_set_sb2_user_interaction_hint
+                                                        (LassoSoapEnvelope *soap_envelope,
+                                                         LassoIdWsf2Sb2UserInteractionHint hint);</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_soap_envelope_wssec_get_security_header ()">
+<a name="lasso-soap-envelope-wssec-get-security-header"></a><h3>lasso_soap_envelope_wssec_get_security_header ()</h3>
+<pre class="programlisting">LassoWsSec1SecurityHeader* lasso_soap_envelope_wssec_get_security_header
+                                                        (LassoSoapEnvelope *soap_envelope);</pre>
+<p>
+Return the first wsse:Security header found in the headers of <em class="parameter"><code>soap_envelope</code></em>.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>soap_envelope</code></em> :</span></p></td>
+<td> a <span class="type">LassoSoapEnvelope</span> object
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>transfer none. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> none. </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_soap_envelope_get_soap_fault ()">
+<a name="lasso-soap-envelope-get-soap-fault"></a><h3>lasso_soap_envelope_get_soap_fault ()</h3>
+<pre class="programlisting">LassoSoapFault*     lasso_soap_envelope_get_soap_fault  (LassoSoapEnvelope *soap_envelope,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> create);</pre>
+<p>
+Return the first SOAP Fault in the Body of the soap message <em class="parameter"><code>soap_envelope</code></em>.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>soap_envelope</code></em> :</span></p></td>
+<td> a <span class="type">LassoSoapEnvelope</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>create</code></em> :</span></p></td>
+<td> whether to create the SOAP Fault. <acronym title="Default parameter value (for in case the shadows-to function has less parameters)."><span class="acronym">default</span></acronym> FALSE. </td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a <span class="type">LassoSoapFault</span> object or NULL.. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> none. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=allow-none"><span class="acronym">allow-none</span></a> none. </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_soap_envelope_set_relates_to ()">
+<a name="lasso-soap-envelope-set-relates-to"></a><h3>lasso_soap_envelope_set_relates_to ()</h3>
+<pre class="programlisting">void                lasso_soap_envelope_set_relates_to  (LassoSoapEnvelope *soap_envelope,
+                                                         char *value,
+                                                         char *relationship);</pre>
+<p>
+Set the value of the RelatesTo header, if it does not exist it is created. If <em class="parameter"><code>value</code></em> is NULL, the
+header is removed.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>soap_envelope</code></em> :</span></p></td>
+<td> a <span class="type">LassoSoapEnvelope</span> object
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value:(allow-none)</code></em> :</span></p></td>
+<td> the value to set into the new header
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>relationship:(allow-none)</code></em> :</span></p></td>
+<td> kind of the relationship
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

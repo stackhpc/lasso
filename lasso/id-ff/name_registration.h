@@ -1,22 +1,22 @@
-/* $Id: name_registration.h 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
@@ -27,12 +27,12 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* __cplusplus */ 
+#endif /* __cplusplus */
 
-#include <lasso/id-ff/profile.h>
+#include "profile.h"
 
-#include <lasso/xml/lib_register_name_identifier_request.h>
-#include <lasso/xml/lib_register_name_identifier_response.h>
+#include "../xml/lib_register_name_identifier_request.h"
+#include "../xml/lib_register_name_identifier_response.h"
 
 #define LASSO_TYPE_NAME_REGISTRATION (lasso_name_registration_get_type())
 #define LASSO_NAME_REGISTRATION(obj) \
@@ -55,7 +55,7 @@ struct _LassoNameRegistration {
 
 	/*< public >*/
 	LassoSamlNameIdentifier *oldNameIdentifier;
-	
+
 	/*< private >*/
 	void *private_data;  /* reserved for future use */
 };
@@ -71,28 +71,28 @@ LASSO_EXPORT LassoNameRegistration* lasso_name_registration_new(LassoServer *ser
 LASSO_EXPORT LassoNameRegistration* lasso_name_registration_new_from_dump(
 		LassoServer *server, const char *dump);
 
-LASSO_EXPORT gint lasso_name_registration_build_request_msg(
+LASSO_EXPORT lasso_error_t lasso_name_registration_build_request_msg(
 		LassoNameRegistration *name_registration);
 
-LASSO_EXPORT gint lasso_name_registration_build_response_msg(
+LASSO_EXPORT lasso_error_t lasso_name_registration_build_response_msg(
 		LassoNameRegistration *name_registration);
 
 LASSO_EXPORT void lasso_name_registration_destroy(LassoNameRegistration *name_registration);
 
 LASSO_EXPORT gchar* lasso_name_registration_dump(LassoNameRegistration *name_registration);
 
-LASSO_EXPORT gint lasso_name_registration_init_request(LassoNameRegistration *name_registration,
+LASSO_EXPORT lasso_error_t lasso_name_registration_init_request(LassoNameRegistration *name_registration,
 		char *remote_providerID, LassoHttpMethod http_method);
 
-LASSO_EXPORT gint lasso_name_registration_process_request_msg(
+LASSO_EXPORT lasso_error_t lasso_name_registration_process_request_msg(
 		LassoNameRegistration *name_registration, gchar *request_msg);
 
-LASSO_EXPORT gint lasso_name_registration_process_response_msg(
+LASSO_EXPORT lasso_error_t lasso_name_registration_process_response_msg(
 		LassoNameRegistration *name_registration, gchar *response_msg);
 
-LASSO_EXPORT gint lasso_name_registration_validate_request(
+LASSO_EXPORT lasso_error_t lasso_name_registration_validate_request(
 		LassoNameRegistration *name_registration);
- 
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

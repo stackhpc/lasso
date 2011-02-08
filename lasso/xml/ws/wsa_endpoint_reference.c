@@ -1,28 +1,31 @@
-/* $Id: wsa_endpoint_reference.c,v 1.0 2005/10/14 15:17:55 fpeters Exp $ 
+/* $Id: wsa_endpoint_reference.c,v 1.0 2005/10/14 15:17:55 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include "../private.h"
 #include "wsa_endpoint_reference.h"
+#include "../idwsf_strings.h"
+#include "../../registry.h"
 
 /*
  * Schema fragment (ws-addr.xsd):
@@ -46,18 +49,18 @@
 static struct XmlSnippet schema_snippets[] = {
 	{ "Address", SNIPPET_NODE,
 		G_STRUCT_OFFSET(LassoWsAddrEndpointReference, Address),
-		"LassoWsAddrAttributedURI" },
+		"LassoWsAddrAttributedURI", NULL, NULL },
 	{ "ReferenceParameters", SNIPPET_NODE,
 		G_STRUCT_OFFSET(LassoWsAddrEndpointReference, ReferenceParameters),
-		"LassoWsAddrReferenceParameters" },
+		"LassoWsAddrReferenceParameters", NULL, NULL },
 	{ "Metadata", SNIPPET_NODE,
 		G_STRUCT_OFFSET(LassoWsAddrEndpointReference, Metadata),
-		"LassoWsAddrMetadata" },
+		"LassoWsAddrMetadata", NULL, NULL },
 	{ "", SNIPPET_LIST_NODES | SNIPPET_ANY,
-		G_STRUCT_OFFSET(LassoWsAddrEndpointReference, any) },
+		G_STRUCT_OFFSET(LassoWsAddrEndpointReference, any), NULL, NULL, NULL},
 	{ "attributes", SNIPPET_ATTRIBUTE | SNIPPET_ANY,
-		G_STRUCT_OFFSET(LassoWsAddrEndpointReference, attributes) },
-	{NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoWsAddrEndpointReference, attributes), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 static LassoNodeClass *parent_class = NULL;
@@ -70,10 +73,6 @@ static LassoNodeClass *parent_class = NULL;
 static void
 instance_init(LassoWsAddrEndpointReference *node)
 {
-	node->Address = NULL;
-	node->ReferenceParameters = NULL;
-	node->Metadata = NULL;
-	node->any = NULL;
 	node->attributes = g_hash_table_new_full(
 		g_str_hash, g_str_equal, g_free, g_free);
 }
@@ -106,10 +105,17 @@ lasso_wsa_endpoint_reference_get_type()
 			sizeof(LassoWsAddrEndpointReference),
 			0,
 			(GInstanceInitFunc) instance_init,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,
 				"LassoWsAddrEndpointReference", &this_info, 0);
+		lasso_registry_default_add_direct_mapping(LASSO_WSA_HREF, "From", LASSO_LASSO_HREF,
+				"LassoWsAddrEndpointReference");
+		lasso_registry_default_add_direct_mapping(LASSO_WSA_HREF, "ReplyTo",
+				LASSO_LASSO_HREF, "LassoWsAddrEndpointReference");
+		lasso_registry_default_add_direct_mapping(LASSO_WSA_HREF, "FaultTo",
+				LASSO_LASSO_HREF, "LassoWsAddrEndpointReference");
 	}
 	return this_type;
 }

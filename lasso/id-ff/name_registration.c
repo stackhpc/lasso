@@ -1,22 +1,22 @@
-/* $Id: name_registration.c 3704 2008-05-15 21:17:44Z fpeters $
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -28,9 +28,11 @@
  *
  **/
 
-#include <lasso/id-ff/name_registration.h>
-#include <lasso/id-ff/profileprivate.h>
-#include <lasso/id-ff/providerprivate.h>
+#include "../xml/private.h"
+#include "name_registration.h"
+#include "profileprivate.h"
+#include "providerprivate.h"
+#include "../utils.h"
 
 /*****************************************************************************/
 /* public methods                                                            */
@@ -39,9 +41,9 @@
 /**
  * lasso_name_registration_build_request_msg:
  * @name_registration: a #LassoNameRegistration
- * 
+ *
  * Builds a register name identifier request message.
- * 
+ *
  * It gets the register name identifier protocol profile and:
  * <itemizedlist>
  * <listitem><para>
@@ -57,7 +59,7 @@
  *   identifier object, sets @msg_body to NULL.
  * </para></listitem>
  * </itemizedlist>
- * 
+ *
  * Return value: 0 on success; or a negative value otherwise.
  **/
 gint
@@ -78,8 +80,7 @@ lasso_name_registration_build_request_msg(LassoNameRegistration *name_registrati
 		return critical_error(LASSO_PROFILE_ERROR_MISSING_REMOTE_PROVIDERID);
 	}
 
-	remote_provider = g_hash_table_lookup(profile->server->providers,
-			profile->remote_providerID);
+	remote_provider = lasso_server_get_provider(profile->server, profile->remote_providerID);
 	if (LASSO_IS_PROVIDER(remote_provider) == FALSE) {
 		return critical_error(LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND);
 	}
@@ -87,9 +88,9 @@ lasso_name_registration_build_request_msg(LassoNameRegistration *name_registrati
 	if (profile->http_request_method == LASSO_HTTP_METHOD_SOAP) {
 		profile->msg_url = lasso_provider_get_metadata_one(
 				remote_provider, "SoapEndpoint");
-		LASSO_SAMLP_REQUEST_ABSTRACT(profile->request)->private_key_file = 
+		LASSO_SAMLP_REQUEST_ABSTRACT(profile->request)->private_key_file =
 			profile->server->private_key;
-		LASSO_SAMLP_REQUEST_ABSTRACT(profile->request)->certificate_file = 
+		LASSO_SAMLP_REQUEST_ABSTRACT(profile->request)->certificate_file =
 			profile->server->certificate;
 		profile->msg_body = lasso_node_export_to_soap(profile->request);
 		return 0;
@@ -103,18 +104,19 @@ lasso_name_registration_build_request_msg(LassoNameRegistration *name_registrati
 		if (url == NULL) {
 			return critical_error(LASSO_PROFILE_ERROR_UNKNOWN_PROFILE_URL);
 		}
-		query = lasso_node_export_to_query(LASSO_NODE(profile->request),
+		query = lasso_node_export_to_query_with_password(LASSO_NODE(profile->request),
 				profile->server->signature_method,
-				profile->server->private_key);
+				profile->server->private_key,
+				profile->server->private_key_password);
 		if (query == NULL) {
-			g_free(url);
+			lasso_release(url);
 			return critical_error(LASSO_PROFILE_ERROR_BUILDING_QUERY_FAILED);
 		}
 		/* build the msg_url */
 		profile->msg_url = lasso_concat_url_query(url, query);
 		profile->msg_body = NULL;
-		g_free(url);
-		g_free(query);
+		lasso_release(url);
+		lasso_release(query);
 		return 0;
 	}
 
@@ -125,7 +127,7 @@ lasso_name_registration_build_request_msg(LassoNameRegistration *name_registrati
 /**
  * lasso_name_registration_build_response_msg:
  * @name_registration: a #LassoNameRegistration
- * 
+ *
  * Builds the register name idendifier response message.
  *
  * It gets the request message method and:
@@ -145,7 +147,7 @@ lasso_name_registration_build_request_msg(LassoNameRegistration *name_registrati
  * If private key and certificate are set in server object it will also signs
  * the message (either with X509 if SOAP or with a simple signature for query
  * strings).
- * 
+ *
  * Return value: 0 on success; or a negative value otherwise.
  **/
 gint
@@ -166,17 +168,16 @@ lasso_name_registration_build_response_msg(LassoNameRegistration *name_registrat
 		return critical_error(LASSO_PROFILE_ERROR_MISSING_REMOTE_PROVIDERID);
 	}
 
-	remote_provider = g_hash_table_lookup(profile->server->providers,
-			profile->remote_providerID);
+	remote_provider = lasso_server_get_provider(profile->server, profile->remote_providerID);
 	if (LASSO_IS_PROVIDER(remote_provider) == FALSE) {
 		return critical_error(LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND);
 	}
 
 	if (profile->http_request_method == LASSO_HTTP_METHOD_SOAP) {
 		profile->msg_url = NULL;
-		LASSO_SAMLP_RESPONSE_ABSTRACT(profile->response)->private_key_file = 
+		LASSO_SAMLP_RESPONSE_ABSTRACT(profile->response)->private_key_file =
 			profile->server->private_key;
-		LASSO_SAMLP_RESPONSE_ABSTRACT(profile->response)->certificate_file = 
+		LASSO_SAMLP_RESPONSE_ABSTRACT(profile->response)->certificate_file =
 			profile->server->certificate;
 		profile->msg_body = lasso_node_export_to_soap(profile->response);
 		return 0;
@@ -188,17 +189,18 @@ lasso_name_registration_build_response_msg(LassoNameRegistration *name_registrat
 		if (url == NULL) {
 			return critical_error(LASSO_PROFILE_ERROR_UNKNOWN_PROFILE_URL);
 		}
-		query = lasso_node_export_to_query(LASSO_NODE(profile->response),
+		query = lasso_node_export_to_query_with_password(LASSO_NODE(profile->response),
 				profile->server->signature_method,
-				profile->server->private_key);
+				profile->server->private_key,
+				profile->server->private_key_password);
 		if (query == NULL) {
-			g_free(url);
+			lasso_release(url);
 			return critical_error(LASSO_PROFILE_ERROR_BUILDING_QUERY_FAILED);
 		}
 		/* build the msg_url */
 		profile->msg_url = lasso_concat_url_query(url, query);
-		g_free(url);
-		g_free(query);
+		lasso_release(url);
+		lasso_release(query);
 		profile->msg_body = NULL;
 
 		return 0;
@@ -210,7 +212,7 @@ lasso_name_registration_build_response_msg(LassoNameRegistration *name_registrat
 /**
  * lasso_name_registration_destroy:
  * @name_registration: a #LassoNameRegistration
- * 
+ *
  * Destroys a #LassoNameRegistration object.
  **/
 void
@@ -230,7 +232,7 @@ lasso_name_registration_destroy(LassoNameRegistration *name_registration)
  * Initializes a new lib:RegisterNameIdentifierRequest request; it sets
  * @name_registration->nameIdentifier to the new name identifier and
  * @name_registration->oldNameIdentifier to the old one.
- * 
+ *
  * Return value: 0 on success; or a negative value otherwise.
  **/
 gint
@@ -256,8 +258,7 @@ lasso_name_registration_init_request(LassoNameRegistration *name_registration,
 	/* set the remote provider id */
 	profile->remote_providerID = g_strdup(remote_providerID);
 
-	remote_provider = g_hash_table_lookup(profile->server->providers,
-			profile->remote_providerID);
+	remote_provider = lasso_server_get_provider(profile->server, profile->remote_providerID);
 	if (LASSO_IS_PROVIDER(remote_provider) == FALSE) {
 		return critical_error(LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND);
 	}
@@ -299,7 +300,7 @@ lasso_name_registration_init_request(LassoNameRegistration *name_registration,
 		}
 
 		oldNameIdentifier = g_object_ref(federation->local_nameIdentifier);
-		
+
 		spNameIdentifier = NULL;
 		if (federation->remote_nameIdentifier) {
 			spNameIdentifier = g_object_ref(federation->remote_nameIdentifier);
@@ -337,13 +338,13 @@ lasso_name_registration_init_request(LassoNameRegistration *name_registration,
 	profile->request = lasso_lib_register_name_identifier_request_new_full(
 			LASSO_PROVIDER(profile->server)->ProviderID,
 			idpNameIdentifier, spNameIdentifier, oldNameIdentifier,
-			profile->server->certificate ? 
+			profile->server->certificate ?
 				LASSO_SIGNATURE_TYPE_WITHX509 : LASSO_SIGNATURE_TYPE_SIMPLE,
 			LASSO_SIGNATURE_METHOD_RSA_SHA1);
 	if (profile->request == NULL) {
 		return critical_error(LASSO_PROFILE_ERROR_BUILDING_REQUEST_FAILED);
 	}
-	LASSO_LIB_REGISTER_NAME_IDENTIFIER_REQUEST(profile->request)->RelayState = 
+	LASSO_LIB_REGISTER_NAME_IDENTIFIER_REQUEST(profile->request)->RelayState =
 			g_strdup(profile->msg_relayState);
 
 	if (lasso_provider_get_protocol_conformance(remote_provider) < LASSO_PROTOCOL_LIBERTY_1_2) {
@@ -361,7 +362,7 @@ lasso_name_registration_init_request(LassoNameRegistration *name_registration,
  * lasso_name_registration_process_request_msg:
  * @name_registration: a #LassoNameRegistration
  * @request_msg: the register name identifier request message
- * 
+ *
  * Processes a lib:RegisterNameIdentifierRequest message.  Rebuilds a request
  * object from the message and optionally verifies its signature.  Sets
  * profile->nameIdentifier to local name identifier.  If it changed (when this
@@ -393,7 +394,7 @@ gint lasso_name_registration_process_request_msg(LassoNameRegistration *name_reg
 		return critical_error(LASSO_PROFILE_ERROR_INVALID_MSG);
 	}
 
-	remote_provider = g_hash_table_lookup(profile->server->providers,
+	remote_provider = lasso_server_get_provider(profile->server,
 			LASSO_LIB_REGISTER_NAME_IDENTIFIER_REQUEST(profile->request)->ProviderID);
 	if (LASSO_IS_PROVIDER(remote_provider) == FALSE) {
 		return critical_error(LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND);
@@ -435,7 +436,7 @@ gint lasso_name_registration_process_request_msg(LassoNameRegistration *name_reg
  * lasso_name_registration_process_response_msg:
  * @name_registration: a #LassoNameRegistration
  * @response_msg: the register name identifier response message
- * 
+ *
  * Processes a lib:RegisterNameIdentifierResponse message.  Rebuilds a response
  * object from the message and optionally verifies its signature.
  *
@@ -454,7 +455,7 @@ lasso_name_registration_process_response_msg(LassoNameRegistration *name_registr
 	LassoHttpMethod response_method;
 	LassoLibStatusResponse *response;
 	LassoMessageFormat format;
-	int rc;
+	int rc = 0;
 	char *statusCodeValue;
 
 	g_return_val_if_fail(LASSO_IS_NAME_REGISTRATION(name_registration),
@@ -474,7 +475,7 @@ lasso_name_registration_process_response_msg(LassoNameRegistration *name_registr
 	if (format == LASSO_MESSAGE_FORMAT_QUERY)
 		response_method = LASSO_HTTP_METHOD_REDIRECT;
 
-	remote_provider = g_hash_table_lookup(profile->server->providers,
+	remote_provider = lasso_server_get_provider(profile->server,
 			LASSO_LIB_STATUS_RESPONSE(profile->response)->ProviderID);
 	if (LASSO_IS_PROVIDER(remote_provider) == FALSE) {
 		return critical_error(LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND);
@@ -507,8 +508,7 @@ lasso_name_registration_process_response_msg(LassoNameRegistration *name_registr
 		return critical_error(LASSO_PROFILE_ERROR_FEDERATION_NOT_FOUND);
 	}
 
-	remote_provider = g_hash_table_lookup(profile->server->providers,
-			profile->remote_providerID);
+	remote_provider = lasso_server_get_provider(profile->server, profile->remote_providerID);
 	if (LASSO_IS_PROVIDER(remote_provider) == FALSE) {
 		return critical_error(LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND);
 	}
@@ -544,9 +544,9 @@ lasso_name_registration_process_response_msg(LassoNameRegistration *name_registr
  * @name_registration: a #LassoNameRegistration
  *
  * Checks profile request with regards to message status and principal
- * federations, update them accordingly and prepares a 
+ * federations, update them accordingly and prepares a
  * lib:RegisterNameIdentifierResponse accordingly.
- * 
+ *
  * Return value: 0 on success; or a negative value otherwise.
  **/
 gint
@@ -580,9 +580,9 @@ lasso_name_registration_validate_request(LassoNameRegistration *name_registratio
 	/* set register name identifier response */
 	profile->response = lasso_lib_register_name_identifier_response_new_full(
 			LASSO_PROVIDER(profile->server)->ProviderID,
-			LASSO_SAML_STATUS_CODE_SUCCESS, 
+			LASSO_SAML_STATUS_CODE_SUCCESS,
 			LASSO_LIB_REGISTER_NAME_IDENTIFIER_REQUEST(profile->request),
-			profile->server->certificate ? 
+			profile->server->certificate ?
 				LASSO_SIGNATURE_TYPE_WITHX509 : LASSO_SIGNATURE_TYPE_SIMPLE,
 			LASSO_SIGNATURE_METHOD_RSA_SHA1);
 	if (LASSO_IS_LIB_REGISTER_NAME_IDENTIFIER_RESPONSE(profile->response) == FALSE) {
@@ -611,8 +611,7 @@ lasso_name_registration_validate_request(LassoNameRegistration *name_registratio
 		return LASSO_PROFILE_ERROR_MISSING_NAME_IDENTIFIER;
 	}
 
-	remote_provider = g_hash_table_lookup(profile->server->providers,
-			profile->remote_providerID);
+	remote_provider = lasso_server_get_provider(profile->server, profile->remote_providerID);
 	if (LASSO_IS_PROVIDER(remote_provider) == FALSE) {
 		return critical_error(LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND);
 	}
@@ -645,8 +644,8 @@ lasso_name_registration_validate_request(LassoNameRegistration *name_registratio
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "OldNameIdentifier", SNIPPET_NODE_IN_CHILD,
-		G_STRUCT_OFFSET(LassoNameRegistration, oldNameIdentifier) },
-	{ NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoNameRegistration, oldNameIdentifier), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 static LassoNodeClass *parent_class = NULL;
@@ -707,6 +706,7 @@ lasso_name_registration_get_type()
 			sizeof(LassoNameRegistration),
 			0,
 			(GInstanceInitFunc) instance_init,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_PROFILE,
@@ -718,9 +718,9 @@ lasso_name_registration_get_type()
 /**
  * lasso_name_registration_new:
  * @server: the #LassoServer
- * 
+ *
  * Creates a new #LassoNameRegistration.
- * 
+ *
  * Return value: a newly created #LassoNameRegistration object; or NULL if
  *     an error occured
  **/
@@ -758,8 +758,8 @@ lasso_name_registration_new_from_dump(LassoServer *server, const char *dump)
 
 	name_registration = lasso_name_registration_new(server);
 	doc = xmlParseMemory(dump, strlen(dump));
-	init_from_xml(LASSO_NODE(name_registration), xmlDocGetRootElement(doc)); 
-	xmlFreeDoc(doc);
+	init_from_xml(LASSO_NODE(name_registration), xmlDocGetRootElement(doc));
+	lasso_release_doc(doc);
 
 	return name_registration;
 }
@@ -767,10 +767,10 @@ lasso_name_registration_new_from_dump(LassoServer *server, const char *dump)
 /**
  * lasso_name_registration_dump:
  * @name_registration: a #LassoNameRegistration
- * 
+ *
  * Dumps @name_registration content to an XML string.
- * 
- * Return value: the dump string.  It must be freed by the caller.
+ *
+ * Return value:(transfer full): the dump string.  It must be freed by the caller.
  **/
 gchar *
 lasso_name_registration_dump(LassoNameRegistration *name_registration)

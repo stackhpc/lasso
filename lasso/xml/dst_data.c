@@ -1,28 +1,30 @@
-/* $Id: dst_data.c 3704 2008-05-15 21:17:44Z fpeters $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/dst_data.h>
+#include "private.h"
+#include "dst_data.h"
+#include "./idwsf_strings.h"
 
 /**
  * SECTION:dst_data
@@ -30,7 +32,7 @@
  *
  * <figure><title>Schema fragment for dst:Data</title>
  * <programlisting><![CDATA[
- * 
+ *
  * <xs:element name="Data" minOccurs="0" maxOccurs="unbounded">
  *   <xs:complexType>
  *     <xs:sequence>
@@ -59,10 +61,10 @@
 /*****************************************************************************/
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "", SNIPPET_LIST_XMLNODES, G_STRUCT_OFFSET(LassoDstData, any) },
-	{ "id", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoDstData, id) },
-	{ "itemIDRef", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoDstData, itemIDRef) },
-	{ NULL, 0, 0}
+	{ "", SNIPPET_LIST_XMLNODES, G_STRUCT_OFFSET(LassoDstData, any), NULL, NULL, NULL},
+	{ "id", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoDstData, id), NULL, NULL, NULL},
+	{ "itemIDRef", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoDstData, itemIDRef), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 
@@ -70,13 +72,6 @@ static struct XmlSnippet schema_snippets[] = {
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoDstData *node)
-{
-	node->any = NULL;
-	node->id = NULL;
-	node->itemIDRef = NULL;
-}
 
 static void
 class_init(LassoDstDataClass *klass)
@@ -104,7 +99,8 @@ lasso_dst_data_get_type()
 			NULL,
 			sizeof(LassoDstData),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,

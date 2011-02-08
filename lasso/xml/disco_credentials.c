@@ -1,28 +1,30 @@
-/* $Id: disco_credentials.c 3704 2008-05-15 21:17:44Z fpeters $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/disco_credentials.h>
+#include "private.h"
+#include "disco_credentials.h"
+#include "./idwsf_strings.h"
 
 /**
  * SECTION:disco_credentials
@@ -30,7 +32,7 @@
  *
  * <figure><title>Schema fragment for disco:Credentials</title>
  * <programlisting><![CDATA[
- * 
+ *
  * <xs:element name="Credentials" minOccurs="0">
  *   <xs:complexType>
  *     <xs:sequence>
@@ -48,19 +50,13 @@
 /*****************************************************************************/
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "", SNIPPET_LIST_NODES, G_STRUCT_OFFSET(LassoDiscoCredentials, any) },
-	{ NULL, 0, 0}
+	{ "", SNIPPET_LIST_XMLNODES, G_STRUCT_OFFSET(LassoDiscoCredentials, any), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
-
-static void
-instance_init(LassoDiscoCredentials *node)
-{
-	node->any = NULL;
-}
 
 static void
 class_init(LassoDiscoCredentialsClass *klass)
@@ -88,7 +84,8 @@ lasso_disco_credentials_get_type()
 			NULL,
 			sizeof(LassoDiscoCredentials),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,

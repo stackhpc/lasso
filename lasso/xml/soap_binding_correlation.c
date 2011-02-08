@@ -1,28 +1,30 @@
-/* $Id: soap_binding_correlation.c 3704 2008-05-15 21:17:44Z fpeters $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/soap_binding_correlation.h>
+#include "private.h"
+#include "soap_binding_correlation.h"
+#include "./idwsf_strings.h"
 
 /**
  * SECTION:soap_binding_correlation
@@ -40,7 +42,7 @@
  * </xs:complexType>
  * ]]></programlisting>
  * </figure>
- */ 
+ */
 
 /*****************************************************************************/
 /* private methods                                                           */
@@ -48,32 +50,22 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "messageID", SNIPPET_ATTRIBUTE,
-	  G_STRUCT_OFFSET(LassoSoapBindingCorrelation, messageID) },
+		G_STRUCT_OFFSET(LassoSoapBindingCorrelation, messageID), NULL, NULL, NULL},
 	{ "refToMessageID", SNIPPET_ATTRIBUTE,
-	  G_STRUCT_OFFSET(LassoSoapBindingCorrelation, refToMessageID) },
+		G_STRUCT_OFFSET(LassoSoapBindingCorrelation, refToMessageID), NULL, NULL, NULL},
 	{ "timestamp", SNIPPET_ATTRIBUTE,
-	  G_STRUCT_OFFSET(LassoSoapBindingCorrelation, timestamp) },
-	{ "id", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoSoapBindingCorrelation, id) },
+		G_STRUCT_OFFSET(LassoSoapBindingCorrelation, timestamp), NULL, NULL, NULL},
+	{ "id", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoSoapBindingCorrelation, id), NULL, NULL, NULL},
 	{ "mustUnderstand", SNIPPET_ATTRIBUTE,
-	  G_STRUCT_OFFSET(LassoSoapBindingCorrelation, mustUnderstand) },
-	{ "actor", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoSoapBindingCorrelation, actor) },
-	{ NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoSoapBindingCorrelation, mustUnderstand), NULL, NULL, NULL},
+	{ "actor", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoSoapBindingCorrelation, actor), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoSoapBindingCorrelation *node)
-{
-	node->messageID = NULL;
-	node->refToMessageID = NULL;
-	node->timestamp = NULL;
-	node->id = NULL;
-	node->mustUnderstand = NULL;
-	node->actor = NULL;
-}
 
 static void
 class_init(LassoSoapBindingCorrelationClass *klass)
@@ -101,7 +93,8 @@ lasso_soap_binding_correlation_get_type()
 			NULL,
 			sizeof(LassoSoapBindingCorrelation),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,
@@ -119,19 +112,6 @@ lasso_soap_binding_correlation_new(const gchar *messageId, const gchar *timestam
 
 	node->messageID = g_strdup(messageId);
 	node->timestamp = g_strdup(timestamp);
-
-	return node;
-}
-
-LassoSoapBindingCorrelation*
-lasso_soap_binding_correlation_new_from_message(const gchar *message)
-{
-	LassoSoapBindingCorrelation *node;
-
-	g_return_val_if_fail(message != NULL, NULL);
-
-	node = g_object_new(LASSO_TYPE_SOAP_BINDING_CORRELATION, NULL);
-	lasso_node_init_from_message(LASSO_NODE(node), message);
 
 	return node;
 }

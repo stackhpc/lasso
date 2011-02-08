@@ -1,27 +1,28 @@
-/* $Id: samlp2_authn_request.c 3704 2008-05-15 21:17:44Z fpeters $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include "../private.h"
 #include "samlp2_authn_request.h"
 
 /**
@@ -62,67 +63,35 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "Subject", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, Subject) },
+		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, Subject), NULL, NULL, NULL},
 	{ "NameIDPolicy", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, NameIDPolicy) },
+		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, NameIDPolicy), NULL, NULL, NULL},
 	{ "Conditions", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, Conditions) },
+		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, Conditions), NULL, NULL, NULL},
 	{ "RequestedAuthnContext", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, RequestedAuthnContext) },
+		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, RequestedAuthnContext), NULL, NULL, NULL},
 	{ "Scoping", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, Scoping) },
+		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, Scoping), NULL, NULL, NULL},
 	{ "ForceAuthn", SNIPPET_ATTRIBUTE | SNIPPET_BOOLEAN,
-		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, ForceAuthn) },
+		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, ForceAuthn), NULL, NULL, NULL},
 	{ "IsPassive", SNIPPET_ATTRIBUTE | SNIPPET_BOOLEAN,
-		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, IsPassive) },
+		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, IsPassive), NULL, NULL, NULL},
 	{ "ProtocolBinding", SNIPPET_ATTRIBUTE,
-		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, ProtocolBinding) },
+		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, ProtocolBinding), NULL, NULL, NULL},
 	{ "AssertionConsumerServiceIndex",
 		SNIPPET_ATTRIBUTE | SNIPPET_INTEGER | SNIPPET_OPTIONAL_NEG,
-		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, AssertionConsumerServiceIndex) },
+		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, AssertionConsumerServiceIndex), NULL, NULL, NULL},
 	{ "AssertionConsumerServiceURL", SNIPPET_ATTRIBUTE,
-		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, AssertionConsumerServiceURL) },
+		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, AssertionConsumerServiceURL), NULL, NULL, NULL},
 	{ "AttributeConsumingServiceIndex",
 		SNIPPET_ATTRIBUTE | SNIPPET_INTEGER | SNIPPET_OPTIONAL_NEG,
-		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, AttributeConsumingServiceIndex) },
+		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, AttributeConsumingServiceIndex), NULL, NULL, NULL},
 	{ "ProviderName", SNIPPET_ATTRIBUTE,
-		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, ProviderName) },
-	{NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoSamlp2AuthnRequest, ProviderName), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 static LassoNodeClass *parent_class = NULL;
-
-
-static gchar*
-build_query(LassoNode *node)
-{
-	char *ret, *deflated_message;
-
-	deflated_message = lasso_node_build_deflated_query(node);
-	if (deflated_message == NULL) {
-		return NULL;
-	}
-	ret = g_strdup_printf("SAMLRequest=%s", deflated_message);
-	/* XXX: must support RelayState (which profiles?) */
-	g_free(deflated_message);
-	return ret;
-}
-
-
-static gboolean
-init_from_query(LassoNode *node, char **query_fields)
-{
-	gboolean rc;
-	char *relay_state = NULL;
-	LassoSamlp2AuthnRequest *request = LASSO_SAMLP2_AUTHN_REQUEST(node);
-
-	rc = lasso_node_init_from_saml2_query_fields(node, query_fields, &relay_state);
-	if (rc && relay_state != NULL) {
-		request->relayState = relay_state;
-	}
-	return rc;
-}
-
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
@@ -131,19 +100,8 @@ init_from_query(LassoNode *node, char **query_fields)
 static void
 instance_init(LassoSamlp2AuthnRequest *node)
 {
-	node->Subject = NULL;
-	node->NameIDPolicy = NULL;
-	node->Conditions = NULL;
-	node->RequestedAuthnContext = NULL;
-	node->Scoping = NULL;
-	node->ForceAuthn = FALSE;
-	node->IsPassive = FALSE;
-	node->ProtocolBinding = NULL;
 	node->AssertionConsumerServiceIndex = -1;
-	node->AssertionConsumerServiceURL = NULL;
 	node->AttributeConsumingServiceIndex = -1;
-	node->ProviderName = NULL;
-	node->relayState = NULL;
 }
 
 static void
@@ -152,10 +110,8 @@ class_init(LassoSamlp2AuthnRequestClass *klass)
 	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
 
 	parent_class = g_type_class_peek_parent(klass);
-	nclass->build_query = build_query;
-	nclass->init_from_query = init_from_query;
 	nclass->node_data = g_new0(LassoNodeClassData, 1);
-	lasso_node_class_set_nodename(nclass, "AuthnRequest"); 
+	lasso_node_class_set_nodename(nclass, "AuthnRequest");
 	lasso_node_class_set_ns(nclass, LASSO_SAML2_PROTOCOL_HREF, LASSO_SAML2_PROTOCOL_PREFIX);
 	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
@@ -176,6 +132,7 @@ lasso_samlp2_authn_request_get_type()
 			sizeof(LassoSamlp2AuthnRequest),
 			0,
 			(GInstanceInitFunc) instance_init,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_SAMLP2_REQUEST_ABSTRACT,

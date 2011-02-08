@@ -1,22 +1,22 @@
-/* $Id: federation.c 3704 2008-05-15 21:17:44Z fpeters $
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -26,12 +26,16 @@
  * SECTION:federation
  * @short_description: Principal federation between two providers
  *
+ * A #LassoFederation represents the an identifier shared by two provider, usually an identity
+ * provider and a service provider. Instance of this class are usually never accessed directly.
  **/
 
-#include <lasso/id-ff/federation.h>
-#include <lasso/id-ff/provider.h>
+#include "../utils.h"
+#include "../xml/private.h"
+#include "federation.h"
+#include "provider.h"
 
-#include <lasso/xml/saml-2.0/saml2_name_id.h>
+#include "../xml/saml-2.0/saml2_name_id.h"
 
 struct _LassoFederationPrivate
 {
@@ -75,9 +79,9 @@ lasso_federation_build_name_identifier(const gchar *nameQualifier,
  **/
 void
 lasso_federation_build_local_name_identifier(LassoFederation *federation,
-					    const gchar     *nameQualifier,
-					    const gchar     *format,
-					    const gchar     *content)
+		const gchar     *nameQualifier,
+		const gchar     *format,
+		const gchar     *content)
 {
 	federation->local_nameIdentifier = lasso_federation_build_name_identifier(
 			nameQualifier, format, content);
@@ -158,12 +162,12 @@ lasso_federation_verify_name_identifier(LassoFederation *federation,
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "LocalNameIdentifier", SNIPPET_NODE_IN_CHILD,
-		G_STRUCT_OFFSET(LassoFederation, local_nameIdentifier) },
+		G_STRUCT_OFFSET(LassoFederation, local_nameIdentifier), NULL, NULL, NULL},
 	{ "RemoteNameIdentifier", SNIPPET_NODE_IN_CHILD,
-		G_STRUCT_OFFSET(LassoFederation, remote_nameIdentifier) },
+		G_STRUCT_OFFSET(LassoFederation, remote_nameIdentifier), NULL, NULL, NULL},
 	{ "RemoteProviderID", SNIPPET_ATTRIBUTE,
-		G_STRUCT_OFFSET(LassoFederation, remote_providerID) },
-	{ NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoFederation, remote_providerID), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 static LassoNodeClass *parent_class = NULL;
@@ -205,7 +209,7 @@ static void
 finalize(GObject *object)
 {
 	LassoFederation *federation = LASSO_FEDERATION(object);
-	g_free(federation->private_data);
+	lasso_release(federation->private_data);
 	G_OBJECT_CLASS(parent_class)->finalize(object);
 }
 
@@ -216,7 +220,7 @@ finalize(GObject *object)
 static void
 instance_init(LassoFederation *federation)
 {
-	federation->private_data = g_new(LassoFederationPrivate, 1);
+	federation->private_data = g_new0(LassoFederationPrivate, 1);
 	federation->private_data->dispose_has_run = FALSE;
 
 	federation->remote_providerID  = NULL;
@@ -234,6 +238,7 @@ class_init(LassoFederationClass *klass)
 	nclass->init_from_xml = init_from_xml;
 	nclass->node_data = g_new0(LassoNodeClassData, 1);
 	lasso_node_class_set_nodename(nclass, "Federation");
+	lasso_node_class_set_ns(nclass, LASSO_LASSO_HREF, LASSO_LASSO_PREFIX);
 	lasso_node_class_add_snippets(nclass, schema_snippets);
 
 	G_OBJECT_CLASS(klass)->dispose = dispose;
@@ -256,6 +261,7 @@ lasso_federation_get_type()
 			sizeof(LassoFederation),
 			0,
 			(GInstanceInitFunc) instance_init,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,
@@ -273,7 +279,7 @@ lasso_federation_get_type()
  * Return value: a newly created #LassoFederation
  **/
 LassoFederation*
-lasso_federation_new(gchar *remote_providerID)
+lasso_federation_new(const gchar *remote_providerID)
 {
 	LassoFederation *federation;
 

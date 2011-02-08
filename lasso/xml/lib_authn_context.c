@@ -1,28 +1,29 @@
-/* $Id: lib_authn_context.c 3704 2008-05-15 21:17:44Z fpeters $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/lib_authn_context.h>
+#include "private.h"
+#include "lib_authn_context.h"
 
 /**
  * SECTION:lib_authn_context
@@ -51,22 +52,16 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "AuthnContextClassRef", SNIPPET_CONTENT,
-		G_STRUCT_OFFSET(LassoLibAuthnContext, AuthnContextClassRef) },
+		G_STRUCT_OFFSET(LassoLibAuthnContext, AuthnContextClassRef), NULL, NULL, NULL},
 	{ "AuthnContextStatementRef", SNIPPET_CONTENT,
-		G_STRUCT_OFFSET(LassoLibAuthnContext, AuthnContextStatementRef) },
-	{ NULL, 0, 0 }
+		G_STRUCT_OFFSET(LassoLibAuthnContext, AuthnContextStatementRef), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoLibAuthnContext *node)
-{
-	node->AuthnContextClassRef = NULL;
-	node->AuthnContextStatementRef = NULL;
-}
 
 static void
 class_init(LassoLibAuthnContextClass *klass)
@@ -94,7 +89,8 @@ lasso_lib_authn_context_get_type()
 			NULL,
 			sizeof(LassoLibAuthnContext),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,
