@@ -1,3 +1,9 @@
+lasso (2.2.1-4build3) natty; urgency=low
+
+  * No-change rebuild for multiarch libs
+
+ -- Andreas Moog <amoog@ubuntu.com>  Tue, 05 Apr 2011 02:54:08 +0200
+
 lasso (2.2.1-4build2) natty; urgency=low
 
   * Rebuild to add support for python 2.7.
