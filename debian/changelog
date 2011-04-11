@@ -1,3 +1,18 @@
+lasso (2.3.5-2) unstable; urgency=low
+
+  * debian/liblasso-perl.install: fixed module name (uppercase L).
+    (closes: #622114)
+  * debian/liblasso3-dev.install: do not install libtool archive file.
+    (closes: #620909, #621560)
+  * debian/control.in: add build-dependency on gcc-4.4, to match the gcj
+    version that is used.
+  * debian/rules:
+    + force gcc 4.4, because of gcj 4.4.
+    + remove rpath from Lasso.so Perl module.
+    + remove obsolete call to dh_python.
+
+ -- Frederic Peters <fpeters@debian.org>  Mon, 11 Apr 2011 09:35:48 +0200
+
 lasso (2.3.5-1) unstable; urgency=low
 
   * New upstream release.
