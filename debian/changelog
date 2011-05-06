@@ -1,3 +1,10 @@
+lasso (2.3.5-2ubuntu1) oneiric; urgency=low
+
+  * Drop b-d ongcj.
+  * Don't use gcc-4.4 as CC.
+
+ -- Matthias Klose <doko@ubuntu.com>  Fri, 06 May 2011 19:38:21 +0200
+
 lasso (2.3.5-2) unstable; urgency=low
 
   * debian/liblasso-perl.install: fixed module name (uppercase L).
