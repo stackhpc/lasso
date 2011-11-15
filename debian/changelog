@@ -1,3 +1,9 @@
+lasso (2.3.5-4build1) precise; urgency=low
+
+  * Rebuild for Perl 5.14.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Tue, 15 Nov 2011 13:28:49 +0000
+
 lasso (2.3.5-4) unstable; urgency=low
 
   * Don't force gcc 4.4 anymore; /facepalm. (closes: #635640)
