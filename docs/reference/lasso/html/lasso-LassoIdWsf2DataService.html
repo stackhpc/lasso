@@ -3,30 +3,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LassoIdWsf2DataService</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="idwsf2.html" title="ID-WSF 2.0">
 <link rel="prev" href="lasso-LassoIdWsf2Discovery.html" title="LassoIdWsf2Discovery">
 <link rel="next" href="lasso-LassoIdWsf2Profile.html" title="LassoIdWsf2Profile">
-<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
-<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
-<link rel="reference" href="rn01.html" title="Application Programming Interface">
-<link rel="chapter" href="architecture.html" title="Lasso Architecture">
-<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
-<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
-<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
-<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
-<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
-<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
-<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
-<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
-<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
-<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
-<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
-<link rel="part" href="pt01.html" title="Part II. Appendix">
-<link rel="index" href="api-index.html" title="API Index">
-<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
@@ -39,11 +22,11 @@
 </tr>
 <tr><td colspan="5" class="shortcuts">
 <a href="#lasso-LassoIdWsf2DataService.synopsis" class="shortcut">Top</a>
-                 | 
-                <a href="#lasso-LassoIdWsf2DataService.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#lasso-LassoIdWsf2DataService.description" class="shortcut">Description</a>
 </td></tr>
 </table>
-<div class="refentry" title="LassoIdWsf2DataService">
+<div class="refentry">
 <a name="lasso-LassoIdWsf2DataService"></a><div class="titlepage"></div>
 <div class="refnamediv"><table width="100%"><tr>
 <td valign="top">
@@ -52,713 +35,557 @@
 </td>
 <td valign="top" align="right"></td>
 </tr></table></div>
-<div class="refsynopsisdiv" title="Synopsis">
+<div class="refsynopsisdiv">
 <a name="lasso-LassoIdWsf2DataService.synopsis"></a><h2>Synopsis</h2>
-<pre class="synopsis">
-                    LassoIdWsf2DataService;
-LassoIdWsf2DataService* lasso_idwsf2_data_service_new   (LassoServer *server);
-lasso_error_t       lasso_idwsf2_data_service_init_create
-                                                        (LassoIdWsf2DataService *service);
-lasso_error_t       lasso_idwsf2_data_service_init_delete
-                                                        (LassoIdWsf2DataService *service);
-lasso_error_t       lasso_idwsf2_data_service_init_modify
-                                                        (LassoIdWsf2DataService *service);
-lasso_error_t       lasso_idwsf2_data_service_init_query
-                                                        (LassoIdWsf2DataService *service);
-lasso_error_t       lasso_idwsf2_data_service_add_modify_item
-                                                        (LassoIdWsf2DataService *service,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *item_query,
-                                                         xmlNode *new_data,
-                                                         <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
->gboolean</a> overrideAllowed,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *item_id);
-lasso_error_t       lasso_idwsf2_data_service_add_namespace
-                                                        (LassoIdWsf2DataService *data_service,
-                                                         const char *prefix,
-                                                         const char *href);
-lasso_error_t       lasso_idwsf2_data_service_add_query_item
-                                                        (LassoIdWsf2DataService *service,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *item_query,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *item_id);
-lasso_error_t       lasso_idwsf2_data_service_build_request_msg
-                                                        (LassoIdWsf2DataService *service,
-                                                         const char *security_mech_id);
-lasso_error_t       lasso_idwsf2_data_service_build_response_msg
-                                                        (LassoIdWsf2DataService *service);
-LassoNode*          lasso_idwsf2_data_service_get_item  (LassoIdWsf2DataService *data_service,
-                                                         const char *item_id);
-LassoIdWsf2DstRefData* lasso_idwsf2_data_service_get_query_item_result
-                                                        (LassoIdWsf2DataService *service,
-                                                         const char *item_id);
-<a
-href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"
->GList</a>*              lasso_idwsf2_data_service_get_query_item_results
-                                                        (LassoIdWsf2DataService *service);
-LassoIdWsf2DataServiceRequestType  lasso_idwsf2_data_service_get_request_type
-                                                        (LassoIdWsf2DataService *service);
-const char*         lasso_idwsf2_data_service_get_service_type
-                                                        (LassoIdWsf2DataService *service);
-const char*         lasso_idwsf2_data_service_get_service_type_prefix
-                                                        (LassoIdWsf2DataService *service);
-lasso_error_t       lasso_idwsf2_data_service_process_request_msg
-                                                        (LassoIdWsf2DataService *service,
-                                                         const char *msg);
-lasso_error_t       lasso_idwsf2_data_service_process_response_msg
-                                                        (LassoIdWsf2DataService *service,
-                                                         const char *msg);
-lasso_error_t       lasso_idwsf2_data_service_set_query_item_result
-                                                        (LassoIdWsf2DataService *data_service,
-                                                         const char *item_id,
-                                                         xmlNode *xml_data,
-                                                         <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
->gboolean</a> add);
-char*               lasso_idwsf2_data_service_get_query_item_result_content
-                                                        (LassoIdWsf2DataService *service,
-                                                         const char *item_id);
-lasso_error_t       lasso_idwsf2_data_service_set_service_type
-                                                        (LassoIdWsf2DataService *service,
-                                                         const char *prefix,
-                                                         const char *service_type);
-lasso_error_t       lasso_idwsf2_data_service_set_status_code
-                                                        (LassoIdWsf2DataService *service,
-                                                         const char *status_code,
-                                                         const char *status_code2);
-<a
-href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"
->GList</a> *             lasso_idwsf2_data_service_get_item_ids
-                                                        (LassoIdWsf2DataService *data_service);
-<a
-href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"
->GList</a> *             lasso_idwsf2_data_service_get_items (LassoIdWsf2DataService *data_service);
-LassoIdWsf2UtilStatus * lasso_idwsf2_data_service_get_response_status
-                                                        (LassoIdWsf2DataService *service);
-lasso_error_t       lasso_idwsf2_data_service_validate_request
-                                                        (LassoIdWsf2DataService *service);
+<pre class="synopsis">struct              <a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService">LassoIdWsf2DataService</a>;
+<a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="returnvalue">LassoIdWsf2DataService</span></a> *  <a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-new" title="lasso_idwsf2_data_service_new ()">lasso_idwsf2_data_service_new</a> (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-init-create" title="lasso_idwsf2_data_service_init_create ()">lasso_idwsf2_data_service_init_create</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-init-delete" title="lasso_idwsf2_data_service_init_delete ()">lasso_idwsf2_data_service_init_delete</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-init-modify" title="lasso_idwsf2_data_service_init_modify ()">lasso_idwsf2_data_service_init_modify</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-init-query" title="lasso_idwsf2_data_service_init_query ()">lasso_idwsf2_data_service_init_query</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-add-modify-item" title="lasso_idwsf2_data_service_add_modify_item ()">lasso_idwsf2_data_service_add_modify_item</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *item_query</code></em>,
+                                                         <em class="parameter"><code><span class="type">xmlNode</span> *new_data</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> overrideAllowed</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *item_id</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-add-namespace" title="lasso_idwsf2_data_service_add_namespace ()">lasso_idwsf2_data_service_add_namespace</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *data_service</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *prefix</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *href</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-add-query-item" title="lasso_idwsf2_data_service_add_query_item ()">lasso_idwsf2_data_service_add_query_item</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *item_query</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *item_id</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-build-request-msg" title="lasso_idwsf2_data_service_build_request_msg ()">lasso_idwsf2_data_service_build_request_msg</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *security_mech_id</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-build-response-msg" title="lasso_idwsf2_data_service_build_response_msg ()">lasso_idwsf2_data_service_build_response_msg</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);
+<a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="returnvalue">LassoNode</span></a> *         <a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-get-item" title="lasso_idwsf2_data_service_get_item ()">lasso_idwsf2_data_service_get_item</a>  (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *data_service</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *item_id</code></em>);
+<a class="link" href="lasso-LassoIdWsf2DstRefData.html#LassoIdWsf2DstRefData" title="struct LassoIdWsf2DstRefData"><span class="returnvalue">LassoIdWsf2DstRefData</span></a> *  <a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-get-query-item-result" title="lasso_idwsf2_data_service_get_query_item_result ()">lasso_idwsf2_data_service_get_query_item_result</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *item_id</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-get-query-item-results" title="lasso_idwsf2_data_service_get_query_item_results ()">lasso_idwsf2_data_service_get_query_item_results</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);
+<span class="returnvalue">LassoIdWsf2DataServiceRequestType</span>  <a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-get-request-type" title="lasso_idwsf2_data_service_get_request_type ()">lasso_idwsf2_data_service_get_request_type</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);
+const <span class="returnvalue">char</span> *        <a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-get-service-type" title="lasso_idwsf2_data_service_get_service_type ()">lasso_idwsf2_data_service_get_service_type</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);
+const <span class="returnvalue">char</span> *        <a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-get-service-type-prefix" title="lasso_idwsf2_data_service_get_service_type_prefix ()">lasso_idwsf2_data_service_get_service_type_prefix</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-process-request-msg" title="lasso_idwsf2_data_service_process_request_msg ()">lasso_idwsf2_data_service_process_request_msg</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *msg</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-process-response-msg" title="lasso_idwsf2_data_service_process_response_msg ()">lasso_idwsf2_data_service_process_response_msg</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *msg</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-set-query-item-result" title="lasso_idwsf2_data_service_set_query_item_result ()">lasso_idwsf2_data_service_set_query_item_result</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *data_service</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *item_id</code></em>,
+                                                         <em class="parameter"><code><span class="type">xmlNode</span> *xml_data</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> add</code></em>);
+<span class="returnvalue">char</span> *              <a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-get-query-item-result-content" title="lasso_idwsf2_data_service_get_query_item_result_content ()">lasso_idwsf2_data_service_get_query_item_result_content</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *item_id</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-set-service-type" title="lasso_idwsf2_data_service_set_service_type ()">lasso_idwsf2_data_service_set_service_type</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *prefix</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *service_type</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-set-status-code" title="lasso_idwsf2_data_service_set_status_code ()">lasso_idwsf2_data_service_set_status_code</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *status_code</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *status_code2</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-get-item-ids" title="lasso_idwsf2_data_service_get_item_ids ()">lasso_idwsf2_data_service_get_item_ids</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *data_service</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-get-items" title="lasso_idwsf2_data_service_get_items ()">lasso_idwsf2_data_service_get_items</a> (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *data_service</code></em>);
+<a class="link" href="lasso-LassoIdWsf2UtilStatus.html#LassoIdWsf2UtilStatus" title="struct LassoIdWsf2UtilStatus"><span class="returnvalue">LassoIdWsf2UtilStatus</span></a> * <a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-get-response-status" title="lasso_idwsf2_data_service_get_response_status ()">lasso_idwsf2_data_service_get_response_status</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-validate-request" title="lasso_idwsf2_data_service_validate_request ()">lasso_idwsf2_data_service_validate_request</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);
 </pre>
 </div>
-<div class="refsect1" title="Description">
+<div class="refsect1">
 <a name="lasso-LassoIdWsf2DataService.description"></a><h2>Description</h2>
 </div>
-<div class="refsect1" title="Details">
+<div class="refsect1">
 <a name="lasso-LassoIdWsf2DataService.details"></a><h2>Details</h2>
-<div class="refsect2" title="LassoIdWsf2DataService">
-<a name="LassoIdWsf2DataService"></a><h3>LassoIdWsf2DataService</h3>
-<pre class="programlisting">typedef struct {
+<div class="refsect2">
+<a name="LassoIdWsf2DataService"></a><h3>struct LassoIdWsf2DataService</h3>
+<pre class="programlisting">struct LassoIdWsf2DataService {
 	LassoIdWsf2Profile parent;
-} LassoIdWsf2DataService;
+};
 </pre>
 </div>
 <hr>
-<div class="refsect2" title="lasso_idwsf2_data_service_new ()">
+<div class="refsect2">
 <a name="lasso-idwsf2-data-service-new"></a><h3>lasso_idwsf2_data_service_new ()</h3>
-<pre class="programlisting">LassoIdWsf2DataService* lasso_idwsf2_data_service_new   (LassoServer *server);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="returnvalue">LassoIdWsf2DataService</span></a> *  lasso_idwsf2_data_service_new (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);</pre>
 <p>
-Create a new <span class="type">LassoIdWsf2DataService</span>.</p>
+Create a new <a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a>.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>server:(allow-none)</code></em> :</span></p></td>
-<td> a <span class="type">LassoServer</span> object, for resolving ProviderIDs
-</td>
+<td>a <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> object, for resolving ProviderIDs</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a newly created <span class="type">LassoIdWsf2DataService</span> object
-</td>
+<td>a newly created <a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> object</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_idwsf2_data_service_init_create ()">
+<div class="refsect2">
 <a name="lasso-idwsf2-data-service-init-create"></a><h3>lasso_idwsf2_data_service_init_create ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_idwsf2_data_service_init_create
-                                                        (LassoIdWsf2DataService *service);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_idwsf2_data_service_init_create
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);</pre>
 </div>
 <hr>
-<div class="refsect2" title="lasso_idwsf2_data_service_init_delete ()">
+<div class="refsect2">
 <a name="lasso-idwsf2-data-service-init-delete"></a><h3>lasso_idwsf2_data_service_init_delete ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_idwsf2_data_service_init_delete
-                                                        (LassoIdWsf2DataService *service);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_idwsf2_data_service_init_delete
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);</pre>
 </div>
 <hr>
-<div class="refsect2" title="lasso_idwsf2_data_service_init_modify ()">
+<div class="refsect2">
 <a name="lasso-idwsf2-data-service-init-modify"></a><h3>lasso_idwsf2_data_service_init_modify ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_idwsf2_data_service_init_modify
-                                                        (LassoIdWsf2DataService *service);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_idwsf2_data_service_init_modify
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);</pre>
 <p>
-Initialise an ID-WSF 2.0 DataService modify request.</p>
+Initialise an ID-WSF 2.0 DataService modify request.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
-<td> a <span class="type">LassoIdWsf2DataService</span>
+<td>a <a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> 0 on success; or a negative value otherwise.
-</td>
+<td>0 on success; or a negative value otherwise.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_idwsf2_data_service_init_query ()">
+<div class="refsect2">
 <a name="lasso-idwsf2-data-service-init-query"></a><h3>lasso_idwsf2_data_service_init_query ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_idwsf2_data_service_init_query
-                                                        (LassoIdWsf2DataService *service);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_idwsf2_data_service_init_query
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);</pre>
 <p>
-Initialise an ID-WSF 2.0 DataService query request.</p>
+Initialise an ID-WSF 2.0 DataService query request.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
-<td> a <span class="type">LassoIdWsf2DataService</span>
+<td>a <a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> 0 on success; or a negative value otherwise.
-</td>
+<td>0 on success; or a negative value otherwise.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_idwsf2_data_service_add_modify_item ()">
+<div class="refsect2">
 <a name="lasso-idwsf2-data-service-add-modify-item"></a><h3>lasso_idwsf2_data_service_add_modify_item ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_idwsf2_data_service_add_modify_item
-                                                        (LassoIdWsf2DataService *service,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *item_query,
-                                                         xmlNode *new_data,
-                                                         <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
->gboolean</a> overrideAllowed,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *item_id);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_idwsf2_data_service_add_modify_item
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *item_query</code></em>,
+                                                         <em class="parameter"><code><span class="type">xmlNode</span> *new_data</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> overrideAllowed</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *item_id</code></em>);</pre>
 <p>
-Add an item in the modification request.</p>
+Add an item in the modification request.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
-<td> a <span class="type">LassoIdWsf2DataService</span>
+<td>a <a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>item_query</code></em> :</span></p></td>
-<td> XPATH of the item to modify
-</td>
+<td>XPATH of the item to modify</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>new_data:(allow-none)</code></em> :</span></p></td>
-<td>new value for the selected item
-</td>
+<td>new value for the selected item</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>overrideAllowed</code></em> :</span></p></td>
-<td>allow-none)(default FALSE. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=allow-none"><span class="acronym">allow-none</span></a>. <acronym title="Default parameter value (for in case the shadows-to function has less parameters)."><span class="acronym">default</span></acronym> FALSE. </td>
+<td>FALSE means only allowing to create a new item, but
+not modify existing one, TRUE means allowing to modify existing item. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Default parameter value (for in case the shadows-to function has less parameters)."><span class="acronym">default</span></acronym> FALSE]</span>
+</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>item_id:(allow-none)</code></em> :</span></p></td>
-<td> identifier of the item to modify
-</td>
+<td>identifier of the item to modify</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> 0 on success; or a negative value otherwise.
-</td>
+<td>0 on success; or a negative value otherwise.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_idwsf2_data_service_add_namespace ()">
+<div class="refsect2">
 <a name="lasso-idwsf2-data-service-add-namespace"></a><h3>lasso_idwsf2_data_service_add_namespace ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_idwsf2_data_service_add_namespace
-                                                        (LassoIdWsf2DataService *data_service,
-                                                         const char *prefix,
-                                                         const char *href);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_idwsf2_data_service_add_namespace
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *data_service</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *prefix</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *href</code></em>);</pre>
 <p>
-Add a new namespace to use for example in XPath elements or in Data or NewData objects.</p>
+Add a new namespace to use for example in XPath elements or in Data or NewData objects.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
-<td> a <span class="type">LassoIdWsf2DataService</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> 0 if successful, an error code otherwise.
-</td>
+<td>0 if successful, an error code otherwise.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_idwsf2_data_service_add_query_item ()">
+<div class="refsect2">
 <a name="lasso-idwsf2-data-service-add-query-item"></a><h3>lasso_idwsf2_data_service_add_query_item ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_idwsf2_data_service_add_query_item
-                                                        (LassoIdWsf2DataService *service,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *item_query,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *item_id);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_idwsf2_data_service_add_query_item
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *item_query</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *item_id</code></em>);</pre>
 <p>
-Add an item in the query request.</p>
+Add an item in the query request.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
-<td> a <span class="type">LassoIdWsf2DataService</span>
+<td>a <a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>item_query</code></em> :</span></p></td>
-<td> a query string
-</td>
+<td>a query string</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>item_id:(allow-none)</code></em> :</span></p></td>
-<td> identifier of the queried item, which will allow to retrieve it in the
-response
-</td>
+<td>identifier of the queried item, which will allow to retrieve it in the
+response</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> 0 on success; or a negative value otherwise.
-</td>
+<td>0 on success; or a negative value otherwise.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_idwsf2_data_service_build_request_msg ()">
+<div class="refsect2">
 <a name="lasso-idwsf2-data-service-build-request-msg"></a><h3>lasso_idwsf2_data_service_build_request_msg ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_idwsf2_data_service_build_request_msg
-                                                        (LassoIdWsf2DataService *service,
-                                                         const char *security_mech_id);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_idwsf2_data_service_build_request_msg
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *security_mech_id</code></em>);</pre>
 <p>
-Build the request message.</p>
+Build the request message.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
-<td> a <span class="type">LassoIdWsf2DataService</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>security_mech_id:(allow-none)</code></em> :</span></p></td>
-<td> the security mechanism to employ, default is Bearer mechanism.
-</td>
+<td>the security mechanism to employ, default is Bearer mechanism.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> 0 if successful, an error code otherwise.
-</td>
+<td>0 if successful, an error code otherwise.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_idwsf2_data_service_build_response_msg ()">
+<div class="refsect2">
 <a name="lasso-idwsf2-data-service-build-response-msg"></a><h3>lasso_idwsf2_data_service_build_response_msg ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_idwsf2_data_service_build_response_msg
-                                                        (LassoIdWsf2DataService *service);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_idwsf2_data_service_build_response_msg
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);</pre>
 <p>
-Build the response message corresponding to the current request.</p>
+Build the response message corresponding to the current request.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
-<td> a <span class="type">LassoIdWsf2DataService</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> 0 if successfull, an error code otherwise.
-</td>
+<td>0 if successfull, an error code otherwise.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_idwsf2_data_service_get_item ()">
+<div class="refsect2">
 <a name="lasso-idwsf2-data-service-get-item"></a><h3>lasso_idwsf2_data_service_get_item ()</h3>
-<pre class="programlisting">LassoNode*          lasso_idwsf2_data_service_get_item  (LassoIdWsf2DataService *data_service,
-                                                         const char *item_id);</pre>
+<pre class="programlisting"><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="returnvalue">LassoNode</span></a> *         lasso_idwsf2_data_service_get_item  (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *data_service</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *item_id</code></em>);</pre>
 <p>
-Retrieve a specific item from a request.</p>
+Retrieve a specific item from a request.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
-<td> a <span class="type">LassoIdWsf2DataService</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>item_id</code></em> :</span></p></td>
-<td> the itemID of the item to return, if NULL try to get the only one item (if there is
-more than one, it returns NULL).
-</td>
+<td>the itemID of the item to return, if NULL try to get the only one item (if there is
+more than one, it returns NULL).</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>transfer none)(allow-none. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> none. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=allow-none"><span class="acronym">allow-none</span></a> none. </td>
+<td>a <a class="link" href="lasso-LassoIdWsf2DstRefQueryItem.html#LassoIdWsf2DstRefQueryItem" title="struct LassoIdWsf2DstRefQueryItem"><span class="type">LassoIdWsf2DstRefQueryItem</span></a> or a <a class="link" href="lasso-LassoIdWsf2DstRefModifyItem.html#LassoIdWsf2DstRefModifyItem" title="struct LassoIdWsf2DstRefModifyItem"><span class="type">LassoIdWsf2DstRefModifyItem</span></a> object, or NULL if
+no item for the given item_id exists. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_idwsf2_data_service_get_query_item_result ()">
+<div class="refsect2">
 <a name="lasso-idwsf2-data-service-get-query-item-result"></a><h3>lasso_idwsf2_data_service_get_query_item_result ()</h3>
-<pre class="programlisting">LassoIdWsf2DstRefData* lasso_idwsf2_data_service_get_query_item_result
-                                                        (LassoIdWsf2DataService *service,
-                                                         const char *item_id);</pre>
-<p>
-</p>
+<pre class="programlisting"><a class="link" href="lasso-LassoIdWsf2DstRefData.html#LassoIdWsf2DstRefData" title="struct LassoIdWsf2DstRefData"><span class="returnvalue">LassoIdWsf2DstRefData</span></a> *  lasso_idwsf2_data_service_get_query_item_result
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *item_id</code></em>);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
-<td> a <span class="type">LassoIdWsf2DataService</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>item_id:(allow-none)</code></em> :</span></p></td>
-<td> an item_id or NULL if only one data is present
-</td>
+<td>an item_id or NULL if only one data is present</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <span class="type">LassoIdWsf2DstRefData</span> or NULL if none is found.. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=allow-none"><span class="acronym">allow-none</span></a>. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> none. </td>
+<td>a <a class="link" href="lasso-LassoIdWsf2DstRefData.html#LassoIdWsf2DstRefData" title="struct LassoIdWsf2DstRefData"><span class="type">LassoIdWsf2DstRefData</span></a> or NULL if none is found. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_idwsf2_data_service_get_query_item_results ()">
+<div class="refsect2">
 <a name="lasso-idwsf2-data-service-get-query-item-results"></a><h3>lasso_idwsf2_data_service_get_query_item_results ()</h3>
-<pre class="programlisting"><a
-href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"
->GList</a>*              lasso_idwsf2_data_service_get_query_item_results
-                                                        (LassoIdWsf2DataService *service);</pre>
-<p>
-</p>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             lasso_idwsf2_data_service_get_query_item_results
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
-<td> a <span class="type">LassoIdWsf2DataService</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>allow-none)(transfer none)(element-type LassoIdWsf2DstRefData. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=allow-none"><span class="acronym">allow-none</span></a>. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> none. <acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> LassoIdWsf2DstRefData. </td>
+<td>the list of
+<a class="link" href="lasso-LassoIdWsf2DstRefData.html#LassoIdWsf2DstRefData" title="struct LassoIdWsf2DstRefData"><span class="type">LassoIdWsf2DstRefData</span></a> or NULL if none is found. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> LassoIdWsf2DstRefData]</span>
+</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_idwsf2_data_service_get_request_type ()">
+<div class="refsect2">
 <a name="lasso-idwsf2-data-service-get-request-type"></a><h3>lasso_idwsf2_data_service_get_request_type ()</h3>
-<pre class="programlisting">LassoIdWsf2DataServiceRequestType  lasso_idwsf2_data_service_get_request_type
-                                                        (LassoIdWsf2DataService *service);</pre>
+<pre class="programlisting"><span class="returnvalue">LassoIdWsf2DataServiceRequestType</span>  lasso_idwsf2_data_service_get_request_type
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);</pre>
 <p>
-Return the type of the currently handled request.</p>
+Return the type of the currently handled request.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
-<td> a <span class="type">LassoIdWsf2DataService</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> object</td>
 </tr></tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_idwsf2_data_service_get_service_type ()">
+<div class="refsect2">
 <a name="lasso-idwsf2-data-service-get-service-type"></a><h3>lasso_idwsf2_data_service_get_service_type ()</h3>
-<pre class="programlisting">const char*         lasso_idwsf2_data_service_get_service_type
-                                                        (LassoIdWsf2DataService *service);</pre>
+<pre class="programlisting">const <span class="returnvalue">char</span> *        lasso_idwsf2_data_service_get_service_type
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);</pre>
 <p>
-Return the service type of the received request</p>
+Return the service type of the received request
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
-<td> a <span class="type">LassoIdWsf2DataService</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> the URI of the service type or NULL.. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=allow-none"><span class="acronym">allow-none</span></a>. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> none. </td>
+<td>the URI of the service type or NULL. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_idwsf2_data_service_get_service_type_prefix ()">
+<div class="refsect2">
 <a name="lasso-idwsf2-data-service-get-service-type-prefix"></a><h3>lasso_idwsf2_data_service_get_service_type_prefix ()</h3>
-<pre class="programlisting">const char*         lasso_idwsf2_data_service_get_service_type_prefix
-                                                        (LassoIdWsf2DataService *service);</pre>
+<pre class="programlisting">const <span class="returnvalue">char</span> *        lasso_idwsf2_data_service_get_service_type_prefix
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);</pre>
 <p>
-Return the service type prefix of the received request</p>
+Return the service type prefix of the received request
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
-<td> a <span class="type">LassoIdWsf2DataService</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> the URI of the service type prefix or NULL.. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=allow-none"><span class="acronym">allow-none</span></a>. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> none. </td>
+<td>the URI of the service type prefix or NULL. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_idwsf2_data_service_process_request_msg ()">
+<div class="refsect2">
 <a name="lasso-idwsf2-data-service-process-request-msg"></a><h3>lasso_idwsf2_data_service_process_request_msg ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_idwsf2_data_service_process_request_msg
-                                                        (LassoIdWsf2DataService *service,
-                                                         const char *msg);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_idwsf2_data_service_process_request_msg
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *msg</code></em>);</pre>
 <p>
-Process a newly received requests.</p>
+Process a newly received requests.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
-<td> a <span class="type">LassoIdWsf2DataService</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>msg</code></em> :</span></p></td>
-<td> the message string
-</td>
+<td>the message string</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_idwsf2_data_service_process_response_msg ()">
+<div class="refsect2">
 <a name="lasso-idwsf2-data-service-process-response-msg"></a><h3>lasso_idwsf2_data_service_process_response_msg ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_idwsf2_data_service_process_response_msg
-                                                        (LassoIdWsf2DataService *service,
-                                                         const char *msg);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_idwsf2_data_service_process_response_msg
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *msg</code></em>);</pre>
 <p>
-Process a received SOAP message response.</p>
+Process a received SOAP message response.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
-<td> a <span class="type">LassoIdWsf2DataService</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>msg</code></em> :</span></p></td>
-<td> the message content. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=allow-none"><span class="acronym">allow-none</span></a>. </td>
+<td>the message content. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> 0 if successful, an error code otherwise.
-</td>
+<td>0 if successful, an error code otherwise.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_idwsf2_data_service_set_query_item_result ()">
+<div class="refsect2">
 <a name="lasso-idwsf2-data-service-set-query-item-result"></a><h3>lasso_idwsf2_data_service_set_query_item_result ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_idwsf2_data_service_set_query_item_result
-                                                        (LassoIdWsf2DataService *data_service,
-                                                         const char *item_id,
-                                                         xmlNode *xml_data,
-                                                         <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
->gboolean</a> add);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_idwsf2_data_service_set_query_item_result
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *data_service</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *item_id</code></em>,
+                                                         <em class="parameter"><code><span class="type">xmlNode</span> *xml_data</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> add</code></em>);</pre>
 <p>
-Set result data for a certain query-item.</p>
+Set result data for a certain query-item.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
-<td> a <span class="type">LassoIdWsf2DataService</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>item_id:(allow-none)</code></em> :</span></p></td>
-<td> target a certain QueryItem if NULL, means there is only one query item
-</td>
+<td>target a certain QueryItem if NULL, means there is only one query item</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>xml_data:(allow-none)</code></em> :</span></p></td>
-<td> the data to add
-</td>
+<td>the data to add</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>add</code></em> :</span></p></td>
-<td> add data to existing datas. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=allow-none"><span class="acronym">allow-none</span></a>. <acronym title="Default parameter value (for in case the shadows-to function has less parameters)."><span class="acronym">default</span></acronym> FALSE. </td>
+<td>add data to existing datas. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Default parameter value (for in case the shadows-to function has less parameters)."><span class="acronym">default</span></acronym> FALSE]</span>
+</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_idwsf2_data_service_get_query_item_result_content ()">
+<div class="refsect2">
 <a name="lasso-idwsf2-data-service-get-query-item-result-content"></a><h3>lasso_idwsf2_data_service_get_query_item_result_content ()</h3>
-<pre class="programlisting">char*               lasso_idwsf2_data_service_get_query_item_result_content
-                                                        (LassoIdWsf2DataService *service,
-                                                         const char *item_id);</pre>
+<pre class="programlisting"><span class="returnvalue">char</span> *              lasso_idwsf2_data_service_get_query_item_result_content
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *item_id</code></em>);</pre>
 <p>
 Returns the text content of the query item result identified by <em class="parameter"><code>item_id</code></em> or the only query item
 result if <em class="parameter"><code>item_id</code></em> is NULL.
 </p>
 <p>If <em class="parameter"><code>item_id</code></em> is NULL and there is multiple results, returns NULL.</p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
-<td> a <span class="type">LassoIdWsf2DataService</span> object
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>item_id:(allow-none)</code></em> :</span></p></td>
-<td> the identifier of the result asked, if NULL and there is only one respone,
-returns it.
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> the text content of the query item result.. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> full. </td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2" title="lasso_idwsf2_data_service_set_service_type ()">
-<a name="lasso-idwsf2-data-service-set-service-type"></a><h3>lasso_idwsf2_data_service_set_service_type ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_idwsf2_data_service_set_service_type
-                                                        (LassoIdWsf2DataService *service,
-                                                         const char *prefix,
-                                                         const char *service_type);</pre>
-<p>
-Fix a service type for this <em class="parameter"><code>service</code></em>.</p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
-<td> a <span class="type">LassoIdWsf2DataService</span> object
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>prefix</code></em> :</span></p></td>
-<td> a prefix to use in producing XML documents
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>service_type</code></em> :</span></p></td>
-<td> the service type URI
-</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2" title="lasso_idwsf2_data_service_set_status_code ()">
-<a name="lasso-idwsf2-data-service-set-status-code"></a><h3>lasso_idwsf2_data_service_set_status_code ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_idwsf2_data_service_set_status_code
-                                                        (LassoIdWsf2DataService *service,
-                                                         const char *status_code,
-                                                         const char *status_code2);</pre>
-<p>
-Set the status code for the current response, if no response exists, it starts one using
-<code class="function">lasso_idwsf2_data_service_validate_request()</code>, if it fails, report a SOAP Fault.</p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
-<td> a <span class="type">LassoIdWsf2DataService</span>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>status_code</code></em> :</span></p></td>
-<td> a first level status code
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>status_code2</code></em> :</span></p></td>
-<td> a second level status code
-</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2" title="lasso_idwsf2_data_service_get_item_ids ()">
-<a name="lasso-idwsf2-data-service-get-item-ids"></a><h3>lasso_idwsf2_data_service_get_item_ids ()</h3>
-<pre class="programlisting"><a
-href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"
->GList</a> *             lasso_idwsf2_data_service_get_item_ids
-                                                        (LassoIdWsf2DataService *data_service);</pre>
-<p>
-Return the list of items ids for the currently handled request.</p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
-<td> a <span class="type">LassoIdWsf2DataService</span> object
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>element-type utf8)(transfer full. <acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> full. </td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2" title="lasso_idwsf2_data_service_get_items ()">
-<a name="lasso-idwsf2-data-service-get-items"></a><h3>lasso_idwsf2_data_service_get_items ()</h3>
-<pre class="programlisting"><a
-href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"
->GList</a> *             lasso_idwsf2_data_service_get_items (LassoIdWsf2DataService *data_service);</pre>
 <p>
 </p>
 <div class="variablelist"><table border="0">
@@ -766,58 +593,165 @@ href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
-<td> a <span class="type">LassoIdWsf2DataService</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> object</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>item_id:(allow-none)</code></em> :</span></p></td>
+<td>the identifier of the result asked, if NULL and there is only one respone,
+returns it.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>element-type LassoNode)(transfer none. <acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> LassoNode. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> none. </td>
+<td>the text content of the query item result. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_idwsf2_data_service_get_response_status ()">
-<a name="lasso-idwsf2-data-service-get-response-status"></a><h3>lasso_idwsf2_data_service_get_response_status ()</h3>
-<pre class="programlisting">LassoIdWsf2UtilStatus * lasso_idwsf2_data_service_get_response_status
-                                                        (LassoIdWsf2DataService *service);</pre>
+<div class="refsect2">
+<a name="lasso-idwsf2-data-service-set-service-type"></a><h3>lasso_idwsf2_data_service_set_service_type ()</h3>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_idwsf2_data_service_set_service_type
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *prefix</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *service_type</code></em>);</pre>
 <p>
-Return the status from the current response.</p>
+Fix a service type for this <em class="parameter"><code>service</code></em>.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
-<td> a <span class="type">LassoIdWsf2UtilStatus</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> object</td>
 </tr>
 <tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <span class="type">LassoIdWsf2UtilStatus</span> object, or NULL.. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> none. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=allow-none"><span class="acronym">allow-none</span></a> none. </td>
+<td><p><span class="term"><em class="parameter"><code>prefix</code></em> :</span></p></td>
+<td>a prefix to use in producing XML documents</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>service_type</code></em> :</span></p></td>
+<td>the service type URI</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_idwsf2_data_service_validate_request ()">
+<div class="refsect2">
+<a name="lasso-idwsf2-data-service-set-status-code"></a><h3>lasso_idwsf2_data_service_set_status_code ()</h3>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_idwsf2_data_service_set_status_code
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *status_code</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *status_code2</code></em>);</pre>
+<p>
+Set the status code for the current response, if no response exists, it starts one using
+<a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-validate-request" title="lasso_idwsf2_data_service_validate_request ()"><code class="function">lasso_idwsf2_data_service_validate_request()</code></a>, if it fails, report a SOAP Fault.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
+<td>a <a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>status_code</code></em> :</span></p></td>
+<td>a first level status code</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>status_code2</code></em> :</span></p></td>
+<td>a second level status code</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="lasso-idwsf2-data-service-get-item-ids"></a><h3>lasso_idwsf2_data_service_get_item_ids ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             lasso_idwsf2_data_service_get_item_ids
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *data_service</code></em>);</pre>
+<p>
+Return the list of items ids for the currently handled request.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
+<td>a <a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> object</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a list of string ids, or NULL if none is found.
+The caller must free the return value. <span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="lasso-idwsf2-data-service-get-items"></a><h3>lasso_idwsf2_data_service_get_items ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             lasso_idwsf2_data_service_get_items (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *data_service</code></em>);</pre>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
+<td>a <a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> object</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a list of Query or Modify items, or NULL if
+none is found. <span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> LassoNode][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="lasso-idwsf2-data-service-get-response-status"></a><h3>lasso_idwsf2_data_service_get_response_status ()</h3>
+<pre class="programlisting"><a class="link" href="lasso-LassoIdWsf2UtilStatus.html#LassoIdWsf2UtilStatus" title="struct LassoIdWsf2UtilStatus"><span class="returnvalue">LassoIdWsf2UtilStatus</span></a> * lasso_idwsf2_data_service_get_response_status
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);</pre>
+<p>
+Return the status from the current response.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
+<td>a <a class="link" href="lasso-LassoIdWsf2UtilStatus.html#LassoIdWsf2UtilStatus" title="struct LassoIdWsf2UtilStatus"><span class="type">LassoIdWsf2UtilStatus</span></a> object</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a <a class="link" href="lasso-LassoIdWsf2UtilStatus.html#LassoIdWsf2UtilStatus" title="struct LassoIdWsf2UtilStatus"><span class="type">LassoIdWsf2UtilStatus</span></a> object, or NULL. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
 <a name="lasso-idwsf2-data-service-validate-request"></a><h3>lasso_idwsf2_data_service_validate_request ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_idwsf2_data_service_validate_request
-                                                        (LassoIdWsf2DataService *service);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_idwsf2_data_service_validate_request
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);</pre>
 <p>
 Initialize a new response object corresponding to the current request. If not request if found or
-the request is invalid, a failure response is created.</p>
+the request is invalid, a failure response is created.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>service</code></em> :</span></p></td>
-<td> a <span class="type">LassoIdWsf2DataService</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> 0 if successful, or LASSO_PROFILE_ERROR_INVALID_REQUEST.
-</td>
+<td>0 if successful, or LASSO_PROFILE_ERROR_INVALID_REQUEST.</td>
 </tr>
 </tbody>
 </table></div>
@@ -826,6 +760,6 @@ the request is invalid, a failure response is created.</p>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.11</div>
+          Generated by GTK-Doc V1.17</div>
 </body>
 </html>

@@ -3,30 +3,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LassoLibAuthnResponseEnvelope</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
 <link rel="prev" href="lasso-LassoLibAuthnRequest.html" title="LassoLibAuthnRequest">
 <link rel="next" href="lasso-LassoLibAuthnResponse.html" title="LassoLibAuthnResponse">
-<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
-<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
-<link rel="reference" href="rn01.html" title="Application Programming Interface">
-<link rel="chapter" href="architecture.html" title="Lasso Architecture">
-<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
-<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
-<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
-<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
-<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
-<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
-<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
-<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
-<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
-<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
-<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
-<link rel="part" href="pt01.html" title="Part II. Appendix">
-<link rel="index" href="api-index.html" title="API Index">
-<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
@@ -39,11 +22,11 @@
 </tr>
 <tr><td colspan="5" class="shortcuts">
 <a href="#lasso-LassoLibAuthnResponseEnvelope.synopsis" class="shortcut">Top</a>
-                 | 
-                <a href="#lasso-LassoLibAuthnResponseEnvelope.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#lasso-LassoLibAuthnResponseEnvelope.description" class="shortcut">Description</a>
 </td></tr>
 </table>
-<div class="refentry" title="LassoLibAuthnResponseEnvelope">
+<div class="refentry">
 <a name="lasso-LassoLibAuthnResponseEnvelope"></a><div class="titlepage"></div>
 <div class="refnamediv"><table width="100%"><tr>
 <td valign="top">
@@ -52,60 +35,55 @@
 </td>
 <td valign="top" align="right"></td>
 </tr></table></div>
-<div class="refsynopsisdiv" title="Synopsis">
+<div class="refsynopsisdiv">
 <a name="lasso-LassoLibAuthnResponseEnvelope.synopsis"></a><h2>Synopsis</h2>
-<pre class="synopsis">
-                    LassoLibAuthnResponseEnvelope;
-LassoLibAuthnResponseEnvelope* lasso_lib_authn_response_envelope_new
-                                                        (LassoLibAuthnResponse *response,
-                                                         char *assertionConsumerServiceURL);
+<pre class="synopsis">struct              <a class="link" href="lasso-LassoLibAuthnResponseEnvelope.html#LassoLibAuthnResponseEnvelope" title="struct LassoLibAuthnResponseEnvelope">LassoLibAuthnResponseEnvelope</a>;
+<a class="link" href="lasso-LassoLibAuthnResponseEnvelope.html#LassoLibAuthnResponseEnvelope" title="struct LassoLibAuthnResponseEnvelope"><span class="returnvalue">LassoLibAuthnResponseEnvelope</span></a> *  <a class="link" href="lasso-LassoLibAuthnResponseEnvelope.html#lasso-lib-authn-response-envelope-new" title="lasso_lib_authn_response_envelope_new ()">lasso_lib_authn_response_envelope_new</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoLibAuthnResponse.html#LassoLibAuthnResponse" title="struct LassoLibAuthnResponse"><span class="type">LassoLibAuthnResponse</span></a> *response</code></em>,
+                                                         <em class="parameter"><code><span class="type">char</span> *assertionConsumerServiceURL</code></em>);
 </pre>
 </div>
-<div class="refsect1" title="Description">
+<div class="refsect1">
 <a name="lasso-LassoLibAuthnResponseEnvelope.description"></a><h2>Description</h2>
-<p>
-</p>
 </div>
-<div class="refsect1" title="Details">
+<div class="refsect1">
 <a name="lasso-LassoLibAuthnResponseEnvelope.details"></a><h2>Details</h2>
-<div class="refsect2" title="LassoLibAuthnResponseEnvelope">
-<a name="LassoLibAuthnResponseEnvelope"></a><h3>LassoLibAuthnResponseEnvelope</h3>
-<pre class="programlisting">typedef struct {
+<div class="refsect2">
+<a name="LassoLibAuthnResponseEnvelope"></a><h3>struct LassoLibAuthnResponseEnvelope</h3>
+<pre class="programlisting">struct LassoLibAuthnResponseEnvelope {
 	LassoNode parent;
 
 	GList *Extension; /* of xmlNode* */
 	LassoLibAuthnResponse *AuthnResponse;
 	char *AssertionConsumerServiceURL;
-} LassoLibAuthnResponseEnvelope;
+};
 </pre>
 </div>
 <hr>
-<div class="refsect2" title="lasso_lib_authn_response_envelope_new ()">
+<div class="refsect2">
 <a name="lasso-lib-authn-response-envelope-new"></a><h3>lasso_lib_authn_response_envelope_new ()</h3>
-<pre class="programlisting">LassoLibAuthnResponseEnvelope* lasso_lib_authn_response_envelope_new
-                                                        (LassoLibAuthnResponse *response,
-                                                         char *assertionConsumerServiceURL);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoLibAuthnResponseEnvelope.html#LassoLibAuthnResponseEnvelope" title="struct LassoLibAuthnResponseEnvelope"><span class="returnvalue">LassoLibAuthnResponseEnvelope</span></a> *  lasso_lib_authn_response_envelope_new
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoLibAuthnResponse.html#LassoLibAuthnResponse" title="struct LassoLibAuthnResponse"><span class="type">LassoLibAuthnResponse</span></a> *response</code></em>,
+                                                         <em class="parameter"><code><span class="type">char</span> *assertionConsumerServiceURL</code></em>);</pre>
 <p>
-Creates a new <span class="type">LassoLibAuthnResponseEnvelope</span> object and initializes it with
-the parameters.</p>
+Creates a new <a class="link" href="lasso-LassoLibAuthnResponseEnvelope.html#LassoLibAuthnResponseEnvelope" title="struct LassoLibAuthnResponseEnvelope"><span class="type">LassoLibAuthnResponseEnvelope</span></a> object and initializes it with
+the parameters.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>response</code></em> :</span></p></td>
-<td> the <span class="type">LassoLibAuthnResponse</span> to envelop
-</td>
+<td>the <a class="link" href="lasso-LassoLibAuthnResponse.html#LassoLibAuthnResponse" title="struct LassoLibAuthnResponse"><span class="type">LassoLibAuthnResponse</span></a> to envelop</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>assertionConsumerServiceURL</code></em> :</span></p></td>
-<td> assertion consumer service URL on the service
-     provider
-</td>
+<td>assertion consumer service URL on the service
+provider</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a newly created <span class="type">LassoLibAuthnResponseEnvelope</span> object
-</td>
+<td>a newly created <a class="link" href="lasso-LassoLibAuthnResponseEnvelope.html#LassoLibAuthnResponseEnvelope" title="struct LassoLibAuthnResponseEnvelope"><span class="type">LassoLibAuthnResponseEnvelope</span></a> object</td>
 </tr>
 </tbody>
 </table></div>
@@ -114,6 +92,6 @@ the parameters.</p>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.11</div>
+          Generated by GTK-Doc V1.17</div>
 </body>
 </html>

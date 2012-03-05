@@ -3,30 +3,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LassoDefederation</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
 <link rel="prev" href="lasso-LassoLogout.html" title="LassoLogout">
 <link rel="next" href="lasso-LassoNameRegistration.html" title="LassoNameRegistration">
-<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
-<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
-<link rel="reference" href="rn01.html" title="Application Programming Interface">
-<link rel="chapter" href="architecture.html" title="Lasso Architecture">
-<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
-<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
-<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
-<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
-<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
-<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
-<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
-<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
-<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
-<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
-<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
-<link rel="part" href="pt01.html" title="Part II. Appendix">
-<link rel="index" href="api-index.html" title="API Index">
-<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
@@ -39,11 +22,11 @@
 </tr>
 <tr><td colspan="5" class="shortcuts">
 <a href="#lasso-LassoDefederation.synopsis" class="shortcut">Top</a>
-                 | 
-                <a href="#lasso-LassoDefederation.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#lasso-LassoDefederation.description" class="shortcut">Description</a>
 </td></tr>
 </table>
-<div class="refentry" title="LassoDefederation">
+<div class="refentry">
 <a name="lasso-LassoDefederation"></a><div class="titlepage"></div>
 <div class="refnamediv"><table width="100%"><tr>
 <td valign="top">
@@ -52,73 +35,69 @@
 </td>
 <td valign="top" align="right"></td>
 </tr></table></div>
-<div class="refsynopsisdiv" title="Synopsis">
+<div class="refsynopsisdiv">
 <a name="lasso-LassoDefederation.synopsis"></a><h2>Synopsis</h2>
-<pre class="synopsis">
-                    LassoDefederation;
-LassoDefederation * lasso_defederation_new              (LassoServer *server);
-lasso_error_t       lasso_defederation_build_notification_msg
-                                                        (LassoDefederation *defederation);
-void                lasso_defederation_destroy          (LassoDefederation *defederation);
-lasso_error_t       lasso_defederation_init_notification
-                                                        (LassoDefederation *defederation,
-                                                         <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *remote_providerID,
-                                                         LassoHttpMethod http_method);
-lasso_error_t       lasso_defederation_process_notification_msg
-                                                        (LassoDefederation *defederation,
-                                                         <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *notification_msg);
-lasso_error_t       lasso_defederation_validate_notification
-                                                        (LassoDefederation *defederation);
+<pre class="synopsis">struct              <a class="link" href="lasso-LassoDefederation.html#LassoDefederation" title="struct LassoDefederation">LassoDefederation</a>;
+<a class="link" href="lasso-LassoDefederation.html#LassoDefederation" title="struct LassoDefederation"><span class="returnvalue">LassoDefederation</span></a> * <a class="link" href="lasso-LassoDefederation.html#lasso-defederation-new" title="lasso_defederation_new ()">lasso_defederation_new</a>              (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoDefederation.html#lasso-defederation-build-notification-msg" title="lasso_defederation_build_notification_msg ()">lasso_defederation_build_notification_msg</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoDefederation.html#LassoDefederation" title="struct LassoDefederation"><span class="type">LassoDefederation</span></a> *defederation</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="lasso-LassoDefederation.html#lasso-defederation-destroy" title="lasso_defederation_destroy ()">lasso_defederation_destroy</a>          (<em class="parameter"><code><a class="link" href="lasso-LassoDefederation.html#LassoDefederation" title="struct LassoDefederation"><span class="type">LassoDefederation</span></a> *defederation</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoDefederation.html#lasso-defederation-init-notification" title="lasso_defederation_init_notification ()">lasso_defederation_init_notification</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoDefederation.html#LassoDefederation" title="struct LassoDefederation"><span class="type">LassoDefederation</span></a> *defederation</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *remote_providerID</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoHttpMethod" title="enum LassoHttpMethod"><span class="type">LassoHttpMethod</span></a> http_method</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoDefederation.html#lasso-defederation-process-notification-msg" title="lasso_defederation_process_notification_msg ()">lasso_defederation_process_notification_msg</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoDefederation.html#LassoDefederation" title="struct LassoDefederation"><span class="type">LassoDefederation</span></a> *defederation</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *notification_msg</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoDefederation.html#lasso-defederation-validate-notification" title="lasso_defederation_validate_notification ()">lasso_defederation_validate_notification</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoDefederation.html#LassoDefederation" title="struct LassoDefederation"><span class="type">LassoDefederation</span></a> *defederation</code></em>);
 </pre>
 </div>
-<div class="refsect1" title="Description">
+<div class="refsect1">
 <a name="lasso-LassoDefederation.description"></a><h2>Description</h2>
 <p>
 The Federation Termination Notification Profiles serves to suppress federations between identity
 providers and services providers. It can be initiated by any of the partners using Redirect
-or SOAP binding.</p>
+or SOAP binding.
+</p>
 </div>
-<div class="refsect1" title="Details">
+<div class="refsect1">
 <a name="lasso-LassoDefederation.details"></a><h2>Details</h2>
-<div class="refsect2" title="LassoDefederation">
-<a name="LassoDefederation"></a><h3>LassoDefederation</h3>
-<pre class="programlisting">typedef struct {
+<div class="refsect2">
+<a name="LassoDefederation"></a><h3>struct LassoDefederation</h3>
+<pre class="programlisting">struct LassoDefederation {
 	LassoProfile parent;
-} LassoDefederation;
+};
 </pre>
 </div>
 <hr>
-<div class="refsect2" title="lasso_defederation_new ()">
+<div class="refsect2">
 <a name="lasso-defederation-new"></a><h3>lasso_defederation_new ()</h3>
-<pre class="programlisting">LassoDefederation * lasso_defederation_new              (LassoServer *server);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoDefederation.html#LassoDefederation" title="struct LassoDefederation"><span class="returnvalue">LassoDefederation</span></a> * lasso_defederation_new              (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);</pre>
 <p>
-Creates a new <span class="type">LassoDefederation</span>.</p>
+Creates a new <a class="link" href="lasso-LassoDefederation.html#LassoDefederation" title="struct LassoDefederation"><span class="type">LassoDefederation</span></a>.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
-<td> the <span class="type">LassoServer</span>
+<td>the <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a newly created <span class="type">LassoDefederation</span> object; or NULL if an error
-    occured
-</td>
+<td>a newly created <a class="link" href="lasso-LassoDefederation.html#LassoDefederation" title="struct LassoDefederation"><span class="type">LassoDefederation</span></a> object; or NULL if an error
+occured</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_defederation_build_notification_msg ()">
+<div class="refsect2">
 <a name="lasso-defederation-build-notification-msg"></a><h3>lasso_defederation_build_notification_msg ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_defederation_build_notification_msg
-                                                        (LassoDefederation *defederation);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_defederation_build_notification_msg
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoDefederation.html#LassoDefederation" title="struct LassoDefederation"><span class="type">LassoDefederation</span></a> *defederation</code></em>);</pre>
 <p>
 Builds the federation termination notification message.
 </p>
@@ -140,85 +119,81 @@ It gets the federation termination notification protocol profile and:
   object, sets <em class="parameter"><code>msg_body</code></em> to NULL.
 </p></li>
 </ul></div>
+<p>
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>defederation</code></em> :</span></p></td>
-<td> a <span class="type">LassoDefederation</span>
+<td>a <a class="link" href="lasso-LassoDefederation.html#LassoDefederation" title="struct LassoDefederation"><span class="type">LassoDefederation</span></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> 0 on success; or a negative value otherwise.
-</td>
+<td>0 on success; or a negative value otherwise.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_defederation_destroy ()">
+<div class="refsect2">
 <a name="lasso-defederation-destroy"></a><h3>lasso_defederation_destroy ()</h3>
-<pre class="programlisting">void                lasso_defederation_destroy          (LassoDefederation *defederation);</pre>
+<pre class="programlisting"><span class="returnvalue">void</span>                lasso_defederation_destroy          (<em class="parameter"><code><a class="link" href="lasso-LassoDefederation.html#LassoDefederation" title="struct LassoDefederation"><span class="type">LassoDefederation</span></a> *defederation</code></em>);</pre>
 <p>
-Destroys a <span class="type">LassoDefederation</span> object.</p>
+Destroys a <a class="link" href="lasso-LassoDefederation.html#LassoDefederation" title="struct LassoDefederation"><span class="type">LassoDefederation</span></a> object.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>defederation</code></em> :</span></p></td>
-<td> a <span class="type">LassoDefederation</span>
+<td>a <a class="link" href="lasso-LassoDefederation.html#LassoDefederation" title="struct LassoDefederation"><span class="type">LassoDefederation</span></a>
 </td>
 </tr></tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_defederation_init_notification ()">
+<div class="refsect2">
 <a name="lasso-defederation-init-notification"></a><h3>lasso_defederation_init_notification ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_defederation_init_notification
-                                                        (LassoDefederation *defederation,
-                                                         <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *remote_providerID,
-                                                         LassoHttpMethod http_method);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_defederation_init_notification
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoDefederation.html#LassoDefederation" title="struct LassoDefederation"><span class="type">LassoDefederation</span></a> *defederation</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *remote_providerID</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoHttpMethod" title="enum LassoHttpMethod"><span class="type">LassoHttpMethod</span></a> http_method</code></em>);</pre>
 <p>
 Sets a new federation termination notification to the remote provider id
 with the provider id of the requester (from the server object) and the name
-identifier of the federated principal.</p>
+identifier of the federated principal.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>defederation</code></em> :</span></p></td>
-<td> a <span class="type">LassoDefederation</span>
+<td>a <a class="link" href="lasso-LassoDefederation.html#LassoDefederation" title="struct LassoDefederation"><span class="type">LassoDefederation</span></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>remote_providerID</code></em> :</span></p></td>
-<td> the provider id of the federation termination notified
-    provider.
-</td>
+<td>the provider id of the federation termination notified
+provider.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>http_method</code></em> :</span></p></td>
-<td> the HTTP method to send the message.
-</td>
+<td>the HTTP method to send the message.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> 0 on success; or a negative value otherwise.
-</td>
+<td>0 on success; or a negative value otherwise.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_defederation_process_notification_msg ()">
+<div class="refsect2">
 <a name="lasso-defederation-process-notification-msg"></a><h3>lasso_defederation_process_notification_msg ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_defederation_process_notification_msg
-                                                        (LassoDefederation *defederation,
-                                                         <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *notification_msg);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_defederation_process_notification_msg
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoDefederation.html#LassoDefederation" title="struct LassoDefederation"><span class="type">LassoDefederation</span></a> *defederation</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *notification_msg</code></em>);</pre>
 <p>
 Processes a lib:FederationTerminationNotification message.  Rebuilds a
 request object from the message and optionally verifies its signature.
@@ -226,48 +201,46 @@ request object from the message and optionally verifies its signature.
 <p>
 Set the msg_nameIdentifier attribute with the NameIdentifier content of the
 notification object and optionally set the msg_relayState attribute with the
-RelayState content of the notification object.</p>
+RelayState content of the notification object.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>defederation</code></em> :</span></p></td>
-<td> the federation termination object
-</td>
+<td>the federation termination object</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>notification_msg</code></em> :</span></p></td>
-<td> the federation termination notification message
-</td>
+<td>the federation termination notification message</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> 0 on success; or a negative value otherwise.
-</td>
+<td>0 on success; or a negative value otherwise.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_defederation_validate_notification ()">
+<div class="refsect2">
 <a name="lasso-defederation-validate-notification"></a><h3>lasso_defederation_validate_notification ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_defederation_validate_notification
-                                                        (LassoDefederation *defederation);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_defederation_validate_notification
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoDefederation.html#LassoDefederation" title="struct LassoDefederation"><span class="type">LassoDefederation</span></a> *defederation</code></em>);</pre>
 <p>
 Checks notification with regards to message status and principal
-federations; update them accordingly.</p>
+federations; update them accordingly.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>defederation</code></em> :</span></p></td>
-<td> a <span class="type">LassoDefederation</span>
+<td>a <a class="link" href="lasso-LassoDefederation.html#LassoDefederation" title="struct LassoDefederation"><span class="type">LassoDefederation</span></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> 0 on success; or a negative value otherwise.
-</td>
+<td>0 on success; or a negative value otherwise.</td>
 </tr>
 </tbody>
 </table></div>
@@ -276,6 +249,6 @@ federations; update them accordingly.</p>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.11</div>
+          Generated by GTK-Doc V1.17</div>
 </body>
 </html>

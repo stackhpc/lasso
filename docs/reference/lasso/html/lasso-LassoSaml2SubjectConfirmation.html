@@ -3,30 +3,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LassoSaml2SubjectConfirmation</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
 <link rel="prev" href="lasso-LassoSaml2SubjectConfirmationData.html" title="LassoSaml2SubjectConfirmationData">
 <link rel="next" href="lasso-LassoSaml2SubjectLocality.html" title="LassoSaml2SubjectLocality">
-<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
-<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
-<link rel="reference" href="rn01.html" title="Application Programming Interface">
-<link rel="chapter" href="architecture.html" title="Lasso Architecture">
-<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
-<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
-<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
-<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
-<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
-<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
-<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
-<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
-<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
-<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
-<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
-<link rel="part" href="pt01.html" title="Part II. Appendix">
-<link rel="index" href="api-index.html" title="API Index">
-<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
@@ -39,11 +22,11 @@
 </tr>
 <tr><td colspan="5" class="shortcuts">
 <a href="#lasso-LassoSaml2SubjectConfirmation.synopsis" class="shortcut">Top</a>
-                 | 
-                <a href="#lasso-LassoSaml2SubjectConfirmation.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#lasso-LassoSaml2SubjectConfirmation.description" class="shortcut">Description</a>
 </td></tr>
 </table>
-<div class="refentry" title="LassoSaml2SubjectConfirmation">
+<div class="refentry">
 <a name="lasso-LassoSaml2SubjectConfirmation"></a><div class="titlepage"></div>
 <div class="refnamediv"><table width="100%"><tr>
 <td valign="top">
@@ -52,20 +35,19 @@
 </td>
 <td valign="top" align="right"></td>
 </tr></table></div>
-<div class="refsynopsisdiv" title="Synopsis">
+<div class="refsynopsisdiv">
 <a name="lasso-LassoSaml2SubjectConfirmation.synopsis"></a><h2>Synopsis</h2>
-<pre class="synopsis">
-                    LassoSaml2SubjectConfirmation;
-LassoNode*          lasso_saml2_subject_confirmation_new
-                                                        (void);
+<pre class="synopsis">struct              <a class="link" href="lasso-LassoSaml2SubjectConfirmation.html#LassoSaml2SubjectConfirmation" title="struct LassoSaml2SubjectConfirmation">LassoSaml2SubjectConfirmation</a>;
+<a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="returnvalue">LassoNode</span></a> *         <a class="link" href="lasso-LassoSaml2SubjectConfirmation.html#lasso-saml2-subject-confirmation-new" title="lasso_saml2_subject_confirmation_new ()">lasso_saml2_subject_confirmation_new</a>
+                                                        (<em class="parameter"><code><span class="type">void</span></code></em>);
 </pre>
 </div>
-<div class="refsect1" title="Description">
+<div class="refsect1">
 <a name="lasso-LassoSaml2SubjectConfirmation.description"></a><h2>Description</h2>
 <p>
 </p>
 <div class="figure">
-<a name="id2732127"></a><p class="title"><b>Figure 63. Schema fragment for saml2:SubjectConfirmation</b></p>
+<a name="id3170512"></a><p class="title"><b>Figure 63. Schema fragment for saml2:SubjectConfirmation</b></p>
 <div class="figure-contents"><pre class="programlisting">
 
 &lt;complexType name="SubjectConfirmationType"&gt;
@@ -81,13 +63,14 @@ LassoNode*          lasso_saml2_subject_confirmation_new
 &lt;/complexType&gt;
 </pre></div>
 </div>
-<p><br class="figure-break"></p>
+<p><br class="figure-break">
+</p>
 </div>
-<div class="refsect1" title="Details">
+<div class="refsect1">
 <a name="lasso-LassoSaml2SubjectConfirmation.details"></a><h2>Details</h2>
-<div class="refsect2" title="LassoSaml2SubjectConfirmation">
-<a name="LassoSaml2SubjectConfirmation"></a><h3>LassoSaml2SubjectConfirmation</h3>
-<pre class="programlisting">typedef struct {
+<div class="refsect2">
+<a name="LassoSaml2SubjectConfirmation"></a><h3>struct LassoSaml2SubjectConfirmation</h3>
+<pre class="programlisting">struct LassoSaml2SubjectConfirmation {
 	LassoNode parent;
 
 	/* elements */
@@ -97,22 +80,22 @@ LassoNode*          lasso_saml2_subject_confirmation_new
 	LassoSaml2SubjectConfirmationData *SubjectConfirmationData;
 	/* attributes */
 	char *Method;
-} LassoSaml2SubjectConfirmation;
+};
 </pre>
 </div>
 <hr>
-<div class="refsect2" title="lasso_saml2_subject_confirmation_new ()">
+<div class="refsect2">
 <a name="lasso-saml2-subject-confirmation-new"></a><h3>lasso_saml2_subject_confirmation_new ()</h3>
-<pre class="programlisting">LassoNode*          lasso_saml2_subject_confirmation_new
-                                                        (void);</pre>
+<pre class="programlisting"><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="returnvalue">LassoNode</span></a> *         lasso_saml2_subject_confirmation_new
+                                                        (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
 <p>
-Creates a new <span class="type">LassoSaml2SubjectConfirmation</span> object.</p>
+Creates a new <a class="link" href="lasso-LassoSaml2SubjectConfirmation.html#LassoSaml2SubjectConfirmation" title="struct LassoSaml2SubjectConfirmation"><span class="type">LassoSaml2SubjectConfirmation</span></a> object.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody><tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a newly created <span class="type">LassoSaml2SubjectConfirmation</span> object
-</td>
+<td>a newly created <a class="link" href="lasso-LassoSaml2SubjectConfirmation.html#LassoSaml2SubjectConfirmation" title="struct LassoSaml2SubjectConfirmation"><span class="type">LassoSaml2SubjectConfirmation</span></a> object</td>
 </tr></tbody>
 </table></div>
 </div>
@@ -120,6 +103,6 @@ Creates a new <span class="type">LassoSaml2SubjectConfirmation</span> object.</p
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.11</div>
+          Generated by GTK-Doc V1.17</div>
 </body>
 </html>

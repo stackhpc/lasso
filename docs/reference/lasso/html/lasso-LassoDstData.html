@@ -3,30 +3,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LassoDstData</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
 <link rel="prev" href="lasso-LassoDiscoServiceInstance.html" title="LassoDiscoServiceInstance">
 <link rel="next" href="lasso-LassoDstModification.html" title="LassoDstModification">
-<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
-<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
-<link rel="reference" href="rn01.html" title="Application Programming Interface">
-<link rel="chapter" href="architecture.html" title="Lasso Architecture">
-<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
-<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
-<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
-<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
-<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
-<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
-<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
-<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
-<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
-<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
-<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
-<link rel="part" href="pt01.html" title="Part II. Appendix">
-<link rel="index" href="api-index.html" title="API Index">
-<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
@@ -39,11 +22,11 @@
 </tr>
 <tr><td colspan="5" class="shortcuts">
 <a href="#lasso-LassoDstData.synopsis" class="shortcut">Top</a>
-                 | 
-                <a href="#lasso-LassoDstData.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#lasso-LassoDstData.description" class="shortcut">Description</a>
 </td></tr>
 </table>
-<div class="refentry" title="LassoDstData">
+<div class="refentry">
 <a name="lasso-LassoDstData"></a><div class="titlepage"></div>
 <div class="refnamediv"><table width="100%"><tr>
 <td valign="top">
@@ -52,19 +35,18 @@
 </td>
 <td valign="top" align="right"></td>
 </tr></table></div>
-<div class="refsynopsisdiv" title="Synopsis">
+<div class="refsynopsisdiv">
 <a name="lasso-LassoDstData.synopsis"></a><h2>Synopsis</h2>
-<pre class="synopsis">
-                    LassoDstData;
-LassoDstData*       lasso_dst_data_new                  (void);
+<pre class="synopsis">struct              <a class="link" href="lasso-LassoDstData.html#LassoDstData" title="struct LassoDstData">LassoDstData</a>;
+<a class="link" href="lasso-LassoDstData.html#LassoDstData" title="struct LassoDstData"><span class="returnvalue">LassoDstData</span></a> *      <a class="link" href="lasso-LassoDstData.html#lasso-dst-data-new" title="lasso_dst_data_new ()">lasso_dst_data_new</a>                  (<em class="parameter"><code><span class="type">void</span></code></em>);
 </pre>
 </div>
-<div class="refsect1" title="Description">
+<div class="refsect1">
 <a name="lasso-LassoDstData.description"></a><h2>Description</h2>
 <p>
 </p>
 <div class="figure">
-<a name="id2758729"></a><p class="title"><b>Figure 112. Schema fragment for dst:Data</b></p>
+<a name="id3184558"></a><p class="title"><b>Figure 112. Schema fragment for dst:Data</b></p>
 <div class="figure-contents"><pre class="programlisting">
 
 &lt;xs:element name="Data" minOccurs="0" maxOccurs="unbounded"&gt;
@@ -88,31 +70,32 @@ Schema fragment (liberty-idwsf-utility-1.0-errata-v1.0.xsd)
 &lt;/xs:simpleType&gt;
 </pre></div>
 </div>
-<p><br class="figure-break"></p>
+<p><br class="figure-break">
+</p>
 </div>
-<div class="refsect1" title="Details">
+<div class="refsect1">
 <a name="lasso-LassoDstData.details"></a><h2>Details</h2>
-<div class="refsect2" title="LassoDstData">
-<a name="LassoDstData"></a><h3>LassoDstData</h3>
-<pre class="programlisting">typedef struct {
+<div class="refsect2">
+<a name="LassoDstData"></a><h3>struct LassoDstData</h3>
+<pre class="programlisting">struct LassoDstData {
 	LassoNode parent;
 
 	GList *any; /* of xmlNode* */
 
 	char *id;
 	char *itemIDRef;
-} LassoDstData;
+};
 </pre>
 </div>
 <hr>
-<div class="refsect2" title="lasso_dst_data_new ()">
+<div class="refsect2">
 <a name="lasso-dst-data-new"></a><h3>lasso_dst_data_new ()</h3>
-<pre class="programlisting">LassoDstData*       lasso_dst_data_new                  (void);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoDstData.html#LassoDstData" title="struct LassoDstData"><span class="returnvalue">LassoDstData</span></a> *      lasso_dst_data_new                  (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
 </div>
 </div>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.11</div>
+          Generated by GTK-Doc V1.17</div>
 </body>
 </html>

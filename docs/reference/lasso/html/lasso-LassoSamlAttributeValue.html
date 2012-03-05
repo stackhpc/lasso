@@ -3,30 +3,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LassoSamlAttributeValue</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
 <link rel="prev" href="lasso-LassoSamlAttributeStatement.html" title="LassoSamlAttributeStatement">
 <link rel="next" href="lasso-LassoSamlAttribute.html" title="LassoSamlAttribute">
-<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
-<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
-<link rel="reference" href="rn01.html" title="Application Programming Interface">
-<link rel="chapter" href="architecture.html" title="Lasso Architecture">
-<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
-<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
-<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
-<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
-<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
-<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
-<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
-<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
-<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
-<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
-<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
-<link rel="part" href="pt01.html" title="Part II. Appendix">
-<link rel="index" href="api-index.html" title="API Index">
-<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
@@ -39,11 +22,11 @@
 </tr>
 <tr><td colspan="5" class="shortcuts">
 <a href="#lasso-LassoSamlAttributeValue.synopsis" class="shortcut">Top</a>
-                 | 
-                <a href="#lasso-LassoSamlAttributeValue.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#lasso-LassoSamlAttributeValue.description" class="shortcut">Description</a>
 </td></tr>
 </table>
-<div class="refentry" title="LassoSamlAttributeValue">
+<div class="refentry">
 <a name="lasso-LassoSamlAttributeValue"></a><div class="titlepage"></div>
 <div class="refnamediv"><table width="100%"><tr>
 <td valign="top">
@@ -52,22 +35,22 @@
 </td>
 <td valign="top" align="right"></td>
 </tr></table></div>
-<div class="refsynopsisdiv" title="Synopsis">
+<div class="refsynopsisdiv">
 <a name="lasso-LassoSamlAttributeValue.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">
-
 #include &lt;lasso/xml/saml_attribute_value.h&gt;
 
-                    LassoSamlAttributeValue;
-LassoSamlAttributeValue* lasso_saml_attribute_value_new (void);
+struct              <a class="link" href="lasso-LassoSamlAttributeValue.html#LassoSamlAttributeValue" title="struct LassoSamlAttributeValue">LassoSamlAttributeValue</a>;
+<a class="link" href="lasso-LassoSamlAttributeValue.html#LassoSamlAttributeValue" title="struct LassoSamlAttributeValue"><span class="returnvalue">LassoSamlAttributeValue</span></a> *  <a class="link" href="lasso-LassoSamlAttributeValue.html#lasso-saml-attribute-value-new" title="lasso_saml_attribute_value_new ()">lasso_saml_attribute_value_new</a>
+                                                        (<em class="parameter"><code><span class="type">void</span></code></em>);
 </pre>
 </div>
-<div class="refsect1" title="Description">
+<div class="refsect1">
 <a name="lasso-LassoSamlAttributeValue.description"></a><h2>Description</h2>
 <p>
 </p>
 <div class="figure">
-<a name="id2711030"></a><p class="title"><b>Figure 25. Schema fragment for samlp2:Extensions</b></p>
+<a name="id3081654"></a><p class="title"><b>Figure 25. Schema fragment for samlp2:Extensions</b></p>
 <div class="figure-contents"><pre class="programlisting">
 
 &lt;element name="AttributeValue" type="anyType"/&gt;
@@ -78,36 +61,38 @@ LassoSamlAttributeValue* lasso_saml_attribute_value_new (void);
 </p>
 <p>
 This object support a special of specifying its content. If the <em class="structfield"><code>any</code></em>
-field is <code class="literal">NULL</code>, then you can attach an <span class="type">xmlNode</span> using
-<code class="function">lasso_node_set_original_xmlnode()</code> and it will be used to generate the content of the serialized
+field is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, then you can attach an <span class="type">xmlNode</span> using
+<a class="link" href="lasso-node.html#lasso-node-set-original-xmlnode" title="lasso_node_set_original_xmlnode ()"><code class="function">lasso_node_set_original_xmlnode()</code></a> and it will be used to generate the content of the serialized
 <span class="type">xmlNode</span> for this object. The content (attributes, childrent and namespaces) of the
 <span class="type">xmlNode</span> will be copied to the result node returned by calls to
-<code class="function">lasso_node_get_xmlNode()</code>.</p>
+<a class="link" href="lasso-node.html#lasso-node-get-xmlNode" title="lasso_node_get_xmlNode ()"><code class="function">lasso_node_get_xmlNode()</code></a>.
+</p>
 </div>
-<div class="refsect1" title="Details">
+<div class="refsect1">
 <a name="lasso-LassoSamlAttributeValue.details"></a><h2>Details</h2>
-<div class="refsect2" title="LassoSamlAttributeValue">
-<a name="LassoSamlAttributeValue"></a><h3>LassoSamlAttributeValue</h3>
-<pre class="programlisting">typedef struct {
+<div class="refsect2">
+<a name="LassoSamlAttributeValue"></a><h3>struct LassoSamlAttributeValue</h3>
+<pre class="programlisting">struct LassoSamlAttributeValue {
 	LassoNode parent;
 
 	GList *any; /* of LassoNode */
-} LassoSamlAttributeValue;
+};
 </pre>
 </div>
 <hr>
-<div class="refsect2" title="lasso_saml_attribute_value_new ()">
+<div class="refsect2">
 <a name="lasso-saml-attribute-value-new"></a><h3>lasso_saml_attribute_value_new ()</h3>
-<pre class="programlisting">LassoSamlAttributeValue* lasso_saml_attribute_value_new (void);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoSamlAttributeValue.html#LassoSamlAttributeValue" title="struct LassoSamlAttributeValue"><span class="returnvalue">LassoSamlAttributeValue</span></a> *  lasso_saml_attribute_value_new
+                                                        (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
 </div>
 </div>
-<div class="refsect1" title="See Also">
+<div class="refsect1">
 <a name="lasso-LassoSamlAttributeValue.see-also"></a><h2>See Also</h2>
-#LassoSamlAttribute, <span class="type">LassoSamlAttributeStatement</span>, <span class="type">LassoSamlAssertion</span>
+<a class="link" href="lasso-LassoSamlAttribute.html#LassoSamlAttribute" title="struct LassoSamlAttribute"><span class="type">LassoSamlAttribute</span></a>, <a class="link" href="lasso-LassoSamlAttributeStatement.html#LassoSamlAttributeStatement" title="struct LassoSamlAttributeStatement"><span class="type">LassoSamlAttributeStatement</span></a>, <a class="link" href="lasso-LassoSamlAssertion.html#LassoSamlAssertion" title="struct LassoSamlAssertion"><span class="type">LassoSamlAssertion</span></a>
 </div>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.11</div>
+          Generated by GTK-Doc V1.17</div>
 </body>
 </html>

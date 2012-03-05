@@ -3,30 +3,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LassoLibLogoutRequest</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
 <link rel="prev" href="lasso-LassoLibIDPList.html" title="LassoLibIDPList">
 <link rel="next" href="lasso-LassoLibLogoutResponse.html" title="LassoLibLogoutResponse">
-<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
-<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
-<link rel="reference" href="rn01.html" title="Application Programming Interface">
-<link rel="chapter" href="architecture.html" title="Lasso Architecture">
-<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
-<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
-<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
-<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
-<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
-<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
-<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
-<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
-<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
-<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
-<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
-<link rel="part" href="pt01.html" title="Part II. Appendix">
-<link rel="index" href="api-index.html" title="API Index">
-<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
@@ -39,11 +22,11 @@
 </tr>
 <tr><td colspan="5" class="shortcuts">
 <a href="#lasso-LassoLibLogoutRequest.synopsis" class="shortcut">Top</a>
-                 | 
-                <a href="#lasso-LassoLibLogoutRequest.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#lasso-LassoLibLogoutRequest.description" class="shortcut">Description</a>
 </td></tr>
 </table>
-<div class="refentry" title="LassoLibLogoutRequest">
+<div class="refentry">
 <a name="lasso-LassoLibLogoutRequest"></a><div class="titlepage"></div>
 <div class="refnamediv"><table width="100%"><tr>
 <td valign="top">
@@ -52,23 +35,22 @@
 </td>
 <td valign="top" align="right"></td>
 </tr></table></div>
-<div class="refsynopsisdiv" title="Synopsis">
+<div class="refsynopsisdiv">
 <a name="lasso-LassoLibLogoutRequest.synopsis"></a><h2>Synopsis</h2>
-<pre class="synopsis">
-                    LassoLibLogoutRequest;
-LassoNode*          lasso_lib_logout_request_new        (void);
-LassoNode*          lasso_lib_logout_request_new_full   (char *providerID,
-                                                         LassoSamlNameIdentifier *nameIdentifier,
-                                                         LassoSignatureType sign_type,
-                                                         LassoSignatureMethod sign_method);
+<pre class="synopsis">struct              <a class="link" href="lasso-LassoLibLogoutRequest.html#LassoLibLogoutRequest" title="struct LassoLibLogoutRequest">LassoLibLogoutRequest</a>;
+<a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="returnvalue">LassoNode</span></a> *         <a class="link" href="lasso-LassoLibLogoutRequest.html#lasso-lib-logout-request-new" title="lasso_lib_logout_request_new ()">lasso_lib_logout_request_new</a>        (<em class="parameter"><code><span class="type">void</span></code></em>);
+<a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="returnvalue">LassoNode</span></a> *         <a class="link" href="lasso-LassoLibLogoutRequest.html#lasso-lib-logout-request-new-full" title="lasso_lib_logout_request_new_full ()">lasso_lib_logout_request_new_full</a>   (<em class="parameter"><code><span class="type">char</span> *providerID</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="lasso-LassoSamlNameIdentifier.html#LassoSamlNameIdentifier" title="struct LassoSamlNameIdentifier"><span class="type">LassoSamlNameIdentifier</span></a> *nameIdentifier</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="lasso-node.html#LassoSignatureType" title="enum LassoSignatureType"><span class="type">LassoSignatureType</span></a> sign_type</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="lasso-node.html#LassoSignatureMethod" title="enum LassoSignatureMethod"><span class="type">LassoSignatureMethod</span></a> sign_method</code></em>);
 </pre>
 </div>
-<div class="refsect1" title="Description">
+<div class="refsect1">
 <a name="lasso-LassoLibLogoutRequest.description"></a><h2>Description</h2>
 <p>
 </p>
 <div class="figure">
-<a name="id2706904"></a><p class="title"><b>Figure 11. Schema fragment for lib:LogoutRequest</b></p>
+<a name="id3110105"></a><p class="title"><b>Figure 11. Schema fragment for lib:LogoutRequest</b></p>
 <div class="figure-contents"><pre class="programlisting">
 &lt;xs:element name="LogoutRequest" type="LogoutRequestType"/&gt;
 &lt;xs:complexType name="LogoutRequestType"&gt;
@@ -91,13 +73,14 @@ LassoNode*          lasso_lib_logout_request_new_full   (char *providerID,
 &lt;xs:element name="RelayState" type="xs:string"/&gt;
 </pre></div>
 </div>
-<p><br class="figure-break"></p>
+<p><br class="figure-break">
+</p>
 </div>
-<div class="refsect1" title="Details">
+<div class="refsect1">
 <a name="lasso-LassoLibLogoutRequest.details"></a><h2>Details</h2>
-<div class="refsect2" title="LassoLibLogoutRequest">
-<a name="LassoLibLogoutRequest"></a><h3>LassoLibLogoutRequest</h3>
-<pre class="programlisting">typedef struct {
+<div class="refsect2">
+<a name="LassoLibLogoutRequest"></a><h3>struct LassoLibLogoutRequest</h3>
+<pre class="programlisting">struct LassoLibLogoutRequest {
 	LassoSamlpRequestAbstract parent;
 
 	/* &lt;xs:element ref="Extension" minOccurs="0" maxOccurs="unbounded"/&gt; */
@@ -108,61 +91,57 @@ LassoNode*          lasso_lib_logout_request_new_full   (char *providerID,
 	char *RelayState;
 	char *consent;
 	char *NotOnOrAfter;
-} LassoLibLogoutRequest;
+};
 </pre>
 </div>
 <hr>
-<div class="refsect2" title="lasso_lib_logout_request_new ()">
+<div class="refsect2">
 <a name="lasso-lib-logout-request-new"></a><h3>lasso_lib_logout_request_new ()</h3>
-<pre class="programlisting">LassoNode*          lasso_lib_logout_request_new        (void);</pre>
+<pre class="programlisting"><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="returnvalue">LassoNode</span></a> *         lasso_lib_logout_request_new        (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
 <p>
-Creates a new <span class="type">LassoLibLogoutRequest</span> object.</p>
+Creates a new <a class="link" href="lasso-LassoLibLogoutRequest.html#LassoLibLogoutRequest" title="struct LassoLibLogoutRequest"><span class="type">LassoLibLogoutRequest</span></a> object.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody><tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a newly created <span class="type">LassoLibLogoutRequest</span> object
-</td>
+<td>a newly created <a class="link" href="lasso-LassoLibLogoutRequest.html#LassoLibLogoutRequest" title="struct LassoLibLogoutRequest"><span class="type">LassoLibLogoutRequest</span></a> object</td>
 </tr></tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_lib_logout_request_new_full ()">
+<div class="refsect2">
 <a name="lasso-lib-logout-request-new-full"></a><h3>lasso_lib_logout_request_new_full ()</h3>
-<pre class="programlisting">LassoNode*          lasso_lib_logout_request_new_full   (char *providerID,
-                                                         LassoSamlNameIdentifier *nameIdentifier,
-                                                         LassoSignatureType sign_type,
-                                                         LassoSignatureMethod sign_method);</pre>
+<pre class="programlisting"><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="returnvalue">LassoNode</span></a> *         lasso_lib_logout_request_new_full   (<em class="parameter"><code><span class="type">char</span> *providerID</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="lasso-LassoSamlNameIdentifier.html#LassoSamlNameIdentifier" title="struct LassoSamlNameIdentifier"><span class="type">LassoSamlNameIdentifier</span></a> *nameIdentifier</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="lasso-node.html#LassoSignatureType" title="enum LassoSignatureType"><span class="type">LassoSignatureType</span></a> sign_type</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="lasso-node.html#LassoSignatureMethod" title="enum LassoSignatureMethod"><span class="type">LassoSignatureMethod</span></a> sign_method</code></em>);</pre>
 <p>
-Creates a new <span class="type">LassoLibLogoutRequest</span> object and initializes it with the
-parameters.</p>
+Creates a new <a class="link" href="lasso-LassoLibLogoutRequest.html#LassoLibLogoutRequest" title="struct LassoLibLogoutRequest"><span class="type">LassoLibLogoutRequest</span></a> object and initializes it with the
+parameters.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>providerID</code></em> :</span></p></td>
-<td> the provider ID requesting the logout
-</td>
+<td>the provider ID requesting the logout</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>nameIdentifier</code></em> :</span></p></td>
-<td> the name identifier to log out
-</td>
+<td>the name identifier to log out</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>sign_type</code></em> :</span></p></td>
-<td> a <span class="type">LassoSignatureType</span> value
-</td>
+<td>a <a class="link" href="lasso-node.html#LassoSignatureType" title="enum LassoSignatureType"><span class="type">LassoSignatureType</span></a> value</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>sign_method</code></em> :</span></p></td>
-<td> a <span class="type">LassoSignatureMethod</span> value
-</td>
+<td>a <a class="link" href="lasso-node.html#LassoSignatureMethod" title="enum LassoSignatureMethod"><span class="type">LassoSignatureMethod</span></a> value</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a newly created <span class="type">LassoLibLogoutRequest</span> object
-</td>
+<td>a newly created <a class="link" href="lasso-LassoLibLogoutRequest.html#LassoLibLogoutRequest" title="struct LassoLibLogoutRequest"><span class="type">LassoLibLogoutRequest</span></a> object</td>
 </tr>
 </tbody>
 </table></div>
@@ -171,6 +150,6 @@ parameters.</p>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.11</div>
+          Generated by GTK-Doc V1.17</div>
 </body>
 </html>
