@@ -3,30 +3,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LassoSaml2NameID</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
 <link rel="prev" href="lasso-LassoSaml2KeyInfoConfirmationData.html" title="LassoSaml2KeyInfoConfirmationData">
 <link rel="next" href="lasso-LassoSaml2OneTimeUse.html" title="LassoSaml2OneTimeUse">
-<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
-<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
-<link rel="reference" href="rn01.html" title="Application Programming Interface">
-<link rel="chapter" href="architecture.html" title="Lasso Architecture">
-<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
-<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
-<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
-<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
-<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
-<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
-<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
-<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
-<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
-<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
-<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
-<link rel="part" href="pt01.html" title="Part II. Appendix">
-<link rel="index" href="api-index.html" title="API Index">
-<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
@@ -39,11 +22,11 @@
 </tr>
 <tr><td colspan="5" class="shortcuts">
 <a href="#lasso-LassoSaml2NameID.synopsis" class="shortcut">Top</a>
-                 | 
-                <a href="#lasso-LassoSaml2NameID.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#lasso-LassoSaml2NameID.description" class="shortcut">Description</a>
 </td></tr>
 </table>
-<div class="refentry" title="LassoSaml2NameID">
+<div class="refentry">
 <a name="lasso-LassoSaml2NameID"></a><div class="titlepage"></div>
 <div class="refnamediv"><table width="100%"><tr>
 <td valign="top">
@@ -52,32 +35,29 @@
 </td>
 <td valign="top" align="right"></td>
 </tr></table></div>
-<div class="refsynopsisdiv" title="Synopsis">
+<div class="refsynopsisdiv">
 <a name="lasso-LassoSaml2NameID.synopsis"></a><h2>Synopsis</h2>
-<pre class="synopsis">
-                    LassoSaml2NameID;
-LassoNode*          lasso_saml2_name_id_new             (void);
-LassoNode*          lasso_saml2_name_id_new_with_string (char *content);
-LassoSaml2NameID*   lasso_saml2_name_id_build_persistent
-                                                        (const char *id,
-                                                         const char *idpID,
-                                                         const char *providerID);
-<a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
->gboolean</a>            lasso_saml2_name_id_equals          (LassoSaml2NameID *name_id,
-                                                         LassoSaml2NameID *other_name_id);
-LassoSaml2NameID*   lasso_saml2_name_id_new_with_persistent_format
-                                                        (const char *id,
-                                                         const char *idpID,
-                                                         const char *providerID);
+<pre class="synopsis">struct              <a class="link" href="lasso-LassoSaml2NameID.html#LassoSaml2NameID" title="struct LassoSaml2NameID">LassoSaml2NameID</a>;
+<a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="returnvalue">LassoNode</span></a> *         <a class="link" href="lasso-LassoSaml2NameID.html#lasso-saml2-name-id-new" title="lasso_saml2_name_id_new ()">lasso_saml2_name_id_new</a>             (<em class="parameter"><code><span class="type">void</span></code></em>);
+<a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="returnvalue">LassoNode</span></a> *         <a class="link" href="lasso-LassoSaml2NameID.html#lasso-saml2-name-id-new-with-string" title="lasso_saml2_name_id_new_with_string ()">lasso_saml2_name_id_new_with_string</a> (<em class="parameter"><code><span class="type">char</span> *content</code></em>);
+<a class="link" href="lasso-LassoSaml2NameID.html#LassoSaml2NameID" title="struct LassoSaml2NameID"><span class="returnvalue">LassoSaml2NameID</span></a> *  <a class="link" href="lasso-LassoSaml2NameID.html#lasso-saml2-name-id-build-persistent" title="lasso_saml2_name_id_build_persistent ()">lasso_saml2_name_id_build_persistent</a>
+                                                        (<em class="parameter"><code>const <span class="type">char</span> *id</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *idpID</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *providerID</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="lasso-LassoSaml2NameID.html#lasso-saml2-name-id-equals" title="lasso_saml2_name_id_equals ()">lasso_saml2_name_id_equals</a>          (<em class="parameter"><code><a class="link" href="lasso-LassoSaml2NameID.html#LassoSaml2NameID" title="struct LassoSaml2NameID"><span class="type">LassoSaml2NameID</span></a> *name_id</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="lasso-LassoSaml2NameID.html#LassoSaml2NameID" title="struct LassoSaml2NameID"><span class="type">LassoSaml2NameID</span></a> *other_name_id</code></em>);
+<a class="link" href="lasso-LassoSaml2NameID.html#LassoSaml2NameID" title="struct LassoSaml2NameID"><span class="returnvalue">LassoSaml2NameID</span></a> *  <a class="link" href="lasso-LassoSaml2NameID.html#lasso-saml2-name-id-new-with-persistent-format" title="lasso_saml2_name_id_new_with_persistent_format ()">lasso_saml2_name_id_new_with_persistent_format</a>
+                                                        (<em class="parameter"><code>const <span class="type">char</span> *id</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *idpID</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *providerID</code></em>);
 </pre>
 </div>
-<div class="refsect1" title="Description">
+<div class="refsect1">
 <a name="lasso-LassoSaml2NameID.description"></a><h2>Description</h2>
 <p>
 </p>
 <div class="figure">
-<a name="id2730141"></a><p class="title"><b>Figure 58. Schema fragment for saml2:NameID</b></p>
+<a name="id3190436"></a><p class="title"><b>Figure 58. Schema fragment for saml2:NameID</b></p>
 <div class="figure-contents"><pre class="programlisting">
 
 &lt;complexType name="NameIDType"&gt;
@@ -91,13 +71,14 @@ LassoSaml2NameID*   lasso_saml2_name_id_new_with_persistent_format
 &lt;/complexType&gt;
 </pre></div>
 </div>
-<p><br class="figure-break"></p>
+<p><br class="figure-break">
+</p>
 </div>
-<div class="refsect1" title="Details">
+<div class="refsect1">
 <a name="lasso-LassoSaml2NameID.details"></a><h2>Details</h2>
-<div class="refsect2" title="LassoSaml2NameID">
-<a name="LassoSaml2NameID"></a><h3>LassoSaml2NameID</h3>
-<pre class="programlisting">typedef struct {
+<div class="refsect2">
+<a name="LassoSaml2NameID"></a><h3>struct LassoSaml2NameID</h3>
+<pre class="programlisting">struct LassoSaml2NameID {
 	LassoNode parent;
 
 	/* elements */
@@ -107,149 +88,140 @@ LassoSaml2NameID*   lasso_saml2_name_id_new_with_persistent_format
 	char *SPProvidedID;
 	char *NameQualifier;
 	char *SPNameQualifier;
-} LassoSaml2NameID;
+};
 </pre>
 </div>
 <hr>
-<div class="refsect2" title="lasso_saml2_name_id_new ()">
+<div class="refsect2">
 <a name="lasso-saml2-name-id-new"></a><h3>lasso_saml2_name_id_new ()</h3>
-<pre class="programlisting">LassoNode*          lasso_saml2_name_id_new             (void);</pre>
+<pre class="programlisting"><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="returnvalue">LassoNode</span></a> *         lasso_saml2_name_id_new             (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
 <p>
-Creates a new <span class="type">LassoSaml2NameID</span> object.</p>
+Creates a new <a class="link" href="lasso-LassoSaml2NameID.html#LassoSaml2NameID" title="struct LassoSaml2NameID"><span class="type">LassoSaml2NameID</span></a> object.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody><tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a newly created <span class="type">LassoSaml2NameID</span> object
-</td>
+<td>a newly created <a class="link" href="lasso-LassoSaml2NameID.html#LassoSaml2NameID" title="struct LassoSaml2NameID"><span class="type">LassoSaml2NameID</span></a> object</td>
 </tr></tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_saml2_name_id_new_with_string ()">
+<div class="refsect2">
 <a name="lasso-saml2-name-id-new-with-string"></a><h3>lasso_saml2_name_id_new_with_string ()</h3>
-<pre class="programlisting">LassoNode*          lasso_saml2_name_id_new_with_string (char *content);</pre>
+<pre class="programlisting"><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="returnvalue">LassoNode</span></a> *         lasso_saml2_name_id_new_with_string (<em class="parameter"><code><span class="type">char</span> *content</code></em>);</pre>
 <p>
-Creates a new <span class="type">LassoSaml2NameID</span> object and initializes it
-with <em class="parameter"><code>content</code></em>. Beware that no format is set.</p>
+Creates a new <a class="link" href="lasso-LassoSaml2NameID.html#LassoSaml2NameID" title="struct LassoSaml2NameID"><span class="type">LassoSaml2NameID</span></a> object and initializes it
+with <em class="parameter"><code>content</code></em>. Beware that no format is set.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>content</code></em> :</span></p></td>
-<td> the Name Identifier.
-</td>
+<td>the Name Identifier.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a newly created <span class="type">LassoSaml2NameID</span> object
-</td>
+<td>a newly created <a class="link" href="lasso-LassoSaml2NameID.html#LassoSaml2NameID" title="struct LassoSaml2NameID"><span class="type">LassoSaml2NameID</span></a> object</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_saml2_name_id_build_persistent ()">
+<div class="refsect2">
 <a name="lasso-saml2-name-id-build-persistent"></a><h3>lasso_saml2_name_id_build_persistent ()</h3>
-<pre class="programlisting">LassoSaml2NameID*   lasso_saml2_name_id_build_persistent
-                                                        (const char *id,
-                                                         const char *idpID,
-                                                         const char *providerID);</pre>
-<div class="warning" title="Warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<pre class="programlisting"><a class="link" href="lasso-LassoSaml2NameID.html#LassoSaml2NameID" title="struct LassoSaml2NameID"><span class="returnvalue">LassoSaml2NameID</span></a> *  lasso_saml2_name_id_build_persistent
+                                                        (<em class="parameter"><code>const <span class="type">char</span> *id</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *idpID</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *providerID</code></em>);</pre>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">Warning</h3>
-<p><code class="literal">lasso_saml2_name_id_build_persistent</code> has been deprecated since version 2.3 and should not be used in newly-written code. use <code class="function">lasso_saml2_name_id_new_with_persistent_format()</code> instead.</p>
+<p><code class="literal">lasso_saml2_name_id_build_persistent</code> has been deprecated since version 2.3 and should not be used in newly-written code. use <a class="link" href="lasso-LassoSaml2NameID.html#lasso-saml2-name-id-new-with-persistent-format" title="lasso_saml2_name_id_new_with_persistent_format ()"><code class="function">lasso_saml2_name_id_new_with_persistent_format()</code></a> instead.</p>
 </div>
 <p>
-Create a new <span class="type">LassoSaml2NameID</span> object, which the <span class="type">LASSO_SAML2_NAME_IDENTIFIER_FORMAT_PERSISTENT</span>
-format, <em class="parameter"><code>id</code></em> as content, <em class="parameter"><code>idpID</code></em> as NameQualifier and <em class="parameter"><code>providerID</code></em> as SPNameQualifier.</p>
+Create a new <a class="link" href="lasso-LassoSaml2NameID.html#LassoSaml2NameID" title="struct LassoSaml2NameID"><span class="type">LassoSaml2NameID</span></a> object, which the <a class="link" href="lasso-SAML-2.0-Strings.html#LASSO-SAML2-NAME-IDENTIFIER-FORMAT-PERSISTENT:CAPS" title="LASSO_SAML2_NAME_IDENTIFIER_FORMAT_PERSISTENT"><span class="type">LASSO_SAML2_NAME_IDENTIFIER_FORMAT_PERSISTENT</span></a>
+format, <em class="parameter"><code>id</code></em> as content, <em class="parameter"><code>idpID</code></em> as NameQualifier and <em class="parameter"><code>providerID</code></em> as SPNameQualifier.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>id</code></em> :</span></p></td>
-<td> the identifier for the princiapl
-</td>
+<td>the identifier for the princiapl</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>idpID</code></em> :</span></p></td>
-<td> the entity ID of the IdP
-</td>
+<td>the entity ID of the IdP</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>providerID</code></em> :</span></p></td>
-<td> the entity ID of the provider
-</td>
+<td>the entity ID of the provider</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a newly created <span class="type">LassoSaml2NameID</span>
+<td>a newly created <a class="link" href="lasso-LassoSaml2NameID.html#LassoSaml2NameID" title="struct LassoSaml2NameID"><span class="type">LassoSaml2NameID</span></a>
 </td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_saml2_name_id_equals ()">
+<div class="refsect2">
 <a name="lasso-saml2-name-id-equals"></a><h3>lasso_saml2_name_id_equals ()</h3>
-<pre class="programlisting"><a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
->gboolean</a>            lasso_saml2_name_id_equals          (LassoSaml2NameID *name_id,
-                                                         LassoSaml2NameID *other_name_id);</pre>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            lasso_saml2_name_id_equals          (<em class="parameter"><code><a class="link" href="lasso-LassoSaml2NameID.html#LassoSaml2NameID" title="struct LassoSaml2NameID"><span class="type">LassoSaml2NameID</span></a> *name_id</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="lasso-LassoSaml2NameID.html#LassoSaml2NameID" title="struct LassoSaml2NameID"><span class="type">LassoSaml2NameID</span></a> *other_name_id</code></em>);</pre>
 <p>
-Return TRUE if <em class="parameter"><code>name_id</code></em> equals <em class="parameter"><code>other_name_id</code></em>.</p>
+Return TRUE if <em class="parameter"><code>name_id</code></em> equals <em class="parameter"><code>other_name_id</code></em>.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>name_id</code></em> :</span></p></td>
-<td> a <span class="type">LassoSaml2NameID</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoSaml2NameID.html#LassoSaml2NameID" title="struct LassoSaml2NameID"><span class="type">LassoSaml2NameID</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>other_name_id</code></em> :</span></p></td>
-<td> another <span class="type">LassoSaml2NameID</span> object
-</td>
+<td>another <a class="link" href="lasso-LassoSaml2NameID.html#LassoSaml2NameID" title="struct LassoSaml2NameID"><span class="type">LassoSaml2NameID</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> TRUE if the two NameID are equal and are <span class="type">LassoSaml2NameID</span> objects, FALSE
-otherwise.
-</td>
+<td>TRUE if the two NameID are equal and are <a class="link" href="lasso-LassoSaml2NameID.html#LassoSaml2NameID" title="struct LassoSaml2NameID"><span class="type">LassoSaml2NameID</span></a> objects, FALSE
+otherwise.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_saml2_name_id_new_with_persistent_format ()">
+<div class="refsect2">
 <a name="lasso-saml2-name-id-new-with-persistent-format"></a><h3>lasso_saml2_name_id_new_with_persistent_format ()</h3>
-<pre class="programlisting">LassoSaml2NameID*   lasso_saml2_name_id_new_with_persistent_format
-                                                        (const char *id,
-                                                         const char *idpID,
-                                                         const char *providerID);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoSaml2NameID.html#LassoSaml2NameID" title="struct LassoSaml2NameID"><span class="returnvalue">LassoSaml2NameID</span></a> *  lasso_saml2_name_id_new_with_persistent_format
+                                                        (<em class="parameter"><code>const <span class="type">char</span> *id</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *idpID</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *providerID</code></em>);</pre>
 <p>
-Create a new <span class="type">LassoSaml2NameID</span> object, which the <span class="type">LASSO_SAML2_NAME_IDENTIFIER_FORMAT_PERSISTENT</span>
-format, <em class="parameter"><code>id</code></em> as content, <em class="parameter"><code>idpID</code></em> as NameQualifier and <em class="parameter"><code>providerID</code></em> as SPNameQualifier.</p>
+Create a new <a class="link" href="lasso-LassoSaml2NameID.html#LassoSaml2NameID" title="struct LassoSaml2NameID"><span class="type">LassoSaml2NameID</span></a> object, which the <a class="link" href="lasso-SAML-2.0-Strings.html#LASSO-SAML2-NAME-IDENTIFIER-FORMAT-PERSISTENT:CAPS" title="LASSO_SAML2_NAME_IDENTIFIER_FORMAT_PERSISTENT"><span class="type">LASSO_SAML2_NAME_IDENTIFIER_FORMAT_PERSISTENT</span></a>
+format, <em class="parameter"><code>id</code></em> as content, <em class="parameter"><code>idpID</code></em> as NameQualifier and <em class="parameter"><code>providerID</code></em> as SPNameQualifier.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>id</code></em> :</span></p></td>
-<td> the identifier for the princiapl
-</td>
+<td>the identifier for the princiapl</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>idpID</code></em> :</span></p></td>
-<td> the entity ID of the IdP
-</td>
+<td>the entity ID of the IdP</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>providerID</code></em> :</span></p></td>
-<td> the entity ID of the provider
-</td>
+<td>the entity ID of the provider</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a newly created <span class="type">LassoSaml2NameID</span>
+<td>a newly created <a class="link" href="lasso-LassoSaml2NameID.html#LassoSaml2NameID" title="struct LassoSaml2NameID"><span class="type">LassoSaml2NameID</span></a>
 </td>
 </tr>
 </tbody>
@@ -260,6 +232,6 @@ format, <em class="parameter"><code>id</code></em> as content, <em class="parame
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.11</div>
+          Generated by GTK-Doc V1.17</div>
 </body>
 </html>

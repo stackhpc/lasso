@@ -3,30 +3,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LassoServer</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="architecture.html" title="Lasso Architecture">
 <link rel="prev" href="architecture.html" title="Lasso Architecture">
 <link rel="next" href="lasso-LassoProvider.html" title="LassoProvider">
-<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
-<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
-<link rel="reference" href="rn01.html" title="Application Programming Interface">
-<link rel="chapter" href="architecture.html" title="Lasso Architecture">
-<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
-<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
-<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
-<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
-<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
-<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
-<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
-<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
-<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
-<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
-<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
-<link rel="part" href="pt01.html" title="Part II. Appendix">
-<link rel="index" href="api-index.html" title="API Index">
-<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
@@ -39,11 +22,11 @@
 </tr>
 <tr><td colspan="5" class="shortcuts">
 <a href="#lasso-LassoServer.synopsis" class="shortcut">Top</a>
-                 | 
-                <a href="#lasso-LassoServer.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#lasso-LassoServer.description" class="shortcut">Description</a>
 </td></tr>
 </table>
-<div class="refentry" title="LassoServer">
+<div class="refentry">
 <a name="lasso-LassoServer"></a><div class="titlepage"></div>
 <div class="refnamediv"><table width="100%"><tr>
 <td valign="top">
@@ -52,101 +35,59 @@
 </td>
 <td valign="top" align="right"></td>
 </tr></table></div>
-<div class="refsynopsisdiv" title="Synopsis">
+<div class="refsynopsisdiv">
 <a name="lasso-LassoServer.synopsis"></a><h2>Synopsis</h2>
-<pre class="synopsis">
-                    LassoServer;
-LassoServer*        lasso_server_new                    (const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *metadata,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *private_key,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *private_key_password,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *certificate);
-LassoServer*        lasso_server_new_from_buffers       (const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *metadata,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *private_key_content,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *private_key_password,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *certificate_content);
-LassoServer*        lasso_server_new_from_dump          (const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *dump);
-lasso_error_t       lasso_server_add_provider           (LassoServer *server,
-                                                         LassoProviderRole role,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *metadata,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *public_key,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *ca_cert_chain);
-lasso_error_t       lasso_server_add_provider_from_buffer
-                                                        (LassoServer *server,
-                                                         LassoProviderRole role,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *metadata,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *public_key,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *ca_cert_chain);
-void                lasso_server_destroy                (LassoServer *server);
-<a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a>*              lasso_server_dump                   (LassoServer *server);
-LassoProvider*      lasso_server_get_provider           (const LassoServer *server,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *providerID);
-lasso_error_t       lasso_server_set_encryption_private_key
-                                                        (LassoServer *server,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *filename_or_buffer);
-lasso_error_t       lasso_server_set_encryption_private_key_with_password
-                                                        (LassoServer *server,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *filename_or_buffer,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *password);
-lasso_error_t       lasso_server_load_affiliation       (LassoServer *server,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *filename);
-lasso_error_t       lasso_server_saml2_assertion_setup_signature
-                                                        (LassoServer *server,
-                                                         LassoSaml2Assertion *saml2_assertion);
+<pre class="synopsis">struct              <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer">LassoServer</a>;
+<a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="returnvalue">LassoServer</span></a> *       <a class="link" href="lasso-LassoServer.html#lasso-server-new" title="lasso_server_new ()">lasso_server_new</a>                    (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *metadata</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *private_key</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *private_key_password</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *certificate</code></em>);
+<a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="returnvalue">LassoServer</span></a> *       <a class="link" href="lasso-LassoServer.html#lasso-server-new-from-buffers" title="lasso_server_new_from_buffers ()">lasso_server_new_from_buffers</a>       (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *metadata</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *private_key_content</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *private_key_password</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *certificate_content</code></em>);
+<a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="returnvalue">LassoServer</span></a> *       <a class="link" href="lasso-LassoServer.html#lasso-server-new-from-dump" title="lasso_server_new_from_dump ()">lasso_server_new_from_dump</a>          (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *dump</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoServer.html#lasso-server-add-provider" title="lasso_server_add_provider ()">lasso_server_add_provider</a>           (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProviderRole" title="enum LassoProviderRole"><span class="type">LassoProviderRole</span></a> role</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *metadata</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *public_key</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *ca_cert_chain</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoServer.html#lasso-server-add-provider-from-buffer" title="lasso_server_add_provider_from_buffer ()">lasso_server_add_provider_from_buffer</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProviderRole" title="enum LassoProviderRole"><span class="type">LassoProviderRole</span></a> role</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *metadata</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *public_key</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *ca_cert_chain</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="lasso-LassoServer.html#lasso-server-destroy" title="lasso_server_destroy ()">lasso_server_destroy</a>                (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="lasso-LassoServer.html#lasso-server-dump" title="lasso_server_dump ()">lasso_server_dump</a>                   (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);
+<a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="returnvalue">LassoProvider</span></a> *     <a class="link" href="lasso-LassoServer.html#lasso-server-get-provider" title="lasso_server_get_provider ()">lasso_server_get_provider</a>           (<em class="parameter"><code>const <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *providerID</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoServer.html#lasso-server-set-encryption-private-key" title="lasso_server_set_encryption_private_key ()">lasso_server_set_encryption_private_key</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *filename_or_buffer</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoServer.html#lasso-server-set-encryption-private-key-with-password" title="lasso_server_set_encryption_private_key_with_password ()">lasso_server_set_encryption_private_key_with_password</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *filename_or_buffer</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *password</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoServer.html#lasso-server-load-affiliation" title="lasso_server_load_affiliation ()">lasso_server_load_affiliation</a>       (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *filename</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoServer.html#lasso-server-saml2-assertion-setup-signature" title="lasso_server_saml2_assertion_setup_signature ()">lasso_server_saml2_assertion_setup_signature</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="lasso-LassoSaml2Assertion.html#LassoSaml2Assertion" title="struct LassoSaml2Assertion"><span class="type">LassoSaml2Assertion</span></a> *saml2_assertion</code></em>);
 </pre>
 </div>
-<div class="refsect1" title="Description">
+<div class="refsect1">
 <a name="lasso-LassoServer.description"></a><h2>Description</h2>
 <p>
 It holds the data about a provider, other providers it knows, which
-certificates to use, etc.</p>
+certificates to use, etc.
+</p>
 </div>
-<div class="refsect1" title="Details">
+<div class="refsect1">
 <a name="lasso-LassoServer.details"></a><h2>Details</h2>
-<div class="refsect2" title="LassoServer">
-<a name="LassoServer"></a><h3>LassoServer</h3>
-<pre class="programlisting">typedef struct {
+<div class="refsect2">
+<a name="LassoServer"></a><h3>struct LassoServer</h3>
+<pre class="programlisting">struct LassoServer {
 	LassoProvider parent;
 
 	GHashTable *providers; /* of LassoProvider */
@@ -156,444 +97,384 @@ certificates to use, etc.</p>
 	gchar *private_key_password;
 	gchar *certificate;
 	LassoSignatureMethod signature_method;
-} LassoServer;
+};
 </pre>
 </div>
 <hr>
-<div class="refsect2" title="lasso_server_new ()">
+<div class="refsect2">
 <a name="lasso-server-new"></a><h3>lasso_server_new ()</h3>
-<pre class="programlisting">LassoServer*        lasso_server_new                    (const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *metadata,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *private_key,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *private_key_password,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *certificate);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="returnvalue">LassoServer</span></a> *       lasso_server_new                    (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *metadata</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *private_key</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *private_key_password</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *certificate</code></em>);</pre>
 <p>
-Creates a new <span class="type">LassoServer</span>.</p>
+Creates a new <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a>.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>metadata</code></em> :</span></p></td>
-<td> path to the provider metadata file or NULL, for a LECP server
-</td>
+<td>path to the provider metadata file or NULL, for a LECP server</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>private_key:(allow-none)</code></em> :</span></p></td>
-<td> path to the the server private key file or NULL
-</td>
+<td>path to the the server private key file or NULL</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>private_key_password:(allow-none)</code></em> :</span></p></td>
-<td> password to private key if it is encrypted, or NULL
-</td>
+<td>password to private key if it is encrypted, or NULL</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>certificate:(allow-none)</code></em> :</span></p></td>
-<td> path to the server certificate file, or NULL
-</td>
+<td>path to the server certificate file, or NULL</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a newly created <span class="type">LassoServer</span> object; or NULL if an error
-     occured
-</td>
+<td>a newly created <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> object; or NULL if an error
+occured</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_server_new_from_buffers ()">
+<div class="refsect2">
 <a name="lasso-server-new-from-buffers"></a><h3>lasso_server_new_from_buffers ()</h3>
-<pre class="programlisting">LassoServer*        lasso_server_new_from_buffers       (const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *metadata,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *private_key_content,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *private_key_password,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *certificate_content);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="returnvalue">LassoServer</span></a> *       lasso_server_new_from_buffers       (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *metadata</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *private_key_content</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *private_key_password</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *certificate_content</code></em>);</pre>
 <p>
-Creates a new <span class="type">LassoServer</span>.</p>
+Creates a new <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a>.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>metadata</code></em> :</span></p></td>
-<td> NULL terminated string containing the content of an ID-FF 1.2 metadata file
-</td>
+<td>NULL terminated string containing the content of an ID-FF 1.2 metadata file</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>private_key_content:(allow-none)</code></em> :</span></p></td>
-<td> NULL terminated string containing a PEM formatted private key
-</td>
+<td>NULL terminated string containing a PEM formatted private key</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>private_key_password:(allow-none)</code></em> :</span></p></td>
-<td> a NULL terminated string which is the optional password of
-the private key
-</td>
+<td>a NULL terminated string which is the optional password of
+the private key</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>certificate_content:(allow-none)</code></em> :</span></p></td>
-<td> NULL terminated string containing a PEM formatted X509
-certificate
-</td>
+<td>NULL terminated string containing a PEM formatted X509
+certificate</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a newly created <span class="type">LassoServer</span> object; or NULL if an error occured
-</td>
+<td>a newly created <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> object; or NULL if an error occured</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_server_new_from_dump ()">
+<div class="refsect2">
 <a name="lasso-server-new-from-dump"></a><h3>lasso_server_new_from_dump ()</h3>
-<pre class="programlisting">LassoServer*        lasso_server_new_from_dump          (const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *dump);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="returnvalue">LassoServer</span></a> *       lasso_server_new_from_dump          (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *dump</code></em>);</pre>
 <p>
-Restores the <em class="parameter"><code>dump</code></em> to a new <span class="type">LassoServer</span>.</p>
+Restores the <em class="parameter"><code>dump</code></em> to a new <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a>.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>dump</code></em> :</span></p></td>
-<td> XML server dump
-</td>
+<td>XML server dump</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a newly created <span class="type">LassoServer</span>; or NULL if an error occured
-</td>
+<td>a newly created <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a>; or NULL if an error occured</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_server_add_provider ()">
+<div class="refsect2">
 <a name="lasso-server-add-provider"></a><h3>lasso_server_add_provider ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_server_add_provider           (LassoServer *server,
-                                                         LassoProviderRole role,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *metadata,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *public_key,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *ca_cert_chain);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_server_add_provider           (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProviderRole" title="enum LassoProviderRole"><span class="type">LassoProviderRole</span></a> role</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *metadata</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *public_key</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *ca_cert_chain</code></em>);</pre>
 <p>
-Creates a new <span class="type">LassoProvider</span> and makes it known to the <em class="parameter"><code>server</code></em></p>
+Creates a new <a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> and makes it known to the <em class="parameter"><code>server</code></em>
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
-<td> a <span class="type">LassoServer</span>
+<td>a <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>role</code></em> :</span></p></td>
-<td> provider role, identity provider or service provider
-</td>
+<td>provider role, identity provider or service provider</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>metadata</code></em> :</span></p></td>
-<td> path to the provider metadata file
-</td>
+<td>path to the provider metadata file</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>public_key:(allow-none)</code></em> :</span></p></td>
-<td> provider public key file (may be a certificate) or NULL
-</td>
+<td>provider public key file (may be a certificate) or NULL</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>ca_cert_chain:(allow-none)</code></em> :</span></p></td>
-<td> provider CA certificate chain file or NULL
-</td>
+<td>provider CA certificate chain file or NULL</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> 0 on success; a negative value if an error occured.
-</td>
+<td>0 on success; a negative value if an error occured.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_server_add_provider_from_buffer ()">
+<div class="refsect2">
 <a name="lasso-server-add-provider-from-buffer"></a><h3>lasso_server_add_provider_from_buffer ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_server_add_provider_from_buffer
-                                                        (LassoServer *server,
-                                                         LassoProviderRole role,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *metadata,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *public_key,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *ca_cert_chain);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_server_add_provider_from_buffer
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProviderRole" title="enum LassoProviderRole"><span class="type">LassoProviderRole</span></a> role</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *metadata</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *public_key</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *ca_cert_chain</code></em>);</pre>
 <p>
-Creates a new <span class="type">LassoProvider</span> and makes it known to the <em class="parameter"><code>server</code></em></p>
+Creates a new <a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> and makes it known to the <em class="parameter"><code>server</code></em>
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
-<td> a <span class="type">LassoServer</span>
+<td>a <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>role</code></em> :</span></p></td>
-<td> provider role, identity provider or service provider
-</td>
+<td>provider role, identity provider or service provider</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>metadata</code></em> :</span></p></td>
-<td> a string buffer containg the metadata file for a new provider
-</td>
+<td>a string buffer containg the metadata file for a new provider</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>public_key:(allow-none)</code></em> :</span></p></td>
-<td> provider public key file (may be a certificate) or NULL
-</td>
+<td>provider public key file (may be a certificate) or NULL</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>ca_cert_chain:(allow-none)</code></em> :</span></p></td>
-<td> provider CA certificate chain file or NULL
-</td>
+<td>provider CA certificate chain file or NULL</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> 0 on success; a negative value if an error occured.
-</td>
+<td>0 on success; a negative value if an error occured.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_server_destroy ()">
+<div class="refsect2">
 <a name="lasso-server-destroy"></a><h3>lasso_server_destroy ()</h3>
-<pre class="programlisting">void                lasso_server_destroy                (LassoServer *server);</pre>
+<pre class="programlisting"><span class="returnvalue">void</span>                lasso_server_destroy                (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);</pre>
 <p>
-Destroys a server.</p>
+Destroys a server.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
-<td> a <span class="type">LassoServer</span>
+<td>a <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a>
 </td>
 </tr></tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_server_dump ()">
+<div class="refsect2">
 <a name="lasso-server-dump"></a><h3>lasso_server_dump ()</h3>
-<pre class="programlisting"><a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a>*              lasso_server_dump                   (LassoServer *server);</pre>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             lasso_server_dump                   (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);</pre>
 <p>
-Dumps <em class="parameter"><code>server</code></em> content to an XML string.</p>
+Dumps <em class="parameter"><code>server</code></em> content to an XML string.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
-<td> a <span class="type">LassoServer</span>
+<td>a <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> the dump string.  It must be freed by the caller.. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> full. </td>
+<td>the dump string.  It must be freed by the caller. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_server_get_provider ()">
+<div class="refsect2">
 <a name="lasso-server-get-provider"></a><h3>lasso_server_get_provider ()</h3>
-<pre class="programlisting">LassoProvider*      lasso_server_get_provider           (const LassoServer *server,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *providerID);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="returnvalue">LassoProvider</span></a> *     lasso_server_get_provider           (<em class="parameter"><code>const <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *providerID</code></em>);</pre>
 <p>
-Looks up for a <span class="type">LassoProvider</span> whose ID is <em class="parameter"><code>providerID</code></em> and returns it.</p>
+Looks up for a <a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> whose ID is <em class="parameter"><code>providerID</code></em> and returns it.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
-<td> a <span class="type">LassoServer</span>
+<td>a <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>providerID</code></em> :</span></p></td>
-<td> the provider ID
-</td>
+<td>the provider ID</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>transfer none. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> none. </td>
+<td>the <a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a>, NULL if it was not found.  The
+<a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> is owned by Lasso and should not be freed. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_server_set_encryption_private_key ()">
+<div class="refsect2">
 <a name="lasso-server-set-encryption-private-key"></a><h3>lasso_server_set_encryption_private_key ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_server_set_encryption_private_key
-                                                        (LassoServer *server,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *filename_or_buffer);</pre>
-<div class="warning" title="Warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_server_set_encryption_private_key
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *filename_or_buffer</code></em>);</pre>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
 <h3 class="title">Warning</h3>
-<p><code class="literal">lasso_server_set_encryption_private_key</code> has been deprecated since version 2.3 and should not be used in newly-written code. Use <code class="function">lasso_server_set_encryption_private_key_with_password()</code> instead.</p>
+<p><code class="literal">lasso_server_set_encryption_private_key</code> has been deprecated since version 2.3 and should not be used in newly-written code. Use <a class="link" href="lasso-LassoServer.html#lasso-server-set-encryption-private-key-with-password" title="lasso_server_set_encryption_private_key_with_password ()"><code class="function">lasso_server_set_encryption_private_key_with_password()</code></a> instead.</p>
 </div>
 <p>
 Load an encryption private key from a file and set it in the server object
 </p>
 <p>
-If <em class="parameter"><code>filename_or_buffer</code></em> is NULL, it frees the currently setted key.</p>
+If <em class="parameter"><code>filename_or_buffer</code></em> is NULL, it frees the currently setted key.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
-<td> a <span class="type">LassoServer</span>
+<td>a <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>filename_or_buffer:(allow-none)</code></em> :</span></p></td>
-<td> file name of the encryption key to load or its content as a
-NULL-terminated string.
-</td>
+<td>file name of the encryption key to load or its content as a
+NULL-terminated string.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> 0 on success; another value if an error occured.
-</td>
+<td>0 on success; another value if an error occured.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_server_set_encryption_private_key_with_password ()">
+<div class="refsect2">
 <a name="lasso-server-set-encryption-private-key-with-password"></a><h3>lasso_server_set_encryption_private_key_with_password ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_server_set_encryption_private_key_with_password
-                                                        (LassoServer *server,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *filename_or_buffer,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *password);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_server_set_encryption_private_key_with_password
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *filename_or_buffer</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *password</code></em>);</pre>
 <p>
 Load an encryption private key from a file and set it in the server object. If <em class="parameter"><code>password</code></em> is
 non-NULL try to decrypt the key with it.
 </p>
 <p>
-If <em class="parameter"><code>filename_or_buffer</code></em> is NULL, it frees the currently setted key.</p>
+If <em class="parameter"><code>filename_or_buffer</code></em> is NULL, it frees the currently setted key.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
-<td> a <span class="type">LassoServer</span>
+<td>a <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>filename_or_buffer:(allow-none)</code></em> :</span></p></td>
-<td> file name of the encryption key to load or its content as a
-NULL-terminated string.
-</td>
+<td>file name of the encryption key to load or its content as a
+NULL-terminated string.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>password:(allow-none)</code></em> :</span></p></td>
-<td> an optional password to decrypt the encryption key.
-</td>
+<td>an optional password to decrypt the encryption key.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> 0 on success; another value if an error occured.
-</td>
+<td>0 on success; another value if an error occured.</td>
 </tr>
 </tbody>
 </table></div>
 <p class="since">Since 2.3</p>
 </div>
 <hr>
-<div class="refsect2" title="lasso_server_load_affiliation ()">
+<div class="refsect2">
 <a name="lasso-server-load-affiliation"></a><h3>lasso_server_load_affiliation ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_server_load_affiliation       (LassoServer *server,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *filename);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_server_load_affiliation       (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *filename</code></em>);</pre>
 <p>
 Load an affiliation metadata file into <em class="parameter"><code>server</code></em>; this must be called after
-providers have been added to <em class="parameter"><code>server</code></em>.</p>
+providers have been added to <em class="parameter"><code>server</code></em>.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
-<td> a <span class="type">LassoServer</span>
+<td>a <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>filename</code></em> :</span></p></td>
-<td> file name of the affiliation metadata to load
-</td>
+<td>file name of the affiliation metadata to load</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> 0 on success; another value if an error occured.
-</td>
+<td>0 on success; another value if an error occured.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_server_saml2_assertion_setup_signature ()">
+<div class="refsect2">
 <a name="lasso-server-saml2-assertion-setup-signature"></a><h3>lasso_server_saml2_assertion_setup_signature ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_server_saml2_assertion_setup_signature
-                                                        (LassoServer *server,
-                                                         LassoSaml2Assertion *saml2_assertion);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_server_saml2_assertion_setup_signature
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="lasso-LassoSaml2Assertion.html#LassoSaml2Assertion" title="struct LassoSaml2Assertion"><span class="type">LassoSaml2Assertion</span></a> *saml2_assertion</code></em>);</pre>
 <p>
-Configure signature on a saml2:Assertion element.</p>
+Configure signature on a saml2:Assertion element.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
-<td> a <span class="type">LassoServer</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>saml2_assertion</code></em> :</span></p></td>
-<td> a <span class="type">LassoSaml2Assertion</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoSaml2Assertion.html#LassoSaml2Assertion" title="struct LassoSaml2Assertion"><span class="type">LassoSaml2Assertion</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> 0 if successfull, an error code otherwise.
-</td>
+<td>0 if successfull, an error code otherwise.</td>
 </tr>
 </tbody>
 </table></div>
@@ -602,6 +483,6 @@ Configure signature on a saml2:Assertion element.</p>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.11</div>
+          Generated by GTK-Doc V1.17</div>
 </body>
 </html>

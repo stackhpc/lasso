@@ -3,30 +3,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Application Programming Interface</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="index.html" title="Lasso Reference Manual">
 <link rel="prev" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
 <link rel="next" href="architecture.html" title="Lasso Architecture">
-<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
-<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
-<link rel="reference" href="rn01.html" title="Application Programming Interface">
-<link rel="chapter" href="architecture.html" title="Lasso Architecture">
-<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
-<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
-<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
-<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
-<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
-<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
-<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
-<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
-<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
-<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
-<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
-<link rel="part" href="pt01.html" title="Part II. Appendix">
-<link rel="index" href="api-index.html" title="API Index">
-<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
@@ -36,10 +19,10 @@
 <th width="100%" align="center">Lasso Reference Manual</th>
 <td><a accesskey="n" href="architecture.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
 </tr></table>
-<div class="reference" title="Application Programming Interface">
+<div class="reference">
 <div class="titlepage">
 <div><div><h1 class="title">
-<a name="id2607991"></a>Application Programming Interface</h1></div></div>
+<a name="id3027374"></a>Application Programming Interface</h1></div></div>
 <hr>
 </div>
 <div class="toc">
@@ -72,7 +55,7 @@
 <span class="refentrytitle"><a href="lasso-Initialization-functions.html">Initialization functions</a></span><span class="refpurpose"></span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="lasso-LassoNode.html">LassoNode</a></span><span class="refpurpose"> — Base class for all Lasso objects</span>
+<span class="refentrytitle"><a href="lasso-node.html">LassoNode</a></span><span class="refpurpose"> — Base class for all Lasso objects</span>
 </dt>
 <dt>
 <span class="refentrytitle"><a href="lasso-Base-Strings.html">Base Strings</a></span><span class="refpurpose"> — General strings constants for Lasso</span>
@@ -87,7 +70,7 @@
 <dt><span class="chapter"><a href="idff.html">Identity Federation Framework - ID-FF 1.2 profiles</a></span></dt>
 <dd><dl>
 <dt>
-<span class="refentrytitle"><a href="lasso-LassoLogin.html">LassoLogin</a></span><span class="refpurpose"> — Single Sign-On and Federation Profile</span>
+<span class="refentrytitle"><a href="lasso-login.html">LassoLogin</a></span><span class="refpurpose"> — Single Sign-On and Federation Profile</span>
 </dt>
 <dt>
 <span class="refentrytitle"><a href="lasso-LassoLogout.html">LassoLogout</a></span><span class="refpurpose"> — Single Logout Profile</span>
@@ -108,7 +91,7 @@
 <dt><span class="chapter"><a href="xml-idff.html">Objects from ID-FF 1.2 schemas</a></span></dt>
 <dd><dl>
 <dt>
-<span class="refentrytitle"><a href="lasso-Strings-for-ID-FF-12.html">Strings for ID-FF 1.2</a></span><span class="refpurpose"></span>
+<span class="refentrytitle"><a href="lasso-Strings-for-ID-FF-1.2.html">Strings for ID-FF 1.2</a></span><span class="refpurpose"></span>
 </dt>
 <dt>
 <span class="refentrytitle"><a href="lasso-LassoLibAssertion.html">LassoLibAssertion</a></span><span class="refpurpose"> — &lt;lib:Assertion&gt;</span>
@@ -249,7 +232,7 @@
 <dt><span class="chapter"><a href="saml2.html">SAML 2.0 Single Sign On profiles</a></span></dt>
 <dd><dl>
 <dt>
-<span class="refentrytitle"><a href="lasso-LassoAssertionQuery.html">LassoAssertionQuery</a></span><span class="refpurpose"></span>
+<span class="refentrytitle"><a href="lasso-assertion-query.html">LassoAssertionQuery</a></span><span class="refpurpose"></span>
 </dt>
 <dt>
 <span class="refentrytitle"><a href="lasso-LassoNameIdManagement.html">LassoNameIdManagement</a></span><span class="refpurpose"> — Name Id Management Profile (SAMLv2)</span>
@@ -258,13 +241,13 @@
 <span class="refentrytitle"><a href="lasso-LassoEcp.html">LassoEcp</a></span><span class="refpurpose"> — Enhanced Client or Proxy Profile (SAMLv2)</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="lasso-Utility-functions-for-SAML-20.html">Utility functions for SAML 2.0</a></span><span class="refpurpose"></span>
+<span class="refentrytitle"><a href="lasso-Utility-functions-for-SAML-2.0.html">Utility functions for SAML 2.0</a></span><span class="refpurpose"></span>
 </dt>
 </dl></dd>
 <dt><span class="chapter"><a href="xml-samlv2.html">Objects from SAML 2.0 schemas</a></span></dt>
 <dd><dl>
 <dt>
-<span class="refentrytitle"><a href="lasso-SAML-20-Strings.html">SAML 2.0 Strings</a></span><span class="refpurpose"> — String constants from SAML 2.0 specifications</span>
+<span class="refentrytitle"><a href="lasso-SAML-2.0-Strings.html">SAML 2.0 Strings</a></span><span class="refpurpose"> — String constants from SAML 2.0 specifications</span>
 </dt>
 <dt>
 <span class="refentrytitle"><a href="lasso-LassoSaml2Action.html">LassoSaml2Action</a></span><span class="refpurpose"> — &lt;saml2:Action&gt;</span>
@@ -432,7 +415,7 @@
 <span class="refentrytitle"><a href="lasso-LassoPersonalProfileService.html">LassoPersonalProfileService</a></span><span class="refpurpose"> — a subclass of LassoDataService to access Personal Profile datas</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="lasso-LassoAuthentication.html">LassoAuthentication</a></span><span class="refpurpose"></span>
+<span class="refentrytitle"><a href="lasso-authentication.html">LassoAuthentication</a></span><span class="refpurpose"></span>
 </dt>
 <dt>
 <span class="refentrytitle"><a href="lasso-LassoWsfProfile.html">LassoWsfProfile</a></span><span class="refpurpose"> — Base class for ID-WSF 1.0 services</span>
@@ -441,13 +424,13 @@
 <span class="refentrytitle"><a href="lasso-LassoInteractionProfileService.html">LassoInteractionProfileService</a></span><span class="refpurpose"> — A service to request user interaction from a principal</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="lasso-Utility-functions-for-ID-WSF-10.html">Utility functions for ID-WSF 1.0</a></span><span class="refpurpose"> — Misc functions used in the implementation of ID-WSF 1.0</span>
+<span class="refentrytitle"><a href="lasso-Utility-functions-for-ID-WSF-1.0.html">Utility functions for ID-WSF 1.0</a></span><span class="refpurpose"> — Misc functions used in the implementation of ID-WSF 1.0</span>
 </dt>
 </dl></dd>
 <dt><span class="chapter"><a href="xml-idwsf.html">Objects from ID-WSF 1.0 schemas</a></span></dt>
 <dd><dl>
 <dt>
-<span class="refentrytitle"><a href="lasso-ID-WSF-10-Strings.html">ID-WSF 1.0 Strings</a></span><span class="refpurpose"></span>
+<span class="refentrytitle"><a href="lasso-ID-WSF-1.0-Strings.html">ID-WSF 1.0 Strings</a></span><span class="refpurpose"></span>
 </dt>
 <dt>
 <span class="refentrytitle"><a href="lasso-LassoDiscoAuthenticateRequester.html">LassoDiscoAuthenticateRequester</a></span><span class="refpurpose"> — &lt;disco:DirectiveType&gt;</span>
@@ -534,10 +517,10 @@
 <span class="refentrytitle"><a href="lasso-LassoDstQuery.html">LassoDstQuery</a></span><span class="refpurpose"> — &lt;dst:Query&gt;</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="lasso-LassoIsRedirectRequest.html">LassoIsRedirectRequest</a></span><span class="refpurpose"> — &lt;is:RedirectRequest&gt;</span>
+<span class="refentrytitle"><a href="lasso-is-redirect-request.html">LassoIsRedirectRequest</a></span><span class="refpurpose"> — &lt;is:RedirectRequest&gt;</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="lasso-LassoIsUserInteraction.html">LassoIsUserInteraction</a></span><span class="refpurpose"> — &lt;is:UserInteraction&gt;</span>
+<span class="refentrytitle"><a href="lasso-is-user-interaction.html">LassoIsUserInteraction</a></span><span class="refpurpose"> — &lt;is:UserInteraction&gt;</span>
 </dt>
 <dt>
 <span class="refentrytitle"><a href="lasso-LassoSaCredentials.html">LassoSaCredentials</a></span><span class="refpurpose"> — &lt;sa:Credentials&gt;</span>
@@ -594,7 +577,7 @@
 <dt><span class="chapter"><a href="idwsf2.html">ID-WSF 2.0</a></span></dt>
 <dd><dl>
 <dt>
-<span class="refentrytitle"><a href="lasso-SOAP-Binding-utility-function-for-ID-WSF-20.html">SOAP Binding utility function for ID-WSF 2.0</a></span><span class="refpurpose"></span>
+<span class="refentrytitle"><a href="lasso-SOAP-Binding-utility-function-for-ID-WSF-2.0.html">SOAP Binding utility function for ID-WSF 2.0</a></span><span class="refpurpose"></span>
 </dt>
 <dt>
 <span class="refentrytitle"><a href="lasso-LassoIdWsf2Discovery.html">LassoIdWsf2Discovery</a></span><span class="refpurpose"></span>
@@ -606,13 +589,13 @@
 <span class="refentrytitle"><a href="lasso-LassoIdWsf2Profile.html">LassoIdWsf2Profile</a></span><span class="refpurpose"></span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="lasso-Addon-to-SAML-20-profile-for-ID-WSF-20-bootsraping.html">Addon to SAML 2.0 profile for ID-WSF 2.0 bootsraping</a></span><span class="refpurpose"></span>
+<span class="refentrytitle"><a href="lasso-Addon-to-SAML-2.0-profile-for-ID-WSF-2.0-bootsraping.html">Addon to SAML 2.0 profile for ID-WSF 2.0 bootsraping</a></span><span class="refpurpose"></span>
 </dt>
 </dl></dd>
 <dt><span class="chapter"><a href="xml-idwsf2.html">Objects from ID-WSF 2.0 schemas</a></span></dt>
 <dd><dl>
 <dt>
-<span class="refentrytitle"><a href="lasso-Strings-for-ID-WSF-20.html">Strings for ID-WSF 2.0</a></span><span class="refpurpose"></span>
+<span class="refentrytitle"><a href="lasso-Strings-for-ID-WSF-2.0.html">Strings for ID-WSF 2.0</a></span><span class="refpurpose"></span>
 </dt>
 <dt>
 <span class="refentrytitle"><a href="lasso-LassoIdWsf2DiscoServiceType.html">LassoIdWsf2DiscoServiceType</a></span><span class="refpurpose"> — &lt;disco:Service&gt;</span>
@@ -768,34 +751,34 @@
 <span class="refentrytitle"><a href="lasso-LassoIdWsf2ImsMappingOutput.html">LassoIdWsf2ImsMappingOutput</a></span><span class="refpurpose"> — &lt;ims:MappingOutput&gt;</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="lasso-LassoIsHelp.html">LassoIsHelp</a></span><span class="refpurpose"> — &lt;is:Help&gt;</span>
+<span class="refentrytitle"><a href="lasso-is-help.html">LassoIsHelp</a></span><span class="refpurpose"> — &lt;is:Help&gt;</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="lasso-LassoIsInquiryElement.html">LassoIsInquiryElement</a></span><span class="refpurpose"> — &lt;is:InquiryElement&gt;</span>
+<span class="refentrytitle"><a href="lasso-is-inquiry-element.html">LassoIsInquiryElement</a></span><span class="refpurpose"> — &lt;is:InquiryElement&gt;</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="lasso-LassoIsInquiry.html">LassoIsInquiry</a></span><span class="refpurpose"> — &lt;is:Inquiry&gt;</span>
+<span class="refentrytitle"><a href="lasso-is-inquiry.html">LassoIsInquiry</a></span><span class="refpurpose"> — &lt;is:Inquiry&gt;</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="lasso-LassoIsInteractionRequest.html">LassoIsInteractionRequest</a></span><span class="refpurpose"> — &lt;is:InteractionRequest&gt;</span>
+<span class="refentrytitle"><a href="lasso-is-interaction-request.html">LassoIsInteractionRequest</a></span><span class="refpurpose"> — &lt;is:InteractionRequest&gt;</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="lasso-LassoIsInteractionResponse.html">LassoIsInteractionResponse</a></span><span class="refpurpose"> — &lt;is:InteractionResponse&gt;</span>
+<span class="refentrytitle"><a href="lasso-is-interaction-response.html">LassoIsInteractionResponse</a></span><span class="refpurpose"> — &lt;is:InteractionResponse&gt;</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="lasso-LassoIsInteractionStatement.html">LassoIsInteractionStatement</a></span><span class="refpurpose"> — &lt;is:InteractionStatement&gt;</span>
+<span class="refentrytitle"><a href="lasso-is-interaction-statement.html">LassoIsInteractionStatement</a></span><span class="refpurpose"> — &lt;is:InteractionStatement&gt;</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="lasso-LassoIsItem.html">LassoIsItem</a></span><span class="refpurpose"> — &lt;is:Item&gt;</span>
+<span class="refentrytitle"><a href="lasso-is-item.html">LassoIsItem</a></span><span class="refpurpose"> — &lt;is:Item&gt;</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="lasso-LassoIsParameter.html">LassoIsParameter</a></span><span class="refpurpose"> — &lt;is:Parameter&gt;</span>
+<span class="refentrytitle"><a href="lasso-is-parameter.html">LassoIsParameter</a></span><span class="refpurpose"> — &lt;is:Parameter&gt;</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="lasso-LassoIsSelect.html">LassoIsSelect</a></span><span class="refpurpose"> — &lt;is:Select&gt;</span>
+<span class="refentrytitle"><a href="lasso-is-select.html">LassoIsSelect</a></span><span class="refpurpose"> — &lt;is:Select&gt;</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="lasso-LassoIsText.html">LassoIsText</a></span><span class="refpurpose"> — &lt;is:Text&gt;</span>
+<span class="refentrytitle"><a href="lasso-is-text.html">LassoIsText</a></span><span class="refpurpose"> — &lt;is:Text&gt;</span>
 </dt>
 <dt>
 <span class="refentrytitle"><a href="lasso-LassoIdWsf2PsAddCollectionRequest.html">LassoIdWsf2PsAddCollectionRequest</a></span><span class="refpurpose"> — &lt;ps:AddCollectionRequest&gt;</span>
@@ -1092,7 +1075,7 @@
 <span class="refentrytitle"><a href="lasso-LassoWsSec1TransformationParameters.html">LassoWsSec1TransformationParameters</a></span><span class="refpurpose"></span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="lasso-LassoWsseUsernameToken.html">LassoWsseUsernameToken</a></span><span class="refpurpose"></span>
+<span class="refentrytitle"><a href="lasso-wsse-username-token.html">LassoWsseUsernameToken</a></span><span class="refpurpose"></span>
 </dt>
 <dt>
 <span class="refentrytitle"><a href="lasso-LassoWsUtil1Timestamp.html">LassoWsUtil1Timestamp</a></span><span class="refpurpose"></span>
@@ -1106,6 +1089,6 @@
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.11</div>
+          Generated by GTK-Doc V1.17</div>
 </body>
 </html>

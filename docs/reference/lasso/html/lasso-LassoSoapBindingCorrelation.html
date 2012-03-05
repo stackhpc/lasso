@@ -3,30 +3,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LassoSoapBindingCorrelation</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
 <link rel="prev" href="lasso-LassoSoapBindingConsent.html" title="LassoSoapBindingConsent">
 <link rel="next" href="lasso-LassoSoapBindingExtCredentialsContext.html" title="LassoSoapBindingExtCredentialsContext">
-<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
-<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
-<link rel="reference" href="rn01.html" title="Application Programming Interface">
-<link rel="chapter" href="architecture.html" title="Lasso Architecture">
-<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
-<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
-<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
-<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
-<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
-<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
-<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
-<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
-<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
-<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
-<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
-<link rel="part" href="pt01.html" title="Part II. Appendix">
-<link rel="index" href="api-index.html" title="API Index">
-<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
@@ -39,11 +22,11 @@
 </tr>
 <tr><td colspan="5" class="shortcuts">
 <a href="#lasso-LassoSoapBindingCorrelation.synopsis" class="shortcut">Top</a>
-                 | 
-                <a href="#lasso-LassoSoapBindingCorrelation.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#lasso-LassoSoapBindingCorrelation.description" class="shortcut">Description</a>
 </td></tr>
 </table>
-<div class="refentry" title="LassoSoapBindingCorrelation">
+<div class="refentry">
 <a name="lasso-LassoSoapBindingCorrelation"></a><div class="titlepage"></div>
 <div class="refnamediv"><table width="100%"><tr>
 <td valign="top">
@@ -52,25 +35,20 @@
 </td>
 <td valign="top" align="right"></td>
 </tr></table></div>
-<div class="refsynopsisdiv" title="Synopsis">
+<div class="refsynopsisdiv">
 <a name="lasso-LassoSoapBindingCorrelation.synopsis"></a><h2>Synopsis</h2>
-<pre class="synopsis">
-                    LassoSoapBindingCorrelation;
-LassoSoapBindingCorrelation* lasso_soap_binding_correlation_new
-                                                        (const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *messageId,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *timestamp);
+<pre class="synopsis">struct              <a class="link" href="lasso-LassoSoapBindingCorrelation.html#LassoSoapBindingCorrelation" title="struct LassoSoapBindingCorrelation">LassoSoapBindingCorrelation</a>;
+<a class="link" href="lasso-LassoSoapBindingCorrelation.html#LassoSoapBindingCorrelation" title="struct LassoSoapBindingCorrelation"><span class="returnvalue">LassoSoapBindingCorrelation</span></a> *  <a class="link" href="lasso-LassoSoapBindingCorrelation.html#lasso-soap-binding-correlation-new" title="lasso_soap_binding_correlation_new ()">lasso_soap_binding_correlation_new</a>
+                                                        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *messageId</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *timestamp</code></em>);
 </pre>
 </div>
-<div class="refsect1" title="Description">
+<div class="refsect1">
 <a name="lasso-LassoSoapBindingCorrelation.description"></a><h2>Description</h2>
 <p>
 </p>
 <div class="figure">
-<a name="id2761689"></a><p class="title"><b>Figure 129. Schema fragment for soapbinding:correlationType</b></p>
+<a name="id3224922"></a><p class="title"><b>Figure 129. Schema fragment for soapbinding:correlationType</b></p>
 <div class="figure-contents"><pre class="programlisting">
 &lt;xs:complexType name="correlationType"&gt;
   &lt;xs:attribute name="messageID" type="IDType" use="required"/&gt;
@@ -82,13 +60,14 @@ href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
 &lt;/xs:complexType&gt;
 </pre></div>
 </div>
-<p><br class="figure-break"></p>
+<p><br class="figure-break">
+</p>
 </div>
-<div class="refsect1" title="Details">
+<div class="refsect1">
 <a name="lasso-LassoSoapBindingCorrelation.details"></a><h2>Details</h2>
-<div class="refsect2" title="LassoSoapBindingCorrelation">
-<a name="LassoSoapBindingCorrelation"></a><h3>LassoSoapBindingCorrelation</h3>
-<pre class="programlisting">typedef struct {
+<div class="refsect2">
+<a name="LassoSoapBindingCorrelation"></a><h3>struct LassoSoapBindingCorrelation</h3>
+<pre class="programlisting">struct LassoSoapBindingCorrelation {
 	LassoNode parent;
 
 	gchar *messageID;
@@ -97,24 +76,20 @@ href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
 	gchar *id;
 	gchar *mustUnderstand;
 	gchar *actor;
-} LassoSoapBindingCorrelation;
+};
 </pre>
 </div>
 <hr>
-<div class="refsect2" title="lasso_soap_binding_correlation_new ()">
+<div class="refsect2">
 <a name="lasso-soap-binding-correlation-new"></a><h3>lasso_soap_binding_correlation_new ()</h3>
-<pre class="programlisting">LassoSoapBindingCorrelation* lasso_soap_binding_correlation_new
-                                                        (const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *messageId,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *timestamp);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoSoapBindingCorrelation.html#LassoSoapBindingCorrelation" title="struct LassoSoapBindingCorrelation"><span class="returnvalue">LassoSoapBindingCorrelation</span></a> *  lasso_soap_binding_correlation_new
+                                                        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *messageId</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *timestamp</code></em>);</pre>
 </div>
 </div>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.11</div>
+          Generated by GTK-Doc V1.17</div>
 </body>
 </html>

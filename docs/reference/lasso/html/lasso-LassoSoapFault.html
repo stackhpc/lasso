@@ -3,30 +3,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LassoSoapFault</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="soap.html" title="Object from the SOAP 1.1 schemas">
 <link rel="prev" href="lasso-LassoSoapEnvelope.html" title="LassoSoapEnvelope">
 <link rel="next" href="lasso-LassoSoapHeader.html" title="LassoSoapHeader">
-<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
-<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
-<link rel="reference" href="rn01.html" title="Application Programming Interface">
-<link rel="chapter" href="architecture.html" title="Lasso Architecture">
-<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
-<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
-<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
-<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
-<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
-<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
-<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
-<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
-<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
-<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
-<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
-<link rel="part" href="pt01.html" title="Part II. Appendix">
-<link rel="index" href="api-index.html" title="API Index">
-<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
@@ -39,11 +22,11 @@
 </tr>
 <tr><td colspan="5" class="shortcuts">
 <a href="#lasso-LassoSoapFault.synopsis" class="shortcut">Top</a>
-                 | 
-                <a href="#lasso-LassoSoapFault.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#lasso-LassoSoapFault.description" class="shortcut">Description</a>
 </td></tr>
 </table>
-<div class="refentry" title="LassoSoapFault">
+<div class="refentry">
 <a name="lasso-LassoSoapFault"></a><div class="titlepage"></div>
 <div class="refnamediv"><table width="100%"><tr>
 <td valign="top">
@@ -52,35 +35,30 @@
 </td>
 <td valign="top" align="right"></td>
 </tr></table></div>
-<div class="refsect1" title="Stability Level">
+<div class="refsect1">
 <a name="lasso-LassoSoapFault.stability-level"></a><h2>Stability Level</h2>
 Stable, unless otherwise indicated
 </div>
-<div class="refsynopsisdiv" title="Synopsis">
+<div class="refsynopsisdiv">
 <a name="lasso-LassoSoapFault.synopsis"></a><h2>Synopsis</h2>
-<pre class="synopsis">
-                    LassoSoapFault;
-LassoSoapFault*     lasso_soap_fault_new                (void);
-LassoSoapFault*     lasso_soap_fault_new_from_message   (const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *message);
-LassoSoapFault*     lasso_soap_fault_new_full           (const char *faultcode,
-                                                         const char *faultstring);
+<pre class="synopsis">struct              <a class="link" href="lasso-LassoSoapFault.html#LassoSoapFault" title="struct LassoSoapFault">LassoSoapFault</a>;
+<a class="link" href="lasso-LassoSoapFault.html#LassoSoapFault" title="struct LassoSoapFault"><span class="returnvalue">LassoSoapFault</span></a> *    <a class="link" href="lasso-LassoSoapFault.html#lasso-soap-fault-new" title="lasso_soap_fault_new ()">lasso_soap_fault_new</a>                (<em class="parameter"><code><span class="type">void</span></code></em>);
+<a class="link" href="lasso-LassoSoapFault.html#LassoSoapFault" title="struct LassoSoapFault"><span class="returnvalue">LassoSoapFault</span></a> *    <a class="link" href="lasso-LassoSoapFault.html#lasso-soap-fault-new-from-message" title="lasso_soap_fault_new_from_message ()">lasso_soap_fault_new_from_message</a>   (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *message</code></em>);
+<a class="link" href="lasso-LassoSoapFault.html#LassoSoapFault" title="struct LassoSoapFault"><span class="returnvalue">LassoSoapFault</span></a> *    <a class="link" href="lasso-LassoSoapFault.html#lasso-soap-fault-new-full" title="lasso_soap_fault_new_full ()">lasso_soap_fault_new_full</a>           (<em class="parameter"><code>const <span class="type">char</span> *faultcode</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *faultstring</code></em>);
 
-void                lasso_soap_fault_add_to_detail      (LassoSoapFault *soap_fault,
-                                                         LassoNode *node);
-LassoSoapDetail *   lasso_soap_fault_get_detail         (LassoSoapFault *soap_fault,
-                                                         <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
->gboolean</a> create);
+<span class="returnvalue">void</span>                <a class="link" href="lasso-LassoSoapFault.html#lasso-soap-fault-add-to-detail" title="lasso_soap_fault_add_to_detail ()">lasso_soap_fault_add_to_detail</a>      (<em class="parameter"><code><a class="link" href="lasso-LassoSoapFault.html#LassoSoapFault" title="struct LassoSoapFault"><span class="type">LassoSoapFault</span></a> *soap_fault</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>);
+<a class="link" href="lasso-LassoSoapDetail.html#LassoSoapDetail" title="struct LassoSoapDetail"><span class="returnvalue">LassoSoapDetail</span></a> *   <a class="link" href="lasso-LassoSoapFault.html#lasso-soap-fault-get-detail" title="lasso_soap_fault_get_detail ()">lasso_soap_fault_get_detail</a>         (<em class="parameter"><code><a class="link" href="lasso-LassoSoapFault.html#LassoSoapFault" title="struct LassoSoapFault"><span class="type">LassoSoapFault</span></a> *soap_fault</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> create</code></em>);
 </pre>
 </div>
-<div class="refsect1" title="Description">
+<div class="refsect1">
 <a name="lasso-LassoSoapFault.description"></a><h2>Description</h2>
 <p>
 </p>
 <div class="figure">
-<a name="id2805957"></a><p class="title"><b>Figure 270. Schema fragment for soap11:Fault</b></p>
+<a name="id3299282"></a><p class="title"><b>Figure 270. Schema fragment for soap11:Fault</b></p>
 <div class="figure-contents"><pre class="programlisting">
 
 &lt;xs: element name="Fault" type="tns: Fault"/&gt;
@@ -107,75 +85,71 @@ href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolea
 
 </pre></div>
 </div>
-<p><br class="figure-break"></p>
+<p><br class="figure-break">
+</p>
 </div>
-<div class="refsect1" title="Details">
+<div class="refsect1">
 <a name="lasso-LassoSoapFault.details"></a><h2>Details</h2>
-<div class="refsect2" title="LassoSoapFault">
-<a name="LassoSoapFault"></a><h3>LassoSoapFault</h3>
-<pre class="programlisting">typedef struct {
+<div class="refsect2">
+<a name="LassoSoapFault"></a><h3>struct LassoSoapFault</h3>
+<pre class="programlisting">struct LassoSoapFault {
 	LassoNode parent;
 
 	gchar *faultcode;
 	gchar *faultstring;
 	GList *faultactor; /* of string */
 	LassoSoapDetail *Detail;
-} LassoSoapFault;
+};
 </pre>
 </div>
 <hr>
-<div class="refsect2" title="lasso_soap_fault_new ()">
+<div class="refsect2">
 <a name="lasso-soap-fault-new"></a><h3>lasso_soap_fault_new ()</h3>
-<pre class="programlisting">LassoSoapFault*     lasso_soap_fault_new                (void);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoSoapFault.html#LassoSoapFault" title="struct LassoSoapFault"><span class="returnvalue">LassoSoapFault</span></a> *    lasso_soap_fault_new                (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
 </div>
 <hr>
-<div class="refsect2" title="lasso_soap_fault_new_from_message ()">
+<div class="refsect2">
 <a name="lasso-soap-fault-new-from-message"></a><h3>lasso_soap_fault_new_from_message ()</h3>
-<pre class="programlisting">LassoSoapFault*     lasso_soap_fault_new_from_message   (const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *message);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoSoapFault.html#LassoSoapFault" title="struct LassoSoapFault"><span class="returnvalue">LassoSoapFault</span></a> *    lasso_soap_fault_new_from_message   (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *message</code></em>);</pre>
 </div>
 <hr>
-<div class="refsect2" title="lasso_soap_fault_new_full ()">
+<div class="refsect2">
 <a name="lasso-soap-fault-new-full"></a><h3>lasso_soap_fault_new_full ()</h3>
-<pre class="programlisting">LassoSoapFault*     lasso_soap_fault_new_full           (const char *faultcode,
-                                                         const char *faultstring);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoSoapFault.html#LassoSoapFault" title="struct LassoSoapFault"><span class="returnvalue">LassoSoapFault</span></a> *    lasso_soap_fault_new_full           (<em class="parameter"><code>const <span class="type">char</span> *faultcode</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *faultstring</code></em>);</pre>
 </div>
 <hr>
-<div class="refsect2" title="lasso_soap_fault_add_to_detail ()">
+<div class="refsect2">
 <a name="lasso-soap-fault-add-to-detail"></a><h3>lasso_soap_fault_add_to_detail ()</h3>
-<pre class="programlisting">void                lasso_soap_fault_add_to_detail      (LassoSoapFault *soap_fault,
-                                                         LassoNode *node);</pre>
+<pre class="programlisting"><span class="returnvalue">void</span>                lasso_soap_fault_add_to_detail      (<em class="parameter"><code><a class="link" href="lasso-LassoSoapFault.html#LassoSoapFault" title="struct LassoSoapFault"><span class="type">LassoSoapFault</span></a> *soap_fault</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>);</pre>
 <p>
-Fill the detail part of a SOAP fault.</p>
+Fill the detail part of a SOAP fault.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>soap_fault</code></em> :</span></p></td>
-<td> a <span class="type">LassoSoapFault</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoSoapFault.html#LassoSoapFault" title="struct LassoSoapFault"><span class="type">LassoSoapFault</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
-<td> a node to add to the Detail sub-element of the <em class="parameter"><code>soap_fault</code></em> object.
-</td>
+<td>a node to add to the Detail sub-element of the <em class="parameter"><code>soap_fault</code></em> object.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_soap_fault_get_detail ()">
+<div class="refsect2">
 <a name="lasso-soap-fault-get-detail"></a><h3>lasso_soap_fault_get_detail ()</h3>
-<pre class="programlisting">LassoSoapDetail *   lasso_soap_fault_get_detail         (LassoSoapFault *soap_fault,
-                                                         <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
->gboolean</a> create);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoSoapDetail.html#LassoSoapDetail" title="struct LassoSoapDetail"><span class="returnvalue">LassoSoapDetail</span></a> *   lasso_soap_fault_get_detail         (<em class="parameter"><code><a class="link" href="lasso-LassoSoapFault.html#LassoSoapFault" title="struct LassoSoapFault"><span class="type">LassoSoapFault</span></a> *soap_fault</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> create</code></em>);</pre>
 </div>
 </div>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.11</div>
+          Generated by GTK-Doc V1.17</div>
 </body>
 </html>

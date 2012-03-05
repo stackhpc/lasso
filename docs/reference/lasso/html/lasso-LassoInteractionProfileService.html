@@ -3,30 +3,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LassoInteractionProfileService</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="idwsf.html" title="Identity Web Services Framework 1.0">
 <link rel="prev" href="lasso-LassoWsfProfile.html" title="LassoWsfProfile">
-<link rel="next" href="lasso-Utility-functions-for-ID-WSF-10.html" title="Utility functions for ID-WSF 1.0">
-<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="next" href="lasso-Utility-functions-for-ID-WSF-1.0.html" title="Utility functions for ID-WSF 1.0">
+<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
-<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
-<link rel="reference" href="rn01.html" title="Application Programming Interface">
-<link rel="chapter" href="architecture.html" title="Lasso Architecture">
-<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
-<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
-<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
-<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
-<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
-<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
-<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
-<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
-<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
-<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
-<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
-<link rel="part" href="pt01.html" title="Part II. Appendix">
-<link rel="index" href="api-index.html" title="API Index">
-<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
@@ -35,15 +18,15 @@
 <td><a accesskey="u" href="idwsf.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
 <td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
 <th width="100%" align="center">Lasso Reference Manual</th>
-<td><a accesskey="n" href="lasso-Utility-functions-for-ID-WSF-10.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+<td><a accesskey="n" href="lasso-Utility-functions-for-ID-WSF-1.0.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
 </tr>
 <tr><td colspan="5" class="shortcuts">
 <a href="#lasso-LassoInteractionProfileService.synopsis" class="shortcut">Top</a>
-                 | 
-                <a href="#lasso-LassoInteractionProfileService.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#lasso-LassoInteractionProfileService.description" class="shortcut">Description</a>
 </td></tr>
 </table>
-<div class="refentry" title="LassoInteractionProfileService">
+<div class="refentry">
 <a name="lasso-LassoInteractionProfileService"></a><div class="titlepage"></div>
 <div class="refnamediv"><table width="100%"><tr>
 <td valign="top">
@@ -52,78 +35,67 @@
 </td>
 <td valign="top" align="right"></td>
 </tr></table></div>
-<div class="refsect1" title="Stability Level">
+<div class="refsect1">
 <a name="lasso-LassoInteractionProfileService.stability-level"></a><h2>Stability Level</h2>
 Unstable, unless otherwise indicated
 </div>
-<div class="refsynopsisdiv" title="Synopsis">
+<div class="refsynopsisdiv">
 <a name="lasso-LassoInteractionProfileService.synopsis"></a><h2>Synopsis</h2>
-<pre class="synopsis">
-                    LassoInteractionProfileService;
-LassoInteractionProfileService* lasso_interaction_profile_service_new
-                                                        (LassoServer *server);
-lasso_error_t       lasso_interaction_profile_service_init_request
-                                                        (LassoInteractionProfileService *service);
-lasso_error_t       lasso_interaction_profile_service_process_request_msg
-                                                        (LassoInteractionProfileService *service,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *request_msg);
-lasso_error_t       lasso_interaction_profile_service_process_response_msg
-                                                        (LassoInteractionProfileService *service,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *response_msg);
+<pre class="synopsis">struct              <a class="link" href="lasso-LassoInteractionProfileService.html#LassoInteractionProfileService" title="struct LassoInteractionProfileService">LassoInteractionProfileService</a>;
+<a class="link" href="lasso-LassoInteractionProfileService.html#LassoInteractionProfileService" title="struct LassoInteractionProfileService"><span class="returnvalue">LassoInteractionProfileService</span></a> *  <a class="link" href="lasso-LassoInteractionProfileService.html#lasso-interaction-profile-service-new" title="lasso_interaction_profile_service_new ()">lasso_interaction_profile_service_new</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoInteractionProfileService.html#lasso-interaction-profile-service-init-request" title="lasso_interaction_profile_service_init_request ()">lasso_interaction_profile_service_init_request</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoInteractionProfileService.html#LassoInteractionProfileService" title="struct LassoInteractionProfileService"><span class="type">LassoInteractionProfileService</span></a> *service</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoInteractionProfileService.html#lasso-interaction-profile-service-process-request-msg" title="lasso_interaction_profile_service_process_request_msg ()">lasso_interaction_profile_service_process_request_msg</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoInteractionProfileService.html#LassoInteractionProfileService" title="struct LassoInteractionProfileService"><span class="type">LassoInteractionProfileService</span></a> *service</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *request_msg</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoInteractionProfileService.html#lasso-interaction-profile-service-process-response-msg" title="lasso_interaction_profile_service_process_response_msg ()">lasso_interaction_profile_service_process_response_msg</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoInteractionProfileService.html#LassoInteractionProfileService" title="struct LassoInteractionProfileService"><span class="type">LassoInteractionProfileService</span></a> *service</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *response_msg</code></em>);
 </pre>
 </div>
-<div class="refsect1" title="Description">
+<div class="refsect1">
 <a name="lasso-LassoInteractionProfileService.description"></a><h2>Description</h2>
-<p>
-</p>
 </div>
-<div class="refsect1" title="Details">
+<div class="refsect1">
 <a name="lasso-LassoInteractionProfileService.details"></a><h2>Details</h2>
-<div class="refsect2" title="LassoInteractionProfileService">
-<a name="LassoInteractionProfileService"></a><h3>LassoInteractionProfileService</h3>
-<pre class="programlisting">typedef struct {
+<div class="refsect2">
+<a name="LassoInteractionProfileService"></a><h3>struct LassoInteractionProfileService</h3>
+<pre class="programlisting">struct LassoInteractionProfileService {
 	LassoWsfProfile parent;
-} LassoInteractionProfileService;
+};
 </pre>
 </div>
 <hr>
-<div class="refsect2" title="lasso_interaction_profile_service_new ()">
+<div class="refsect2">
 <a name="lasso-interaction-profile-service-new"></a><h3>lasso_interaction_profile_service_new ()</h3>
-<pre class="programlisting">LassoInteractionProfileService* lasso_interaction_profile_service_new
-                                                        (LassoServer *server);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoInteractionProfileService.html#LassoInteractionProfileService" title="struct LassoInteractionProfileService"><span class="returnvalue">LassoInteractionProfileService</span></a> *  lasso_interaction_profile_service_new
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);</pre>
 </div>
 <hr>
-<div class="refsect2" title="lasso_interaction_profile_service_init_request ()">
+<div class="refsect2">
 <a name="lasso-interaction-profile-service-init-request"></a><h3>lasso_interaction_profile_service_init_request ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_interaction_profile_service_init_request
-                                                        (LassoInteractionProfileService *service);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_interaction_profile_service_init_request
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoInteractionProfileService.html#LassoInteractionProfileService" title="struct LassoInteractionProfileService"><span class="type">LassoInteractionProfileService</span></a> *service</code></em>);</pre>
 </div>
 <hr>
-<div class="refsect2" title="lasso_interaction_profile_service_process_request_msg ()">
+<div class="refsect2">
 <a name="lasso-interaction-profile-service-process-request-msg"></a><h3>lasso_interaction_profile_service_process_request_msg ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_interaction_profile_service_process_request_msg
-                                                        (LassoInteractionProfileService *service,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *request_msg);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_interaction_profile_service_process_request_msg
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoInteractionProfileService.html#LassoInteractionProfileService" title="struct LassoInteractionProfileService"><span class="type">LassoInteractionProfileService</span></a> *service</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *request_msg</code></em>);</pre>
 </div>
 <hr>
-<div class="refsect2" title="lasso_interaction_profile_service_process_response_msg ()">
+<div class="refsect2">
 <a name="lasso-interaction-profile-service-process-response-msg"></a><h3>lasso_interaction_profile_service_process_response_msg ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_interaction_profile_service_process_response_msg
-                                                        (LassoInteractionProfileService *service,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *response_msg);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_interaction_profile_service_process_response_msg
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoInteractionProfileService.html#LassoInteractionProfileService" title="struct LassoInteractionProfileService"><span class="type">LassoInteractionProfileService</span></a> *service</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *response_msg</code></em>);</pre>
 </div>
 </div>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.11</div>
+          Generated by GTK-Doc V1.17</div>
 </body>
 </html>
