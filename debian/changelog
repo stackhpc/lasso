@@ -1,3 +1,9 @@
+lasso (2.3.6-2) unstable; urgency=low
+
+  * Fix building against glib 2.32 (closes: #665565, #666636)
+
+ -- Frederic Peters <fpeters@debian.org>  Mon, 02 Apr 2012 17:31:31 +0200
+
 lasso (2.3.6-1) unstable; urgency=low
 
   * New upstream version.
