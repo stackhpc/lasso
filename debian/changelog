@@ -1,3 +1,9 @@
+lasso (2.3.6-2build1) quantal; urgency=low
+
+  * No-change rebuild for phpapi change
+
+ -- Ilya Barygin <randomaction@ubuntu.com>  Sat, 30 Jun 2012 13:03:19 +0400
+
 lasso (2.3.6-2) unstable; urgency=low
 
   * Fix building against glib 2.32 (closes: #665565, #666636)
