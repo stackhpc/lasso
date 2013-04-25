@@ -96,7 +96,11 @@ lasso_lecp_build_authn_request_envelope_msg(LassoLecp *lecp)
 	xmlOutputBufferFlush(buf);
 
 	lasso_assign_string(profile->msg_body,
+#ifdef LIBXML2_NEW_BUFFER
+			(char*)(buf->conv ? xmlBufContent(buf) : xmlOutputBufferGetContent(buf)));
+#else
 			(char*)(buf->conv ? buf->conv->content : buf->buffer->content));
+#endif
 	xmlOutputBufferClose(buf);
 	xmlFreeNode(msg);
 
@@ -342,7 +346,11 @@ lasso_lecp_process_authn_request_envelope_msg(LassoLecp *lecp, const char *reque
 	xmlNodeDumpOutput(buf, NULL, soap_envelope, 0, 0, "utf-8");
 	xmlOutputBufferFlush(buf);
 	LASSO_PROFILE(lecp)->msg_body = g_strdup( (char*)(
+#ifdef LIBXML2_NEW_BUFFER
+			buf->conv ? xmlBufContent(buf) : xmlOutputBufferGetContent(buf)));
+#else
 			buf->conv ? buf->conv->content : buf->buffer->content));
+#endif
 	xmlOutputBufferClose(buf);
 	xmlFreeNode(soap_envelope);
 
