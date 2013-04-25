@@ -1,3 +1,9 @@
+lasso (2.3.6-2ubuntu1) raring; urgency=low
+
+  * Ported to LIBXML2_NEW_BUFFER, fixing FTBFS.
+
+ -- Daniel T Chen <crimsun@ubuntu.com>  Wed, 24 Apr 2013 20:26:55 -0400
+
 lasso (2.3.6-2build1) quantal; urgency=low
 
   * No-change rebuild for phpapi change

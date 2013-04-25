@@ -120,9 +120,17 @@ get_pystring_from_xml_node(xmlNode *xmlnode)
 		xmlNodeDumpOutput(buf, NULL, xmlnode, 0, 1, NULL);
 		xmlOutputBufferFlush(buf);
 		if (buf->conv == NULL) {
+#ifdef LIBXML2_NEW_BUFFER
+			pystring = PyString_FromString((char*)xmlOutputBufferGetContent(buf));
+#else
 			pystring = PyString_FromString((char*)buf->buffer->content);
+#endif
 		} else {
+#ifdef LIBXML2_NEW_BUFFER
+			pystring = PyString_FromString((char*)xmlBufContent(buf));
+#else
 			pystring = PyString_FromString((char*)buf->conv->content);
+#endif
 		}
 		xmlOutputBufferClose(buf);
 	}

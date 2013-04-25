@@ -175,7 +175,11 @@ lasso_ecp_process_authn_request_msg(LassoEcp *ecp, const char *authn_request_msg
 	xmlNodeDumpOutput(buf, NULL, xmlnode, 0, 0, "utf-8");
 	xmlOutputBufferFlush(buf);
 	LASSO_PROFILE(ecp)->msg_body = g_strdup(
+#ifdef LIBXML2_NEW_BUFFER
+			(char*)(buf->conv ? xmlBufContent(buf) : xmlOutputBufferGetContent(buf)));
+#else
 			(char*)(buf->conv ? buf->conv->content : buf->buffer->content));
+#endif
 	xmlOutputBufferClose(buf);
 	lasso_release_doc(doc);
 
@@ -276,7 +280,11 @@ lasso_ecp_process_response_msg(LassoEcp *ecp, const char *response_msg)
 	xmlNodeDumpOutput(buf, NULL, new_envelope, 0, 0, "utf-8");
 	xmlOutputBufferFlush(buf);
 	LASSO_PROFILE(ecp)->msg_body = g_strdup(
+#ifdef LIBXML2_NEW_BUFFER
+			(char*)(buf->conv ? xmlBufContent(buf) : xmlOutputBufferGetContent(buf)));
+#else
 			(char*)(buf->conv ? buf->conv->content : buf->buffer->content));
+#endif
 	xmlOutputBufferClose(buf);
 
 	lasso_release_doc(doc);
