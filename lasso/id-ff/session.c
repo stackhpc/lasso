@@ -450,7 +450,11 @@ xmlNode_to_base64(xmlNode *node) {
 		goto cleanup;
 	xmlNodeDumpOutput(buf, NULL, node, 0, 0, "utf-8");
 	xmlOutputBufferFlush(buf);
+#ifdef LIBXML2_NEW_BUFFER
+	buffer = buf->conv ? xmlBufContent(buf) : xmlOutputBufferGetContent(buf);
+#else
 	buffer = buf->conv ? buf->conv->content : buf->buffer->content;
+#endif
 
 	ret = xmlSecBase64Encode(buffer, strlen((char*)buffer), 0);
 

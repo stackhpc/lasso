@@ -1063,7 +1063,11 @@ lasso_node_build_deflated_query(LassoNode *node)
 	buf = xmlAllocOutputBuffer(handler);
 	xmlNodeDumpOutput(buf, NULL, xmlnode, 0, 0, "utf-8");
 	xmlOutputBufferFlush(buf);
+#ifdef LIBXML2_NEW_BUFFER
+	buffer = buf->conv ? xmlBufContent(buf) : xmlOutputBufferGetContent(buf);
+#else
 	buffer = buf->conv ? buf->conv->content : buf->buffer->content;
+#endif
 
 	xmlFreeNode(xmlnode);
 	xmlnode = NULL;
@@ -2156,7 +2160,11 @@ lasso_xmlnode_to_string(xmlNode *node, gboolean format, int level)
 	buf = xmlAllocOutputBuffer(handler);
 	xmlNodeDumpOutput(buf, NULL, node, level, format ? 1 : 0, "utf-8");
 	xmlOutputBufferFlush(buf);
+#ifdef LIBXML2_NEW_BUFFER
+	buffer = buf->conv ? xmlBufContent(buf) : xmlOutputBufferGetContent(buf);
+#else
 	buffer = buf->conv ? buf->conv->content : buf->buffer->content;
+#endif
 	/* do not mix XML and GLib strings, so we must copy */
 	str = g_strdup((char*)buffer);
 	xmlOutputBufferClose(buf);
