@@ -136,9 +136,17 @@ get_string_from_xml_node(xmlNode *xmlnode)
 		xmlNodeDumpOutput(buf, NULL, xmlnode, 0, 1, NULL);
 		xmlOutputBufferFlush(buf);
 		if (buf->conv == NULL) {
+#ifdef LIBXML2_NEW_BUFFER
+			xmlString = estrdup((char*)xmlOutputBufferGetContent(buf));
+#else
 			xmlString = estrdup((char*)buf->buffer->content);
+#endif
 		} else {
+#ifdef LIBXML2_NEW_BUFFER
+			xmlString = estrdup((char*)xmlBufContent(buf));
+#else
 			xmlString = estrdup((char*)buf->conv->content);
+#endif
 		}
 		xmlOutputBufferClose(buf);
 	}

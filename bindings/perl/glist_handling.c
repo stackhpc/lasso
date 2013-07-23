@@ -53,9 +53,17 @@ xmlnode_to_pv(xmlNode *node, gboolean do_free)
 		xmlNodeDumpOutput(buf, NULL, node, 0, 1, NULL);
 		xmlOutputBufferFlush(buf);
 		if (buf->conv == NULL) {
+#ifdef LIBXML2_NEW_BUFFER
+			pestring = newSVpv((char*)xmlOutputBufferGetContent(buf), 0);
+#else
 			pestring = newSVpv((char*)buf->buffer->content, 0);
+#endif
 		} else {
+#ifdef LIBXML2_NEW_BUFFER
+			pestring = newSVpv((char*)xmlBufContent(buf), 0);
+#else
 			pestring = newSVpv((char*)buf->conv->content, 0);
+#endif
 		}
 		xmlOutputBufferClose(buf);
 	}
