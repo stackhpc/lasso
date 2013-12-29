@@ -1117,7 +1117,6 @@ lasso_node_build_deflated_query(LassoNode *node)
 
 	xmlnode = lasso_node_get_xmlNode(node, FALSE);
 	result = lasso_xmlnode_build_deflated_query(xmlnode);
-	xmlFreeNode(xmlnode);
 	return result;
 }
 
