@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "../private.h"
@@ -56,13 +55,13 @@
 
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "BaseID", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoSamlp2NameIDMappingRequest, BaseID), NULL, NULL, NULL},
-	{ "NameID", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoSamlp2NameIDMappingRequest, NameID), NULL, NULL, NULL},
-	{ "EncryptedID", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoSamlp2NameIDMappingRequest, EncryptedID),
-		"LassoSaml2EncryptedElement", NULL, NULL },
+	{ "BaseID", SNIPPET_NODE, G_STRUCT_OFFSET(LassoSamlp2NameIDMappingRequest, BaseID), NULL,
+		LASSO_SAML2_ASSERTION_PREFIX, LASSO_SAML2_ASSERTION_HREF},
+	{ "NameID", SNIPPET_NODE, G_STRUCT_OFFSET(LassoSamlp2NameIDMappingRequest, NameID), NULL,
+		LASSO_SAML2_ASSERTION_PREFIX, LASSO_SAML2_ASSERTION_HREF},
+	{ "EncryptedID", SNIPPET_NODE, G_STRUCT_OFFSET(LassoSamlp2NameIDMappingRequest,
+			EncryptedID), NULL, LASSO_SAML2_ASSERTION_PREFIX,
+	LASSO_SAML2_ASSERTION_HREF},
 	{ "NameIDPolicy", SNIPPET_NODE,
 		G_STRUCT_OFFSET(LassoSamlp2NameIDMappingRequest, NameIDPolicy), NULL, NULL, NULL},
 	{NULL, 0, 0, NULL, NULL, NULL}

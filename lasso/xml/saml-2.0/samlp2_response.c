@@ -18,14 +18,13 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "../private.h"
-#include "./samlp2_response.h"
-#include "./saml2_assertion.h"
-#include "./saml2_encrypted_element.h"
+#include "samlp2_response.h"
+#include "saml2_assertion.h"
+#include "saml2_encrypted_element.h"
 #include "../../utils.h"
 
 /**
@@ -56,10 +55,11 @@ extern LassoNode* lasso_assertion_encrypt(LassoSaml2Assertion *assertion, char *
 /*****************************************************************************/
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "Assertion", SNIPPET_LIST_NODES,
-		G_STRUCT_OFFSET(LassoSamlp2Response, Assertion), NULL, NULL, NULL},
-	{ "EncryptedAssertion", SNIPPET_LIST_NODES,
-		G_STRUCT_OFFSET(LassoSamlp2Response, EncryptedAssertion), NULL, NULL, NULL},
+	{ "Assertion", SNIPPET_LIST_NODES, G_STRUCT_OFFSET(LassoSamlp2Response, Assertion), NULL,
+		LASSO_SAML2_ASSERTION_PREFIX, LASSO_SAML2_ASSERTION_HREF},
+	{ "EncryptedAssertion", SNIPPET_LIST_NODES, G_STRUCT_OFFSET(LassoSamlp2Response,
+			EncryptedAssertion), NULL, LASSO_SAML2_ASSERTION_PREFIX,
+	LASSO_SAML2_ASSERTION_HREF},
 	{NULL, 0, 0, NULL, NULL, NULL}
 };
 

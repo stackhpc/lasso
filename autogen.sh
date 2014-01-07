@@ -27,7 +27,16 @@ cd "$srcdir"
 	DIE=1
 }
 
-if automake-1.11 --version < /dev/null > /dev/null 2>&1; then
+if automake-1.14 --version < /dev/null > /dev/null 2>&1; then
+    AUTOMAKE=automake-1.14
+    ACLOCAL=aclocal-1.14
+elif automake-1.13 --version < /dev/null > /dev/null 2>&1; then
+    AUTOMAKE=automake-1.13
+    ACLOCAL=aclocal-1.13
+elif automake-1.12 --version < /dev/null > /dev/null 2>&1; then
+    AUTOMAKE=automake-1.12
+    ACLOCAL=aclocal-1.12
+elif automake-1.11 --version < /dev/null > /dev/null 2>&1; then
     AUTOMAKE=automake-1.11
     ACLOCAL=aclocal-1.11
 elif automake-1.10 --version < /dev/null > /dev/null 2>&1; then
@@ -73,8 +82,15 @@ fi
 echo "* Running libtoolize"
 libtoolize --copy --force
 
-echo "* Running gtkdocize"
-gtkdocize --flavour no-tmpl || exit $?
+GTKDOCIZE=`which gtkdocize`
+if test -z $GTKDOCIZE; then
+        echo "You don't have gtk-doc installed, and thus"
+        echo "won't be able to generate the documentation."
+        touch gtk-doc.make
+else
+        echo "* Running gtkdocize"
+        $GTKDOCIZE --flavour no-tmpl || exit $?
+fi
 
 echo "* Running $ACLOCAL"
 $ACLOCAL $ACLOCAL_FLAGS -I m4 || exit $?

@@ -18,11 +18,10 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "./saml2_login.h"
+#include "saml2_login.h"
 #include "../xml/id-wsf-2.0/idwsf2_strings.h"
 #include "identity.h"
 #include "server.h"
@@ -44,7 +43,7 @@
 #include "../xml/saml-2.0/saml2_attribute_statement.h"
 #include "../xml/saml-2.0/saml2_attribute_value.h"
 #include "../xml/saml-2.0/samlp2_response.h"
-#include "./idwsf2_helper.h"
+#include "idwsf2_helper.h"
 #include "../xml/private.h"
 
 
@@ -91,7 +90,7 @@ lasso_server_create_assertion_as_idwsf2_security_token(LassoServer *server,
 			lasso_release_gobject(assertion);
 			goto cleanup;
 		}
-		lasso_assign_gobject(assertion->Subject->EncryptedID, encrypted_id);
+		lasso_assign_new_gobject(assertion->Subject->EncryptedID, encrypted_id);
 	} else {
 		lasso_assign_new_gobject(assertion->Subject->NameID, name_id);
 	}

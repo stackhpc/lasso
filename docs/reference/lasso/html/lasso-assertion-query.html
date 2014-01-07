@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LassoAssertionQuery</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
 <link rel="prev" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
 <link rel="next" href="lasso-LassoNameIdManagement.html" title="LassoNameIdManagement">
-<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -51,17 +51,17 @@ struct              <a class="link" href="lasso-assertion-query.html#LassoAssert
                                                         (<em class="parameter"><code><a class="link" href="lasso-assertion-query.html#LassoAssertionQuery" title="struct LassoAssertionQuery"><span class="type">LassoAssertionQuery</span></a> *assertion_query</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-assertion-query.html#lasso-assertion-query-process-request-msg" title="lasso_assertion_query_process_request_msg ()">lasso_assertion_query_process_request_msg</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-assertion-query.html#LassoAssertionQuery" title="struct LassoAssertionQuery"><span class="type">LassoAssertionQuery</span></a> *assertion_query</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *request_msg</code></em>);
+                                                         <em class="parameter"><code><span class="type">gchar</span> *request_msg</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-assertion-query.html#lasso-assertion-query-build-response-msg" title="lasso_assertion_query_build_response_msg ()">lasso_assertion_query_build_response_msg</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-assertion-query.html#LassoAssertionQuery" title="struct LassoAssertionQuery"><span class="type">LassoAssertionQuery</span></a> *assertion_query</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-assertion-query.html#lasso-assertion-query-process-response-msg" title="lasso_assertion_query_process_response_msg ()">lasso_assertion_query_process_response_msg</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-assertion-query.html#LassoAssertionQuery" title="struct LassoAssertionQuery"><span class="type">LassoAssertionQuery</span></a> *assertion_query</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *response_msg</code></em>);
+                                                         <em class="parameter"><code><span class="type">gchar</span> *response_msg</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-assertion-query.html#lasso-assertion-query-add-attribute-request" title="lasso_assertion_query_add_attribute_request ()">lasso_assertion_query_add_attribute_request</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-assertion-query.html#LassoAssertionQuery" title="struct LassoAssertionQuery"><span class="type">LassoAssertionQuery</span></a> *assertion_query</code></em>,
                                                          <em class="parameter"><code><span class="type">char</span> *format</code></em>,
                                                          <em class="parameter"><code><span class="type">char</span> *name</code></em>);
-<a class="link" href="lasso-assertion-query.html#LassoAssertionQueryRequestType" title="enum LassoAssertionQueryRequestType"><span class="returnvalue">LassoAssertionQueryRequestType</span></a>  <a class="link" href="lasso-assertion-query.html#lasso-assertion-query-get-request-type" title="lasso_assertion_query_get_request_type ()">lasso_assertion_query_get_request_type</a>
+<a class="link" href="lasso-assertion-query.html#LassoAssertionQueryRequestType" title="enum LassoAssertionQueryRequestType"><span class="returnvalue">LassoAssertionQueryRequestType</span></a> <a class="link" href="lasso-assertion-query.html#lasso-assertion-query-get-request-type" title="lasso_assertion_query_get_request_type ()">lasso_assertion_query_get_request_type</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-assertion-query.html#LassoAssertionQuery" title="struct LassoAssertionQuery"><span class="type">LassoAssertionQuery</span></a> *assertion_query</code></em>);
 </pre>
 </div>
@@ -263,7 +263,7 @@ Build an Assertion Query profile request message.
 <a name="lasso-assertion-query-process-request-msg"></a><h3>lasso_assertion_query_process_request_msg ()</h3>
 <pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_assertion_query_process_request_msg
                                                         (<em class="parameter"><code><a class="link" href="lasso-assertion-query.html#LassoAssertionQuery" title="struct LassoAssertionQuery"><span class="type">LassoAssertionQuery</span></a> *assertion_query</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *request_msg</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">gchar</span> *request_msg</code></em>);</pre>
 <p>
 Processes a Assertion query or request message.  Rebuilds a request object
 from the message and check its signature.
@@ -315,7 +315,7 @@ Builds the Response message.
 <a name="lasso-assertion-query-process-response-msg"></a><h3>lasso_assertion_query_process_response_msg ()</h3>
 <pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_assertion_query_process_response_msg
                                                         (<em class="parameter"><code><a class="link" href="lasso-assertion-query.html#LassoAssertionQuery" title="struct LassoAssertionQuery"><span class="type">LassoAssertionQuery</span></a> *assertion_query</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *response_msg</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">gchar</span> *response_msg</code></em>);</pre>
 <p>
 Parses the response message and builds the corresponding response object.
 </p>
@@ -373,7 +373,7 @@ Append a new attribute designator to the current attribute request.
 <hr>
 <div class="refsect2">
 <a name="lasso-assertion-query-get-request-type"></a><h3>lasso_assertion_query_get_request_type ()</h3>
-<pre class="programlisting"><a class="link" href="lasso-assertion-query.html#LassoAssertionQueryRequestType" title="enum LassoAssertionQueryRequestType"><span class="returnvalue">LassoAssertionQueryRequestType</span></a>  lasso_assertion_query_get_request_type
+<pre class="programlisting"><a class="link" href="lasso-assertion-query.html#LassoAssertionQueryRequestType" title="enum LassoAssertionQueryRequestType"><span class="returnvalue">LassoAssertionQueryRequestType</span></a> lasso_assertion_query_get_request_type
                                                         (<em class="parameter"><code><a class="link" href="lasso-assertion-query.html#LassoAssertionQuery" title="struct LassoAssertionQuery"><span class="type">LassoAssertionQuery</span></a> *assertion_query</code></em>);</pre>
 <p>
 Return the type of the last processed request.
@@ -396,6 +396,6 @@ Return the type of the last processed request.
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.17</div>
+          Generated by GTK-Doc V1.18</div>
 </body>
 </html>

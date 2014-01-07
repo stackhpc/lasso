@@ -140,7 +140,6 @@ the <ulink url="http://lasso.entrouvert.org/license">GNU General Public License<
     <xi:include href="xml/session.xml"/>
     <xi:include href="xml/profile.xml"/>
     <xi:include href="xml/errors.xml"/>
-    <xi:include href="xml/init.xml"/>
     <para><link linkend="lasso-LassoNode">LassoNode</link> is the base class for all Lasso classes, it gives XML serialization and deserialization support to all of them.</para>
     <xi:include href="xml/node.xml"/>
     <para>The <link linkend="lasso-LassoMiscTextNode">LassoMiscTextNode</link> allows to represent miscellenaous nodes for whose no mapping to a specific <link linkend="GObjectClass">GObjectClass</link> exists.</para>
@@ -213,7 +212,7 @@ the <ulink url="http://lasso.entrouvert.org/license">GNU General Public License<
   <chapter id="saml2">
     <title>SAML 2.0 Single Sign On profiles</title>
     <para>
-	    The profile <link linkend="lasso-LassoLogin">LassoLogin</link> and <link linkend="lasso-LassoLogout">LassoLogout</link> are shared between SAML
+	    The profile <link linkend="lasso-login">LassoLogin</link> and <link linkend="lasso-LassoLogout">LassoLogout</link> are shared between SAML
 	    2.0 and ID-FF 1.2, depending on the declared protocol support,
 	    Lasso will create request respecting the chosen standard. Beware
 	    that initialization of the <link linkend="lasso-LassoLogin">LassoLogin</link> object, after construction,

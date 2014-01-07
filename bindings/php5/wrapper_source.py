@@ -16,8 +16,7 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 import sys
 import os
@@ -185,7 +184,7 @@ PHP_MSHUTDOWN_FUNCTION(lasso)
     } else {
         RETVAL_NULL();
     }'''
-            if free or is_transfer_full(arg):
+            if free:
                 print >> self.fd, '    free(return_c_value);'
         elif is_xml_node(arg):
             print >> self.fd, '''\
@@ -198,13 +197,15 @@ PHP_MSHUTDOWN_FUNCTION(lasso)
         }
     }
 '''
+            if free:
+                print >> self.fd, '    lasso_release_xml_node(return_c_value);'
         elif is_glist(arg):
             el_type = element_type(arg)
             if is_cstring(el_type):
                 print >> self.fd, '''\
     set_array_from_list_of_strings((GList*)return_c_value, &return_value);
 '''
-                if free or is_transfer_full(arg):
+                if free:
                     print >> self.fd, '    lasso_release_list_of_strings(return_c_value);'
             elif is_xml_node(el_type):
                 print >> self.fd, '''\
@@ -216,7 +217,7 @@ PHP_MSHUTDOWN_FUNCTION(lasso)
                 print >> self.fd, '''\
     set_array_from_list_of_objects((GList*)return_c_value, &return_value);
 '''
-                if free or is_transfer_full(arg):
+                if free:
                     print >> self.fd, '    lasso_release_list_of_gobjects(return_c_value);'
             else:
                 raise Exception('cannot return value for %s' % (arg,))
@@ -371,7 +372,7 @@ PHP_MSHUTDOWN_FUNCTION(lasso)
                     print >> self.fd, '    }'
 
         try:
-            self.return_value(m.return_arg, is_transfer_full(m.return_arg))
+            self.return_value(m.return_arg, is_transfer_full(m.return_arg, default=True))
         except:
             raise Exception('Cannot return value for function %s' % m)
 

@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 
@@ -28,7 +27,7 @@
 #include <xmlsec/templates.h>
 
 #include "is_interaction_statement.h"
-#include "./idwsf2_strings.h"
+#include "idwsf2_strings.h"
 
 /**
  * SECTION:is_interaction_statement
@@ -55,7 +54,7 @@
 static struct XmlSnippet schema_snippets[] = {
 	{ "Inquiry", SNIPPET_LIST_NODES,
 		G_STRUCT_OFFSET(LassoIdWsf2IsInteractionStatement, Inquiry), NULL, NULL, NULL},
-	{ "Signature", SNIPPET_SIGNATURE, 0, NULL, NULL, NULL  },
+	{ "Signature", SNIPPET_SIGNATURE, 0, NULL, LASSO_DS_PREFIX, LASSO_DS_HREF  },
 
 	/* hidden fields; used in lasso dumps */
 	{ "SignType", SNIPPET_ATTRIBUTE | SNIPPET_INTEGER | SNIPPET_LASSO_DUMP,

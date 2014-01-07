@@ -16,8 +16,7 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 import re
 import string
@@ -30,10 +29,14 @@ def convert_type_from_gobject_annotation(type):
     return _mapping_convert_type_from_gobject_annotation.get(type, type)
 
 def clean_type(type):
+    '''Convert struct references to their typedef counterpart'''
     if not type:
         return type
     type = type.strip()
     type = re.sub('\s+', ' ', type)
+    m = re.match('\s*struct\s+_(\w+)\s*\*', type)
+    if m:
+        type = '%s*' % m.group(1)
     return re.sub('\s*\*\s*', '*', type)
 
 
@@ -254,19 +257,20 @@ def is_int(arg, binding_data):
 def is_time_t_pointer(arg):
     return re.match(r'\btime_t\*', unconstify(arg_type(arg)))
 
-def is_transfer_full(arg):
+def is_transfer_full(arg, default=False):
     if not isinstance(arg, tuple):
-        return False
+        return default
     transfer = arg[2].get('transfer')
     if transfer:
         return transfer == 'full'
-    else:
-        return is_out(arg) or is_object(arg)
+    if is_cstring(arg) and is_const(arg):
+        return False
+    return default or is_out(arg) or is_object(arg)
 
 _not_objects = ( 'GHashTable', 'GList', 'GType' )
 
 def is_object(arg):
-    t = unconstify(arg_type(arg))
+    t = clean_type(unconstify(arg_type(arg)))
     return t and t[0] in string.uppercase and not [ x for x in _not_objects if x in t ]
 
 if __name__ == '__main__':

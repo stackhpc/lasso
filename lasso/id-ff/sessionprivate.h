@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef __LASSO_SESSION_PRIVATE_H__
@@ -41,10 +40,14 @@ struct _LassoSessionPrivate
 	GList *providerIDs;
 	GHashTable *status; /* hold temporary response status for sso-art */
 	GHashTable *assertions_by_id;
+	GHashTable *nid_and_session_indexes;
 #ifdef LASSO_WSF_ENABLED
 	GHashTable *eprs;
 #endif
 };
+
+#define LASSO_SESSION_GET_PRIVATE(o) \
+	   (G_TYPE_INSTANCE_GET_PRIVATE ((o), LASSO_TYPE_SESSION, LassoSessionPrivate))
 
 gint lasso_session_add_status(LassoSession *session,
 		const char *providerID, LassoNode *status);
@@ -61,6 +64,8 @@ gint lasso_session_count_assertions(LassoSession *session);
 gboolean lasso_session_is_dirty(LassoSession *session);
 
 void lasso_session_init_provider_ids(LassoSession *session);
+
+gboolean lasso_session_has_slo_session(LassoSession *session, const gchar *provider_id);
 
 #ifdef __cplusplus
 }

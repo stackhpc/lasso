@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef __LASSO_SAML_SUBJECT_CONFIRMATION_H__
@@ -30,7 +29,7 @@ extern "C" {
 #endif /* __cplusplus */
 
 #include "xml.h"
-#include "ds_key_info.h"
+#include "dsig/ds_key_info.h"
 
 #define LASSO_TYPE_SAML_SUBJECT_CONFIRMATION (lasso_saml_subject_confirmation_get_type())
 #define LASSO_SAML_SUBJECT_CONFIRMATION(obj) \

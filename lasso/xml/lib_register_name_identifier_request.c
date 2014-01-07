@@ -18,12 +18,11 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "./private.h"
-#include "./lib_register_name_identifier_request.h"
+#include "private.h"
+#include "lib_register_name_identifier_request.h"
 #include "../utils.h"
 
 /**
@@ -66,12 +65,15 @@ static struct XmlSnippet schema_snippets[] = {
 		G_STRUCT_OFFSET(LassoLibRegisterNameIdentifierRequest, Extension), NULL, NULL, NULL},
 	{ "ProviderID", SNIPPET_CONTENT,
 		G_STRUCT_OFFSET(LassoLibRegisterNameIdentifierRequest, ProviderID), NULL, NULL, NULL},
-	{ "IDPProvidedNameIdentifier", SNIPPET_NAME_IDENTIFIER,
-		G_STRUCT_OFFSET(LassoLibRegisterNameIdentifierRequest, IDPProvidedNameIdentifier), NULL, NULL, NULL},
-	{ "SPProvidedNameIdentifier", SNIPPET_NAME_IDENTIFIER,
-		G_STRUCT_OFFSET(LassoLibRegisterNameIdentifierRequest, SPProvidedNameIdentifier), NULL, NULL, NULL},
-	{ "OldProvidedNameIdentifier", SNIPPET_NAME_IDENTIFIER,
-		G_STRUCT_OFFSET(LassoLibRegisterNameIdentifierRequest, OldProvidedNameIdentifier), NULL, NULL, NULL},
+	{ "IDPProvidedNameIdentifier", SNIPPET_NODE,
+		G_STRUCT_OFFSET(LassoLibRegisterNameIdentifierRequest, IDPProvidedNameIdentifier),
+		"LassoSamlNameIdentifier", LASSO_LIB_PREFIX, LASSO_LIB_HREF},
+	{ "SPProvidedNameIdentifier", SNIPPET_NODE,
+		G_STRUCT_OFFSET(LassoLibRegisterNameIdentifierRequest, SPProvidedNameIdentifier),
+		"LassoSamlNameIdentifier", LASSO_LIB_PREFIX, LASSO_LIB_HREF},
+	{ "OldProvidedNameIdentifier", SNIPPET_NODE,
+		G_STRUCT_OFFSET(LassoLibRegisterNameIdentifierRequest, OldProvidedNameIdentifier),
+		"LassoSamlNameIdentifier", LASSO_LIB_PREFIX, LASSO_LIB_HREF},
 	{ "RelayState", SNIPPET_CONTENT,
 		G_STRUCT_OFFSET(LassoLibRegisterNameIdentifierRequest, RelayState), NULL, NULL, NULL},
 	{NULL, 0, 0, NULL, NULL, NULL}

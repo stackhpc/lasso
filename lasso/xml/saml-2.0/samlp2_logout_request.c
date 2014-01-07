@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "../private.h"
@@ -67,15 +66,16 @@ struct _LassoSamlp2LogoutRequestPrivate {
 
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "BaseID", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoSamlp2LogoutRequest, BaseID), NULL, NULL, NULL},
-	{ "NameID", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoSamlp2LogoutRequest, NameID), NULL, NULL, NULL},
-	{ "EncryptedID", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoSamlp2LogoutRequest, EncryptedID),
-		"LassoSaml2EncryptedElement", NULL, NULL },
+	{ "BaseID", SNIPPET_NODE, G_STRUCT_OFFSET(LassoSamlp2LogoutRequest, BaseID), NULL,
+		LASSO_SAML2_ASSERTION_PREFIX, LASSO_SAML2_ASSERTION_HREF},
+	{ "NameID", SNIPPET_NODE, G_STRUCT_OFFSET(LassoSamlp2LogoutRequest, NameID), NULL,
+		LASSO_SAML2_ASSERTION_PREFIX, LASSO_SAML2_ASSERTION_HREF},
+	{ "EncryptedID", SNIPPET_NODE, G_STRUCT_OFFSET(LassoSamlp2LogoutRequest, EncryptedID), NULL,
+		LASSO_SAML2_ASSERTION_PREFIX, LASSO_SAML2_ASSERTION_HREF},
 	{ "SessionIndex", SNIPPET_CONTENT,
 		G_STRUCT_OFFSET(LassoSamlp2LogoutRequest, SessionIndex), NULL, NULL, NULL},
+	{ "SessionIndex", SNIPPET_LIST_NODES,
+		0, NULL, NULL, NULL},
 	{ "Reason", SNIPPET_ATTRIBUTE,
 		G_STRUCT_OFFSET(LassoSamlp2LogoutRequest, Reason), NULL, NULL, NULL},
 	{ "NotOnOrAfter", SNIPPET_ATTRIBUTE,
@@ -138,10 +138,17 @@ init_from_xml(LassoNode *node, xmlNode *xmlnode)
 	int rc = 0;
 	xmlNode *child = NULL;
 	LassoSamlp2LogoutRequestPrivate *pv = NULL;
+	LassoSamlp2LogoutRequest *logout_request = (LassoSamlp2LogoutRequest*)node;
 
 	rc = parent_class->init_from_xml(node, xmlnode);
+	if ((logout_request->BaseID != 0) +
+	    (logout_request->NameID != 0) +
+	    (logout_request->EncryptedID != 0) != 1) {
+		error("samlp2:LogoutRequest needs one of BaseID, NameID or EncryptedID");
+		rc = 1;
+	}
+
 	if (rc == 0) {
-		GList *last;
 
 		pv = GET_PRIVATE(node);
 		child = xmlSecFindChild(xmlnode, BAD_CAST SESSION_INDEX,
@@ -153,11 +160,10 @@ init_from_xml(LassoNode *node, xmlNode *xmlnode)
 			lasso_release_xml_string(content);
 			child = xmlSecGetNextElementNode(child->next);
 		}
-		/* remove the last one, since it is also stored in node->SessionIndex */
-		last = g_list_last(pv->SessionIndex);
-		if (last) {
-			lasso_release_string(last->data);
-			pv->SessionIndex = g_list_delete_link(pv->SessionIndex, last);
+		/* remove the first one, since it is also stored in node->SessionIndex */
+		if (pv->SessionIndex) {
+			lasso_release_string(pv->SessionIndex->data);
+			pv->SessionIndex = g_list_delete_link(pv->SessionIndex, pv->SessionIndex);
 		}
 	}
 

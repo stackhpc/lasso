@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 /**
@@ -66,6 +65,7 @@ use this default role to access descriptors.</para>
 #include <unistd.h>
 #include "../utils.h"
 #include "../debug.h"
+#include "../keyprivate.h"
 
 static char *protocol_uris[LASSO_MD_PROTOCOL_TYPE_LAST] = {
 	"http://projectliberty.org/profiles/fedterm",
@@ -90,22 +90,22 @@ char *protocol_methods[LASSO_HTTP_METHOD_LAST] = {
 	"", "-http", "-soap"
 };
 
-static gboolean _lasso_provider_load_metadata_from_doc(LassoProvider *provider, xmlDoc *doc);
+static gboolean _lasso_provider_load_metadata_from_xmlnode(LassoProvider *provider, xmlNode *node);
 static int _lasso_provider_get_role_index(LassoProviderRole role);
 void _lasso_provider_add_metadata_value_for_role(LassoProvider *provider,
 		LassoProviderRole role, const char *name, const char *value);
 typedef int LassoProviderRoleIndex;
 
 static int
-lasso_provider_try_loading_public_key(LassoProvider *provider, xmlSecKeyPtr *public_key, gboolean mandatory) {
-	if (provider->public_key || provider->private_data->signing_key_descriptor) {
-		*public_key = lasso_provider_get_public_key(provider);
-		if (*public_key == NULL)
+lasso_provider_try_loading_public_keys(LassoProvider *provider, GList **public_keys, gboolean mandatory) {
+	if (provider->public_key || provider->private_data->signing_key_descriptors) {
+		*public_keys = lasso_provider_get_public_keys(provider);
+		if (*public_keys == NULL)
 			return LASSO_DS_ERROR_PUBLIC_KEY_LOAD_FAILED;
 	} else {
-		*public_key = NULL;
+		*public_keys = NULL;
 	}
-	if (*public_key == NULL && mandatory)
+	if (*public_keys == NULL && mandatory)
 		return LASSO_PROVIDER_ERROR_MISSING_PUBLIC_KEY;
 	return 0;
 }
@@ -515,24 +515,27 @@ static struct XmlSnippet schema_snippets[] = {
 	{ "CaCertChainFilePath", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoProvider, ca_cert_chain), NULL, NULL, NULL},
 	{ "MetadataFilePath", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoProvider, metadata_filename), NULL, NULL, NULL},
 	{ "ProviderID", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoProvider, ProviderID), NULL, NULL, NULL},
+	{ "ProviderRole", SNIPPET_ATTRIBUTE, 0, NULL, NULL, NULL},
+	{ "EncryptionMode", SNIPPET_ATTRIBUTE, 0, NULL, NULL, NULL},
+	{ "ProviderDumpVersion", SNIPPET_ATTRIBUTE, 0, NULL, NULL, NULL},
 	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 static LassoNodeClass *parent_class = NULL;
 
 /**
- * lasso_provider_get_public_key:
+ * lasso_provider_get_public_keys:
  * @provider: a #LassoProvider object
  *
- * Return the public key associated with this provider.
+ * Return the public keys associated with this provider.
  *
  * Return value: an #xmlSecKey object.
  */
-xmlSecKey*
-lasso_provider_get_public_key(const LassoProvider *provider)
+GList*
+lasso_provider_get_public_keys(const LassoProvider *provider)
 {
 	g_return_val_if_fail(LASSO_IS_PROVIDER(provider), NULL);
-	return provider->private_data->public_key;
+	return provider->private_data->signing_public_keys;
 }
 
 /**
@@ -548,11 +551,16 @@ xmlSecKey*
 lasso_provider_get_encryption_public_key(const LassoProvider *provider)
 {
 	g_return_val_if_fail(LASSO_IS_PROVIDER(provider), NULL);
+	GList *keys;
 
-	if (provider->private_data->encryption_public_key) {
-		return provider->private_data->encryption_public_key;
+	keys = provider->private_data->encryption_public_keys;
+	/* encrypt using the first given key, multiple encryption key in the metadata is generally
+	 * useless. roll-over of the encryption key is done mainly at the receiving side, by trying
+	 * to decipher using the two private keys, the old and the new. */
+	if (keys && keys->data) {
+		return (xmlSecKey*)keys->data;
 	}
-	return lasso_provider_get_public_key(provider);
+	return NULL;
 }
 
 static void
@@ -647,7 +655,8 @@ _lasso_provider_load_key_descriptor(LassoProvider *provider, xmlNode *key_descri
 	private_data = provider->private_data;
 	use = xmlGetProp(key_descriptor, (xmlChar*)"use");
 	if (use == NULL || lasso_strisequal((char *)use,"signing")) {
-		lasso_assign_xml_node(private_data->signing_key_descriptor, key_descriptor);
+		lasso_list_add_xml_node(private_data->signing_key_descriptors,
+				key_descriptor);
 	}
 	if (use == NULL || strcmp((char*)use, "encryption") == 0) {
 		lasso_assign_xml_node(private_data->encryption_key_descriptor, key_descriptor);
@@ -835,14 +844,12 @@ dispose(GObject *object)
 		provider->private_data->default_assertion_consumer = NULL;
 	}
 
-	if (provider->private_data->public_key) {
-		xmlSecKeyDestroy(provider->private_data->public_key);
-		provider->private_data->public_key = NULL;
+	if (provider->private_data->signing_public_keys) {
+		lasso_release_list_of_sec_key(provider->private_data->signing_public_keys);
 	}
 
-	if (provider->private_data->signing_key_descriptor) {
-		xmlFreeNode(provider->private_data->signing_key_descriptor);
-		provider->private_data->signing_key_descriptor = NULL;
+	if (provider->private_data->signing_key_descriptors) {
+		lasso_release_list_of_xml_node(provider->private_data->signing_key_descriptors);
 	}
 
 	if (provider->private_data->encryption_key_descriptor) {
@@ -855,10 +862,7 @@ dispose(GObject *object)
 		provider->private_data->encryption_public_key_str = NULL;
 	}
 
-	if (provider->private_data->encryption_public_key) {
-		xmlSecKeyDestroy(provider->private_data->encryption_public_key);
-		provider->private_data->encryption_public_key = NULL;
-	}
+	lasso_release_list_of_sec_key(provider->private_data->encryption_public_keys);
 
 	lasso_release(provider->private_data->affiliation_id);
 	provider->private_data->affiliation_id = NULL;
@@ -867,17 +871,6 @@ dispose(GObject *object)
 	lasso_release_list_of_full(provider->private_data->endpoints, lasso_endpoint_free);
 
 	G_OBJECT_CLASS(parent_class)->dispose(G_OBJECT(provider));
-}
-
-static void
-finalize(GObject *object)
-{
-	LassoProvider *provider = LASSO_PROVIDER(object);
-
-	lasso_release(provider->private_data);
-	provider->private_data = NULL;
-
-	G_OBJECT_CLASS(parent_class)->finalize(G_OBJECT(provider));
 }
 
 /*****************************************************************************/
@@ -892,19 +885,21 @@ instance_init(LassoProvider *provider)
 	provider->metadata_filename = NULL;
 	provider->public_key = NULL;
 	provider->ca_cert_chain = NULL;
-	provider->private_data = g_new0(LassoProviderPrivate, 1);
+	provider->private_data = G_TYPE_INSTANCE_GET_PRIVATE(provider, LASSO_TYPE_PROVIDER,
+			LassoProviderPrivate);
 	provider->private_data->dispose_has_run = FALSE;
 	provider->private_data->default_assertion_consumer = NULL;
 	provider->private_data->affiliation_id = NULL;
 	provider->private_data->affiliation_owner_id = NULL;
 	provider->private_data->organization = NULL;
-	provider->private_data->public_key = NULL;
-	provider->private_data->signing_key_descriptor = NULL;
+	provider->private_data->signing_public_keys = NULL;
+	provider->private_data->signing_key_descriptors = NULL;
 	provider->private_data->encryption_key_descriptor = NULL;
 	provider->private_data->encryption_public_key_str = NULL;
-	provider->private_data->encryption_public_key = NULL;
+	provider->private_data->encryption_public_keys = NULL;
 	provider->private_data->encryption_mode = LASSO_ENCRYPTION_MODE_NONE;
 	provider->private_data->encryption_sym_key_type = LASSO_ENCRYPTION_SYM_KEY_TYPE_AES_128;
+	provider->private_data->signature_context = LASSO_SIGNATURE_CONTEXT_NONE;
 
 	/* no value_destroy_func since it shouldn't destroy the GList on insert */
 	provider->private_data->Descriptors = g_hash_table_new_full(
@@ -926,7 +921,7 @@ class_init(LassoProviderClass *klass)
 	nclass->init_from_xml = init_from_xml;
 
 	G_OBJECT_CLASS(klass)->dispose = dispose;
-	G_OBJECT_CLASS(klass)->finalize = finalize;
+	g_type_class_add_private(G_OBJECT_CLASS(klass), sizeof(LassoProviderPrivate));
 }
 
 GType
@@ -974,6 +969,7 @@ gboolean
 _lasso_provider_load_metadata_from_buffer(LassoProvider *provider, const gchar *metadata, int length)
 {
 	xmlDoc *doc;
+	xmlNode *node;
 	gboolean rc = TRUE;
 
 	lasso_return_val_if_fail(LASSO_IS_PROVIDER(provider), FALSE);
@@ -984,7 +980,8 @@ _lasso_provider_load_metadata_from_buffer(LassoProvider *provider, const gchar *
 	if (doc == NULL) {
 		return FALSE;
 	}
-	goto_cleanup_if_fail_with_rc (_lasso_provider_load_metadata_from_doc(provider, doc), FALSE);
+	node = xmlDocGetRootElement(doc);
+	goto_cleanup_if_fail_with_rc (_lasso_provider_load_metadata_from_xmlnode(provider, node), FALSE);
 	lasso_assign_string(provider->metadata_filename, metadata);
 cleanup:
 	lasso_release_doc(doc);
@@ -1031,28 +1028,23 @@ lasso_provider_load_metadata(LassoProvider *provider, const gchar *path)
 }
 
 static gboolean
-_lasso_provider_load_metadata_from_doc(LassoProvider *provider, xmlDoc *doc)
+_lasso_provider_load_metadata_from_xmlnode(LassoProvider *provider, xmlNode *node)
 {
+	xmlDoc *doc = NULL;
 	xmlXPathContext *xpathCtx;
 	xmlXPathObject *xpathObj;
-	xmlNode *node;
 	const char *xpath_idp = "/md:EntityDescriptor/md:IDPDescriptor";
 	const char *xpath_sp = "/md:EntityDescriptor/md:SPDescriptor";
 	const char *xpath_organization = "/md:EntityDescriptor/md:Organization";
 	xmlChar *providerID = NULL;
 
 	g_return_val_if_fail(LASSO_IS_PROVIDER(provider), FALSE);
-	if (doc == NULL) {
-		warning("Metadata is not an XML document");
-		return FALSE;
-	}
+	g_return_val_if_fail(node != NULL && node->ns != NULL, FALSE);
+	g_return_val_if_fail (node->doc != NULL, FALSE);
 
-	node = xmlDocGetRootElement(doc);
-	if (node == NULL || node->ns == NULL) {
-		message (G_LOG_LEVEL_CRITICAL, "lasso_provider_load_metadata_from_doc: no root element");
-		return FALSE;
-	}
-
+	/* In the future it could be necessary to handle node without a document, and to create one
+	 * to hold them. */
+	doc = node->doc;
 
 	if (strcmp((char*)node->ns->href, LASSO_SAML2_METADATA_HREF) == 0) {
 		gboolean result;
@@ -1074,7 +1066,7 @@ _lasso_provider_load_metadata_from_doc(LassoProvider *provider, xmlDoc *doc)
 		xpathObj = xmlXPathEvalExpression(
 				(xmlChar*)"/md11:SPDescriptor|/md11:IDPDescriptor", xpathCtx);
 		if (xpathObj->nodesetval == NULL || xpathObj->nodesetval->nodeNr == 0) {
-			message (G_LOG_LEVEL_CRITICAL, "lasso_saml20_provider_load_metadata_from_doc: no md12:EntityDescriptor or md11:SPDesriptor or md11:IDPDescriptor");
+			message (G_LOG_LEVEL_CRITICAL, "lasso_saml20_provider_load_metadata_from_xmlnode: no md12:EntityDescriptor or md11:SPDesriptor or md11:IDPDescriptor");
 			xmlXPathFreeObject(xpathObj);
 			xmlXPathFreeContext(xpathCtx);
 			return FALSE;
@@ -1233,44 +1225,74 @@ gboolean
 lasso_provider_load_public_key(LassoProvider *provider, LassoPublicKeyType public_key_type)
 {
 	gchar *public_key = NULL;
+	GList *keys_descriptors = NULL;
 	xmlNode *key_descriptor = NULL;
-	xmlSecKey *pub_key = NULL;
+	GList *keys = NULL;
+	gboolean ret = FALSE;
 
 	g_return_val_if_fail(LASSO_IS_PROVIDER(provider), FALSE);
 	if (public_key_type == LASSO_PUBLIC_KEY_SIGNING) {
 		public_key = provider->public_key;
-		key_descriptor = provider->private_data->signing_key_descriptor;
+		keys_descriptors = provider->private_data->signing_key_descriptors;
 	} else {
 		key_descriptor = provider->private_data->encryption_key_descriptor;
 	}
 
-	if (public_key == NULL && key_descriptor == NULL) {
+	if (public_key == NULL && keys_descriptors == NULL && key_descriptor == NULL) {
 		return TRUE;
 	}
 
-	if (public_key == NULL) {
-		pub_key = lasso_xmlsec_load_key_info(key_descriptor);
-		if (! pub_key) {
+	if (public_key != NULL) {
+		xmlSecKey *key = lasso_xmlsec_load_private_key(public_key, NULL,
+				LASSO_SIGNATURE_METHOD_RSA_SHA1, NULL);
+		if (key) {
+			lasso_list_add_new_sec_key(keys, key);
+		} else {
+			message(G_LOG_LEVEL_WARNING, "Could not read public key from file %s", public_key);
+		}
+	}
+	if (key_descriptor) {
+		xmlSecKey *key = lasso_xmlsec_load_key_info(key_descriptor);
+		if (key) {
+			lasso_list_add_new_sec_key(keys, key);
+		} else {
 			message(G_LOG_LEVEL_WARNING, "Could not read KeyInfo from %s KeyDescriptor", public_key_type == LASSO_PUBLIC_KEY_SIGNING ? "signing" : "encryption");
 		}
-	} else {
-		pub_key = lasso_xmlsec_load_private_key(public_key, NULL);
 	}
 
-	if (pub_key) {
+	if (keys_descriptors) {
+		lasso_foreach_full_begin(xmlNode*, key_descriptor, it, keys_descriptors);
+		{
+			xmlSecKey *key = lasso_xmlsec_load_key_info(key_descriptor);
+			if (key) {
+				lasso_list_add_new_sec_key(keys, key);
+			} else {
+				message(G_LOG_LEVEL_WARNING, "Could not read KeyInfo from %s "
+						"KeyDescriptor",
+						public_key_type == LASSO_PUBLIC_KEY_SIGNING ? "signing" :
+						"encryption");
+			}
+		}
+		lasso_foreach_full_end();
+	}
+
+	if (keys) {
+		GList **dest = NULL;
 		switch (public_key_type) {
 			case LASSO_PUBLIC_KEY_SIGNING:
-				lasso_assign_new_sec_key(provider->private_data->public_key, pub_key);
+				dest = &provider->private_data->signing_public_keys;
 				break;
 			case LASSO_PUBLIC_KEY_ENCRYPTION:
-				lasso_assign_new_sec_key(provider->private_data->encryption_public_key, pub_key);
+				dest = &provider->private_data->encryption_public_keys;
 				break;
-			default:
-				xmlSecKeyDestroy(pub_key);
+		}
+		if (dest) {
+			lasso_transfer_full(*dest, keys, list_of_sec_key);
+			ret = TRUE;
 		}
 	}
-
-	return (pub_key != NULL);
+	lasso_release_list_of_sec_key(keys);
+	return ret;
 }
 
 
@@ -1300,9 +1322,10 @@ lasso_provider_verify_saml_signature(LassoProvider *provider,
 {
 	const char *id_attribute_name = NULL;
 	const xmlChar *node_ns = NULL;
-	xmlSecKey *public_key = NULL;
+	GList *public_keys = NULL;
 	xmlSecKeysMngr *keys_manager = NULL;
 	int rc = 0;
+	int signature_rc = 0;
 
 	lasso_bad_param(PROVIDER, provider);
 	lasso_null_param(signed_node);
@@ -1323,9 +1346,18 @@ lasso_provider_verify_saml_signature(LassoProvider *provider,
 	goto_cleanup_if_fail_with_rc(id_attribute_name, LASSO_PARAM_ERROR_INVALID_VALUE);
 	/* Get provider credentials */
 	lasso_check_good_rc(lasso_provider_try_loading_ca_cert_chain(provider, &keys_manager));
-	lasso_check_good_rc(lasso_provider_try_loading_public_key(provider, &public_key, keys_manager == NULL));
-	rc = lasso_verify_signature(signed_node, doc, id_attribute_name, keys_manager, public_key,
-			NO_OPTION, NULL);
+	lasso_check_good_rc(lasso_provider_try_loading_public_keys(provider, &public_keys, keys_manager == NULL));
+
+	lasso_foreach_full_begin(xmlSecKey*, public_key, it, public_keys);
+	{
+		signature_rc = lasso_verify_signature(signed_node, doc, id_attribute_name, keys_manager, public_key,
+				NO_OPTION, NULL);
+		if (signature_rc == 0) {
+			break;
+		}
+	}
+	lasso_foreach_full_end();
+	rc = signature_rc;
 cleanup:
 	lasso_release_key_manager(keys_manager);
 	return rc;
@@ -1339,45 +1371,35 @@ lasso_provider_verify_signature(LassoProvider *provider,
 	 * reflection about code reuse is under way...
 	 */
 	xmlDoc *doc = NULL;
-	xmlNode *xmlnode = NULL, *sign = NULL, *x509data = NULL;
+	xmlNode *xmlnode = NULL;
 	xmlSecKeysMngr *keys_mngr = NULL;
-	xmlSecDSigCtx *dsigCtx = NULL;
 	int rc = 0;
+	int signature_rc = 0;
 	xmlXPathContext *xpathCtx = NULL;
 	xmlXPathObject *xpathObj = NULL;
-	xmlSecKey *public_key = NULL;
+	GList *public_keys = NULL;
 
 	g_return_val_if_fail(LASSO_IS_PROVIDER(provider), LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
 
 	if (lasso_flag_verify_signature == FALSE)
 		return 0;
 
-
 	if (message == NULL)
 		return LASSO_PROFILE_ERROR_INVALID_MSG;
 
 	if (format == LASSO_MESSAGE_FORMAT_ERROR)
 		return LASSO_PROFILE_ERROR_INVALID_MSG;
+
 	if (format == LASSO_MESSAGE_FORMAT_UNKNOWN)
 		return LASSO_PROFILE_ERROR_INVALID_MSG;
 
 	if (format == LASSO_MESSAGE_FORMAT_QUERY) {
-		lasso_check_good_rc(lasso_provider_try_loading_public_key(provider, &public_key, TRUE));
-
-		switch (lasso_provider_get_protocol_conformance(provider)) {
-			case LASSO_PROTOCOL_LIBERTY_1_0:
-			case LASSO_PROTOCOL_LIBERTY_1_1:
-			case LASSO_PROTOCOL_LIBERTY_1_2:
-				return lasso_query_verify_signature(message, public_key);
-			case LASSO_PROTOCOL_SAML_2_0:
-				return lasso_saml2_query_verify_signature(message, public_key);
-			default:
-				return LASSO_PROFILE_ERROR_CANNOT_VERIFY_SIGNATURE;
-		}
+		return lasso_provider_verify_query_signature(provider, message);
 	}
 	lasso_check_good_rc(lasso_provider_try_loading_ca_cert_chain(provider, &keys_mngr));
 	/* public key is mandatory if no keys manager is present */
-	lasso_check_good_rc(lasso_provider_try_loading_public_key(provider, &public_key, keys_mngr == NULL));
+	lasso_check_good_rc(lasso_provider_try_loading_public_keys(provider, &public_keys,
+				keys_mngr == NULL));
 
 	if (format == LASSO_MESSAGE_FORMAT_BASE64) {
 		int len;
@@ -1405,64 +1427,20 @@ lasso_provider_verify_signature(LassoProvider *provider,
 	}
 
 
-	sign = NULL;
-	for (sign = xmlnode->children; sign; sign = sign->next) {
-		if (strcmp((char*)sign->name, "Signature") == 0)
+	lasso_foreach_full_begin(xmlSecKeyPtr, public_key, it, public_keys);
+	{
+		signature_rc = lasso_verify_signature(xmlnode, doc, id_attr_name,
+				keys_mngr, public_key, NO_OPTION, NULL);
+		if (signature_rc == 0) {
 			break;
-	}
-
-	/* If no signature was found, look for one in assertion */
-	if (sign == NULL) {
-		for (sign = xmlnode->children; sign; sign = sign->next) {
-			if (strcmp((char*)sign->name, "Assertion") == 0)
-				break;
-		}
-		if (sign != NULL) {
-			xmlnode = sign;
-			for (sign = xmlnode->children; sign; sign = sign->next) {
-				if (strcmp((char*)sign->name, "Signature") == 0)
-					break;
-			}
 		}
 	}
-
-	goto_cleanup_if_fail_with_rc (sign != NULL, LASSO_DS_ERROR_SIGNATURE_NOT_FOUND);
-
-	if (id_attr_name) {
-		xmlChar *id_value = xmlGetProp(xmlnode, (xmlChar*)id_attr_name);
-		xmlAttr *id_attr = xmlHasProp(xmlnode, (xmlChar*)id_attr_name);
-		if (id_value != NULL) {
-			xmlAddID(NULL, doc, id_value, id_attr);
-			xmlFree(id_value);
-		}
-	}
-
-	x509data = xmlSecFindNode(xmlnode, xmlSecNodeX509Data, xmlSecDSigNs);
-	if (x509data == NULL) { /* no need for a keys mngr if there is no X509 data */
-		lasso_release_key_manager(keys_mngr);
-	}
-
-	dsigCtx = xmlSecDSigCtxCreate(keys_mngr);
-	if (public_key) {
-		dsigCtx->signKey = xmlSecKeyDuplicate(public_key);
-	}
-
-	goto_cleanup_if_fail_with_rc (xmlSecDSigCtxVerify(dsigCtx, sign) >= 0,
-			LASSO_DS_ERROR_SIGNATURE_VERIFICATION_FAILED);
-
-	if (dsigCtx->status != xmlSecDSigStatusSucceeded) {
-		rc = LASSO_DS_ERROR_INVALID_SIGNATURE;
-		goto cleanup;
-	}
+	lasso_foreach_full_end();
+	rc = signature_rc;
 
 cleanup:
 	lasso_release_key_manager(keys_mngr);
-	lasso_release_signature_context(dsigCtx);
-	if (xpathCtx)
-		xmlXPathFreeContext(xpathCtx);
-	if (xpathObj)
-		xmlXPathFreeObject(xpathObj);
-	lasso_release_doc(doc);
+	lasso_release_xpath_job(xpathObj, xpathCtx, doc);
 	return rc;
 }
 
@@ -1546,23 +1524,38 @@ lasso_provider_get_encryption_sym_key_type(const LassoProvider *provider)
 int
 lasso_provider_verify_query_signature(LassoProvider *provider, const char *message)
 {
-	xmlSecKey *provider_public_key;
+	int (*check)(const char *, const xmlSecKey *) = NULL;
 	int rc = 0;
+	int signature_rc = 0;
+	GList *public_keys = NULL;
 
 	lasso_bad_param(PROVIDER, provider);
-	lasso_check_good_rc(lasso_provider_try_loading_public_key(provider, &provider_public_key, TRUE));
-	g_return_val_if_fail(provider_public_key, LASSO_PROVIDER_ERROR_MISSING_PUBLIC_KEY);
+	lasso_null_param(message);
+
+	lasso_check_good_rc(lasso_provider_try_loading_public_keys(provider, &public_keys, TRUE));
 
 	switch (lasso_provider_get_protocol_conformance(provider)) {
 		case LASSO_PROTOCOL_LIBERTY_1_0:
 		case LASSO_PROTOCOL_LIBERTY_1_1:
 		case LASSO_PROTOCOL_LIBERTY_1_2:
-			return lasso_query_verify_signature(message, provider_public_key);
+			check = lasso_query_verify_signature;
+			break;
 		case LASSO_PROTOCOL_SAML_2_0:
-			return lasso_saml2_query_verify_signature(message, provider_public_key);
+			check = lasso_saml2_query_verify_signature;
+			break;
 		default:
-			return LASSO_ERROR_UNIMPLEMENTED;
+			return LASSO_PROFILE_ERROR_CANNOT_VERIFY_SIGNATURE;
 	}
+	/* Check with all known signing keys... */
+	lasso_foreach_full_begin(xmlSecKeyPtr, public_key, it, public_keys);
+	{
+		signature_rc = check(message, public_key);
+		if (signature_rc == 0) {
+			break;
+		}
+	}
+	lasso_foreach_full_end();
+	rc = signature_rc;
 cleanup:
 	return rc;
 }
@@ -1627,7 +1620,7 @@ int
 lasso_provider_verify_single_node_signature (LassoProvider *provider, LassoNode *node, const char *id_attr_name)
 {
 	xmlNode *xmlnode = NULL;
-	xmlSecKey *public_key = NULL;
+	GList *public_keys = NULL;
 	xmlSecKeysMngr *keys_mngr = NULL;
 	int rc = 0;
 
@@ -1636,10 +1629,17 @@ lasso_provider_verify_single_node_signature (LassoProvider *provider, LassoNode 
 		return LASSO_DS_ERROR_SIGNATURE_VERIFICATION_FAILED;
 	}
 	lasso_check_good_rc(lasso_provider_try_loading_ca_cert_chain(provider, &keys_mngr));
-	lasso_check_good_rc(lasso_provider_try_loading_public_key(provider, &public_key,
+	lasso_check_good_rc(lasso_provider_try_loading_public_keys(provider, &public_keys,
 				keys_mngr == NULL));
-	rc = lasso_verify_signature(xmlnode, NULL, id_attr_name, keys_mngr, public_key,
-			NO_SINGLE_REFERENCE, NULL);
+
+	lasso_foreach_full_begin(xmlSecKey*, public_key, it, public_keys);
+	{
+		rc = lasso_verify_signature(xmlnode, NULL, id_attr_name, keys_mngr, public_key,
+				NO_SINGLE_REFERENCE, NULL);
+		if (rc == 0)
+			break;
+	}
+	lasso_foreach_full_end();
 cleanup:
 	return rc;
 }
@@ -1724,4 +1724,96 @@ lasso_provider_match_conformance(LassoProvider *provider, LassoProvider *another
 	int conformance2 = lasso_provider_get_protocol_conformance(another_provider);
 
 	return (conformance1 & conformance2) != 0;
+}
+
+LassoProvider*
+lasso_provider_new_from_xmlnode(LassoProviderRole role, xmlNode *node) {
+	LassoProvider *provider = NULL, *ret = NULL;
+
+	provider = (LassoProvider*)g_object_new(LASSO_TYPE_PROVIDER, NULL);
+	provider->role = role;
+	goto_cleanup_if_fail(_lasso_provider_load_metadata_from_xmlnode(provider, node));
+
+	if (!lasso_provider_load_public_key(provider, LASSO_PUBLIC_KEY_SIGNING)) {
+		message(G_LOG_LEVEL_WARNING, "Could not load public signing key of %s",
+				provider->ProviderID);
+		goto cleanup;
+	}
+	if (!lasso_provider_load_public_key(provider, LASSO_PUBLIC_KEY_ENCRYPTION)) {
+		message(G_LOG_LEVEL_WARNING, "Could not load public encryption key of %s",
+				provider->ProviderID);
+		goto cleanup;
+	}
+
+	provider->private_data->encryption_mode = LASSO_ENCRYPTION_MODE_NONE;
+	lasso_transfer_gobject(ret, provider);
+cleanup:
+	lasso_release_gobject(provider);
+	return ret;
+}
+
+/**
+ * lasso_provider_add_key:
+ * @provider: a #LassoProvider object
+ * @key: a #LassoKey object
+ * @after:(default FALSE): add the key at the end of the list, not on front.
+ *
+ * Add a new signature key for validating message received from @provider. If the key is used to
+ * improve verification time add it first with @after as true, it the key is ther for continuity of
+ * service (when doing a key rollover for example) at it last with @after as false.
+ *
+ * Return value: 0 if successful, an error code otherwise.
+ */
+lasso_error_t
+lasso_provider_add_key(LassoProvider *provider, LassoKey *key, gboolean after)
+{
+	LassoSignatureContext context;
+	lasso_error_t rc = 0;
+	GList **list = NULL;
+	xmlSecKey *xml_sec_key;
+
+	lasso_bad_param(PROVIDER, provider);
+	lasso_bad_param(KEY, key);
+
+	switch (lasso_key_get_key_type(key)) {
+		case LASSO_KEY_TYPE_FOR_SIGNATURE:
+			context = lasso_key_get_signature_context(key);
+			list = &provider->private_data->signing_public_keys;
+			xml_sec_key = xmlSecKeyDuplicate(context.signature_key);
+			break;
+	}
+	goto_cleanup_if_fail_with_rc(list && xml_sec_key, LASSO_PARAM_ERROR_INVALID_VALUE);
+	if (after) {
+		*list = g_list_append(*list, xml_sec_key);
+	} else {
+		*list = g_list_prepend(*list, xml_sec_key);
+	}
+cleanup:
+	return rc;
+}
+
+/**
+ * lasso_provider_set_server_signing_key:
+ * @provider: a #LassoProvider object
+ * @key: a #LassoKey object
+ *
+ * Return value: 0 if successful, an error code otherwise.
+ */
+lasso_error_t
+lasso_provider_set_server_signing_key(LassoProvider *provider,
+		LassoKey *key)
+{
+	lasso_error_t rc = 0;
+	LassoSignatureContext context = LASSO_SIGNATURE_CONTEXT_NONE;
+
+	lasso_bad_param(PROVIDER, provider);
+	lasso_bad_param(KEY, key);
+
+	context = lasso_key_get_signature_context(key);
+	goto_cleanup_if_fail_with_rc(lasso_validate_signature_context(context),
+			LASSO_DS_ERROR_PRIVATE_KEY_LOAD_FAILED);
+	lasso_assign_signature_context(provider->private_data->signature_context,
+			context);
+cleanup:
+	return rc;
 }

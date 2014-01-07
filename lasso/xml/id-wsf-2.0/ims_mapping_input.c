@@ -18,13 +18,12 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "../private.h"
 #include "ims_mapping_input.h"
-#include "./idwsf2_strings.h"
+#include "idwsf2_strings.h"
 
 /**
  * SECTION:ims_mapping_input
@@ -51,9 +50,11 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "TokenPolicy", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoIdWsf2ImsMappingInput, TokenPolicy), NULL, NULL, NULL},
+		G_STRUCT_OFFSET(LassoIdWsf2ImsMappingInput, TokenPolicy), NULL,
+		LASSO_IDWSF2_SEC_PREFIX, LASSO_IDWSF2_SEC_HREF},
 	{ "Token", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoIdWsf2ImsMappingInput, Token), NULL, NULL, NULL},
+		G_STRUCT_OFFSET(LassoIdWsf2ImsMappingInput, Token), NULL, LASSO_IDWSF2_SEC_PREFIX,
+		LASSO_IDWSF2_SEC_HREF},
 	{ "reqID", SNIPPET_ATTRIBUTE | SNIPPET_OPTIONAL,
 		G_STRUCT_OFFSET(LassoIdWsf2ImsMappingInput, reqID), NULL, NULL, NULL},
 	{NULL, 0, 0, NULL, NULL, NULL}

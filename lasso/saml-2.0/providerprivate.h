@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef __LASSO_SAML20_PROVIDER_PRIVATE_H__
@@ -53,6 +52,11 @@ gboolean lasso_saml20_provider_check_assertion_consumer_service_url(LassoProvide
 		const gchar *url, const gchar *binding);
 const gchar* lasso_saml20_provider_get_assertion_consumer_service_binding_by_url(
 		LassoProvider *provider, const char *url);
+lasso_error_t lasso_saml20_provider_get_artifact_resolution_service_index(LassoProvider *provider,
+		unsigned short *index);
+const gchar* lasso_saml20_provider_get_endpoint_url(LassoProvider *provider, LassoProviderRole role,
+		const char *kind, GSList *bindings, gboolean is_response, gboolean is_default,
+		int idx);
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

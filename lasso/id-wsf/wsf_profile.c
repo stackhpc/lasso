@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "../xml/private.h"
@@ -34,11 +33,11 @@
 
 #include "../utils.h"
 
-#include "./wsf_profile.h"
+#include "wsf_profile.h"
 #include "../xml/idwsf_strings.h"
-#include "./wsf_profile_private.h"
-#include "./discovery.h"
-#include "./wsf_utils.h"
+#include "wsf_profile_private.h"
+#include "discovery.h"
+#include "wsf_utils.h"
 #include "../xml/disco_modify.h"
 #include "../xml/soap-1.1/soap_fault.h"
 #include "../xml/soap_binding_correlation.h"

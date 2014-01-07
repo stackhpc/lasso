@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 /**
@@ -82,11 +81,11 @@
 #include "../id-ff/providerprivate.h"
 #include "../id-ff/sessionprivate.h"
 
-#include "./id_wsf.h"
-#include "./wsf_profile_private.h"
-#include "./wsf_utils.h"
+#include "id_wsf.h"
+#include "wsf_profile_private.h"
+#include "wsf_utils.h"
 #include "../utils.h"
-#include "./discovery.h"
+#include "discovery.h"
 
 struct _LassoDiscoveryPrivate
 {
@@ -917,12 +916,13 @@ lasso_discovery_build_key_info_node(LassoDiscovery *discovery, const gchar *prov
 	LassoDsKeyValue *key_value = NULL;
 	LassoProvider *provider = NULL;
 	xmlSecKeyInfoCtx *ctx = NULL;
-	xmlSecKey *public_key = NULL;
 	xmlDoc *doc = NULL;
 	xmlNode *key_info_node = NULL;
 	xmlNode *xmlnode = NULL;
 	xmlXPathContext *xpathCtx = NULL;
 	xmlXPathObject *xpathObj = NULL;
+	GList *public_keys = NULL;
+	xmlSecKey *public_key = NULL;
 
 	lasso_return_val_if_invalid_param(DISCOVERY, discovery, NULL);
 	g_return_val_if_fail(providerID != NULL, NULL);
@@ -933,7 +933,11 @@ lasso_discovery_build_key_info_node(LassoDiscovery *discovery, const gchar *prov
 		return NULL;
 	}
 
-	public_key = lasso_provider_get_public_key(provider);
+	public_keys = lasso_provider_get_public_keys(provider);
+	if (public_keys == NULL) {
+		return NULL;
+	}
+	public_key = (xmlSecKey*)public_keys->data;
 	if (public_key == NULL) {
 		return NULL;
 	}

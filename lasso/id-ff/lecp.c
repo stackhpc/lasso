@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 /**
@@ -419,9 +418,13 @@ instance_init(LassoLecp *lecp)
 static void
 class_init(LassoLecpClass *klass)
 {
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
 	parent_class = g_type_class_peek_parent(klass);
 
 	G_OBJECT_CLASS(klass)->finalize = finalize;
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "Lecp");
+	lasso_node_class_set_ns(nclass, LASSO_LASSO_HREF, LASSO_LASSO_PREFIX);
 }
 
 GType

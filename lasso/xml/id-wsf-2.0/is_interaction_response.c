@@ -18,13 +18,12 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "../private.h"
 #include "is_interaction_response.h"
-#include "./idwsf2_strings.h"
+#include "idwsf2_strings.h"
 
 /**
  * SECTION:is_interaction_response
@@ -55,7 +54,7 @@
 static struct XmlSnippet schema_snippets[] = {
 	{ "Status", SNIPPET_NODE,
 		G_STRUCT_OFFSET(LassoIdWsf2IsInteractionResponse, Status),
-		"LassoIdWsf2UtilStatus", NULL, NULL },
+		"LassoIdWsf2UtilStatus", LASSO_IDWSF2_UTIL_PREFIX, LASSO_IDWSF2_UTIL_HREF},
 	{ "InteractionStatement", SNIPPET_LIST_NODES,
 		G_STRUCT_OFFSET(LassoIdWsf2IsInteractionResponse, InteractionStatement), NULL, NULL, NULL},
 	{ "Parameter", SNIPPET_LIST_NODES,

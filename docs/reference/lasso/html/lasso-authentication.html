@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LassoAuthentication</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="idwsf.html" title="Identity Web Services Framework 1.0">
 <link rel="prev" href="lasso-LassoPersonalProfileService.html" title="LassoPersonalProfileService">
 <link rel="next" href="lasso-LassoWsfProfile.html" title="LassoWsfProfile">
-<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -40,7 +40,7 @@
 <pre class="synopsis">typedef             <a class="link" href="lasso-authentication.html#LassoUserAccount" title="LassoUserAccount">LassoUserAccount</a>;
 enum                <a class="link" href="lasso-authentication.html#LassoSaslMechanisms" title="enum LassoSaslMechanisms">LassoSaslMechanisms</a>;
 struct              <a class="link" href="lasso-authentication.html#LassoAuthentication" title="struct LassoAuthentication">LassoAuthentication</a>;
-<a class="link" href="lasso-authentication.html#LassoAuthentication" title="struct LassoAuthentication"><span class="returnvalue">LassoAuthentication</span></a> *  <a class="link" href="lasso-authentication.html#lasso-authentication-new" title="lasso_authentication_new ()">lasso_authentication_new</a>         (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);
+<a class="link" href="lasso-authentication.html#LassoAuthentication" title="struct LassoAuthentication"><span class="returnvalue">LassoAuthentication</span></a> * <a class="link" href="lasso-authentication.html#lasso-authentication-new" title="lasso_authentication_new ()">lasso_authentication_new</a>          (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="lasso-authentication.html#lasso-authentication-destroy" title="lasso_authentication_destroy ()">lasso_authentication_destroy</a>        (<em class="parameter"><code><a class="link" href="lasso-authentication.html#LassoAuthentication" title="struct LassoAuthentication"><span class="type">LassoAuthentication</span></a> *authentication</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-authentication.html#lasso-authentication-client-start" title="lasso_authentication_client_start ()">lasso_authentication_client_start</a>   (<em class="parameter"><code><a class="link" href="lasso-authentication.html#LassoAuthentication" title="struct LassoAuthentication"><span class="type">LassoAuthentication</span></a> *authentication</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-authentication.html#lasso-authentication-client-step" title="lasso_authentication_client_step ()">lasso_authentication_client_step</a>    (<em class="parameter"><code><a class="link" href="lasso-authentication.html#LassoAuthentication" title="struct LassoAuthentication"><span class="type">LassoAuthentication</span></a> *authentication</code></em>);
@@ -48,14 +48,14 @@ struct              <a class="link" href="lasso-authentication.html#LassoAuthent
                                                         (<em class="parameter"><code><a class="link" href="lasso-authentication.html#LassoAuthentication" title="struct LassoAuthentication"><span class="type">LassoAuthentication</span></a> *authentication</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-authentication.html#lasso-authentication-init-request" title="lasso_authentication_init_request ()">lasso_authentication_init_request</a>   (<em class="parameter"><code><a class="link" href="lasso-authentication.html#LassoAuthentication" title="struct LassoAuthentication"><span class="type">LassoAuthentication</span></a> *authentication</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-LassoDiscoDescription.html#LassoDiscoDescription" title="struct LassoDiscoDescription"><span class="type">LassoDiscoDescription</span></a> *description</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *mechanisms</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *mechanisms</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-authentication.html#LassoUserAccount" title="LassoUserAccount"><span class="type">LassoUserAccount</span></a> *account</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-authentication.html#lasso-authentication-process-request-msg" title="lasso_authentication_process_request_msg ()">lasso_authentication_process_request_msg</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-authentication.html#LassoAuthentication" title="struct LassoAuthentication"><span class="type">LassoAuthentication</span></a> *authentication</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *soap_msg</code></em>);
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *soap_msg</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-authentication.html#lasso-authentication-process-response-msg" title="lasso_authentication_process_response_msg ()">lasso_authentication_process_response_msg</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-authentication.html#LassoAuthentication" title="struct LassoAuthentication"><span class="type">LassoAuthentication</span></a> *authentication</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *soap_msg</code></em>);
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *soap_msg</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-authentication.html#lasso-authentication-server-start" title="lasso_authentication_server_start ()">lasso_authentication_server_start</a>   (<em class="parameter"><code><a class="link" href="lasso-authentication.html#LassoAuthentication" title="struct LassoAuthentication"><span class="type">LassoAuthentication</span></a> *authentication</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-authentication.html#lasso-authentication-server-step" title="lasso_authentication_server_step ()">lasso_authentication_server_step</a>    (<em class="parameter"><code><a class="link" href="lasso-authentication.html#LassoAuthentication" title="struct LassoAuthentication"><span class="type">LassoAuthentication</span></a> *authentication</code></em>);
 </pre>
@@ -77,7 +77,7 @@ struct              <a class="link" href="lasso-authentication.html#LassoAuthent
 	LASSO_SASL_MECH_ANONYMOUS = 1,
 	LASSO_SASL_MECH_PLAIN,
 	LASSO_SASL_MECH_CRAM_MD5,
-}LassoSaslMechanisms;
+} LassoSaslMechanisms;
 </pre>
 </div>
 <hr>
@@ -95,7 +95,7 @@ struct              <a class="link" href="lasso-authentication.html#LassoAuthent
 <hr>
 <div class="refsect2">
 <a name="lasso-authentication-new"></a><h3>lasso_authentication_new ()</h3>
-<pre class="programlisting"><a class="link" href="lasso-authentication.html#LassoAuthentication" title="struct LassoAuthentication"><span class="returnvalue">LassoAuthentication</span></a> *  lasso_authentication_new         (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);</pre>
+<pre class="programlisting"><a class="link" href="lasso-authentication.html#LassoAuthentication" title="struct LassoAuthentication"><span class="returnvalue">LassoAuthentication</span></a> * lasso_authentication_new          (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);</pre>
 </div>
 <hr>
 <div class="refsect2">
@@ -123,7 +123,7 @@ struct              <a class="link" href="lasso-authentication.html#LassoAuthent
 <a name="lasso-authentication-init-request"></a><h3>lasso_authentication_init_request ()</h3>
 <pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_authentication_init_request   (<em class="parameter"><code><a class="link" href="lasso-authentication.html#LassoAuthentication" title="struct LassoAuthentication"><span class="type">LassoAuthentication</span></a> *authentication</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-LassoDiscoDescription.html#LassoDiscoDescription" title="struct LassoDiscoDescription"><span class="type">LassoDiscoDescription</span></a> *description</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *mechanisms</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *mechanisms</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-authentication.html#LassoUserAccount" title="LassoUserAccount"><span class="type">LassoUserAccount</span></a> *account</code></em>);</pre>
 </div>
 <hr>
@@ -131,14 +131,14 @@ struct              <a class="link" href="lasso-authentication.html#LassoAuthent
 <a name="lasso-authentication-process-request-msg"></a><h3>lasso_authentication_process_request_msg ()</h3>
 <pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_authentication_process_request_msg
                                                         (<em class="parameter"><code><a class="link" href="lasso-authentication.html#LassoAuthentication" title="struct LassoAuthentication"><span class="type">LassoAuthentication</span></a> *authentication</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *soap_msg</code></em>);</pre>
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *soap_msg</code></em>);</pre>
 </div>
 <hr>
 <div class="refsect2">
 <a name="lasso-authentication-process-response-msg"></a><h3>lasso_authentication_process_response_msg ()</h3>
 <pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_authentication_process_response_msg
                                                         (<em class="parameter"><code><a class="link" href="lasso-authentication.html#LassoAuthentication" title="struct LassoAuthentication"><span class="type">LassoAuthentication</span></a> *authentication</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *soap_msg</code></em>);</pre>
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *soap_msg</code></em>);</pre>
 </div>
 <hr>
 <div class="refsect2">
@@ -154,6 +154,6 @@ struct              <a class="link" href="lasso-authentication.html#LassoAuthent
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.17</div>
+          Generated by GTK-Doc V1.18</div>
 </body>
 </html>

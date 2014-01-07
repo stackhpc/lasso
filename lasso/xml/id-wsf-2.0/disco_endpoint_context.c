@@ -18,13 +18,12 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "../private.h"
 #include "disco_endpoint_context.h"
-#include "./idwsf2_strings.h"
+#include "idwsf2_strings.h"
 #include "sbf_framework.h"
 
 /**
@@ -56,7 +55,8 @@ static struct XmlSnippet schema_snippets[] = {
 	{ "Address", SNIPPET_LIST_CONTENT,
 		G_STRUCT_OFFSET(LassoIdWsf2DiscoEndpointContext, Address), NULL, NULL, NULL},
 	{ "Framework", SNIPPET_LIST_NODES,
-		G_STRUCT_OFFSET(LassoIdWsf2DiscoEndpointContext, Framework), NULL, NULL, NULL},
+		G_STRUCT_OFFSET(LassoIdWsf2DiscoEndpointContext, Framework), NULL,
+		LASSO_IDWSF2_SBF_PREFIX, LASSO_IDWSF2_SBF_HREF},
 	{ "SecurityMechID", SNIPPET_LIST_CONTENT,
 		G_STRUCT_OFFSET(LassoIdWsf2DiscoEndpointContext, SecurityMechID), NULL, NULL, NULL},
 	{ "Action", SNIPPET_LIST_CONTENT,

@@ -19,11 +19,11 @@ lasso.rc.lo: $(top_srcdir)/win32/lasso.rc
 lib_LTLIBRARIES = liblasso.la
 
 liblassoinclude_HEADERS = export.h lasso.h lasso_config.h errors.h \
-			  registry.h ctypes.h
-nodist_liblassoinclude_HEADERS = debug.h utils.h registry-private.h logging.h backward_comp.h
+			  registry.h ctypes.h key.h
+nodist_liblassoinclude_HEADERS = debug.h utils.h registry-private.h logging.h backward_comp.h keyprivate.h
 BUILT_SOURCES = types.c errors.c symbols.sym
 
-liblasso_la_SOURCES = lasso.c errors.c registry.c utils.c logging.c
+liblasso_la_SOURCES = lasso.c errors.c registry.c utils.c logging.c key.c
 
 if WSF_ENABLED
 SYMBOLS_ARGS = -wsf
@@ -57,6 +57,8 @@ if MINGW
 liblasso_la_LIBADD = \
 	$(top_builddir)/lasso/xml/liblasso-xml.la \
 	$(top_builddir)/lasso/xml/saml-2.0/liblasso-xml-saml2.la \
+	$(top_builddir)/lasso/xml/soap-1.1/liblasso-xml-soap11.la \
+	$(top_builddir)/lasso/xml/dsig/liblasso-xml-dsig.la \
 	$(top_builddir)/lasso/id-ff/liblasso-id-ff.la \
 	$(top_builddir)/lasso/saml-2.0/liblasso-saml-20.la \
 	$(WSF_LIB_FILE) \
@@ -73,6 +75,7 @@ liblasso_la_LIBADD = \
 	$(top_builddir)/lasso/xml/liblasso-xml.la \
 	$(top_builddir)/lasso/xml/saml-2.0/liblasso-xml-saml2.la \
 	$(top_builddir)/lasso/xml/soap-1.1/liblasso-xml-soap11.la \
+	$(top_builddir)/lasso/xml/dsig/liblasso-xml-dsig.la \
 	$(top_builddir)/lasso/id-ff/liblasso-id-ff.la \
 	$(top_builddir)/lasso/saml-2.0/liblasso-saml-20.la \
 	$(WSF_LIB_FILE) \

@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LassoFederation</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="architecture.html" title="Lasso Architecture">
 <link rel="prev" href="lasso-LassoIdentity.html" title="LassoIdentity">
 <link rel="next" href="lasso-LassoSession.html" title="LassoSession">
-<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -38,14 +38,14 @@
 <div class="refsynopsisdiv">
 <a name="lasso-LassoFederation.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">struct              <a class="link" href="lasso-LassoFederation.html#LassoFederation" title="struct LassoFederation">LassoFederation</a>;
-<a class="link" href="lasso-LassoFederation.html#LassoFederation" title="struct LassoFederation"><span class="returnvalue">LassoFederation</span></a> *   <a class="link" href="lasso-LassoFederation.html#lasso-federation-new" title="lasso_federation_new ()">lasso_federation_new</a>                (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *remote_providerID</code></em>);
+<a class="link" href="lasso-LassoFederation.html#LassoFederation" title="struct LassoFederation"><span class="returnvalue">LassoFederation</span></a> *   <a class="link" href="lasso-LassoFederation.html#lasso-federation-new" title="lasso_federation_new ()">lasso_federation_new</a>                (<em class="parameter"><code>const <span class="type">gchar</span> *remote_providerID</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="lasso-LassoFederation.html#lasso-federation-build-local-name-identifier" title="lasso_federation_build_local_name_identifier ()">lasso_federation_build_local_name_identifier</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoFederation.html#LassoFederation" title="struct LassoFederation"><span class="type">LassoFederation</span></a> *federation</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *nameQualifier</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *format</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *content</code></em>);
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *nameQualifier</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *format</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *content</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="lasso-LassoFederation.html#lasso-federation-destroy" title="lasso_federation_destroy ()">lasso_federation_destroy</a>            (<em class="parameter"><code><a class="link" href="lasso-LassoFederation.html#LassoFederation" title="struct LassoFederation"><span class="type">LassoFederation</span></a> *federation</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="lasso-LassoFederation.html#lasso-federation-verify-name-identifier" title="lasso_federation_verify_name_identifier ()">lasso_federation_verify_name_identifier</a>
+<span class="returnvalue">gboolean</span>            <a class="link" href="lasso-LassoFederation.html#lasso-federation-verify-name-identifier" title="lasso_federation_verify_name_identifier ()">lasso_federation_verify_name_identifier</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoFederation.html#LassoFederation" title="struct LassoFederation"><span class="type">LassoFederation</span></a> *federation</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *name_identifier</code></em>);
 </pre>
@@ -73,7 +73,7 @@ provider and a service provider. Instance of this class are usually never access
 <hr>
 <div class="refsect2">
 <a name="lasso-federation-new"></a><h3>lasso_federation_new ()</h3>
-<pre class="programlisting"><a class="link" href="lasso-LassoFederation.html#LassoFederation" title="struct LassoFederation"><span class="returnvalue">LassoFederation</span></a> *   lasso_federation_new                (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *remote_providerID</code></em>);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoFederation.html#LassoFederation" title="struct LassoFederation"><span class="returnvalue">LassoFederation</span></a> *   lasso_federation_new                (<em class="parameter"><code>const <span class="type">gchar</span> *remote_providerID</code></em>);</pre>
 <p>
 Creates a new <a class="link" href="lasso-LassoFederation.html#LassoFederation" title="struct LassoFederation"><span class="type">LassoFederation</span></a> with the remote provider.
 </p>
@@ -97,9 +97,9 @@ Creates a new <a class="link" href="lasso-LassoFederation.html#LassoFederation" 
 <a name="lasso-federation-build-local-name-identifier"></a><h3>lasso_federation_build_local_name_identifier ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                lasso_federation_build_local_name_identifier
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoFederation.html#LassoFederation" title="struct LassoFederation"><span class="type">LassoFederation</span></a> *federation</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *nameQualifier</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *format</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *content</code></em>);</pre>
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *nameQualifier</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *format</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *content</code></em>);</pre>
 <p>
 Builds federation local name identifier.
 </p>
@@ -145,7 +145,7 @@ Destroys a federation.
 <hr>
 <div class="refsect2">
 <a name="lasso-federation-verify-name-identifier"></a><h3>lasso_federation_verify_name_identifier ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            lasso_federation_verify_name_identifier
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            lasso_federation_verify_name_identifier
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoFederation.html#LassoFederation" title="struct LassoFederation"><span class="type">LassoFederation</span></a> *federation</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *name_identifier</code></em>);</pre>
 <p>
@@ -167,7 +167,7 @@ Checks whether federation is for <em class="parameter"><code>name_identifier</co
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the federation is for <em class="parameter"><code>name_identifier</code></em>.</td>
+<code class="literal">TRUE</code> if the federation is for <em class="parameter"><code>name_identifier</code></em>.</td>
 </tr>
 </tbody>
 </table></div>
@@ -176,6 +176,6 @@ Checks whether federation is for <em class="parameter"><code>name_identifier</co
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.17</div>
+          Generated by GTK-Doc V1.18</div>
 </body>
 </html>

@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 /**
@@ -456,6 +455,15 @@ lasso_defederation_validate_notification(LassoDefederation *defederation)
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
+static void
+class_init(LassoDefederationClass *klass)
+{
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
+
+	nclass->node_data = NULL;
+}
+
+
 GType
 lasso_defederation_get_type()
 {
@@ -464,11 +472,11 @@ lasso_defederation_get_type()
 	if (!this_type) {
 		static const GTypeInfo this_info = {
 			sizeof (LassoDefederationClass),
-			NULL, NULL, NULL, NULL, NULL,
+			NULL, NULL, (GClassInitFunc) class_init, NULL, NULL,
 			sizeof(LassoDefederation),
 			0,
 			NULL,
-			NULL
+			NULL,
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_PROFILE,

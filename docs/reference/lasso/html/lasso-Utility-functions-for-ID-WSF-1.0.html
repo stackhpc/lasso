@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Utility functions for ID-WSF 1.0</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="idwsf.html" title="Identity Web Services Framework 1.0">
 <link rel="prev" href="lasso-LassoInteractionProfileService.html" title="LassoInteractionProfileService">
 <link rel="next" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
-<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -41,42 +41,42 @@ Private, unless otherwise indicated
 </div>
 <div class="refsynopsisdiv">
 <a name="lasso-Utility-functions-for-ID-WSF-1.0.synopsis"></a><h2>Synopsis</h2>
-<pre class="synopsis"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-security-mech-id-is-null-authentication" title="lasso_security_mech_id_is_null_authentication ()">lasso_security_mech_id_is_null_authentication</a>
-                                                        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *security_mech_id</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-security-mech-id-is-x509-authentication" title="lasso_security_mech_id_is_x509_authentication ()">lasso_security_mech_id_is_x509_authentication</a>
-                                                        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *security_mech_id</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-security-mech-id-is-saml-authentication" title="lasso_security_mech_id_is_saml_authentication ()">lasso_security_mech_id_is_saml_authentication</a>
-                                                        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *security_mech_id</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-security-mech-id-is-bearer-authentication" title="lasso_security_mech_id_is_bearer_authentication ()">lasso_security_mech_id_is_bearer_authentication</a>
-                                                        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *security_mech_id</code></em>);
+<pre class="synopsis"><span class="returnvalue">gboolean</span>            <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-security-mech-id-is-null-authentication" title="lasso_security_mech_id_is_null_authentication ()">lasso_security_mech_id_is_null_authentication</a>
+                                                        (<em class="parameter"><code>const <span class="type">gchar</span> *security_mech_id</code></em>);
+<span class="returnvalue">gboolean</span>            <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-security-mech-id-is-x509-authentication" title="lasso_security_mech_id_is_x509_authentication ()">lasso_security_mech_id_is_x509_authentication</a>
+                                                        (<em class="parameter"><code>const <span class="type">gchar</span> *security_mech_id</code></em>);
+<span class="returnvalue">gboolean</span>            <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-security-mech-id-is-saml-authentication" title="lasso_security_mech_id_is_saml_authentication ()">lasso_security_mech_id_is_saml_authentication</a>
+                                                        (<em class="parameter"><code>const <span class="type">gchar</span> *security_mech_id</code></em>);
+<span class="returnvalue">gboolean</span>            <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-security-mech-id-is-bearer-authentication" title="lasso_security_mech_id_is_bearer_authentication ()">lasso_security_mech_id_is_bearer_authentication</a>
+                                                        (<em class="parameter"><code>const <span class="type">gchar</span> *security_mech_id</code></em>);
 
-<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-login-set-encryptedResourceId" title="lasso_login_set_encryptedResourceId ()">lasso_login_set_encryptedResourceId</a> (<em class="parameter"><code><a class="link" href="lasso-login.html#LassoLogin" title="struct LassoLogin"><span class="type">LassoLogin</span></a> *login</code></em>,
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-login-set-encryptedResourceId" title="lasso_login_set_encryptedResourceId ()">lasso_login_set_encryptedResourceId</a> (<em class="parameter"><code><a class="link" href="lasso-LassoLogin.html#LassoLogin" title="struct LassoLogin"><span class="type">LassoLogin</span></a> *login</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-LassoDiscoEncryptedResourceID.html#LassoDiscoEncryptedResourceID" title="struct LassoDiscoEncryptedResourceID"><span class="type">LassoDiscoEncryptedResourceID</span></a> *encryptedResourceId</code></em>);
-<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-login-set-resourceId" title="lasso_login_set_resourceId ()">lasso_login_set_resourceId</a>          (<em class="parameter"><code><a class="link" href="lasso-login.html#LassoLogin" title="struct LassoLogin"><span class="type">LassoLogin</span></a> *login</code></em>,
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-login-set-resourceId" title="lasso_login_set_resourceId ()">lasso_login_set_resourceId</a>          (<em class="parameter"><code><a class="link" href="lasso-LassoLogin.html#LassoLogin" title="struct LassoLogin"><span class="type">LassoLogin</span></a> *login</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *content</code></em>);
 
-<a class="link" href="lasso-LassoDiscoServiceInstance.html#LassoDiscoServiceInstance" title="struct LassoDiscoServiceInstance"><span class="returnvalue">LassoDiscoServiceInstance</span></a> *  <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-server-get-service" title="lasso_server_get_service ()">lasso_server_get_service</a>   (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *serviceType</code></em>);
+<a class="link" href="lasso-LassoDiscoServiceInstance.html#LassoDiscoServiceInstance" title="struct LassoDiscoServiceInstance"><span class="returnvalue">LassoDiscoServiceInstance</span></a> * <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-server-get-service" title="lasso_server_get_service ()">lasso_server_get_service</a>    (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *serviceType</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-server-add-service" title="lasso_server_add_service ()">lasso_server_add_service</a>            (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *service</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-server-add-service-from-dump" title="lasso_server_add_service_from_dump ()">lasso_server_add_service_from_dump</a>  (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *dump</code></em>);
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *dump</code></em>);
 
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-identity-add-resource-offering" title="lasso_identity_add_resource_offering ()">lasso_identity_add_resource_offering</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoIdentity.html#LassoIdentity" title="struct LassoIdentity"><span class="type">LassoIdentity</span></a> *identity</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-LassoDiscoResourceOffering.html#LassoDiscoResourceOffering" title="struct LassoDiscoResourceOffering"><span class="type">LassoDiscoResourceOffering</span></a> *offering</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-identity-remove-resource-offering" title="lasso_identity_remove_resource_offering ()">lasso_identity_remove_resource_offering</a>
+<span class="returnvalue">gboolean</span>            <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-identity-remove-resource-offering" title="lasso_identity_remove_resource_offering ()">lasso_identity_remove_resource_offering</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoIdentity.html#LassoIdentity" title="struct LassoIdentity"><span class="type">LassoIdentity</span></a> *identity</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *entryID</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-identity-get-offerings" title="lasso_identity_get_offerings ()">lasso_identity_get_offerings</a>        (<em class="parameter"><code><a class="link" href="lasso-LassoIdentity.html#LassoIdentity" title="struct LassoIdentity"><span class="type">LassoIdentity</span></a> *identity</code></em>,
+<span class="returnvalue">GList</span> *             <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-identity-get-offerings" title="lasso_identity_get_offerings ()">lasso_identity_get_offerings</a>        (<em class="parameter"><code><a class="link" href="lasso-LassoIdentity.html#LassoIdentity" title="struct LassoIdentity"><span class="type">LassoIdentity</span></a> *identity</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *service_type</code></em>);
-<a class="link" href="lasso-LassoDiscoResourceOffering.html#LassoDiscoResourceOffering" title="struct LassoDiscoResourceOffering"><span class="returnvalue">LassoDiscoResourceOffering</span></a> *  <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-identity-get-resource-offering" title="lasso_identity_get_resource_offering ()">lasso_identity_get_resource_offering</a>
+<a class="link" href="lasso-LassoDiscoResourceOffering.html#LassoDiscoResourceOffering" title="struct LassoDiscoResourceOffering"><span class="returnvalue">LassoDiscoResourceOffering</span></a> * <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-identity-get-resource-offering" title="lasso_identity_get_resource_offering ()">lasso_identity_get_resource_offering</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoIdentity.html#LassoIdentity" title="struct LassoIdentity"><span class="type">LassoIdentity</span></a> *identity</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *entryID</code></em>);
 
-<a class="link" href="lasso-LassoSoapBindingProvider.html#LassoSoapBindingProvider" title="struct LassoSoapBindingProvider"><span class="returnvalue">LassoSoapBindingProvider</span></a> *  <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-soap-binding-get-provider" title="lasso_soap_binding_get_provider ()">lasso_soap_binding_get_provider</a>
+<a class="link" href="lasso-LassoSoapBindingProvider.html#LassoSoapBindingProvider" title="struct LassoSoapBindingProvider"><span class="returnvalue">LassoSoapBindingProvider</span></a> * <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-soap-binding-get-provider" title="lasso_soap_binding_get_provider ()">lasso_soap_binding_get_provider</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoSoapEnvelope.html#LassoSoapEnvelope" title="struct LassoSoapEnvelope"><span class="type">LassoSoapEnvelope</span></a> *envelope</code></em>);
-<a class="link" href="lasso-LassoSoapBindingCorrelation.html#LassoSoapBindingCorrelation" title="struct LassoSoapBindingCorrelation"><span class="returnvalue">LassoSoapBindingCorrelation</span></a> *  <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-soap-binding-get-correlation" title="lasso_soap_binding_get_correlation ()">lasso_soap_binding_get_correlation</a>
+<a class="link" href="lasso-LassoSoapBindingCorrelation.html#LassoSoapBindingCorrelation" title="struct LassoSoapBindingCorrelation"><span class="returnvalue">LassoSoapBindingCorrelation</span></a> * <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-soap-binding-get-correlation" title="lasso_soap_binding_get_correlation ()">lasso_soap_binding_get_correlation</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoSoapEnvelope.html#LassoSoapEnvelope" title="struct LassoSoapEnvelope"><span class="type">LassoSoapEnvelope</span></a> *evelope</code></em>);
 
 <span class="returnvalue">void</span>                <a class="link" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-register-dst-service" title="lasso_register_dst_service ()">lasso_register_dst_service</a>          (<em class="parameter"><code>const <span class="type">char</span> *prefix</code></em>,
@@ -92,8 +92,8 @@ Private, unless otherwise indicated
 <a name="lasso-Utility-functions-for-ID-WSF-1.0.details"></a><h2>Details</h2>
 <div class="refsect2">
 <a name="lasso-security-mech-id-is-null-authentication"></a><h3>lasso_security_mech_id_is_null_authentication ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            lasso_security_mech_id_is_null_authentication
-                                                        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *security_mech_id</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            lasso_security_mech_id_is_null_authentication
+                                                        (<em class="parameter"><code>const <span class="type">gchar</span> *security_mech_id</code></em>);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -104,7 +104,7 @@ Private, unless otherwise indicated
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>security_mech_id</code></em> is null or one of
+<code class="literal">TRUE</code> if <em class="parameter"><code>security_mech_id</code></em> is null or one of
 urn:liberty:security:2003-08:null:null,
 urn:liberty:security:2003-08:TLS:null,
 urn:liberty:security:2003-08:ClientTLS:null,
@@ -116,8 +116,8 @@ FALSE otherwise.</td>
 <hr>
 <div class="refsect2">
 <a name="lasso-security-mech-id-is-x509-authentication"></a><h3>lasso_security_mech_id_is_x509_authentication ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            lasso_security_mech_id_is_x509_authentication
-                                                        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *security_mech_id</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            lasso_security_mech_id_is_x509_authentication
+                                                        (<em class="parameter"><code>const <span class="type">gchar</span> *security_mech_id</code></em>);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -128,7 +128,7 @@ FALSE otherwise.</td>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>security_mech_id</code></em> is one of
+<code class="literal">TRUE</code> if <em class="parameter"><code>security_mech_id</code></em> is one of
 urn:liberty:security:2003-08:null:X509,
 urn:liberty:security:2003-08:TLS:X509,
 urn:liberty:security:2003-08:ClientTLS:X509,
@@ -140,8 +140,8 @@ FALSE otherwise.</td>
 <hr>
 <div class="refsect2">
 <a name="lasso-security-mech-id-is-saml-authentication"></a><h3>lasso_security_mech_id_is_saml_authentication ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            lasso_security_mech_id_is_saml_authentication
-                                                        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *security_mech_id</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            lasso_security_mech_id_is_saml_authentication
+                                                        (<em class="parameter"><code>const <span class="type">gchar</span> *security_mech_id</code></em>);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -152,7 +152,7 @@ FALSE otherwise.</td>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>security_mech_id</code></em> is one of
+<code class="literal">TRUE</code> if <em class="parameter"><code>security_mech_id</code></em> is one of
 urn:liberty:security:2003-08:null:SAML,
 urn:liberty:security:2003-08:TLS:SAML,
 urn:liberty:security:2003-08:ClientTLS:SAML,
@@ -166,8 +166,8 @@ FALSE otherwise.</td>
 <hr>
 <div class="refsect2">
 <a name="lasso-security-mech-id-is-bearer-authentication"></a><h3>lasso_security_mech_id_is_bearer_authentication ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            lasso_security_mech_id_is_bearer_authentication
-                                                        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *security_mech_id</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            lasso_security_mech_id_is_bearer_authentication
+                                                        (<em class="parameter"><code>const <span class="type">gchar</span> *security_mech_id</code></em>);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -178,7 +178,7 @@ FALSE otherwise.</td>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>security_mech_id</code></em> is one of
+<code class="literal">TRUE</code> if <em class="parameter"><code>security_mech_id</code></em> is one of
 urn:liberty:security:2003-08:null:Bearer,
 urn:liberty:security:2003-08:TLS:Bearer,
 urn:liberty:security:2003-08:ClientTLS:Bearer,
@@ -192,7 +192,7 @@ FALSE otherwise.</td>
 <hr>
 <div class="refsect2">
 <a name="lasso-login-set-encryptedResourceId"></a><h3>lasso_login_set_encryptedResourceId ()</h3>
-<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_login_set_encryptedResourceId (<em class="parameter"><code><a class="link" href="lasso-login.html#LassoLogin" title="struct LassoLogin"><span class="type">LassoLogin</span></a> *login</code></em>,
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_login_set_encryptedResourceId (<em class="parameter"><code><a class="link" href="lasso-LassoLogin.html#LassoLogin" title="struct LassoLogin"><span class="type">LassoLogin</span></a> *login</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-LassoDiscoEncryptedResourceID.html#LassoDiscoEncryptedResourceID" title="struct LassoDiscoEncryptedResourceID"><span class="type">LassoDiscoEncryptedResourceID</span></a> *encryptedResourceId</code></em>);</pre>
 <p>
 Set the <a class="link" href="lasso-LassoDiscoEncryptedResourceID.html#LassoDiscoEncryptedResourceID" title="struct LassoDiscoEncryptedResourceID"><span class="type">LassoDiscoEncryptedResourceID</span></a> to place the next produced assertions as an ID-WSF 1.0
@@ -203,7 +203,7 @@ bootstrap.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>login</code></em> :</span></p></td>
-<td>a <a class="link" href="lasso-login.html#LassoLogin" title="struct LassoLogin"><span class="type">LassoLogin</span></a> object</td>
+<td>a <a class="link" href="lasso-LassoLogin.html#LassoLogin" title="struct LassoLogin"><span class="type">LassoLogin</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>encryptedResourceId</code></em> :</span></p></td>
@@ -219,7 +219,7 @@ bootstrap.
 <hr>
 <div class="refsect2">
 <a name="lasso-login-set-resourceId"></a><h3>lasso_login_set_resourceId ()</h3>
-<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_login_set_resourceId          (<em class="parameter"><code><a class="link" href="lasso-login.html#LassoLogin" title="struct LassoLogin"><span class="type">LassoLogin</span></a> *login</code></em>,
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_login_set_resourceId          (<em class="parameter"><code><a class="link" href="lasso-LassoLogin.html#LassoLogin" title="struct LassoLogin"><span class="type">LassoLogin</span></a> *login</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *content</code></em>);</pre>
 <p>
 Set the resourceId to place in the next produced assertion for ID-WSF bootstrap.
@@ -229,7 +229,7 @@ Set the resourceId to place in the next produced assertion for ID-WSF bootstrap.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>login</code></em> :</span></p></td>
-<td>a <a class="link" href="lasso-login.html#LassoLogin" title="struct LassoLogin"><span class="type">LassoLogin</span></a>
+<td>a <a class="link" href="lasso-LassoLogin.html#LassoLogin" title="struct LassoLogin"><span class="type">LassoLogin</span></a>
 </td>
 </tr>
 <tr>
@@ -246,8 +246,8 @@ Set the resourceId to place in the next produced assertion for ID-WSF bootstrap.
 <hr>
 <div class="refsect2">
 <a name="lasso-server-get-service"></a><h3>lasso_server_get_service ()</h3>
-<pre class="programlisting"><a class="link" href="lasso-LassoDiscoServiceInstance.html#LassoDiscoServiceInstance" title="struct LassoDiscoServiceInstance"><span class="returnvalue">LassoDiscoServiceInstance</span></a> *  lasso_server_get_service   (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *serviceType</code></em>);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoDiscoServiceInstance.html#LassoDiscoServiceInstance" title="struct LassoDiscoServiceInstance"><span class="returnvalue">LassoDiscoServiceInstance</span></a> * lasso_server_get_service    (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *serviceType</code></em>);</pre>
 <p>
 Look up a disco service instance corresponding to this service type.
 </p>
@@ -304,7 +304,7 @@ Add a service to the registry of service of this <a class="link" href="lasso-Las
 <div class="refsect2">
 <a name="lasso-server-add-service-from-dump"></a><h3>lasso_server_add_service_from_dump ()</h3>
 <pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_server_add_service_from_dump  (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *dump</code></em>);</pre>
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *dump</code></em>);</pre>
 <p>
 An utility function that parse a <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> dump an try to add it as a
 service using lasso_server_add_service.
@@ -363,7 +363,7 @@ offering-&gt;entryID to get it after this call.
 <hr>
 <div class="refsect2">
 <a name="lasso-identity-remove-resource-offering"></a><h3>lasso_identity_remove_resource_offering ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            lasso_identity_remove_resource_offering
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            lasso_identity_remove_resource_offering
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoIdentity.html#LassoIdentity" title="struct LassoIdentity"><span class="type">LassoIdentity</span></a> *identity</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *entryID</code></em>);</pre>
 <p>
@@ -391,7 +391,7 @@ Remove resource offering about identity with <em class="parameter"><code>entryID
 <hr>
 <div class="refsect2">
 <a name="lasso-identity-get-offerings"></a><h3>lasso_identity_get_offerings ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             lasso_identity_get_offerings        (<em class="parameter"><code><a class="link" href="lasso-LassoIdentity.html#LassoIdentity" title="struct LassoIdentity"><span class="type">LassoIdentity</span></a> *identity</code></em>,
+<pre class="programlisting"><span class="returnvalue">GList</span> *             lasso_identity_get_offerings        (<em class="parameter"><code><a class="link" href="lasso-LassoIdentity.html#LassoIdentity" title="struct LassoIdentity"><span class="type">LassoIdentity</span></a> *identity</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *service_type</code></em>);</pre>
 <p>
 Returns a list of <a class="link" href="lasso-LassoDiscoResourceOffering.html#LassoDiscoResourceOffering" title="struct LassoDiscoResourceOffering"><span class="type">LassoDiscoResourceOffering</span></a> associated to this service type.
@@ -419,14 +419,14 @@ Returns a list of <a class="link" href="lasso-LassoDiscoResourceOffering.html#La
 <hr>
 <div class="refsect2">
 <a name="lasso-identity-get-resource-offering"></a><h3>lasso_identity_get_resource_offering ()</h3>
-<pre class="programlisting"><a class="link" href="lasso-LassoDiscoResourceOffering.html#LassoDiscoResourceOffering" title="struct LassoDiscoResourceOffering"><span class="returnvalue">LassoDiscoResourceOffering</span></a> *  lasso_identity_get_resource_offering
+<pre class="programlisting"><a class="link" href="lasso-LassoDiscoResourceOffering.html#LassoDiscoResourceOffering" title="struct LassoDiscoResourceOffering"><span class="returnvalue">LassoDiscoResourceOffering</span></a> * lasso_identity_get_resource_offering
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoIdentity.html#LassoIdentity" title="struct LassoIdentity"><span class="type">LassoIdentity</span></a> *identity</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *entryID</code></em>);</pre>
 </div>
 <hr>
 <div class="refsect2">
 <a name="lasso-soap-binding-get-provider"></a><h3>lasso_soap_binding_get_provider ()</h3>
-<pre class="programlisting"><a class="link" href="lasso-LassoSoapBindingProvider.html#LassoSoapBindingProvider" title="struct LassoSoapBindingProvider"><span class="returnvalue">LassoSoapBindingProvider</span></a> *  lasso_soap_binding_get_provider
+<pre class="programlisting"><a class="link" href="lasso-LassoSoapBindingProvider.html#LassoSoapBindingProvider" title="struct LassoSoapBindingProvider"><span class="returnvalue">LassoSoapBindingProvider</span></a> * lasso_soap_binding_get_provider
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoSoapEnvelope.html#LassoSoapEnvelope" title="struct LassoSoapEnvelope"><span class="type">LassoSoapEnvelope</span></a> *envelope</code></em>);</pre>
 <p>
 Look up the sb:Provider header in the SOAP message envelope.
@@ -450,7 +450,7 @@ envelope. If found it returns a reference you do not own.</td>
 <hr>
 <div class="refsect2">
 <a name="lasso-soap-binding-get-correlation"></a><h3>lasso_soap_binding_get_correlation ()</h3>
-<pre class="programlisting"><a class="link" href="lasso-LassoSoapBindingCorrelation.html#LassoSoapBindingCorrelation" title="struct LassoSoapBindingCorrelation"><span class="returnvalue">LassoSoapBindingCorrelation</span></a> *  lasso_soap_binding_get_correlation
+<pre class="programlisting"><a class="link" href="lasso-LassoSoapBindingCorrelation.html#LassoSoapBindingCorrelation" title="struct LassoSoapBindingCorrelation"><span class="returnvalue">LassoSoapBindingCorrelation</span></a> * lasso_soap_binding_get_correlation
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoSoapEnvelope.html#LassoSoapEnvelope" title="struct LassoSoapEnvelope"><span class="type">LassoSoapEnvelope</span></a> *evelope</code></em>);</pre>
 <p>
 Look up the sb:Correlation header in the SOAP message envelope.
@@ -503,6 +503,6 @@ Registers prefix and href of a custom data service template service.
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.17</div>
+          Generated by GTK-Doc V1.18</div>
 </body>
 </html>

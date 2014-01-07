@@ -17,8 +17,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -47,6 +46,7 @@ xmlnode_to_xmlbuffer(xmlNode *node)
 	return buffer;
 }
 
+
 /**
  * xmlnode_to_pv:
  * @node: an xmlNode* object
@@ -57,7 +57,7 @@ xmlnode_to_xmlbuffer(xmlNode *node)
 static SV*
 xmlnode_to_pv(xmlNode *node, gboolean do_free)
 {
-	xmlBuffer* buf;
+	xmlBuffer *buf;
 	SV *pestring = NULL;
 
 	if (node == NULL) {
@@ -69,7 +69,6 @@ xmlnode_to_pv(xmlNode *node, gboolean do_free)
 		pestring = &PL_sv_undef;
 	} else {
 		pestring = newSVpv((char*)xmlBufferContent(buf), 0);
-		xmlBufferFree(buf);
 	}
 	if (do_free) {
 		lasso_release_xml_node(node);
@@ -80,7 +79,7 @@ xmlnode_to_pv(xmlNode *node, gboolean do_free)
 
 static xmlNode *
 pv_to_xmlnode(SV *value) {
-	unsigned int size;
+	STRLEN size;
 	char *string;
 
 	if (! SvPOK(value))

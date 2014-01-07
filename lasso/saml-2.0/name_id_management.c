@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "../xml/private.h"
@@ -124,7 +123,7 @@ lasso_name_id_management_init_request(LassoNameIdManagement *name_id_management,
 cleanup:
 	lasso_release_gobject(request);
 
-	return 0;
+	return rc;
 }
 
 
@@ -434,6 +433,7 @@ class_init(LassoNameIdManagementClass *klass)
 	nclass->get_xmlNode = get_xmlNode;
 	nclass->node_data = g_new0(LassoNodeClassData, 1);
 	lasso_node_class_set_nodename(nclass, "NameIdManagement");
+	lasso_node_class_set_ns(nclass, LASSO_LASSO_HREF, LASSO_LASSO_PREFIX);
 	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
 

@@ -18,13 +18,12 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "private.h"
 #include "sa_sasl_request.h"
-#include "./idwsf_strings.h"
+#include "idwsf_strings.h"
 
 /**
  * SECTION:sa_sasl_request
@@ -63,7 +62,8 @@ static struct XmlSnippet schema_snippets[] = {
 	{ "Data", SNIPPET_LIST_CONTENT,
 		G_STRUCT_OFFSET(LassoSaSASLRequest, Data), NULL, NULL, NULL},
 	{ "RequestAuthnContext", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoSaSASLRequest, RequestAuthnContext), NULL, NULL, NULL},
+		G_STRUCT_OFFSET(LassoSaSASLRequest, RequestAuthnContext), NULL, LASSO_LIB_PREFIX,
+		LASSO_LIB_HREF},
 	{ "mechanism", SNIPPET_ATTRIBUTE,
 		G_STRUCT_OFFSET(LassoSaSASLRequest, mechanism), NULL, NULL, NULL},
 	{ "authzID", SNIPPET_ATTRIBUTE,

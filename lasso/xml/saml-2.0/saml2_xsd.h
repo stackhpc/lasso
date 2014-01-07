@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -37,6 +36,7 @@
 #define LASSO_SAML2_METADATA_ELEMENT_ORGANIZATION "Organization"
 #define LASSO_SAML2_METADATA_ELEMENT_KEY_DESCRIPTOR "KeyDescriptor"
 #define LASSO_SAML2_METADATA_ELEMENT_ASSERTION_CONSUMER_SERVICE "AssertionConsumerService"
+#define LASSO_SAML2_METADATA_ELEMENT_ARTIFACT_RESOLUTION_SERVICE "ArtifactResolutionService"
 #define LASSO_SAML2_METADATA_ATTRIBUTE_BINDING "Binding"
 #define LASSO_SAML2_METADATA_ATTRIBUTE_VALID_UNTIL "validUntil"
 #define LASSO_SAML2_METADATA_ATTRIBUTE_CACHE_DURATION "cacheDuration"

@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LassoMiscTextNode</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="architecture.html" title="Lasso Architecture">
 <link rel="prev" href="lasso-registry.html" title="registry">
 <link rel="next" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
-<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -39,9 +39,9 @@
 <a name="lasso-LassoMiscTextNode.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">struct              <a class="link" href="lasso-LassoMiscTextNode.html#LassoMiscTextNode" title="struct LassoMiscTextNode">LassoMiscTextNode</a>;
 <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="returnvalue">LassoNode</span></a> *         <a class="link" href="lasso-LassoMiscTextNode.html#lasso-misc-text-node-new" title="lasso_misc_text_node_new ()">lasso_misc_text_node_new</a>            (<em class="parameter"><code><span class="type">void</span></code></em>);
-<a class="link" href="lasso-LassoMiscTextNode.html#LassoMiscTextNode" title="struct LassoMiscTextNode"><span class="returnvalue">LassoMiscTextNode</span></a> *  <a class="link" href="lasso-LassoMiscTextNode.html#lasso-misc-text-node-new-with-string" title="lasso_misc_text_node_new_with_string ()">lasso_misc_text_node_new_with_string</a>
+<a class="link" href="lasso-LassoMiscTextNode.html#LassoMiscTextNode" title="struct LassoMiscTextNode"><span class="returnvalue">LassoMiscTextNode</span></a> * <a class="link" href="lasso-LassoMiscTextNode.html#lasso-misc-text-node-new-with-string" title="lasso_misc_text_node_new_with_string ()">lasso_misc_text_node_new_with_string</a>
                                                         (<em class="parameter"><code>const <span class="type">char</span> *content</code></em>);
-<a class="link" href="lasso-LassoMiscTextNode.html#LassoMiscTextNode" title="struct LassoMiscTextNode"><span class="returnvalue">LassoMiscTextNode</span></a> *  <a class="link" href="lasso-LassoMiscTextNode.html#lasso-misc-text-node-new-with-xml-node" title="lasso_misc_text_node_new_with_xml_node ()">lasso_misc_text_node_new_with_xml_node</a>
+<a class="link" href="lasso-LassoMiscTextNode.html#LassoMiscTextNode" title="struct LassoMiscTextNode"><span class="returnvalue">LassoMiscTextNode</span></a> * <a class="link" href="lasso-LassoMiscTextNode.html#lasso-misc-text-node-new-with-xml-node" title="lasso_misc_text_node_new_with_xml_node ()">lasso_misc_text_node_new_with_xml_node</a>
                                                         (<em class="parameter"><code><span class="type">xmlNode</span> *xml_node</code></em>);
 <span class="returnvalue">xmlNode</span> *           <a class="link" href="lasso-LassoMiscTextNode.html#lasso-misc-text-node-get-xml-content" title="lasso_misc_text_node_get_xml_content ()">lasso_misc_text_node_get_xml_content</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoMiscTextNode.html#LassoMiscTextNode" title="struct LassoMiscTextNode"><span class="type">LassoMiscTextNode</span></a> *misc_text_node</code></em>);
@@ -88,7 +88,7 @@ Creates a new <a class="link" href="lasso-LassoMiscTextNode.html#LassoMiscTextNo
 <hr>
 <div class="refsect2">
 <a name="lasso-misc-text-node-new-with-string"></a><h3>lasso_misc_text_node_new_with_string ()</h3>
-<pre class="programlisting"><a class="link" href="lasso-LassoMiscTextNode.html#LassoMiscTextNode" title="struct LassoMiscTextNode"><span class="returnvalue">LassoMiscTextNode</span></a> *  lasso_misc_text_node_new_with_string
+<pre class="programlisting"><a class="link" href="lasso-LassoMiscTextNode.html#LassoMiscTextNode" title="struct LassoMiscTextNode"><span class="returnvalue">LassoMiscTextNode</span></a> * lasso_misc_text_node_new_with_string
                                                         (<em class="parameter"><code>const <span class="type">char</span> *content</code></em>);</pre>
 <p>
 Creates a new <a class="link" href="lasso-LassoMiscTextNode.html#LassoMiscTextNode" title="struct LassoMiscTextNode"><span class="type">LassoMiscTextNode</span></a> object and initializes it with <em class="parameter"><code>content</code></em>. Beware that no
@@ -112,7 +112,7 @@ nodename, so it would create a text child, not an element.
 <hr>
 <div class="refsect2">
 <a name="lasso-misc-text-node-new-with-xml-node"></a><h3>lasso_misc_text_node_new_with_xml_node ()</h3>
-<pre class="programlisting"><a class="link" href="lasso-LassoMiscTextNode.html#LassoMiscTextNode" title="struct LassoMiscTextNode"><span class="returnvalue">LassoMiscTextNode</span></a> *  lasso_misc_text_node_new_with_xml_node
+<pre class="programlisting"><a class="link" href="lasso-LassoMiscTextNode.html#LassoMiscTextNode" title="struct LassoMiscTextNode"><span class="returnvalue">LassoMiscTextNode</span></a> * lasso_misc_text_node_new_with_xml_node
                                                         (<em class="parameter"><code><span class="type">xmlNode</span> *xml_node</code></em>);</pre>
 <p>
 Creates a new <a class="link" href="lasso-LassoMiscTextNode.html#LassoMiscTextNode" title="struct LassoMiscTextNode"><span class="type">LassoMiscTextNode</span></a> object and initialize it with <em class="parameter"><code>xml_node</code></em>.
@@ -150,7 +150,8 @@ Return the xml content in this node.
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>an <span class="type">xmlNode</span> or NULL.</td>
+<td>an <span class="type">xmlNode</span> or NULL. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
 </tr>
 </tbody>
 </table></div>
@@ -177,6 +178,6 @@ Set the xml content of this <a class="link" href="lasso-LassoMiscTextNode.html#L
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.17</div>
+          Generated by GTK-Doc V1.18</div>
 </body>
 </html>

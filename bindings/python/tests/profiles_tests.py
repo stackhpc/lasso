@@ -21,8 +21,7 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 
 import os
@@ -35,6 +34,9 @@ if not '../.libs' in sys.path:
     sys.path.insert(0, '../.libs')
 
 import lasso
+import logging
+
+logging.basicConfig()
 
 
 try:
@@ -272,6 +274,34 @@ class LoginTestCase(unittest.TestCase):
         sp_login.processAuthnResponseMsg(idp_login.msgBody)
         sp_login.acceptSso()
 
+    def test07(self):
+        '''SAMLv2 SSO with DSA key for the IdP'''
+        sp = lasso.Server(
+            os.path.join(dataDir, 'sp5-saml2/metadata.xml'),
+            os.path.join(dataDir, 'sp5-saml2/private-key.pem'))
+        assert sp
+        sp.addProvider(
+            lasso.PROVIDER_ROLE_IDP,
+            os.path.join(dataDir, 'idp12-dsa-saml2/metadata.xml'))
+        sp_login = lasso.Login(sp)
+        assert sp_login
+        sp_login.initAuthnRequest(None, lasso.HTTP_METHOD_REDIRECT)
+        sp_login.buildAuthnRequestMsg()
+        idp = lasso.Server(
+            os.path.join(dataDir, 'idp12-dsa-saml2/metadata.xml'),
+            os.path.join(dataDir, 'idp12-dsa-saml2/private-key.pem'))
+        idp.signatureMethod = lasso.SIGNATURE_METHOD_DSA_SHA1
+        idp.addProvider(
+            lasso.PROVIDER_ROLE_SP,
+            os.path.join(dataDir, 'sp5-saml2/metadata.xml'))
+        idp_login = lasso.Login(idp)
+        print sp_login.msgUrl
+        idp_login.processAuthnRequestMsg(sp_login.msgUrl.split('?')[1])
+        idp_login.protocolProfile = lasso.LOGIN_PROTOCOL_PROFILE_BRWS_POST;
+        idp_login.validateRequestMsg(True, True)
+        idp_login.buildAssertion("None", "None", "None", "None", "None")
+        idp_login.buildAuthnResponseMsg()
+
 class LogoutTestCase(unittest.TestCase):
     def test01(self):
         """SP logout without session and identity; testing initRequest."""
@@ -452,8 +482,9 @@ class AttributeAuthorityTestCase(unittest.TestCase):
 class LogoutTestCase(unittest.TestCase):
     def test01(self):
         '''Test parsing of a logout request with more than one session index'''
-        content = '''<samlp:LogoutRequest xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" ID="xxxx" Version="2.0" IssueInstant="2010-06-14T22:00:00">
-        <samlp:Issuer>me</samlp:Issuer>
+        content = '''<samlp:LogoutRequest xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" ID="xxxx" Version="2.0" IssueInstant="2010-06-14T22:00:00">
+        <saml:Issuer>me</saml:Issuer>
+        <saml:NameID>coin</saml:NameID>
         <samlp:SessionIndex>id1</samlp:SessionIndex>
         <samlp:SessionIndex>id2</samlp:SessionIndex>
         <samlp:SessionIndex>id3</samlp:SessionIndex>
@@ -461,8 +492,8 @@ class LogoutTestCase(unittest.TestCase):
 
         node = lasso.Samlp2LogoutRequest.newFromXmlNode(content)
         assert isinstance(node, lasso.Samlp2LogoutRequest)
-        assert node.sessionIndex == 'id3'
-        assert node.sessionIndexes == ('id1', 'id2', 'id3')
+        assert node.sessionIndex == 'id1'
+        assert node.sessionIndexes == ('id2', 'id3', 'id1')
 
 serverSuite = unittest.makeSuite(ServerTestCase, 'test')
 loginSuite = unittest.makeSuite(LoginTestCase, 'test')

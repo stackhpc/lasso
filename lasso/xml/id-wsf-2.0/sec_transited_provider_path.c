@@ -18,13 +18,12 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "../private.h"
 #include "sec_transited_provider_path.h"
-#include "./idwsf2_strings.h"
+#include "idwsf2_strings.h"
 
 /**
  * SECTION:sec_transited_provider_path
@@ -50,7 +49,8 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "TransitedProvider", SNIPPET_LIST_NODES,
-		G_STRUCT_OFFSET(LassoIdWsf2SecTransitedProviderPath, TransitedProvider), NULL, NULL, NULL},
+		G_STRUCT_OFFSET(LassoIdWsf2SecTransitedProviderPath, TransitedProvider), NULL,
+		LASSO_IDWSF2_SEC_PREFIX, LASSO_IDWSF2_SEC_HREF},
 	{NULL, 0, 0, NULL, NULL, NULL}
 };
 

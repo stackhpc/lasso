@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LassoLibAuthnRequestEnvelope</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
 <link rel="prev" href="lasso-LassoLibAuthnContext.html" title="LassoLibAuthnContext">
 <link rel="next" href="lasso-LassoLibAuthnRequest.html" title="LassoLibAuthnRequest">
-<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -38,9 +38,9 @@
 <div class="refsynopsisdiv">
 <a name="lasso-LassoLibAuthnRequestEnvelope.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">struct              <a class="link" href="lasso-LassoLibAuthnRequestEnvelope.html#LassoLibAuthnRequestEnvelope" title="struct LassoLibAuthnRequestEnvelope">LassoLibAuthnRequestEnvelope</a>;
-<a class="link" href="lasso-LassoLibAuthnRequestEnvelope.html#LassoLibAuthnRequestEnvelope" title="struct LassoLibAuthnRequestEnvelope"><span class="returnvalue">LassoLibAuthnRequestEnvelope</span></a> *  <a class="link" href="lasso-LassoLibAuthnRequestEnvelope.html#lasso-lib-authn-request-envelope-new" title="lasso_lib_authn_request_envelope_new ()">lasso_lib_authn_request_envelope_new</a>
+<a class="link" href="lasso-LassoLibAuthnRequestEnvelope.html#LassoLibAuthnRequestEnvelope" title="struct LassoLibAuthnRequestEnvelope"><span class="returnvalue">LassoLibAuthnRequestEnvelope</span></a> * <a class="link" href="lasso-LassoLibAuthnRequestEnvelope.html#lasso-lib-authn-request-envelope-new" title="lasso_lib_authn_request_envelope_new ()">lasso_lib_authn_request_envelope_new</a>
                                                         (<em class="parameter"><code><span class="type">void</span></code></em>);
-<a class="link" href="lasso-LassoLibAuthnRequestEnvelope.html#LassoLibAuthnRequestEnvelope" title="struct LassoLibAuthnRequestEnvelope"><span class="returnvalue">LassoLibAuthnRequestEnvelope</span></a> *  <a class="link" href="lasso-LassoLibAuthnRequestEnvelope.html#lasso-lib-authn-request-envelope-new-full" title="lasso_lib_authn_request_envelope_new_full ()">lasso_lib_authn_request_envelope_new_full</a>
+<a class="link" href="lasso-LassoLibAuthnRequestEnvelope.html#LassoLibAuthnRequestEnvelope" title="struct LassoLibAuthnRequestEnvelope"><span class="returnvalue">LassoLibAuthnRequestEnvelope</span></a> * <a class="link" href="lasso-LassoLibAuthnRequestEnvelope.html#lasso-lib-authn-request-envelope-new-full" title="lasso_lib_authn_request_envelope_new_full ()">lasso_lib_authn_request_envelope_new_full</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoLibAuthnRequest.html#LassoLibAuthnRequest" title="struct LassoLibAuthnRequest"><span class="type">LassoLibAuthnRequest</span></a> *authnRequest</code></em>,
                                                          <em class="parameter"><code><span class="type">char</span> *providerID</code></em>,
                                                          <em class="parameter"><code><span class="type">char</span> *assertionConsumerServiceURL</code></em>);
@@ -51,7 +51,7 @@
 <p>
 </p>
 <div class="figure">
-<a name="id3116458"></a><p class="title"><b>Figure 4. Schema fragment for lib:AuthnRequestEnvelope</b></p>
+<a name="idp11716448"></a><p class="title"><b>Figure 4. Schema fragment for lib:AuthnRequestEnvelope</b></p>
 <div class="figure-contents"><pre class="programlisting">
 &lt;xs:element name="AuthnRequestEnvelope" type="AuthnRequestEnvelopeType"/&gt;
 &lt;xs:complexType name="AuthnRequestEnvelopeType"&gt;
@@ -117,7 +117,7 @@
 <hr>
 <div class="refsect2">
 <a name="lasso-lib-authn-request-envelope-new"></a><h3>lasso_lib_authn_request_envelope_new ()</h3>
-<pre class="programlisting"><a class="link" href="lasso-LassoLibAuthnRequestEnvelope.html#LassoLibAuthnRequestEnvelope" title="struct LassoLibAuthnRequestEnvelope"><span class="returnvalue">LassoLibAuthnRequestEnvelope</span></a> *  lasso_lib_authn_request_envelope_new
+<pre class="programlisting"><a class="link" href="lasso-LassoLibAuthnRequestEnvelope.html#LassoLibAuthnRequestEnvelope" title="struct LassoLibAuthnRequestEnvelope"><span class="returnvalue">LassoLibAuthnRequestEnvelope</span></a> * lasso_lib_authn_request_envelope_new
                                                         (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
 <p>
 Creates a new <a class="link" href="lasso-LassoLibAuthnRequestEnvelope.html#LassoLibAuthnRequestEnvelope" title="struct LassoLibAuthnRequestEnvelope"><span class="type">LassoLibAuthnRequestEnvelope</span></a> object.
@@ -133,7 +133,7 @@ Creates a new <a class="link" href="lasso-LassoLibAuthnRequestEnvelope.html#Lass
 <hr>
 <div class="refsect2">
 <a name="lasso-lib-authn-request-envelope-new-full"></a><h3>lasso_lib_authn_request_envelope_new_full ()</h3>
-<pre class="programlisting"><a class="link" href="lasso-LassoLibAuthnRequestEnvelope.html#LassoLibAuthnRequestEnvelope" title="struct LassoLibAuthnRequestEnvelope"><span class="returnvalue">LassoLibAuthnRequestEnvelope</span></a> *  lasso_lib_authn_request_envelope_new_full
+<pre class="programlisting"><a class="link" href="lasso-LassoLibAuthnRequestEnvelope.html#LassoLibAuthnRequestEnvelope" title="struct LassoLibAuthnRequestEnvelope"><span class="returnvalue">LassoLibAuthnRequestEnvelope</span></a> * lasso_lib_authn_request_envelope_new_full
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoLibAuthnRequest.html#LassoLibAuthnRequest" title="struct LassoLibAuthnRequest"><span class="type">LassoLibAuthnRequest</span></a> *authnRequest</code></em>,
                                                          <em class="parameter"><code><span class="type">char</span> *providerID</code></em>,
                                                          <em class="parameter"><code><span class="type">char</span> *assertionConsumerServiceURL</code></em>);</pre>
@@ -168,6 +168,6 @@ provider</td>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.17</div>
+          Generated by GTK-Doc V1.18</div>
 </body>
 </html>

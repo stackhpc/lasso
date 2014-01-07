@@ -18,11 +18,10 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "./saml2_helper.h"
+#include "saml2_helper.h"
 
 #include "../id-ff/server.h"
 #include "../id-ff/serverprivate.h"
@@ -34,8 +33,10 @@
 #include "../xml/saml-2.0/saml2_attribute_value.h"
 #include "../xml/private.h"
 #include "../utils.h"
-#include "./provider.h"
+#include "provider.h"
 #include <time.h>
+
+static GList* lasso_saml2_assertion_get_audience_restrictions(LassoSaml2Assertion *assertion);
 
 /**
  * lasso_saml2_assertion_has_audience_restriction:
@@ -49,19 +50,7 @@
 gboolean
 lasso_saml2_assertion_has_audience_restriction(LassoSaml2Assertion *saml2_assertion)
 {
-	GList *it;
-
-	g_return_val_if_fail (LASSO_IS_SAML2_ASSERTION(saml2_assertion), FALSE);
-	if (! LASSO_IS_SAML2_CONDITIONS(saml2_assertion->Conditions))
-		return FALSE;
-
-	lasso_foreach(it, saml2_assertion->Conditions->Condition)
-	{
-		if (LASSO_IS_SAML2_AUDIENCE_RESTRICTION(it->data)) {
-			return TRUE;
-		}
-	}
-	return FALSE;
+	return lasso_saml2_assertion_get_audience_restrictions(saml2_assertion) != NULL;
 }
 
 /**
@@ -79,10 +68,7 @@ lasso_saml2_assertion_is_audience_restricted(LassoSaml2Assertion *saml2_assertio
 {
 	GList *it;
 
-	g_return_val_if_fail (LASSO_IS_SAML2_ASSERTION(saml2_assertion), FALSE);
-	if (! LASSO_IS_SAML2_CONDITIONS(saml2_assertion->Conditions))
-		return FALSE;
-	lasso_foreach(it, saml2_assertion->Conditions->Condition)
+	lasso_foreach(it, lasso_saml2_assertion_get_audience_restrictions(saml2_assertion))
 	{
 		if (LASSO_IS_SAML2_AUDIENCE_RESTRICTION(it->data)) {
 			LassoSaml2AudienceRestriction *saml2_audience_restriction;
@@ -323,11 +309,10 @@ void
 lasso_saml2_assertion_set_basic_conditions(LassoSaml2Assertion *saml2_assertion, time_t tolerance,
 		time_t length, gboolean one_time_use)
 {
-	LassoSaml2Conditions *saml2_conditions;
-
 	g_return_if_fail (LASSO_IS_SAML2_ASSERTION (saml2_assertion));
 
-	saml2_conditions = lasso_saml2_assertion_get_conditions (saml2_assertion, TRUE);
+	/* ensure conditions exists */
+	lasso_saml2_assertion_get_conditions (saml2_assertion, TRUE);
 	set_notbefore_and_notonorafter (saml2_assertion->Conditions, tolerance, length);
 	lasso_saml2_assertion_set_one_time_use(saml2_assertion, one_time_use);
 }
@@ -393,11 +378,11 @@ void
 lasso_saml2_assertion_add_proxy_limit (LassoSaml2Assertion *saml2_assertion, int proxy_count,
 		GList *proxy_audiences)
 {
-	LassoSaml2Conditions *saml2_conditions;
 	LassoSaml2ProxyRestriction *saml2_proxy_restriction;
 
 	g_return_if_fail (LASSO_IS_SAML2_ASSERTION (saml2_assertion));
-	saml2_conditions = lasso_saml2_assertion_get_conditions (saml2_assertion, TRUE);
+	/* ensure conditions exists */
+	lasso_saml2_assertion_get_conditions (saml2_assertion, TRUE);
 	saml2_proxy_restriction = (LassoSaml2ProxyRestriction*)lasso_saml2_proxy_restriction_new ();
 	if (proxy_count >= 0) {
 		saml2_proxy_restriction->Count = g_strdup_printf("%i", proxy_count);
@@ -678,27 +663,27 @@ int
 lasso_server_saml2_assertion_setup_signature(LassoServer *server,
 		LassoSaml2Assertion *saml2_assertion)
 {
+	LassoSignatureContext context = LASSO_SIGNATURE_CONTEXT_NONE;
+	GList *audience_restrictions = NULL;
+	char *provider_id = NULL;
+	lasso_error_t rc = 0;
+
 	lasso_bad_param(SERVER, server);
 	lasso_bad_param(SAML2_ASSERTION, saml2_assertion);
 
-	if (server->certificate) {
-		saml2_assertion->sign_type = LASSO_SIGNATURE_TYPE_WITHX509;
-	} else {
-		saml2_assertion->sign_type = LASSO_SIGNATURE_TYPE_SIMPLE;
+	/* instead of this we should probably allow to pass a provider id or object in a new API */
+	audience_restrictions = lasso_saml2_assertion_get_audience_restrictions(saml2_assertion);
+	if (audience_restrictions) {
+		provider_id = ((LassoSaml2AudienceRestriction*)audience_restrictions->data)->Audience;
 	}
-	saml2_assertion->sign_method = server->signature_method;
-	lasso_assign_string(saml2_assertion->private_key_file,
-			server->private_key);
-	lasso_assign_string(saml2_assertion->certificate_file,
-			server->certificate);
-	lasso_node_set_signature((LassoNode*)saml2_assertion, saml2_assertion->sign_type,
-			saml2_assertion->sign_method, server->private_key,
-			server->private_key_password, server->certificate);
+	lasso_check_good_rc(lasso_server_get_signature_context_for_provider_by_name(server,
+				provider_id, &context));
+	lasso_node_set_signature(&saml2_assertion->parent, context);
 	if (! saml2_assertion->ID) {
 		lasso_assign_new_string(saml2_assertion->ID, lasso_build_unique_id(32));
 	}
-
-	return 0;
+cleanup:
+	return rc;
 }
 
 /**
@@ -734,10 +719,18 @@ lasso_saml2_assertion_add_attribute_with_node(LassoSaml2Assertion *assertion, co
 	lasso_assign_string(attribute->NameFormat, LASSO_SAML2_ATTRIBUTE_NAME_FORMAT_URI);
 	lasso_list_add_new_gobject(attribute->AttributeValue, attribute_value);
 
-	attribute_statement = LASSO_SAML2_ATTRIBUTE_STATEMENT(lasso_saml2_attribute_statement_new());
+	if (assertion->AttributeStatement
+			&& LASSO_IS_SAML2_ATTRIBUTE_STATEMENT(
+				assertion->AttributeStatement->data)) {
+		attribute_statement =
+			(LassoSaml2AttributeStatement*)
+				assertion->AttributeStatement->data;
+	} else {
+		attribute_statement = LASSO_SAML2_ATTRIBUTE_STATEMENT(lasso_saml2_attribute_statement_new());
+		lasso_list_add_new_gobject(assertion->AttributeStatement, attribute_statement);
+	}
 	lasso_list_add_new_gobject(attribute_statement->Attribute, attribute);
 
-	lasso_list_add_new_gobject(assertion->AttributeStatement, attribute_statement);
 cleanup:
 	return rc;
 }
@@ -776,8 +769,22 @@ int
 lasso_saml2_encrypted_element_server_decrypt(LassoSaml2EncryptedElement* encrypted_element, LassoServer *server, LassoNode** decrypted_node)
 {
 	lasso_bad_param(SERVER, server);
+	int rc = 0;
+	GList *encryption_private_keys;
 
-	return lasso_saml2_encrypted_element_decrypt(encrypted_element, lasso_server_get_encryption_private_key(server), decrypted_node);
+	encryption_private_keys = lasso_server_get_encryption_private_keys(server);
+	if (! encryption_private_keys) {
+		return LASSO_PROFILE_ERROR_MISSING_ENCRYPTION_PRIVATE_KEY;
+	}
+	lasso_foreach_full_begin(xmlSecKey*, encryption_private_key, it, encryption_private_keys)
+	{
+		rc = lasso_saml2_encrypted_element_decrypt(encrypted_element,
+				encryption_private_key, decrypted_node);
+		if (rc == 0)
+			break;
+	}
+	lasso_foreach_full_end();
+	return rc;
 }
 
 /**
@@ -800,4 +807,22 @@ lasso_saml2_assertion_decrypt_subject(LassoSaml2Assertion *assertion, LassoServe
 		return lasso_saml2_encrypted_element_server_decrypt(assertion->Subject->EncryptedID, server, (LassoNode**)&assertion->Subject->NameID);
 	}
 	return 0;
+}
+
+/**
+ * lasso_saml2_assertion_get_audience_restrictions:
+ * @assertion: a #LassoSaml2Assertion
+ *
+ * Returns the list of audience restriction associated to the given assertion
+ *
+ * Return value:(transfer none): the GList of the Saml2AudienceRestriction nodes
+ */
+static GList*
+lasso_saml2_assertion_get_audience_restrictions(LassoSaml2Assertion *assertion)
+{
+	g_return_val_if_fail (LASSO_IS_SAML2_ASSERTION(assertion), NULL);
+	if (! LASSO_IS_SAML2_CONDITIONS(assertion->Conditions))
+		return FALSE;
+
+	return assertion->Conditions->AudienceRestriction;
 }

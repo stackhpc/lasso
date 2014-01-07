@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "../private.h"
@@ -51,8 +50,8 @@
 
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "Subject", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoSamlp2SubjectQueryAbstract, Subject), NULL, NULL, NULL},
+	{ "Subject", SNIPPET_NODE, G_STRUCT_OFFSET(LassoSamlp2SubjectQueryAbstract, Subject), NULL,
+		LASSO_SAML2_ASSERTION_PREFIX, LASSO_SAML2_ASSERTION_HREF },
 	{NULL, 0, 0, NULL, NULL, NULL}
 };
 

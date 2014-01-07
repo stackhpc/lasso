@@ -17,8 +17,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include <stdlib.h>
@@ -26,8 +25,9 @@
 #include <config.h>
 
 #include <check.h>
+#include <glib.h>
 #include "../lasso/lasso.h"
-#include "lasso_config.h"
+#include "../lasso/lasso_config.h"
 
 extern Suite* basic_suite();
 extern Suite* login_suite();
@@ -55,6 +55,12 @@ SuiteFunction suites[] = {
 #endif
 	NULL
 };
+void error_logger(const gchar *log_domain, GLogLevelFlags log_level,
+		const gchar *message, G_GNUC_UNUSED gpointer user_data)
+{
+	fail("No logging output expected: message «%s» was emitted for domain «%s» at the level"
+			" «%d»", message, log_domain, log_level);
+}
 
 int
 main(int argc, char *argv[])
@@ -71,6 +77,7 @@ main(int argc, char *argv[])
 	}
 
 	lasso_init();
+	g_log_set_default_handler(error_logger, NULL);
 
 	sr = srunner_create(suites[0]());
 

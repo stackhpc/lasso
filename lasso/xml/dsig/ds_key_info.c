@@ -18,16 +18,15 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "private.h"
-#include "ds_key_value.h"
+#include "../private.h"
+#include "ds_key_info.h"
 
 /**
- * SECTION:ds_key_value
- * @short_description: object mapping for an XML DSIG KeyValue element
+ * SECTION:ds_key_info
+ * @short_description: object mapping for an XML DSIG KeyInfo element
  *
  */
 
@@ -36,7 +35,7 @@
 /*****************************************************************************/
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "RSAKeyValue", SNIPPET_NODE, G_STRUCT_OFFSET(LassoDsKeyValue, RSAKeyValue), NULL, NULL, NULL},
+	{ "KeyValue", SNIPPET_NODE, G_STRUCT_OFFSET(LassoDsKeyInfo, KeyValue), NULL, NULL, NULL},
 	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
@@ -44,52 +43,51 @@ static struct XmlSnippet schema_snippets[] = {
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-
 static void
-class_init(LassoDsKeyValueClass *klass)
+class_init(LassoDsKeyInfoClass *klass)
 {
 	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
 
 	nclass->node_data = g_new0(LassoNodeClassData, 1);
-	lasso_node_class_set_nodename(nclass, "KeyValue");
+	lasso_node_class_set_nodename(nclass, "KeyInfo");
 	lasso_node_class_set_ns(nclass, LASSO_DS_HREF, LASSO_DS_PREFIX);
 	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
 
 GType
-lasso_ds_key_value_get_type()
+lasso_ds_key_info_get_type()
 {
 	static GType this_type = 0;
 
 	if (!this_type) {
 		static const GTypeInfo this_info = {
-			sizeof (LassoDsKeyValueClass),
+			sizeof (LassoDsKeyInfoClass),
 			NULL,
 			NULL,
 			(GClassInitFunc) class_init,
 			NULL,
 			NULL,
-			sizeof(LassoDsKeyValue),
+			sizeof(LassoDsKeyInfo),
 			0,
 			NULL,
 			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,
-				"LassoDsKeyValue", &this_info, 0);
+				"LassoDsKeyInfo", &this_info, 0);
 	}
 	return this_type;
 }
 
 /**
- * lasso_ds_key_value_new:
+ * lasso_ds_key_info_new:
  *
- * Creates a new #LassoDsKeyValue object.
+ * Creates a new #LassoDsKeyInfo object.
  *
- * Return value: a newly created #LassoDsKeyValue object
+ * Return value: a newly created #LassoDsKeyInfo object
  **/
-LassoDsKeyValue*
-lasso_ds_key_value_new()
+LassoDsKeyInfo*
+lasso_ds_key_info_new()
 {
-	return g_object_new(LASSO_TYPE_DS_KEY_VALUE, NULL);
+	return g_object_new(LASSO_TYPE_DS_KEY_INFO, NULL);
 }

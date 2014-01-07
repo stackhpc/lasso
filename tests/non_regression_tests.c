@@ -17,8 +17,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include <stdlib.h>
@@ -26,14 +25,18 @@
 
 #include <check.h>
 
-#include <../lasso/lasso.h>
-#include "./tests.h"
-#include <../lasso/xml/lib_assertion.h>
-#include <../lasso/xml/lib_authentication_statement.h>
-#include <../lasso/xml/saml_name_identifier.h>
-#include <../lasso/xml/samlp_response.h>
-#include <../lasso/id-ff/provider.h>
+#include "../lasso/lasso.h"
+#include "tests.h"
+#include "../lasso/xml/lib_assertion.h"
+#include "../lasso/xml/lib_authentication_statement.h"
+#include "../lasso/xml/saml_name_identifier.h"
+#include "../lasso/xml/samlp_response.h"
+#include "../lasso/xml/saml-2.0/saml2_attribute.h"
+#include "../lasso/xml/saml-2.0/samlp2_authn_request.h"
+#include "../lasso/id-ff/provider.h"
 #include "../lasso/utils.h"
+#include <libxml/tree.h>
+#include <libxml/parser.h>
 
 
 Suite* non_regression_suite();
@@ -85,6 +88,7 @@ END_TEST
 START_TEST(indexed_endpoints_20101008)
 {
 	LassoProvider *provider = NULL;
+	char *str;
 	char *meta01 = "<md:EntityDescriptor entityID=\"google.com\" xmlns=\"urn:oasis:names:tc:SAML:2.0:metadata\" xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:md=\"urn:oasis:names:tc:SAML:2.0:metadata\">\n\
 <SPSSODescriptor protocolSupportEnumeration=\"urn:oasis:names:tc:SAML:2.0:protocol\">\n\
 <AssertionConsumerService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact\" Location=\"wrong\" index=\"1\" />\n\
@@ -112,28 +116,100 @@ START_TEST(indexed_endpoints_20101008)
 
 	provider = lasso_provider_new_from_buffer(LASSO_PROVIDER_ROLE_SP, meta01, NULL, NULL);
 	check_not_null(provider);
-	check_str_equals(lasso_provider_get_assertion_consumer_service_url(provider, NULL), "ok");
-	check_str_equals(lasso_provider_get_assertion_consumer_service_url(provider, "0"), "ok");
-	check_str_equals(lasso_provider_get_assertion_consumer_service_url(provider, "1"), "wrong");
+	str = lasso_provider_get_assertion_consumer_service_url(provider, NULL);
+	check_str_equals(str, "ok");
+	g_free(str);
+	str = lasso_provider_get_assertion_consumer_service_url(provider, "0");
+	check_str_equals(str, "ok");
+	g_free(str);
+	str = lasso_provider_get_assertion_consumer_service_url(provider, "1");
+	check_str_equals(str, "wrong");
+	g_free(str);
 	lasso_release_gobject(provider);
 	provider = lasso_provider_new_from_buffer(LASSO_PROVIDER_ROLE_SP, meta02, NULL, NULL);
 	check_not_null(provider);
-	check_str_equals(lasso_provider_get_assertion_consumer_service_url(provider, NULL), "ok");
-	check_str_equals(lasso_provider_get_assertion_consumer_service_url(provider, "0"), "wrong");
-	check_str_equals(lasso_provider_get_assertion_consumer_service_url(provider, "1"), "ok");
+	str = lasso_provider_get_assertion_consumer_service_url(provider, NULL);
+	check_str_equals(str, "ok");
+	g_free(str);
+	str = lasso_provider_get_assertion_consumer_service_url(provider, "0");
+	check_str_equals(str, "wrong");
+	g_free(str);
+	str = lasso_provider_get_assertion_consumer_service_url(provider, "1");
+	check_str_equals(str, "ok");
+	g_free(str);
 	lasso_release_gobject(provider);
 	provider = lasso_provider_new_from_buffer(LASSO_PROVIDER_ROLE_SP, meta03, NULL, NULL);
 	check_not_null(provider);
-	check_str_equals(lasso_provider_get_assertion_consumer_service_url(provider, NULL), "ok");
-	check_str_equals(lasso_provider_get_assertion_consumer_service_url(provider, "0"), "wrong");
-	check_str_equals(lasso_provider_get_assertion_consumer_service_url(provider, "1"), "ok");
+	str = lasso_provider_get_assertion_consumer_service_url(provider, NULL);
+	check_str_equals(str, "ok");
+	g_free(str);
+	str = lasso_provider_get_assertion_consumer_service_url(provider, "0");
+	check_str_equals(str, "wrong");
+	g_free(str);
+	str = lasso_provider_get_assertion_consumer_service_url(provider, "1");
+	check_str_equals(str, "ok");
+	g_free(str);
 	lasso_release_gobject(provider);
 	provider = lasso_provider_new_from_buffer(LASSO_PROVIDER_ROLE_SP, meta04, NULL, NULL);
 	check_not_null(provider);
-	check_str_equals(lasso_provider_get_assertion_consumer_service_url(provider, NULL), "ok");
-	check_str_equals(lasso_provider_get_assertion_consumer_service_url(provider, "0"), "wrong");
-	check_str_equals(lasso_provider_get_assertion_consumer_service_url(provider, "1"), "ok");
+	str = lasso_provider_get_assertion_consumer_service_url(provider, NULL);
+	check_str_equals(str, "ok");
+	g_free(str);
+	str = lasso_provider_get_assertion_consumer_service_url(provider, "0");
+	check_str_equals(str, "wrong");
+	g_free(str);
+	str = lasso_provider_get_assertion_consumer_service_url(provider, "1");
+	check_str_equals(str, "ok");
+	g_free(str);
 	lasso_release_gobject(provider);
+}
+END_TEST
+
+START_TEST(remove_warning_when_parssing_unknown_SNIPPET_LIST_NODES_20111007)
+{
+	LassoNode *node;
+	xmlDoc *xmldoc;
+	const char content[] = "<saml:Attribute Name=\"urn:oid:1.3.6.1.4.1.5923.1.1.1.10\" NameFormat=\"urn:oasis:names:tc:SAML:2.0:attrname-format:uri\" FriendlyName=\"eduPersonTargetedID\" xmlns:saml=\"urn:oasis:names:tc:SAML:2.0:assertion\"><saml:AttributeValue><NameID Format=\"urn:oasis:names:tc:SAML:2.0:nameid-format:persistent\" NameQualifier=\"https://services-federation.renater.fr/test/idp\" SPNameQualifier=\"https://univnautes.entrouvert.lan/authsaml2/metadata\">C8NQsm1Y3Gas9m0AMDhxU7UxCSI=</NameID></saml:AttributeValue></saml:Attribute>";
+
+	xmldoc = xmlReadMemory(content, sizeof(content)-1, NULL, NULL, 0);
+	check_not_null(xmldoc);
+	node = lasso_node_new_from_xmlNode(xmlDocGetRootElement(xmldoc));
+	check_not_null(node);
+	check_true(LASSO_IS_SAML2_ATTRIBUTE(node));
+	check_true(LASSO_IS_NODE(node));
+	xmlFreeDoc(xmldoc);
+	lasso_release_gobject(node);
+}
+END_TEST
+
+START_TEST(wrong_endpoint_index_in_artifacts)
+{
+	LassoServer *server = NULL;
+	LassoLogin *login = NULL;
+	guchar *decoded = NULL;
+	size_t out_len;
+
+	check_not_null(server = lasso_server_new(TESTSDATADIR "/idp13-artifact-resolution-service-indexed/metadata.xml",
+				TESTSDATADIR "/idp13-artifact-resolution-service-indexed/private-key.pem", NULL, NULL));
+	check_good_rc(lasso_server_add_provider(server, LASSO_PROVIDER_ROLE_SP,
+				TESTSDATADIR "/sp7-saml2/metadata.xml", NULL, NULL));
+	check_not_null(login = lasso_login_new(server));
+	check_good_rc(lasso_login_init_idp_initiated_authn_request(login,
+				"http://sp7/metadata"));
+	lasso_assign_string(LASSO_SAMLP2_AUTHN_REQUEST(login->parent.request)->ProtocolBinding,
+			LASSO_SAML2_METADATA_BINDING_ARTIFACT);
+	check_good_rc(lasso_login_process_authn_request_msg(login, NULL));
+	check_good_rc(lasso_login_validate_request_msg(login, TRUE, TRUE));
+	check_good_rc(lasso_login_build_artifact_msg(login, LASSO_HTTP_METHOD_ARTIFACT_GET));
+	check_not_null(LASSO_PROFILE(login)->msg_url);
+	check_null(LASSO_PROFILE(login)->msg_body);
+	printf("%s\n", LASSO_PROFILE(login)->msg_url);
+	decoded = g_base64_decode(strstr(LASSO_PROFILE(login)->msg_url, "SAMLart=")+8, &out_len);
+	check_equals(decoded[2],0);
+	check_equals(decoded[3],7);
+	lasso_release_gobject(login);
+	lasso_release_gobject(server);
+	lasso_release(decoded);
 }
 END_TEST
 
@@ -142,7 +218,9 @@ struct {
 	void *function;
 } tests[] = {
 	{ "Googleapps error from coudot@ on 27-09-2010", test01_googleapps_27092010},
-	{ "Wrong assertionConsumer ordering on 08-10-2010", indexed_endpoints_20101008}
+	{ "Wrong assertionConsumer ordering on 08-10-2010", indexed_endpoints_20101008},
+	{ "Warning when parsing AttributeValue node containing unknown namespace nodes", remove_warning_when_parssing_unknown_SNIPPET_LIST_NODES_20111007 },
+	{ "Wrong endpoint index in artifacts", wrong_endpoint_index_in_artifacts },
 };
 
 Suite*

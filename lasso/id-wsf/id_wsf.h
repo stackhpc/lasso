@@ -18,21 +18,20 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef __LASSO_IDSWF_H__
 #define __LASSO_IDSWF_H__
 
-#include "./authentication.h"
-#include "./data_service.h"
-#include "./discovery.h"
-#include "./id_ff_extensions.h"
-#include "./id_wsf.h"
-#include "./interaction_profile_service.h"
-#include "./personal_profile_service.h"
-#include "./wsf_utils.h"
-#include "./wsf_profile.h"
+#include "authentication.h"
+#include "data_service.h"
+#include "discovery.h"
+#include "id_ff_extensions.h"
+#include "id_wsf.h"
+#include "interaction_profile_service.h"
+#include "personal_profile_service.h"
+#include "wsf_utils.h"
+#include "wsf_profile.h"
 
 #endif /* __LASSO_IDSWF_H__ */
