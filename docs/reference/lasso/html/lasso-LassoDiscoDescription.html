@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LassoDiscoDescription</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
 <link rel="prev" href="lasso-LassoDiscoCredentials.html" title="LassoDiscoCredentials">
 <link rel="next" href="lasso-LassoDiscoEncryptedResourceID.html" title="LassoDiscoEncryptedResourceID">
-<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -39,18 +39,18 @@
 <a name="lasso-LassoDiscoDescription.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">struct              <a class="link" href="lasso-LassoDiscoDescription.html#LassoDiscoDescription" title="struct LassoDiscoDescription">LassoDiscoDescription</a>;
 <a class="link" href="lasso-LassoDiscoDescription.html#LassoDiscoDescription" title="struct LassoDiscoDescription"><span class="returnvalue">LassoDiscoDescription</span></a> * <a class="link" href="lasso-LassoDiscoDescription.html#lasso-disco-description-copy" title="lasso_disco_description_copy ()">lasso_disco_description_copy</a>    (<em class="parameter"><code><a class="link" href="lasso-LassoDiscoDescription.html#LassoDiscoDescription" title="struct LassoDiscoDescription"><span class="type">LassoDiscoDescription</span></a> *description</code></em>);
-<a class="link" href="lasso-LassoDiscoDescription.html#LassoDiscoDescription" title="struct LassoDiscoDescription"><span class="returnvalue">LassoDiscoDescription</span></a> *  <a class="link" href="lasso-LassoDiscoDescription.html#lasso-disco-description-new" title="lasso_disco_description_new ()">lasso_disco_description_new</a>    ();
-<a class="link" href="lasso-LassoDiscoDescription.html#LassoDiscoDescription" title="struct LassoDiscoDescription"><span class="returnvalue">LassoDiscoDescription</span></a> *  <a class="link" href="lasso-LassoDiscoDescription.html#lasso-disco-description-new-with-WsdlRef" title="lasso_disco_description_new_with_WsdlRef ()">lasso_disco_description_new_with_WsdlRef</a>
-                                                        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *securityMechID</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *wsdlURI</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *serviceNameRef</code></em>);
-<a class="link" href="lasso-LassoDiscoDescription.html#LassoDiscoDescription" title="struct LassoDiscoDescription"><span class="returnvalue">LassoDiscoDescription</span></a> *  <a class="link" href="lasso-LassoDiscoDescription.html#lasso-disco-description-new-with-BriefSoapHttpDescription" title="lasso_disco_description_new_with_BriefSoapHttpDescription ()">lasso_disco_description_new_with_BriefSoapHttpDescription</a>
-                                                        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *securityMechID</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *endpoint</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *soapAction</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="lasso-LassoDiscoDescription.html#lasso-disco-description-has-saml-authentication" title="lasso_disco_description_has_saml_authentication ()">lasso_disco_description_has_saml_authentication</a>
+<a class="link" href="lasso-LassoDiscoDescription.html#LassoDiscoDescription" title="struct LassoDiscoDescription"><span class="returnvalue">LassoDiscoDescription</span></a> * <a class="link" href="lasso-LassoDiscoDescription.html#lasso-disco-description-new" title="lasso_disco_description_new ()">lasso_disco_description_new</a>     ();
+<a class="link" href="lasso-LassoDiscoDescription.html#LassoDiscoDescription" title="struct LassoDiscoDescription"><span class="returnvalue">LassoDiscoDescription</span></a> * <a class="link" href="lasso-LassoDiscoDescription.html#lasso-disco-description-new-with-WsdlRef" title="lasso_disco_description_new_with_WsdlRef ()">lasso_disco_description_new_with_WsdlRef</a>
+                                                        (<em class="parameter"><code>const <span class="type">gchar</span> *securityMechID</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *wsdlURI</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *serviceNameRef</code></em>);
+<a class="link" href="lasso-LassoDiscoDescription.html#LassoDiscoDescription" title="struct LassoDiscoDescription"><span class="returnvalue">LassoDiscoDescription</span></a> * <a class="link" href="lasso-LassoDiscoDescription.html#lasso-disco-description-new-with-BriefSoapHttpDescription" title="lasso_disco_description_new_with_BriefSoapHttpDescription ()">lasso_disco_description_new_with_BriefSoapHttpDescription</a>
+                                                        (<em class="parameter"><code>const <span class="type">gchar</span> *securityMechID</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *endpoint</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *soapAction</code></em>);
+<span class="returnvalue">gboolean</span>            <a class="link" href="lasso-LassoDiscoDescription.html#lasso-disco-description-has-saml-authentication" title="lasso_disco_description_has_saml_authentication ()">lasso_disco_description_has_saml_authentication</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoDiscoDescription.html#LassoDiscoDescription" title="struct LassoDiscoDescription"><span class="type">LassoDiscoDescription</span></a> *description</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="lasso-LassoDiscoDescription.html#lasso-disco-description-has-x509-authentication" title="lasso_disco_description_has_x509_authentication ()">lasso_disco_description_has_x509_authentication</a>
+<span class="returnvalue">gboolean</span>            <a class="link" href="lasso-LassoDiscoDescription.html#lasso-disco-description-has-x509-authentication" title="lasso_disco_description_has_x509_authentication ()">lasso_disco_description_has_x509_authentication</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoDiscoDescription.html#LassoDiscoDescription" title="struct LassoDiscoDescription"><span class="type">LassoDiscoDescription</span></a> *description</code></em>);
 </pre>
 </div>
@@ -59,7 +59,7 @@
 <p>
 </p>
 <div class="figure">
-<a name="id3204926"></a><p class="title"><b>Figure 96. Schema fragment for disco:DescriptionType</b></p>
+<a name="idp21471440"></a><p class="title"><b>Figure 96. Schema fragment for disco:DescriptionType</b></p>
 <div class="figure-contents"><pre class="programlisting">
 
 &lt;xs:complexType name="DescriptionType"&gt;
@@ -130,28 +130,28 @@
 <hr>
 <div class="refsect2">
 <a name="lasso-disco-description-new"></a><h3>lasso_disco_description_new ()</h3>
-<pre class="programlisting"><a class="link" href="lasso-LassoDiscoDescription.html#LassoDiscoDescription" title="struct LassoDiscoDescription"><span class="returnvalue">LassoDiscoDescription</span></a> *  lasso_disco_description_new    ();</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoDiscoDescription.html#LassoDiscoDescription" title="struct LassoDiscoDescription"><span class="returnvalue">LassoDiscoDescription</span></a> * lasso_disco_description_new     ();</pre>
 </div>
 <hr>
 <div class="refsect2">
 <a name="lasso-disco-description-new-with-WsdlRef"></a><h3>lasso_disco_description_new_with_WsdlRef ()</h3>
-<pre class="programlisting"><a class="link" href="lasso-LassoDiscoDescription.html#LassoDiscoDescription" title="struct LassoDiscoDescription"><span class="returnvalue">LassoDiscoDescription</span></a> *  lasso_disco_description_new_with_WsdlRef
-                                                        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *securityMechID</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *wsdlURI</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *serviceNameRef</code></em>);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoDiscoDescription.html#LassoDiscoDescription" title="struct LassoDiscoDescription"><span class="returnvalue">LassoDiscoDescription</span></a> * lasso_disco_description_new_with_WsdlRef
+                                                        (<em class="parameter"><code>const <span class="type">gchar</span> *securityMechID</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *wsdlURI</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *serviceNameRef</code></em>);</pre>
 </div>
 <hr>
 <div class="refsect2">
 <a name="lasso-disco-description-new-with-BriefSoapHttpDescription"></a><h3>lasso_disco_description_new_with_BriefSoapHttpDescription ()</h3>
-<pre class="programlisting"><a class="link" href="lasso-LassoDiscoDescription.html#LassoDiscoDescription" title="struct LassoDiscoDescription"><span class="returnvalue">LassoDiscoDescription</span></a> *  lasso_disco_description_new_with_BriefSoapHttpDescription
-                                                        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *securityMechID</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *endpoint</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *soapAction</code></em>);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoDiscoDescription.html#LassoDiscoDescription" title="struct LassoDiscoDescription"><span class="returnvalue">LassoDiscoDescription</span></a> * lasso_disco_description_new_with_BriefSoapHttpDescription
+                                                        (<em class="parameter"><code>const <span class="type">gchar</span> *securityMechID</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *endpoint</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *soapAction</code></em>);</pre>
 </div>
 <hr>
 <div class="refsect2">
 <a name="lasso-disco-description-has-saml-authentication"></a><h3>lasso_disco_description_has_saml_authentication ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            lasso_disco_description_has_saml_authentication
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            lasso_disco_description_has_saml_authentication
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoDiscoDescription.html#LassoDiscoDescription" title="struct LassoDiscoDescription"><span class="type">LassoDiscoDescription</span></a> *description</code></em>);</pre>
 <p>
 Checks if the given description supports any security mechanism using
@@ -168,7 +168,7 @@ SAML authentication.
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if SAML is supported by the service description, FALSE if it
+<code class="literal">TRUE</code> if SAML is supported by the service description, FALSE if it
 is not supported of if description is not a valid <a class="link" href="lasso-LassoDiscoDescription.html#LassoDiscoDescription" title="struct LassoDiscoDescription"><span class="type">LassoDiscoDescription</span></a>.</td>
 </tr>
 </tbody>
@@ -177,7 +177,7 @@ is not supported of if description is not a valid <a class="link" href="lasso-La
 <hr>
 <div class="refsect2">
 <a name="lasso-disco-description-has-x509-authentication"></a><h3>lasso_disco_description_has_x509_authentication ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            lasso_disco_description_has_x509_authentication
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            lasso_disco_description_has_x509_authentication
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoDiscoDescription.html#LassoDiscoDescription" title="struct LassoDiscoDescription"><span class="type">LassoDiscoDescription</span></a> *description</code></em>);</pre>
 <p>
 Checks if the given description supports any security mechanism using
@@ -194,7 +194,7 @@ X509 authentication.
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if X509 is supported by the service description, FALSE if it
+<code class="literal">TRUE</code> if X509 is supported by the service description, FALSE if it
 is not supported of if description is not a valid <a class="link" href="lasso-LassoDiscoDescription.html#LassoDiscoDescription" title="struct LassoDiscoDescription"><span class="type">LassoDiscoDescription</span></a>.</td>
 </tr>
 </tbody>
@@ -204,6 +204,6 @@ is not supported of if description is not a valid <a class="link" href="lasso-La
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.17</div>
+          Generated by GTK-Doc V1.18</div>
 </body>
 </html>

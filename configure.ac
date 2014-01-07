@@ -15,7 +15,7 @@ dnl - Second number is the number of supported API versions where API version >
 dnl   first number.
 dnl - Third number is the current API version implementation version number.
 dnl See libtool explanations about current, age and release, later in this file.
-AC_INIT([lasso], 2.3.6, lasso-devel@lists.labs.libre-entreprise.org)
+AC_INIT([lasso], m4_esyscmd([tools/git-version-gen .tarball-version]), lasso-devel@lists.labs.libre-entreprise.org)
 dnl Check if autoconf ver > 2.53
 AC_PREREQ(2.53)
 AC_CONFIG_MACRO_DIR([m4])
@@ -36,7 +36,7 @@ AM_CONDITIONAL(HAVE_AM_SILENT_RULES, test x$HAVE_AM_SILENT_RULES != x)
 dnl Create rules to automaticaly regenerate the config header.
 AM_CONFIG_HEADER([config.h lasso/lasso_config.h])
 dnl Add --enable-maintainer-mode option to configure.
-AM_MAINTAINER_MODE
+AM_MAINTAINER_MODE([enable])
 
 dnl ==========================================================================
 dnl Perform host specific configuration
@@ -54,6 +54,9 @@ case "${host}" in
         ;;
     *linux*)
         SUN_EXTRA_INCLUDE="linux"
+        ;;
+    *solaris*)
+        SUN_EXTRA_INCLUDE="solaris"
         ;;
 esac
 
@@ -74,7 +77,7 @@ case "${host}" in
                 ;;
         esac
         ;;
-    *-darwin*)
+    *darwin*)
         DARWIN=1
         ;;
 esac
@@ -133,7 +136,6 @@ AC_CHECK_PROGS(PYTHON, python)
 AC_CHECK_PROGS(SWIG, swig)
 
 dnl Make sure we have an ANSI compiler
-AM_C_PROTOTYPES
 test "z$U" != "z" && AC_MSG_ERROR(Compiler not ANSI compliant)
 
 dnl Check for variadic macros
@@ -157,7 +159,7 @@ dnl ==========================================================================
 changequote(<<, >>)dnl
 VERSION_MAJOR=`echo $VERSION | $SED -e 's/^\([^\.]*\)\.\([^\.]*\)\.\(.*\)$/\1/'`
 VERSION_MINOR=`echo $VERSION | $SED -e 's/^\([^\.]*\)\.\([^\.]*\)\.\(.*\)$/\2/'`
-VERSION_RELEASE=`echo $VERSION | $SED -e 's/^\([^\.]*\)\.\([^\.]*\)\.\(.*\)$/\3/'`
+VERSION_RELEASE=`echo $VERSION | $SED -e 's/^\([^\.]*\)\.\([^\.]*\)\.\([0-9]*\).*$/\3/'`
 changequote([, ])dnl
 VERSION_UNDERSCORED=`echo $VERSION | $SED -e 's/\./_/g'`
 AC_SUBST(VERSION_UNDERSCORED)
@@ -184,7 +186,7 @@ dnl - interfaces removed -> AGE = 0
 # m = a
 # r = r
 current=`expr $VERSION_MAJOR + $VERSION_MINOR`
-LASSO_VERSION_INFO="12:4:9"
+LASSO_VERSION_INFO="13:0:10"
 AC_SUBST(LASSO_VERSION_INFO)
 
 dnl Compute the minimal supported ABI version for Win32 scripts and resources files.
@@ -193,44 +195,6 @@ UPCASED_DLL_FILENAME="LIBLASSO-$minimal_version.DLL"
 DLL_FILENAME="liblasso-$minimal_version.dll"
 AC_SUBST(UPCASED_DLL_FILENAME)
 AC_SUBST(DLL_FILENAME)
-
-dnl ==========================================================================
-dnl Swig
-dnl ==========================================================================
-SWIG_MIN_VERSION=1.3.28
-AC_MSG_CHECKING(SWIG support)
-if test "X$SWIG" != "X"; then
-  SWIG_VERSION=`$SWIG -version 2>&1 | $SED -ne 's/^SWIG Version //p'`
-  SWIG_VERSION_DEC=`echo $SWIG_VERSION | $AWK -F. '{printf("%d\n", 10000*$1 + 100*$2 + $3)};'`
-
- if test $SWIG_VERSION_DEC -ge 010314; then
-   SWIG_PYTHON_ARGS=-noproxy
- fi
-
-  SWIG_MIN_VERSION_DEC=`echo $SWIG_MIN_VERSION | $AWK -F. '{printf("%d\n", 10000*$1 + 100*$2 + $3)};'`
-
-  if test $SWIG_VERSION_DEC -ge $SWIG_MIN_VERSION_DEC; then
-    AC_MSG_RESULT($SWIG_VERSION - OK)
-  else
-    AC_MSG_RESULT($SWIG_VERSION - too old to generate language interfaces)
-    if test -r $srcdir/python/lasso_wrap.c ; then
-      AC_MSG_WARN(Pre-generated language interface files are present)
-      AC_MSG_WARN(If you want to change the interfaces you will need)
-      AC_MSG_WARN(SWIG version $SWIG_MIN_VERSION from http://www.swig.org/)
-    else
-      AC_MSG_WARN(There are no pre-generated language interface files)
-      AC_MSG_WARN(lasso language interfaces will NOT build.)
-      AC_MSG_WARN(If you want to build them you will need)
-      AC_MSG_WARN(SWIG version $SWIG_MIN_VERSION from http://www.swig.org/)
-      AC_MSG_WARN(Alternatively copy the pre-generated interface)
-      AC_MSG_WARN(files from a released version)
-    fi
-  fi
-else
-  AC_MSG_RESULT(not present - using pre-generated interface files)
-  SWIG="echo"
-fi
-AC_SUBST(SWIG_PYTHON_ARGS)
 
 dnl Detect available languages binding.
 languages_available=
@@ -322,6 +286,11 @@ else
   JAVA_VERSION=""
 fi
 
+dnl Support JNI under MacOsX
+if test  "$DARWIN" == 1; then
+    JNI_EXTRA_LDFLAGS="-shrext .jnilib"
+fi
+
 dnl Conditional java sub dir test.
 AM_CONDITIONAL([JAVA_ENABLED],[test "x$enable_java" = "xyes"])
 AM_CONDITIONAL([JUNIT_ENABLED],[test "x$JUNIT" != "x"])
@@ -332,6 +301,7 @@ AC_SUBST(JAVA_INCLUDE)
 AC_SUBST(CLASSPATH_OPT)
 JDK_INCLUDE=$JAVA_INCLUDE
 AC_SUBST(JDK_INCLUDE)
+AC_SUBST(JNI_EXTRA_LDFLAGS)
 
 
 # --------------
@@ -354,7 +324,7 @@ fi
 
 dnl need to change quotes to allow square brackets
 changequote(<<, >>)dnl
-PYTHON_VERSION=`$PYTHON -c 'import sys; print sys.version[:3]' 2>/dev/null`
+PYTHON_VERSION=`$PYTHON -c 'from distutils import sysconfig ; print sysconfig.get_config_var("VERSION")'`
 changequote([, ])dnl
 
 test "x$PYTHON" != "x" || AC_MSG_ERROR(Python must be installed to compile lasso)
@@ -362,21 +332,20 @@ test "x$PYTHON" != "x" || AC_MSG_ERROR(Python must be installed to compile lasso
 AC_MSG_CHECKING(for Python development files)
 dnl Check if we were be able to extract a good version number.
 if test "X$PYTHON_VERSION" != "X"; then
-    PY_PREFIX=`$PYTHON -c 'import sys ; print sys.prefix'`
-    PY_EXEC_PREFIX=`$PYTHON -c 'import sys ; print sys.exec_prefix'`
     changequote(<<, >>)dnl
-    PY_VERSION=`$PYTHON -c 'import sys ; print sys.version[0:3]'`
+    PYTHON_INC=`$PYTHON -c 'from distutils import sysconfig ; print sysconfig.get_python_inc()'`
+    PYTHON_LIB=`$PYTHON -c 'from distutils import sysconfig ; print sysconfig.get_python_lib(1)'`
     changequote([, ])dnl
-    PYTHON_H=$PY_PREFIX/include/python$PY_VERSION/Python.h
-    LIBPYTHON_SO=$PY_PREFIX/lib/libpython$PY_VERSION.so
+    PYTHON_H=$PYTHON_INC/Python.h
     if test -f $PYTHON_H; then
-            dnl Not useful unless we make a test on the python version.
-            PYTHON="python$PY_VERSION"
-            PY_CFLAGS="-I$PY_PREFIX/include/python$PY_VERSION"
-            PY_MAKEFILE="$PY_EXEC_PREFIX/lib/python$PY_VERSION/config/Makefile"
+            PY_CFLAGS="-I$PYTHON_INC"
+            PY_MAKEFILE=`$PYTHON -c 'from distutils import sysconfig ; print sysconfig.get_makefile_filename()'`
             PY_OTHER_LIBS=`$SED -n -e 's/^LIBS=\(.*\)/\1/p' $PY_MAKEFILE`
             PY_EXTRA_LIBS="$PY_LOCALMODLIBS $PY_BASEMODLIBS $PY_OTHER_LIBS"
-            PY_SITE_PACKAGES="\${prefix}/lib/python$PY_VERSION/site-packages"
+            dnl this extracts the $libdir out of python lib directory,
+            dnl replacing it by our own.
+            PY_SUFFIX_LIB=`echo $PYTHON_LIB | $SED -e 's/.*python/python/'`
+            PY_SITE_PACKAGES="\${libdir}/$PY_SUFFIX_LIB"
             AC_SUBST(PYTHON)
             AC_SUBST(PY_LIB_LOC)
             AC_SUBST(PY_CFLAGS)
@@ -451,18 +420,6 @@ AC_SUBST(PHP5_EXTENSION_DIR)
 AC_SUBST(PHP5_PREFIX)
 AC_SUBST(PHP5_INCLUDE_DIR)
 AC_SUBST(PHP5_CONFIG_DIR)
-
-dnl Check for expat
-have_expat_include=no
-if test $MINGW -eq 1; then 
-    AC_CHECK_LIB(xmlparse, XML_ParserCreate, have_expat_lib=yes, have_expat_lib=no)
-else
-    AC_CHECK_LIB(expat, XML_ParserCreate, have_expat_lib=yes, have_expat_lib=no)
-fi
-  
-if test x$have_expat_lib = xno; then
-    enable_php5=no
-fi
 
 AC_MSG_CHECKING(for PHP 5 development files)
 if $PHP5_CONFIG --version | grep -q "^5" || test "x$ENABLE_PHP5_FORCE" = "xyes"
@@ -675,7 +632,14 @@ AC_SUBST(LASSO_WSF_SUPPORT)
 
 
 dnl API Reference documentation support
+# gtkdocize greps for ^GTK_DOC_CHECK and parses it, so you need to have
+# it on it's own line.
+m4_ifdef([GTK_DOC_CHECK], [
 GTK_DOC_CHECK(1.9)
+],[
+AM_CONDITIONAL([ENABLE_GTK_DOC],[false])
+])
+
 if test "z$with_html_dir" != "z" ; then
     LASSO_DOCDIR=$with_html_dir
 else
@@ -700,7 +664,7 @@ if test "z$PKG_CONFIG_PATH" != "z"; then
     export PKG_CONFIG_PATH
 fi
 
-PKG_CHECK_MODULES(LASSO, glib-2.0 >= 2.4.0 gobject-2.0 >= 2.4.0 libxml-2.0 xmlsec1 >= 1.2.6 xmlsec1-openssl >= 1.2.6 openssl)
+PKG_CHECK_MODULES(LASSO, glib-2.0 >= 2.17.0 gobject-2.0 >= 2.17.0 libxml-2.0 xmlsec1 >= 1.2.6 xmlsec1-openssl >= 1.2.6 openssl)
 
 AC_ARG_WITH(sasl2, [  --with-sasl2[=PFX]         Use Cyrus SASL library version 2 for WSF-Auth])
 if test "x$enable_wsf" = "xyes"; then
@@ -834,6 +798,7 @@ lasso/xml/saml-2.0/Makefile
 lasso/xml/soap-1.1/Makefile
 lasso/xml/id-wsf-2.0/Makefile
 lasso/xml/ws/Makefile
+lasso/xml/dsig/Makefile
 tests/Makefile
 tests/data/Makefile
 lasso.pc

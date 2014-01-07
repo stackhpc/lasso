@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef __LASSO_UTILS_H__
@@ -30,10 +29,10 @@
 #include <glib-object.h>
 #include <xmlsec/keys.h>
 #include "debug.h"
-#include "./backward_comp.h"
-#include "./xml/private.h"
-#include "./xml/tools.h"
-#include "./logging.h"
+#include "backward_comp.h"
+#include "xml/private.h"
+#include "xml/tools.h"
+#include "logging.h"
 
 #ifdef LASSO_DEBUG
 #ifdef __GNUC__
@@ -123,6 +122,9 @@
 #define lasso_release_list(dest) \
 	lasso_release_full2(dest, g_list_free, GList*)
 
+#define lasso_release_slist(dest) \
+	lasso_release_full2(dest, g_slist_free, GSList*)
+
 #define lasso_release_list_of_full(dest, free_function) \
 	{ \
 		GList **__tmp = &(dest); \
@@ -143,6 +145,9 @@
 
 #define lasso_release_list_of_xml_node_list(dest) \
 	lasso_release_list_of_full(dest, xmlFreeNodeList)
+
+#define lasso_release_list_of_sec_key(dest) \
+	lasso_release_list_of_full(dest, xmlSecKeyDestroy)
 
 #define lasso_release_xml_node(node) \
 	lasso_release_full2(node, xmlFreeNode, xmlNodePtr)
@@ -426,6 +431,12 @@
 		} \
 	}
 
+#define lasso_list_add_new_sec_key(dest, src) \
+	{ \
+		xmlSecKey *__tmp_src = (src); \
+		lasso_list_add_non_null(dest, __tmp_src); \
+	}
+
 /* List element removal */
 #define lasso_list_remove_gobject(list, gobject) \
 	do { void *__tmp = gobject; GList **__tmp_list = &(list); \
@@ -454,6 +465,9 @@
 
 #define lasso_transfer_gobject(dest, src) \
 	lasso_transfer_full(dest, src, gobject)
+
+#define lasso_transfer_xml_node(dest, src) \
+	lasso_transfer_full(dest, src, xml_node)
 
 /* Node extraction */
 #define lasso_extract_node_or_fail(to, from, kind, error) \
@@ -671,6 +685,26 @@ lasso_strisempty(const char *str) {
 inline static gboolean
 lasso_xmlstrisnotequal(const xmlChar *a, const xmlChar *b) {
 	return lasso_strisnotequal((char*)a, (char*)b);
+}
+
+/**
+ * lasso_crypto_memequal:
+ * @a: first buffer
+ * @b: second buffer
+ * @l: common length
+ *
+ * Compare two buffers, preventing timing attacks.
+ */
+static inline gboolean
+lasso_crypto_memequal(void *a, void *b, unsigned int l)
+{
+	unsigned char *x = a, *y = b;
+	gboolean result = TRUE;
+
+	for (;l;l--, x++, y++) {
+		result = result && (*x == *y);
+	}
+	return result;
 }
 
 #endif /* __LASSO_UTILS_H__ */

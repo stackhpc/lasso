@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LassoLibAuthnRequest</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
 <link rel="prev" href="lasso-LassoLibAuthnRequestEnvelope.html" title="LassoLibAuthnRequestEnvelope">
 <link rel="next" href="lasso-LassoLibAuthnResponseEnvelope.html" title="LassoLibAuthnResponseEnvelope">
-<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -38,7 +38,7 @@
 <div class="refsynopsisdiv">
 <a name="lasso-LassoLibAuthnRequest.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">struct              <a class="link" href="lasso-LassoLibAuthnRequest.html#LassoLibAuthnRequest" title="struct LassoLibAuthnRequest">LassoLibAuthnRequest</a>;
-<a class="link" href="lasso-LassoLibAuthnRequest.html#LassoLibAuthnRequest" title="struct LassoLibAuthnRequest"><span class="returnvalue">LassoLibAuthnRequest</span></a> *  <a class="link" href="lasso-LassoLibAuthnRequest.html#lasso-lib-authn-request-new" title="lasso_lib_authn_request_new ()">lasso_lib_authn_request_new</a>     (<em class="parameter"><code><span class="type">void</span></code></em>);
+<a class="link" href="lasso-LassoLibAuthnRequest.html#LassoLibAuthnRequest" title="struct LassoLibAuthnRequest"><span class="returnvalue">LassoLibAuthnRequest</span></a> * <a class="link" href="lasso-LassoLibAuthnRequest.html#lasso-lib-authn-request-new" title="lasso_lib_authn_request_new ()">lasso_lib_authn_request_new</a>      (<em class="parameter"><code><span class="type">void</span></code></em>);
 </pre>
 </div>
 <div class="refsect1">
@@ -60,7 +60,7 @@ properties of a nonce.
 <p>
 </p>
 <div class="figure">
-<a name="id3113942"></a><p class="title"><b>Figure 5. Schema fragment for lib:AuthnRequest</b></p>
+<a name="idp9313728"></a><p class="title"><b>Figure 5. Schema fragment for lib:AuthnRequest</b></p>
 <div class="figure-contents"><pre class="programlisting">
 &lt;xs:element name="AuthnRequest" type="AuthnRequestType" /&gt;
 &lt;xs:complexType name="AuthnRequestType"&gt;
@@ -139,7 +139,7 @@ properties of a nonce.
 </pre>
 <p>
 <em class="parameter"><code>ProviderID</code></em> isthe service provider identifier, this field will often be
-filled with <a class="link" href="lasso-login.html#lasso-login-init-authn-request" title="lasso_login_init_authn_request ()"><code class="function">lasso_login_init_authn_request()</code></a>
+filled with <a class="link" href="lasso-LassoLogin.html#lasso-login-init-authn-request" title="lasso_login_init_authn_request ()"><code class="function">lasso_login_init_authn_request()</code></a>
 </p>
 <p>
 <em class="parameter"><code>nameIDPolicy</code></em> tells the identity provider about the policy to use for
@@ -149,11 +149,11 @@ federation; it must be one of <a class="link" href="lasso-Strings-for-ID-FF-1.2.
 <a class="link" href="lasso-Strings-for-ID-FF-1.2.html#LASSO-LIB-NAMEID-POLICY-TYPE-ANY:CAPS" title="LASSO_LIB_NAMEID_POLICY_TYPE_ANY"><span class="type">LASSO_LIB_NAMEID_POLICY_TYPE_ANY</span></a>.
 </p>
 <p>
-<em class="parameter"><code>IsPassive</code></em>; if <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> (default) it tells the identity provider not to
+<em class="parameter"><code>IsPassive</code></em>; if <code class="literal">TRUE</code> (default) it tells the identity provider not to
 interact with the user.
 </p>
 <p>
-<em class="parameter"><code>ForceAuthn</code></em>; only used if <em class="parameter"><code>IsPassive</code></em> is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a>, it tells the identity
+<em class="parameter"><code>ForceAuthn</code></em>; only used if <em class="parameter"><code>IsPassive</code></em> is <code class="literal">FALSE</code>, it tells the identity
 provider to force authentication of the user even when already
 authenticated.
 </p>
@@ -166,7 +166,7 @@ or <a class="link" href="lasso-Strings-for-ID-FF-1.2.html#LASSO-LIB-PROTOCOL-PRO
 <hr>
 <div class="refsect2">
 <a name="lasso-lib-authn-request-new"></a><h3>lasso_lib_authn_request_new ()</h3>
-<pre class="programlisting"><a class="link" href="lasso-LassoLibAuthnRequest.html#LassoLibAuthnRequest" title="struct LassoLibAuthnRequest"><span class="returnvalue">LassoLibAuthnRequest</span></a> *  lasso_lib_authn_request_new     (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoLibAuthnRequest.html#LassoLibAuthnRequest" title="struct LassoLibAuthnRequest"><span class="returnvalue">LassoLibAuthnRequest</span></a> * lasso_lib_authn_request_new      (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
 <p>
 Creates a new <a class="link" href="lasso-LassoLibAuthnRequest.html#LassoLibAuthnRequest" title="struct LassoLibAuthnRequest"><span class="type">LassoLibAuthnRequest</span></a> object.
 </p>
@@ -181,11 +181,11 @@ Creates a new <a class="link" href="lasso-LassoLibAuthnRequest.html#LassoLibAuth
 </div>
 <div class="refsect1">
 <a name="lasso-LassoLibAuthnRequest.see-also"></a><h2>See Also</h2>
-<a class="link" href="lasso-login.html#LassoLogin" title="struct LassoLogin"><span class="type">LassoLogin</span></a>
+<a class="link" href="lasso-LassoLogin.html#LassoLogin" title="struct LassoLogin"><span class="type">LassoLogin</span></a>
 </div>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.17</div>
+          Generated by GTK-Doc V1.18</div>
 </body>
 </html>

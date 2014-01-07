@@ -18,13 +18,13 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #define _POSIX_SOURCE
 
 #include <errno.h>
+#include <string.h>
 
 #include "../xml/private.h"
 #include <xmlsec/base64.h>
@@ -34,9 +34,15 @@
 #include "../id-ff/server.h"
 #include "../id-ff/providerprivate.h"
 #include "../utils.h"
-#include "./provider.h"
+#include "provider.h"
 #include "../xml/saml-2.0/saml2_attribute.h"
 #include "../xml/saml-2.0/saml2_xsd.h"
+
+enum HttpMethodKind {
+	SYNC_NOT_APPLICABLE,
+	SYNCHRONOUS,
+	ASYNCHRONOUS
+};
 
 const char *profile_names[LASSO_MD_PROTOCOL_TYPE_LAST] = {
 	"", /* No fedterm in SAML 2.0 */
@@ -54,6 +60,21 @@ const char *profile_names[LASSO_MD_PROTOCOL_TYPE_LAST] = {
 	"AuthzService",  /*PDPDescriptor*/
 	"AttributeService" /*AttributeAuthorityDescriptor*/
 };
+
+static enum HttpMethodKind http_method_kind(LassoHttpMethod method) {
+	switch (method) {
+		case LASSO_HTTP_METHOD_SOAP:
+			return ASYNCHRONOUS;
+		case LASSO_HTTP_METHOD_GET:
+		case LASSO_HTTP_METHOD_POST:
+		case LASSO_HTTP_METHOD_REDIRECT:
+		case LASSO_HTTP_METHOD_ARTIFACT_GET:
+		case LASSO_HTTP_METHOD_ARTIFACT_POST:
+			return SYNCHRONOUS;
+		default:
+			return SYNC_NOT_APPLICABLE;
+	}
+}
 
 static const char*
 binding_uri_to_identifier(const char *uri)
@@ -131,7 +152,7 @@ xsdUnsignedShortParse(xmlChar *value, int *out) {
 
 	errno = 0;
 	l = strtol((char*)value, NULL, 10);
-	if (((l == LONG_MIN || l == LONG_MAX) && errno == ERANGE) ||
+	if (((l == INT_MIN || l == INT_MAX) && errno == ERANGE) ||
 			errno == EINVAL || l < 0 || l >= 65535) {
 		return FALSE;
 	}
@@ -156,9 +177,10 @@ load_endpoint_type2(xmlNode *xmlnode, LassoProvider *provider, LassoProviderRole
 		warning("Invalid endpoint node %s", (char*) xmlnode->name);
 		goto cleanup;
 	}
-	indexed_endpoint = checkSaml2MdNode(xmlnode, LASSO_SAML2_METADATA_ELEMENT_ASSERTION_CONSUMER_SERVICE);
+	indexed_endpoint = checkSaml2MdNode(xmlnode, LASSO_SAML2_METADATA_ELEMENT_ASSERTION_CONSUMER_SERVICE) ||
+		checkSaml2MdNode(xmlnode, LASSO_SAML2_METADATA_ELEMENT_ARTIFACT_RESOLUTION_SERVICE);
 	if (indexed_endpoint) {
-		if (! xsdUnsignedShortParse(index, &idx)) {
+		if (! index || ! xsdUnsignedShortParse(index, &idx)) {
 			warning("Invalid AssertionConsumerService, no index set");
 			goto cleanup;
 		}
@@ -265,7 +287,6 @@ load_endpoint_type(xmlNode *xmlnode, LassoProvider *provider, LassoProviderRole 
 	} else {
 		name = g_strdup_printf("%s %s", xmlnode->name, binding_s);
 	}
-	lasso_release_xml_string(binding);
 
 	/* Response endpoint ? */
 	response_value = getSaml2MdProp(xmlnode, LASSO_SAML2_METADATA_ATTRIBUTE_RESPONSE_LOCATION);
@@ -279,6 +300,7 @@ load_endpoint_type(xmlNode *xmlnode, LassoProvider *provider, LassoProviderRole 
 	_lasso_provider_add_metadata_value_for_role(provider, role, name, (char*)value);
 
 cleanup:
+	lasso_release_xml_string(binding);
 	lasso_release_xml_string(value);
 	lasso_release_xml_string(response_value);
 	lasso_release_string(name);
@@ -348,7 +370,8 @@ load_descriptor(xmlNode *xmlnode, LassoProvider *provider, LassoProviderRole rol
 		LASSO_SAML2_METADATA_ATTRIBUTE_CACHE_DURATION,
 		LASSO_SAML2_METADATA_ATTRIBUTE_AUTHN_REQUEST_SIGNED,
 		LASSO_SAML2_METADATA_ATTRIBUTE_WANT_AUTHN_REQUEST_SIGNED,
-		LASSO_SAML2_METADATA_ATTRIBUTE_ERROR_URL
+		LASSO_SAML2_METADATA_ATTRIBUTE_ERROR_URL,
+		NULL
 	};
 	int i;
 	xmlNode *t;
@@ -423,6 +446,8 @@ lasso_saml20_provider_load_metadata(LassoProvider *provider, xmlNode *root_node)
 {
 	xmlNode *node, *descriptor_node;
 	xmlChar *providerID;
+	xmlChar providerID_cpy[150] = "";
+
 	LassoProviderPrivate *pdata = provider->private_data;
 	static const struct {
 		char *name;
@@ -459,6 +484,7 @@ lasso_saml20_provider_load_metadata(LassoProvider *provider, xmlNode *root_node)
 	providerID = xmlGetProp(node, (xmlChar*)"entityID");
 	g_return_val_if_fail(providerID, FALSE);
 	lasso_assign_string(provider->ProviderID, (char*)providerID);
+	g_strlcpy((char*) providerID_cpy, (char*) providerID, 150);
 	lasso_release_xml_string(providerID);
 	/* initialize roles */
 	pdata->roles = LASSO_PROVIDER_ROLE_NONE;
@@ -497,10 +523,11 @@ lasso_saml20_provider_load_metadata(LassoProvider *provider, xmlNode *root_node)
 		/* We must at least load one descriptor, and we must load a descriptor for our
 		 * assigned role or we fail. */
 		if (! loaded_one_or_more_descriptor) {
-			warning("No descriptor was loaded, failing");
+			warning("%s: No descriptor was loaded, failing", providerID_cpy);
 		}
 		if ((pdata->roles & provider->role) == 0) {
-			warning("Loaded roles and prescribed role does not intersect");
+			warning("%s: Loaded roles and prescribed role does not intersect",
+					providerID_cpy);
 		}
 		return FALSE;
 	}
@@ -508,8 +535,55 @@ lasso_saml20_provider_load_metadata(LassoProvider *provider, xmlNode *root_node)
 	return TRUE;
 }
 
+enum {
+	FOR_RESPONSE = 1
+};
+
+/**
+ * has_synchronous_methods:
+ * @provider: a #LassoProvider object
+ * @protocol_type: a #LassoMdProtocolType value
+ * @for_response: a boolean stating whether we need the answer for receiving a response.
+ *
+ * Return whether the given @provider support a certain protocol with a synchronous binding.
+ * If we need to receive a response for this protocol, @for_response must be set to True.
+ *
+ * Return result: TRUE if @provider supports @protocol_type with a synchronous binding, eventually
+ * for receiving responses, FALSE otherwise.
+ */
+static gboolean has_synchronous_methods(LassoProvider *provider, LassoMdProtocolType protocol_type,
+		gboolean for_response)
+{
+	GList *t = NULL;
+	const char *kind = NULL;
+	LassoHttpMethod result = LASSO_HTTP_METHOD_NONE;
+
+	if (protocol_type < LASSO_MD_PROTOCOL_TYPE_LAST) {
+		kind = profile_names[protocol_type];
+	}
+	if (! kind) {
+		return LASSO_HTTP_METHOD_NONE;
+	}
+
+	if (for_response && protocol_type == LASSO_MD_PROTOCOL_TYPE_SINGLE_SIGN_ON)
+	{
+		kind = LASSO_SAML2_METADATA_ELEMENT_ASSERTION_CONSUMER_SERVICE;
+	}
+
+	lasso_foreach(t, provider->private_data->endpoints) {
+		EndpointType *endpoint_type = (EndpointType*)t->data;
+		if (endpoint_type && lasso_strisequal(endpoint_type->kind, kind)) {
+			result = binding_uri_to_http_method(endpoint_type->binding);
+			if (http_method_kind(result) == SYNCHRONOUS)
+				return TRUE;
+		}
+	}
+
+	return FALSE;
+}
+
 LassoHttpMethod
-lasso_saml20_provider_get_first_http_method(G_GNUC_UNUSED LassoProvider *provider,
+lasso_saml20_provider_get_first_http_method(LassoProvider *provider,
 		LassoProvider *remote_provider, LassoMdProtocolType protocol_type)
 {
 	GList *t = NULL;
@@ -527,6 +601,11 @@ lasso_saml20_provider_get_first_http_method(G_GNUC_UNUSED LassoProvider *provide
 		EndpointType *endpoint_type = (EndpointType*)t->data;
 		if (endpoint_type && lasso_strisequal(endpoint_type->kind, kind)) {
 			result = binding_uri_to_http_method(endpoint_type->binding);
+			/* a synchronous method needs another synchronous method for receiving the
+			 * response on the local side */
+			if (http_method_kind(result) == SYNCHRONOUS
+					&& ! has_synchronous_methods(provider, protocol_type, FOR_RESPONSE))
+				continue;
 			if (result != LASSO_HTTP_METHOD_NONE)
 				break;
 		}
@@ -698,6 +777,93 @@ lasso_saml20_provider_get_assertion_consumer_service_url_by_binding(LassoProvide
 		}
 	}
 	return NULL;
+}
+
+/**
+ * lasso_saml20_provider_get_endpoint_url:
+ * @provider: a #LassoProvider object
+ * @role: the role of the given provider,
+ * @kind: the endpoint kind, ex. AssertionConsumerService
+ * @bindings:(allow-none): a list of string, giving binding to match, if needed,
+ * @is_response: TRUE if the URL will be user for returning a response
+ * @is_default: TRUE if we are looking for the default endpoint
+ * @idx: if >= 0 look for the endpoint with the given index
+ *
+ * Return the best URL for reaching the given endpoint
+ */
+const gchar*
+lasso_saml20_provider_get_endpoint_url(LassoProvider *provider, 
+		LassoProviderRole role, const char *kind, GSList *bindings, gboolean is_response,
+		gboolean is_default, int idx)
+{
+	EndpointType* endpoint_type = NULL;
+	GList *t = NULL;
+
+	if (! LASSO_IS_PROVIDER(provider) || !kind)
+		return NULL;
+	lasso_foreach(t, provider->private_data->endpoints) {
+		endpoint_type = (EndpointType*) t->data;
+		if (! endpoint_type)
+			continue;
+		if (! endpoint_type->binding)
+			continue;
+		if (endpoint_type->role != role \
+				&& role != LASSO_PROVIDER_ROLE_ANY \
+				&& role != LASSO_PROVIDER_ROLE_NONE)
+			continue;
+		if (! lasso_strisequal(endpoint_type->kind, kind))
+			continue;
+		/* endpoints are already properly ordered so that the first matching one is the
+		 * default one */
+		if (is_default)
+			break;
+		else if (idx >= 0) {
+			if (endpoint_type->index == idx)
+				break;
+		} else {
+			/* if all else fails return the first matching one or the first matching our
+			 * list of bindings */
+			if (!bindings || g_slist_find_custom(bindings, endpoint_type->binding, (GCompareFunc)g_strcmp0))
+				break;
+		}
+		endpoint_type = NULL;
+	}
+
+	if (! endpoint_type)
+		return NULL;
+	if (is_response && endpoint_type->return_url)
+		return endpoint_type->return_url;
+	else
+		return endpoint_type->url;
+}
+
+
+lasso_error_t
+lasso_saml20_provider_get_artifact_resolution_service_index(LassoProvider *provider, unsigned short *index)
+{
+	const char *kind = LASSO_SAML2_METADATA_ELEMENT_ARTIFACT_RESOLUTION_SERVICE;
+	GList *t = NULL;
+
+	lasso_bad_param(PROVIDER, provider)
+	lasso_null_param(index);
+	lasso_foreach(t, provider->private_data->endpoints) {
+		EndpointType *endpoint_type = (EndpointType*) t->data;
+		if (! endpoint_type)
+			continue;
+		/* endpoints are already properly ordered to provide the default endpoint first, so
+		 * we just need to return the first matching one */
+		if (endpoint_type->role == provider->role || provider->role ==
+				LASSO_PROVIDER_ROLE_NONE || provider->role ==
+				LASSO_PROVIDER_ROLE_ANY) {
+			if (lasso_strisequal(endpoint_type->kind,kind))
+			{
+				*index = endpoint_type->index;
+				return 0;
+			}
+		}
+	}
+	return -1;
+
 }
 
 /**

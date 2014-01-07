@@ -18,28 +18,27 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef __LASSO_XML_WS_H__
 #define __LASSO_XML_WS_H__
 
-#include "./wsa_attributed_any.h"
-#include "./wsa_attributed_qname.h"
-#include "./wsa_attributed_unsigned_long.h"
-#include "./wsa_attributed_uri.h"
-#include "./wsa_endpoint_reference.h"
-#include "./wsa_metadata.h"
-#include "./wsa_problem_action.h"
-#include "./wsa_reference_parameters.h"
-#include "./wsa_relates_to.h"
-#include "./wsse_embedded.h"
-#include "./wsse_reference.h"
-#include "./wsse_security_header.h"
-#include "./wsse_security_token_reference.h"
-#include "./wsse_transformation_parameters.h"
-#include "./wsse_username_token.h"
-#include "./wsu_timestamp.h"
+#include "wsa_attributed_any.h"
+#include "wsa_attributed_qname.h"
+#include "wsa_attributed_unsigned_long.h"
+#include "wsa_attributed_uri.h"
+#include "wsa_endpoint_reference.h"
+#include "wsa_metadata.h"
+#include "wsa_problem_action.h"
+#include "wsa_reference_parameters.h"
+#include "wsa_relates_to.h"
+#include "wsse_embedded.h"
+#include "wsse_reference.h"
+#include "wsse_security_header.h"
+#include "wsse_security_token_reference.h"
+#include "wsse_transformation_parameters.h"
+#include "wsse_username_token.h"
+#include "wsu_timestamp.h"
 
 #endif

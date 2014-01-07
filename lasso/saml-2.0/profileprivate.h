@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef __LASSO_SAML20_PROFILE_PRIVATE_H__
@@ -50,7 +49,7 @@ int lasso_saml20_profile_init_request(LassoProfile *profile, const char *remote_
 int lasso_saml20_profile_set_response_status(LassoProfile *profile, const char *code1, const char
 		*code2);
 int lasso_saml20_profile_init_artifact_resolve(LassoProfile *profile,
-		const char *msg, LassoHttpMethod method);
+		LassoProviderRole role, const char *msg, LassoHttpMethod method);
 int lasso_saml20_profile_process_artifact_resolve(LassoProfile *profile, const char *msg);
 int lasso_saml20_profile_build_artifact_response(LassoProfile *profile);
 int lasso_saml20_profile_process_artifact_response(LassoProfile *profile, const char *msg);

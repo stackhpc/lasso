@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef __LASSO_SESSION_H__
@@ -83,6 +82,13 @@ LASSO_EXPORT LassoNode* lasso_session_get_assertion(
 		LassoSession *session, const gchar *providerID);
 LASSO_EXPORT lasso_error_t lasso_session_add_assertion(LassoSession *session,
 		const char *providerID, LassoNode *assertion);
+
+LASSO_EXPORT GList *lasso_session_get_name_ids(LassoSession *session, const gchar *providerID);
+
+LASSO_EXPORT GList *lasso_session_get_session_indexes(LassoSession *session,
+		const gchar *providerID, LassoNode *name_id);
+
+LASSO_EXPORT GList* lasso_session_get_assertion_ids(LassoSession *session, const gchar *providerID);
 
 #ifdef __cplusplus
 }

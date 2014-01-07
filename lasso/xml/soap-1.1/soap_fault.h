@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef __LASSO_SOAP_FAULT_H__
@@ -30,7 +29,7 @@ extern "C" {
 #endif /* __cplusplus */
 
 #include "../xml.h"
-#include "./soap_detail.h"
+#include "soap_detail.h"
 
 #define LASSO_TYPE_SOAP_FAULT (lasso_soap_fault_get_type())
 #define LASSO_SOAP_FAULT(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), \

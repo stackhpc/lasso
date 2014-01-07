@@ -18,15 +18,14 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "../id-ff/session.h"
 #include "../xml/private.h"
-#include "./assertion_query.h"
-#include "./providerprivate.h"
-#include "./profileprivate.h"
+#include "assertion_query.h"
+#include "providerprivate.h"
+#include "profileprivate.h"
 #include "../id-ff/providerprivate.h"
 #include "../id-ff/profileprivate.h"
 #include "../id-ff/identityprivate.h"
@@ -223,16 +222,18 @@ lasso_assertion_query_build_request_msg(LassoAssertionQuery *assertion_query)
 		const char *url;
 		/* XXX: support only SOAP */
 		static const gchar *servicepoints[LASSO_ASSERTION_QUERY_REQUEST_TYPE_LAST] = {
-			"AssertionIDRequestService SOAP",
+			NULL,
+			NULL,
 			"AuthnQueryService SOAP",
+			"AttributeService SOAP",
 			"AuthzService SOAP",
-			"AttributeService SOAP"
 		};
 		static const LassoProviderRole roles[LASSO_ASSERTION_QUERY_REQUEST_TYPE_LAST] = {
-			LASSO_PROVIDER_ROLE_ANY,
+			LASSO_PROVIDER_ROLE_NONE,
+			LASSO_PROVIDER_ROLE_NONE,
 			LASSO_PROVIDER_ROLE_AUTHN_AUTHORITY,
+			LASSO_PROVIDER_ROLE_ATTRIBUTE_AUTHORITY,
 			LASSO_PROVIDER_ROLE_AUTHZ_AUTHORITY,
-			LASSO_PROVIDER_ROLE_ATTRIBUTE_AUTHORITY
 		};
 
 		type = assertion_query->private_data->query_request_type;
@@ -240,7 +241,7 @@ lasso_assertion_query_build_request_msg(LassoAssertionQuery *assertion_query)
 			return LASSO_ERROR_UNDEFINED;
 		}
 		if (type < LASSO_ASSERTION_QUERY_REQUEST_TYPE_ASSERTION_ID ||
-		    type >= LASSO_ASSERTION_QUERY_REQUEST_TYPE_AUTHZ_DECISION) {
+		    type > LASSO_ASSERTION_QUERY_REQUEST_TYPE_AUTHZ_DECISION) {
 			return LASSO_PARAM_ERROR_INVALID_VALUE;
 		}
 		url = lasso_provider_get_metadata_one_for_role(remote_provider, roles[type], servicepoints[type]);
@@ -551,6 +552,7 @@ class_init(LassoAssertionQueryClass *klass)
 	nclass->init_from_xml = init_from_xml;
 	nclass->node_data = g_new0(LassoNodeClassData, 1);
 	lasso_node_class_set_nodename(nclass, "AssertionQuery");
+	lasso_node_class_set_ns(nclass, LASSO_LASSO_HREF, LASSO_LASSO_PREFIX);
 	lasso_node_class_add_snippets(nclass, schema_snippets);
 
 	G_OBJECT_CLASS(klass)->finalize = finalize;

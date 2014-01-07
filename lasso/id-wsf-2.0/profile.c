@@ -18,10 +18,10 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <stdio.h>
 #include "../xml/private.h"
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
@@ -56,8 +56,8 @@
 #include "../xml/saml-2.0/saml2_assertion.h"
 #include "../xml/misc_text_node.h"
 #include "../utils.h"
-#include "./idwsf2_helper.h"
-#include "./soap_binding.h"
+#include "idwsf2_helper.h"
+#include "soap_binding.h"
 #include "../id-wsf/wsf_utils.h"
 #include "../saml-2.0/saml2_helper.h"
 
@@ -415,6 +415,7 @@ lasso_idwsf2_profile_check_security_mechanism(LassoIdWsf2Profile *profile,
 		const char *sender_id = NULL, *local_service_id = NULL;
 		const char *name_qualifier = NULL, *sp_name_qualifier = NULL;
 		LassoSaml2AssertionValidationState validation_state;
+		LassoProviderRole role;
 
 		assertion = lasso_soap_envelope_get_saml2_security_token (envelope);
 		if (assertion == NULL)
@@ -425,7 +426,12 @@ lasso_idwsf2_profile_check_security_mechanism(LassoIdWsf2Profile *profile,
 		issuer = lasso_saml2_assertion_get_issuer_provider(assertion, profile->parent.server);
 		if (! issuer)
 			goto_cleanup_with_rc(LASSO_PROFILE_ERROR_UNKNOWN_ISSUER);
-		if (issuer->role != LASSO_PROVIDER_ROLE_IDP)
+		if (issuer == &profile->parent.server->parent || issuer->role == 0) {
+			role = issuer->private_data->roles;
+		} else {
+			role = issuer->role;
+		}
+		if ((role & LASSO_PROVIDER_ROLE_IDP) == 0)
 			goto_cleanup_with_rc(LASSO_PROFILE_ERROR_ISSUER_IS_NOT_AN_IDP);
 		lasso_check_good_rc(lasso_provider_verify_single_node_signature(issuer,
 					(LassoNode*)assertion, "ID"));

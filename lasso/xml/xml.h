@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef __LASSO_XML_H__
@@ -92,15 +91,24 @@ typedef enum {
  * LassoSignatureMethod:
  * @LASSO_SIGNATURE_METHOD_RSA_SHA1: sign using a RSA private key
  * @LASSO_SIGNATURE_METHOD_DSA_SHA1: sign using a DSA private key
+ * @LASSO_SIGNATURE_METHOD_HMAC_SHA1: sign using a an HMAC-SHA1 secret key
  *
  * Signature method.
  **/
 typedef enum {
-	LASSO_SIGNATURE_METHOD_RSA_SHA1 = 1,
+	LASSO_SIGNATURE_METHOD_NONE = 0,
+	LASSO_SIGNATURE_METHOD_RSA_SHA1,
 	LASSO_SIGNATURE_METHOD_DSA_SHA1,
+	LASSO_SIGNATURE_METHOD_HMAC_SHA1,
 	LASSO_SIGNATURE_METHOD_LAST
 } LassoSignatureMethod;
 
+static inline gboolean
+lasso_validate_signature_method(LassoSignatureMethod signature_method)
+{
+	return signature_method > (LassoSignatureMethod)LASSO_SIGNATURE_TYPE_NONE \
+		&& signature_method < (LassoSignatureMethod)LASSO_SIGNATURE_METHOD_LAST;
+}
 
 typedef struct _LassoNode LassoNode;
 typedef struct _LassoNodeClass LassoNodeClass;
@@ -184,6 +192,11 @@ LASSO_EXPORT void lasso_register_idwsf2_dst_service(const gchar *prefix, const g
 LASSO_EXPORT gchar* lasso_get_prefix_for_idwsf2_dst_service_href(const gchar *href);
 
 LASSO_EXPORT char* lasso_node_debug(LassoNode *node, int level);
+
+struct _LassoKey;
+
+LASSO_EXPORT char* lasso_node_export_to_saml2_query(LassoNode *node, const char *param_name, const
+		char *url, struct _LassoKey *key);
 
 #ifdef __cplusplus
 }

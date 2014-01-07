@@ -18,19 +18,18 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "../xml/private.h"
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
 
-#include "./providerprivate.h"
-#include "./loginprivate.h"
-#include "./profileprivate.h"
-#include "./federationprivate.h"
-#include "./saml2_helper.h"
+#include "providerprivate.h"
+#include "loginprivate.h"
+#include "profileprivate.h"
+#include "federationprivate.h"
+#include "saml2_helper.h"
 
 #include "../id-ff/providerprivate.h"
 #include "../id-ff/serverprivate.h"
@@ -200,11 +199,6 @@ _lasso_login_must_verify_authn_request_signature(LassoProfile *profile) {
 
 static gboolean
 _lasso_login_must_verify_signature(LassoProfile *profile) {
-	LassoProvider *remote_provider;
-
-	remote_provider = lasso_server_get_provider(profile->server,
-			profile->remote_providerID);
-
 	switch (lasso_profile_get_signature_verify_hint(profile)) {
 		case LASSO_PROFILE_SIGNATURE_VERIFY_HINT_MAYBE:
 			return lasso_flag_verify_signature;
@@ -227,10 +221,8 @@ lasso_saml20_login_build_authn_request_msg(LassoLogin *login)
 	LassoProfile *profile;
 	LassoSamlp2AuthnRequest *authn_request;
 	int rc = 0;
-	LassoHttpMethod http_method;
 
 	profile = &login->parent;
-	http_method = login->http_method;
 
 	lasso_extract_node_or_fail(authn_request, profile->request, SAMLP2_AUTHN_REQUEST,
 			LASSO_PROFILE_ERROR_INVALID_REQUEST);
@@ -267,6 +259,7 @@ lasso_saml20_login_process_authn_request_msg(LassoLogin *login, const char *auth
 	LassoSamlp2StatusResponse *response = NULL;
 	LassoSamlp2AuthnRequest *authn_request = NULL;
 	LassoProvider *remote_provider = NULL;
+	LassoServer *server = NULL;
 	const gchar *protocol_binding = NULL;
 	const char *status1 = LASSO_SAML2_STATUS_CODE_RESPONDER;
 	const char *status2 = NULL;
@@ -305,6 +298,10 @@ lasso_saml20_login_process_authn_request_msg(LassoLogin *login, const char *auth
 		rc = LASSO_PROFILE_ERROR_UNKNOWN_PROVIDER;
 		goto cleanup;
 	}
+	lasso_extract_node_or_fail(server, lasso_profile_get_server(&login->parent), SERVER,
+			LASSO_PROFILE_ERROR_MISSING_SERVER);
+	remote_provider->role = LASSO_PROVIDER_ROLE_SP;
+	server->parent.role = LASSO_PROVIDER_ROLE_IDP;
 
 	/* all those attributes are mutually exclusive */
 	if (((authn_request->ProtocolBinding != NULL) ||
@@ -837,9 +834,16 @@ lasso_saml20_login_build_assertion(LassoLogin *login,
 	lasso_check_good_rc(lasso_server_saml2_assertion_setup_signature(profile->server,
 				assertion));
 
-
 	/* Encrypt NameID */
 	if (do_encrypt_nameid) {
+		/* store assertion in session object */
+		if (profile->session == NULL) {
+			profile->session = lasso_session_new();
+		}
+
+		lasso_session_add_assertion(profile->session, profile->remote_providerID,
+				LASSO_NODE(assertion));
+
 		/* FIXME: as with assertions, it should be possible to setup encryption of NameID for later */
 		goto_cleanup_if_fail_with_rc(provider != NULL, LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND);
 
@@ -859,14 +863,6 @@ lasso_saml20_login_build_assertion(LassoLogin *login,
 				lasso_provider_get_encryption_public_key(provider),
 				lasso_provider_get_encryption_sym_key_type(provider));
 	}
-
-	/* store assertion in session object */
-	if (profile->session == NULL) {
-		profile->session = lasso_session_new();
-	}
-
-	lasso_session_add_assertion(profile->session, profile->remote_providerID,
-			LASSO_NODE(assertion));
 
 	response = LASSO_SAMLP2_RESPONSE(profile->response);
 	lasso_list_add_gobject(response->Assertion, assertion);
@@ -919,6 +915,17 @@ lasso_saml20_login_build_artifact_msg(LassoLogin *login, LassoHttpMethod http_me
 		lasso_assign_string(subject_confirmation_data->Recipient, url);
 	}
 
+	/* If there is a non-encrypted NameID, fix the assertion in the session */
+	if (assertion && assertion->Subject && assertion->Subject->NameID) {
+		/* store assertion in session object */
+		if (profile->session == NULL) {
+			profile->session = lasso_session_new();
+		}
+		lasso_session_add_assertion(profile->session, profile->remote_providerID,
+				LASSO_NODE(assertion));
+	}
+
+
 	lasso_check_good_rc(lasso_saml20_profile_build_response_msg(profile, NULL, http_method,
 				url));
 
@@ -932,8 +939,8 @@ gint
 lasso_saml20_login_init_request(LassoLogin *login, gchar *response_msg,
 		LassoHttpMethod response_http_method)
 {
-	return lasso_saml20_profile_init_artifact_resolve(
-			LASSO_PROFILE(login), response_msg, response_http_method);
+	return lasso_saml20_profile_init_artifact_resolve(LASSO_PROFILE(login),
+			LASSO_PROVIDER_ROLE_IDP, response_msg, response_http_method);
 }
 
 
@@ -949,7 +956,7 @@ lasso_saml20_login_build_request_msg(LassoLogin *login)
 		lasso_node_remove_signature(profile->request);
 	}
 	return lasso_saml20_profile_build_request_msg(profile, "ArtifactResolutionService",
-			LASSO_HTTP_METHOD_SOAP, NULL);
+			LASSO_HTTP_METHOD_SOAP, profile->msg_url);
 }
 
 gint
@@ -1057,7 +1064,8 @@ lasso_saml20_login_process_authn_response_msg(LassoLogin *login, gchar *authn_re
 
 	/* Skip signature errors, let lasso_saml20_login_process_response_status_and_assertion
 	 * handle them */
-	goto_cleanup_if_fail (rc == 0 || rc == LASSO_PROFILE_ERROR_CANNOT_VERIFY_SIGNATURE);
+	goto_cleanup_if_fail (rc == 0 || rc == LASSO_LOGIN_ERROR_STATUS_NOT_SUCCESS || rc ==
+			LASSO_PROFILE_ERROR_CANNOT_VERIFY_SIGNATURE);
 
 	rc = lasso_saml20_login_process_response_status_and_assertion(login);
 cleanup:
@@ -1159,16 +1167,16 @@ _lasso_check_assertion_issuer(LassoSaml2Assertion *assertion, const gchar *provi
 static gint
 _lasso_saml20_login_decrypt_assertion(LassoLogin *login, LassoSamlp2Response *samlp2_response)
 {
-	xmlSecKey *encryption_private_key;
-	GList *it;
+	GList *encryption_private_keys = NULL;
+	GList *it = NULL;
 	gboolean at_least_one_decryption_failture = FALSE;
 	gboolean at_least_one_malformed_element = FALSE;
 
 	if (! samlp2_response->EncryptedAssertion)
 		return 0; /* nothing to do */
 
-	encryption_private_key = lasso_server_get_encryption_private_key(login->parent.server);
-	if (! encryption_private_key) {
+	encryption_private_keys = lasso_server_get_encryption_private_keys(login->parent.server);
+	if (! encryption_private_keys) {
 			message(G_LOG_LEVEL_WARNING, "Missing private encryption key, cannot decrypt assertions.");
 			return LASSO_DS_ERROR_DECRYPTION_FAILED_MISSING_PRIVATE_KEY;
 	}
@@ -1184,9 +1192,19 @@ _lasso_saml20_login_decrypt_assertion(LassoLogin *login, LassoSamlp2Response *sa
 			continue;
 		}
 		encrypted_assertion = (LassoSaml2EncryptedElement*)it->data;
-		rc1 = lasso_saml2_encrypted_element_decrypt(encrypted_assertion, encryption_private_key, (LassoNode**)&assertion);
-
-		if (rc1) {
+		lasso_foreach_full_begin(xmlSecKey*, encryption_private_key, it,
+				encryption_private_keys)
+		{
+			rc1 = lasso_saml2_encrypted_element_decrypt(encrypted_assertion, encryption_private_key, (LassoNode**)&assertion);
+			if (rc1 == 0)
+				break;
+		}
+		lasso_foreach_full_end();
+		if (rc1 == LASSO_DS_ERROR_DECRYPTION_FAILED) {
+			message(G_LOG_LEVEL_WARNING, "Could not decrypt the EncryptedKey");
+			at_least_one_decryption_failture |= TRUE;
+			continue;
+		} else if (rc1) {
 			message(G_LOG_LEVEL_WARNING, "Could not decrypt an assertion: %s", lasso_strerror(rc1));
 			at_least_one_decryption_failture |= TRUE;
 			continue;
@@ -1323,7 +1341,7 @@ lasso_saml20_login_accept_sso(LassoLogin *login)
 {
 	LassoProfile *profile;
 	LassoSaml2Assertion *assertion;
-	GList *previous_assertions, *t;
+	GList *previous_assertion_ids, *t;
 	LassoSaml2NameID *ni;
 	LassoFederation *federation;
 
@@ -1335,23 +1353,15 @@ lasso_saml20_login_accept_sso(LassoLogin *login)
 	if (assertion == NULL)
 		return LASSO_PROFILE_ERROR_MISSING_ASSERTION;
 
-	previous_assertions = lasso_session_get_assertions(profile->session,
+	previous_assertion_ids = lasso_session_get_assertion_ids(profile->session,
 			profile->remote_providerID);
-	for (t = previous_assertions; t; t = g_list_next(t)) {
-		LassoSaml2Assertion *ta;
-
-		if (LASSO_IS_SAML2_ASSERTION(t->data) == FALSE) {
-			continue;
-		}
-
-		ta = t->data;
-
-		if (lasso_strisequal(ta->ID,assertion->ID)) {
-			lasso_release_list(previous_assertions);
+	lasso_foreach(t, previous_assertion_ids) {
+		if (lasso_strisequal(t->data, assertion->ID)) {
+			lasso_release_list_of_strings(previous_assertion_ids);
 			return LASSO_LOGIN_ERROR_ASSERTION_REPLAY;
 		}
 	}
-	lasso_release_list(previous_assertions);
+	lasso_release_list_of_strings(previous_assertion_ids);
 
 	lasso_session_add_assertion(profile->session, profile->remote_providerID,
 			LASSO_NODE(assertion));
@@ -1414,6 +1424,16 @@ lasso_saml20_login_build_authn_response_msg(LassoLogin *login)
 		lasso_assign_string(subject_confirmation_data->Recipient, url);
 	}
 
+	/* If there is a non-encrypted NameID, fix the assertion in the session */
+	if (assertion && assertion->Subject && assertion->Subject->NameID) {
+		/* store assertion in session object */
+		if (profile->session == NULL) {
+			profile->session = lasso_session_new();
+		}
+		lasso_session_add_assertion(profile->session, profile->remote_providerID,
+				LASSO_NODE(assertion));
+	}
+
 	switch (login->protocolProfile) {
 		case LASSO_LOGIN_PROTOCOL_PROFILE_BRWS_POST:
 			http_method = LASSO_HTTP_METHOD_POST;
@@ -1428,6 +1448,7 @@ lasso_saml20_login_build_authn_response_msg(LassoLogin *login)
 	lasso_check_good_rc(lasso_saml20_profile_build_response_msg(profile, NULL, http_method, url));
 
 cleanup:
+	lasso_release_string(url);
 	return rc;
 }
 
@@ -1484,8 +1505,12 @@ lasso_saml20_login_init_idp_initiated_authn_request(LassoLogin *login,
 	if (! LASSO_IS_PROVIDER(provider))
 		return LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND;
 
+	/* fix roles */
+	server->parent.role = LASSO_PROVIDER_ROLE_IDP;
+	provider->role = LASSO_PROVIDER_ROLE_SP;
+
 	lasso_assign_string(profile->remote_providerID, remote_providerID);
-	lasso_assign_gobject(profile->request, lasso_samlp2_authn_request_new());
+	lasso_assign_new_gobject(profile->request, lasso_samlp2_authn_request_new());
 	lasso_assign_new_gobject(LASSO_SAMLP2_AUTHN_REQUEST(profile->request)->NameIDPolicy,
 			lasso_samlp2_name_id_policy_new());
 	lasso_assign_new_gobject(LASSO_SAMLP2_REQUEST_ABSTRACT(profile->request)->Issuer,

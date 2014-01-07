@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef __LASSO_PROVIDER_H__
@@ -31,6 +30,7 @@ extern "C" {
 
 #include "../xml/xml.h"
 #include "../xml/xml_enc.h"
+#include "../key.h"
 
 #define LASSO_TYPE_PROVIDER (lasso_provider_get_type())
 #define LASSO_PROVIDER(obj) \
@@ -134,7 +134,8 @@ typedef enum {
 	LASSO_PROVIDER_ROLE_AUTHN_AUTHORITY = 4,
 	LASSO_PROVIDER_ROLE_AUTHZ_AUTHORITY = 8,
 	LASSO_PROVIDER_ROLE_ATTRIBUTE_AUTHORITY = 16,
-	LASSO_PROVIDER_ROLE_LAST = 17
+	LASSO_PROVIDER_ROLE_LAST = 17,
+	LASSO_PROVIDER_ROLE_ALL = 31
 } LassoProviderRole;
 
 
@@ -268,6 +269,14 @@ LASSO_EXPORT GList *lasso_provider_get_metadata_keys_for_role(LassoProvider *pro
 LASSO_EXPORT LassoProviderRole lasso_provider_get_roles(LassoProvider *provider);
 
 LASSO_EXPORT gboolean lasso_provider_match_conformance(LassoProvider *provider, LassoProvider *another_provider);
+
+LASSO_EXPORT lasso_error_t lasso_provider_set_server_signing_key(LassoProvider *provider,
+		LassoKey *key);
+
+LASSO_EXPORT lasso_error_t lasso_provider_add_key(LassoProvider *provider, LassoKey *key, gboolean after);
+
+LASSO_EXPORT int lasso_provider_verify_signature(LassoProvider *provider,
+		const char *message, const char *id_attr_name, LassoMessageFormat format);
 
 #ifdef __cplusplus
 }

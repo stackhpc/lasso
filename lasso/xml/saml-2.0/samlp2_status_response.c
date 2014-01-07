@@ -18,14 +18,14 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 
 #include "../private.h"
 #include "../../utils.h"
-#include "./samlp2_status_response.h"
+#include "samlp2_status_response.h"
+#include "saml2_strings.h"
 #include <xmlsec/xmldsig.h>
 #include <xmlsec/templates.h>
 
@@ -62,9 +62,9 @@
 static struct XmlSnippet schema_snippets[] = {
 	{ "Issuer", SNIPPET_NODE,
 		G_STRUCT_OFFSET(LassoSamlp2StatusResponse, Issuer),
-		"LassoSaml2NameID", NULL, NULL},
+		"LassoSaml2NameID", LASSO_SAML2_ASSERTION_PREFIX, LASSO_SAML2_ASSERTION_HREF},
 	{ "Signature", SNIPPET_SIGNATURE,
-		G_STRUCT_OFFSET(LassoSamlp2StatusResponse, ID), NULL, NULL, NULL},
+		G_STRUCT_OFFSET(LassoSamlp2StatusResponse, ID), NULL, LASSO_DS_PREFIX, LASSO_DS_HREF},
 	{ "Extensions", SNIPPET_NODE,
 		G_STRUCT_OFFSET(LassoSamlp2StatusResponse, Extensions), NULL, NULL, NULL},
 	{ "Status", SNIPPET_NODE,

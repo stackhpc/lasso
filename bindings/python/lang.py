@@ -16,8 +16,7 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 import os
 import sys
@@ -73,11 +72,11 @@ class Binding:
         if not name:
             raise Exception('Cannot free, missing a name')
         if is_cstring(type):
-            print >>fd, '   lasso_release_string(%s);' % name
-        elif is_int(type, self.binding_data):
+            print >>fd, '    lasso_release_string(%s);' % name
+        elif is_int(type, self.binding_data) or is_boolean(type):
             pass
         elif is_xml_node(type):
-            print >>fd, '   lasso_release_xml_node(%s);' % name
+            print >>fd, '    lasso_release_xml_node(%s);' % name
         elif is_glist(type):
             etype = element_type(type)
             if is_cstring(etype):
@@ -122,6 +121,11 @@ def cptrToPy(cptr):
     o = klass.__new__(klass)
     o._cptr = cptr
     return o
+
+def str2lasso(s):
+    if isinstance(s, unicode):
+        return s.encode('utf-8')
+    return s
 
 class frozendict(dict):
     \'\'\'Immutable dict\'\'\'
@@ -168,7 +172,10 @@ class Error(Exception):
             raise exception
 
     def __str__(self):
-        return '<lasso.%s(%s): %s>' % (self.__class__.__name__, self.code, _lasso.strError(self.code))
+        if self.code:
+            return '<lasso.%s(%s): %s>' % (self.__class__.__name__, self.code, _lasso.strError(self.code))
+        else:
+            return '<lasso.%s: %s>' % (self.__class__.__name__, self.message)
 
     def __getitem__(self, i):
         # compatibility with SWIG bindings
@@ -323,6 +330,8 @@ if WSF_SUPPORT:
                     py_args.append(get_python_arg_decl(arg))
                     if not is_int(arg, self.binding_data) and is_object(arg):
                         c_args.append('%(name)s and %(name)s._cptr' % { 'name' : arg_name(arg) })
+                    elif is_cstring(arg):
+                        c_args.append('str2lasso(%s)' % arg_name(arg))
                     else:
                         c_args.append(arg_name(arg))
                 py_args = remove_bad_optional(py_args)
@@ -350,6 +359,8 @@ if WSF_SUPPORT:
 
                     if not is_int(arg, self.binding_data) and is_object(arg):
                         c_args.append('%s and %s._cptr' % (aname, aname))
+                    elif is_cstring(arg):
+                        c_args.append('str2lasso(%s)' % arg_name(arg))
                     else:
                         c_args.append(aname)
                 opt = False
@@ -409,6 +420,8 @@ if WSF_SUPPORT:
             print >> fd, '    def set_%s(self, value):' % mname
             if is_int(m, self.binding_data) or is_xml_node(m) or is_cstring(m) or is_boolean(m):
                 pass
+            elif is_cstring(m):
+                print >> fd, '        value = str2lasso(value)'
             elif is_object(m):
                 print >> fd, '        if value is not None:'
                 print >> fd, '            value = value and value._cptr'
@@ -463,6 +476,8 @@ if WSF_SUPPORT:
 
                 if is_out(arg):
                     c_args.append(outvar)
+                elif is_cstring(arg):
+                    c_args.append('str2lasso(%s)' % arg_name(arg))
                 elif is_xml_node(arg) or is_boolean(arg) or is_cstring(arg) or is_int(arg, self.binding_data) or is_glist(arg) or is_hashtable(arg) or is_time_t_pointer(arg):
                     c_args.append(arg_name(arg))
                 elif is_object(arg):
@@ -982,6 +997,17 @@ register_constants(PyObject *d)
             print >> fd, '   ',
         print >> fd, '%s(%s);' % (m.name, ', '.join([ref_name(x) for x in m.args]))
 
+        if m.return_type:
+            # Constructor so decrease refcount (it was incremented by PyGObjectPtr_New called
+            # in self.return_value
+            try:
+                self.return_value(fd, m.return_arg)
+            except:
+                print >>sys.stderr, 'W: cannot assign return value of', m
+                raise
+
+            if is_transfer_full(m.return_arg, default=True):
+                self.free_value(fd, m.return_arg, name = 'return_value')
         for f, arg in zip(parse_tuple_format, m.args):
             if is_out(arg):
                 self.return_value(fd, arg, return_var_name = arg[1], return_pyvar_name = 'out_pyvalue')
@@ -996,20 +1022,12 @@ register_constants(PyObject *d)
                     print >> fd, '    free_list(&%s, (GFunc)g_object_unref);' % arg[1]
             elif is_time_t_pointer(arg):
                 print >> fd, '    if (%s) free(%s);' % (arg[1], arg[1])
+            elif not is_transfer_full(arg) and is_xml_node(arg):
+                self.free_value(fd, arg)
 
         if not m.return_type:
             print >> fd, '    return noneRef();'
         else:
-            # Constructor so decrease refcount (it was incremented by PyGObjectPtr_New called
-            # in self.return_value
-            try:
-                self.return_value(fd, m.return_arg)
-            except:
-                print >>sys.stderr, 'W: cannot assign return value of', m
-                raise
-
-            if is_transfer_full(m.return_arg):
-                self.free_value(fd, m.return_arg, name = 'return_value')
             print >> fd, '    return return_pyvalue;'
         print >> fd, '}'
         print >> fd, ''

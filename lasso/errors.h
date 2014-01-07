@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 /**
@@ -36,7 +35,7 @@
  * <para><emphasis>Beware that this convention is not always well followed.</emphasis></para>
  */
 
-#include "./export.h"
+#include "export.h"
 
 LASSO_EXPORT const char* lasso_strerror(int error_code);
 
@@ -263,6 +262,15 @@ LASSO_EXPORT const char* lasso_strerror(int error_code);
  * Parsed XML is invalid.
  */
 #define LASSO_SERVER_ERROR_INVALID_XML -205
+/**
+ * LASSO_SERVER_ERROR_NO_PROVIDER_LOADED
+ *
+ * When loading a metadata file it indicates that no provider could be loaded.
+ * It could be because the file is not well formed, or because there is no provider for the
+ * role sought.
+ *
+ */
+#define LASSO_SERVER_ERROR_NO_PROVIDER_LOADED 206
 
 /* Single Logout */
 /**
@@ -289,6 +297,12 @@ LASSO_EXPORT const char* lasso_strerror(int error_code);
  * Unknown principal on logout
  */
 #define LASSO_LOGOUT_ERROR_UNKNOWN_PRINCIPAL 304
+/**
+ * LASSO_LOGOUT_ERROR_PARTIAL_LOGOUT:
+ *
+ * Logout could not be propagated to every service provider in the current session.
+ */
+#define LASSO_LOGOUT_ERROR_PARTIAL_LOGOUT 305
 
 /* Profile */
 /**
@@ -588,7 +602,20 @@ LASSO_EXPORT const char* lasso_strerror(int error_code);
  * The issuer of an assertion is not considered as an IdP
  */
 #define LASSO_PROFILE_ERROR_ISSUER_IS_NOT_AN_IDP 449
-
+/**
+ * LASSO_PROFILE_ERROR_REQUEST_DENIED:
+ *
+ * Generic error when an IdP or an SP return the RequestDenied status code in its response.
+ *
+ */
+#define LASSO_PROFILE_ERROR_REQUEST_DENIED 450
+/**
+ * LASSO_PROFILE_ERROR_ENDPOINT_INDEX_NOT_FOUND
+ *
+ * A received artifact contains an andpoint index which does not exist in the metadata of the
+ * corresponding provider.
+ */
+#define LASSO_PROFILE_ERROR_ENDPOINT_INDEX_NOT_FOUND 451
 
 /* functions/methods parameters checking */
 /**
@@ -1055,3 +1082,10 @@ LASSO_EXPORT const char* lasso_strerror(int error_code);
  * The current assertion query does not contain an attribute query.
  */
 #define LASSO_ASSERTION_QUERY_ERROR_NOT_AN_ATTRIBUTE_QUERY 1902
+
+/**
+ * LASSO_XMLENC_ERROR_INVALID_ENCRYPTED_DATA
+ *
+ * The EncryptedData node is invalid, look at the logs.
+ */
+#define LASSO_XMLENC_ERROR_INVALID_ENCRYPTED_DATA -2001

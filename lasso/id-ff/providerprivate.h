@@ -18,16 +18,19 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef __LASSO_PROVIDER_PRIVATE_H__
 #define __LASSO_PROVIDER_PRIVATE_H__
 
+#include <./serverprivate.h>
+#include "../xml/private.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
+
 
 /**
  * LassoPublicKeyType:
@@ -68,25 +71,24 @@ struct _LassoProviderPrivate
 	char *affiliation_owner_id;
 	char *affiliation_id;
 
-	xmlSecKey *public_key;
-	xmlNode *signing_key_descriptor;
+	GList *signing_public_keys;
+	GList *signing_key_descriptors;
 	xmlNode *encryption_key_descriptor;
 	char *encryption_public_key_str;
-	xmlSecKey *encryption_public_key;
+	GList *encryption_public_keys;
 	LassoEncryptionMode encryption_mode;
 	LassoEncryptionSymKeyType encryption_sym_key_type;
 	char *valid_until;
 	char *cache_duration;
 	GList *endpoints; /* of EndpointType_s */
+	LassoSignatureContext signature_context;
 };
 
 gboolean lasso_provider_load_metadata(LassoProvider *provider, const gchar *metadata);
 gboolean lasso_provider_load_metadata_from_buffer(LassoProvider *provider, const gchar *metadata);
-int lasso_provider_verify_signature(LassoProvider *provider,
-		const char *message, const char *id_attr_name, LassoMessageFormat format);
 gboolean lasso_provider_load_public_key(LassoProvider *provider,
 		LassoPublicKeyType public_key_type);
-xmlSecKey* lasso_provider_get_public_key(const LassoProvider *provider);
+GList* lasso_provider_get_public_keys(const LassoProvider *provider);
 xmlSecKey* lasso_provider_get_encryption_public_key(const LassoProvider *provider);
 LassoEncryptionSymKeyType lasso_provider_get_encryption_sym_key_type(const LassoProvider* provider);
 int lasso_provider_verify_saml_signature(LassoProvider *provider, xmlNode *signed_node, xmlDoc *doc);
@@ -94,7 +96,7 @@ int lasso_provider_verify_query_signature(LassoProvider *provider, const char *m
 void _lasso_provider_load_key_descriptor(LassoProvider *provider, xmlNode *key_descriptor);
 void _lasso_provider_add_metadata_value_for_role(LassoProvider *provider,
 		LassoProviderRole role, const char *name, const char *value);
-
+LassoProvider* lasso_provider_new_from_xmlnode(LassoProviderRole role, xmlNode *node);
 
 #ifdef __cplusplus
 }

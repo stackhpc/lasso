@@ -1,3 +1,11 @@
+lasso (2.4.0-1) unstable; urgency=low
+
+  * New upstream version.
+  * debian/control, debian/rules: use autoreconf
+  * debian/source/version: switch to 3.0 (quilt)
+
+ -- Frederic Peters <fpeters@debian.org>  Tue, 07 Jan 2014 13:22:21 +0100
+
 lasso (2.3.6-3) unstable; urgency=medium
 
   * Remove double-free in lasso_node_build_deflated_query. (thanks Andjelko

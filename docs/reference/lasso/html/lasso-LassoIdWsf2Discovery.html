@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LassoIdWsf2Discovery</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="idwsf2.html" title="ID-WSF 2.0">
 <link rel="prev" href="lasso-SOAP-Binding-utility-function-for-ID-WSF-2.0.html" title="SOAP Binding utility function for ID-WSF 2.0">
 <link rel="next" href="lasso-LassoIdWsf2DataService.html" title="LassoIdWsf2DataService">
-<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -38,7 +38,7 @@
 <div class="refsynopsisdiv">
 <a name="lasso-LassoIdWsf2Discovery.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">struct              <a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery">LassoIdWsf2Discovery</a>;
-<a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="returnvalue">LassoIdWsf2Discovery</span></a> *  <a class="link" href="lasso-LassoIdWsf2Discovery.html#lasso-idwsf2-discovery-new" title="lasso_idwsf2_discovery_new ()">lasso_idwsf2_discovery_new</a>      (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);
+<a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="returnvalue">LassoIdWsf2Discovery</span></a> * <a class="link" href="lasso-LassoIdWsf2Discovery.html#lasso-idwsf2-discovery-new" title="lasso_idwsf2_discovery_new ()">lasso_idwsf2_discovery_new</a>       (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoIdWsf2Discovery.html#lasso-idwsf2-discovery-init-metadata-register" title="lasso_idwsf2_discovery_init_metadata_register ()">lasso_idwsf2_discovery_init_metadata_register</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoIdWsf2Discovery.html#lasso-idwsf2-discovery-init-metadata-association-add" title="lasso_idwsf2_discovery_init_metadata_association_add ()">lasso_idwsf2_discovery_init_metadata_association_add</a>
@@ -61,20 +61,20 @@
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *idwsf2_discovery</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *abstract</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *provider_id</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *service_types</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *options</code></em>,
+                                                         <em class="parameter"><code><span class="type">GList</span> *service_types</code></em>,
+                                                         <em class="parameter"><code><span class="type">GList</span> *options</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *address</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *security_mechanisms</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="lasso-LassoIdWsf2Discovery.html#lasso-idwsf2-discovery-get-metadatas" title="lasso_idwsf2_discovery_get_metadatas ()">lasso_idwsf2_discovery_get_metadatas</a>
+                                                         <em class="parameter"><code><span class="type">GList</span> *security_mechanisms</code></em>);
+<span class="returnvalue">GList</span> *             <a class="link" href="lasso-LassoIdWsf2Discovery.html#lasso-idwsf2-discovery-get-metadatas" title="lasso_idwsf2_discovery_get_metadatas ()">lasso_idwsf2_discovery_get_metadatas</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoIdWsf2Discovery.html#lasso-idwsf2-discovery-add-requested-service" title="lasso_idwsf2_discovery_add_requested_service ()">lasso_idwsf2_discovery_add_requested_service</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *service_types</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *provider_ids</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *options</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *security_mechanisms</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *frameworks</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *actions</code></em>,
+                                                         <em class="parameter"><code><span class="type">GList</span> *service_types</code></em>,
+                                                         <em class="parameter"><code><span class="type">GList</span> *provider_ids</code></em>,
+                                                         <em class="parameter"><code><span class="type">GList</span> *options</code></em>,
+                                                         <em class="parameter"><code><span class="type">GList</span> *security_mechanisms</code></em>,
+                                                         <em class="parameter"><code><span class="type">GList</span> *frameworks</code></em>,
+                                                         <em class="parameter"><code><span class="type">GList</span> *actions</code></em>,
                                                          <em class="parameter"><code><span class="type">LassoIdWsf2DiscoveryQueryResultType</span> result_type</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *req_id</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoIdWsf2Discovery.html#lasso-idwsf2-discovery-build-request-msg" title="lasso_idwsf2_discovery_build_request_msg ()">lasso_idwsf2_discovery_build_request_msg</a>
@@ -83,7 +83,7 @@
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoIdWsf2Discovery.html#lasso-idwsf2-discovery-process-request-msg" title="lasso_idwsf2_discovery_process_request_msg ()">lasso_idwsf2_discovery_process_request_msg</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *message</code></em>);
-<span class="returnvalue">LassoIdWsf2DiscoveryRequestType</span>  <a class="link" href="lasso-LassoIdWsf2Discovery.html#lasso-idwsf2-discovery-get-request-type" title="lasso_idwsf2_discovery_get_request_type ()">lasso_idwsf2_discovery_get_request_type</a>
+<span class="returnvalue">LassoIdWsf2DiscoveryRequestType</span> <a class="link" href="lasso-LassoIdWsf2Discovery.html#lasso-idwsf2-discovery-get-request-type" title="lasso_idwsf2_discovery_get_request_type ()">lasso_idwsf2_discovery_get_request_type</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoIdWsf2Discovery.html#lasso-idwsf2-discovery-validate-request" title="lasso_idwsf2_discovery_validate_request ()">lasso_idwsf2_discovery_validate_request</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>);
@@ -93,11 +93,11 @@
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoIdWsf2Discovery.html#lasso-idwsf2-discovery-process-response-msg" title="lasso_idwsf2_discovery_process_response_msg ()">lasso_idwsf2_discovery_process_response_msg</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *msg</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="lasso-LassoIdWsf2Discovery.html#lasso-idwsf2-discovery-get-endpoint-references" title="lasso_idwsf2_discovery_get_endpoint_references ()">lasso_idwsf2_discovery_get_endpoint_references</a>
+<span class="returnvalue">GList</span> *             <a class="link" href="lasso-LassoIdWsf2Discovery.html#lasso-idwsf2-discovery-get-endpoint-references" title="lasso_idwsf2_discovery_get_endpoint_references ()">lasso_idwsf2_discovery_get_endpoint_references</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="lasso-LassoIdWsf2Discovery.html#lasso-idwsf2-discovery-get-svcmdids" title="lasso_idwsf2_discovery_get_svcmdids ()">lasso_idwsf2_discovery_get_svcmdids</a> (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>);
+<span class="returnvalue">GList</span> *             <a class="link" href="lasso-LassoIdWsf2Discovery.html#lasso-idwsf2-discovery-get-svcmdids" title="lasso_idwsf2_discovery_get_svcmdids ()">lasso_idwsf2_discovery_get_svcmdids</a> (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="lasso-LassoIdWsf2Discovery.html#lasso-idwsf2-discovery-set-svcmdids" title="lasso_idwsf2_discovery_set_svcmdids ()">lasso_idwsf2_discovery_set_svcmdids</a> (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *svcmdids</code></em>);
+                                                         <em class="parameter"><code><span class="type">GList</span> *svcmdids</code></em>);
 </pre>
 </div>
 <div class="refsect1">
@@ -115,7 +115,7 @@
 <hr>
 <div class="refsect2">
 <a name="lasso-idwsf2-discovery-new"></a><h3>lasso_idwsf2_discovery_new ()</h3>
-<pre class="programlisting"><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="returnvalue">LassoIdWsf2Discovery</span></a> *  lasso_idwsf2_discovery_new      (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="returnvalue">LassoIdWsf2Discovery</span></a> * lasso_idwsf2_discovery_new       (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);</pre>
 <p>
 Create a new <a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a>.
 </p>
@@ -317,10 +317,10 @@ Add a new metadata object to a request.
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *idwsf2_discovery</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *abstract</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *provider_id</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *service_types</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *options</code></em>,
+                                                         <em class="parameter"><code><span class="type">GList</span> *service_types</code></em>,
+                                                         <em class="parameter"><code><span class="type">GList</span> *options</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *address</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *security_mechanisms</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">GList</span> *security_mechanisms</code></em>);</pre>
 <p>
 Add new metadata to the current Metadata Register request.
 </p>
@@ -370,7 +370,7 @@ service. <span class="annotation">[<acronym title="NULL is ok, both for passing 
 <hr>
 <div class="refsect2">
 <a name="lasso-idwsf2-discovery-get-metadatas"></a><h3>lasso_idwsf2_discovery_get_metadatas ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             lasso_idwsf2_discovery_get_metadatas
+<pre class="programlisting"><span class="returnvalue">GList</span> *             lasso_idwsf2_discovery_get_metadatas
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>);</pre>
 <p>
 Return the current list of metadatas in the <em class="parameter"><code>discovery</code></em> object. They can be metadatas just
@@ -398,12 +398,12 @@ received through a <span class="type">LASSO_IDWSF2_DISCOVERY_REQUEST_TYPE_MD_REG
 <a name="lasso-idwsf2-discovery-add-requested-service"></a><h3>lasso_idwsf2_discovery_add_requested_service ()</h3>
 <pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_idwsf2_discovery_add_requested_service
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *service_types</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *provider_ids</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *options</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *security_mechanisms</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *frameworks</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *actions</code></em>,
+                                                         <em class="parameter"><code><span class="type">GList</span> *service_types</code></em>,
+                                                         <em class="parameter"><code><span class="type">GList</span> *provider_ids</code></em>,
+                                                         <em class="parameter"><code><span class="type">GList</span> *options</code></em>,
+                                                         <em class="parameter"><code><span class="type">GList</span> *security_mechanisms</code></em>,
+                                                         <em class="parameter"><code><span class="type">GList</span> *frameworks</code></em>,
+                                                         <em class="parameter"><code><span class="type">GList</span> *actions</code></em>,
                                                          <em class="parameter"><code><span class="type">LassoIdWsf2DiscoveryQueryResultType</span> result_type</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *req_id</code></em>);</pre>
 <p>
@@ -533,7 +533,7 @@ content.</p></li>
 <hr>
 <div class="refsect2">
 <a name="lasso-idwsf2-discovery-get-request-type"></a><h3>lasso_idwsf2_discovery_get_request_type ()</h3>
-<pre class="programlisting"><span class="returnvalue">LassoIdWsf2DiscoveryRequestType</span>  lasso_idwsf2_discovery_get_request_type
+<pre class="programlisting"><span class="returnvalue">LassoIdWsf2DiscoveryRequestType</span> lasso_idwsf2_discovery_get_request_type
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>);</pre>
 <p>
 Return the type of the last parsed request.
@@ -633,7 +633,7 @@ Fail the last request with the given status code.
 <hr>
 <div class="refsect2">
 <a name="lasso-idwsf2-discovery-get-endpoint-references"></a><h3>lasso_idwsf2_discovery_get_endpoint_references ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             lasso_idwsf2_discovery_get_endpoint_references
+<pre class="programlisting"><span class="returnvalue">GList</span> *             lasso_idwsf2_discovery_get_endpoint_references
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>);</pre>
 <p>
 Return the list of wsa:EndpointReference returned by the last discovery query.
@@ -647,7 +647,7 @@ Return the list of wsa:EndpointReference returned by the last discovery query.
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> of
+<td>a <span class="type">GList</span> of
 LassoWsAddrEndpointReference objects, or NULL if none is found. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> LassoWsAddrEndpointReference]</span>
 </td>
 </tr>
@@ -657,7 +657,7 @@ LassoWsAddrEndpointReference objects, or NULL if none is found. <span class="ann
 <hr>
 <div class="refsect2">
 <a name="lasso-idwsf2-discovery-get-svcmdids"></a><h3>lasso_idwsf2_discovery_get_svcmdids ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             lasso_idwsf2_discovery_get_svcmdids (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">GList</span> *             lasso_idwsf2_discovery_get_svcmdids (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>);</pre>
 <p>
 Return the list of SvcMDID, or service metadata ids, returned by the last discovery query.
 </p>
@@ -680,7 +680,7 @@ Return the list of SvcMDID, or service metadata ids, returned by the last discov
 <div class="refsect2">
 <a name="lasso-idwsf2-discovery-set-svcmdids"></a><h3>lasso_idwsf2_discovery_set_svcmdids ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                lasso_idwsf2_discovery_set_svcmdids (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *svcmdids</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">GList</span> *svcmdids</code></em>);</pre>
 <p>
 Set the list of SvcMDID, or service metadata ids.
 </p>
@@ -703,6 +703,6 @@ Set the list of SvcMDID, or service metadata ids.
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.17</div>
+          Generated by GTK-Doc V1.18</div>
 </body>
 </html>

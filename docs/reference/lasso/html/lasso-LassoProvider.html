@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LassoProvider</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="architecture.html" title="Lasso Architecture">
 <link rel="prev" href="lasso-LassoServer.html" title="LassoServer">
 <link rel="next" href="lasso-LassoIdentity.html" title="LassoIdentity">
-<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -47,35 +47,35 @@ enum                <a class="link" href="lasso-LassoProvider.html#LassoProvider
                                                          <em class="parameter"><code>const <span class="type">char</span> *metadata</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *public_key</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *ca_cert_chain</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="lasso-LassoProvider.html#lasso-provider-get-assertion-consumer-service-url" title="lasso_provider_get_assertion_consumer_service_url ()">lasso_provider_get_assertion_consumer_service_url</a>
+<span class="returnvalue">gchar</span> *             <a class="link" href="lasso-LassoProvider.html#lasso-provider-get-assertion-consumer-service-url" title="lasso_provider_get_assertion_consumer_service_url ()">lasso_provider_get_assertion_consumer_service_url</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *service_id</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="lasso-LassoProvider.html#lasso-provider-get-metadata-one" title="lasso_provider_get_metadata_one ()">lasso_provider_get_metadata_one</a>     (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
+<span class="returnvalue">gchar</span> *             <a class="link" href="lasso-LassoProvider.html#lasso-provider-get-metadata-one" title="lasso_provider_get_metadata_one ()">lasso_provider_get_metadata_one</a>     (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *name</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="lasso-LassoProvider.html#lasso-provider-get-metadata-list" title="lasso_provider_get_metadata_list ()">lasso_provider_get_metadata_list</a>    (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
+<span class="returnvalue">GList</span> *             <a class="link" href="lasso-LassoProvider.html#lasso-provider-get-metadata-list" title="lasso_provider_get_metadata_list ()">lasso_provider_get_metadata_list</a>    (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *name</code></em>);
-<a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="returnvalue">LassoProvider</span></a> *     <a class="link" href="lasso-LassoProvider.html#lasso-provider-new-from-dump" title="lasso_provider_new_from_dump ()">lasso_provider_new_from_dump</a>        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *dump</code></em>);
+<a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="returnvalue">LassoProvider</span></a> *     <a class="link" href="lasso-LassoProvider.html#lasso-provider-new-from-dump" title="lasso_provider_new_from_dump ()">lasso_provider_new_from_dump</a>        (<em class="parameter"><code>const <span class="type">gchar</span> *dump</code></em>);
 <a class="link" href="lasso-LassoProvider.html#LassoHttpMethod" title="enum LassoHttpMethod"><span class="returnvalue">LassoHttpMethod</span></a>     <a class="link" href="lasso-LassoProvider.html#lasso-provider-get-first-http-method" title="lasso_provider_get_first_http_method ()">lasso_provider_get_first_http_method</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *remote_provider</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoMdProtocolType" title="enum LassoMdProtocolType"><span class="type">LassoMdProtocolType</span></a> protocol_type</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="lasso-LassoProvider.html#lasso-provider-accept-http-method" title="lasso_provider_accept_http_method ()">lasso_provider_accept_http_method</a>   (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
+<span class="returnvalue">gboolean</span>            <a class="link" href="lasso-LassoProvider.html#lasso-provider-accept-http-method" title="lasso_provider_accept_http_method ()">lasso_provider_accept_http_method</a>   (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *remote_provider</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoMdProtocolType" title="enum LassoMdProtocolType"><span class="type">LassoMdProtocolType</span></a> protocol_type</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoHttpMethod" title="enum LassoHttpMethod"><span class="type">LassoHttpMethod</span></a> http_method</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> initiate_profile</code></em>);
+                                                         <em class="parameter"><code><span class="type">gboolean</span> initiate_profile</code></em>);
 enum                <a class="link" href="lasso-LassoProvider.html#LassoHttpMethod" title="enum LassoHttpMethod">LassoHttpMethod</a>;
 enum                <a class="link" href="lasso-LassoProvider.html#LassoMdProtocolType" title="enum LassoMdProtocolType">LassoMdProtocolType</a>;
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="lasso-LassoProvider.html#lasso-provider-has-protocol-profile" title="lasso_provider_has_protocol_profile ()">lasso_provider_has_protocol_profile</a> (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
+<span class="returnvalue">gboolean</span>            <a class="link" href="lasso-LassoProvider.html#lasso-provider-has-protocol-profile" title="lasso_provider_has_protocol_profile ()">lasso_provider_has_protocol_profile</a> (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoMdProtocolType" title="enum LassoMdProtocolType"><span class="type">LassoMdProtocolType</span></a> protocol_type</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *protocol_profile</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="lasso-LassoProvider.html#lasso-provider-get-base64-succinct-id" title="lasso_provider_get_base64_succinct_id ()">lasso_provider_get_base64_succinct_id</a>
+<span class="returnvalue">gchar</span> *             <a class="link" href="lasso-LassoProvider.html#lasso-provider-get-base64-succinct-id" title="lasso_provider_get_base64_succinct_id ()">lasso_provider_get_base64_succinct_id</a>
                                                         (<em class="parameter"><code>const <a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>);
 <span class="returnvalue">xmlNode</span> *           <a class="link" href="lasso-LassoProvider.html#lasso-provider-get-organization" title="lasso_provider_get_organization ()">lasso_provider_get_organization</a>     (<em class="parameter"><code>const <a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>);
-<a class="link" href="lasso-LassoProvider.html#LassoProtocolConformance" title="enum LassoProtocolConformance"><span class="returnvalue">LassoProtocolConformance</span></a>  <a class="link" href="lasso-LassoProvider.html#lasso-provider-get-protocol-conformance" title="lasso_provider_get_protocol_conformance ()">lasso_provider_get_protocol_conformance</a>
+<a class="link" href="lasso-LassoProvider.html#LassoProtocolConformance" title="enum LassoProtocolConformance"><span class="returnvalue">LassoProtocolConformance</span></a> <a class="link" href="lasso-LassoProvider.html#lasso-provider-get-protocol-conformance" title="lasso_provider_get_protocol_conformance ()">lasso_provider_get_protocol_conformance</a>
                                                         (<em class="parameter"><code>const <a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>);
 enum                <a class="link" href="lasso-LassoProvider.html#LassoProtocolConformance" title="enum LassoProtocolConformance">LassoProtocolConformance</a>;
-<a class="link" href="lasso-LassoProvider.html#LassoEncryptionMode" title="enum LassoEncryptionMode"><span class="returnvalue">LassoEncryptionMode</span></a>  <a class="link" href="lasso-LassoProvider.html#lasso-provider-get-encryption-mode" title="lasso_provider_get_encryption_mode ()">lasso_provider_get_encryption_mode</a> (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>);
+<a class="link" href="lasso-LassoProvider.html#LassoEncryptionMode" title="enum LassoEncryptionMode"><span class="returnvalue">LassoEncryptionMode</span></a> <a class="link" href="lasso-LassoProvider.html#lasso-provider-get-encryption-mode" title="lasso_provider_get_encryption_mode ()">lasso_provider_get_encryption_mode</a>  (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="lasso-LassoProvider.html#lasso-provider-set-encryption-mode" title="lasso_provider_set_encryption_mode ()">lasso_provider_set_encryption_mode</a>  (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoEncryptionMode" title="enum LassoEncryptionMode"><span class="type">LassoEncryptionMode</span></a> encryption_mode</code></em>);
 enum                <a class="link" href="lasso-LassoProvider.html#LassoEncryptionMode" title="enum LassoEncryptionMode">LassoEncryptionMode</a>;
@@ -87,11 +87,11 @@ enum                <a class="link" href="lasso-LassoProvider.html#LassoEncrypti
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *id_attr_name</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="lasso-LassoProvider.html#lasso-provider-get-default-name-id-format" title="lasso_provider_get_default_name_id_format ()">lasso_provider_get_default_name_id_format</a>
+<span class="returnvalue">gchar</span> *             <a class="link" href="lasso-LassoProvider.html#lasso-provider-get-default-name-id-format" title="lasso_provider_get_default_name_id_format ()">lasso_provider_get_default_name_id_format</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>);
 const <span class="returnvalue">char</span> *        <a class="link" href="lasso-LassoProvider.html#lasso-provider-get-sp-name-qualifier" title="lasso_provider_get_sp_name_qualifier ()">lasso_provider_get_sp_name_qualifier</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="lasso-LassoProvider.html#lasso-provider-get-idp-supported-attributes" title="lasso_provider_get_idp_supported_attributes ()">lasso_provider_get_idp_supported_attributes</a>
+<span class="returnvalue">GList</span> *             <a class="link" href="lasso-LassoProvider.html#lasso-provider-get-idp-supported-attributes" title="lasso_provider_get_idp_supported_attributes ()">lasso_provider_get_idp_supported_attributes</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>);
 <span class="returnvalue">char</span> *              <a class="link" href="lasso-LassoProvider.html#lasso-provider-get-valid-until" title="lasso_provider_get_valid_until ()">lasso_provider_get_valid_until</a>      (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>);
 <span class="returnvalue">char</span> *              <a class="link" href="lasso-LassoProvider.html#lasso-provider-get-cache-duration" title="lasso_provider_get_cache_duration ()">lasso_provider_get_cache_duration</a>   (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>);
@@ -99,15 +99,15 @@ const <span class="returnvalue">char</span> *        <a class="link" href="lasso
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProviderRole" title="enum LassoProviderRole"><span class="type">LassoProviderRole</span></a> role</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *name</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="lasso-LassoProvider.html#lasso-provider-get-metadata-list-for-role" title="lasso_provider_get_metadata_list_for_role ()">lasso_provider_get_metadata_list_for_role</a>
+<span class="returnvalue">GList</span> *             <a class="link" href="lasso-LassoProvider.html#lasso-provider-get-metadata-list-for-role" title="lasso_provider_get_metadata_list_for_role ()">lasso_provider_get_metadata_list_for_role</a>
                                                         (<em class="parameter"><code>const <a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProviderRole" title="enum LassoProviderRole"><span class="type">LassoProviderRole</span></a> role</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *name</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="lasso-LassoProvider.html#lasso-provider-get-metadata-keys-for-role" title="lasso_provider_get_metadata_keys_for_role ()">lasso_provider_get_metadata_keys_for_role</a>
+<span class="returnvalue">GList</span> *             <a class="link" href="lasso-LassoProvider.html#lasso-provider-get-metadata-keys-for-role" title="lasso_provider_get_metadata_keys_for_role ()">lasso_provider_get_metadata_keys_for_role</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProviderRole" title="enum LassoProviderRole"><span class="type">LassoProviderRole</span></a> role</code></em>);
 <a class="link" href="lasso-LassoProvider.html#LassoProviderRole" title="enum LassoProviderRole"><span class="returnvalue">LassoProviderRole</span></a>   <a class="link" href="lasso-LassoProvider.html#lasso-provider-get-roles" title="lasso_provider_get_roles ()">lasso_provider_get_roles</a>            (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="lasso-LassoProvider.html#lasso-provider-match-conformance" title="lasso_provider_match_conformance ()">lasso_provider_match_conformance</a>    (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
+<span class="returnvalue">gboolean</span>            <a class="link" href="lasso-LassoProvider.html#lasso-provider-match-conformance" title="lasso_provider_match_conformance ()">lasso_provider_match_conformance</a>    (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *another_provider</code></em>);
 </pre>
 </div>
@@ -180,7 +180,7 @@ flattened inside a key-value map that you can access using the functions
 <td></td>
 </tr>
 <tr>
-<td><p><span class="term"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *<em class="structfield"><code><a name="LassoProvider.ProviderID"></a>ProviderID</code></em>;</span></p></td>
+<td><p><span class="term"><span class="type">gchar</span> *<em class="structfield"><code><a name="LassoProvider.ProviderID"></a>ProviderID</code></em>;</span></p></td>
 <td>the identifier URI of this provider</td>
 </tr>
 <tr>
@@ -192,11 +192,11 @@ flattened inside a key-value map that you can access using the functions
 <td>file path or content of the metadata description for this provider.</td>
 </tr>
 <tr>
-<td><p><span class="term"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *<em class="structfield"><code><a name="LassoProvider.public-key"></a>public_key</code></em>;</span></p></td>
+<td><p><span class="term"><span class="type">gchar</span> *<em class="structfield"><code><a name="LassoProvider.public-key"></a>public_key</code></em>;</span></p></td>
 <td>file path or content of the public key file for this provider.</td>
 </tr>
 <tr>
-<td><p><span class="term"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *<em class="structfield"><code><a name="LassoProvider.ca-cert-chain"></a>ca_cert_chain</code></em>;</span></p></td>
+<td><p><span class="term"><span class="type">gchar</span> *<em class="structfield"><code><a name="LassoProvider.ca-cert-chain"></a>ca_cert_chain</code></em>;</span></p></td>
 <td>file path or content of the CA cert chain used to validate signature of this
 provider (can be used instead of a public key to limit the need for metadata updates).</td>
 </tr>
@@ -251,7 +251,8 @@ Creates a new <a class="link" href="lasso-LassoProvider.html#LassoProvider" titl
 	LASSO_PROVIDER_ROLE_AUTHN_AUTHORITY = 4,
 	LASSO_PROVIDER_ROLE_AUTHZ_AUTHORITY = 8,
 	LASSO_PROVIDER_ROLE_ATTRIBUTE_AUTHORITY = 16,
-	LASSO_PROVIDER_ROLE_LAST = 17
+	LASSO_PROVIDER_ROLE_LAST = 17,
+	LASSO_PROVIDER_ROLE_ALL = 31
 } LassoProviderRole;
 </pre>
 <p>
@@ -310,6 +311,10 @@ attributes aboute a principal,
 <em class="parameter"><code>LASSO_PROVIDER_ROLE_LAST</code></em>.
 </td>
 </tr>
+<tr>
+<td><p><a name="LASSO-PROVIDER-ROLE-ALL:CAPS"></a><span class="term"><code class="literal">LASSO_PROVIDER_ROLE_ALL</code></span></p></td>
+<td></td>
+</tr>
 </tbody>
 </table></div>
 </div>
@@ -352,7 +357,7 @@ Creates a new <a class="link" href="lasso-LassoProvider.html#LassoProvider" titl
 <hr>
 <div class="refsect2">
 <a name="lasso-provider-get-assertion-consumer-service-url"></a><h3>lasso_provider_get_assertion_consumer_service_url ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             lasso_provider_get_assertion_consumer_service_url
+<pre class="programlisting"><span class="returnvalue">gchar</span> *             lasso_provider_get_assertion_consumer_service_url
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *service_id</code></em>);</pre>
 <p>
@@ -383,7 +388,7 @@ string must be freed by the caller. <span class="annotation">[<acronym title="NU
 <hr>
 <div class="refsect2">
 <a name="lasso-provider-get-metadata-one"></a><h3>lasso_provider_get_metadata_one ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             lasso_provider_get_metadata_one     (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
+<pre class="programlisting"><span class="returnvalue">gchar</span> *             lasso_provider_get_metadata_one     (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *name</code></em>);</pre>
 <p>
 Extracts the element <em class="parameter"><code>name</code></em> from the provider metadata descriptor.
@@ -412,7 +417,7 @@ This string must be freed by the caller. <span class="annotation">[<acronym titl
 <hr>
 <div class="refsect2">
 <a name="lasso-provider-get-metadata-list"></a><h3>lasso_provider_get_metadata_list ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             lasso_provider_get_metadata_list    (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
+<pre class="programlisting"><span class="returnvalue">GList</span> *             lasso_provider_get_metadata_list    (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *name</code></em>);</pre>
 <p>
 Extracts zero to many elements from the provider metadata descriptor.
@@ -431,7 +436,7 @@ Extracts zero to many elements from the provider metadata descriptor.
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> with the elements.  This GList is internally
+<td>a <span class="type">GList</span> with the elements.  This GList is internally
 allocated and points to internally allocated strings.  It must
 not be freed, modified or stored. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> string]</span>
 </td>
@@ -442,7 +447,7 @@ not be freed, modified or stored. <span class="annotation">[<acronym title="Don'
 <hr>
 <div class="refsect2">
 <a name="lasso-provider-new-from-dump"></a><h3>lasso_provider_new_from_dump ()</h3>
-<pre class="programlisting"><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="returnvalue">LassoProvider</span></a> *     lasso_provider_new_from_dump        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *dump</code></em>);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="returnvalue">LassoProvider</span></a> *     lasso_provider_new_from_dump        (<em class="parameter"><code>const <span class="type">gchar</span> *dump</code></em>);</pre>
 <p>
 Restores the <em class="parameter"><code>dump</code></em> to a new <a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a>.
 </p>
@@ -498,11 +503,11 @@ Looks up and returns a <a class="link" href="lasso-LassoProvider.html#LassoHttpM
 <hr>
 <div class="refsect2">
 <a name="lasso-provider-accept-http-method"></a><h3>lasso_provider_accept_http_method ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            lasso_provider_accept_http_method   (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            lasso_provider_accept_http_method   (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *remote_provider</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoMdProtocolType" title="enum LassoMdProtocolType"><span class="type">LassoMdProtocolType</span></a> protocol_type</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoHttpMethod" title="enum LassoHttpMethod"><span class="type">LassoHttpMethod</span></a> http_method</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> initiate_profile</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">gboolean</span> initiate_profile</code></em>);</pre>
 <p>
 Gets if <em class="parameter"><code>http_method</code></em> is an appropriate method for the <em class="parameter"><code>protocol_type</code></em> profile
 between <em class="parameter"><code>provider</code></em> and <em class="parameter"><code>remote_provider</code></em>.
@@ -534,7 +539,7 @@ between <em class="parameter"><code>provider</code></em> and <em class="paramete
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if it is appropriate</td>
+<code class="literal">TRUE</code> if it is appropriate</td>
 </tr>
 </tbody>
 </table></div>
@@ -705,7 +710,7 @@ Liberty Metadata Type.
 <hr>
 <div class="refsect2">
 <a name="lasso-provider-has-protocol-profile"></a><h3>lasso_provider_has_protocol_profile ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            lasso_provider_has_protocol_profile (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            lasso_provider_has_protocol_profile (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoMdProtocolType" title="enum LassoMdProtocolType"><span class="type">LassoMdProtocolType</span></a> protocol_type</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *protocol_profile</code></em>);</pre>
 <p>
@@ -730,7 +735,7 @@ Gets if <em class="parameter"><code>provider</code></em> supports <em class="par
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if it is supported</td>
+<code class="literal">TRUE</code> if it is supported</td>
 </tr>
 </tbody>
 </table></div>
@@ -738,7 +743,7 @@ Gets if <em class="parameter"><code>provider</code></em> supports <em class="par
 <hr>
 <div class="refsect2">
 <a name="lasso-provider-get-base64-succinct-id"></a><h3>lasso_provider_get_base64_succinct_id ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             lasso_provider_get_base64_succinct_id
+<pre class="programlisting"><span class="returnvalue">gchar</span> *             lasso_provider_get_base64_succinct_id
                                                         (<em class="parameter"><code>const <a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>);</pre>
 <p>
 Computes and returns the base64-encoded provider succinct ID.
@@ -787,7 +792,7 @@ not found.  This xmlnode must be freed by the caller. <span class="annotation">[
 <hr>
 <div class="refsect2">
 <a name="lasso-provider-get-protocol-conformance"></a><h3>lasso_provider_get_protocol_conformance ()</h3>
-<pre class="programlisting"><a class="link" href="lasso-LassoProvider.html#LassoProtocolConformance" title="enum LassoProtocolConformance"><span class="returnvalue">LassoProtocolConformance</span></a>  lasso_provider_get_protocol_conformance
+<pre class="programlisting"><a class="link" href="lasso-LassoProvider.html#LassoProtocolConformance" title="enum LassoProtocolConformance"><span class="returnvalue">LassoProtocolConformance</span></a> lasso_provider_get_protocol_conformance
                                                         (<em class="parameter"><code>const <a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>);</pre>
 <p>
 Return the protocol conformance of the given provider, it should allow to switch behaviour of SP
@@ -854,7 +859,7 @@ Provider protocol conformance.
 <hr>
 <div class="refsect2">
 <a name="lasso-provider-get-encryption-mode"></a><h3>lasso_provider_get_encryption_mode ()</h3>
-<pre class="programlisting"><a class="link" href="lasso-LassoProvider.html#LassoEncryptionMode" title="enum LassoEncryptionMode"><span class="returnvalue">LassoEncryptionMode</span></a>  lasso_provider_get_encryption_mode (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoProvider.html#LassoEncryptionMode" title="enum LassoEncryptionMode"><span class="returnvalue">LassoEncryptionMode</span></a> lasso_provider_get_encryption_mode  (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>);</pre>
 <p>
 Return the current encryption mode.
 </p>
@@ -1030,7 +1035,7 @@ signature.</td>
 <hr>
 <div class="refsect2">
 <a name="lasso-provider-get-default-name-id-format"></a><h3>lasso_provider_get_default_name_id_format ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             lasso_provider_get_default_name_id_format
+<pre class="programlisting"><span class="returnvalue">gchar</span> *             lasso_provider_get_default_name_id_format
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>);</pre>
 <p>
 If the provider has a list of supported name id formats in its metadatas, return the first one.
@@ -1077,7 +1082,7 @@ free it. <span class="annotation">[<acronym title="Don't free data after the cod
 <hr>
 <div class="refsect2">
 <a name="lasso-provider-get-idp-supported-attributes"></a><h3>lasso_provider_get_idp_supported_attributes ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             lasso_provider_get_idp_supported_attributes
+<pre class="programlisting"><span class="returnvalue">GList</span> *             lasso_provider_get_idp_supported_attributes
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>);</pre>
 <p>
 If the provider supports the IDP SSO role, then return the list of Attribute definition that this
@@ -1178,7 +1183,7 @@ Retun value: a newly allocated string or NULL. If non-NULL must be freed by the 
 <hr>
 <div class="refsect2">
 <a name="lasso-provider-get-metadata-list-for-role"></a><h3>lasso_provider_get_metadata_list_for_role ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             lasso_provider_get_metadata_list_for_role
+<pre class="programlisting"><span class="returnvalue">GList</span> *             lasso_provider_get_metadata_list_for_role
                                                         (<em class="parameter"><code>const <a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProviderRole" title="enum LassoProviderRole"><span class="type">LassoProviderRole</span></a> role</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *name</code></em>);</pre>
@@ -1203,7 +1208,7 @@ Extracts zero to many elements from the <em class="parameter"><code>provider</co
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> with the elements.  This GList is internally
+<td>a <span class="type">GList</span> with the elements.  This GList is internally
 allocated and points to internally allocated strings.  It must
 not be freed, modified or stored. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> string]</span>
 </td>
@@ -1214,7 +1219,7 @@ not be freed, modified or stored. <span class="annotation">[<acronym title="Don'
 <hr>
 <div class="refsect2">
 <a name="lasso-provider-get-metadata-keys-for-role"></a><h3>lasso_provider_get_metadata_keys_for_role ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             lasso_provider_get_metadata_keys_for_role
+<pre class="programlisting"><span class="returnvalue">GList</span> *             lasso_provider_get_metadata_keys_for_role
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProviderRole" title="enum LassoProviderRole"><span class="type">LassoProviderRole</span></a> role</code></em>);</pre>
 <p>
@@ -1263,7 +1268,7 @@ Return the bitmask of the supported roles.
 <hr>
 <div class="refsect2">
 <a name="lasso-provider-match-conformance"></a><h3>lasso_provider_match_conformance ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            lasso_provider_match_conformance    (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            lasso_provider_match_conformance    (<em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *provider</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> *another_provider</code></em>);</pre>
 <p>
 Return whether the two provider support a same protocol.
@@ -1291,6 +1296,6 @@ See also <a class="link" href="lasso-LassoProvider.html#LassoProtocolConformance
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.17</div>
+          Generated by GTK-Doc V1.18</div>
 </body>
 </html>

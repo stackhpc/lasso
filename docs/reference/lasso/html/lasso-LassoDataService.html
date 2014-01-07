@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LassoDataService</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="idwsf.html" title="Identity Web Services Framework 1.0">
 <link rel="prev" href="lasso-LassoDiscovery.html" title="LassoDiscovery">
 <link rel="next" href="lasso-LassoPersonalProfileService.html" title="LassoPersonalProfileService">
-<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -58,26 +58,26 @@
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoDataService.html#lasso-data-service-get-answer" title="lasso_data_service_get_answer ()">lasso_data_service_get_answer</a>       (<em class="parameter"><code><a class="link" href="lasso-LassoDataService.html#LassoDataService" title="struct LassoDataService"><span class="type">LassoDataService</span></a> *service</code></em>,
                                                          <em class="parameter"><code><span class="type">xmlNode</span> **output</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoDataService.html#lasso-data-service-get-answers" title="lasso_data_service_get_answers ()">lasso_data_service_get_answers</a>      (<em class="parameter"><code><a class="link" href="lasso-LassoDataService.html#LassoDataService" title="struct LassoDataService"><span class="type">LassoDataService</span></a> *service</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> **output</code></em>);
+                                                         <em class="parameter"><code><span class="type">GList</span> **output</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoDataService.html#lasso-data-service-get-answers-by-select" title="lasso_data_service_get_answers_by_select ()">lasso_data_service_get_answers_by_select</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoDataService.html#LassoDataService" title="struct LassoDataService"><span class="type">LassoDataService</span></a> *service</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *select</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> **output</code></em>);
+                                                         <em class="parameter"><code><span class="type">GList</span> **output</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoDataService.html#lasso-data-service-get-answers-by-item-id" title="lasso_data_service_get_answers_by_item_id ()">lasso_data_service_get_answers_by_item_id</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoDataService.html#LassoDataService" title="struct LassoDataService"><span class="type">LassoDataService</span></a> *service</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *item_id</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> **output</code></em>);
+                                                         <em class="parameter"><code><span class="type">GList</span> **output</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoDataService.html#lasso-data-service-init-modify" title="lasso_data_service_init_modify ()">lasso_data_service_init_modify</a>      (<em class="parameter"><code><a class="link" href="lasso-LassoDataService.html#LassoDataService" title="struct LassoDataService"><span class="type">LassoDataService</span></a> *service</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *security_mech_id</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoDataService.html#lasso-data-service-add-modification" title="lasso_data_service_add_modification ()">lasso_data_service_add_modification</a> (<em class="parameter"><code><a class="link" href="lasso-LassoDataService.html#LassoDataService" title="struct LassoDataService"><span class="type">LassoDataService</span></a> *service</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *select</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *select</code></em>,
                                                          <em class="parameter"><code><span class="type">xmlNode</span> *xmlData</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> overrideAllowed</code></em>,
+                                                         <em class="parameter"><code><span class="type">gboolean</span> overrideAllowed</code></em>,
                                                          <em class="parameter"><code><span class="type">time_t</span> *notChangedSince</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-LassoDstModification.html#LassoDstModification" title="struct LassoDstModification"><span class="type">LassoDstModification</span></a> **output</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoDataService.html#lasso-data-service-process-modify-response-msg" title="lasso_data_service_process_modify_response_msg ()">lasso_data_service_process_modify_response_msg</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoDataService.html#LassoDataService" title="struct LassoDataService"><span class="type">LassoDataService</span></a> *service</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *soap_msg</code></em>);
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *soap_msg</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoDataService.html#lasso-data-service-process-request-msg" title="lasso_data_service_process_request_msg ()">lasso_data_service_process_request_msg</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoDataService.html#LassoDataService" title="struct LassoDataService"><span class="type">LassoDataService</span></a> *service</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *message</code></em>,
@@ -109,24 +109,47 @@ and retrieves the name of the principal:
 </p>
 <p>
 </p>
-<div class="informalexample"><pre class="programlisting">
-char *soap_answer;            // SOAP answer from data service
-xmlNode *principal_name;      // libxml2 xmlNode with the principal name
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="gtkdoc kwb">char</span> <span class="gtkdoc opt">*</span>soap_answer<span class="gtkdoc opt">;</span>            <span class="gtkdoc slc">// SOAP answer from data service</span>
+xmlNode <span class="gtkdoc opt">*</span>principal_name<span class="gtkdoc opt">;</span>      <span class="gtkdoc slc">// libxml2 xmlNode with the principal name</span>
 
-service = lasso_discovery_get_service(discovery);
-lasso_data_service_init_query(service, "/pp:PP/pp:InformalName", NULL);
-lasso_data_service_build_request_msg(service);
+service <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoDiscovery.html#lasso-discovery-get-service">lasso_discovery_get_service</a></span><span class="gtkdoc opt">(</span>discovery<span class="gtkdoc opt">);</span>
+<span class="function"><a href="lasso-LassoDataService.html#lasso-data-service-init-query">lasso_data_service_init_query</a></span><span class="gtkdoc opt">(</span>service<span class="gtkdoc opt">,</span> <span class="string">&quot;/pp:PP/pp:InformalName&quot;</span><span class="gtkdoc opt">,</span> NULL<span class="gtkdoc opt">);</span>
+<span class="function">lasso_data_service_build_request_msg</span><span class="gtkdoc opt">(</span>service<span class="gtkdoc opt">);</span>
 
-// service must perform SOAP call to LASSO_WSF_PROFILE(service)-&gt;msg_url
-// the SOAP message is LASSO_WSF_PROFILE(service)-&gt;msg_body.  The answer
-// is stored in char* soap_answer;
+<span class="gtkdoc slc">// service must perform SOAP call to LASSO_WSF_PROFILE(service)-&gt;msg_url</span>
+<span class="gtkdoc slc">// the SOAP message is LASSO_WSF_PROFILE(service)-&gt;msg_body.  The answer</span>
+<span class="gtkdoc slc">// is stored in char* soap_answer;</span>
 
-lasso_data_service_process_query_response_msg(service, soap_answer);
-principal_name = lasso_data_service_get_answer(service, "/pp:PP/pp:InformalName");
+<span class="function"><a href="lasso-LassoDataService.html#lasso-data-service-process-query-response-msg">lasso_data_service_process_query_response_msg</a></span><span class="gtkdoc opt">(</span>service<span class="gtkdoc opt">,</span> soap_answer<span class="gtkdoc opt">);</span>
+principal_name <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoDataService.html#lasso-data-service-get-answer">lasso_data_service_get_answer</a></span><span class="gtkdoc opt">(</span>service<span class="gtkdoc opt">,</span> <span class="string">&quot;/pp:PP/pp:InformalName&quot;</span><span class="gtkdoc opt">);</span>
 
-// app should probably then use xmlNodeGetContent libxml2 function to get
-// access to node content.
-</pre></div>
+<span class="gtkdoc slc">// app should probably then use xmlNodeGetContent libxml2 function to get</span>
+<span class="gtkdoc slc">// access to node content.</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 <p>
 </p>
 </div>
@@ -357,7 +380,7 @@ Get the first xmlNode of the first Data element of the QueryResponse message.
 <div class="refsect2">
 <a name="lasso-data-service-get-answers"></a><h3>lasso_data_service_get_answers ()</h3>
 <pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_data_service_get_answers      (<em class="parameter"><code><a class="link" href="lasso-LassoDataService.html#LassoDataService" title="struct LassoDataService"><span class="type">LassoDataService</span></a> *service</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> **output</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">GList</span> **output</code></em>);</pre>
 <p>
 Get all the xmlNode content of the first Data element of the QueryResponse message.
 </p>
@@ -386,7 +409,7 @@ Get all the xmlNode content of the first Data element of the QueryResponse messa
 <pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_data_service_get_answers_by_select
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoDataService.html#LassoDataService" title="struct LassoDataService"><span class="type">LassoDataService</span></a> *service</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *select</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> **output</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">GList</span> **output</code></em>);</pre>
 <p>
 Returns the answers for the specified <em class="parameter"><code>select</code></em> request.
 </p>
@@ -420,7 +443,7 @@ Returns the answers for the specified <em class="parameter"><code>select</code><
 <pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_data_service_get_answers_by_item_id
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoDataService.html#LassoDataService" title="struct LassoDataService"><span class="type">LassoDataService</span></a> *service</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *item_id</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> **output</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">GList</span> **output</code></em>);</pre>
 <p>
 Returns the answers for the specified <em class="parameter"><code>itemID</code></em> request.
 </p>
@@ -480,9 +503,9 @@ fragment to replace the selected data.
 <div class="refsect2">
 <a name="lasso-data-service-add-modification"></a><h3>lasso_data_service_add_modification ()</h3>
 <pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_data_service_add_modification (<em class="parameter"><code><a class="link" href="lasso-LassoDataService.html#LassoDataService" title="struct LassoDataService"><span class="type">LassoDataService</span></a> *service</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *select</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *select</code></em>,
                                                          <em class="parameter"><code><span class="type">xmlNode</span> *xmlData</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> overrideAllowed</code></em>,
+                                                         <em class="parameter"><code><span class="type">gboolean</span> overrideAllowed</code></em>,
                                                          <em class="parameter"><code><span class="type">time_t</span> *notChangedSince</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-LassoDstModification.html#LassoDstModification" title="struct LassoDstModification"><span class="type">LassoDstModification</span></a> **output</code></em>);</pre>
 <p>
@@ -535,7 +558,7 @@ otherwise.</td>
 <a name="lasso-data-service-process-modify-response-msg"></a><h3>lasso_data_service_process_modify_response_msg ()</h3>
 <pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_data_service_process_modify_response_msg
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoDataService.html#LassoDataService" title="struct LassoDataService"><span class="type">LassoDataService</span></a> *service</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *soap_msg</code></em>);</pre>
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *soap_msg</code></em>);</pre>
 <p>
 Process a modify response message.
 </p>
@@ -689,6 +712,6 @@ Return the XML resrouce data in this data service.
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.17</div>
+          Generated by GTK-Doc V1.18</div>
 </body>
 </html>
