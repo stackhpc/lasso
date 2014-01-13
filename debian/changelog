@@ -1,3 +1,9 @@
+lasso (2.4.0-2) unstable; urgency=medium
+
+  * debian/php5-lasso.prerm: fix call to php5dismod. (closes: #734767)
+
+ -- Frederic Peters <fpeters@debian.org>  Mon, 13 Jan 2014 11:00:16 +0100
+
 lasso (2.4.0-1) unstable; urgency=low
 
   * New upstream version.
