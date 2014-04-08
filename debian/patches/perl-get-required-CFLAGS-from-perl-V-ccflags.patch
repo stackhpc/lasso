@@ -1,0 +1,20 @@
+Index: lasso-2.4.0/configure.ac
+===================================================================
+--- lasso-2.4.0.orig/configure.ac	2014-04-08 09:28:13.920492398 +0200
++++ lasso-2.4.0/configure.ac	2014-04-08 09:28:30.516574688 +0200
+@@ -531,12 +531,15 @@
+ if test "X$PERL" != "X"; then
+   PERLINSTALLSITEARCH=`$PERL -MConfig -e 'print $Config{installsitearch};'`
+   PERLMAN3DIR=`$PERL -MConfig -e 'print $Config{man3dir};'`
++  PERL_CFLAGS=$($PERL -V::ccflags:)
+ else
+   PERLINSTALLSITEARCH=none
+   PERLMAN3DIR=none
++  PERL_CFLAGS=
+ fi
+ AC_SUBST(PERLINSTALLSITEARCH)
+ AC_SUBST(PERLMAN3DIR)
++AC_SUBST(PERL_CFLAGS)
+ 
+ AC_MSG_CHECKING(for Perl API)
+ if test "X$enable_perl" != "Xno" ; then
