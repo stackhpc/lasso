@@ -1,3 +1,13 @@
+lasso (2.4.0-4) unstable; urgency=medium
+
+  * d/p/Use-INSTALLDIRS-vendor-for-the-Perl-bindings-as-per-.patch: use
+    INSTALLDIRS=vendor for the Perl bindings, as per the Debian Perl policy.
+    (thanks Niko Tyni)
+  * debian/rules, debian/liblasso-perl.install: don't hardcode /usr/lib/perl5
+    (thanks Niko Tyni, again) (closes: #752703)
+
+ -- Frederic Peters <fpeters@debian.org>  Wed, 25 Jun 2014 23:15:03 +0200
+
 lasso (2.4.0-3) unstable; urgency=medium
 
   * d/p/perl-get-required-CFLAGS-from-perl-V-ccflags.patch (stolen from git):
