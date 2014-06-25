@@ -14,6 +14,8 @@ DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
 
 DEB_TARGET_ARCH     := $(shell dpkg-architecture -qDEB_HOST_ARCH)
 
+ARCHLIB := $(shell perl -MConfig -e 'print $$Config{vendorarch}')
+
 with_java := no
 no_java_archs := alpha arm hppa hurd-i386
 ifneq ($(DEB_TARGET_ARCH),i386)
@@ -104,6 +106,7 @@ endif
 	done
 
 	rm -f config.log
+	rm -f debian/liblasso-perl.install
 
 	dh_clean 
 
@@ -126,6 +129,8 @@ install: build
 	  mv $(CURDIR)/debian/tmp/usr/lib/java/*.so $(CURDIR)/debian/tmp/usr/lib/jni/ ; \
 	fi
 
+	sed -e 's,$${archlib},$(ARCHLIB),g' debian/liblasso-perl.install.in > debian/liblasso-perl.install
+
 	# remove id-wsf directory if it is empty
 	-rmdir $(CURDIR)/debian/tmp/usr/include/lasso/id-wsf/
 
@@ -143,7 +148,7 @@ binary-arch: build install
 	dh_installexamples -XCVS
 	dh_installman
 	dh_install
-	chrpath -d $(CURDIR)/debian/liblasso-perl/usr/lib/perl5/auto/Lasso/Lasso.so
+	chrpath -d $(CURDIR)/debian/liblasso-perl/$(ARCHLIB)/auto/Lasso/Lasso.so
 	dh_link
 	dh_strip
 	dh_perl
