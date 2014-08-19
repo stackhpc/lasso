@@ -1,3 +1,9 @@
+lasso (2.4.0-4build1) utopic; urgency=medium
+
+  * Rebuild for Perl 5.20.0.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Wed, 20 Aug 2014 00:19:08 +0100
+
 lasso (2.4.0-4) unstable; urgency=medium
 
   * d/p/Use-INSTALLDIRS-vendor-for-the-Perl-bindings-as-per-.patch: use
