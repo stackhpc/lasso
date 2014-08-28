@@ -225,7 +225,9 @@ lasso_iso_8601_gmt_to_time_t(const char *xsdtime)
 		if (strptime_ret == NULL) {
 			return -1;
 		}
-	}
+	} else {
+            return -1;
+        }
 	return timegm(&tm);
 }
 
@@ -481,7 +483,7 @@ lasso_query_sign(char *query, LassoSignatureContext context)
 	const xmlChar *algo_href = NULL;
 	char *hmac_key;
 	size_t hmac_key_length;
-	const EVP_MD *md;
+	const EVP_MD *md = NULL;
 	xmlSecKey *key;
 	xmlSecKeyData *key_data;
 	unsigned int sigret_size = 0;
@@ -798,7 +800,7 @@ lasso_saml2_query_verify_signature(const char *query, const xmlSecKey *sender_pu
 	int n = 0;
 	char *saml_request_response = NULL;
 	char *relaystate = NULL;
-	char *sig_alg, *usig_alg = NULL;
+	char *sig_alg = NULL, *usig_alg = NULL;
 	lasso_error_t rc = 0;
 
 	lasso_return_val_if_fail(query != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
@@ -855,6 +857,9 @@ lasso_saml2_query_verify_signature(const char *query, const xmlSecKey *sender_pu
 		goto_cleanup_with_rc(LASSO_PROFILE_ERROR_INVALID_QUERY);
 	}
 
+	if (! sig_alg) {
+		goto_cleanup_with_rc(LASSO_DS_ERROR_INVALID_SIGALG);
+	}
 	if (! b64_signature) {
 		goto_cleanup_with_rc(LASSO_DS_ERROR_SIGNATURE_NOT_FOUND);
 	}
@@ -1377,6 +1382,7 @@ lasso_verify_signature(xmlNode *signed_node, xmlDoc *doc, const char *id_attr_na
 			lasso_strisequal((char*)dsig_reference_ctx->uri, reference_uri);
 		ok |= (signature_verification_option & EMPTY_URI)
 			&& xmlDocGetRootElement(doc) == signed_node
+			&& dsig_reference_ctx != NULL
 			&& lasso_strisequal((char*)dsig_reference_ctx->uri, "");
 		goto_cleanup_if_fail_with_rc(ok,
 				LASSO_DS_ERROR_INVALID_REFERENCE_FOR_SAML);
@@ -1388,7 +1394,8 @@ lasso_verify_signature(xmlNode *signed_node, xmlDoc *doc, const char *id_attr_na
 		for (i = 0; i < size; ++i) {
 
 			dsig_reference_ctx = (xmlSecDSigReferenceCtx*)xmlSecPtrListGetItem(&(dsigCtx->signedInfoReferences), i);
-			if (dsig_reference_ctx->uri == NULL) {
+			if (dsig_reference_ctx == NULL ||
+                            dsig_reference_ctx->uri == NULL) {
 				message(G_LOG_LEVEL_CRITICAL, "dsig_reference_ctx->uri cannot be null");
 				continue;
 			}
@@ -1716,6 +1723,7 @@ static void __xmlWarningFunc(G_GNUC_UNUSED void *userData, const char *msg, ...)
 
 	va_start(arg_ptr, msg);
 	xml_logv(G_LOG_LEVEL_WARNING, msg, arg_ptr);
+        va_end(arg_ptr);
 }
 
 static void __xmlErrorFunc(G_GNUC_UNUSED void *userData, const char *msg, ...) {
@@ -1723,6 +1731,7 @@ static void __xmlErrorFunc(G_GNUC_UNUSED void *userData, const char *msg, ...) {
 
 	va_start(arg_ptr, msg);
 	xml_logv(G_LOG_LEVEL_CRITICAL, msg, arg_ptr);
+        va_end(arg_ptr);
 }
 
 /**
@@ -1921,8 +1930,8 @@ char*
 lasso_url_add_parameters(char *url,
 		gboolean free, ...)
 {
-	char *old_url = url, *new_url;
-	xmlChar *encoded_key, *encoded_value;
+	char *old_url = url, *new_url = NULL;
+	xmlChar *encoded_key = NULL, *encoded_value;
 	va_list ap;
 
 	va_start(ap, free);
@@ -2461,7 +2470,7 @@ get_or_define_ns(xmlNode *xmlnode, const xmlChar *ns_uri, const xmlChar *advised
 		return ns;
 	/* Try with the advised prefix */
 	if (advised_prefix) {
-		ns = xmlSearchNs(NULL, xmlnode, BAD_CAST prefix);
+		ns = xmlSearchNs(NULL, xmlnode, BAD_CAST advised_prefix);
 		if (! ns) { /* If not taken, use it */
 			return xmlNewNs(xmlnode, ns_uri, BAD_CAST advised_prefix);
 		}

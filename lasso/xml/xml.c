@@ -792,7 +792,7 @@ xmlNode*
 lasso_node_get_xmlNode(LassoNode *node, gboolean lasso_dump)
 {
 	xmlNode *xmlnode = NULL;
-	LassoSignatureContext context = LASSO_SIGNATURE_CONTEXT_NONE;
+	LassoSignatureContext context;
 	LassoNodeClassData *node_data;
 
 	g_return_val_if_fail (LASSO_IS_NODE(node), NULL);
@@ -1079,6 +1079,9 @@ lasso_node_set_encryption(LassoNode *node, xmlSecKey *encryption_public_key,
 	g_return_if_fail(LASSO_IS_NODE(node));
 	if (encryption_public_key) {
 		custom_element = _lasso_node_get_custom_element_or_create(node);
+		if (! custom_element) {
+			return;
+		}
 	} else {
 		custom_element = _lasso_node_get_custom_element(node);
 		if (! custom_element) {
@@ -1267,7 +1270,7 @@ lasso_get_integer_attribute(xmlNode *node, xmlChar *attribute_name, xmlChar *ns_
 		goto cleanup;
 	if (! lasso_string_to_xsd_integer((char*)content, &what))
 		goto cleanup;
-	if (*integer < low || *integer >= high)
+	if (what < low || what >= high)
 		goto cleanup;
 	*integer = what;
 	rc = TRUE;
@@ -1414,7 +1417,7 @@ lasso_node_impl_init_from_xml(LassoNode *node, xmlNode *xmlnode)
 	SnippetType type;
 	struct XmlSnippet *snippet_any = NULL;
 	struct XmlSnippet *snippet_any_attribute = NULL;
-	GType g_type_collect_namespaces, g_type_any, g_type_any_attribute;
+	GType g_type_collect_namespaces = 0, g_type_any = 0, g_type_any_attribute = 0;
 	struct XmlSnippet *snippet_collect_namespaces = NULL;
 	struct XmlSnippet *snippet_signature = NULL;
 	gboolean keep_xmlnode = FALSE;
@@ -1761,7 +1764,6 @@ lasso_node_impl_init_from_xml(LassoNode *node, xmlNode *xmlnode)
 					BAD_CAST LASSO_LIB_HREF, &what, LASSO_SIGNATURE_TYPE_NONE+1,
 					LASSO_SIGNATURE_TYPE_LAST))
 				break;
-			type = what;
 			private_key_password = xmlGetNsProp(xmlnode, LASSO_PRIVATE_KEY_PASSWORD_ATTRIBUTE,
 				BAD_CAST LASSO_LIB_HREF);
 			if (! private_key)
@@ -2717,7 +2719,6 @@ lasso_node_build_xmlNode_from_snippets(LassoNode *node, LassoNodeClass *class, x
 		struct XmlSnippet *snippets, gboolean lasso_dump)
 {
 	struct XmlSnippet *snippet;
-	SnippetType type;
 	GType g_type;
 	xmlNode *t;
 	GList *elem;
@@ -2726,37 +2727,50 @@ lasso_node_build_xmlNode_from_snippets(LassoNode *node, LassoNodeClass *class, x
 	g_type = G_TYPE_FROM_CLASS(class);
 
 	for (snippet = snippets; snippet && snippet->name; snippet++) {
-		void *value;
+		void *value = NULL;
+		int int_value;
+		gboolean bool_value;
 		char *str;
+		gboolean optional = snippet->type & SNIPPET_OPTIONAL;
+		gboolean optional_neg = snippet->type & SNIPPET_OPTIONAL_NEG;
 
 		if (! snippet->offset && ! (snippet->type & SNIPPET_PRIVATE)) {
 			continue;
 		}
-		type = snippet->type & 0xff;
-		value = SNIPPET_STRUCT_MEMBER(void *, node, g_type, snippet);
-		str = value;
-		if (lasso_dump == FALSE && snippet->type & SNIPPET_LASSO_DUMP)
+		if (lasso_dump == FALSE && snippet->type & SNIPPET_LASSO_DUMP) {
 			continue;
-
-		if (type == SNIPPET_ATTRIBUTE && snippet->type & SNIPPET_ANY) {
+		}
+		if ((snippet->type & 0xff) == SNIPPET_ATTRIBUTE && (snippet->type & SNIPPET_ANY)) {
 			snippet_any_attribute = snippet;
 			continue;
 		}
-		if (value == NULL && (!(snippet->type & SNIPPET_BOOLEAN ||
-					snippet->type & SNIPPET_INTEGER) ||
-					snippet->type & SNIPPET_OPTIONAL))
-			continue;
 
-		if (snippet->type & SNIPPET_OPTIONAL_NEG && GPOINTER_TO_INT(value) == -1)
-			continue;
+		// convert input type to string if needed
+		if (snippet->type & SNIPPET_INTEGER) {
+			int_value = SNIPPET_STRUCT_MEMBER(int, node, g_type, snippet);
+			if (int_value == 0 && optional) {
+				continue;
+			}
+			if (int_value == -1 && optional_neg) {
+				continue;
+			}
+			str = g_strdup_printf("%i", int_value);
+		} else if (snippet->type & SNIPPET_BOOLEAN) {
+			bool_value = SNIPPET_STRUCT_MEMBER(gboolean, node, g_type, snippet);
+			if (bool_value == FALSE  && optional) {
+				continue;
+			}
+			str = bool_value ? "true" : "false";
+		} else {
+			value = SNIPPET_STRUCT_MEMBER(void *, node, g_type, snippet);
+			if (value == NULL) {
+				continue;
+			}
+			str = value;
+		}
 
-		/* XXX: not sure it is 64-bits clean */
-		if (snippet->type & SNIPPET_BOOLEAN)
-			str = GPOINTER_TO_INT(value) ? "true" : "false";
-		if (snippet->type & SNIPPET_INTEGER)
-			str = g_strdup_printf("%d", GPOINTER_TO_INT(value));
-
-		switch (type) {
+		// output type
+		switch (snippet->type & 0xff) {
 			case SNIPPET_ATTRIBUTE:
 				if (snippet->ns_name) {
 					xmlNsPtr ns;
@@ -2827,21 +2841,12 @@ lasso_node_build_xmlNode_from_snippets(LassoNode *node, LassoNodeClass *class, x
 				break;
 			case SNIPPET_COLLECT_NAMESPACES:
 				break;
-			case SNIPPET_INTEGER:
-			case SNIPPET_BOOLEAN:
-			case SNIPPET_LASSO_DUMP:
-			case SNIPPET_OPTIONAL:
-			case SNIPPET_OPTIONAL_NEG:
-			case SNIPPET_ALLOW_TEXT:
-			case SNIPPET_ANY:
-			case SNIPPET_KEEP_XMLNODE:
-			case SNIPPET_PRIVATE:
-			case SNIPPET_MANDATORY:
 			case SNIPPET_UNUSED1:
 				g_assert_not_reached();
 		}
-		if (snippet->type & SNIPPET_INTEGER)
+		if (snippet->type & SNIPPET_INTEGER) {
 			lasso_release(str);
+		}
 	}
 
 	if (snippet_any_attribute) {
@@ -2911,7 +2916,7 @@ find_path(LassoNode *node, char *path, LassoNode **value_node, LassoNodeClass **
 
 	*class_p = NULL;
 	s = path;
-	while (s-1) {
+	while (s) {
 		t = strchr(s, '/');
 		if (t) *t = 0;
 		tsnippet = find_xml_snippet_by_name(tnode, s, class_p);
@@ -2920,8 +2925,11 @@ find_path(LassoNode *node, char *path, LassoNode **value_node, LassoNodeClass **
 					tsnippet);
 			if (tnode == NULL)
 				return FALSE;
+
+			s = t+1;
+		} else {
+			s = NULL;
 		}
-		s = t+1;
 	}
 
 	if (tsnippet == NULL)

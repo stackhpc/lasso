@@ -1500,7 +1500,8 @@ lasso_login_destroy(LassoLogin *login)
  * provider, or if none is specified, Transient, which ask the IdP to give a one-time
  * federation</para>
  *
- * Return value: 0 on success; or <itemizedlist>
+ * Return value: 0 on success; or
+ * <itemizedlist>
  * <listitem><para>LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ if login is not a #LassoLogin object,</para></listitem>
  * <listitem><para>LASSO_PROFILE_ERROR_MISSING_REMOTE_PROVIDERID if @remote_providerID is NULL and no default remote
  * provider could be found from the server object -- usually the first one in the order of adding to
@@ -1824,16 +1825,16 @@ lasso_login_must_authenticate(LassoLogin *login)
 		char *class_ref;
 		GList *class_refs = request->RequestAuthnContext->AuthnContextClassRef;
 		GList *t1, *t2;
-		int compa;
+		int compa = -1;
 
 		if (comparison == NULL || strcmp(comparison, "exact") == 0) {
 			compa = 0;
 		} else if (strcmp(comparison, "minimum") == 0) {
 			message(G_LOG_LEVEL_CRITICAL, "'minimum' comparison is not implemented");
-			compa = 0;
+			compa = 1;
 		} else if (strcmp(comparison, "better") == 0) {
 			message(G_LOG_LEVEL_CRITICAL, "'better' comparison is not implemented");
-			compa = 0;
+			compa = 2;
 		}
 
 		if (class_refs) {
@@ -1867,15 +1868,21 @@ lasso_login_must_authenticate(LassoLogin *login)
 					method = LASSO_LIB_AUTHN_CONTEXT_CLASS_REF_PASSWORD;
 				}
 
-				if (compa == 0) { /* exact */
+				switch (compa) {
+				case 1: /* minimum */
+					/* XXX: implement 'minimum' comparison */
+				case 2: /* better */
+					/* XXX: implement 'better' comparison */
+				case 0: /* exact */
 					if (strcmp(method, class_ref) == 0) {
 						matched = TRUE;
-						break;
 					}
-				} else if (compa == 1) { /* minimum */
-					/* XXX: implement 'minimum' comparison */
-				} else if (compa == 2) { /* better */
-					/* XXX: implement 'better' comparison */
+					break;
+				default: /* inever reached */
+					break;
+				}
+				if (matched == TRUE) {
+					break;
 				}
 			}
 		}
@@ -2127,7 +2134,38 @@ lasso_login_process_authn_request_msg(LassoLogin *login, const char *authn_reque
  *
  * Processes received authentication response.
  *
- * Return value: 0 on success; or a negative value otherwise.
+ * Return value: 0 on success; or
+ * <itemizedlist>
+ * <listitem><para>#LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ if login is not a #LassoLogin
+ * object,</para></listitem>
+ * <listitem><para>#LASSO_PARAM_ERROR_INVALID_VALUE if authn_response_msg is NULL,</para></listitem>
+ * <listitem><para>#LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND, if the issuing
+ * provider of the assertion is not registered in the #LassoServer object,</para></listitem>
+ * <listitem><para>#LASSO_PROFILE_ERROR_MISSING_ISSUER if the parsed samlp2:AuthnRequest does not
+ * have a proper Issuer element, </para></listitem>
+ * <listitem><para>#LASSO_PROFILE_ERROR_MISSING_STATUS_CODE if the reponse is missing a
+ * <literal>StatusCode</literal> element,</para></listitem>
+ * <listitem><para>#LASSO_PROFILE_STATUS_NOT_SUCCESS_ERROR if the identity provider returned a
+ * failure response,</para></listitem>
+ * <listitem><para>#LASSO_PROFILE_ERROR_REQUEST_DENIED</para> if the identity provider returned the
+ * specific status code <literal>RequestDenied</literal>,</listitem>
+ * <listitem><para>#LASSO_PROFILE_ERROR_INVALID_MSG if the message is not a #LassoSamlpResponse
+ * (ID-FF 1.2) or a #LassoSamlp2ResponseMsg (SAML 2.0),</para></listitem>
+ * <listitem><para>#LASSO_PROFILE_ERROR_UNSUPPORTED_PROFILE, if the received message format does not
+ * correspond to a binding supported by this function, the only supported binding by this function
+ * is HTTP POST,</para></listitem>
+ * <listitem><para>#LASSO_PROFILE_ERROR_MISSING_SERVER the server object is needed to sign a message
+ * and it is missing,</para></listitem>
+ * <listitem><para>#LASSO_PROFILE_ERROR_CANNOT_VERIFY_SIGNATURE if the validation of the signature
+ * of the message failed, a specific error code is available in
+ * <literal>login->parent.signature_status</literal></para></listitem>
+ * <listitem><para>#LASSO_LOGIN_ERROR_ASSERTION_DOES_NOT_MATCH_REQUEST_ID if the received response
+ * does not match the saved AuthenticationRequest ID,</para></listitem>
+ * <listitem><para>#LASSO_PROFILE_ERROR_INVALID_ISSUER if the assertion issuer does not match the
+ * AuthenticationResponse issuer,</para></listitem>
+ * <listitem><para>#LASSO_PROFILE_ERROR_NAME_IDENTIFIER_NOT_FOUND if not NameID could be found or
+ * decoded,</para></listitem>
+ * </itemizedlist>
  **/
 gint
 lasso_login_process_authn_response_msg(LassoLogin *login, gchar *authn_response_msg)
@@ -2530,7 +2568,8 @@ lasso_login_dump(LassoLogin *login)
  *
  * Initializes a response to the authentication request received.
  *
- * Return value: 0 on success; or <itemizedlist>
+ * Return value: 0 on success; or
+ * <itemizedlist>
  * <listitem><para>#LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ if login is not a #LassoLogin object,</para></listitem>
  * <listitem><para>#LASSO_LOGIN_ERROR_REQUEST_DENIED</para> if @authentication_result if FALSE,</listitem>
  * <listitem><para>#LASSO_LOGIN_ERROR_INVALID_SIGNATURE if signature validation of the request

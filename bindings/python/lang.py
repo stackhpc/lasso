@@ -418,7 +418,7 @@ if WSF_SUPPORT:
             print >> fd, '        return t;'
             # setter
             print >> fd, '    def set_%s(self, value):' % mname
-            if is_int(m, self.binding_data) or is_xml_node(m) or is_cstring(m) or is_boolean(m):
+            if is_int(m, self.binding_data) or is_xml_node(m) or is_boolean(m):
                 pass
             elif is_cstring(m):
                 print >> fd, '        value = str2lasso(value)'
@@ -770,9 +770,9 @@ register_constants(PyObject *d)
                 parse_arg = '&value'
                 print >> fd, '    %s value;' % type
             elif is_int(m, self.binding_data):
-                parse_format = 'i'
+                parse_format = 'l'
                 parse_arg = '&value'
-                print >> fd, '    %s value;' % type
+                print >> fd, '    long value;'
             elif is_glist(m) or is_hashtable(m) or is_xml_node(m) or is_boolean(m):
                 parse_format = 'O'
                 print >> fd, '    PyObject *cvt_value;'

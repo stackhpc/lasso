@@ -405,19 +405,19 @@ lasso_saml20_login_must_authenticate(LassoLogin *login)
 		GList *class_refs = request->RequestedAuthnContext->AuthnContextClassRef;
 		char *class_ref;
 		GList *t1, *t2;
-		int compa;
+		int compa = -1;
 
 		if (comparison == NULL || lasso_strisequal(comparison,"exact")) {
 			compa = 0;
 		} else if (lasso_strisequal(comparison,"minimum")) {
 			message(G_LOG_LEVEL_CRITICAL, "'minimum' comparison is not implemented");
-			compa = 0;
+			compa = 1;
 		} else if (lasso_strisequal(comparison,"better")) {
 			message(G_LOG_LEVEL_CRITICAL, "'better' comparison is not implemented");
-			compa = 0;
+			compa = 2;
 		} else if (lasso_strisequal(comparison,"maximum")) {
 			message(G_LOG_LEVEL_CRITICAL, "'maximum' comparison is not implemented");
-			compa = 0;
+			compa = 3;
 		}
 
 		if (class_refs) {
@@ -454,17 +454,23 @@ lasso_saml20_login_must_authenticate(LassoLogin *login)
 
 				method = as->AuthnContext->AuthnContextClassRef;
 
-				if (compa == 0) { /* exact */
+				switch (compa) {
+				case 1: /* minimum */
+					/* XXX: implement 'minimum' comparison */
+				case 2: /* better */
+					/* XXX: implement 'better' comparison */
+				case 3: /* maximum */
+					/* XXX: implement 'maximum' comparison */
+				case 0: /* exact */
 					if (lasso_strisequal(method,class_ref)) {
 						matched = TRUE;
-						break;
 					}
-				} else if (compa == 1) { /* minimum */
-					/* XXX: implement 'minimum' comparison */
-				} else if (compa == 2) { /* better */
-					/* XXX: implement 'better' comparison */
-				} else if (compa == 3) { /* maximum */
-					/* XXX: implement 'maximum' comparison */
+					break;
+				default: /* never reached */
+					break;
+				}
+				if (matched == TRUE) {
+					break;
 				}
 			}
 		}
@@ -731,8 +737,6 @@ lasso_saml20_login_build_assertion(LassoLogin *login,
 	goto_cleanup_if_fail_with_rc(LASSO_IS_SAMLP2_RESPONSE(profile->response),
 			LASSO_PROFILE_ERROR_MISSING_RESPONSE);
 
-	response = (LassoSamlp2Response*)profile->response;
-
 	assertion = LASSO_SAML2_ASSERTION(lasso_saml2_assertion_new());
 	assertion->ID = lasso_build_unique_id(32);
 	lasso_assign_string(assertion->Version, "2.0");
@@ -740,6 +744,7 @@ lasso_saml20_login_build_assertion(LassoLogin *login,
 	assertion->Issuer = LASSO_SAML2_NAME_ID(lasso_saml2_name_id_new_with_string(
 			LASSO_PROVIDER(profile->server)->ProviderID));
 	assertion->Conditions = LASSO_SAML2_CONDITIONS(lasso_saml2_conditions_new());
+	lasso_assign_string(assertion->Conditions->NotOnOrAfter, notOnOrAfter);
 
 	audience_restriction = LASSO_SAML2_AUDIENCE_RESTRICTION(
 			lasso_saml2_audience_restriction_new());
@@ -948,10 +953,14 @@ gint
 lasso_saml20_login_build_request_msg(LassoLogin *login)
 {
 	LassoProfile *profile;
+	lasso_error_t rc = 0;
 
 	profile = &login->parent;
 	if (_lasso_login_must_sign_non_authn_request(login)) {
-		lasso_profile_saml20_setup_message_signature(profile, profile->request);
+		rc = lasso_profile_saml20_setup_message_signature(profile, profile->request);
+		if (rc != 0) {
+			return rc;
+		}
 	} else {
 		lasso_node_remove_signature(profile->request);
 	}
@@ -1117,6 +1126,7 @@ lasso_saml20_login_check_assertion_signature(LassoLogin *login,
 		/* Issuer format is not entity */
 	{
 		rc = LASSO_PROFILE_ERROR_MISSING_ISSUER;
+		goto cleanup;
 	} else {
 		remote_provider_id = Issuer->content;
 	}
@@ -1391,7 +1401,7 @@ lasso_saml20_login_build_authn_response_msg(LassoLogin *login)
 	LassoProfile *profile;
 	LassoProvider *remote_provider = NULL;
 	LassoSaml2Assertion *assertion = NULL;
-	LassoHttpMethod http_method;
+	LassoHttpMethod http_method = LASSO_HTTP_METHOD_NONE;
 	char *url = NULL;
 	int rc = 0;
 
