@@ -326,6 +326,7 @@ lasso_provider_get_first_http_method(LassoProvider *provider,
 	const gchar *role_prefix;
 
 	g_return_val_if_fail(LASSO_IS_PROVIDER(provider), LASSO_HTTP_METHOD_NONE);
+	g_return_val_if_fail(remote_provider != NULL, LASSO_HTTP_METHOD_NONE);
 	if (provider->private_data->conformance == LASSO_PROTOCOL_SAML_2_0) {
 		return lasso_saml20_provider_get_first_http_method(
 				provider, remote_provider, protocol_type);
@@ -869,6 +870,9 @@ dispose(GObject *object)
 	lasso_release(provider->private_data->affiliation_owner_id);
 	provider->private_data->affiliation_owner_id = NULL;
 	lasso_release_list_of_full(provider->private_data->endpoints, lasso_endpoint_free);
+
+	lasso_assign_new_signature_context(provider->private_data->signature_context,
+			LASSO_SIGNATURE_CONTEXT_NONE);
 
 	G_OBJECT_CLASS(parent_class)->dispose(G_OBJECT(provider));
 }
@@ -1770,7 +1774,7 @@ lasso_provider_add_key(LassoProvider *provider, LassoKey *key, gboolean after)
 	LassoSignatureContext context;
 	lasso_error_t rc = 0;
 	GList **list = NULL;
-	xmlSecKey *xml_sec_key;
+	xmlSecKey *xml_sec_key = NULL;
 
 	lasso_bad_param(PROVIDER, provider);
 	lasso_bad_param(KEY, key);
@@ -1804,7 +1808,7 @@ lasso_provider_set_server_signing_key(LassoProvider *provider,
 		LassoKey *key)
 {
 	lasso_error_t rc = 0;
-	LassoSignatureContext context = LASSO_SIGNATURE_CONTEXT_NONE;
+	LassoSignatureContext context;
 
 	lasso_bad_param(PROVIDER, provider);
 	lasso_bad_param(KEY, key);

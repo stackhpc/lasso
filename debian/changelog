@@ -1,3 +1,11 @@
+lasso (2.4.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * d/p/perl-get-required-CFLAGS-from-perl-V-ccflags.patch: merged upstream
+  * d/p/Use-INSTALLDIRS-vendor-for-the-Perl-bindings-as-per-.patch: refreshed
+
+ -- Frederic Peters <fpeters@debian.org>  Thu, 28 Aug 2014 17:27:48 +0200
+
 lasso (2.4.0-4) unstable; urgency=medium
 
   * d/p/Use-INSTALLDIRS-vendor-for-the-Perl-bindings-as-per-.patch: use

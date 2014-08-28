@@ -34,7 +34,7 @@ tests2_LDADD = \
 	$(LASSO_LIBS) \
 	$(CHECK_LIBS)
 tests2_LDFLAGS = -rpath `cd $(top_builddir)/lasso/.libs/; pwd`
-tests2_CFLAGS = -DSRCDIR=\"$(srcdir)\"
+tests2_CFLAGS = $(AM_CFLAGS) -DSRCDIR=\"$(srcdir)\"
 
 perfs_SOURCES = perfs.c
 perfs_LDADD = $(top_builddir)/lasso/liblasso.la $(LASSO_LIBS)
@@ -51,6 +51,8 @@ LEAKCHECK = G_DEBUG=gc-friendly MALLOC_CHECK_=2 G_SLICE=always-malloc CK_FORK=no
 
 LEAKCHECK_REACHABLE = $(LEAKCHECK) --show-reachable=yes
 
+LEAKCHECK_GENSUPPRESSIONS=$(LEAKCHECK) --gen-suppressions=all
+
 MASSIF = G_DEBUG=gc-friendly MALLOC_CHECK_=2 G_SLICE=always-malloc CK_FORK=no \
 		valgrind --tool=massif
 
@@ -59,6 +61,9 @@ leakcheck:
 
 leakcheck-reachable:
 	$(LEAKCHECK_REACHABLE) ./tests
+
+leakcheck-gensuppressions:
+	$(LEAKCHECK_GENSUPPRESSIONS) ./tests
 
 massif:
 	$(MASSIF) ./tests

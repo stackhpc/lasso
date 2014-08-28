@@ -1,2 +1,1 @@
-perl-get-required-CFLAGS-from-perl-V-ccflags.patch
 Use-INSTALLDIRS-vendor-for-the-Perl-bindings-as-per-.patch
