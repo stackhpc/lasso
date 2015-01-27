@@ -1,3 +1,9 @@
+lasso (2.4.1-1build1) vivid; urgency=medium
+
+  * No change rebuild against PHP 5.6 (phpapi-20131226).
+
+ -- Robie Basak <robie.basak@ubuntu.com>  Tue, 27 Jan 2015 15:54:55 +0000
+
 lasso (2.4.1-1) unstable; urgency=medium
 
   * New upstream release.
