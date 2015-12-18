@@ -1,3 +1,9 @@
+lasso (2.5.0-1build1) xenial; urgency=medium
+
+  * Rebuild for Perl 5.22.1.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Fri, 18 Dec 2015 00:26:50 +0000
+
 lasso (2.5.0-1) unstable; urgency=medium
 
   * New upstream release.
