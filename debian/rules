@@ -74,7 +74,7 @@ build-stamp:  config.status
 	dh_testdir
 
 	# Add here commands to compile the package.
-	$(MAKE)
+	$(MAKE) V=1
 	set -e; \
 	for v in $(OTHERPYVERS); do \
 	  rm -rf bindings/python$$v; \

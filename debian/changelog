@@ -1,3 +1,13 @@
+lasso (2.5.0-3) unstable; urgency=medium
+
+  * d/p/0001-perl-remove-quotes-from-PERL-V-ccflags-output.patch: new patch,
+    make sure to remove quotes given by "perl -V::ccflags:" as they ultimately
+    cause the 32bit builds to fail. (closes: #809759)
+    * Thanks to Niko Tyni for the detailed diagnostic.
+  * d/rules: enable verbose builds. (closes: #809760)
+
+ -- Frederic Peters <fpeters@debian.org>  Mon, 11 Jan 2016 09:16:31 +0100
+
 lasso (2.5.0-2) unstable; urgency=medium
 
   * Build against latest Perl release.
