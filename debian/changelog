@@ -1,3 +1,9 @@
+lasso (2.5.0-4) unstable; urgency=medium
+
+  * d/control: add missing php5-common dependency. (closes: #811340)
+
+ -- Frederic Peters <fpeters@debian.org>  Thu, 10 Mar 2016 22:38:24 +0100
+
 lasso (2.5.0-3) unstable; urgency=medium
 
   * d/p/0001-perl-remove-quotes-from-PERL-V-ccflags-output.patch: new patch,
