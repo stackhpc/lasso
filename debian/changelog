@@ -1,3 +1,9 @@
+lasso (2.5.0-3ubuntu1) xenial; urgency=medium
+
+  * Disable PHP bindings as they only support PHP5 (LP: #1566404).
+
+ -- Nishanth Aravamudan <nish.aravamudan@canonical.com>  Tue, 05 Apr 2016 08:27:20 -0700
+
 lasso (2.5.0-3build1) xenial; urgency=medium
 
   * No-change rebuild to drop python3.4 support.
