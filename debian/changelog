@@ -1,3 +1,9 @@
+lasso (2.5.0-5) unstable; urgency=medium
+
+  * d/: disable PHP support for now. (closes: #821547, #821683)
+
+ -- Frederic Peters <fpeters@debian.org>  Thu, 05 May 2016 11:11:01 +0200
+
 lasso (2.5.0-4) unstable; urgency=medium
 
   * d/control: add missing php5-common dependency. (closes: #811340)
