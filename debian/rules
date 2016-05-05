@@ -26,6 +26,8 @@ ifneq ($(DEB_TARGET_ARCH),i386)
  endif
 endif
 
+with_php := no
+
 PYDEF		:= $(shell pyversions -vd)
 PYVERS		:= $(shell pyversions -vr debian/control)
 PY3VERS		:= $(shell py3versions -vr '>= 3.0')
@@ -51,8 +53,7 @@ CONFIGURE_ARGS := \
 	--infodir=\$${prefix}/share/info \
 	--enable-tests=no \
 	--disable-gtk-doc \
-	--enable-perl \
-	--with-php5-config-dir=/etc/php5/mods-available/
+	--enable-perl
 
 
 ifeq ($(with_java),yes)
@@ -60,6 +61,13 @@ ifeq ($(with_java),yes)
 else
   CONFIGURE_ARGS += --disable-java
 endif
+
+ifeq ($(with_php),yes)
+  CONFIGURE_ARGS += --enable-php --with-php5-config-dir=/etc/php5/mods-available/
+else
+  CONFIGURE_ARGS += --disable-php
+endif
+
 
 
 config.status: configure
@@ -104,6 +112,13 @@ else
 	sed -e 's/^#JAVA#.*//' < debian/control.in > debian/control
 endif
 
+ifeq ($(with_php),yes)
+	sed -e 's/^#PHP#//' < debian/control.in > debian/control
+else
+	sed -e 's/^#PHP#.*//' < debian/control.in > debian/control
+endif
+
+
 	[ ! -f Makefile ] || $(MAKE) distclean
 
 	for v in $(OTHERPYVERS); do \
@@ -136,10 +151,12 @@ install: build
 	done
 
 
+ifeq ($(with_java),yes)
 	mkdir $(CURDIR)/debian/tmp/usr/lib/jni/
 	if [ -e $(CURDIR)/debian/tmp/usr/lib/java ]; then \
 	  mv $(CURDIR)/debian/tmp/usr/lib/java/*.so $(CURDIR)/debian/tmp/usr/lib/jni/ ; \
 	fi
+endif
 
 	sed -e 's,$${archlib},$(ARCHLIB),g' debian/liblasso-perl.install.in > debian/liblasso-perl.install
 
@@ -171,7 +188,9 @@ binary-arch: build install
 	dh_makeshlibs -a -V
 	dh_installdeb
 	dh_shlibdeps -a
+ifeq ($(with_php),yes)
 	echo "php:Depends=phpapi-`php-config5 --phpapi`" >> $(CURDIR)/debian/php5-lasso.substvars
+endif
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
