@@ -1,3 +1,9 @@
+lasso (2.5.0-5build1) zesty; urgency=medium
+
+  * No-change rebuild for perl 5.24 transition
+
+ -- Iain Lane <iain@orangesquash.org.uk>  Sun, 23 Oct 2016 12:09:05 +0100
+
 lasso (2.5.0-5) unstable; urgency=medium
 
   * d/: disable PHP support for now. (closes: #821547, #821683)
