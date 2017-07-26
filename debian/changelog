@@ -1,3 +1,9 @@
+lasso (2.5.0-5build3) artful; urgency=medium
+
+  * No-change rebuild for perl 5.26.0.
+
+ -- Matthias Klose <doko@ubuntu.com>  Wed, 26 Jul 2017 19:52:30 +0000
+
 lasso (2.5.0-5build2) artful; urgency=medium
 
   * No change rebuild to add Python 3.6 support.
