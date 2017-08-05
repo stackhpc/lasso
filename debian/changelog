@@ -1,3 +1,9 @@
+lasso (2.5.0-5build4) artful; urgency=medium
+
+  * No-change rebuild to build to drop python3.5.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sat, 05 Aug 2017 18:24:55 +0000
+
 lasso (2.5.0-5build3) artful; urgency=medium
 
   * No-change rebuild for perl 5.26.0.
