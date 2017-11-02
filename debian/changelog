@@ -1,3 +1,9 @@
+lasso (2.5.0-5build5) bionic; urgency=medium
+
+  * No-change rebuild against perlapi-5.26.1
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Thu, 02 Nov 2017 05:36:19 +0000
+
 lasso (2.5.0-5build4) artful; urgency=medium
 
   * No-change rebuild to build to drop python3.5.

@@ -1,7 +1,8 @@
 Source: lasso
 Priority: optional
 Section: libs
-Maintainer: Frederic Peters <fpeters@debian.org>
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+XSBC-Original-Maintainer: Frederic Peters <fpeters@debian.org>
 Build-Depends: debhelper (>= 8),
         dh-python,
         libxml2-dev,
