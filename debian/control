@@ -5,6 +5,7 @@ Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 XSBC-Original-Maintainer: Frederic Peters <fpeters@debian.org>
 Build-Depends: debhelper (>= 8),
         dh-python,
+        liberror-perl,
         libxml2-dev,
         libxslt1-dev,
         libxmlsec1-dev,
