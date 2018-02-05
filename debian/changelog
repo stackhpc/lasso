@@ -1,3 +1,9 @@
+lasso (2.5.0-5ubuntu1) bionic; urgency=medium
+
+  * d/control, d/rules: Enable test execution during build.
+
+ -- Corey Bryant <corey.bryant@canonical.com>  Mon, 05 Feb 2018 16:20:28 -0500
+
 lasso (2.5.0-5build5) bionic; urgency=medium
 
   * No-change rebuild against perlapi-5.26.1
