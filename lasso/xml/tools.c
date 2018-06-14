@@ -57,7 +57,6 @@
 #include <xmlsec/errors.h>
 #include <xmlsec/openssl/x509.h>
 #include <xmlsec/openssl/crypto.h>
-#include <xmlsec/soap.h>
 
 #include <zlib.h>
 
@@ -616,15 +615,27 @@ lasso_query_sign(char *query, LassoSignatureContext context)
 
 	switch (sign_method) {
 		case LASSO_SIGNATURE_METHOD_RSA_SHA1:
+			/* sign digest message */
+			status = RSA_sign(NID_sha1, (unsigned char*)digest, SHA_DIGEST_LENGTH, sigret,
+					&siglen, rsa);
+			break;
 		case LASSO_SIGNATURE_METHOD_RSA_SHA256:
+			/* sign digest message */
+			status = RSA_sign(NID_sha256, (unsigned char*)digest, SHA256_DIGEST_LENGTH, sigret,
+					&siglen, rsa);
+			break;
 		case LASSO_SIGNATURE_METHOD_RSA_SHA384:
+			/* sign digest message */
+			status = RSA_sign(NID_sha384, (unsigned char*)digest, SHA384_DIGEST_LENGTH, sigret,
+					&siglen, rsa);
+			break;
 		case LASSO_SIGNATURE_METHOD_RSA_SHA512:
 			/* sign digest message */
-			status = RSA_sign(NID_sha1, (unsigned char*)digest, 20, sigret,
+			status = RSA_sign(NID_sha512, (unsigned char*)digest, SHA512_DIGEST_LENGTH, sigret,
 					&siglen, rsa);
 			break;
 		case LASSO_SIGNATURE_METHOD_DSA_SHA1:
-			status = DSA_sign(NID_sha1, (unsigned char*)digest, 20, sigret,
+			status = DSA_sign(NID_sha1, (unsigned char*)digest, SHA_DIGEST_LENGTH, sigret,
 					&siglen, dsa);
 			break;
 		case LASSO_SIGNATURE_METHOD_HMAC_SHA1:
@@ -723,14 +734,14 @@ lasso_query_verify_helper(const char *signed_content, const char *b64_signature,
 		rsa = xmlSecOpenSSLKeyDataRsaGetRsa(key->value);
 		key_size = RSA_size(rsa);
 		method = LASSO_SIGNATURE_METHOD_RSA_SHA1;
-		digest_size = 20;
+		digest_size = SHA_DIGEST_LENGTH;
 		type = NID_sha1;
 	} else if (lasso_strisequal(algorithm, (char*)xmlSecHrefDsaSha1)) {
 		goto_cleanup_if_fail_with_rc(key->value->id == xmlSecOpenSSLKeyDataDsaId, LASSO_DS_ERROR_INVALID_SIGALG);
 		dsa = xmlSecOpenSSLKeyDataDsaGetDsa(key->value);
 		key_size = DSA_size(dsa);
 		method = LASSO_SIGNATURE_METHOD_DSA_SHA1;
-		digest_size = 20;
+		digest_size = SHA_DIGEST_LENGTH;
 		type = NID_sha1;
 	} else if (lasso_strisequal(algorithm, (char*)xmlSecHrefRsaSha256)) {
 		goto_cleanup_if_fail_with_rc(key->value->id == xmlSecOpenSSLKeyDataRsaId,
@@ -738,7 +749,7 @@ lasso_query_verify_helper(const char *signed_content, const char *b64_signature,
 		rsa = xmlSecOpenSSLKeyDataRsaGetRsa(key->value);
 		key_size = RSA_size(rsa);
 		method = LASSO_SIGNATURE_METHOD_RSA_SHA256;
-		digest_size = 32;
+		digest_size = SHA256_DIGEST_LENGTH;
 		type = NID_sha256;
 	} else if (lasso_strisequal(algorithm, (char*)xmlSecHrefRsaSha384)) {
 		goto_cleanup_if_fail_with_rc(key->value->id == xmlSecOpenSSLKeyDataRsaId,
@@ -746,7 +757,7 @@ lasso_query_verify_helper(const char *signed_content, const char *b64_signature,
 		rsa = xmlSecOpenSSLKeyDataRsaGetRsa(key->value);
 		key_size = RSA_size(rsa);
 		method = LASSO_SIGNATURE_METHOD_RSA_SHA384;
-		digest_size = 48;
+		digest_size = SHA384_DIGEST_LENGTH;
 		type = NID_sha384;
 	} else if (lasso_strisequal(algorithm, (char*)xmlSecHrefRsaSha512)) {
 		goto_cleanup_if_fail_with_rc(key->value->id == xmlSecOpenSSLKeyDataRsaId,
@@ -754,7 +765,7 @@ lasso_query_verify_helper(const char *signed_content, const char *b64_signature,
 		rsa = xmlSecOpenSSLKeyDataRsaGetRsa(key->value);
 		key_size = RSA_size(rsa);
 		method = LASSO_SIGNATURE_METHOD_RSA_SHA512;
-		digest_size = 64;
+		digest_size = SHA512_DIGEST_LENGTH;
 		type = NID_sha512;
 	} else if (lasso_strisequal(algorithm, (char*)xmlSecHrefHmacSha1)) {
 		lasso_check_good_rc(lasso_get_hmac_key(key, (void**)&hmac_key, &hmac_key_length));
@@ -1107,24 +1118,33 @@ lasso_sha512(const char *str)
 	return (char*)SHA512((unsigned char*)str, strlen(str), md);
 }
 
-char**
-urlencoded_to_strings(const char *str)
+
+/**
+ * lasso_urlencoded_to_strings:
+ * @str: a query string
+ *
+ * Parse a query string and separate it into an char* array of its components.
+ *
+ * The returned array must be deallocated.
+ */
+xmlChar**
+lasso_urlencoded_to_strings(const char *str)
 {
 	int i, n=1;
 	char *st, *st2;
-	char **result;
+	xmlChar **result;
 
+	g_assert(str);
 	/* count components */
 	st = (char*)str;
 	while (*st) {
 		if (*st == '&' || *st == ';')
 			n++;
-		n++;
 		st++;
 	}
 
 	/* allocate result array */
-	result = g_new0(char*, n+1);
+	result = g_new0(xmlChar*, n+1);
 	result[n] = NULL;
 
 	/* tokenize */
@@ -1133,15 +1153,17 @@ urlencoded_to_strings(const char *str)
 	while(1) {
 		if (*st == '&' || *st == ';' || *st == '\0') {
 			ptrdiff_t len = st - st2;
+
+			g_assert(i < n+1);
 			if (len) {
-				result[i] = xmlURIUnescapeString(st2, len, NULL);
+				result[i] = (xmlChar*)xmlURIUnescapeString(st2, len, NULL);
 			} else {
 				result[i] = g_malloc0(1);
 			}
 			i++;
-			st2 = st + 1;
 			if (*st == '\0')
 				break;
+			st2 = st + 1;
 		}
 		st++;
 	}
@@ -1465,6 +1487,10 @@ lasso_saml_constrain_dsigctxt(xmlSecDSigCtxPtr dsigCtx) {
 	/* Limit allowed transforms for signature and reference processing */
 	if((xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformInclC14NId) < 0) ||
 			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformExclC14NId) < 0) ||
+			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformInclC14NWithCommentsId) < 0) ||
+			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformExclC14NWithCommentsId) < 0) ||
+			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformInclC14N11Id) < 0) ||
+			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformInclC14N11WithCommentsId) < 0) ||
 			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformSha1Id) < 0) ||
 			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformHmacSha1Id) < 0) ||
 			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformDsaSha1Id) < 0) ||
@@ -1485,6 +1511,10 @@ lasso_saml_constrain_dsigctxt(xmlSecDSigCtxPtr dsigCtx) {
 	}
 	if((xmlSecDSigCtxEnableReferenceTransform(dsigCtx, xmlSecTransformInclC14NId) < 0) ||
 			(xmlSecDSigCtxEnableReferenceTransform(dsigCtx, xmlSecTransformExclC14NId) < 0) ||
+			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformInclC14NWithCommentsId) < 0) ||
+			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformExclC14NWithCommentsId) < 0) ||
+			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformInclC14N11Id) < 0) ||
+			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformInclC14N11WithCommentsId) < 0) ||
 			(xmlSecDSigCtxEnableReferenceTransform(dsigCtx, xmlSecTransformSha1Id) < 0) ||
 			(xmlSecDSigCtxEnableReferenceTransform(dsigCtx, xmlSecTransformSha256Id) < 0) ||
 			(xmlSecDSigCtxEnableReferenceTransform(dsigCtx, xmlSecTransformSha384Id) < 0) ||
@@ -1646,30 +1676,156 @@ cleanup:
 	return rc;
 }
 
+/**
+ * lasso_xml_next_element_node:
+ * @node:                the pointer to an XML node.
+ *
+ * Seraches for the next element node.
+ *
+ * Returns: the pointer to next element node or NULL if it is not found.
+ */
+xmlNodePtr
+lasso_xml_next_element_node(xmlNodePtr node)
+{
+
+    for (; node != NULL && node->type != XML_ELEMENT_NODE; node = node->next);
+    return node;
+}
+
+/**
+ * lasso_xml_get_node_ns_href:
+ * @node: the pointer to node.
+ *
+ * Get's node's namespace href.
+ *
+ * Returns: node's namespace href.
+ */
+const xmlChar*
+lasso_xml_get_node_ns_href(const xmlNodePtr node)
+{
+    xmlNsPtr ns;
+
+    if (node == NULL) {
+        return NULL;
+    }
+
+    /* do we have a namespace in the node? */
+    if (node->ns != NULL) {
+        return node->ns->href;
+    }
+
+    /* search for default namespace */
+    ns = xmlSearchNs(node->doc, node, NULL);
+    if (ns != NULL) {
+        return ns->href;
+    }
+
+    return NULL;
+}
+
+/**
+ * lasso_xml_is_element_node:
+ * @node: the pointer to an XML node.
+ * @name: the name,
+ * @ns:   the namespace href.
+ *
+ * Checks that the node has a given name and a given namespace href.
+ *
+ * Returns: true if the node matches false otherwise.
+ */
+gboolean
+lasso_xml_is_element_node(const xmlNodePtr node,
+                          const xmlChar *name, const xmlChar *ns)
+{
+    if (node == NULL) {
+        return FALSE;
+    }
+
+    return (node->type == XML_ELEMENT_NODE &&
+            xmlStrEqual(node->name, name) &&
+            xmlStrEqual(lasso_xml_get_node_ns_href(node), ns));
+}
+
 gboolean
 lasso_xml_is_soap(xmlNode *root)
 {
-	return xmlSecCheckNodeName(root, xmlSecNodeEnvelope, xmlSecSoap11Ns) ||
-		xmlSecCheckNodeName(root, xmlSecNodeEnvelope, xmlSecSoap12Ns);
+    return lasso_xml_is_element_node(root, BAD_CAST "Envelope",
+                                     BAD_CAST LASSO_SOAP_ENV_HREF);
+}
+
+/**
+ * lasso_xml_soap11_get_header:
+ * @envelope_node: the pointer to <soap:Envelope> node.
+ *
+ * Gets pointer to the <soap:Header> node.
+ *
+ * Returns: pointer to <soap:Header> node or NULL if an error occurs.
+ */
+xmlNodePtr
+lasso_xml_soap11_get_header(xmlNodePtr envelope_node)
+{
+    xmlNodePtr node;
+
+    if (envelope_node == NULL) {
+        return NULL;
+    }
+
+    /* optional Header node is first */
+    node = lasso_xml_next_element_node(envelope_node->children);
+    if (lasso_xml_is_element_node(node, BAD_CAST "Header",
+                                  BAD_CAST LASSO_SOAP_ENV_HREF)) {
+        return node;
+    }
+
+    return NULL;
+}
+
+/**
+ * lasso_xml_soap11_get_body:
+ * @envelope_node: the pointer to <soap:Envelope> node.
+ *
+ * Gets pointer to the <soap:Body> node.
+ *
+ * Returns: pointer to <soap:Body> node or NULL if an error occurs.
+ */
+xmlNodePtr
+lasso_xml_soap11_get_body(xmlNodePtr envelope_node)
+{
+    xmlNodePtr node;
+
+    if (envelope_node == NULL) {
+        return NULL;
+    }
+
+    /* optional Header node first */
+    node = lasso_xml_next_element_node(envelope_node->children);
+    if (lasso_xml_is_element_node(node, BAD_CAST "Header",
+                                  BAD_CAST LASSO_SOAP_ENV_HREF)) {
+        node = lasso_xml_next_element_node(node->next);
+    }
+
+    /* Body node is next */
+    if (!lasso_xml_is_element_node(node, BAD_CAST "Body",
+                                   BAD_CAST  LASSO_SOAP_ENV_HREF)) {
+        return NULL;
+    }
+
+    return node;
 }
 
 xmlNode*
 lasso_xml_get_soap_content(xmlNode *root)
 {
 	gboolean is_soap11 = FALSE;
-	gboolean is_soap12 = FALSE;
 	xmlNode *content = NULL;
 
-	is_soap11 = xmlSecCheckNodeName(root, xmlSecNodeEnvelope, xmlSecSoap11Ns);
-	is_soap12 = xmlSecCheckNodeName(root, xmlSecNodeEnvelope, xmlSecSoap12Ns);
-
-	if (is_soap11 || is_soap12) {
+	is_soap11 = lasso_xml_is_element_node(root, BAD_CAST "Envelope",
+                                              BAD_CAST LASSO_SOAP_ENV_HREF);
+	if (is_soap11) {
 		xmlNode *body;
 
 		if (is_soap11) {
-			body = xmlSecSoap11GetBody(root);
-		} else {
-			body = xmlSecSoap12GetBody(root);
+			body = lasso_xml_soap11_get_body(root);
 		}
 		if (body) {
 			content = xmlSecGetNextElementNode(body->children);
@@ -2410,12 +2566,14 @@ lasso_xmlsec_load_key_info(xmlNode *key_descriptor)
 {
 	xmlSecKeyPtr key, result = NULL;
 	xmlNodePtr key_info = NULL;
-	xmlSecKeyInfoCtx ctx;
-	xmlSecKeysMngr *keys_mngr;
+	xmlSecKeyInfoCtx ctx = {0};
+	xmlSecKeysMngr *keys_mngr = NULL;
 	xmlNodePtr key_value = NULL;
 	int rc = 0;
 	xmlChar *content = NULL;
-	X509 *cert;
+	X509 *cert = NULL;
+	xmlSecKeyDataPtr cert_data = NULL;
+	xmlSecKeyDataPtr cert_key = NULL;
 
 	if (! key_descriptor)
 		return NULL;
@@ -2441,49 +2599,55 @@ lasso_xmlsec_load_key_info(xmlNode *key_descriptor)
 	ctx.certsVerificationDepth = 0;
 
 	key = xmlSecKeyCreate();
-	/* anyway to make this reentrant and thread safe ? */
-	xmlSecErrorsDefaultCallbackEnableOutput(FALSE);
+	if (lasso_flag_pem_public_key) {
+		xmlSecErrorsDefaultCallbackEnableOutput(FALSE);
+	}
 	rc = xmlSecKeyInfoNodeRead(key_info, key, &ctx);
-	xmlSecErrorsDefaultCallbackEnableOutput(TRUE);
+	if (lasso_flag_pem_public_key) {
+		xmlSecErrorsDefaultCallbackEnableOutput(TRUE);
+	}
 	xmlSecKeyInfoCtxFinalize(&ctx);
 
-	if (rc == 0) {
-		xmlSecKeyDataPtr cert_data;
-
-		cert_data = xmlSecKeyGetData(key, xmlSecOpenSSLKeyDataX509Id);
-
-		if (cert_data) {
-			cert = xmlSecOpenSSLKeyDataX509GetCert(cert_data, 0);
-			if (cert) {
-				xmlSecKeyDataPtr cert_key;
-
-				cert_key = xmlSecOpenSSLX509CertGetKey(cert);
-				rc = xmlSecKeySetValue(key, cert_key);
-				if (rc < 0) {
-					xmlSecKeyDataDestroy(cert_key);
-					goto next;
-				}
-			}
-		}
+	if (rc != 0) {
+		goto next;
 	}
+	/* reference, do not free */
+	cert_data = xmlSecKeyGetData(key, xmlSecOpenSSLKeyDataX509Id);
 
-	if (rc == 0 && xmlSecKeyIsValid(key)) {
+	if (! cert_data) {
+		goto next;
+	}
+	/* reference, do not free */
+	cert = xmlSecOpenSSLKeyDataX509GetCert(cert_data, 0);
+	if (! cert) {
+		goto next;
+	}
+	/* new value, free */
+	cert_key = xmlSecOpenSSLX509CertGetKey(cert);
+	rc = xmlSecKeySetValue(key, cert_key);
+	if (rc < 0) {
+		xmlSecKeyDataDestroy(cert_key);
+	}
+next:
+	/* We found a key, exit */
+	if (xmlSecKeyIsValid(key)) {
 		result = key;
 		key = NULL;
 		goto cleanup;
 	}
 	xmlSecKeyDestroy(key);
-next:
-	if (! (key_value = xmlSecFindChild(key_info, xmlSecNodeKeyValue, xmlSecDSigNs)) &&
-		 ! (key_value = xmlSecFindNode(key_info, xmlSecNodeX509Certificate, xmlSecDSigNs)))  {
-		goto cleanup;
-	}
+	if (lasso_flag_pem_public_key) {
+		if (! (key_value = xmlSecFindChild(key_info, xmlSecNodeKeyValue, xmlSecDSigNs)) &&
+			 ! (key_value = xmlSecFindNode(key_info, xmlSecNodeX509Certificate, xmlSecDSigNs)))  {
+			goto cleanup;
+		}
 
-	content = xmlNodeGetContent(key_value);
-	if (content) {
-		result = lasso_xmlsec_load_private_key_from_buffer((char*)content,
-				strlen((char*)content), NULL, LASSO_SIGNATURE_METHOD_RSA_SHA1, NULL);
-		xmlFree(content);
+		content = xmlNodeGetContent(key_value);
+		if (content) {
+			result = lasso_xmlsec_load_private_key_from_buffer((char*)content,
+					strlen((char*)content), NULL, LASSO_SIGNATURE_METHOD_RSA_SHA1, NULL);
+			xmlFree(content);
+		}
 	}
 
 cleanup:
@@ -2811,14 +2975,39 @@ lasso_xmlnode_add_saml2_signature_template(xmlNode *node, LassoSignatureContext 
 		xmlAddChild(node, signature);
 	}
 
-	/* Normally the signature is son of the signed node, which holds an Id attribute, but in
-	 * other cases, set snippet->offset to 0 and use xmlSecTmpSignatureAddReference from another
-	 * node get_xmlNode virtual method to add the needed reference.
-	 */
-	uri = g_strdup_printf("#%s", id);
-	reference = xmlSecTmplSignatureAddReference(signature,
-			xmlSecTransformSha1Id, NULL, (xmlChar*)uri, NULL);
-	lasso_release(uri);
+	/* choose a digest for handling references based on the chosen signature algorithm */
+	{
+		xmlSecTransformId digest_method_id;
+		switch (context.signature_method) {
+			case LASSO_SIGNATURE_METHOD_RSA_SHA1:
+			case LASSO_SIGNATURE_METHOD_DSA_SHA1:
+			case LASSO_SIGNATURE_METHOD_HMAC_SHA1:
+				digest_method_id = xmlSecTransformSha1Id;
+				break;
+			case LASSO_SIGNATURE_METHOD_RSA_SHA256:
+			case LASSO_SIGNATURE_METHOD_HMAC_SHA256:
+				digest_method_id = xmlSecTransformSha256Id;
+				break;
+			case LASSO_SIGNATURE_METHOD_RSA_SHA384:
+			case LASSO_SIGNATURE_METHOD_HMAC_SHA384:
+				digest_method_id = xmlSecTransformSha384Id;
+				break;
+			case LASSO_SIGNATURE_METHOD_RSA_SHA512:
+			case LASSO_SIGNATURE_METHOD_HMAC_SHA512:
+				digest_method_id = xmlSecTransformSha384Id;
+				break;
+			default:
+				g_assert_not_reached();
+		}
+		/* Normally the signature is son of the signed node, which holds an Id attribute, but in
+		 * other cases, set snippet->offset to 0 and use xmlSecTmpSignatureAddReference from another
+		 * node get_xmlNode virtual method to add the needed reference.
+		 */
+		uri = g_strdup_printf("#%s", id);
+		reference = xmlSecTmplSignatureAddReference(signature, digest_method_id, NULL,
+				(xmlChar*)uri, NULL);
+		lasso_release(uri);
+	}
 
 	/* add enveloped transform */
 	xmlSecTmplReferenceAddTransform(reference, xmlSecTransformEnvelopedId);
@@ -2855,24 +3044,64 @@ lasso_xmlnode_add_saml2_signature_template(xmlNode *node, LassoSignatureContext 
 	}
 }
 
+
+/**
+ * lasso_get_saml_message:
+ * @query_fields: a NULL terminated array of char* representing a parsed query string.
+ *
+ * Return the first SAMLRequest or SAMLResponse value in the query string array.
+ */
 static char*
-get_saml_message(char **query_fields) {
-	int i;
-	char *field, *t;
+lasso_get_saml_message(xmlChar **query_fields) {
+	int i = 0;
+	char *enc = NULL;
+	char *message = NULL;
+	char *decoded_message = NULL;
+	xmlChar *field = NULL;
+	char *t = NULL;
+	int rc = 0;
+	int len = 0;
 
 	for (i=0; (field=query_fields[i]); i++) {
-		t = strchr(field, '=');
+		t = strchr((char*)field, '=');
 		if (t == NULL)
 			continue;
 		*t = 0;
-		if (strcmp(field, LASSO_SAML2_FIELD_ENCODING) == 0) {
-			return t+1;
+		if (strcmp((char*)field, LASSO_SAML2_FIELD_ENCODING) == 0) {
+			enc = t+1;
+			continue;
 		}
-		if (strcmp(field, LASSO_SAML2_FIELD_REQUEST) == 0 || strcmp(field, LASSO_SAML2_FIELD_RESPONSE) == 0) {
-			return t+1;
+		if (strcmp((char*)field, LASSO_SAML2_FIELD_REQUEST) == 0 || strcmp((char*)field, LASSO_SAML2_FIELD_RESPONSE) == 0) {
+			message = t+1;
+			continue;
 		}
 	}
-	return NULL;
+	if (message == NULL) {
+		return NULL;
+	}
+	if (enc && strcmp(enc, LASSO_SAML2_DEFLATE_ENCODING) != 0) {
+		/* unknown encoding */
+		debug("Unknown URL encoding: %64s", enc);
+		return NULL;
+	}
+	len = strlen(message);
+	decoded_message = g_malloc(len);
+	if (! is_base64(message)) {
+		debug("message is not base64");
+		goto cleanup;
+	}
+	rc = xmlSecBase64Decode((xmlChar*)message, (xmlChar*)decoded_message, len);
+	if (rc < 0) {
+		debug("could not decode redirect SAML message");
+		goto cleanup;
+	}
+	/* rc contains the length of the result */
+	message = (char*)lasso_inflate((unsigned char*) decoded_message, rc);
+cleanup:
+	if (decoded_message) {
+		lasso_release(decoded_message);
+	}
+	return message;
 }
 
 /**
@@ -2882,47 +3111,52 @@ get_saml_message(char **query_fields) {
  * Try to parse the passed message and create an xmlTextReader from it.
  */
 xmlTextReader *
-lasso_xmltextreader_from_message(const char *message, xmlChar **to_free) {
+lasso_xmltextreader_from_message(const char *message, char **to_free) {
 	size_t len = strlen(message);
 	char *needle;
-	char **query_fields = NULL;
+	xmlChar **query_fields = NULL;
 	char *decoded_message = NULL;
 	xmlTextReader *reader = NULL;
 
+	g_assert(to_free);
+	/* Differentiate SOAP from others */
 	if (message[0] != '<') {
 		needle = strchr(message, '=');
-		if (needle) {
-			ptrdiff_t needle_pos = (needle-message);
-			if (len - needle_pos > 2) { // query
-				query_fields = urlencoded_to_strings(needle+1);
-				message = get_saml_message(query_fields);
-				if (! message)
-					goto cleanup;
-				len = strlen(message);
+		/* Differentiate redirect binding from POST */
+		if (needle && message[len-1] != '=') {
+			query_fields = lasso_urlencoded_to_strings(message);
+			message = *to_free = lasso_get_saml_message(query_fields);
+			len = strlen(message);
+			if (! message) {
+				goto cleanup;
 			}
-		}
-		if (is_base64(message)) {
-			int rc;
+		} else { /* POST */
+			int rc = 0;
+
+			if (! is_base64(message)) {
+				debug("POST message is not base64");
+				goto cleanup;
+			}
 			decoded_message = g_malloc(len);
 			rc = xmlSecBase64Decode((xmlChar*)message, (xmlChar*)decoded_message, len);
-			if (rc < 0)
+			if (rc < 0) {
+				debug("could not decode POST SAML message");
 				goto cleanup;
+			}
 			len = rc;
-			message = (char*)lasso_inflate((unsigned char*) decoded_message, rc);
-			lasso_release_string(decoded_message);
-			if (! message)
-				goto cleanup;
+			decoded_message[len] = '\0';
+			message = *to_free = decoded_message;
+			decoded_message = NULL;
 		}
 	}
 
 	if (message[0] == '<') // XML case
-		reader = xmlReaderForMemory(message, len, "", NULL, XML_PARSE_NOENT |
-				XML_PARSE_NONET);
+		reader = xmlReaderForMemory(message, len, "", NULL, XML_PARSE_NONET);
 
 cleanup:
 	if (query_fields)
-		lasso_release(query_fields);
-	if (decoded_message && to_free)
-		*to_free = BAD_CAST decoded_message;
+		lasso_release_array_of_xml_strings(query_fields);
+	if (decoded_message)
+		lasso_release_string(decoded_message);
 	return reader;
 }

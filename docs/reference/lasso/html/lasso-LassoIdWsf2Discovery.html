@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Lasso Reference Manual: LassoIdWsf2Discovery</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<title>LassoIdWsf2Discovery: Lasso Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="idwsf2.html" title="ID-WSF 2.0">
 <link rel="prev" href="lasso-SOAP-Binding-utility-function-for-ID-WSF-2.0.html" title="SOAP Binding utility function for ID-WSF 2.0">
 <link rel="next" href="lasso-LassoIdWsf2DataService.html" title="LassoIdWsf2DataService">
-<meta name="generator" content="GTK-Doc V1.21 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.28 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -33,7 +33,7 @@
 </tr></table></div>
 <div class="refsect1">
 <a name="lasso-LassoIdWsf2Discovery.functions"></a><h2>Functions</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="functions_return">
 <col class="functions_name">
@@ -220,7 +220,7 @@
 </div>
 <div class="refsect1">
 <a name="lasso-LassoIdWsf2Discovery.other"></a><h2>Types and Values</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="name">
 <col class="description">
@@ -242,24 +242,23 @@
 lasso_idwsf2_discovery_new (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);</pre>
 <p>Create a new <a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a>.</p>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.2.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-discovery-new.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
 <col width="200px" class="parameters_annotations">
 </colgroup>
 <tbody><tr>
-<td class="parameter_name"><p>server:(allow-none)</p></td>
-<td class="parameter_description"><p>a <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> object, for resolving ProviderID names</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_name"><p>server</p></td>
+<td class="parameter_description"><p>a <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> object, for resolving ProviderID names. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr></tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.2.6"></a><h4>Returns</h4>
+<a name="lasso-idwsf2-discovery-new.returns"></a><h4>Returns</h4>
 <p> a newly created <a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> object; or NULL if an error occured.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -270,8 +269,8 @@ lasso_idwsf2_discovery_init_metadata_register
                                (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>);</pre>
 <p>Initialise a ID-WSF service metadata registration request to a Discovery service.</p>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.3.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-discovery-init-metadata-register.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -285,9 +284,8 @@ lasso_idwsf2_discovery_init_metadata_register
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.3.6"></a><h4>Returns</h4>
+<a name="lasso-idwsf2-discovery-init-metadata-register.returns"></a><h4>Returns</h4>
 <p> 0 on success; an error code otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -299,8 +297,8 @@ lasso_idwsf2_discovery_init_metadata_association_add
 <p>Initialise a request to associate a user account to a service metadata, allowing
 a WSC to request this service for data related to this user account.</p>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.4.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-discovery-init-metadata-association-add.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -321,9 +319,8 @@ a WSC to request this service for data related to this user account.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.4.6"></a><h4>Returns</h4>
+<a name="lasso-idwsf2-discovery-init-metadata-association-add.returns"></a><h4>Returns</h4>
 <p> 0 on success; or a negative value otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -333,8 +330,8 @@ a WSC to request this service for data related to this user account.</p>
 lasso_idwsf2_discovery_init_query (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>);</pre>
 <p>Initialise a request for ID-WSF discovery Query to a discovery service.</p>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.5.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-discovery-init-query.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -348,9 +345,8 @@ lasso_idwsf2_discovery_init_query (<em class="parameter"><code><a class="link" h
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.5.6"></a><h4>Returns</h4>
+<a name="lasso-idwsf2-discovery-init-query.returns"></a><h4>Returns</h4>
 <p> 0 on success; or a negative value otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -361,8 +357,8 @@ lasso_idwsf2_discovery_init_metadata_query
                                (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>);</pre>
 <p>Initialise a ID-WSF service metadata query request to a Discovery service</p>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.6.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-discovery-init-metadata-query.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -376,9 +372,8 @@ lasso_idwsf2_discovery_init_metadata_query
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.6.6"></a><h4>Returns</h4>
+<a name="lasso-idwsf2-discovery-init-metadata-query.returns"></a><h4>Returns</h4>
 <p> 0 on success; an error code otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -389,8 +384,8 @@ lasso_idwsf2_discovery_init_metadata_replace
                                (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>);</pre>
 <p>Initialise a ID-WSF service metadata replace request to a Discovery service.</p>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.7.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-discovery-init-metadata-replace.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -404,9 +399,8 @@ lasso_idwsf2_discovery_init_metadata_replace
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.7.6"></a><h4>Returns</h4>
+<a name="lasso-idwsf2-discovery-init-metadata-replace.returns"></a><h4>Returns</h4>
 <p> 0 on success; an error code otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -417,8 +411,8 @@ lasso_idwsf2_discovery_init_metadata_delete
                                (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>);</pre>
 <p>Initialise a ID-WSF service metadata query request to a Discovery service</p>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.8.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-discovery-init-metadata-delete.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -432,9 +426,8 @@ lasso_idwsf2_discovery_init_metadata_delete
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.8.6"></a><h4>Returns</h4>
+<a name="lasso-idwsf2-discovery-init-metadata-delete.returns"></a><h4>Returns</h4>
 <p> 0 on success; an error code otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -460,8 +453,8 @@ lasso_idwsf2_discovery_add_service_metadata
                                 <em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DiscoSvcMetadata.html#LassoIdWsf2DiscoSvcMetadata" title="struct LassoIdWsf2DiscoSvcMetadata"><span class="type">LassoIdWsf2DiscoSvcMetadata</span></a> *service_metadata</code></em>);</pre>
 <p>Add a new metadata object to a request.</p>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.11.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-discovery-add-service-metadata.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -482,9 +475,8 @@ lasso_idwsf2_discovery_add_service_metadata
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.11.6"></a><h4>Returns</h4>
+<a name="lasso-idwsf2-discovery-add-service-metadata.returns"></a><h4>Returns</h4>
 <p> 0 if successful, an error code otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -501,8 +493,8 @@ lasso_idwsf2_discovery_add_simple_service_metadata
                                 <em class="parameter"><code><span class="type">GList</span> *security_mechanisms</code></em>);</pre>
 <p>Add new metadata to the current Metadata Register request.</p>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.12.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-discovery-add-simple-service-metadata.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -515,34 +507,34 @@ lasso_idwsf2_discovery_add_simple_service_metadata
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
-<td class="parameter_name"><p>abstract:(allow-none)</p></td>
-<td class="parameter_description"><p>a human description of the service</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_name"><p>abstract</p></td>
+<td class="parameter_description"><p>a human description of the service. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
-<td class="parameter_name"><p>provider_id:(allow-none)</p></td>
+<td class="parameter_name"><p>provider_id</p></td>
 <td class="parameter_description"><p>the provider id of the service to register, if none is given,
-providerId of the current <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> object is used</p></td>
-<td class="parameter_annotations"> </td>
+providerId of the current <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> object is used. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>service_types</p></td>
-<td class="parameter_description"><p> an array of service type URIs. </p></td>
+<td class="parameter_description"><p>an array of service type URIs. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>options</p></td>
-<td class="parameter_description"><p> an array of option string. </p></td>
+<td class="parameter_description"><p>an array of option string. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> LassoIdWsf2DiscoOptions][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
-<td class="parameter_name"><p>address:(allow-none)</p></td>
-<td class="parameter_description"><p>the URI of the service endpoint for the default EndpointContext</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_name"><p>address</p></td>
+<td class="parameter_description"><p>the URI of the service endpoint for the default EndpointContext. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>security_mechanisms</p></td>
-<td class="parameter_description"><p> the security mechanisms supported by the
+<td class="parameter_description"><p>the security mechanisms supported by the
 service. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8]</span></td>
 </tr>
@@ -550,9 +542,8 @@ service. </p></td>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.12.6"></a><h4>Returns</h4>
+<a name="lasso-idwsf2-discovery-add-simple-service-metadata.returns"></a><h4>Returns</h4>
 <p> 0 if successful, an error code otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -566,8 +557,8 @@ received through a <span class="type">LASSO_IDWSF2_DISCOVERY_REQUEST_TYPE_MD_REG
 <a class="link" href="lasso-LassoIdWsf2Discovery.html#lasso-idwsf2-discovery-add-service-metadata" title="lasso_idwsf2_discovery_add_service_metadata ()"><code class="function">lasso_idwsf2_discovery_add_service_metadata()</code></a> or
 <a class="link" href="lasso-LassoIdWsf2Discovery.html#lasso-idwsf2-discovery-add-simple-service-metadata" title="lasso_idwsf2_discovery_add_simple_service_metadata ()"><code class="function">lasso_idwsf2_discovery_add_simple_service_metadata()</code></a>.</p>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.13.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-discovery-get-metadatas.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -581,8 +572,8 @@ received through a <span class="type">LASSO_IDWSF2_DISCOVERY_REQUEST_TYPE_MD_REG
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.13.6"></a><h4>Returns</h4>
-<p> the list of metadatas. </p>
+<a name="lasso-idwsf2-discovery-get-metadatas.returns"></a><h4>Returns</h4>
+<p>the list of metadatas. </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> LassoIdWsf2DiscoSvcMetadata]</span></p>
 </div>
 </div>
@@ -603,8 +594,8 @@ lasso_idwsf2_discovery_add_requested_service
 <p>Add a new request to find some specific services associated to the current principal at the
 discovery service.</p>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.14.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-discovery-add-requested-service.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -618,53 +609,52 @@ discovery service.</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>service_types</p></td>
-<td class="parameter_description"><p> the service type (or data profile) requested. </p></td>
+<td class="parameter_description"><p>the service type (or data profile) requested. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>provider_ids</p></td>
-<td class="parameter_description"><p> the providers ids to select. </p></td>
+<td class="parameter_description"><p>the providers ids to select. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>options</p></td>
-<td class="parameter_description"><p> the options to select. </p></td>
+<td class="parameter_description"><p>the options to select. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>security_mechanisms</p></td>
-<td class="parameter_description"><p> the security mechanisms to select. </p></td>
+<td class="parameter_description"><p>the security mechanisms to select. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>frameworks</p></td>
-<td class="parameter_description"><p> the ID-WSF framework version to select. </p></td>
+<td class="parameter_description"><p>the ID-WSF framework version to select. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>actions</p></td>
-<td class="parameter_description"><p> the actions to select. </p></td>
+<td class="parameter_description"><p>the actions to select. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>result_type</p></td>
-<td class="parameter_description"><p> how to filter
+<td class="parameter_description"><p>how to filter
 the generated EPRs. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Default parameter value (for in case the shadows-to function has less parameters)."><span class="acronym">default</span></acronym> LASSO_IDWSF2_DISCOVERY_QUERY_RESULT_TYPE_NONE]</span></td>
 </tr>
 <tr>
-<td class="parameter_name"><p>req_id:(allow-none)</p></td>
+<td class="parameter_name"><p>req_id</p></td>
 <td class="parameter_description"><p>an eventual ID to put on the request, that can be matched with the
-generated EndpointReferences</p></td>
-<td class="parameter_annotations"> </td>
+generated EndpointReferences. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.14.6"></a><h4>Returns</h4>
+<a name="lasso-idwsf2-discovery-add-requested-service.returns"></a><h4>Returns</h4>
 <p> 0 on success; or a negative value otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -677,8 +667,8 @@ lasso_idwsf2_discovery_build_request_msg
 <p>Build the request message using a security mechanism to authenticate the requester and the target
 identity. If none is given Bearer mechanism is used.</p>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.15.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-discovery-build-request-msg.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -691,17 +681,16 @@ identity. If none is given Bearer mechanism is used.</p>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
-<td class="parameter_name"><p>security_mechanism:(allow-none)</p></td>
-<td class="parameter_description"><p>the security mech id to use, if NULL a Bearer mechanism is used.</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_name"><p>security_mechanism</p></td>
+<td class="parameter_description"><p>the security mech id to use, if NULL a Bearer mechanism is used. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.15.6"></a><h4>Returns</h4>
+<a name="lasso-idwsf2-discovery-build-request-msg.returns"></a><h4>Returns</h4>
 <p> 0 if successful, an error code otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -713,8 +702,8 @@ lasso_idwsf2_discovery_process_request_msg
                                 <em class="parameter"><code>const <span class="type">char</span> *message</code></em>);</pre>
 <p>Parse a Discovery service request.</p>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.16.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-discovery-process-request-msg.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -735,7 +724,7 @@ lasso_idwsf2_discovery_process_request_msg
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.16.6"></a><h4>Returns</h4>
+<a name="lasso-idwsf2-discovery-process-request-msg.returns"></a><h4>Returns</h4>
 <p> 0 if sucessful, an error code otherwise among:</p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem"><p>LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ if <em class="parameter"><code>profile</code></em> is not a <a class="link" href="lasso-LassoIdWsf2Profile.html#LassoIdWsf2Profile" title="struct LassoIdWsf2Profile"><span class="type">LassoIdWsf2Profile</span></a>
@@ -745,7 +734,6 @@ object,</p></li>
 <li class="listitem"><p>LASSO_SOAP_ERROR_MISSING_BODY if the message has no body
 content.</p></li>
 </ul></div>
-<p></p>
 </div>
 </div>
 <hr>
@@ -756,8 +744,8 @@ lasso_idwsf2_discovery_get_request_type
                                (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>);</pre>
 <p>Return the type of the last parsed request.</p>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.17.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-discovery-get-request-type.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -771,9 +759,8 @@ lasso_idwsf2_discovery_get_request_type
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.17.6"></a><h4>Returns</h4>
+<a name="lasso-idwsf2-discovery-get-request-type.returns"></a><h4>Returns</h4>
 <p> the type of the last parsed request.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -784,8 +771,8 @@ lasso_idwsf2_discovery_validate_request
                                (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>);</pre>
 <p>Accept the discovery request, and produce the response.</p>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.18.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-discovery-validate-request.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -799,9 +786,8 @@ lasso_idwsf2_discovery_validate_request
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.18.6"></a><h4>Returns</h4>
+<a name="lasso-idwsf2-discovery-validate-request.returns"></a><h4>Returns</h4>
 <p> 0 on success; or a negative value otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -813,8 +799,8 @@ lasso_idwsf2_discovery_fail_request (<em class="parameter"><code><a class="link"
                                      <em class="parameter"><code>const <span class="type">char</span> *status_code2</code></em>);</pre>
 <p>Fail the last request with the given status code.</p>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.19.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-discovery-fail-request.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -832,17 +818,16 @@ lasso_idwsf2_discovery_fail_request (<em class="parameter"><code><a class="link"
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
-<td class="parameter_name"><p>status_code2:(allow-none)</p></td>
-<td class="parameter_description"><p>a second-level status code</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_name"><p>status_code2</p></td>
+<td class="parameter_description"><p>a second-level status code. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.19.6"></a><h4>Returns</h4>
+<a name="lasso-idwsf2-discovery-fail-request.returns"></a><h4>Returns</h4>
 <p> 0 on success; or a negative value otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -853,8 +838,8 @@ lasso_idwsf2_discovery_process_response_msg
                                (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>,
                                 <em class="parameter"><code>const <span class="type">char</span> *msg</code></em>);</pre>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.20.4"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-discovery-process-response-msg.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -875,9 +860,8 @@ lasso_idwsf2_discovery_process_response_msg
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.20.5"></a><h4>Returns</h4>
+<a name="lasso-idwsf2-discovery-process-response-msg.returns"></a><h4>Returns</h4>
 <p> 0 if successful, an error code otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -888,8 +872,8 @@ lasso_idwsf2_discovery_get_endpoint_references
                                (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>);</pre>
 <p>Return the list of wsa:EndpointReference returned by the last discovery query.</p>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.21.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-discovery-get-endpoint-references.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -903,8 +887,8 @@ lasso_idwsf2_discovery_get_endpoint_references
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.21.6"></a><h4>Returns</h4>
-<p> a <span class="type">GList</span> of
+<a name="lasso-idwsf2-discovery-get-endpoint-references.returns"></a><h4>Returns</h4>
+<p>a <span class="type">GList</span> of
 LassoWsAddrEndpointReference objects, or NULL if none is found. </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> LassoWsAddrEndpointReference]</span></p>
 </div>
@@ -916,8 +900,8 @@ LassoWsAddrEndpointReference objects, or NULL if none is found. </p>
 lasso_idwsf2_discovery_get_svcmdids (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2Discovery.html#LassoIdWsf2Discovery" title="struct LassoIdWsf2Discovery"><span class="type">LassoIdWsf2Discovery</span></a> *discovery</code></em>);</pre>
 <p>Return the list of SvcMDID, or service metadata ids, returned by the last discovery query.</p>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.22.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-discovery-get-svcmdids.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -931,8 +915,8 @@ lasso_idwsf2_discovery_get_svcmdids (<em class="parameter"><code><a class="link"
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.22.6"></a><h4>Returns</h4>
-<p> a list of SvcMDID's. </p>
+<a name="lasso-idwsf2-discovery-get-svcmdids.returns"></a><h4>Returns</h4>
+<p>a list of SvcMDID's. </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
 </div>
 </div>
@@ -944,8 +928,8 @@ lasso_idwsf2_discovery_set_svcmdids (<em class="parameter"><code><a class="link"
                                      <em class="parameter"><code><span class="type">GList</span> *svcmdids</code></em>);</pre>
 <p>Set the list of SvcMDID, or service metadata ids.</p>
 <div class="refsect3">
-<a name="id-1.3.9.3.6.23.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-discovery-set-svcmdids.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -959,7 +943,7 @@ lasso_idwsf2_discovery_set_svcmdids (<em class="parameter"><code><a class="link"
 </tr>
 <tr>
 <td class="parameter_name"><p>svcmdids</p></td>
-<td class="parameter_description"><p> a list of service metadata IDs. </p></td>
+<td class="parameter_description"><p>a list of service metadata IDs. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
@@ -979,7 +963,6 @@ lasso_idwsf2_discovery_set_svcmdids (<em class="parameter"><code><a class="link"
 </div>
 </div>
 <div class="footer">
-<hr>
-          Generated by GTK-Doc V1.21</div>
+<hr>Generated by GTK-Doc V1.28</div>
 </body>
 </html>

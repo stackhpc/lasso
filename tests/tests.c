@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <config.h>
+#include <stdio.h>
 
 #include <check.h>
 #include <glib.h>
@@ -57,18 +58,62 @@ SuiteFunction suites[] = {
 	NULL
 };
 
+
 void
 mute_logger(G_GNUC_UNUSED const gchar *domain,
 		G_GNUC_UNUSED GLogLevelFlags log_level, G_GNUC_UNUSED const gchar *message,
 		G_GNUC_UNUSED gpointer user_data) {
 }
 
+int dontfork = 0;
+int log_failed = 0;
+
+void set_mute_logger() {
+     g_log_set_default_handler(mute_logger, NULL);
+     if (log_failed) {
+         log_failed = 0;
+         fail("There were logs, there should not");
+     }
+}
+
 void
-fail_logger(const gchar *log_domain, GLogLevelFlags log_level,
-		const gchar *message, G_GNUC_UNUSED gpointer user_data)
+fail_logger(const gchar *log_domain G_GNUC_UNUSED, GLogLevelFlags log_level,
+		const gchar *message G_GNUC_UNUSED, G_GNUC_UNUSED gpointer user_data)
 {
-	fail("No logging output expected: message «%s» was emitted for domain «%s» at the level"
-			" «%d»", message, log_domain, log_level);
+	const char *level_name G_GNUC_UNUSED = NULL;
+
+	if (strncmp(message, "libxmlsec", 9) == 0) {
+		return;
+	}
+
+	switch (log_level) {
+		case G_LOG_LEVEL_ERROR:
+			level_name = "ERROR";
+			break;
+		case G_LOG_LEVEL_CRITICAL:
+			level_name = "CRITICAL";
+			break;
+		case G_LOG_LEVEL_WARNING:
+			level_name = "WARNING";
+			break;
+		case G_LOG_LEVEL_INFO:
+			level_name = "INFO";
+			break;
+		case G_LOG_LEVEL_MESSAGE:
+			level_name = "MESSAGE";
+			break;
+		case G_LOG_LEVEL_DEBUG:
+			level_name = "DEBUG";
+			break;
+		default:
+			g_assert_not_reached();
+	}
+        if (! dontfork) {
+		fail("No logging output expected: message «%s» was emitted for domain «%s» at the level «%s»", message, log_domain, level_name);
+	}
+	printf("No logging output expected: message «%s» was emitted for domain «%s» at the level «%s»", message, log_domain, level_name);
+        log_failed = 1;
+        G_BREAKPOINT();
 }
 
 static xmlFreeFunc free_func;
@@ -132,6 +177,7 @@ main(int argc, char *argv[])
 	if (dont_fork) {
 		srunner_set_fork_status(sr, CK_NOFORK);
 	}
+        dontfork = srunner_fork_status(sr) == CK_NOFORK;
 #ifdef CHECK_IS_XML
 	srunner_set_xml(sr, "result.xml");
 #endif

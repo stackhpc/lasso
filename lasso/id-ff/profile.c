@@ -838,7 +838,7 @@ lasso_profile_get_issuer(const char *message)
 	char *result = NULL;
 	int count = 0, ret;
 	xmlChar *xml_result = NULL;
-	xmlChar *to_free = NULL;
+	char *to_free = NULL;
 
 
 	reader = lasso_xmltextreader_from_message(message, &to_free);
@@ -867,7 +867,7 @@ cleanup:
 	if (reader)
 		xmlFreeTextReader(reader);
 	if (to_free)
-		lasso_release_xml_string(to_free);
+		lasso_release(to_free);
 	return result;
 }
 
@@ -887,7 +887,7 @@ lasso_profile_get_in_response_to(const char *message)
 	int ret;
 	int node_type = 0;
 	xmlChar *xml_result = NULL;
-	xmlChar *to_free = NULL;
+	char *to_free = NULL;
 
 
 	reader = lasso_xmltextreader_from_message(message, &to_free);
@@ -913,7 +913,7 @@ cleanup:
 	if (xml_result)
 		lasso_release_xml_string(xml_result);
 	if (to_free)
-		lasso_release_xml_string(to_free);
+		lasso_release(to_free);
 	return result;
 }
 
@@ -945,6 +945,9 @@ dispose(GObject *object)
 	lasso_release_string(profile->private_data->artifact_message);
 
 	G_OBJECT_CLASS(parent_class)->dispose(G_OBJECT(profile));
+
+	lasso_release_gobject(profile->private_data->idp_list);
+	lasso_release_string(profile->private_data->message_id);
 }
 
 /*****************************************************************************/

@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Lasso Reference Manual: Addon to SAML 2.0 profile for ID-WSF 2.0 bootsraping</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<title>Addon to SAML 2.0 profile for ID-WSF 2.0 bootsraping: Lasso Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="idwsf2.html" title="ID-WSF 2.0">
 <link rel="prev" href="lasso-LassoIdWsf2Profile.html" title="LassoIdWsf2Profile">
 <link rel="next" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
-<meta name="generator" content="GTK-Doc V1.21 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.28 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -33,7 +33,7 @@
 </tr></table></div>
 <div class="refsect1">
 <a name="lasso-Addon-to-SAML-2.0-profile-for-ID-WSF-2.0-bootsraping.functions"></a><h2>Functions</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="functions_return">
 <col class="functions_name">
@@ -88,8 +88,8 @@ also having the Discovery service role.</p>
  and <em class="parameter"><code>duration</code></em>
  are respectively ten minutes and two days.</p>
 <div class="refsect3">
-<a name="id-1.3.9.6.5.2.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-login-idwsf2-add-discovery-bootstrap-epr.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -113,28 +113,27 @@ also having the Discovery service role.</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>security_mechanisms</p></td>
-<td class="parameter_description"><p> the list of supported security mechanisms. </p></td>
+<td class="parameter_description"><p>the list of supported security mechanisms. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>tolerance</p></td>
-<td class="parameter_description"><p> see <a class="link" href="lasso-LassoSaml2Assertion.html#lasso-saml2-assertion-set-basic-conditions" title="lasso_saml2_assertion_set_basic_conditions ()"><code class="function">lasso_saml2_assertion_set_basic_conditions()</code></a>. </p></td>
+<td class="parameter_description"><p>see <a class="link" href="lasso-LassoSaml2Assertion.html#lasso-saml2-assertion-set-basic-conditions" title="lasso_saml2_assertion_set_basic_conditions ()"><code class="function">lasso_saml2_assertion_set_basic_conditions()</code></a>. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="Default parameter value (for in case the shadows-to function has less parameters)."><span class="acronym">default</span></acronym> -1]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>duration</p></td>
-<td class="parameter_description"><p> see <a class="link" href="lasso-LassoSaml2Assertion.html#lasso-saml2-assertion-set-basic-conditions" title="lasso_saml2_assertion_set_basic_conditions ()"><code class="function">lasso_saml2_assertion_set_basic_conditions()</code></a>. </p></td>
+<td class="parameter_description"><p>see <a class="link" href="lasso-LassoSaml2Assertion.html#lasso-saml2-assertion-set-basic-conditions" title="lasso_saml2_assertion_set_basic_conditions ()"><code class="function">lasso_saml2_assertion_set_basic_conditions()</code></a>. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="Default parameter value (for in case the shadows-to function has less parameters)."><span class="acronym">default</span></acronym> 0]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.6.5.2.7"></a><h4>Returns</h4>
+<a name="lasso-login-idwsf2-add-discovery-bootstrap-epr.returns"></a><h4>Returns</h4>
 <p> 0 if successfull, otherwise <a class="link" href="lasso-Error-Codes.html#LASSO-PROFILE-ERROR-MISSING-ASSERTION:CAPS" title="LASSO_PROFILE_ERROR_MISSING_ASSERTION"><span class="type">LASSO_PROFILE_ERROR_MISSING_ASSERTION</span></a> if no assertion is present
 in the <a class="link" href="lasso-LassoLogin.html#LassoLogin" title="struct LassoLogin"><span class="type">LassoLogin</span></a> object, <a class="link" href="lasso-Error-Codes.html#LASSO-PARAM-ERROR-BAD-TYPE-OR-NULL-OBJ:CAPS" title="LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ"><span class="type">LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ</span></a> if login is not a <a class="link" href="lasso-LassoLogin.html#LassoLogin" title="struct LassoLogin"><span class="type">LassoLogin</span></a>
 object.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -145,8 +144,8 @@ lasso_login_idwsf2_get_discovery_bootstrap_epr
                                (<em class="parameter"><code><a class="link" href="lasso-LassoLogin.html#LassoLogin" title="struct LassoLogin"><span class="type">LassoLogin</span></a> *login</code></em>);</pre>
 <p>Extract the Discovery boostrap EPR from the attribute named <a class="link" href="lasso-SAML-2.0-Strings.html#LASSO-SAML2-ATTRIBUTE-NAME-EPR:CAPS" title="LASSO_SAML2_ATTRIBUTE_NAME_EPR"><span class="type">LASSO_SAML2_ATTRIBUTE_NAME_EPR</span></a>.</p>
 <div class="refsect3">
-<a name="id-1.3.9.6.5.3.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-login-idwsf2-get-discovery-bootstrap-epr.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -160,8 +159,8 @@ lasso_login_idwsf2_get_discovery_bootstrap_epr
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.6.5.3.6"></a><h4>Returns</h4>
-<p> a caller owned <a class="link" href="lasso-LassoWsAddrEndpointReference.html#LassoWsAddrEndpointReference" title="struct LassoWsAddrEndpointReference"><span class="type">LassoWsAddrEndpointReference</span></a> object, or NULL if none can be found. </p>
+<a name="lasso-login-idwsf2-get-discovery-bootstrap-epr.returns"></a><h4>Returns</h4>
+<p>a caller owned <a class="link" href="lasso-LassoWsAddrEndpointReference.html#LassoWsAddrEndpointReference" title="struct LassoWsAddrEndpointReference"><span class="type">LassoWsAddrEndpointReference</span></a> object, or NULL if none can be found. </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
 </div>
 </div>
@@ -174,8 +173,8 @@ lasso_saml2_assertion_idwsf2_get_discovery_bootstrap_epr
 <p>Extract the Discovery bootstrap EPR from <em class="parameter"><code>assertion</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.3.9.6.5.4.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-saml2-assertion-idwsf2-get-discovery-bootstrap-epr.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -189,8 +188,8 @@ lasso_saml2_assertion_idwsf2_get_discovery_bootstrap_epr
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.6.5.4.6"></a><h4>Returns</h4>
-<p> a <a class="link" href="lasso-LassoWsAddrEndpointReference.html#LassoWsAddrEndpointReference" title="struct LassoWsAddrEndpointReference"><span class="type">LassoWsAddrEndpointReference</span></a> or NULL if no bootstrap EPR is found. </p>
+<a name="lasso-saml2-assertion-idwsf2-get-discovery-bootstrap-epr.returns"></a><h4>Returns</h4>
+<p>a <a class="link" href="lasso-LassoWsAddrEndpointReference.html#LassoWsAddrEndpointReference" title="struct LassoWsAddrEndpointReference"><span class="type">LassoWsAddrEndpointReference</span></a> or NULL if no bootstrap EPR is found. </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
 </div>
 </div>
@@ -200,7 +199,6 @@ lasso_saml2_assertion_idwsf2_get_discovery_bootstrap_epr
 </div>
 </div>
 <div class="footer">
-<hr>
-          Generated by GTK-Doc V1.21</div>
+<hr>Generated by GTK-Doc V1.28</div>
 </body>
 </html>

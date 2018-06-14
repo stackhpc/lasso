@@ -230,7 +230,7 @@ char* lasso_sha384(const char *str);
 
 char* lasso_sha512(const char *str);
 
-char** urlencoded_to_strings(const char *str);
+xmlChar** lasso_urlencoded_to_strings(const char *str);
 
 int lasso_sign_node(xmlNode *xmlnode, LassoSignatureContext context, const char *id_attr_name, const char *id_value);
 
@@ -265,7 +265,18 @@ xmlDocPtr lasso_xml_parse_memory(const char *buffer, int size);
 
 xmlNode* lasso_xml_get_soap_content(xmlNode *root);
 
+xmlNodePtr lasso_xml_next_element_node(xmlNodePtr node);
+
+const xmlChar* lasso_xml_get_node_ns_href(const xmlNodePtr node);
+
+gboolean lasso_xml_is_element_node(const xmlNodePtr node,
+                                   const xmlChar *name, const xmlChar *ns);
+
 gboolean lasso_xml_is_soap(xmlNode *root);
+
+xmlNodePtr lasso_xml_soap11_get_header(xmlNodePtr envelope_node);
+
+xmlNodePtr lasso_xml_soap11_get_body(xmlNodePtr envelope_node);
 
 gboolean lasso_eval_xpath_expression(xmlXPathContextPtr xpath_ctx, const char *expression,
 		xmlXPathObjectPtr *xpath_object_ptr, int *xpath_error_code);
@@ -335,7 +346,7 @@ void lasso_xmlnode_add_saml2_signature_template(xmlNode *node, LassoSignatureCon
 
 gchar* lasso_xmlnode_build_deflated_query(xmlNode *xmlnode);
 
-xmlTextReader *lasso_xmltextreader_from_message(const char *message, xmlChar **to_free);
+xmlTextReader *lasso_xmltextreader_from_message(const char *message, char **to_free);
 
 #ifdef __cplusplus
 }

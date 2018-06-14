@@ -1,3 +1,20 @@
+lasso (2.6.0-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Frederic Peters <fpeters@debian.org>  Thu, 14 Jun 2018 09:10:09 +0200
+
+lasso (2.5.99-1) unstable; urgency=medium
+
+  * New upstream release candidate.
+    - include support for SHA256 signatures (closes: #901411)
+  * debian/patches/0001-perl-remove-quotes-from-PERL-V-ccflags-output.patch
+    - dropped, released upstream
+  * debian/patches/Use-INSTALLDIRS-vendor-for-the-Perl-bindings-as-per-.patch
+    - dropped, released upstream
+
+ -- Frederic Peters <fpeters@debian.org>  Wed, 13 Jun 2018 09:25:08 +0200
+
 lasso (2.5.0-5) unstable; urgency=medium
 
   * d/: disable PHP support for now. (closes: #821547, #821683)

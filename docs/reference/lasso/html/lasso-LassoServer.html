@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Lasso Reference Manual: LassoServer</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<title>LassoServer: Lasso Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="architecture.html" title="Lasso Architecture">
 <link rel="prev" href="architecture.html" title="Lasso Architecture">
 <link rel="next" href="lasso-LassoProvider.html" title="LassoProvider">
-<meta name="generator" content="GTK-Doc V1.21 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.28 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -33,7 +33,7 @@
 </tr></table></div>
 <div class="refsect1">
 <a name="lasso-LassoServer.functions"></a><h2>Functions</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="functions_return">
 <col class="functions_name">
@@ -172,7 +172,7 @@
 </div>
 <div class="refsect1">
 <a name="lasso-LassoServer.other"></a><h2>Types and Values</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="name">
 <col class="description">
@@ -199,8 +199,8 @@ lasso_server_new (<em class="parameter"><code>const <span class="type">gchar</sp
                   <em class="parameter"><code>const <span class="type">gchar</span> *certificate</code></em>);</pre>
 <p>Creates a new <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a>.</p>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.2.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-server-new.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -213,28 +213,27 @@ lasso_server_new (<em class="parameter"><code>const <span class="type">gchar</sp
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
-<td class="parameter_name"><p>private_key:(allow-none)</p></td>
-<td class="parameter_description"><p>path to the the server private key file or NULL</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_name"><p>private_key</p></td>
+<td class="parameter_description"><p>path to the the server private key file or NULL. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
-<td class="parameter_name"><p>private_key_password:(allow-none)</p></td>
-<td class="parameter_description"><p>password to private key if it is encrypted, or NULL</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_name"><p>private_key_password</p></td>
+<td class="parameter_description"><p>password to private key if it is encrypted, or NULL. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
-<td class="parameter_name"><p>certificate:(allow-none)</p></td>
-<td class="parameter_description"><p>path to the server certificate file, or NULL</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_name"><p>certificate</p></td>
+<td class="parameter_description"><p>path to the server certificate file, or NULL. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.2.6"></a><h4>Returns</h4>
+<a name="lasso-server-new.returns"></a><h4>Returns</h4>
 <p> a newly created <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> object; or NULL if an error
 occured</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -247,8 +246,8 @@ lasso_server_new_from_buffers (<em class="parameter"><code>const <span class="ty
                                <em class="parameter"><code>const <span class="type">gchar</span> *certificate_content</code></em>);</pre>
 <p>Creates a new <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a>.</p>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.3.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-server-new-from-buffers.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -261,29 +260,28 @@ lasso_server_new_from_buffers (<em class="parameter"><code>const <span class="ty
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
-<td class="parameter_name"><p>private_key_content:(allow-none)</p></td>
-<td class="parameter_description"><p>NULL terminated string containing a PEM formatted private key</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_name"><p>private_key_content</p></td>
+<td class="parameter_description"><p>NULL terminated string containing a PEM formatted private key. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
-<td class="parameter_name"><p>private_key_password:(allow-none)</p></td>
+<td class="parameter_name"><p>private_key_password</p></td>
 <td class="parameter_description"><p>a NULL terminated string which is the optional password of
-the private key</p></td>
-<td class="parameter_annotations"> </td>
+the private key. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
-<td class="parameter_name"><p>certificate_content:(allow-none)</p></td>
+<td class="parameter_name"><p>certificate_content</p></td>
 <td class="parameter_description"><p>NULL terminated string containing a PEM formatted X509
-certificate</p></td>
-<td class="parameter_annotations"> </td>
+certificate. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.3.6"></a><h4>Returns</h4>
+<a name="lasso-server-new-from-buffers.returns"></a><h4>Returns</h4>
 <p> a newly created <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> object; or NULL if an error occured</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -294,8 +292,8 @@ lasso_server_new_from_dump (<em class="parameter"><code>const <span class="type"
 <p>Restores the <em class="parameter"><code>dump</code></em>
  to a new <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a>.</p>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.4.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-server-new-from-dump.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -309,9 +307,8 @@ lasso_server_new_from_dump (<em class="parameter"><code>const <span class="type"
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.4.6"></a><h4>Returns</h4>
+<a name="lasso-server-new-from-dump.returns"></a><h4>Returns</h4>
 <p> a newly created <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a>; or NULL if an error occured</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -326,8 +323,8 @@ lasso_server_add_provider (<em class="parameter"><code><a class="link" href="las
 <p>Creates a new <a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> and makes it known to the <em class="parameter"><code>server</code></em>
 </p>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.5.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-server-add-provider.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -350,22 +347,21 @@ lasso_server_add_provider (<em class="parameter"><code><a class="link" href="las
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
-<td class="parameter_name"><p>public_key:(allow-none)</p></td>
-<td class="parameter_description"><p>provider public key file (may be a certificate) or NULL</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_name"><p>public_key</p></td>
+<td class="parameter_description"><p>provider public key file (may be a certificate) or NULL. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
-<td class="parameter_name"><p>ca_cert_chain:(allow-none)</p></td>
-<td class="parameter_description"><p>provider CA certificate chain file or NULL</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_name"><p>ca_cert_chain</p></td>
+<td class="parameter_description"><p>provider CA certificate chain file or NULL. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.5.6"></a><h4>Returns</h4>
+<a name="lasso-server-add-provider.returns"></a><h4>Returns</h4>
 <p> 0 on success; a negative value if an error occured.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -379,8 +375,8 @@ lasso_server_add_provider2 (<em class="parameter"><code><a class="link" href="la
 .</p>
 <p>Return 0 if successful, LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ otherwise.</p>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.6.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-server-add-provider2.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -413,8 +409,8 @@ lasso_server_add_provider_from_buffer (<em class="parameter"><code><a class="lin
 <p>Creates a new <a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> and makes it known to the <em class="parameter"><code>server</code></em>
 </p>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.7.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-server-add-provider-from-buffer.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -437,22 +433,21 @@ lasso_server_add_provider_from_buffer (<em class="parameter"><code><a class="lin
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
-<td class="parameter_name"><p>public_key:(allow-none)</p></td>
-<td class="parameter_description"><p>provider public key file (may be a certificate) or NULL</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_name"><p>public_key</p></td>
+<td class="parameter_description"><p>provider public key file (may be a certificate) or NULL. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
-<td class="parameter_name"><p>ca_cert_chain:(allow-none)</p></td>
-<td class="parameter_description"><p>provider CA certificate chain file or NULL</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_name"><p>ca_cert_chain</p></td>
+<td class="parameter_description"><p>provider CA certificate chain file or NULL. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.7.6"></a><h4>Returns</h4>
+<a name="lasso-server-add-provider-from-buffer.returns"></a><h4>Returns</h4>
 <p> 0 on success; a negative value if an error occured.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -473,8 +468,8 @@ lasso_server_load_metadata (<em class="parameter"><code><a class="link" href="la
  is non-NULL, use it to check a signature on the metadata file, otherwise ignore
 signature validation.</p>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.8.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-server-load-metadata.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -497,20 +492,20 @@ signature validation.</p>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
-<td class="parameter_name"><p>trusted_roots:(allow-none)</p></td>
+<td class="parameter_name"><p>trusted_roots</p></td>
 <td class="parameter_description"><p>a PEM encoded files containing the certificates to check signatures
-on the metadata file (optional)</p></td>
-<td class="parameter_annotations"> </td>
+on the metadata file (optional). </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>blacklisted_entity_ids</p></td>
-<td class="parameter_description"><p> a list of EntityID which should not be
+<td class="parameter_description"><p>a list of EntityID which should not be
 loaded, can be NULL. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> string]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>loaded_entity_ids</p></td>
-<td class="parameter_description"><p> an output parameter for the
+<td class="parameter_description"><p>an output parameter for the
 list of the loaded EntityID, can be NULL. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> string][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
@@ -524,7 +519,7 @@ EntitiesDescriptors nodes.</p></td>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.8.6"></a><h4>Returns</h4>
+<a name="lasso-server-load-metadata.returns"></a><h4>Returns</h4>
 <p> 0 on success, an error code otherwise, among:</p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem"><p>
@@ -535,7 +530,6 @@ valid role value,
 LASSO_DS_ERROR_CA_CERT_CHAIN_LOAD_FAILED if the <em class="parameter"><code>trusted_root</code></em> file cannot be loaded,
 </p></li>
 </ul></div>
-<p></p>
 </div>
 </div>
 <hr>
@@ -545,8 +539,8 @@ LASSO_DS_ERROR_CA_CERT_CHAIN_LOAD_FAILED if the <em class="parameter"><code>trus
 lasso_server_destroy (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);</pre>
 <p>Destroys a server.</p>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.9.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-server-destroy.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -568,8 +562,8 @@ lasso_server_dump (<em class="parameter"><code><a class="link" href="lasso-Lasso
 <p>Dumps <em class="parameter"><code>server</code></em>
  content to an XML string.</p>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.10.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-server-dump.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -583,8 +577,8 @@ lasso_server_dump (<em class="parameter"><code><a class="link" href="lasso-Lasso
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.10.6"></a><h4>Returns</h4>
-<p> the dump string.  It must be freed by the caller. </p>
+<a name="lasso-server-dump.returns"></a><h4>Returns</h4>
+<p>the dump string.  It must be freed by the caller. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
 </div>
@@ -597,8 +591,8 @@ lasso_server_get_provider (<em class="parameter"><code>const <a class="link" hre
 <p>Looks up for a <a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> whose ID is <em class="parameter"><code>providerID</code></em>
  and returns it.</p>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.11.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-server-get-provider.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -619,8 +613,8 @@ lasso_server_get_provider (<em class="parameter"><code>const <a class="link" hre
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.11.6"></a><h4>Returns</h4>
-<p> the <a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a>, NULL if it was not found.  The
+<a name="lasso-server-get-provider.returns"></a><h4>Returns</h4>
+<p>the <a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a>, NULL if it was not found.  The
 <a class="link" href="lasso-LassoProvider.html#LassoProvider" title="struct LassoProvider"><span class="type">LassoProvider</span></a> is owned by Lasso and should not be freed. </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
 </div>
@@ -640,8 +634,8 @@ lasso_server_set_encryption_private_key
 <p>If <em class="parameter"><code>filename_or_buffer</code></em>
  is NULL, it frees the currently setted key.</p>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.12.7"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-server-set-encryption-private-key.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -654,18 +648,17 @@ lasso_server_set_encryption_private_key
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
-<td class="parameter_name"><p>filename_or_buffer:(allow-none)</p></td>
+<td class="parameter_name"><p>filename_or_buffer</p></td>
 <td class="parameter_description"><p>file name of the encryption key to load or its content as a
-NULL-terminated string.</p></td>
-<td class="parameter_annotations"> </td>
+NULL-terminated string. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.12.8"></a><h4>Returns</h4>
+<a name="lasso-server-set-encryption-private-key.returns"></a><h4>Returns</h4>
 <p> 0 on success; another value if an error occured.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -682,8 +675,8 @@ non-NULL try to decrypt the key with it.</p>
 <p>If <em class="parameter"><code>filename_or_buffer</code></em>
  is NULL, it frees the currently setted key.</p>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.13.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-server-set-encryption-private-key-with-password.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -696,25 +689,24 @@ non-NULL try to decrypt the key with it.</p>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
-<td class="parameter_name"><p>filename_or_buffer:(allow-none)</p></td>
+<td class="parameter_name"><p>filename_or_buffer</p></td>
 <td class="parameter_description"><p>file name of the encryption key to load or its content as a
-NULL-terminated string.</p></td>
-<td class="parameter_annotations"> </td>
+NULL-terminated string. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
-<td class="parameter_name"><p>password:(allow-none)</p></td>
-<td class="parameter_description"><p>an optional password to decrypt the encryption key.</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_name"><p>password</p></td>
+<td class="parameter_description"><p>an optional password to decrypt the encryption key. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.13.7"></a><h4>Returns</h4>
+<a name="lasso-server-set-encryption-private-key-with-password.returns"></a><h4>Returns</h4>
 <p> 0 on success; another value if an error occured.</p>
-<p></p>
 </div>
-<p class="since">Since 2.3</p>
+<p class="since">Since: 2.3</p>
 </div>
 <hr>
 <div class="refsect2">
@@ -727,8 +719,8 @@ lasso_server_load_affiliation (<em class="parameter"><code><a class="link" href=
 providers have been added to <em class="parameter"><code>server</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.14.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-server-load-affiliation.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -749,9 +741,8 @@ providers have been added to <em class="parameter"><code>server</code></em>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.14.6"></a><h4>Returns</h4>
+<a name="lasso-server-load-affiliation.returns"></a><h4>Returns</h4>
 <p> 0 on success; another value if an error occured.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -767,8 +758,8 @@ endpoint given the <em class="parameter"><code>endpoint_description</code></em>
 If the provider cannot be found or if the provider does not have a
 matching endpoint NULL will be returned.</p>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.15.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-server-get-endpoint-url-by-id.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -794,9 +785,8 @@ matching endpoint NULL will be returned.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.15.6"></a><h4>Returns</h4>
+<a name="lasso-server-get-endpoint-url-by-id.returns"></a><h4>Returns</h4>
 <p> url (must be freed by caller)</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -820,8 +810,8 @@ have the specified <em class="parameter"><code>role</code></em>
 
 by calling <code class="function">lasso_release_list_of_strings()</code>.</p>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.16.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-server-get-filtered-provider-list.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -854,8 +844,8 @@ by calling <code class="function">lasso_release_list_of_strings()</code>.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.16.6"></a><h4>Returns</h4>
-<p>  <span class="type">GList</span> of matching provider EntityID's returned here. </p>
+<a name="lasso-server-get-filtered-provider-list.returns"></a><h4>Returns</h4>
+<p><span class="type">GList</span> of matching provider EntityID's returned here. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> string]</span></p>
 </div>
 </div>
@@ -868,8 +858,8 @@ lasso_server_saml2_assertion_setup_signature
                                 <em class="parameter"><code><a class="link" href="lasso-LassoSaml2Assertion.html#LassoSaml2Assertion" title="struct LassoSaml2Assertion"><span class="type">LassoSaml2Assertion</span></a> *saml2_assertion</code></em>);</pre>
 <p>Configure signature on a saml2:Assertion element.</p>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.17.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-server-saml2-assertion-setup-signature.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -890,9 +880,8 @@ lasso_server_saml2_assertion_setup_signature
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.4.6.17.6"></a><h4>Returns</h4>
+<a name="lasso-server-saml2-assertion-setup-signature.returns"></a><h4>Returns</h4>
 <p> 0 if successfull, an error code otherwise.</p>
-<p></p>
 </div>
 </div>
 </div>
@@ -916,7 +905,6 @@ lasso_server_saml2_assertion_setup_signature
 </div>
 </div>
 <div class="footer">
-<hr>
-          Generated by GTK-Doc V1.21</div>
+<hr>Generated by GTK-Doc V1.28</div>
 </body>
 </html>

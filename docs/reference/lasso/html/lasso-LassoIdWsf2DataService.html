@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Lasso Reference Manual: LassoIdWsf2DataService</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<title>LassoIdWsf2DataService: Lasso Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="idwsf2.html" title="ID-WSF 2.0">
 <link rel="prev" href="lasso-LassoIdWsf2Discovery.html" title="LassoIdWsf2Discovery">
 <link rel="next" href="lasso-LassoIdWsf2Profile.html" title="LassoIdWsf2Profile">
-<meta name="generator" content="GTK-Doc V1.21 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.28 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -33,7 +33,7 @@
 </tr></table></div>
 <div class="refsect1">
 <a name="lasso-LassoIdWsf2DataService.functions"></a><h2>Functions</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="functions_return">
 <col class="functions_name">
@@ -250,7 +250,7 @@
 </div>
 <div class="refsect1">
 <a name="lasso-LassoIdWsf2DataService.other"></a><h2>Types and Values</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="name">
 <col class="description">
@@ -272,24 +272,23 @@
 lasso_idwsf2_data_service_new (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);</pre>
 <p>Create a new <a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a>.</p>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.2.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-data-service-new.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
 <col width="200px" class="parameters_annotations">
 </colgroup>
 <tbody><tr>
-<td class="parameter_name"><p>server:(allow-none)</p></td>
-<td class="parameter_description"><p>a <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> object, for resolving ProviderIDs</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_name"><p>server</p></td>
+<td class="parameter_description"><p>a <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> object, for resolving ProviderIDs. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr></tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.2.6"></a><h4>Returns</h4>
+<a name="lasso-idwsf2-data-service-new.returns"></a><h4>Returns</h4>
 <p> a newly created <a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> object</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -311,8 +310,8 @@ lasso_idwsf2_data_service_init_delete (<em class="parameter"><code><a class="lin
 lasso_idwsf2_data_service_init_modify (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);</pre>
 <p>Initialise an ID-WSF 2.0 DataService modify request.</p>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.5.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-data-service-init-modify.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -326,9 +325,8 @@ lasso_idwsf2_data_service_init_modify (<em class="parameter"><code><a class="lin
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.5.6"></a><h4>Returns</h4>
+<a name="lasso-idwsf2-data-service-init-modify.returns"></a><h4>Returns</h4>
 <p> 0 on success; or a negative value otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -338,8 +336,8 @@ lasso_idwsf2_data_service_init_modify (<em class="parameter"><code><a class="lin
 lasso_idwsf2_data_service_init_query (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);</pre>
 <p>Initialise an ID-WSF 2.0 DataService query request.</p>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.6.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-data-service-init-query.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -353,9 +351,8 @@ lasso_idwsf2_data_service_init_query (<em class="parameter"><code><a class="link
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.6.6"></a><h4>Returns</h4>
+<a name="lasso-idwsf2-data-service-init-query.returns"></a><h4>Returns</h4>
 <p> 0 on success; or a negative value otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -370,8 +367,8 @@ lasso_idwsf2_data_service_add_modify_item
                                 <em class="parameter"><code>const <span class="type">gchar</span> *item_id</code></em>);</pre>
 <p>Add an item in the modification request.</p>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.7.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-data-service-add-modify-item.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -389,28 +386,27 @@ lasso_idwsf2_data_service_add_modify_item
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
-<td class="parameter_name"><p>new_data:(allow-none)</p></td>
-<td class="parameter_description"><p>new value for the selected item</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_name"><p>new_data</p></td>
+<td class="parameter_description"><p>new value for the selected item. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>overrideAllowed</p></td>
-<td class="parameter_description"><p> FALSE means only allowing to create a new item, but
+<td class="parameter_description"><p>FALSE means only allowing to create a new item, but
 not modify existing one, TRUE means allowing to modify existing item. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Default parameter value (for in case the shadows-to function has less parameters)."><span class="acronym">default</span></acronym> FALSE]</span></td>
 </tr>
 <tr>
-<td class="parameter_name"><p>item_id:(allow-none)</p></td>
-<td class="parameter_description"><p>identifier of the item to modify</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_name"><p>item_id</p></td>
+<td class="parameter_description"><p>identifier of the item to modify. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.7.6"></a><h4>Returns</h4>
+<a name="lasso-idwsf2-data-service-add-modify-item.returns"></a><h4>Returns</h4>
 <p> 0 on success; or a negative value otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -423,8 +419,8 @@ lasso_idwsf2_data_service_add_namespace
                                 <em class="parameter"><code>const <span class="type">char</span> *href</code></em>);</pre>
 <p>Add a new namespace to use for example in XPath elements or in Data or NewData objects.</p>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.8.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-data-service-add-namespace.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -438,9 +434,8 @@ lasso_idwsf2_data_service_add_namespace
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.8.6"></a><h4>Returns</h4>
+<a name="lasso-idwsf2-data-service-add-namespace.returns"></a><h4>Returns</h4>
 <p> 0 if successful, an error code otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -453,8 +448,8 @@ lasso_idwsf2_data_service_add_query_item
                                 <em class="parameter"><code>const <span class="type">gchar</span> *item_id</code></em>);</pre>
 <p>Add an item in the query request.</p>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.9.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-data-service-add-query-item.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -472,18 +467,17 @@ lasso_idwsf2_data_service_add_query_item
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
-<td class="parameter_name"><p>item_id:(allow-none)</p></td>
+<td class="parameter_name"><p>item_id</p></td>
 <td class="parameter_description"><p>identifier of the queried item, which will allow to retrieve it in the
-response</p></td>
-<td class="parameter_annotations"> </td>
+response. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.9.6"></a><h4>Returns</h4>
+<a name="lasso-idwsf2-data-service-add-query-item.returns"></a><h4>Returns</h4>
 <p> 0 on success; or a negative value otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -495,8 +489,8 @@ lasso_idwsf2_data_service_build_request_msg
                                 <em class="parameter"><code>const <span class="type">char</span> *security_mech_id</code></em>);</pre>
 <p>Build the request message.</p>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.10.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-data-service-build-request-msg.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -509,17 +503,16 @@ lasso_idwsf2_data_service_build_request_msg
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
-<td class="parameter_name"><p>security_mech_id:(allow-none)</p></td>
-<td class="parameter_description"><p>the security mechanism to employ, default is Bearer mechanism.</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_name"><p>security_mech_id</p></td>
+<td class="parameter_description"><p>the security mechanism to employ, default is Bearer mechanism. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.10.6"></a><h4>Returns</h4>
+<a name="lasso-idwsf2-data-service-build-request-msg.returns"></a><h4>Returns</h4>
 <p> 0 if successful, an error code otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -530,8 +523,8 @@ lasso_idwsf2_data_service_build_response_msg
                                (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);</pre>
 <p>Build the response message corresponding to the current request.</p>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.11.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-data-service-build-response-msg.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -545,9 +538,8 @@ lasso_idwsf2_data_service_build_response_msg
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.11.6"></a><h4>Returns</h4>
+<a name="lasso-idwsf2-data-service-build-response-msg.returns"></a><h4>Returns</h4>
 <p> 0 if successfull, an error code otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -558,8 +550,8 @@ lasso_idwsf2_data_service_get_item (<em class="parameter"><code><a class="link" 
                                     <em class="parameter"><code>const <span class="type">char</span> *item_id</code></em>);</pre>
 <p>Retrieve a specific item from a request.</p>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.12.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-data-service-get-item.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -581,8 +573,8 @@ more than one, it returns NULL).</p></td>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.12.6"></a><h4>Returns</h4>
-<p> a <a class="link" href="lasso-LassoIdWsf2DstRefQueryItem.html#LassoIdWsf2DstRefQueryItem" title="struct LassoIdWsf2DstRefQueryItem"><span class="type">LassoIdWsf2DstRefQueryItem</span></a> or a <a class="link" href="lasso-LassoIdWsf2DstRefModifyItem.html#LassoIdWsf2DstRefModifyItem" title="struct LassoIdWsf2DstRefModifyItem"><span class="type">LassoIdWsf2DstRefModifyItem</span></a> object, or NULL if
+<a name="lasso-idwsf2-data-service-get-item.returns"></a><h4>Returns</h4>
+<p>a <a class="link" href="lasso-LassoIdWsf2DstRefQueryItem.html#LassoIdWsf2DstRefQueryItem" title="struct LassoIdWsf2DstRefQueryItem"><span class="type">LassoIdWsf2DstRefQueryItem</span></a> or a <a class="link" href="lasso-LassoIdWsf2DstRefModifyItem.html#LassoIdWsf2DstRefModifyItem" title="struct LassoIdWsf2DstRefModifyItem"><span class="type">LassoIdWsf2DstRefModifyItem</span></a> object, or NULL if
 no item for the given item_id exists. </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
 </div>
@@ -595,8 +587,8 @@ lasso_idwsf2_data_service_get_query_item_result
                                (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>,
                                 <em class="parameter"><code>const <span class="type">char</span> *item_id</code></em>);</pre>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.13.4"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-data-service-get-query-item-result.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -609,16 +601,16 @@ lasso_idwsf2_data_service_get_query_item_result
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
-<td class="parameter_name"><p>item_id:(allow-none)</p></td>
-<td class="parameter_description"><p>an item_id or NULL if only one data is present</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_name"><p>item_id</p></td>
+<td class="parameter_description"><p>an item_id or NULL if only one data is present. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.13.5"></a><h4>Returns</h4>
-<p> a <a class="link" href="lasso-LassoIdWsf2DstRefData.html#LassoIdWsf2DstRefData" title="struct LassoIdWsf2DstRefData"><span class="type">LassoIdWsf2DstRefData</span></a> or NULL if none is found. </p>
+<a name="lasso-idwsf2-data-service-get-query-item-result.returns"></a><h4>Returns</h4>
+<p>a <a class="link" href="lasso-LassoIdWsf2DstRefData.html#LassoIdWsf2DstRefData" title="struct LassoIdWsf2DstRefData"><span class="type">LassoIdWsf2DstRefData</span></a> or NULL if none is found. </p>
 <p><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
 </div>
 </div>
@@ -629,8 +621,8 @@ lasso_idwsf2_data_service_get_query_item_result
 lasso_idwsf2_data_service_get_query_item_results
                                (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);</pre>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.14.4"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-data-service-get-query-item-results.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -644,8 +636,8 @@ lasso_idwsf2_data_service_get_query_item_results
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.14.5"></a><h4>Returns</h4>
-<p> the list of
+<a name="lasso-idwsf2-data-service-get-query-item-results.returns"></a><h4>Returns</h4>
+<p>the list of
 <a class="link" href="lasso-LassoIdWsf2DstRefData.html#LassoIdWsf2DstRefData" title="struct LassoIdWsf2DstRefData"><span class="type">LassoIdWsf2DstRefData</span></a> or NULL if none is found. </p>
 <p><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> LassoIdWsf2DstRefData]</span></p>
 </div>
@@ -658,8 +650,8 @@ lasso_idwsf2_data_service_get_request_type
                                (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);</pre>
 <p>Return the type of the currently handled request.</p>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.15.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-data-service-get-request-type.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -681,8 +673,8 @@ lasso_idwsf2_data_service_get_service_type
                                (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);</pre>
 <p>Return the service type of the received request</p>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.16.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-data-service-get-service-type.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -696,8 +688,8 @@ lasso_idwsf2_data_service_get_service_type
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.16.6"></a><h4>Returns</h4>
-<p> the URI of the service type or NULL. </p>
+<a name="lasso-idwsf2-data-service-get-service-type.returns"></a><h4>Returns</h4>
+<p>the URI of the service type or NULL. </p>
 <p><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
 </div>
 </div>
@@ -709,8 +701,8 @@ lasso_idwsf2_data_service_get_service_type_prefix
                                (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);</pre>
 <p>Return the service type prefix of the received request</p>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.17.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-data-service-get-service-type-prefix.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -724,8 +716,8 @@ lasso_idwsf2_data_service_get_service_type_prefix
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.17.6"></a><h4>Returns</h4>
-<p> the URI of the service type prefix or NULL. </p>
+<a name="lasso-idwsf2-data-service-get-service-type-prefix.returns"></a><h4>Returns</h4>
+<p>the URI of the service type prefix or NULL. </p>
 <p><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
 </div>
 </div>
@@ -738,8 +730,8 @@ lasso_idwsf2_data_service_process_request_msg
                                 <em class="parameter"><code>const <span class="type">char</span> *msg</code></em>);</pre>
 <p>Process a newly received requests.</p>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.18.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-data-service-process-request-msg.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -769,8 +761,8 @@ lasso_idwsf2_data_service_process_response_msg
                                 <em class="parameter"><code>const <span class="type">char</span> *msg</code></em>);</pre>
 <p>Process a received SOAP message response.</p>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.19.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-data-service-process-response-msg.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -784,16 +776,15 @@ lasso_idwsf2_data_service_process_response_msg
 </tr>
 <tr>
 <td class="parameter_name"><p>msg</p></td>
-<td class="parameter_description"><p> the message content. </p></td>
+<td class="parameter_description"><p>the message content. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.19.6"></a><h4>Returns</h4>
+<a name="lasso-idwsf2-data-service-process-response-msg.returns"></a><h4>Returns</h4>
 <p> 0 if successful, an error code otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -807,8 +798,8 @@ lasso_idwsf2_data_service_set_query_item_result
                                 <em class="parameter"><code><span class="type">gboolean</span> add</code></em>);</pre>
 <p>Set result data for a certain query-item.</p>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.20.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-data-service-set-query-item-result.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -821,18 +812,18 @@ lasso_idwsf2_data_service_set_query_item_result
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
-<td class="parameter_name"><p>item_id:(allow-none)</p></td>
-<td class="parameter_description"><p>target a certain QueryItem if NULL, means there is only one query item</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_name"><p>item_id</p></td>
+<td class="parameter_description"><p>target a certain QueryItem if NULL, means there is only one query item. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
-<td class="parameter_name"><p>xml_data:(allow-none)</p></td>
-<td class="parameter_description"><p>the data to add</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_name"><p>xml_data</p></td>
+<td class="parameter_description"><p>the data to add. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>add</p></td>
-<td class="parameter_description"><p> add data to existing datas. </p></td>
+<td class="parameter_description"><p>add data to existing datas. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Default parameter value (for in case the shadows-to function has less parameters)."><span class="acronym">default</span></acronym> FALSE]</span></td>
 </tr>
 </tbody>
@@ -852,8 +843,8 @@ result if <em class="parameter"><code>item_id</code></em>
  is NULL.</p>
 <p>If <em class="parameter"><code>item_id</code></em> is NULL and there is multiple results, returns NULL.</p>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.21.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-data-service-get-query-item-result-content.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -866,17 +857,17 @@ result if <em class="parameter"><code>item_id</code></em>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
-<td class="parameter_name"><p>item_id:(allow-none)</p></td>
+<td class="parameter_name"><p>item_id</p></td>
 <td class="parameter_description"><p>the identifier of the result asked, if NULL and there is only one respone,
-returns it.</p></td>
-<td class="parameter_annotations"> </td>
+returns it. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.21.7"></a><h4>Returns</h4>
-<p> the text content of the query item result. </p>
+<a name="lasso-idwsf2-data-service-get-query-item-result-content.returns"></a><h4>Returns</h4>
+<p>the text content of the query item result. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
 </div>
@@ -891,8 +882,8 @@ lasso_idwsf2_data_service_set_service_type
 <p>Fix a service type for this <em class="parameter"><code>service</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.22.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-data-service-set-service-type.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -929,8 +920,8 @@ lasso_idwsf2_data_service_set_status_code
 <p>Set the status code for the current response, if no response exists, it starts one using
 <a class="link" href="lasso-LassoIdWsf2DataService.html#lasso-idwsf2-data-service-validate-request" title="lasso_idwsf2_data_service_validate_request ()"><code class="function">lasso_idwsf2_data_service_validate_request()</code></a>, if it fails, report a SOAP Fault.</p>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.23.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-data-service-set-status-code.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -964,8 +955,8 @@ lasso_idwsf2_data_service_get_item_ids
                                (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *data_service</code></em>);</pre>
 <p>Return the list of items ids for the currently handled request.</p>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.24.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-data-service-get-item-ids.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -979,8 +970,8 @@ lasso_idwsf2_data_service_get_item_ids
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.24.6"></a><h4>Returns</h4>
-<p> a list of string ids, or NULL if none is found.
+<a name="lasso-idwsf2-data-service-get-item-ids.returns"></a><h4>Returns</h4>
+<p>a list of string ids, or NULL if none is found.
 The caller must free the return value. </p>
 <p><span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
@@ -991,8 +982,8 @@ The caller must free the return value. </p>
 <pre class="programlisting"><span class="returnvalue">GList</span> *
 lasso_idwsf2_data_service_get_items (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *data_service</code></em>);</pre>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.25.4"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-data-service-get-items.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1006,8 +997,8 @@ lasso_idwsf2_data_service_get_items (<em class="parameter"><code><a class="link"
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.25.5"></a><h4>Returns</h4>
-<p> a list of Query or Modify items, or NULL if
+<a name="lasso-idwsf2-data-service-get-items.returns"></a><h4>Returns</h4>
+<p>a list of Query or Modify items, or NULL if
 none is found. </p>
 <p><span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> LassoNode][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
 </div>
@@ -1020,8 +1011,8 @@ lasso_idwsf2_data_service_get_response_status
                                (<em class="parameter"><code><a class="link" href="lasso-LassoIdWsf2DataService.html#LassoIdWsf2DataService" title="struct LassoIdWsf2DataService"><span class="type">LassoIdWsf2DataService</span></a> *service</code></em>);</pre>
 <p>Return the status from the current response.</p>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.26.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-data-service-get-response-status.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1035,8 +1026,8 @@ lasso_idwsf2_data_service_get_response_status
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.26.6"></a><h4>Returns</h4>
-<p> a <a class="link" href="lasso-LassoIdWsf2UtilStatus.html#LassoIdWsf2UtilStatus" title="struct LassoIdWsf2UtilStatus"><span class="type">LassoIdWsf2UtilStatus</span></a> object, or NULL. </p>
+<a name="lasso-idwsf2-data-service-get-response-status.returns"></a><h4>Returns</h4>
+<p>a <a class="link" href="lasso-LassoIdWsf2UtilStatus.html#LassoIdWsf2UtilStatus" title="struct LassoIdWsf2UtilStatus"><span class="type">LassoIdWsf2UtilStatus</span></a> object, or NULL. </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
 </div>
 </div>
@@ -1049,8 +1040,8 @@ lasso_idwsf2_data_service_validate_request
 <p>Initialize a new response object corresponding to the current request. If not request if found or
 the request is invalid, a failure response is created.</p>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.27.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-idwsf2-data-service-validate-request.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1064,9 +1055,8 @@ the request is invalid, a failure response is created.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.9.4.6.27.6"></a><h4>Returns</h4>
+<a name="lasso-idwsf2-data-service-validate-request.returns"></a><h4>Returns</h4>
 <p> 0 if successful, or LASSO_PROFILE_ERROR_INVALID_REQUEST.</p>
-<p></p>
 </div>
 </div>
 </div>
@@ -1082,7 +1072,6 @@ the request is invalid, a failure response is created.</p>
 </div>
 </div>
 <div class="footer">
-<hr>
-          Generated by GTK-Doc V1.21</div>
+<hr>Generated by GTK-Doc V1.28</div>
 </body>
 </html>

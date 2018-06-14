@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<!DOCTYPE book PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "">
 <book xmlns="http://www.devhelp.net/book" title="Lasso Reference Manual" link="index.html" author="" name="lasso" version="2" language="c">
   <chapters>
     <sub name="Lasso &amp; Liberty Alliance Overview" link="lasso.html"/>
@@ -956,8 +955,6 @@
     <keyword type="function" name="lasso_name_id_management_build_response_msg ()" link="lasso-LassoNameIdManagement.html#lasso-name-id-management-build-response-msg"/>
     <keyword type="function" name="lasso_name_id_management_process_response_msg ()" link="lasso-LassoNameIdManagement.html#lasso-name-id-management-process-response-msg"/>
     <keyword type="struct" name="struct LassoNameIdManagement" link="lasso-LassoNameIdManagement.html#LassoNameIdManagement"/>
-    <keyword type="" name="Introduction" link="lasso-LassoEcp.html#id-1.3.5.5.5.2"/>
-    <keyword type="" name="ECP Operational Steps" link="lasso-LassoEcp.html#id-1.3.5.5.5.3"/>
     <keyword type="function" name="lasso_ecp_is_provider_in_sp_idplist ()" link="lasso-LassoEcp.html#lasso-ecp-is-provider-in-sp-idplist"/>
     <keyword type="function" name="lasso_ecp_is_idp_entry_known_idp_supporting_ecp ()" link="lasso-LassoEcp.html#lasso-ecp-is-idp-entry-known-idp-supporting-ecp"/>
     <keyword type="function" name="lasso_ecp_set_known_sp_provided_idp_entries_supporting_ecp ()" link="lasso-LassoEcp.html#lasso-ecp-set-known-sp-provided-idp-entries-supporting-ecp"/>
@@ -966,11 +963,7 @@
     <keyword type="function" name="lasso_ecp_process_sp_idp_list ()" link="lasso-LassoEcp.html#lasso-ecp-process-sp-idp-list"/>
     <keyword type="function" name="lasso_ecp_new ()" link="lasso-LassoEcp.html#lasso-ecp-new"/>
     <keyword type="function" name="lasso_ecp_process_authn_request_msg ()" link="lasso-LassoEcp.html#lasso-ecp-process-authn-request-msg"/>
-    <keyword type="" name="IdP Selection" link="lasso-LassoEcp.html#id-1.3.5.5.6.9.8"/>
-    <keyword type="" name="Results" link="lasso-LassoEcp.html#id-1.3.5.5.6.9.9"/>
-    <keyword type="" name="Side Effects" link="lasso-LassoEcp.html#id-1.3.5.5.6.9.10"/>
     <keyword type="function" name="lasso_ecp_process_response_msg ()" link="lasso-LassoEcp.html#lasso-ecp-process-response-msg"/>
-    <keyword type="" name="Side Effects" link="lasso-LassoEcp.html#id-1.3.5.5.6.10.11"/>
     <keyword type="function" name="lasso_ecp_destroy ()" link="lasso-LassoEcp.html#lasso-ecp-destroy"/>
     <keyword type="struct" name="struct LassoEcp" link="lasso-LassoEcp.html#LassoEcp"/>
     <keyword type="function" name="lasso_build_unique_id ()" link="lasso-Utility-functions-for-SAML-2.0.html#lasso-build-unique-id"/>
@@ -1988,5 +1981,145 @@
     <keyword type="macro" name="LASSO_WSU_PREFIX" link="lasso-Strings-for-WS-*.html#LASSO-WSU-PREFIX:CAPS"/>
     <keyword type="macro" name="LASSO_XSI_HREF" link="lasso-Strings-for-WS-*.html#LASSO-XSI-HREF:CAPS"/>
     <keyword type="macro" name="LASSO_XSI_PREFIX" link="lasso-Strings-for-WS-*.html#LASSO-XSI-PREFIX:CAPS"/>
+    <keyword type="constant" name="LASSO_PROVIDER_ROLE_ANY" link="lasso-LassoProvider.html#LASSO-PROVIDER-ROLE-ANY:CAPS"/>
+    <keyword type="constant" name="LASSO_PROVIDER_ROLE_NONE" link="lasso-LassoProvider.html#LASSO-PROVIDER-ROLE-NONE:CAPS"/>
+    <keyword type="constant" name="LASSO_PROVIDER_ROLE_SP" link="lasso-LassoProvider.html#LASSO-PROVIDER-ROLE-SP:CAPS"/>
+    <keyword type="constant" name="LASSO_PROVIDER_ROLE_IDP" link="lasso-LassoProvider.html#LASSO-PROVIDER-ROLE-IDP:CAPS"/>
+    <keyword type="constant" name="LASSO_PROVIDER_ROLE_BOTH" link="lasso-LassoProvider.html#LASSO-PROVIDER-ROLE-BOTH:CAPS"/>
+    <keyword type="constant" name="LASSO_PROVIDER_ROLE_AUTHN_AUTHORITY" link="lasso-LassoProvider.html#LASSO-PROVIDER-ROLE-AUTHN-AUTHORITY:CAPS"/>
+    <keyword type="constant" name="LASSO_PROVIDER_ROLE_AUTHZ_AUTHORITY" link="lasso-LassoProvider.html#LASSO-PROVIDER-ROLE-AUTHZ-AUTHORITY:CAPS"/>
+    <keyword type="constant" name="LASSO_PROVIDER_ROLE_ATTRIBUTE_AUTHORITY" link="lasso-LassoProvider.html#LASSO-PROVIDER-ROLE-ATTRIBUTE-AUTHORITY:CAPS"/>
+    <keyword type="constant" name="LASSO_PROVIDER_ROLE_LAST" link="lasso-LassoProvider.html#LASSO-PROVIDER-ROLE-LAST:CAPS"/>
+    <keyword type="constant" name="LASSO_PROVIDER_ROLE_ALL" link="lasso-LassoProvider.html#LASSO-PROVIDER-ROLE-ALL:CAPS"/>
+    <keyword type="constant" name="LASSO_HTTP_METHOD_NONE" link="lasso-LassoProvider.html#LASSO-HTTP-METHOD-NONE:CAPS"/>
+    <keyword type="constant" name="LASSO_HTTP_METHOD_ANY" link="lasso-LassoProvider.html#LASSO-HTTP-METHOD-ANY:CAPS"/>
+    <keyword type="constant" name="LASSO_HTTP_METHOD_IDP_INITIATED" link="lasso-LassoProvider.html#LASSO-HTTP-METHOD-IDP-INITIATED:CAPS"/>
+    <keyword type="constant" name="LASSO_HTTP_METHOD_GET" link="lasso-LassoProvider.html#LASSO-HTTP-METHOD-GET:CAPS"/>
+    <keyword type="constant" name="LASSO_HTTP_METHOD_POST" link="lasso-LassoProvider.html#LASSO-HTTP-METHOD-POST:CAPS"/>
+    <keyword type="constant" name="LASSO_HTTP_METHOD_REDIRECT" link="lasso-LassoProvider.html#LASSO-HTTP-METHOD-REDIRECT:CAPS"/>
+    <keyword type="constant" name="LASSO_HTTP_METHOD_SOAP" link="lasso-LassoProvider.html#LASSO-HTTP-METHOD-SOAP:CAPS"/>
+    <keyword type="constant" name="LASSO_HTTP_METHOD_ARTIFACT_GET" link="lasso-LassoProvider.html#LASSO-HTTP-METHOD-ARTIFACT-GET:CAPS"/>
+    <keyword type="constant" name="LASSO_HTTP_METHOD_ARTIFACT_POST" link="lasso-LassoProvider.html#LASSO-HTTP-METHOD-ARTIFACT-POST:CAPS"/>
+    <keyword type="constant" name="LASSO_HTTP_METHOD_PAOS" link="lasso-LassoProvider.html#LASSO-HTTP-METHOD-PAOS:CAPS"/>
+    <keyword type="constant" name="LASSO_HTTP_METHOD_LAST" link="lasso-LassoProvider.html#LASSO-HTTP-METHOD-LAST:CAPS"/>
+    <keyword type="constant" name="LASSO_MD_PROTOCOL_TYPE_FEDERATION_TERMINATION" link="lasso-LassoProvider.html#LASSO-MD-PROTOCOL-TYPE-FEDERATION-TERMINATION:CAPS"/>
+    <keyword type="constant" name="LASSO_MD_PROTOCOL_TYPE_NAME_IDENTIFIER_MAPPING" link="lasso-LassoProvider.html#LASSO-MD-PROTOCOL-TYPE-NAME-IDENTIFIER-MAPPING:CAPS"/>
+    <keyword type="constant" name="LASSO_MD_PROTOCOL_TYPE_REGISTER_NAME_IDENTIFIER" link="lasso-LassoProvider.html#LASSO-MD-PROTOCOL-TYPE-REGISTER-NAME-IDENTIFIER:CAPS"/>
+    <keyword type="constant" name="LASSO_MD_PROTOCOL_TYPE_SINGLE_LOGOUT" link="lasso-LassoProvider.html#LASSO-MD-PROTOCOL-TYPE-SINGLE-LOGOUT:CAPS"/>
+    <keyword type="constant" name="LASSO_MD_PROTOCOL_TYPE_SINGLE_SIGN_ON" link="lasso-LassoProvider.html#LASSO-MD-PROTOCOL-TYPE-SINGLE-SIGN-ON:CAPS"/>
+    <keyword type="constant" name="LASSO_MD_PROTOCOL_TYPE_ARTIFACT_RESOLUTION" link="lasso-LassoProvider.html#LASSO-MD-PROTOCOL-TYPE-ARTIFACT-RESOLUTION:CAPS"/>
+    <keyword type="constant" name="LASSO_MD_PROTOCOL_TYPE_MANAGE_NAME_ID" link="lasso-LassoProvider.html#LASSO-MD-PROTOCOL-TYPE-MANAGE-NAME-ID:CAPS"/>
+    <keyword type="constant" name="LASSO_MD_PROTOCOL_TYPE_ASSERTION_ID_REQUEST" link="lasso-LassoProvider.html#LASSO-MD-PROTOCOL-TYPE-ASSERTION-ID-REQUEST:CAPS"/>
+    <keyword type="constant" name="LASSO_MD_PROTOCOL_TYPE_AUTHN_QUERY" link="lasso-LassoProvider.html#LASSO-MD-PROTOCOL-TYPE-AUTHN-QUERY:CAPS"/>
+    <keyword type="constant" name="LASSO_MD_PROTOCOL_TYPE_AUTHZ" link="lasso-LassoProvider.html#LASSO-MD-PROTOCOL-TYPE-AUTHZ:CAPS"/>
+    <keyword type="constant" name="LASSO_MD_PROTOCOL_TYPE_ATTRIBUTE" link="lasso-LassoProvider.html#LASSO-MD-PROTOCOL-TYPE-ATTRIBUTE:CAPS"/>
+    <keyword type="constant" name="LASSO_MD_PROTOCOL_TYPE_LAST" link="lasso-LassoProvider.html#LASSO-MD-PROTOCOL-TYPE-LAST:CAPS"/>
+    <keyword type="constant" name="LASSO_PROTOCOL_NONE" link="lasso-LassoProvider.html#LASSO-PROTOCOL-NONE:CAPS"/>
+    <keyword type="constant" name="LASSO_PROTOCOL_LIBERTY_1_0" link="lasso-LassoProvider.html#LASSO-PROTOCOL-LIBERTY-1-0:CAPS"/>
+    <keyword type="constant" name="LASSO_PROTOCOL_LIBERTY_1_1" link="lasso-LassoProvider.html#LASSO-PROTOCOL-LIBERTY-1-1:CAPS"/>
+    <keyword type="constant" name="LASSO_PROTOCOL_LIBERTY_1_2" link="lasso-LassoProvider.html#LASSO-PROTOCOL-LIBERTY-1-2:CAPS"/>
+    <keyword type="constant" name="LASSO_PROTOCOL_SAML_2_0" link="lasso-LassoProvider.html#LASSO-PROTOCOL-SAML-2-0:CAPS"/>
+    <keyword type="constant" name="LASSO_ENCRYPTION_MODE_NONE" link="lasso-LassoProvider.html#LASSO-ENCRYPTION-MODE-NONE:CAPS"/>
+    <keyword type="constant" name="LASSO_ENCRYPTION_MODE_NAMEID" link="lasso-LassoProvider.html#LASSO-ENCRYPTION-MODE-NAMEID:CAPS"/>
+    <keyword type="constant" name="LASSO_ENCRYPTION_MODE_ASSERTION" link="lasso-LassoProvider.html#LASSO-ENCRYPTION-MODE-ASSERTION:CAPS"/>
+    <keyword type="constant" name="LASSO_ENCRYPTION_SYM_KEY_TYPE_DEFAULT" link="lasso-LassoProvider.html#LASSO-ENCRYPTION-SYM-KEY-TYPE-DEFAULT:CAPS"/>
+    <keyword type="constant" name="LASSO_ENCRYPTION_SYM_KEY_TYPE_AES_256" link="lasso-LassoProvider.html#LASSO-ENCRYPTION-SYM-KEY-TYPE-AES-256:CAPS"/>
+    <keyword type="constant" name="LASSO_ENCRYPTION_SYM_KEY_TYPE_AES_128" link="lasso-LassoProvider.html#LASSO-ENCRYPTION-SYM-KEY-TYPE-AES-128:CAPS"/>
+    <keyword type="constant" name="LASSO_ENCRYPTION_SYM_KEY_TYPE_3DES" link="lasso-LassoProvider.html#LASSO-ENCRYPTION-SYM-KEY-TYPE-3DES:CAPS"/>
+    <keyword type="constant" name="LASSO_ENCRYTPION_SYM_KEY_TYPE_LAST" link="lasso-LassoProvider.html#LASSO-ENCRYTPION-SYM-KEY-TYPE-LAST:CAPS"/>
+    <keyword type="constant" name="LASSO_REQUEST_TYPE_INVALID" link="lasso-LassoProfile.html#LASSO-REQUEST-TYPE-INVALID:CAPS"/>
+    <keyword type="constant" name="LASSO_REQUEST_TYPE_LOGIN" link="lasso-LassoProfile.html#LASSO-REQUEST-TYPE-LOGIN:CAPS"/>
+    <keyword type="constant" name="LASSO_REQUEST_TYPE_LOGOUT" link="lasso-LassoProfile.html#LASSO-REQUEST-TYPE-LOGOUT:CAPS"/>
+    <keyword type="constant" name="LASSO_REQUEST_TYPE_DEFEDERATION" link="lasso-LassoProfile.html#LASSO-REQUEST-TYPE-DEFEDERATION:CAPS"/>
+    <keyword type="constant" name="LASSO_REQUEST_TYPE_NAME_REGISTRATION" link="lasso-LassoProfile.html#LASSO-REQUEST-TYPE-NAME-REGISTRATION:CAPS"/>
+    <keyword type="constant" name="LASSO_REQUEST_TYPE_NAME_IDENTIFIER_MAPPING" link="lasso-LassoProfile.html#LASSO-REQUEST-TYPE-NAME-IDENTIFIER-MAPPING:CAPS"/>
+    <keyword type="constant" name="LASSO_REQUEST_TYPE_LECP" link="lasso-LassoProfile.html#LASSO-REQUEST-TYPE-LECP:CAPS"/>
+    <keyword type="constant" name="LASSO_REQUEST_TYPE_DISCO_QUERY" link="lasso-LassoProfile.html#LASSO-REQUEST-TYPE-DISCO-QUERY:CAPS"/>
+    <keyword type="constant" name="LASSO_REQUEST_TYPE_DISCO_MODIFY" link="lasso-LassoProfile.html#LASSO-REQUEST-TYPE-DISCO-MODIFY:CAPS"/>
+    <keyword type="constant" name="LASSO_REQUEST_TYPE_DST_QUERY" link="lasso-LassoProfile.html#LASSO-REQUEST-TYPE-DST-QUERY:CAPS"/>
+    <keyword type="constant" name="LASSO_REQUEST_TYPE_DST_MODIFY" link="lasso-LassoProfile.html#LASSO-REQUEST-TYPE-DST-MODIFY:CAPS"/>
+    <keyword type="constant" name="LASSO_REQUEST_TYPE_SASL_REQUEST" link="lasso-LassoProfile.html#LASSO-REQUEST-TYPE-SASL-REQUEST:CAPS"/>
+    <keyword type="constant" name="LASSO_REQUEST_TYPE_NAME_ID_MANAGEMENT" link="lasso-LassoProfile.html#LASSO-REQUEST-TYPE-NAME-ID-MANAGEMENT:CAPS"/>
+    <keyword type="constant" name="LASSO_REQUEST_TYPE_IDWSF2_DISCO_SVCMD_REGISTER" link="lasso-LassoProfile.html#LASSO-REQUEST-TYPE-IDWSF2-DISCO-SVCMD-REGISTER:CAPS"/>
+    <keyword type="constant" name="LASSO_REQUEST_TYPE_IDWSF2_DISCO_SVCMD_ASSOCIATION_ADD" link="lasso-LassoProfile.html#LASSO-REQUEST-TYPE-IDWSF2-DISCO-SVCMD-ASSOCIATION-ADD:CAPS"/>
+    <keyword type="constant" name="LASSO_REQUEST_TYPE_IDWSF2_DISCO_QUERY" link="lasso-LassoProfile.html#LASSO-REQUEST-TYPE-IDWSF2-DISCO-QUERY:CAPS"/>
+    <keyword type="constant" name="LASSO_PROFILE_SIGNATURE_HINT_MAYBE" link="lasso-LassoProfile.html#LASSO-PROFILE-SIGNATURE-HINT-MAYBE:CAPS"/>
+    <keyword type="constant" name="LASSO_PROFILE_SIGNATURE_HINT_FORCE" link="lasso-LassoProfile.html#LASSO-PROFILE-SIGNATURE-HINT-FORCE:CAPS"/>
+    <keyword type="constant" name="LASSO_PROFILE_SIGNATURE_HINT_FORBID" link="lasso-LassoProfile.html#LASSO-PROFILE-SIGNATURE-HINT-FORBID:CAPS"/>
+    <keyword type="constant" name="LASSO_PROFILE_SIGNATURE_VERIFY_HINT_MAYBE" link="lasso-LassoProfile.html#LASSO-PROFILE-SIGNATURE-VERIFY-HINT-MAYBE:CAPS"/>
+    <keyword type="constant" name="LASSO_PROFILE_SIGNATURE_VERIFY_HINT_FORCE" link="lasso-LassoProfile.html#LASSO-PROFILE-SIGNATURE-VERIFY-HINT-FORCE:CAPS"/>
+    <keyword type="constant" name="LASSO_PROFILE_SIGNATURE_VERIFY_HINT_IGNORE" link="lasso-LassoProfile.html#LASSO-PROFILE-SIGNATURE-VERIFY-HINT-IGNORE:CAPS"/>
+    <keyword type="constant" name="LASSO_PROFILE_SIGNATURE_VERIFY_HINT_LAST" link="lasso-LassoProfile.html#LASSO-PROFILE-SIGNATURE-VERIFY-HINT-LAST:CAPS"/>
+    <keyword type="constant" name="LASSO_MESSAGE_FORMAT_XSCHEMA_ERROR" link="lasso-node.html#LASSO-MESSAGE-FORMAT-XSCHEMA-ERROR:CAPS"/>
+    <keyword type="constant" name="LASSO_MESSAGE_FORMAT_ERROR" link="lasso-node.html#LASSO-MESSAGE-FORMAT-ERROR:CAPS"/>
+    <keyword type="constant" name="LASSO_MESSAGE_FORMAT_UNKNOWN" link="lasso-node.html#LASSO-MESSAGE-FORMAT-UNKNOWN:CAPS"/>
+    <keyword type="constant" name="LASSO_MESSAGE_FORMAT_XML" link="lasso-node.html#LASSO-MESSAGE-FORMAT-XML:CAPS"/>
+    <keyword type="constant" name="LASSO_MESSAGE_FORMAT_BASE64" link="lasso-node.html#LASSO-MESSAGE-FORMAT-BASE64:CAPS"/>
+    <keyword type="constant" name="LASSO_MESSAGE_FORMAT_QUERY" link="lasso-node.html#LASSO-MESSAGE-FORMAT-QUERY:CAPS"/>
+    <keyword type="constant" name="LASSO_MESSAGE_FORMAT_SOAP" link="lasso-node.html#LASSO-MESSAGE-FORMAT-SOAP:CAPS"/>
+    <keyword type="constant" name="LASSO_SIGNATURE_TYPE_NONE" link="lasso-node.html#LASSO-SIGNATURE-TYPE-NONE:CAPS"/>
+    <keyword type="constant" name="LASSO_SIGNATURE_TYPE_SIMPLE" link="lasso-node.html#LASSO-SIGNATURE-TYPE-SIMPLE:CAPS"/>
+    <keyword type="constant" name="LASSO_SIGNATURE_TYPE_WITHX509" link="lasso-node.html#LASSO-SIGNATURE-TYPE-WITHX509:CAPS"/>
+    <keyword type="constant" name="LASSO_SIGNATURE_TYPE_LAST" link="lasso-node.html#LASSO-SIGNATURE-TYPE-LAST:CAPS"/>
+    <keyword type="constant" name="LASSO_SIGNATURE_METHOD_NONE" link="lasso-node.html#LASSO-SIGNATURE-METHOD-NONE:CAPS"/>
+    <keyword type="constant" name="LASSO_SIGNATURE_METHOD_RSA_SHA1" link="lasso-node.html#LASSO-SIGNATURE-METHOD-RSA-SHA1:CAPS"/>
+    <keyword type="constant" name="LASSO_SIGNATURE_METHOD_DSA_SHA1" link="lasso-node.html#LASSO-SIGNATURE-METHOD-DSA-SHA1:CAPS"/>
+    <keyword type="constant" name="LASSO_SIGNATURE_METHOD_HMAC_SHA1" link="lasso-node.html#LASSO-SIGNATURE-METHOD-HMAC-SHA1:CAPS"/>
+    <keyword type="constant" name="LASSO_SIGNATURE_METHOD_RSA_SHA256" link="lasso-node.html#LASSO-SIGNATURE-METHOD-RSA-SHA256:CAPS"/>
+    <keyword type="constant" name="LASSO_SIGNATURE_METHOD_HMAC_SHA256" link="lasso-node.html#LASSO-SIGNATURE-METHOD-HMAC-SHA256:CAPS"/>
+    <keyword type="constant" name="LASSO_SIGNATURE_METHOD_RSA_SHA384" link="lasso-node.html#LASSO-SIGNATURE-METHOD-RSA-SHA384:CAPS"/>
+    <keyword type="constant" name="LASSO_SIGNATURE_METHOD_HMAC_SHA384" link="lasso-node.html#LASSO-SIGNATURE-METHOD-HMAC-SHA384:CAPS"/>
+    <keyword type="constant" name="LASSO_SIGNATURE_METHOD_RSA_SHA512" link="lasso-node.html#LASSO-SIGNATURE-METHOD-RSA-SHA512:CAPS"/>
+    <keyword type="constant" name="LASSO_SIGNATURE_METHOD_HMAC_SHA512" link="lasso-node.html#LASSO-SIGNATURE-METHOD-HMAC-SHA512:CAPS"/>
+    <keyword type="constant" name="LASSO_SIGNATURE_METHOD_LAST" link="lasso-node.html#LASSO-SIGNATURE-METHOD-LAST:CAPS"/>
+    <keyword type="constant" name="LASSO_ASSERTION_QUERY_REQUEST_TYPE_UNSET" link="lasso-assertion-query.html#LASSO-ASSERTION-QUERY-REQUEST-TYPE-UNSET:CAPS"/>
+    <keyword type="constant" name="LASSO_ASSERTION_QUERY_REQUEST_TYPE_ASSERTION_ID" link="lasso-assertion-query.html#LASSO-ASSERTION-QUERY-REQUEST-TYPE-ASSERTION-ID:CAPS"/>
+    <keyword type="constant" name="LASSO_ASSERTION_QUERY_REQUEST_TYPE_AUTHN" link="lasso-assertion-query.html#LASSO-ASSERTION-QUERY-REQUEST-TYPE-AUTHN:CAPS"/>
+    <keyword type="constant" name="LASSO_ASSERTION_QUERY_REQUEST_TYPE_ATTRIBUTE" link="lasso-assertion-query.html#LASSO-ASSERTION-QUERY-REQUEST-TYPE-ATTRIBUTE:CAPS"/>
+    <keyword type="constant" name="LASSO_ASSERTION_QUERY_REQUEST_TYPE_AUTHZ_DECISION" link="lasso-assertion-query.html#LASSO-ASSERTION-QUERY-REQUEST-TYPE-AUTHZ-DECISION:CAPS"/>
+    <keyword type="constant" name="LASSO_ASSERTION_QUERY_REQUEST_TYPE_LAST" link="lasso-assertion-query.html#LASSO-ASSERTION-QUERY-REQUEST-TYPE-LAST:CAPS"/>
+    <keyword type="constant" name="LASSO_SAML2_ASSERTION_VALID" link="lasso-LassoSaml2Assertion.html#LASSO-SAML2-ASSERTION-VALID:CAPS"/>
+    <keyword type="constant" name="LASSO_SAML2_ASSERTION_INVALID" link="lasso-LassoSaml2Assertion.html#LASSO-SAML2-ASSERTION-INVALID:CAPS"/>
+    <keyword type="constant" name="LASSO_SAML2_ASSERTION_INDETERMINATE" link="lasso-LassoSaml2Assertion.html#LASSO-SAML2-ASSERTION-INDETERMINATE:CAPS"/>
+    <keyword type="constant" name="LASSO_SASL_MECH_ANONYMOUS" link="lasso-authentication.html#LASSO-SASL-MECH-ANONYMOUS:CAPS"/>
+    <keyword type="constant" name="LASSO_SASL_MECH_PLAIN" link="lasso-authentication.html#LASSO-SASL-MECH-PLAIN:CAPS"/>
+    <keyword type="constant" name="LASSO_SASL_MECH_CRAM_MD5" link="lasso-authentication.html#LASSO-SASL-MECH-CRAM-MD5:CAPS"/>
+    <keyword type="constant" name="LASSO_WSSE_USERNAME_TOKEN_PASSWORD_TYPE_UNKNOWN" link="lasso-wsse-username-token.html#LASSO-WSSE-USERNAME-TOKEN-PASSWORD-TYPE-UNKNOWN:CAPS"/>
+    <keyword type="constant" name="LASSO_WSSE_USERNAME_TOKEN_PASSWORD_TYPE_TEXT" link="lasso-wsse-username-token.html#LASSO-WSSE-USERNAME-TOKEN-PASSWORD-TYPE-TEXT:CAPS"/>
+    <keyword type="constant" name="LASSO_WSSE_USERNAME_TOKEN_PASSWORD_TYPE_DIGEST" link="lasso-wsse-username-token.html#LASSO-WSSE-USERNAME-TOKEN-PASSWORD-TYPE-DIGEST:CAPS"/>
+    <keyword type="constant" name="LASSO_WSSE_USERNAME_TOKEN_PASSWORD_TYPE_LAST" link="lasso-wsse-username-token.html#LASSO-WSSE-USERNAME-TOKEN-PASSWORD-TYPE-LAST:CAPS"/>
+    <keyword type="member" name="LassoProvider.parent" link="lasso-LassoProvider.html#LassoProvider.parent"/>
+    <keyword type="member" name="LassoProvider.ProviderID" link="lasso-LassoProvider.html#LassoProvider.ProviderID"/>
+    <keyword type="member" name="LassoProvider.role" link="lasso-LassoProvider.html#LassoProvider.role"/>
+    <keyword type="member" name="LassoProvider.metadata-filename" link="lasso-LassoProvider.html#LassoProvider.metadata-filename"/>
+    <keyword type="member" name="LassoProvider.public-key" link="lasso-LassoProvider.html#LassoProvider.public-key"/>
+    <keyword type="member" name="LassoProvider.ca-cert-chain" link="lasso-LassoProvider.html#LassoProvider.ca-cert-chain"/>
+    <keyword type="member" name="LassoSession.parent" link="lasso-LassoSession.html#LassoSession.parent"/>
+    <keyword type="member" name="LassoSession.assertions" link="lasso-LassoSession.html#LassoSession.assertions"/>
+    <keyword type="member" name="LassoSession.is-dirty" link="lasso-LassoSession.html#LassoSession.is-dirty"/>
+    <keyword type="member" name="LassoProfile.parent" link="lasso-LassoProfile.html#LassoProfile.parent"/>
+    <keyword type="member" name="LassoProfile.server" link="lasso-LassoProfile.html#LassoProfile.server"/>
+    <keyword type="member" name="LassoProfile.request" link="lasso-LassoProfile.html#LassoProfile.request"/>
+    <keyword type="member" name="LassoProfile.response" link="lasso-LassoProfile.html#LassoProfile.response"/>
+    <keyword type="member" name="LassoProfile.nameIdentifier" link="lasso-LassoProfile.html#LassoProfile.nameIdentifier"/>
+    <keyword type="member" name="LassoProfile.remote-providerID" link="lasso-LassoProfile.html#LassoProfile.remote-providerID"/>
+    <keyword type="member" name="LassoProfile.msg-url" link="lasso-LassoProfile.html#LassoProfile.msg-url"/>
+    <keyword type="member" name="LassoProfile.msg-body" link="lasso-LassoProfile.html#LassoProfile.msg-body"/>
+    <keyword type="member" name="LassoProfile.msg-relayState" link="lasso-LassoProfile.html#LassoProfile.msg-relayState"/>
+    <keyword type="member" name="LassoLogin.parent" link="lasso-LassoLogin.html#LassoLogin.parent"/>
+    <keyword type="member" name="LassoLogin.protocolProfile" link="lasso-LassoLogin.html#LassoLogin.protocolProfile"/>
+    <keyword type="member" name="LassoLogin.assertionArtifact" link="lasso-LassoLogin.html#LassoLogin.assertionArtifact"/>
+    <keyword type="member" name="LassoSamlp2NameIDPolicy.parent" link="lasso-LassoSamlp2NameIDPolicy.html#LassoSamlp2NameIDPolicy.parent"/>
+    <keyword type="member" name="LassoSamlp2NameIDPolicy.Format" link="lasso-LassoSamlp2NameIDPolicy.html#LassoSamlp2NameIDPolicy.Format"/>
+    <keyword type="member" name="LassoSamlp2NameIDPolicy.SPNameQualifier" link="lasso-LassoSamlp2NameIDPolicy.html#LassoSamlp2NameIDPolicy.SPNameQualifier"/>
+    <keyword type="member" name="LassoSamlp2NameIDPolicy.AllowCreate" link="lasso-LassoSamlp2NameIDPolicy.html#LassoSamlp2NameIDPolicy.AllowCreate"/>
+    <keyword type="member" name="LassoWsseUsernameToken.parent" link="lasso-wsse-username-token.html#LassoWsseUsernameToken.parent"/>
+    <keyword type="member" name="LassoWsseUsernameToken.Id" link="lasso-wsse-username-token.html#LassoWsseUsernameToken.Id"/>
+    <keyword type="member" name="LassoWsseUsernameToken.Username" link="lasso-wsse-username-token.html#LassoWsseUsernameToken.Username"/>
+    <keyword type="member" name="LassoWsseUsernameToken.Nonce" link="lasso-wsse-username-token.html#LassoWsseUsernameToken.Nonce"/>
+    <keyword type="member" name="LassoWsseUsernameToken.Salt" link="lasso-wsse-username-token.html#LassoWsseUsernameToken.Salt"/>
+    <keyword type="member" name="LassoWsseUsernameToken.Created" link="lasso-wsse-username-token.html#LassoWsseUsernameToken.Created"/>
+    <keyword type="member" name="LassoWsseUsernameToken.Iteration" link="lasso-wsse-username-token.html#LassoWsseUsernameToken.Iteration"/>
+    <keyword type="member" name="LassoWsseUsernameToken.attributes" link="lasso-wsse-username-token.html#LassoWsseUsernameToken.attributes"/>
   </functions>
 </book>

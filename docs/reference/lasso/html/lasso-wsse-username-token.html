@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Lasso Reference Manual: LassoWsseUsernameToken</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<title>LassoWsseUsernameToken: Lasso Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="ws-addr.html" title="Object from the WS-* schemas">
 <link rel="prev" href="lasso-LassoWsSec1TransformationParameters.html" title="LassoWsSec1TransformationParameters">
 <link rel="next" href="lasso-LassoWsUtil1Timestamp.html" title="LassoWsUtil1Timestamp">
-<meta name="generator" content="GTK-Doc V1.21 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.28 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -33,7 +33,7 @@
 </tr></table></div>
 <div class="refsect1">
 <a name="lasso-wsse-username-token.functions"></a><h2>Functions</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="functions_return">
 <col class="functions_name">
@@ -92,7 +92,7 @@
 </div>
 <div class="refsect1">
 <a name="lasso-wsse-username-token.other"></a><h2>Types and Values</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="name">
 <col class="description">
@@ -128,8 +128,8 @@ lasso_wsse_username_token_new (<em class="parameter"><code><span class="type">vo
 lasso_wsse_username_token_reset_nonce (<em class="parameter"><code><a class="link" href="lasso-wsse-username-token.html#LassoWsseUsernameToken" title="struct LassoWsseUsernameToken"><span class="type">LassoWsseUsernameToken</span></a> *wsse_username_token</code></em>);</pre>
 <p>Generate a random nonce.</p>
 <div class="refsect3">
-<a name="id-1.3.13.16.6.3.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-wsse-username-token-reset-nonce.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -152,8 +152,8 @@ lasso_wsse_username_token_set_password_kind
                                 <em class="parameter"><code><a class="link" href="lasso-wsse-username-token.html#LassoWsseUsernameTokenPasswordType" title="enum LassoWsseUsernameTokenPasswordType"><span class="type">LassoWsseUsernameTokenPasswordType</span></a> password_type</code></em>);</pre>
 <p>Set the way to transmit password, that is either cleartext or digest.</p>
 <div class="refsect3">
-<a name="id-1.3.13.16.6.4.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-wsse-username-token-set-password-kind.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -185,8 +185,8 @@ lasso_wsse_username_token_set_password
 SHA1(nonce + created + password), convert to Base64 and set it as the password. If nonce or
 created are NULL, the empty string is used.</p>
 <div class="refsect3">
-<a name="id-1.3.13.16.6.5.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-wsse-username-token-set-password.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -207,9 +207,8 @@ created are NULL, the empty string is used.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.13.16.6.5.6"></a><h4>Returns</h4>
+<a name="lasso-wsse-username-token-set-password.returns"></a><h4>Returns</h4>
 <p> 0 if successfull, an error code otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -228,8 +227,8 @@ lasso_wsse_username_token_derive_key (<em class="parameter"><code><a class="link
                                       <em class="parameter"><code><span class="type">char</span> *password</code></em>);</pre>
 <p>Generate a derived 128bit key using the password and setting from the UsernameToken.</p>
 <div class="refsect3">
-<a name="id-1.3.13.16.6.7.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-wsse-username-token-derive-key.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -250,9 +249,8 @@ lasso_wsse_username_token_derive_key (<em class="parameter"><code><a class="link
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.13.16.6.7.6"></a><h4>Returns</h4>
+<a name="lasso-wsse-username-token-derive-key.returns"></a><h4>Returns</h4>
 <p> a 20 byte octet string.</p>
-<p></p>
 </div>
 </div>
 </div>
@@ -261,8 +259,8 @@ lasso_wsse_username_token_derive_key (<em class="parameter"><code><a class="link
 <div class="refsect2">
 <a name="LassoWsseUsernameTokenPasswordType"></a><h3>enum LassoWsseUsernameTokenPasswordType</h3>
 <div class="refsect3">
-<a name="id-1.3.13.16.7.2.3"></a><h4>Members</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="LassoWsseUsernameTokenPasswordType.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="300px" class="enum_members_name">
 <col class="enum_members_description">
@@ -309,8 +307,8 @@ lasso_wsse_username_token_derive_key (<em class="parameter"><code><a class="link
 };
 </pre>
 <div class="refsect3">
-<a name="id-1.3.13.16.7.3.4"></a><h4>Members</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="LassoWsseUsernameToken.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="300px" class="struct_members_name">
 <col class="struct_members_description">
@@ -364,7 +362,6 @@ lasso_wsse_username_token_derive_key (<em class="parameter"><code><a class="link
 </div>
 </div>
 <div class="footer">
-<hr>
-          Generated by GTK-Doc V1.21</div>
+<hr>Generated by GTK-Doc V1.28</div>
 </body>
 </html>

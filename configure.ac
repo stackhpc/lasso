@@ -91,7 +91,6 @@ dnl
 dnl Check for programs
 dnl
 AC_PROG_CC
-CFLAGS=""
 AM_CFLAGS=""
 AC_HEADER_STDC
 LT_AC_PROG_RC
@@ -186,7 +185,7 @@ dnl - interfaces removed -> AGE = 0
 # m = a
 # r = r
 current=`expr $VERSION_MAJOR + $VERSION_MINOR`
-LASSO_VERSION_INFO="15:0:12"
+LASSO_VERSION_INFO="16:0:13"
 AC_SUBST(LASSO_VERSION_INFO)
 
 dnl Compute the minimal supported ABI version for Win32 scripts and resources files.
@@ -230,7 +229,6 @@ if test "x$JAVAC" = "xjavac"; then
         dnl We assume it is a SUN environment.
         SUN=yes
     fi
-    JAVAC_FLAGS="-target 1.4 -source 1.4"
     CLASSPATH_OPT="-classpath"
 fi
 
@@ -531,7 +529,7 @@ AC_ARG_ENABLE(perl, [  --disable-perl          disable the Perl binding],,
 if test "X$PERL" != "X"; then
   PERLINSTALLSITEARCH=`$PERL -MConfig -e 'print $Config{installsitearch};'`
   PERLMAN3DIR=`$PERL -MConfig -e 'print $Config{man3dir};'`
-  PERL_CFLAGS=$($PERL -V::ccflags:)
+  PERL_CFLAGS=$($PERL -V::ccflags: | tr -d "'")
 else
   PERLINSTALLSITEARCH=none
   PERLMAN3DIR=none
@@ -702,7 +700,7 @@ AC_ARG_ENABLE(debugging,   [  --enable-debugging      enable debuging optimizati
 if test "z$enable_debugging" = "zyes" ; then
     enable_debugging=yes
     LASSO_DEFINES="$LASSO_DEFINES -DLASSO_DEBUG"
-    AM_CFLAGS="-O0 -g -Wall -Wextra -Werror"
+    CFLAGS="$CFLAGS -O0 -g -Wall -Wextra -Werror"
 else
     enable_debugging=no
 fi    

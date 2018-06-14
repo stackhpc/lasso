@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Lasso Reference Manual: LassoProfile</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<title>LassoProfile: Lasso Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="architecture.html" title="Lasso Architecture">
 <link rel="prev" href="lasso-LassoSession.html" title="LassoSession">
 <link rel="next" href="lasso-Error-Codes.html" title="Error Codes">
-<meta name="generator" content="GTK-Doc V1.21 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.28 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -33,7 +33,7 @@
 </tr></table></div>
 <div class="refsect1">
 <a name="lasso-LassoProfile.functions"></a><h2>Functions</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="functions_return">
 <col class="functions_name">
@@ -204,7 +204,7 @@
 </div>
 <div class="refsect1">
 <a name="lasso-LassoProfile.other"></a><h2>Types and Values</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="name">
 <col class="description">
@@ -241,8 +241,8 @@ lasso_profile_get_request_type_from_soap_msg
                                (<em class="parameter"><code>const <span class="type">gchar</span> *soap</code></em>);</pre>
 <p>Looks up and return the type of the request in a SOAP message.</p>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.2.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-profile-get-request-type-from-soap-msg.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -256,9 +256,8 @@ lasso_profile_get_request_type_from_soap_msg
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.2.6"></a><h4>Returns</h4>
+<a name="lasso-profile-get-request-type-from-soap-msg.returns"></a><h4>Returns</h4>
 <p> the type of request</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -274,8 +273,8 @@ lasso_profile_set_soap_fault_response (<em class="parameter"><code><a class="lin
 , and <em class="parameter"><code>details</code></em>
  to initialize it.</p>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.3.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-profile-set-soap-fault-response.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -293,22 +292,21 @@ lasso_profile_set_soap_fault_response (<em class="parameter"><code><a class="lin
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
-<td class="parameter_name"><p>faultstring:(allow-none)</p></td>
-<td class="parameter_description"><p>the description for the SOAP fault</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_name"><p>faultstring</p></td>
+<td class="parameter_description"><p>the description for the SOAP fault. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>details</p></td>
-<td class="parameter_description"><p> a list of nodes to add as details. </p></td>
+<td class="parameter_description"><p>a list of nodes to add as details. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> LassoNode][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.3.6"></a><h4>Returns</h4>
+<a name="lasso-profile-set-soap-fault-response.returns"></a><h4>Returns</h4>
 <p> 0 if successful, an error code otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -319,8 +317,8 @@ lasso_profile_is_liberty_query (<em class="parameter"><code>const <span class="t
 <p>Tests the query string to know if the URL is called as the result of a
 Liberty redirect (action initiated elsewhere) or not.</p>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.4.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-profile-is-liberty-query.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -334,9 +332,8 @@ Liberty redirect (action initiated elsewhere) or not.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.4.6"></a><h4>Returns</h4>
+<a name="lasso-profile-is-liberty-query.returns"></a><h4>Returns</h4>
 <p> TRUE if Liberty query, FALSE otherwise</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -347,8 +344,8 @@ lasso_profile_get_identity (<em class="parameter"><code><a class="link" href="la
 <p>Gets the identity bound to <em class="parameter"><code>profile</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.5.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-profile-get-identity.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -362,8 +359,8 @@ lasso_profile_get_identity (<em class="parameter"><code><a class="link" href="la
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.5.6"></a><h4>Returns</h4>
-<p> the identity or NULL if it none was found.  The <a class="link" href="lasso-LassoIdentity.html#LassoIdentity" title="struct LassoIdentity"><span class="type">LassoIdentity</span></a>
+<a name="lasso-profile-get-identity.returns"></a><h4>Returns</h4>
+<p>the identity or NULL if it none was found.  The <a class="link" href="lasso-LassoIdentity.html#LassoIdentity" title="struct LassoIdentity"><span class="type">LassoIdentity</span></a>
 object is internally allocated and must not be freed by the caller. </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
 </div>
@@ -376,8 +373,8 @@ lasso_profile_get_session (<em class="parameter"><code><a class="link" href="las
 <p>Gets the session bound to <em class="parameter"><code>profile</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.6.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-profile-get-session.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -391,8 +388,8 @@ lasso_profile_get_session (<em class="parameter"><code><a class="link" href="las
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.6.6"></a><h4>Returns</h4>
-<p> the session or NULL if it none was found.  The <a class="link" href="lasso-LassoSession.html#LassoSession" title="struct LassoSession"><span class="type">LassoSession</span></a>
+<a name="lasso-profile-get-session.returns"></a><h4>Returns</h4>
+<p>the session or NULL if it none was found.  The <a class="link" href="lasso-LassoSession.html#LassoSession" title="struct LassoSession"><span class="type">LassoSession</span></a>
 object is internally allocated and must not be freed by the caller. </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
 </div>
@@ -404,8 +401,8 @@ object is internally allocated and must not be freed by the caller. </p>
 lasso_profile_is_identity_dirty (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);</pre>
 <p>Checks whether identity has been modified (and should therefore be saved).</p>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.7.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-profile-is-identity-dirty.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -419,9 +416,8 @@ lasso_profile_is_identity_dirty (<em class="parameter"><code><a class="link" hre
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.7.6"></a><h4>Returns</h4>
+<a name="lasso-profile-is-identity-dirty.returns"></a><h4>Returns</h4>
 <p> <code class="literal">TRUE</code> if identity has changed</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -431,8 +427,8 @@ lasso_profile_is_identity_dirty (<em class="parameter"><code><a class="link" hre
 lasso_profile_is_session_dirty (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);</pre>
 <p>Checks whether session has been modified (and should therefore be saved).</p>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.8.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-profile-is-session-dirty.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -446,9 +442,8 @@ lasso_profile_is_session_dirty (<em class="parameter"><code><a class="link" href
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.8.6"></a><h4>Returns</h4>
+<a name="lasso-profile-is-session-dirty.returns"></a><h4>Returns</h4>
 <p> <code class="literal">TRUE</code> if session has changed</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -460,8 +455,8 @@ lasso_profile_set_identity_from_dump (<em class="parameter"><code><a class="link
 <p>Builds a new <a class="link" href="lasso-LassoIdentity.html#LassoIdentity" title="struct LassoIdentity"><span class="type">LassoIdentity</span></a> object from XML dump and binds it to <em class="parameter"><code>profile</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.9.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-profile-set-identity-from-dump.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -482,9 +477,8 @@ lasso_profile_set_identity_from_dump (<em class="parameter"><code><a class="link
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.9.6"></a><h4>Returns</h4>
+<a name="lasso-profile-set-identity-from-dump.returns"></a><h4>Returns</h4>
 <p> 0 on success; or a negative value otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -496,8 +490,8 @@ lasso_profile_set_session_from_dump (<em class="parameter"><code><a class="link"
 <p>Builds a new <a class="link" href="lasso-LassoSession.html#LassoSession" title="struct LassoSession"><span class="type">LassoSession</span></a> object from XML dump and binds it to <em class="parameter"><code>profile</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.10.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-profile-set-session-from-dump.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -518,9 +512,8 @@ lasso_profile_set_session_from_dump (<em class="parameter"><code><a class="link"
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.10.6"></a><h4>Returns</h4>
+<a name="lasso-profile-set-session-from-dump.returns"></a><h4>Returns</h4>
 <p> 0 on success; or a negative value otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -532,8 +525,8 @@ lasso_profile_get_nameIdentifier (<em class="parameter"><code><a class="link" hr
 identifier (which is actually a <a class="link" href="lasso-LassoSamlNameIdentifier.html#LassoSamlNameIdentifier" title="struct LassoSamlNameIdentifier"><span class="type">LassoSamlNameIdentifier</span></a> in ID-FF 1.2 and
 <a class="link" href="lasso-LassoSaml2NameID.html#LassoSaml2NameID" title="struct LassoSaml2NameID"><span class="type">LassoSaml2NameID</span></a> in SAML 2.0).</p>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.11.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-profile-get-nameIdentifier.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -547,8 +540,8 @@ identifier (which is actually a <a class="link" href="lasso-LassoSamlNameIdentif
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.11.6"></a><h4>Returns</h4>
-<p> the name identifier or NULL if none was found.  The <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a>
+<a name="lasso-profile-get-nameIdentifier.returns"></a><h4>Returns</h4>
+<p>the name identifier or NULL if none was found.  The <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a>
 object is internally allocated and must not be freed by the caller. </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
 </div>
@@ -560,8 +553,8 @@ object is internally allocated and must not be freed by the caller. </p>
 lasso_profile_get_artifact (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);</pre>
 <p>Return the artifact token</p>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.12.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-profile-get-artifact.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -575,8 +568,8 @@ lasso_profile_get_artifact (<em class="parameter"><code><a class="link" href="la
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.12.6"></a><h4>Returns</h4>
-<p> a newly allocated string or NULL. </p>
+<a name="lasso-profile-get-artifact.returns"></a><h4>Returns</h4>
+<p>a newly allocated string or NULL. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
 </div>
 </div>
@@ -587,8 +580,8 @@ lasso_profile_get_artifact (<em class="parameter"><code><a class="link" href="la
 lasso_profile_get_artifact_message (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);</pre>
 <p>Return the artifact message.</p>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.13.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-profile-get-artifact-message.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -602,8 +595,8 @@ lasso_profile_get_artifact_message (<em class="parameter"><code><a class="link" 
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.13.6"></a><h4>Returns</h4>
-<p> a newly allocated string or NULL. </p>
+<a name="lasso-profile-get-artifact-message.returns"></a><h4>Returns</h4>
+<p>a newly allocated string or NULL. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
 </div>
 </div>
@@ -616,8 +609,8 @@ lasso_profile_set_artifact_message (<em class="parameter"><code><a class="link" 
 <p>Set <em class="parameter"><code>message</code></em>
  as the content for the ArtifactResolve response.</p>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.14.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-profile-set-artifact-message.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -646,8 +639,8 @@ lasso_profile_get_server (<em class="parameter"><code><a class="link" href="lass
 <p>Return the <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> linked to this profile object. A profile object should always contains
 one. It allows to find metadatas of other providers and to know our own metadatas.</p>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.15.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-profile-get-server.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -661,8 +654,8 @@ one. It allows to find metadatas of other providers and to know our own metadata
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.15.6"></a><h4>Returns</h4>
-<p> a <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> or NULL if profile is not a <a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> or no
+<a name="lasso-profile-get-server.returns"></a><h4>Returns</h4>
+<p>a <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> or NULL if profile is not a <a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> or no
 <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> object was setup at the creation of this profile. </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
 </div>
@@ -676,8 +669,8 @@ lasso_profile_set_signature_hint (<em class="parameter"><code><a class="link" hr
 <p>By default each profile will choose to sign or not its messages, this method allow to force or
 forbid the signature of messages, on a per transaction basis.</p>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.16.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-profile-set-signature-hint.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -706,8 +699,8 @@ implicit information).</p></td>
 lasso_profile_get_signature_hint (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);</pre>
 <p>Return the value of the signature hint attribute (see <a class="link" href="lasso-LassoProfile.html#lasso-profile-set-signature-hint" title="lasso_profile_set_signature_hint ()"><code class="function">lasso_profile_set_signature_hint()</code></a>).</p>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.17.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-profile-get-signature-hint.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -721,9 +714,8 @@ lasso_profile_get_signature_hint (<em class="parameter"><code><a class="link" hr
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.17.6"></a><h4>Returns</h4>
+<a name="lasso-profile-get-signature-hint.returns"></a><h4>Returns</h4>
 <p> a value in the enum type <a class="link" href="lasso-LassoProfile.html#LassoProfileSignatureHint" title="enum LassoProfileSignatureHint"><span class="type">LassoProfileSignatureHint</span></a>.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -736,8 +728,8 @@ lasso_profile_set_signature_verify_hint
 <p>By default each profile will choose to verify or not its messages, this method allow to force or
 forbid the signature of messages, on a per transaction basis.</p>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.18.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-profile-set-signature-verify-hint.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -768,8 +760,8 @@ lasso_profile_get_signature_verify_hint
 <p>Return the value of the signature verify hint attribute (see
 <a class="link" href="lasso-LassoProfile.html#lasso-profile-set-signature-verify-hint" title="lasso_profile_set_signature_verify_hint ()"><code class="function">lasso_profile_set_signature_verify_hint()</code></a>).</p>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.19.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-profile-get-signature-verify-hint.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -783,9 +775,8 @@ lasso_profile_get_signature_verify_hint
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.19.6"></a><h4>Returns</h4>
+<a name="lasso-profile-get-signature-verify-hint.returns"></a><h4>Returns</h4>
 <p> a value in the enum type <a class="link" href="lasso-LassoProfile.html#LassoProfileSignatureVerifyHint" title="enum LassoProfileSignatureVerifyHint"><span class="type">LassoProfileSignatureVerifyHint</span></a>.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -798,8 +789,8 @@ lasso_profile_sso_role_with (<em class="parameter"><code><a class="link" href="l
 uses the <span class="type">LassoProfile.identity</span> to find if a federation qualifier by the given provider exists or
 the reverse.</p>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.20.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-profile-sso-role-with.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -820,12 +811,11 @@ the reverse.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.20.6"></a><h4>Returns</h4>
+<a name="lasso-profile-sso-role-with.returns"></a><h4>Returns</h4>
 <p> <a class="link" href="lasso-LassoProvider.html#LASSO-PROVIDER-ROLE-NONE:CAPS"><span class="type">LASSO_PROVIDER_ROLE_NONE</span></a> if nothing can be said, <a class="link" href="lasso-LassoProvider.html#LASSO-PROVIDER-ROLE-SP:CAPS"><span class="type">LASSO_PROVIDER_ROLE_SP</span></a> if a
 federation qualifier by <em class="parameter"><code>remote_provider_id</code></em>
 exists or <a class="link" href="lasso-LassoProvider.html#LASSO-PROVIDER-ROLE-IDP:CAPS"><span class="type">LASSO_PROVIDER_ROLE_IDP</span></a> if a federation
 qualifier by our own <a class="link" href="lasso-LassoProvider.html#LassoProvider.ProviderID"><span class="type">LassoProvider.ProviderID</span></a> exists.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -835,8 +825,8 @@ qualifier by our own <a class="link" href="lasso-LassoProvider.html#LassoProvide
 lasso_profile_get_signature_status (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);</pre>
 <p>Returns the signature status from the last parsed message.</p>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.21.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-profile-get-signature-status.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -850,9 +840,8 @@ lasso_profile_get_signature_status (<em class="parameter"><code><a class="link" 
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.9.6.21.6"></a><h4>Returns</h4>
+<a name="lasso-profile-get-signature-status.returns"></a><h4>Returns</h4>
 <p> 0 if no error from signature checking occurred, an error code otherwise.</p>
-<p></p>
 </div>
 </div>
 </div>
@@ -881,8 +870,8 @@ lasso_profile_get_signature_status (<em class="parameter"><code><a class="link" 
 <a class="link" href="lasso-LassoDefederation.html#LassoDefederation" title="struct LassoDefederation"><span class="type">LassoDefederation</span></a>, <a class="link" href="lasso-LassoNameIdentifierMapping.html#LassoNameIdentifierMapping" title="struct LassoNameIdentifierMapping"><span class="type">LassoNameIdentifierMapping</span></a>, <a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="type">LassoNameRegistration</span></a>, <a class="link" href="lasso-LassoNameIdManagement.html#LassoNameIdManagement" title="struct LassoNameIdManagement"><span class="type">LassoNameIdManagement</span></a>
 or <a class="link" href="lasso-assertion-query.html#LassoAssertionQuery" title="struct LassoAssertionQuery"><span class="type">LassoAssertionQuery</span></a>. It handles the minimal state used by all theses profiles.</p>
 <div class="refsect3">
-<a name="id-1.3.2.9.7.2.5"></a><h4>Members</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="LassoProfile.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="300px" class="struct_members_name">
 <col class="struct_members_description">
@@ -947,8 +936,8 @@ HTTP-Get binding.</p></td>
 <a name="LassoRequestType"></a><h3>enum LassoRequestType</h3>
 <p>Request types (known for SOAP endpoints)</p>
 <div class="refsect3">
-<a name="id-1.3.2.9.7.3.4"></a><h4>Members</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="LassoRequestType.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="300px" class="enum_members_name">
 <col class="enum_members_description">
@@ -1079,8 +1068,8 @@ Add Association request</p>
 <p>Advice a <a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> object about the policy for generating request and response
 signatures.</p>
 <div class="refsect3">
-<a name="id-1.3.2.9.7.4.4"></a><h4>Members</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="LassoProfileSignatureHint.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="300px" class="enum_members_name">
 <col class="enum_members_description">
@@ -1118,8 +1107,8 @@ signatures.</p>
 <p>Advice a <a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> object about the policy checking request and response
 signatures.</p>
 <div class="refsect3">
-<a name="id-1.3.2.9.7.5.4"></a><h4>Members</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="LassoProfileSignatureVerifyHint.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="300px" class="enum_members_name">
 <col class="enum_members_description">
@@ -1161,7 +1150,6 @@ on failures. The result of signature checking is still available in
 </div>
 </div>
 <div class="footer">
-<hr>
-          Generated by GTK-Doc V1.21</div>
+<hr>Generated by GTK-Doc V1.28</div>
 </body>
 </html>
