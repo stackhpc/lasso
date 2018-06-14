@@ -198,6 +198,18 @@
 		} \
 	}
 
+#define lasso_release_array_of_xml_strings(dest) \
+	{ \
+		xmlChar ***__tmp = &(dest);\
+		if (*__tmp) {\
+			int i = 0;\
+			for (i = 0; (*__tmp)[i]; i++) {\
+				lasso_release_xml_string((*__tmp)[i]);\
+			}\
+			lasso_release((*__tmp));\
+		}\
+	}
+
 /* Assignment and list appending */
 /*
  * lasso_assign_xxx macros ensure that you dot leak previous value of assigned things, they use
@@ -325,6 +337,17 @@
 		} \
 	}
 
+#define lasso_assign_list_of_xml_node(dest, src) \
+	{ \
+		GList *__tmp = src; \
+		GList *__iter_dest; \
+		lasso_release_list_of_xml_node(dest); \
+		dest = g_list_copy(__tmp); \
+		for (__iter_dest = dest ; __iter_dest != NULL ; __iter_dest = g_list_next(__iter_dest)) { \
+			__iter_dest->data = xmlCopyNode(__iter_dest->data, 1); \
+		} \
+	}
+
 #define lasso_assign_new_sec_key(dest, src) \
 	{ \
 		xmlSecKey *__tmp = (src); \
@@ -335,11 +358,29 @@
 
 #define lasso_assign_sec_key(dest, src) \
 	{ \
-		xmlSecKey *__tmp = xmlSecKeyDuplicate(src); \
+		xmlSecKey *__tmp = NULL; \
+		if (src) {\
+			__tmp = xmlSecKeyDuplicate(src); \
+		} \
 		if (dest) \
 			lasso_release_sec_key(dest); \
 		dest = __tmp; \
 	}
+
+G_GNUC_UNUSED static void
+_lasso_copy_helper_assign_table_of_attributes(gpointer key, gpointer val, gpointer dest){
+	    g_hash_table_insert((GHashTable*) dest, g_strdup(key), g_strdup(val));
+}
+
+#define lasso_assign_table_of_attributes(dest, src) \
+	{\
+		if (!dest) {\
+			(dest) = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, g_free);\
+		}\
+		g_hash_table_remove_all(dest);\
+		g_hash_table_foreach(src, _lasso_copy_helper_assign_table_of_attributes, dest);\
+	}
+
 
 /* List appending */
 

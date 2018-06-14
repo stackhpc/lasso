@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Lasso Reference Manual: Utility functions for ID-WSF 1.0</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<title>Utility functions for ID-WSF 1.0: Lasso Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="idwsf.html" title="Identity Web Services Framework 1.0">
 <link rel="prev" href="lasso-LassoInteractionProfileService.html" title="LassoInteractionProfileService">
 <link rel="next" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
-<meta name="generator" content="GTK-Doc V1.21 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.28 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -40,7 +40,7 @@ documented ways.
 </div>
 <div class="refsect1">
 <a name="lasso-Utility-functions-for-ID-WSF-1.0.functions"></a><h2>Functions</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="functions_return">
 <col class="functions_name">
@@ -196,8 +196,8 @@ documented ways.
 lasso_security_mech_id_is_null_authentication
                                (<em class="parameter"><code>const <span class="type">gchar</span> *security_mech_id</code></em>);</pre>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.2.4"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-security-mech-id-is-null-authentication.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -211,14 +211,13 @@ lasso_security_mech_id_is_null_authentication
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.2.5"></a><h4>Returns</h4>
+<a name="lasso-security-mech-id-is-null-authentication.returns"></a><h4>Returns</h4>
 <p> <code class="literal">TRUE</code> if <em class="parameter"><code>security_mech_id</code></em>
 is null or one of
 urn:liberty:security:2003-08:null:null,
 urn:liberty:security:2003-08:TLS:null,
 urn:liberty:security:2003-08:ClientTLS:null,
 FALSE otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -228,8 +227,8 @@ FALSE otherwise.</p>
 lasso_security_mech_id_is_x509_authentication
                                (<em class="parameter"><code>const <span class="type">gchar</span> *security_mech_id</code></em>);</pre>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.3.4"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-security-mech-id-is-x509-authentication.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -243,14 +242,13 @@ lasso_security_mech_id_is_x509_authentication
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.3.5"></a><h4>Returns</h4>
+<a name="lasso-security-mech-id-is-x509-authentication.returns"></a><h4>Returns</h4>
 <p> <code class="literal">TRUE</code> if <em class="parameter"><code>security_mech_id</code></em>
 is one of
 urn:liberty:security:2003-08:null:X509,
 urn:liberty:security:2003-08:TLS:X509,
 urn:liberty:security:2003-08:ClientTLS:X509,
 FALSE otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -260,8 +258,8 @@ FALSE otherwise.</p>
 lasso_security_mech_id_is_saml_authentication
                                (<em class="parameter"><code>const <span class="type">gchar</span> *security_mech_id</code></em>);</pre>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.4.4"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-security-mech-id-is-saml-authentication.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -275,7 +273,7 @@ lasso_security_mech_id_is_saml_authentication
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.4.5"></a><h4>Returns</h4>
+<a name="lasso-security-mech-id-is-saml-authentication.returns"></a><h4>Returns</h4>
 <p> <code class="literal">TRUE</code> if <em class="parameter"><code>security_mech_id</code></em>
 is one of
 urn:liberty:security:2003-08:null:SAML,
@@ -284,7 +282,6 @@ urn:liberty:security:2003-08:ClientTLS:SAML,
 urn:liberty:security:2005-02:null:SAML,
 urn:liberty:security:2005-02:TLS:SAML,
 FALSE otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -294,8 +291,8 @@ FALSE otherwise.</p>
 lasso_security_mech_id_is_bearer_authentication
                                (<em class="parameter"><code>const <span class="type">gchar</span> *security_mech_id</code></em>);</pre>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.5.4"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-security-mech-id-is-bearer-authentication.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -309,7 +306,7 @@ lasso_security_mech_id_is_bearer_authentication
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.5.5"></a><h4>Returns</h4>
+<a name="lasso-security-mech-id-is-bearer-authentication.returns"></a><h4>Returns</h4>
 <p> <code class="literal">TRUE</code> if <em class="parameter"><code>security_mech_id</code></em>
 is one of
 urn:liberty:security:2003-08:null:Bearer,
@@ -318,7 +315,6 @@ urn:liberty:security:2003-08:ClientTLS:Bearer,
 urn:liberty:security:2005-02:null:Bearer,
 urn:liberty:security:2005-02:TLS:Bearer,
 FALSE otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -330,8 +326,8 @@ lasso_login_set_encryptedResourceId (<em class="parameter"><code><a class="link"
 <p>Set the <a class="link" href="lasso-LassoDiscoEncryptedResourceID.html#LassoDiscoEncryptedResourceID" title="struct LassoDiscoEncryptedResourceID"><span class="type">LassoDiscoEncryptedResourceID</span></a> to place the next produced assertions as an ID-WSF 1.0
 bootstrap.</p>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.6.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-login-set-encryptedResourceId.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -352,9 +348,8 @@ bootstrap.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.6.6"></a><h4>Returns</h4>
+<a name="lasso-login-set-encryptedResourceId.returns"></a><h4>Returns</h4>
 <p> 0 on success; or a negative value otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -365,8 +360,8 @@ lasso_login_set_resourceId (<em class="parameter"><code><a class="link" href="la
                             <em class="parameter"><code>const <span class="type">char</span> *content</code></em>);</pre>
 <p>Set the resourceId to place in the next produced assertion for ID-WSF bootstrap.</p>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.7.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-login-set-resourceId.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -387,9 +382,8 @@ lasso_login_set_resourceId (<em class="parameter"><code><a class="link" href="la
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.7.6"></a><h4>Returns</h4>
+<a name="lasso-login-set-resourceId.returns"></a><h4>Returns</h4>
 <p> 0 on success; or a negative value otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -400,8 +394,8 @@ lasso_server_get_service (<em class="parameter"><code><a class="link" href="lass
                           <em class="parameter"><code>const <span class="type">gchar</span> *serviceType</code></em>);</pre>
 <p>Look up a disco service instance corresponding to this service type.</p>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.8.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-server-get-service.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -422,8 +416,8 @@ lasso_server_get_service (<em class="parameter"><code><a class="link" href="lass
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.8.6"></a><h4>Returns</h4>
-<p> the <a class="link" href="lasso-LassoDiscoServiceInstance.html#LassoDiscoServiceInstance" title="struct LassoDiscoServiceInstance"><span class="type">LassoDiscoServiceInstance</span></a>, NULL if it was not found.
+<a name="lasso-server-get-service.returns"></a><h4>Returns</h4>
+<p>the <a class="link" href="lasso-LassoDiscoServiceInstance.html#LassoDiscoServiceInstance" title="struct LassoDiscoServiceInstance"><span class="type">LassoDiscoServiceInstance</span></a>, NULL if it was not found.
 The <a class="link" href="lasso-LassoDiscoServiceInstance.html#LassoDiscoServiceInstance" title="struct LassoDiscoServiceInstance"><span class="type">LassoDiscoServiceInstance</span></a> is owned by Lasso and should not be
 freed. </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
@@ -437,8 +431,8 @@ lasso_server_add_service (<em class="parameter"><code><a class="link" href="lass
                           <em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *service</code></em>);</pre>
 <p>Add a service to the registry of service of this <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> object.</p>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.9.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-server-add-service.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -459,9 +453,8 @@ lasso_server_add_service (<em class="parameter"><code><a class="link" href="lass
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.9.6"></a><h4>Returns</h4>
+<a name="lasso-server-add-service.returns"></a><h4>Returns</h4>
 <p> 0 on success; a negative value if an error occured.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -473,8 +466,8 @@ lasso_server_add_service_from_dump (<em class="parameter"><code><a class="link" 
 <p>An utility function that parse a <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> dump an try to add it as a
 service using lasso_server_add_service.</p>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.10.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-server-add-service-from-dump.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -495,11 +488,10 @@ service using lasso_server_add_service.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.10.6"></a><h4>Returns</h4>
+<a name="lasso-server-add-service-from-dump.returns"></a><h4>Returns</h4>
 <p> 0 if succesfull, LASSO_PARAM_ERROR_BAD_TYPE_OF_NULL_OBJECT if
 said dump is not a <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> or is not of the righ type,
 LASSO_PARAM_ERROR_INVALID_VALUE if dump is NULL.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -513,8 +505,8 @@ lasso_identity_add_resource_offering (<em class="parameter"><code><a class="link
 It also allocate an entryId identifier for the offering, look into
 offering-&gt;entryID to get it after this call.</p>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.11.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-identity-add-resource-offering.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -535,9 +527,8 @@ offering-&gt;entryID to get it after this call.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.11.6"></a><h4>Returns</h4>
+<a name="lasso-identity-add-resource-offering.returns"></a><h4>Returns</h4>
 <p> Always 0, there should not be any error (if memory is not exhausted).</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -550,8 +541,8 @@ lasso_identity_remove_resource_offering
 <p>Remove resource offering about identity with <em class="parameter"><code>entryID</code></em>
 </p>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.12.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-identity-remove-resource-offering.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -572,9 +563,8 @@ lasso_identity_remove_resource_offering
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.12.6"></a><h4>Returns</h4>
+<a name="lasso-identity-remove-resource-offering.returns"></a><h4>Returns</h4>
 <p> TRUE on success; FALSE if the offering was not found.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -585,8 +575,8 @@ lasso_identity_get_offerings (<em class="parameter"><code><a class="link" href="
                               <em class="parameter"><code>const <span class="type">char</span> *service_type</code></em>);</pre>
 <p>Returns a list of <a class="link" href="lasso-LassoDiscoResourceOffering.html#LassoDiscoResourceOffering" title="struct LassoDiscoResourceOffering"><span class="type">LassoDiscoResourceOffering</span></a> associated to this service type.</p>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.13.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-identity-get-offerings.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -607,8 +597,8 @@ lasso_identity_get_offerings (<em class="parameter"><code><a class="link" href="
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.13.6"></a><h4>Returns</h4>
-<p> a newly allocated list of <a class="link" href="lasso-LassoDiscoResourceOffering.html#LassoDiscoResourceOffering" title="struct LassoDiscoResourceOffering"><span class="type">LassoDiscoResourceOffering</span></a>. </p>
+<a name="lasso-identity-get-offerings.returns"></a><h4>Returns</h4>
+<p>a newly allocated list of <a class="link" href="lasso-LassoDiscoResourceOffering.html#LassoDiscoResourceOffering" title="struct LassoDiscoResourceOffering"><span class="type">LassoDiscoResourceOffering</span></a>. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> LassoDiscoResourceOffering]</span></p>
 </div>
 </div>
@@ -626,8 +616,8 @@ lasso_identity_get_resource_offering (<em class="parameter"><code><a class="link
 lasso_soap_binding_get_provider (<em class="parameter"><code><a class="link" href="lasso-LassoSoapEnvelope.html#LassoSoapEnvelope" title="struct LassoSoapEnvelope"><span class="type">LassoSoapEnvelope</span></a> *envelope</code></em>);</pre>
 <p>Look up the sb:Provider header in the SOAP message envelope.</p>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.15.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-soap-binding-get-provider.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -641,10 +631,9 @@ lasso_soap_binding_get_provider (<em class="parameter"><code><a class="link" hre
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.15.6"></a><h4>Returns</h4>
+<a name="lasso-soap-binding-get-provider.returns"></a><h4>Returns</h4>
 <p> NULL if no Provider element is present in the header of the SOAP
 envelope. If found it returns a reference you do not own.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -654,8 +643,8 @@ envelope. If found it returns a reference you do not own.</p>
 lasso_soap_binding_get_correlation (<em class="parameter"><code><a class="link" href="lasso-LassoSoapEnvelope.html#LassoSoapEnvelope" title="struct LassoSoapEnvelope"><span class="type">LassoSoapEnvelope</span></a> *evelope</code></em>);</pre>
 <p>Look up the sb:Correlation header in the SOAP message envelope.</p>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.16.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-soap-binding-get-correlation.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -669,10 +658,9 @@ lasso_soap_binding_get_correlation (<em class="parameter"><code><a class="link" 
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.16.6"></a><h4>Returns</h4>
+<a name="lasso-soap-binding-get-correlation.returns"></a><h4>Returns</h4>
 <p> NULL if no Correlation element is present in the header of the
 SOAP envelope. If found it returns a reference you do not own.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -683,8 +671,8 @@ lasso_register_dst_service (<em class="parameter"><code>const <span class="type"
                             <em class="parameter"><code>const <span class="type">char</span> *href</code></em>);</pre>
 <p>Registers prefix and href of a custom data service template service.</p>
 <div class="refsect3">
-<a name="id-1.3.7.8.6.17.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-register-dst-service.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -717,7 +705,6 @@ lasso_get_prefix_for_dst_service_href (<em class="parameter"><code>const <span c
 </div>
 </div>
 <div class="footer">
-<hr>
-          Generated by GTK-Doc V1.21</div>
+<hr>Generated by GTK-Doc V1.28</div>
 </body>
 </html>
