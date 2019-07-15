@@ -1,4 +1,4 @@
-lasso (2.6.0-2ubuntu1) UNRELEASED; urgency=high
+lasso (2.6.0-2ubuntu0.1) disco; urgency=high
 
   * d/p/PAOS-Do-not-populate-Destination-attribute.patch: Do not populate
     "Destination" attribute (LP: #1833299)
