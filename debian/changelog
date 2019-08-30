@@ -1,3 +1,9 @@
+lasso (2.6.0-3) unstable; urgency=medium
+
+  * d/*: remove python-lasso (closes: #936817)
+
+ -- Frederic Peters <fpeters@debian.org>  Fri, 30 Aug 2019 10:39:11 +0200
+
 lasso (2.6.0-2) unstable; urgency=medium
 
   * d/compat: bump do debhelper level 9.
