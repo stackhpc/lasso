@@ -16,19 +16,6 @@ DEB_TARGET_ARCH     := $(shell dpkg-architecture -qDEB_HOST_ARCH)
 
 ARCHLIB := $(shell perl -MConfig -e 'print $$Config{vendorarch}')
 
-with_java := no
-no_java_archs := alpha arm hppa hurd-i386
-ifneq ($(DEB_TARGET_ARCH),i386)
- ifneq ($(DEB_TARGET_ARCH),amd64)
-  ifeq ($(DEB_TARGET_ARCH), $(findstring $(DEB_TARGET_ARCH),$(no_java_archs)))
-   with_java := disabled for architecture $(DEB_TARGET_ARCH)
-  endif
- endif
-endif
-
-with_php := no
-
-PYDEF		:= $(shell py3versions -vd)
 PY3VERS		:= $(shell py3versions -vr '>= 3.0')
 
 CFLAGS = `dpkg-buildflags --get CFLAGS`
@@ -51,25 +38,13 @@ CONFIGURE_ARGS := \
 	--infodir=\$${prefix}/share/info \
 	--enable-tests=no \
 	--disable-gtk-doc \
+	--disable-java \
+	--disable-php \
 	--enable-perl \
 	--with-python=/usr/bin/python3
 
 
-ifeq ($(with_java),yes)
-  CONFIGURE_ARGS += --enable-java
-else
-  CONFIGURE_ARGS += --disable-java
-endif
-
-ifeq ($(with_php),yes)
-  CONFIGURE_ARGS += --enable-php --with-php5-config-dir=/etc/php5/mods-available/
-else
-  CONFIGURE_ARGS += --disable-php
-endif
-
-
-
-config.status: configure
+config.status: configure.ac
 	dh_testdir
 	# Add here commands to configure the package.
 	dh_autoreconf
@@ -95,19 +70,7 @@ build-stamp:  config.status
 clean:
 	dh_testdir
 	dh_testroot
-	rm -f build-stamp 
-
-ifeq ($(with_java),yes)
-	sed -e 's/^#JAVA#//' < debian/control.in > debian/control
-else
-	sed -e 's/^#JAVA#.*//' < debian/control.in > debian/control
-endif
-
-ifeq ($(with_php),yes)
-	sed -e 's/^#PHP#//' < debian/control.in > debian/control
-else
-	sed -e 's/^#PHP#.*//' < debian/control.in > debian/control
-endif
+	rm -f build-stamp
 
 
 	[ ! -f Makefile ] || $(MAKE) distclean
@@ -118,6 +81,7 @@ endif
 
 	rm -f config.log
 	rm -f debian/liblasso-perl.install
+	rm -rf ./bindings/perl/__pycache__ ./bindings/__pycache__ ./bindings/python/__pycache__
 
 	dh_autoreconf_clean
 	dh_clean
@@ -136,13 +100,6 @@ install: build
 	  $(MAKE) -C bindings/python$$v install DESTDIR=$(CURDIR)/debian/tmp; \
 	done
 
-
-ifeq ($(with_java),yes)
-	mkdir $(CURDIR)/debian/tmp/usr/lib/jni/
-	if [ -e $(CURDIR)/debian/tmp/usr/lib/java ]; then \
-	  mv $(CURDIR)/debian/tmp/usr/lib/java/*.so $(CURDIR)/debian/tmp/usr/lib/jni/ ; \
-	fi
-endif
 
 	sed -e 's,$${archlib},$(ARCHLIB),g' debian/liblasso-perl.install.in > debian/liblasso-perl.install
 
@@ -173,9 +130,6 @@ binary-arch: build install
 	dh_makeshlibs -a -V
 	dh_installdeb
 	dh_shlibdeps -a
-ifeq ($(with_php),yes)
-	echo "php:Depends=phpapi-`php-config5 --phpapi`" >> $(CURDIR)/debian/php5-lasso.substvars
-endif
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb

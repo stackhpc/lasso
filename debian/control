@@ -12,11 +12,11 @@ Build-Depends: debhelper (>= 9),
         libglib2.0-dev,
         python3-all-dev (>= 3.2),
         libexpat1-dev,
-        fastjar,
+        python,
         python3-lxml,
         python3-six,
         chrpath
-Standards-Version: 4.1.4
+Standards-Version: 4.4
 X-Python3-Version: >= 3.4
 Homepage: http://lasso.entrouvert.org
 
@@ -56,18 +56,6 @@ Description: Library for Liberty Alliance and SAML protocols - Python bindings
  .
  This package contains Python bindings for liblasso, needed to use lasso
  in Python applications.
-
-#JAVA#Package: liblasso-java
-#JAVA#Section: libs
-#JAVA#Architecture: amd64 armel i386 ia64 mips mipsel powerpc ppc64 s390 sparc kfreebsd-i386 kfreebsd-amd64
-#JAVA#Depends: ${shlibs:Depends}, ${misc:Depends}
-#JAVA#Description: Library for Liberty Alliance and SAML protocols - Java bindings
-#JAVA# Lasso is an implementation of Liberty Alliance and related protocols, for
-#JAVA# network identity federations, single sign-on and other web services protocols.
-#JAVA# The main specifications implemented by the library are ID-FF, ID-WSF and SAML.
-#JAVA# .
-#JAVA# This package provides the Java interface to liblasso, needed to use lasso in
-#JAVA# Java applications
 
 Package: liblasso-perl
 Section: perl

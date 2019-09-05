@@ -1,3 +1,16 @@
+lasso (2.6.0-4) unstable; urgency=medium
+
+  * d/compat: bump to debhelper level 10.
+  * d/control: bump Standards-Version to 4.4, but no switch to "dh" yet.
+  * d/control, d/rules: remove obsolete support for building Java and PHP
+    bindings; this also removes the d/control.in mechanism.
+  * d/control: add explicit python dependency, still required for lasso/*.py
+    build tools. (will be fixed in next upstream tarball)
+  * d/rules: remove PYDEF variable unused with the removal of python-lasso.
+  * d/rules: clean Python 3 __pycache__ directories.
+
+ -- Frederic Peters <fpeters@debian.org>  Thu, 05 Sep 2019 08:03:12 +0200
+
 lasso (2.6.0-3) unstable; urgency=medium
 
   * d/*: remove python-lasso (closes: #936817)
