@@ -16,6 +16,7 @@ DEB_TARGET_ARCH     := $(shell dpkg-architecture -qDEB_HOST_ARCH)
 
 ARCHLIB := $(shell perl -MConfig -e 'print $$Config{vendorarch}')
 
+DEFAULT_PYTHON3	:= $(shell py3versions -dv)
 PY3VERS		:= $(shell py3versions -vr '>= 3.0')
 
 CFLAGS = `dpkg-buildflags --get CFLAGS`
@@ -40,15 +41,20 @@ CONFIGURE_ARGS := \
 	--disable-gtk-doc \
 	--disable-java \
 	--disable-php \
-	--enable-perl \
-	--with-python=/usr/bin/python3
+	--enable-perl
 
 
 config.status: configure.ac
 	dh_testdir
-	# Add here commands to configure the package.
 	dh_autoreconf
-	CFLAGS="$(CFLAGS)" CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) $(CONFIGURE_ARGS)
+	# run configure once per Python3 version, and copy resulting directory
+	# aside
+	set -e; \
+	for v in $(PY3VERS); do \
+		CFLAGS="$(CFLAGS)" CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) $(CONFIGURE_ARGS) --with-python=/usr/bin/python$$v; \
+		rm -rf bindings/python$$v; \
+		cp -a bindings/python bindings/python$$v; \
+	done
 
 
 build: build-stamp
@@ -59,8 +65,6 @@ build-stamp:  config.status
 	$(MAKE) V=1
 	set -e; \
 	for v in $(PY3VERS); do \
-	  rm -rf bindings/python$$v; \
-	  cp -a bindings/python bindings/python$$v; \
 	  $(MAKE) PYTHON=/usr/bin/python$$v -C bindings/python$$v clean; \
 	  $(MAKE) PYTHON=/usr/bin/python$$v -C bindings/python$$v; \
 	done
@@ -92,14 +96,18 @@ install: build
 	dh_clean -k
 	dh_installdirs
 
-	# Add here commands to install the package into debian/tmp
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp \
 		GACUTIL="/usr/bin/gacutil -root $(CURDIR)/debian/tmp/usr/lib"
+
+	# install and rename module for all supporter Python 3 versions
 	set -e; \
 	for v in $(PY3VERS); do \
 	  $(MAKE) -C bindings/python$$v install DESTDIR=$(CURDIR)/debian/tmp; \
+	  PYVER=/usr/bin/python$$v ; \
+	  SUFFIX=$$($$PYVER -c 'import sysconfig; print(sysconfig.get_config_var("EXT_SUFFIX"))') ; \
+	  mv $(CURDIR)/debian/tmp/usr/lib/python3/dist-packages/_lasso.so \
+		  $(CURDIR)/debian/tmp/usr/lib/python3/dist-packages/_lasso$$SUFFIX ; \
 	done
-
 
 	sed -e 's,$${archlib},$(ARCHLIB),g' debian/liblasso-perl.install.in > debian/liblasso-perl.install
 

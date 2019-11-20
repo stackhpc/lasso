@@ -1,3 +1,10 @@
+lasso (2.6.0-5) unstable; urgency=medium
+
+  * d/rules: update build/install target to support coinstalling for multiple
+    Python 3 versions (closes: #945123)
+
+ -- Frederic Peters <fpeters@debian.org>  Wed, 20 Nov 2019 11:01:24 +0100
+
 lasso (2.6.0-4) unstable; urgency=medium
 
   * d/compat: bump to debhelper level 10.
