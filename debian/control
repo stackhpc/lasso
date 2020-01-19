@@ -12,7 +12,6 @@ Build-Depends: debhelper (>= 9),
         libglib2.0-dev,
         python3-all-dev (>= 3.2),
         libexpat1-dev,
-        python,
         python3-lxml,
         python3-six,
         chrpath
@@ -69,15 +68,3 @@ Description: Library for Liberty Alliance and SAML protocols - Perl bindings
  .
  This package contains Perl bindings for liblasso, needed to use lasso
  in Perl applications.
-
-
-
-
-
-
-
-
-
-
-
-

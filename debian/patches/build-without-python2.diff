@@ -1,0 +1,858 @@
+Import upstream commits related to building with Python 3:
+* Use python interpreter specified configure script
+* Make Python scripts compatible with both Py2 and Py3
+* Downcase UTF-8 file encoding name
+* Make more Python scripts compatible with both Py2 and Py3
+* Configure should search for versioned Python interpreter.
+* Clean python cache when building python3 binding
+* Use io.open(encoding=utf8) in extract_symbols/sections.py
+* Fix python multi-version builds on jessie and stretch
+--- a/bindings/bindings.py
++++ b/bindings/bindings.py
+@@ -23,10 +23,16 @@
+ 
+ import os
+ import re
+-from six import print_
++from six import print_, PY3
+ import sys
+ from utils import *
+ 
++if PY3:
++    do_open = lambda *args, **kwargs: open(*args, encoding='utf-8', **kwargs)
++else:
++    do_open = open
++
++
+ from optparse import OptionParser
+ 
+ try:
+@@ -160,10 +166,10 @@
+             if not 'Makefile.am' in filenames:
+                 # not a source dir
+                 continue
+-            makefile_am = open(os.path.join(base, 'Makefile.am')).read()
++            makefile_am = do_open(os.path.join(base, 'Makefile.am')).read()
+             filenames = [x for x in filenames if x.endswith('.c') if x in makefile_am]
+             for filename in filenames:
+-                s = open(os.path.join(base, filename)).read()
++                s = do_open(os.path.join(base, filename)).read()
+                 docstrings = regex.findall(s)
+                 for d in docstrings:
+                     docstring = '\n'.join([x[3:] for x in d.splitlines()])
+@@ -406,7 +412,7 @@
+     in_struct_private = False
+     in_ifdef_zero = False
+ 
+-    lines = open(header_file).readlines()
++    lines = do_open(header_file).readlines()
+     i = 0
+     while i < len(lines):
+         line = lines[i]
+@@ -623,6 +629,11 @@
+ 
+         php5_binding = lang.Binding(binding)
+         php5_binding.generate()
++    elif options.language == 'php7':
++        from php7 import lang
++
++        php7_binding = lang.Binding(binding)
++        php7_binding.generate()
+     elif options.language == 'java':
+         from java import lang
+ 
+--- a/bindings/php5/php_code.py
++++ b/bindings/php5/php_code.py
+@@ -304,7 +304,7 @@
+                     m.name.endswith('_new_full'):
+                 continue
+             if not m.name.startswith(method_prefix):
+-                print >> sys.stderr, 'W:', m.name, 'vs', method_prefix
++                six.print_('W:', m.name, 'vs', method_prefix, file=sys.stderr)
+                 continue
+ 
+             if m.rename:
+@@ -330,7 +330,7 @@
+                         elif defval.startswith('b:'): # boolean
+                             php_args.append('%s = %s' % (arg_name, defval[2:]))
+                         else:
+-                            print >> sys.stderr, "E: don't know what to do with %s" % defval
++                            six.print_("E: don't know what to do with %s" % defval, file=sys.stderr)
+                             sys.exit(1)
+                     else:
+                         php_args.append('%s = null' % arg_name)
+@@ -396,7 +396,8 @@
+             elif type == '%': # %TRUE, %FALSE
+                 if var in ('TRUE', 'FALSE'):
+                     return var
+-                print >> sys.stderr, 'W: unknown docstring thingie \'%s\' in \'%s\'' % (s.group(1), func.docstring.orig_docstring)
++                six.print_('W: unknown docstring thingie \'%s\' in \'%s\'' % (s.group(1), func.docstring.orig_docstring),
++                           file=sys.stderr)
+             elif type == '@':
+                 if var == first_arg_name:
+                     return '$this'
+--- a/bindings/php5/wrapper_source.py
++++ b/bindings/php5/wrapper_source.py
+@@ -230,7 +230,8 @@
+ ''', file=self.fd)
+             else:
+                 if not is_cstring(arg):
+-                    print >>sys.stderr, 'W: %s has no explicit string annotation' % (arg,)
++                    six.print_('W: %s has no explicit string annotation' % (arg,),
++                               file=sys.stderr)
+                 six.print_('''\
+     set_array_from_hashtable_of_strings(return_c_value, &return_value);
+ ''', file=self.fd)
+@@ -279,7 +280,7 @@
+             elif is_time_t_pointer(arg):
+                 parse_tuple_format.append('l')
+                 parse_tuple_args.append('&%s' % (arg_name(arg),))
+-                print >>self.fd,  '    time_t %s = 0;' % (arg_name(arg),)
++                six.print_('    time_t %s = 0;' % (arg_name(arg),), file=self.fd)
+             elif is_xml_node(arg):
+                 parse_tuple_format.append('s!')
+                 parse_tuple_args.append('&%s_str, &%s_len' % (arg_name(arg), arg_name(arg)))
+--- a/bindings/python/Makefile.am
++++ b/bindings/python/Makefile.am
+@@ -41,3 +41,6 @@
+ 
+ 
+ endif
++
++distclean-local:
++	rm -rf __pycache__
+--- a/bindings/python/examples/get_attributes_from_assertion.py
++++ b/bindings/python/examples/get_attributes_from_assertion.py
+@@ -1,8 +1,10 @@
+ # Example SP Python code to get attributes from an assertion
+ 
++from six import print_
++
+ for attribute in assertion.attributeStatement[0].attribute:
+     if attribute.name == lasso.SAML2_ATTRIBUTE_NAME_EPR:
+         continue
+-    print 'attribute : ' + attribute.name
++    print_('attribute : ' + attribute.name)
+     for value in attribute.attributeValue:
+-        print '  value : ' + value.any[0].content
++        print_('  value : ' + value.any[0].content)
+--- a/bindings/python/tests/XmlTestRunner.py
++++ b/bindings/python/tests/XmlTestRunner.py
+@@ -1,4 +1,4 @@
+-# -*- coding: UTF-8 -*-
++# -*- coding: utf-8 -*-
+ #
+ # $Id: XmlTestRunner.py 3254 2007-06-05 21:23:57Z fpeters $
+ #
+@@ -25,6 +25,7 @@
+ import unittest
+ import time
+ import sys
++from six import print_
+ 
+ def xml(text):
+     if not text:
+@@ -33,25 +34,25 @@
+ 
+ class XmlTestResult(unittest.TestResult):
+     def addSuccess(self, test):
+-        print """    <test result="success">
++        print_("""    <test result="success">
+       <id>%s</id>
+       <description>%s</description>
+-    </test>""" % (test.id(), xml(test.shortDescription()))
++    </test>""" % (test.id(), xml(test.shortDescription())))
+ 
+     def addError(self, test, err):
+         unittest.TestResult.addError(self, test, err)
+-        print """    <test result="error">
++        print_("""    <test result="error">
+       <id>%s</id>
+       <description>%s</description>
+-    </test>""" % (test.id(), xml(test.shortDescription()))
++    </test>""" % (test.id(), xml(test.shortDescription())))
+         # TODO: add err
+ 
+     def addFailure(self, test, err):
+         unittest.TestResult.addFailure(self, test, err)
+-        print """    <test result="failure">
++        print_("""    <test result="failure">
+       <id>%s</id>
+       <description>%s</description>
+-    </test>""" % (test.id(), xml(test.shortDescription()))
++    </test>""" % (test.id(), xml(test.shortDescription())))
+         # TODO: add err
+ 
+ 
+@@ -60,14 +61,14 @@
+         return XmlTestResult()
+ 
+     def run(self, test):
+-        print "<suite>"
++        print_("<suite>")
+         result = self._makeResult()
+         startTime = time.time()
+         test(result)
+         stopTime = time.time()
+         timeTaken = float(stopTime - startTime)
+-        print "  <duration>%s</duration>" % timeTaken
+-        print "</suite>"
++        print_("  <duration>%s</duration>" % timeTaken)
++        print_("</suite>")
+ 
+         return result
+ 
+--- a/bindings/python/tests/binding_tests.py
++++ b/bindings/python/tests/binding_tests.py
+@@ -1,5 +1,5 @@
+ #! /usr/bin/env python
+-# -*- coding: UTF-8 -*-
++# -*- coding: utf-8 -*-
+ #
+ # $Id: binding_tests.py 3283 2007-06-11 09:10:18Z dlaniel $
+ #
+@@ -311,8 +311,8 @@
+                    </samlp:Extensions>'''
+         node = lasso.Node.newFromXmlNode(content)
+         assert 'next_url' in node.any[1]
+-        assert 'huhu' in node.attributes.keys()[0]
+-        assert node.attributes.values()[0] == 'xxx'
++        assert '{https://www.entrouvert.com/}huhu' in node.attributes.keys()
++        assert 'xxx' in node.attributes.values()
+         node.any = ('<zob>coin</zob>',)
+         node.attributes = {'michou': 'zozo'}
+         assert '<zob>coin</zob>' in node.dump()
+--- a/bindings/python/tests/idwsf1_tests.py
++++ b/bindings/python/tests/idwsf1_tests.py
+@@ -1,5 +1,5 @@
+ #! /usr/bin/env python
+-# -*- coding: UTF-8 -*-
++# -*- coding: utf-8 -*-
+ #
+ # Python unit tests for Lasso library
+ #
+--- a/bindings/python/tests/idwsf2_tests.py
++++ b/bindings/python/tests/idwsf2_tests.py
+@@ -1,5 +1,5 @@
+ #! /usr/bin/env python
+-# -*- coding: UTF-8 -*-
++# -*- coding: utf-8 -*-
+ #
+ # $Id: idwsf2_tests.py 3254 2007-06-05 21:23:57Z dlaniel $
+ #
+@@ -27,7 +27,7 @@
+ import os
+ import unittest
+ import sys
+-from StringIO import StringIO
++from six import StringIO
+ import logging
+ 
+ logging.basicConfig()
+@@ -310,11 +310,11 @@
+         self.failUnless(idp_disco.request.svcMD[0].svcMDID is None)
+         try:
+             idp_disco.checkSecurityMechanism()
+-        except lasso.Error, e:
++        except lasso.Error as e:
+             self.fail(e)
+         try:
+             idp_disco.validateRequest()
+-        except lasso.Error, e:
++        except lasso.Error as e:
+             self.fail(e)
+         self.failUnless(idp_disco.response is not None)
+         self.failUnlessEqual(len(idp_disco.metadatas), 1)
+@@ -391,16 +391,16 @@
+         self.failUnless(idp_disco is not None)
+         try:
+             idp_disco.processRequestMsg(wsp_disco.msgBody)
+-        except lasso.Error, e:
++        except lasso.Error as e:
+             self.fail(e)
+         self.failUnless(idp_disco.request is not None)
+         try:
+             idp_disco.checkSecurityMechanism()
+-        except lasso.Error, e:
++        except lasso.Error as e:
+             self.fail(e)
+         try:
+             idp_disco.failRequest(lasso.IDWSF2_DISCOVERY_STATUS_CODE_FAILED, lasso.IDWSF2_DISCOVERY_STATUS_CODE_FORBIDDEN)
+-        except lasso.Error, e:
++        except lasso.Error as e:
+             self.fail(e)
+         self.failUnless(idp_disco.response is not None)
+         self.failUnless(idp_disco.response.status is not None)
+@@ -415,7 +415,7 @@
+             wsp_disco.processResponseMsg(idp_disco.msgBody)
+         except lasso.Idwsf2DiscoveryForbiddenError:
+             pass
+-        except lasso.Error, e:
++        except lasso.Error as e:
+             self.fail(e)
+ 
+     def test03(self):
+@@ -475,7 +475,7 @@
+         self.failUnless(soap_envelope.getMessageId() is not None)
+         try:
+             idp_disco.checkSecurityMechanism()
+-        except lasso.Error, e:
++        except lasso.Error as e:
+             self.fail(e)
+         # redirect
+         interactionUrl = spInteractionUrl
+@@ -488,7 +488,7 @@
+         self.failUnless(response.detail.any[0].redirectURL.startswith(interactionUrl + '?transactionID='))
+         try:
+             idp_disco.buildResponseMsg()
+-        except lasso.Error, e:
++        except lasso.Error as e:
+             self.fail(e)
+         self.failUnless(idp_disco.msgBody is not None)
+ 
+@@ -500,7 +500,7 @@
+             wsp_disco.processResponseMsg(idp_disco.msgBody)
+         except lasso.WsfprofileRedirectRequestError:
+             pass
+-        except lasso.Error, e:
++        except lasso.Error as e:
+             self.fail(e)
+         response_envelope = wsp_disco.getSoapEnvelopeResponse()
+         self.failUnless(response_envelope.sb2GetRedirectRequestUrl().startswith(interactionUrl + '?transactionID='))
+@@ -527,11 +527,11 @@
+         self.failUnless(idp_disco.request.svcMD[0].svcMDID is None)
+         try:
+             idp_disco.checkSecurityMechanism()
+-        except lasso.Error, e:
++        except lasso.Error as e:
+             self.fail(e)
+         try:
+             idp_disco.validateRequest()
+-        except lasso.Error, e:
++        except lasso.Error as e:
+             self.fail(e)
+         self.failUnless(idp_disco.response is not None)
+         self.failUnlessEqual(len(idp_disco.metadatas), 1)
+--- a/bindings/python/tests/profiles_tests.py
++++ b/bindings/python/tests/profiles_tests.py
+@@ -1,5 +1,5 @@
+ #! /usr/bin/env python
+-# -*- coding: UTF-8 -*-
++# -*- coding: utf-8 -*-
+ #
+ # $Id: profiles_tests.py 3254 2007-06-05 21:23:57Z fpeters $
+ #
+@@ -386,6 +386,21 @@
+         else:
+             self.fail('Logout processResponseMsg should have failed.')
+ 
++    def test05(self):
++        '''Test parsing of a logout request with more than one session index'''
++        content = '''<samlp:LogoutRequest xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" ID="xxxx" Version="2.0" IssueInstant="2010-06-14T22:00:00">
++        <saml:Issuer>me</saml:Issuer>
++        <saml:NameID>coin</saml:NameID>
++        <samlp:SessionIndex>id1</samlp:SessionIndex>
++        <samlp:SessionIndex>id2</samlp:SessionIndex>
++        <samlp:SessionIndex>id3</samlp:SessionIndex>
++        </samlp:LogoutRequest>'''
++
++        node = lasso.Samlp2LogoutRequest.newFromXmlNode(content)
++        assert isinstance(node, lasso.Samlp2LogoutRequest)
++        assert node.sessionIndex == 'id1'
++        assert node.sessionIndexes == ('id1', 'id2', 'id3')
++
+ class DefederationTestCase(unittest.TestCase):
+     def test01(self):
+         """IDP initiated defederation; testing processNotificationMsg with non Liberty query."""
+@@ -478,32 +493,15 @@
+         assert aq.response.assertion[0].attributeStatement[0].attribute[0]
+         assert aq.response.assertion[0].attributeStatement[0].attribute[0].attributeValue[0]
+ 
+-class LogoutTestCase(unittest.TestCase):
+-    def test01(self):
+-        '''Test parsing of a logout request with more than one session index'''
+-        content = '''<samlp:LogoutRequest xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" ID="xxxx" Version="2.0" IssueInstant="2010-06-14T22:00:00">
+-        <saml:Issuer>me</saml:Issuer>
+-        <saml:NameID>coin</saml:NameID>
+-        <samlp:SessionIndex>id1</samlp:SessionIndex>
+-        <samlp:SessionIndex>id2</samlp:SessionIndex>
+-        <samlp:SessionIndex>id3</samlp:SessionIndex>
+-        </samlp:LogoutRequest>'''
+-
+-        node = lasso.Samlp2LogoutRequest.newFromXmlNode(content)
+-        assert isinstance(node, lasso.Samlp2LogoutRequest)
+-        assert node.sessionIndex == 'id1'
+-        assert node.sessionIndexes == ('id1', 'id2', 'id3')
+-
+ serverSuite = unittest.makeSuite(ServerTestCase, 'test')
+ loginSuite = unittest.makeSuite(LoginTestCase, 'test')
+ logoutSuite = unittest.makeSuite(LogoutTestCase, 'test')
+ defederationSuite = unittest.makeSuite(DefederationTestCase, 'test')
+ identitySuite = unittest.makeSuite(IdentityTestCase, 'test')
+ attributeSuite = unittest.makeSuite(AttributeAuthorityTestCase, 'test')
+-logoutSuite = unittest.makeSuite(LogoutTestCase, 'test')
+ 
+ allTests = unittest.TestSuite((serverSuite, loginSuite, logoutSuite, defederationSuite,
+-                               identitySuite, attributeSuite, logoutSuite))
++                               identitySuite, attributeSuite))
+ 
+ if __name__ == '__main__':
+     sys.exit(not unittest.TextTestRunner(verbosity = 2).run(allTests).wasSuccessful())
+--- a/bindings/python/tests/tests.py
++++ b/bindings/python/tests/tests.py
+@@ -1,5 +1,5 @@
+ #! /usr/bin/env python
+-# -*- coding: UTF-8 -*-
++# -*- coding: utf-8 -*-
+ #
+ # $Id: tests.py 3425 2007-10-10 09:31:03Z dlaniel $
+ #
+@@ -31,6 +31,7 @@
+ import sys
+ import time
+ import unittest
++from six import print_
+ 
+ from XmlTestRunner import XmlTestRunner
+ 
+@@ -63,10 +64,10 @@
+ __builtin__.__dict__['dataDir'] = os.path.join(options.srcDir, '../../../tests/data')
+ 
+ if options.xmlMode:
+-    print """<?xml version="1.0"?>"""
+-    print """<testsuites xmlns="http://check.sourceforge.net/ns">"""
+-    print """  <title>Python Bindings</title>"""
+-    print """  <datetime>%s</datetime>""" % time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
++    print_('<?xml version="1.0"?>')
++    print_('<testsuites xmlns="http://check.sourceforge.net/ns">')
++    print_('  <title>Python Bindings</title>')
++    print_('  <datetime>%s</datetime>' % time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()))
+ 
+ success = True
+ for testSuite in testSuites:
+@@ -77,7 +78,7 @@
+         if fp:
+             fp.close()
+     if not module:
+-        print >> sys.stderr, 'Unable to load test suite:', testSuite
++        print_('Unable to load test suite:', testSuite, file=sys.stderr)
+         continue
+ 
+     if module.__doc__:
+@@ -90,13 +91,13 @@
+     else:
+         runner = unittest.TextTestRunner(verbosity=2)
+         print
+-        print '-' * len(doc)
+-        print doc
+-        print '-' * len(doc)
++        print_('-' * len(doc))
++        print_(doc)
++        print_('-' * len(doc))
+     result = runner.run(module.allTests)
+     success = success and result.wasSuccessful()
+ 
+ if options.xmlMode:
+-    print """</testsuites>"""
++    print_('</testsuites>')
+ 
+ sys.exit(not success)
+--- a/lasso/build_strerror.py
++++ b/lasso/build_strerror.py
+@@ -1,42 +1,42 @@
+ #! /usr/bin/env python
+ 
+-from cStringIO import StringIO
+ import glob
+ import re
+ import sys
+ import os
++from six import print_, StringIO
+ 
+ srcdir = sys.argv[1]
+ 
+-hlines = file('%s/errors.h' % srcdir,'r').readlines()
+ messages = dict()
+ description = ''
+ 
+-for line in hlines:
+-    m = re.match(r'^ \* LASSO.*ERROR', line)
+-    if m:
+-        description = ''
+-        continue
+-    m = re.match(r'^ \* (.*[^:])$', line)
+-    if m:
+-        description += m.group(1)
+-    m = re.match(r'#define (LASSO_\w*ERROR\w+)', line)
+-    if m and description:
+-        description = re.sub(r'[ \n]+', ' ', description).strip()
+-        messages[m.group(1)] = description
+-        description = ''
+-    else:
+-        m = re.match(r'#define (LASSO_\w*ERROR\w+)',line)
++with open('%s/errors.h' % srcdir,'r') as f:
++    for line in f:
++        m = re.match(r'^ \* LASSO.*ERROR', line)
+         if m:
+-            messages[m.group(1)] = m.group(1)
++            description = ''
++            continue
++        m = re.match(r'^ \* (.*[^:])$', line)
++        if m:
++            description += m.group(1)
++        m = re.match(r'#define (LASSO_\w*ERROR\w+)', line)
++        if m and description:
++            description = re.sub(r'[ \n]+', ' ', description).strip()
++            messages[m.group(1)] = description
++            description = ''
++        else:
++            m = re.match(r'#define (LASSO_\w*ERROR\w+)',line)
++            if m:
++                messages[m.group(1)] = m.group(1)
+ 
+-clines = file('%s/errors.c.in' % srcdir,'r').readlines()
+-for line in clines:
+-    if '@ERROR_CASES@' in line:
+-        keys = messages.keys()
+-        keys.sort()
+-        for k in keys:
+-            print """		case %s:
+-			return "%s";""" % (k,messages[k].rstrip('\n'))
+-    else:
+-        print line,
++with open('%s/errors.c.in' % srcdir,'r') as f:
++    for line in f:
++        if '@ERROR_CASES@' in line:
++            keys = sorted(messages.keys())
++            for k in keys:
++                print_('		case %s:\n'
++                       '			return "%s";' %
++                       (k,messages[k].rstrip('\n')))
++        else:
++            print_(line, end="")
+--- a/lasso/extract_sections.py
++++ b/lasso/extract_sections.py
+@@ -1,10 +1,11 @@
+ #! /usr/bin/env python
+ 
+-import glob
++import io
+ import re
+ import sys
+ import os
+ import os.path
++from six import print_
+ 
+ enable_wsf = False
+ 
+@@ -23,8 +24,8 @@
+             prefixes.append(os.path.splitext(file)[0])
+     for prefix in prefixes:
+         try:
+-            header = open(os.path.join(root, prefix + '.h')).read()
+-            implementation = open(os.path.join(root, prefix + '.c')).read()
++            header = io.open(os.path.join(root, prefix + '.h'), encoding='utf-8').read()
++            implementation = io.open(os.path.join(root, prefix + '.c'), encoding='utf-8').read()
+             exported_functions = re.findall('LASSO_EXPORT.*(lasso_\w*)', header)
+             normal_functions = sorted ([ x for x in exported_functions if not x.endswith('get_type') ])
+             get_type = [ x for x in exported_functions if x.endswith('get_type') ][0]
+@@ -45,17 +46,17 @@
+                     return x
+             if type and macro_type:
+                 standard_decl = [ convert(x) for x in [ 'LASSO_%s', 'LASSO_IS_%s', 'LASSO_TYPE_%s', get_type, 'LASSO_%s_CLASS', 'LASSO_IS_%s_CLASS', 'LASSO_%s_GET_CLASS' ] ]
+-                print
+-                print '<SECTION>'
+-                print '<FILE>%s</FILE>' % file_name
+-                print '<TITLE>%s</TITLE>' % type
+-                print type
++                print_('')
++                print_('<SECTION>')
++                print_('<FILE>%s</FILE>' % file_name)
++                print_('<TITLE>%s</TITLE>' % type)
++                print_(type)
+                 for x in types + normal_functions:
+-                    print x
+-                print '<SUBSECTION Standard>'
++                    print_(x)
++                print_('<SUBSECTION Standard>')
+                 for x in standard_decl:
+-                    print x
+-                print '</SECTION>'
++                    print_(x)
++                print_('</SECTION>')
+         except:
+             continue
+ 
+--- a/lasso/extract_symbols.py
++++ b/lasso/extract_symbols.py
+@@ -1,5 +1,6 @@
+ #! /usr/bin/env python
+ 
++import io
+ import glob
+ import re
+ import sys
+@@ -22,7 +23,7 @@
+         glob.glob('%s/*/*/*.h' % srcdir):
+     if ('/id-wsf/' in header_file or '/id-wsf-2.0' in header_file) and not enable_wsf:
+         continue
+-    symbols.extend(regex.findall(open(header_file).read().replace('\\\n', '')))
++    symbols.extend(regex.findall(io.open(header_file, encoding='utf-8').read().replace('\\\n', '')))
+ 
+ wsf = ['lasso_disco_', 'lasso_dst_', 'lasso_is_', 'lasso_profile_service_',
+         'lasso_discovery', 'lasso_wsf', 'lasso_interaction_', 'lasso_utility_',
+--- a/tools/api.py
++++ b/tools/api.py
+@@ -2,7 +2,7 @@
+ import os.path
+ sys.path.append(os.path.join(os.path.dirname(__file__),'../bindings'))
+ import bindings
+-
++from six import print_
+ 
+ 
+ def main(args):
+@@ -27,19 +27,19 @@
+         d[x.name] = x
+     for x in binding.structs:
+         d[x.name] = x
+-    l = d.keys()
+-    l.sort()
++    l = sorted(d.keys())
+     for x in l:
+         if isinstance(d[x], bindings.Function):
+-            print d[x].return_type, " ",
+-            print x,
+-            print '(', ', '.join(map(lambda x: x[0] + ' ' + x[1], d[x].args)), ')'
++            print_(d[x].return_type, " ",)
++            print_(x, end='')
++            print_('(', ', '.join(map(lambda x: x[0] + ' ' + x[1], d[x].args)), ')')
+         elif isinstance(d[x], bindings.Struct):
+-            print 'struct', x, '{ ',
+-            print ', '.join(map(lambda x: x[0] + ' ' + x[1], d[x].members)),
+-            print ' }'
++            print_('struct', x, '{ ',)
++            print_(', '.join(map(lambda x: x[0] + ' ' + x[1], d[x].members)),
++                   end='')
++            print_(' }')
+         else:
+-            print x
++            print_(x)
+ 
+ if __name__ == "__main__":
+     main(sys.argv)
+--- a/tools/check-lasso-sections.py
++++ b/tools/check-lasso-sections.py
+@@ -1,11 +1,14 @@
+-#!/usr/bin/python
++#!/usr/bin/env python
+ 
+ import sys
+ import os.path
+ import re
++from six import print_
+ 
+ if len(sys.argv) < 3:
+-    print "Usage: check-lasso-sections.py lasso docs/referenrece/lasso/lasso-sections.txt"
++    print_("Usage: check-lasso-sections.py "
++           "lasso docs/referenrece/lasso/lasso-sections.txt",
++           file=sys.stderr)
+     sys.exit(1)
+ source=sys.argv[1]
+ lasso_sections_txt=sys.argv[2]
+@@ -15,7 +18,8 @@
+ for dirpath, dirnames, filenames in os.walk(source):
+     for filename in filenames:
+         _, ext = os.path.splitext(filename)
+-        lines = list(file(os.path.join(dirpath, filename)))
++        with open(os.path.join(dirpath, filename)) as f:
++            lines = f.readlines()
+         while lines:
+             line, lines = lines[0], lines[1:]
+             line=line.strip()
+@@ -30,13 +34,13 @@
+ 
+ lasso_sections_txt=file(lasso_sections_txt).read()
+ 
+-print ' = Methods missing from lasso-sections.txt =\n'
++print_(' = Methods missing from lasso-sections.txt =\n')
+ for method in methods:
+     if not method in lasso_sections_txt:
+-        print method
++        print_(method)
+ 
+-print ' = Methods in lasso-sections.txt which does not exist anymore = \n'
++print_(' = Methods in lasso-sections.txt which does not exist anymore = \n')
+ for line in lasso_sections_txt.splitlines():
+     if line.startswith('lasso_'):
+         if line not in methods:
+-            print line
++            print_(line)
+--- a/tools/format-suppressions.py
++++ b/tools/format-suppressions.py
+@@ -1,4 +1,5 @@
+ import re
++from six import print_
+ 
+ valgrind_log = open('log','r').read()
+ 
+@@ -33,11 +34,11 @@
+ i = 43
+ for x in keep:
+     block = keep[x]
+-    print "{"
+-    print "   suppression", i
++    print_("{")
++    print_("   suppression", i)
+     for x in block[1:]:
+-        print x
++        print_(x)
+         if re.search(limit_re, x):
+             break
+-    print '}'
++    print_('}')
+     i += 1
+--- a/tools/generate_idwsf2_classes.py
++++ b/tools/generate_idwsf2_classes.py
+@@ -5,6 +5,7 @@
+ import xml.dom.minidom
+ import string
+ import sys
++from six import print_
+ 
+ full_constructors = {
+     'disco_svc_metadata': (
+@@ -232,7 +233,7 @@
+                 elif b_pref == 'tns':
+                     includes['wsa:' + self.base_class_name[6:]] = True
+                 else:
+-                    print b_pref, self.base_prefix, self.base_class_name
++                    print_(b_pref, self.base_prefix, self.base_class_name)
+                     raise 'XXX'
+ 
+         s.append('#include <lasso/xml/xml.h>')
+@@ -255,9 +256,9 @@
+                     else:
+                         s.append('#include "%s.h"' % classes[ns][name].file_name)
+                 except KeyError:
+-                    print >> sys.stderr, 'W: missing', ns, name
++                    print_('W: missing', ns, name, file=sys.stderr)
+                     if self.name == 'DataResponseBase':
+-                        print classes[ns].keys()
++                        print_(classes[ns].keys())
+                         raise 'toot'
+                     pass
+             else:
+@@ -1418,7 +1419,7 @@
+                 if ns == 'lu':
+                     ns = 'util'
+                 elif ns not in doms.keys():
+-                    print 'ref:', ref
++                    print_('ref:', ref)
+                     raise 'NS: %s' % ns
+                 typ = [x for x in doms[ns].getElementsByTagName('xs:attribute') \
+                         if x.attributes.get('name') and x.attributes['name'].value == name][0]
+@@ -1465,7 +1466,7 @@
+                     if ns == 'lu':
+                         ns = 'util'
+                     elif ns not in doms.keys():
+-                        print 'ref:', ref
++                        print_('ref:', ref)
+                         raise 'NS: %s' % ns
+                     typ = [x for x in doms[ns].getElementsByTagName('xs:attribute') \
+                             if x.attributes.get('name') and x.attributes['name'].value == name][0]
+@@ -1571,7 +1572,7 @@
+                     refered = get_by_name_and_attribute(dom, 'xs:element', 'name', ref)
+                     if refered:
+                         if len(refered) >= 1:
+-                            print >> sys.stderr, 'W: more than one refered'
++                            print_('W: more than one refered', file=sys.stderr)
+                         refered = refered[0]
+                         if refered.attributes.has_key('type'):
+                             elem_type = refered.attributes['type'].value
+@@ -1596,9 +1597,9 @@
+                             klass.has_ds_signature = True
+                             elem_type = 'ds:Signature'
+                         else:
+-                            print >> sys.stderr, 'W: missing xmldsig support for %s' % ref
++                            print_('W: missing xmldsig support for %s' % ref, file=sys.stderr)
+                     elif not doms.has_key(ns):
+-                        print >> sys.stderr, 'W: missing dom for', ns
++                        print_('W: missing dom for', ns, file=sys.stderr)
+                         elem_type = 'XXX'
+                         if ns == 'samlp':
+                             elem_type = ref
+@@ -1664,13 +1665,13 @@
+                     ):
+                 klass.elements.append( ('any', 'GList', 'LassoNode'))
+             else:
+-                print >> sys.stderr, 'W: any occurence for %s (prefix: %s)' % (klass.name, prefix)
++                print_('W: any occurence for %s (prefix: %s)' % (klass.name, prefix), file=sys.stderr)
+             # XXX... other occurences of <any>
+ 
+-        print klass.name
++        print_(klass.name)
+         for elem in klass.elements:
+-            print '  ', elem
+-        print '-'*40
++            print_('  ', elem)
++        print_('-'*40)
+ 
+ def get_ordered_classes():
+     all_classes = []
+@@ -1733,9 +1734,9 @@
+ 
+ for klass_p in classes.keys():
+     for klass in classes[klass_p].values():
+-        #print klass_p, klass.name
++        #print_(klass_p, klass.name)
+         if klass.base_class_name != 'Node':
+-            #print '  <-', klass.base_prefix, ':', klass.base_class_name
++            #print_('  <-', klass.base_prefix, ':', klass.base_class_name)
+             if klass.base_prefix:
+                 prefix = klass.base_prefix
+             else:
+--- a/configure.ac
++++ b/configure.ac
+@@ -131,7 +131,7 @@
+ AC_CHECK_PROGS(PERL, perl)
+ AC_CHECK_PROGS(PHP5, php5 php)
+ AC_CHECK_PROGS(PHP5_CONFIG, php-config5 php-config)
+-AC_CHECK_PROGS(PYTHON, python)
++AC_CHECK_PROGS(PYTHON, python3 python python2)
+ AC_CHECK_PROGS(SWIG, swig)
+ 
+ dnl Make sure we have an ANSI compiler
+--- a/bindings/java/Makefile.am
++++ b/bindings/java/Makefile.am
+@@ -26,7 +26,7 @@
+ EXTRA_ARGS = --enable-id-wsf
+ endif
+ 
+-java_lasso_source_files := $(shell python $(top_srcdir)/bindings/bindings.py -l java-list --src-dir=$(top_srcdir)/lasso/ $(EXTRA_ARGS) )
++java_lasso_source_files := $(shell $(PYTHON) $(top_srcdir)/bindings/bindings.py -l java-list --src-dir=$(top_srcdir)/lasso/ $(EXTRA_ARGS) )
+ 
+ lasso_jardir=$(prefix)/share/java
+ lasso_jar_DATA=lasso.jar
+--- a/bindings/python/tests/Makefile.am
++++ b/bindings/python/tests/Makefile.am
+@@ -11,5 +11,8 @@
+ TESTS += idwsf1_tests.py idwsf2_tests.py
+ endif
+ 
++TEST_EXTENSIONS = .py
++PY_LOG_COMPILER = $(PYTHON)
++
+ EXTRA_DIST = profiles_tests.py binding_tests.py idwsf1_tests.py idwsf2_tests.py \
+ 	tests.py XmlTestRunner.py
+--- a/lasso/Makefile.am
++++ b/lasso/Makefile.am
+@@ -91,7 +91,7 @@
+ endif
+ 
+ $(srcdir)/errors.c: $(srcdir)/errors.h $(srcdir)/build_strerror.py
+-	python $(srcdir)/build_strerror.py $(srcdir) >.errors.c.new
++	$(PYTHON) $(srcdir)/build_strerror.py $(srcdir) >.errors.c.new
+ 	if ! cmp -s $(srcdir)/errors.c .errors.c.new; then \
+ 	mv -f .errors.c.new $@; else \
+ 	rm .errors.c.new; fi
