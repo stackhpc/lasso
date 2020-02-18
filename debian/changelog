@@ -1,3 +1,9 @@
+lasso (2.6.0-2ubuntu3) focal; urgency=medium
+
+  * No-change rebuild to drop python3.7.
+
+ -- Matthias Klose <doko@ubuntu.com>  Tue, 18 Feb 2020 10:20:19 +0100
+
 lasso (2.6.0-2ubuntu2) focal; urgency=medium
 
   * No-change rebuild to build with python3.8.
