@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 #
 # $Id: XmlTestRunner.py 3254 2007-06-05 21:23:57Z fpeters $
 #
@@ -25,6 +25,7 @@
 import unittest
 import time
 import sys
+from six import print_
 
 def xml(text):
     if not text:
@@ -33,25 +34,25 @@ def xml(text):
 
 class XmlTestResult(unittest.TestResult):
     def addSuccess(self, test):
-        print """    <test result="success">
+        print_("""    <test result="success">
       <id>%s</id>
       <description>%s</description>
-    </test>""" % (test.id(), xml(test.shortDescription()))
+    </test>""" % (test.id(), xml(test.shortDescription())))
 
     def addError(self, test, err):
         unittest.TestResult.addError(self, test, err)
-        print """    <test result="error">
+        print_("""    <test result="error">
       <id>%s</id>
       <description>%s</description>
-    </test>""" % (test.id(), xml(test.shortDescription()))
+    </test>""" % (test.id(), xml(test.shortDescription())))
         # TODO: add err
 
     def addFailure(self, test, err):
         unittest.TestResult.addFailure(self, test, err)
-        print """    <test result="failure">
+        print_("""    <test result="failure">
       <id>%s</id>
       <description>%s</description>
-    </test>""" % (test.id(), xml(test.shortDescription()))
+    </test>""" % (test.id(), xml(test.shortDescription())))
         # TODO: add err
 
 
@@ -60,14 +61,14 @@ class XmlTestRunner:
         return XmlTestResult()
 
     def run(self, test):
-        print "<suite>"
+        print_("<suite>")
         result = self._makeResult()
         startTime = time.time()
         test(result)
         stopTime = time.time()
         timeTaken = float(stopTime - startTime)
-        print "  <duration>%s</duration>" % timeTaken
-        print "</suite>"
+        print_("  <duration>%s</duration>" % timeTaken)
+        print_("</suite>")
 
         return result
 
