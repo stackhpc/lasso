@@ -182,7 +182,7 @@ init_from_xml(LassoNode *node, xmlNode *xmlnode)
 }
 
 static void
-class_init(LassoSamlp2LogoutRequestClass *klass)
+class_init(LassoSamlp2LogoutRequestClass *klass, void *unused G_GNUC_UNUSED)
 {
 	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
 
@@ -268,12 +268,12 @@ lasso_samlp2_logout_request_set_session_indexes(LassoSamlp2LogoutRequest *logout
 
 	/* assign rest of the list to the new private field */
 	pv = GET_PRIVATE(logout_request);
-	lasso_assign_list_of_strings(pv->SessionIndex, session_index);
-	/* extract last element and assign it to old field */
-	if (pv->SessionIndex && pv->SessionIndex->next) {
-		GList *last = g_list_last(pv->SessionIndex);
-		lasso_assign_new_string(logout_request->SessionIndex, (char*) last->data);
-		pv->SessionIndex = g_list_delete_link(pv->SessionIndex, last);
+	if (! session_index) {
+		lasso_release_string(logout_request->SessionIndex);
+		lasso_release_list_of_strings(pv->SessionIndex);
+	} else {
+		lasso_assign_string(logout_request->SessionIndex, (char*) session_index->data);
+		lasso_assign_list_of_strings(pv->SessionIndex, session_index->next);
 	}
 }
 
