@@ -28,7 +28,9 @@
  */
 #define _DEFAULT_SOURCE
 /* permit importation of strptime for glibc2 */
+#if !defined(__sun)
 #define _XOPEN_SOURCE
+#endif
 /* permit importation of timegm for glibc2, wait for people to complain it does not work on their
  * system. */
 #define _BSD_SOURCE
@@ -72,7 +74,7 @@
 #include "../lasso_config.h"
 
 /**
- * SECTION:tools
+ * SECTION:saml2_utils
  * @short_description: Misc functions used inside Lasso
  * @stability: Internal
  */
@@ -1353,11 +1355,11 @@ lasso_inflate(unsigned char *input, size_t len)
 	zstr.zfree = NULL;
 	zstr.opaque = NULL;
 
-	output = g_malloc(len*10);
+	output = g_malloc(len*20);
 	zstr.avail_in = len;
 	zstr.next_in = (unsigned char*)input;
 	zstr.total_in = 0;
-	zstr.avail_out = len*10;
+	zstr.avail_out = len*20;
 	zstr.total_out = 0;
 	zstr.next_out = output;
 
@@ -3056,6 +3058,7 @@ lasso_get_saml_message(xmlChar **query_fields) {
 	int i = 0;
 	char *enc = NULL;
 	char *message = NULL;
+	char *saml_message = NULL;
 	char *decoded_message = NULL;
 	xmlChar *field = NULL;
 	char *t = NULL;
@@ -3096,12 +3099,12 @@ lasso_get_saml_message(xmlChar **query_fields) {
 		goto cleanup;
 	}
 	/* rc contains the length of the result */
-	message = (char*)lasso_inflate((unsigned char*) decoded_message, rc);
+	saml_message = (char*)lasso_inflate((unsigned char*) decoded_message, rc);
 cleanup:
 	if (decoded_message) {
 		lasso_release(decoded_message);
 	}
-	return message;
+	return saml_message;
 }
 
 /**
@@ -3126,10 +3129,10 @@ lasso_xmltextreader_from_message(const char *message, char **to_free) {
 		if (needle && message[len-1] != '=') {
 			query_fields = lasso_urlencoded_to_strings(message);
 			message = *to_free = lasso_get_saml_message(query_fields);
-			len = strlen(message);
 			if (! message) {
 				goto cleanup;
 			}
+			len = strlen(message);
 		} else { /* POST */
 			int rc = 0;
 

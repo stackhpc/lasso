@@ -22,6 +22,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <strings.h>
 
 #include <check.h>
 
@@ -141,7 +142,7 @@ static struct XmlSnippet schema_snippets[] = {
 };
 
 static void
-class_init(LassoNodeClass *klass)
+class_init(LassoNodeClass *klass, gpointer class_data G_GNUC_UNUSED)
 {
 	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
 
@@ -1983,24 +1984,13 @@ START_TEST(test13_test_lasso_server_load_metadata)
 	block_lasso_logs;
 	check_good_rc(lasso_server_load_metadata(server, LASSO_PROVIDER_ROLE_IDP,
 				TESTSDATADIR "/metadata/renater-metadata.xml",
-				TESTSDATADIR "/metadata/metadata-federation-renater.crt",
+				TESTSDATADIR "/rootCA.crt",
 				&blacklisted_1, &loaded_entity_ids,
 				LASSO_SERVER_LOAD_METADATA_FLAG_DEFAULT));
 	unblock_lasso_logs;
 	check_equals(g_hash_table_size(server->providers), 110);
 	check_equals(g_list_length(loaded_entity_ids), 110);
 
-#if 0
-	/* UK federation file are too big to distribute (and I don't even known if it's right to do
-	 * it, disable this test for now ) */
-	check_good_rc(lasso_server_load_metadata(server, LASSO_PROVIDER_ROLE_IDP,
-				TESTSDATADIR "/ukfederation-metadata.xml",
-				TESTSDATADIR "/ukfederation.pem",
-				&blacklisted_1, &loaded_entity_ids,
-				LASSO_SERVER_LOAD_METADATA_FLAG_DEFAULT));
-	check_equals(g_list_length(loaded_entity_ids), 283);
-	check_equals(g_hash_table_size(server->providers), 393);
-#endif
 	lasso_release_list_of_strings(loaded_entity_ids);
 
 	lasso_release_gobject(server);
@@ -2082,7 +2072,7 @@ START_TEST(test15_ds_key_info)
 }
 END_TEST
 
-/* test load federation */
+/* test get issuer */
 START_TEST(test16_test_get_issuer)
 {
 	char *content = NULL;
@@ -2169,6 +2159,12 @@ START_TEST(test16_test_get_issuer)
 	lasso_release_gobject(spLoginContext);
 	lasso_release_gobject(spServerContext);
 
+	begin_check_do_log("Lasso", G_LOG_LEVEL_DEBUG, "could not decode POST SAML message", TRUE);
+	check_null(lasso_profile_get_issuer(""));
+	end_check_do_log("Lasso");
+	begin_check_do_log("Lasso", G_LOG_LEVEL_DEBUG, "message is not base64", TRUE);
+	check_null(lasso_profile_get_issuer("SAMLRequest=!!hello!!"));
+	end_check_do_log("Lasso");
 }
 END_TEST
 
