@@ -1,0 +1,32 @@
+<!-- ##### SECTION Title ##### -->
+LassoSamlSubject
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT LassoSamlSubject ##### -->
+<para>
+
+</para>
+
+@NameIdentifier: 
+@SubjectConfirmation: 
+
+<!-- ##### FUNCTION lasso_saml_subject_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+

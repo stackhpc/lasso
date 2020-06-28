@@ -1,12 +1,11 @@
-/* $Id: lib_register_name_identifier_request.h,v 1.4 2004/07/22 06:59:03 eraviart Exp $ 
+/* $Id: lib_register_name_identifier_request.h,v 1.17 2005/01/22 15:57:55 eraviart Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,46 +30,59 @@ extern "C" {
 #endif /* __cplusplus */ 
 
 #include <lasso/xml/samlp_request_abstract.h>
-#include <lasso/xml/lib_idp_provided_name_identifier.h>
-#include <lasso/xml/lib_old_provided_name_identifier.h>
-#include <lasso/xml/lib_sp_provided_name_identifier.h>
+#include <lasso/xml/saml_name_identifier.h>
 
-#define LASSO_TYPE_LIB_REGISTER_NAME_IDENTIFIER_REQUEST (lasso_lib_register_name_identifier_request_get_type())
-#define LASSO_LIB_REGISTER_NAME_IDENTIFIER_REQUEST(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_LIB_REGISTER_NAME_IDENTIFIER_REQUEST, LassoLibRegisterNameIdentifierRequest))
-#define LASSO_LIB_REGISTER_NAME_IDENTIFIER_REQUEST_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_LIB_REGISTER_NAME_IDENTIFIER_REQUEST, LassoLibRegisterNameIdentifierRequestClass))
-#define LASSO_IS_LIB_REGISTER_NAME_IDENTIFIER_REQUEST(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_LIB_REGISTER_NAME_IDENTIFIER_REQUEST))
-#define LASSO_IS_LIB_REGISTER_NAME_IDENTIFIER_REQUEST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_LIB_REGISTER_NAME_IDENTIFIER_REQUEST))
-#define LASSO_LIB_REGISTER_NAME_IDENTIFIER_REQUEST_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_LIB_REGISTER_NAME_IDENTIFIER_REQUEST, LassoLibRegisterNameIdentifierRequestClass)) 
+#define LASSO_TYPE_LIB_REGISTER_NAME_IDENTIFIER_REQUEST \
+	(lasso_lib_register_name_identifier_request_get_type())
+#define LASSO_LIB_REGISTER_NAME_IDENTIFIER_REQUEST(obj) \
+	(G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_LIB_REGISTER_NAME_IDENTIFIER_REQUEST, \
+				    LassoLibRegisterNameIdentifierRequest))
+#define LASSO_LIB_REGISTER_NAME_IDENTIFIER_REQUEST_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_LIB_REGISTER_NAME_IDENTIFIER_REQUEST, \
+				 LassoLibRegisterNameIdentifierRequestClass))
+#define LASSO_IS_LIB_REGISTER_NAME_IDENTIFIER_REQUEST(obj) \
+	(G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_LIB_REGISTER_NAME_IDENTIFIER_REQUEST))
+#define LASSO_IS_LIB_REGISTER_NAME_IDENTIFIER_REQUEST_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_LIB_REGISTER_NAME_IDENTIFIER_REQUEST))
+#define LASSO_LIB_REGISTER_NAME_IDENTIFIER_REQUEST_GET_CLASS(o) \
+	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_LIB_REGISTER_NAME_IDENTIFIER_REQUEST, \
+				    LassoLibRegisterNameIdentifierRequestClass)) 
 
 typedef struct _LassoLibRegisterNameIdentifierRequest LassoLibRegisterNameIdentifierRequest;
-typedef struct _LassoLibRegisterNameIdentifierRequestClass LassoLibRegisterNameIdentifierRequestClass;
+typedef struct _LassoLibRegisterNameIdentifierRequestClass \
+	LassoLibRegisterNameIdentifierRequestClass;
 
 struct _LassoLibRegisterNameIdentifierRequest {
-  LassoSamlpRequestAbstract parent;
-  /*< private >*/
+	LassoSamlpRequestAbstract parent;
+
+	/*< public >*/
+	/* <xs:element ref="Extension" minOccurs="0" maxOccurs="unbounded"/> */
+	GList *Extension;
+	/* <xs:element ref="ProviderID"/> */
+	char *ProviderID;
+	/* <xs:element ref="IDPProvidedNameIdentifier"/> */
+	LassoSamlNameIdentifier *IDPProvidedNameIdentifier;
+	/* <xs:element ref="SPProvidedNameIdentifier" minOccurs="0"/> */
+	LassoSamlNameIdentifier *SPProvidedNameIdentifier;
+	/* <xs:element ref="OldProvidedNameIdentifier"/> */
+	LassoSamlNameIdentifier *OldProvidedNameIdentifier;
+	/* <xs:element ref="RelayState" minOccurs="0"/> */
+	char *RelayState;
+
 };
 
 struct _LassoLibRegisterNameIdentifierRequestClass {
-  LassoSamlpRequestAbstractClass parent;
+	LassoSamlpRequestAbstractClass parent;
 };
 
 LASSO_EXPORT GType lasso_lib_register_name_identifier_request_get_type(void);
-LASSO_EXPORT LassoNode* lasso_lib_register_name_identifier_request_new(void);
-
-LASSO_EXPORT void lasso_lib_register_name_identifier_request_set_relayState                (LassoLibRegisterNameIdentifierRequest *,
-											    const xmlChar *);
-
-LASSO_EXPORT void lasso_lib_register_name_identifier_request_set_providerID                (LassoLibRegisterNameIdentifierRequest *,
-											    const xmlChar *);
-
-LASSO_EXPORT void lasso_lib_register_name_identifier_request_set_idpProvidedNameIdentifier (LassoLibRegisterNameIdentifierRequest *,
-											    LassoLibIDPProvidedNameIdentifier *);
-
-LASSO_EXPORT void lasso_lib_register_name_identifier_request_set_oldProvidedNameIdentifier (LassoLibRegisterNameIdentifierRequest *,
-											    LassoLibOLDProvidedNameIdentifier *);
-
-LASSO_EXPORT void lasso_lib_register_name_identifier_request_set_spProvidedNameIdentifier  (LassoLibRegisterNameIdentifierRequest *,
-											    LassoLibSPProvidedNameIdentifier *);
+LASSO_EXPORT LassoSamlpRequestAbstract* lasso_lib_register_name_identifier_request_new(void);
+LASSO_EXPORT LassoSamlpRequestAbstract* lasso_lib_register_name_identifier_request_new_full(
+		const char *providerID,
+		LassoSamlNameIdentifier *idpNameIdentifier,
+		LassoSamlNameIdentifier *spNameIdentifier,
+		LassoSamlNameIdentifier *oldNameIdentifier,
+		LassoSignatureType sign_type, LassoSignatureMethod sign_method);
 
 #ifdef __cplusplus
 }

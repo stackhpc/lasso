@@ -1,12 +1,11 @@
-/* $Id: lib_request_authn_context.c,v 1.4 2004/08/13 15:16:13 fpeters Exp $
+/* $Id: lib_request_authn_context.c,v 1.18 2005/02/10 13:53:36 nclapies Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,108 +25,96 @@
 #include <lasso/xml/lib_request_authn_context.h>
 
 /*
-Information describing which authentication context the requester desires the
-identity provider to use in authenticating the Principal.
-
-Schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
-
-<xs:element name="RequestAuthnContext">
-  <xs:complexType>
-    <xs:sequence>
-      <xs:choice>
-        <xs:element name="AuthnContextClassRef" type="xs:anyURI" maxOccurs="unbounded"/>
-        <xs:element name="AuthnContextStatementRef" type="xs:anyURI" maxOccurs="unbounded"/>
-      </xs:choice>
-      <xs:element name="AuthnContextComparison" type="AuthnContextComparisonType" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-</xs:element>
-*/
+ * Information describing which authentication context the requester desires the
+ * identity provider to use in authenticating the Principal.
+ * 
+ * Schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
+ * 
+ * <xs:element name="RequestAuthnContext">
+ *   <xs:complexType>
+ *     <xs:sequence>
+ *       <xs:choice>
+ *         <xs:element name="AuthnContextClassRef" type="xs:anyURI" maxOccurs="unbounded"/>
+ *         <xs:element name="AuthnContextStatementRef" type="xs:anyURI" maxOccurs="unbounded"/>
+ *       </xs:choice>
+ *       <xs:element name="AuthnContextComparison" 
+ *           type="AuthnContextComparisonType" minOccurs="0"/>
+ *     </xs:sequence>
+ *   </xs:complexType>
+ * </xs:element>
+ */
 
 /*****************************************************************************/
-/* public methods                                                            */
+/* private methods                                                           */
 /*****************************************************************************/
 
-void
-lasso_lib_request_authn_context_add_authnContextClassRef(LassoLibRequestAuthnContext *node,
-							 const xmlChar *authnContextClassRef)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_LIB_REQUEST_AUTHN_CONTEXT(node));
-  g_assert(authnContextClassRef != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->new_child(LASSO_NODE (node), "AuthnContextClassRef",
-		   authnContextClassRef, TRUE);
-}
-
-void
-lasso_lib_request_authn_context_add_authnContextStatementRef(LassoLibRequestAuthnContext *node,
-							     const xmlChar *authnContextStatementRef)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_LIB_REQUEST_AUTHN_CONTEXT(node));
-  g_assert(authnContextStatementRef != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->new_child(LASSO_NODE (node), "AuthnContextStatementRef",
-		   authnContextStatementRef, TRUE);
-}
-
-void
-lasso_lib_request_authn_context_set_authnContextComparison(LassoLibRequestAuthnContext *node,
-							   const xmlChar *authnContextComparison)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_LIB_REQUEST_AUTHN_CONTEXT(node));
-  g_assert(authnContextComparison != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->new_child(LASSO_NODE (node), "AuthnContextComparison",
-		   authnContextComparison, FALSE);
-}
+static struct XmlSnippet schema_snippets[] = {
+	{ "AuthnContextClassRef", SNIPPET_LIST_CONTENT,
+		G_STRUCT_OFFSET(LassoLibRequestAuthnContext, AuthnContextClassRef) },
+	{ "AuthnContextStatementRef", SNIPPET_LIST_CONTENT,
+		G_STRUCT_OFFSET(LassoLibRequestAuthnContext, AuthnContextStatementRef) },
+	{ "AuthnContextComparison", SNIPPET_CONTENT,
+		G_STRUCT_OFFSET(LassoLibRequestAuthnContext, AuthnContextComparison) },
+	{ NULL, 0, 0}
+};
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
 static void
-lasso_lib_request_authn_context_instance_init(LassoLibRequestAuthnContext *node)
+instance_init(LassoLibRequestAuthnContext *node)
 {
-  LassoNodeClass *class = LASSO_NODE_GET_CLASS(LASSO_NODE(node));
-
-  class->set_ns(LASSO_NODE(node), lassoLibHRef, lassoLibPrefix);
-  class->set_name(LASSO_NODE(node), "RequestAuthnContext");
+	node->AuthnContextClassRef = NULL;
+	node->AuthnContextStatementRef = NULL;
+	node->AuthnContextComparison = NULL;
 }
 
 static void
-lasso_lib_request_authn_context_class_init(LassoLibRequestAuthnContextClass *klass)
+class_init(LassoLibRequestAuthnContextClass *klass)
 {
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
+
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "RequestAuthnContext");
+	lasso_node_class_set_ns(nclass, LASSO_LIB_HREF, LASSO_LIB_PREFIX);
+	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
 
-GType lasso_lib_request_authn_context_get_type() {
-  static GType this_type = 0;
+GType
+lasso_lib_request_authn_context_get_type()
+{
+	static GType this_type = 0;
 
-  if (!this_type) {
-    static const GTypeInfo this_info = {
-      sizeof (LassoLibRequestAuthnContextClass),
-      NULL,
-      NULL,
-      (GClassInitFunc) lasso_lib_request_authn_context_class_init,
-      NULL,
-      NULL,
-      sizeof(LassoLibRequestAuthnContext),
-      0,
-      (GInstanceInitFunc) lasso_lib_request_authn_context_instance_init,
-    };
-    
-    this_type = g_type_register_static(LASSO_TYPE_NODE,
-				       "LassoLibRequestAuthnContext",
-				       &this_info, 0);
-  }
-  return this_type;
+	if (!this_type) {
+		static const GTypeInfo this_info = {
+			sizeof (LassoLibRequestAuthnContextClass),
+			NULL,
+			NULL,
+			(GClassInitFunc) class_init,
+			NULL,
+			NULL,
+			sizeof(LassoLibRequestAuthnContext),
+			0,
+			(GInstanceInitFunc) instance_init,
+		};
+
+		this_type = g_type_register_static(LASSO_TYPE_NODE,
+				"LassoLibRequestAuthnContext", &this_info, 0);
+	}
+	return this_type;
 }
 
-LassoNode* lasso_lib_request_authn_context_new() {
-  return LASSO_NODE(g_object_new(LASSO_TYPE_LIB_REQUEST_AUTHN_CONTEXT, NULL));
+
+/**
+ * lasso_lib_request_authn_context_new:
+ *
+ * Creates a new #LassoLibRequestAuthnContext object.
+ *
+ * Return value: a newly created #LassoLibRequestAuthnContext object
+ **/
+LassoLibRequestAuthnContext*
+lasso_lib_request_authn_context_new()
+{
+	return g_object_new(LASSO_TYPE_LIB_REQUEST_AUTHN_CONTEXT, NULL);
 }

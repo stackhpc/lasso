@@ -1,0 +1,34 @@
+<!-- ##### SECTION Title ##### -->
+LassoSamlAttribute
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT LassoSamlAttribute ##### -->
+<para>
+
+</para>
+
+@parent: 
+@attributeName: 
+@attributeNameSpace: 
+@AttributeValue: 
+
+<!-- ##### FUNCTION lasso_saml_attribute_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+

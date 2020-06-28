@@ -1,10 +1,10 @@
 /*
  * Lasso library C unit tests
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
- *
- * Author: Emmanuel Raviart <eraviart@entrouvert.com>
+ * 
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,12 +30,14 @@
 
 extern Suite* basic_suite();
 extern Suite* login_suite();
+extern Suite* random_suite();
 
 typedef Suite* (*SuiteFunction) ();
 
 SuiteFunction suites[] = {
 	basic_suite,
 	login_suite,
+	random_suite,
 	NULL
 };
 

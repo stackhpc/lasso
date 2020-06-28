@@ -1,12 +1,11 @@
-/* $Id: lib_status_response.c,v 1.5 2004/08/13 15:16:13 fpeters Exp $ 
+/* $Id: lib_status_response.c,v 1.21 2005/05/10 21:18:31 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,118 +23,154 @@
  */
 
 #include <lasso/xml/lib_status_response.h>
+#include <libxml/uri.h>
 
 /*
-Schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
-
-<xs:complexType name="StatusResponseType">
-  <xs:complexContent>
-    <xs:extension base="samlp:ResponseAbstractType">
-      <xs:sequence>
-        <xs:element ref="Extension" minOccurs="0" maxOccurs="unbounded"/>
-        <xs:element ref="ProviderID"/>
-        <xs:element ref="samlp:Status"/>
-        <xs:element ref="RelayState" minOccurs="0"/>
-      </xs:sequence>
-    </xs:extension>
-  </xs:complexContent>
-</xs:complexType>
-
-<xs:element name="ProviderID" type="md:entityIDType"/>
-<xs:element name="RelayState" type="xs:string"/>
-
-From liberty-metadata-v1.0.xsd:
-<xs:simpleType name="entityIDType">
-  <xs:restriction base="xs:anyURI">
-    <xs:maxLength value="1024" id="maxlengthid"/>
-  </xs:restriction>
-</xs:simpleType>
-
-*/
+ * Schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
+ * 
+ * <xs:complexType name="StatusResponseType">
+ *   <xs:complexContent>
+ *     <xs:extension base="samlp:ResponseAbstractType">
+ *       <xs:sequence>
+ *         <xs:element ref="Extension" minOccurs="0" maxOccurs="unbounded"/>
+ *         <xs:element ref="ProviderID"/>
+ *         <xs:element ref="samlp:Status"/>
+ *         <xs:element ref="RelayState" minOccurs="0"/>
+ *       </xs:sequence>
+ *     </xs:extension>
+ *   </xs:complexContent>
+ * </xs:complexType>
+ * 
+ * <xs:element name="ProviderID" type="md:entityIDType"/>
+ * <xs:element name="RelayState" type="xs:string"/>
+ * 
+ * From liberty-metadata-v1.0.xsd:
+ * <xs:simpleType name="entityIDType">
+ *   <xs:restriction base="xs:anyURI">
+ *     <xs:maxLength value="1024" id="maxlengthid"/>
+ *   </xs:restriction>
+ * </xs:simpleType>
+ */
 
 /*****************************************************************************/
-/* public methods                                                            */
+/* private methods                                                           */
 /*****************************************************************************/
 
-void
-lasso_lib_status_response_set_providerID(LassoLibStatusResponse *node,
-					 const xmlChar *providerID)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_LIB_STATUS_RESPONSE(node));
-  g_assert(providerID != NULL);
-  /* FIXME : providerID length SHOULD be <= 1024 */
+static struct XmlSnippet schema_snippets[] = {
+	{ "Extension", SNIPPET_EXTENSION,
+		G_STRUCT_OFFSET(LassoLibStatusResponse, Extension) },
+	{ "ProviderID", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoLibStatusResponse, ProviderID) },
+	{ "Status", SNIPPET_NODE, G_STRUCT_OFFSET(LassoLibStatusResponse, Status) },
+	{ "RelayState", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoLibStatusResponse, RelayState) },
+	{ NULL, 0, 0}
+};
 
-  class = LASSO_NODE_GET_CLASS(node);
-  class->new_child(LASSO_NODE (node), "ProviderID", providerID, FALSE);
+static struct QuerySnippet query_snippets[] = {
+	{ "ResponseID", NULL },
+	{ "MajorVersion", NULL },
+	{ "MinorVersion", NULL },
+	{ "IssueInstant", NULL },
+	{ "Recipient", NULL },
+	{ "ProviderID", NULL },
+	{ "Status", "Value" },
+	{ "RelayState", NULL },
+	{ "InResponseTo", NULL },
+	{ NULL, NULL }
+};
+
+static LassoNodeClass *parent_class = NULL;
+
+static gchar*
+build_query(LassoNode *node)
+{
+	return lasso_node_build_query_from_snippets(node);
 }
 
-void
-lasso_lib_status_response_set_relayState(LassoLibStatusResponse *node,
-					 const xmlChar *relayState)
+static gboolean
+init_from_query(LassoNode *node, char **query_fields)
 {
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_LIB_STATUS_RESPONSE(node));
-  g_assert(relayState != NULL);
+	LassoLibStatusResponse *response = LASSO_LIB_STATUS_RESPONSE(node);
 
-  class = LASSO_NODE_GET_CLASS(node);
-  class->new_child(LASSO_NODE (node), "RelayState", relayState, FALSE);
+	response->Status = lasso_samlp_status_new();
+	lasso_node_init_from_query_fields(node, query_fields);
+	if (response->ProviderID == NULL || response->Status == NULL)
+		return FALSE;
+	
+	if (response->Status->StatusCode) {
+		LassoSamlpStatusCode *code = response->Status->StatusCode;
+		if (code->Value && strchr(code->Value, ':') == NULL) {
+			char *s;  /* if not a QName; add the samlp prefix */
+			s = g_strdup_printf("samlp:%s", code->Value);
+			g_free(code->Value);
+			code->Value = s;
+		}
+	}
+
+	
+	return TRUE;
 }
 
-void
-lasso_lib_status_response_set_status(LassoLibStatusResponse *node,
-				     LassoSamlpStatus *status)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_LIB_STATUS_RESPONSE(node));
-  g_assert(LASSO_IS_SAMLP_STATUS(status));
-  
-  class = LASSO_NODE_GET_CLASS(node);
-  class->add_child(LASSO_NODE (node), LASSO_NODE (status), FALSE);
-}
+
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
 static void
-lasso_lib_status_response_instance_init(LassoLibStatusResponse *node)
+instance_init(LassoLibStatusResponse *node)
 {
-  LassoNodeClass *class = LASSO_NODE_GET_CLASS(LASSO_NODE(node));
-
-  class->set_ns(LASSO_NODE(node), lassoLibHRef, lassoLibPrefix);
-  class->set_name(LASSO_NODE(node), "StatusResponse");
+	node->ProviderID = NULL;
+	node->Status = NULL;
+	node->RelayState = NULL;
 }
 
 static void
-lasso_lib_status_response_class_init(LassoLibStatusResponseClass *klass)
+class_init(LassoLibStatusResponseClass *klass)
 {
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
+
+	parent_class = g_type_class_peek_parent(klass);
+	nclass->build_query = build_query;
+	nclass->init_from_query = init_from_query;
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "StatusResponse");
+	lasso_node_class_set_ns(nclass, LASSO_LIB_HREF, LASSO_LIB_PREFIX);
+	lasso_node_class_add_snippets(nclass, schema_snippets);
+	lasso_node_class_add_query_snippets(nclass, query_snippets);
 }
 
-GType lasso_lib_status_response_get_type() {
-  static GType status_response_type = 0;
+GType
+lasso_lib_status_response_get_type()
+{
+	static GType status_response_type = 0;
 
-  if (!status_response_type) {
-    static const GTypeInfo status_response_info = {
-      sizeof (LassoLibStatusResponseClass),
-      NULL,
-      NULL,
-      (GClassInitFunc) lasso_lib_status_response_class_init,
-      NULL,
-      NULL,
-      sizeof(LassoLibStatusResponse),
-      0,
-      (GInstanceInitFunc) lasso_lib_status_response_instance_init,
-    };
-    
-    status_response_type = g_type_register_static(LASSO_TYPE_SAMLP_RESPONSE_ABSTRACT,
-						 "LassoLibStatusResponse",
-						 &status_response_info, 0);
-  }
-  return status_response_type;
+	if (!status_response_type) {
+		static const GTypeInfo status_response_info = {
+			sizeof (LassoLibStatusResponseClass),
+			NULL,
+			NULL,
+			(GClassInitFunc) class_init,
+			NULL,
+			NULL,
+			sizeof(LassoLibStatusResponse),
+			0,
+			(GInstanceInitFunc) instance_init,
+		};
+
+		status_response_type = g_type_register_static(LASSO_TYPE_SAMLP_RESPONSE_ABSTRACT,
+				"LassoLibStatusResponse", &status_response_info, 0);
+	}
+	return status_response_type;
 }
 
+/**
+ * lasso_lib_status_response_new:
+ *
+ * Creates a new #LassoLibStatusResponse object.
+ *
+ * Return value: a newly created #LassoLibStatusResponse object
+ **/
 LassoNode* lasso_lib_status_response_new()
 {
-  return LASSO_NODE(g_object_new(LASSO_TYPE_LIB_STATUS_RESPONSE, NULL));
+	return g_object_new(LASSO_TYPE_LIB_STATUS_RESPONSE, NULL);
 }

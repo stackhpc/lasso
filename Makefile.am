@@ -10,20 +10,20 @@ endif
 if CSHARP_ENABLED
     CSHARP_SD = csharp
 endif
-if GTK_DOC_ENABLED
-    GTK_DOC_SD = docs
+if PERL_ENABLED
+    PERL_SD = perl
 endif
 
 SUBDIRS		= lasso \
-		  $(PHP_SD) $(PYTHON_SD) $(JAVA_SD) $(CSHARP_SD) \
-		  tests \
 		  swig \
+		  $(PHP_SD) $(PYTHON_SD) $(JAVA_SD) $(CSHARP_SD) $(PERL_SD) \
+		  tests \
 		  win32 \
-		  $(GTK_DOC_SD)
+		  docs
 
 ABS_BUILDDIR	= $(shell pwd)
 
-EXTRA_DIST	= COPYING lasso.pc.in
+EXTRA_DIST	= COPYING lasso.pc.in lasso-src-config.in
 
 pkgconfig_DATA	= lasso.pc
 pkgconfigdir	= $(libdir)/pkgconfig

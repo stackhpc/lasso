@@ -41,8 +41,7 @@ host_triplet = @host@
 subdir = python
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/macros/check.m4 \
-	$(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(mkdir_p)
@@ -109,6 +108,7 @@ DARWIN_TRUE = @DARWIN_TRUE@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
 DLLTOOL = @DLLTOOL@
+DLL_FILENAME = @DLL_FILENAME@
 ECHO = @ECHO@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
@@ -125,9 +125,14 @@ GTK_DOC_CFLAGS = @GTK_DOC_CFLAGS@
 GTK_DOC_ENABLED_FALSE = @GTK_DOC_ENABLED_FALSE@
 GTK_DOC_ENABLED_TRUE = @GTK_DOC_ENABLED_TRUE@
 GTK_DOC_LIBS = @GTK_DOC_LIBS@
+HAVE_INKSCAPE_FALSE = @HAVE_INKSCAPE_FALSE@
+HAVE_INKSCAPE_TRUE = @HAVE_INKSCAPE_TRUE@
 HAVE_REST2HTML_FALSE = @HAVE_REST2HTML_FALSE@
 HAVE_REST2HTML_TRUE = @HAVE_REST2HTML_TRUE@
+HAVE_XSLTPROC_FALSE = @HAVE_XSLTPROC_FALSE@
+HAVE_XSLTPROC_TRUE = @HAVE_XSLTPROC_TRUE@
 HTML_DIR = @HTML_DIR@
+INKSCAPE = @INKSCAPE@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
@@ -147,8 +152,10 @@ LASSO_CORE_LIBS = @LASSO_CORE_LIBS@
 LASSO_DEFINES = @LASSO_DEFINES@
 LASSO_DOCDIR = @LASSO_DOCDIR@
 LASSO_LIBS = @LASSO_LIBS@
+LASSO_PUB_CFLAGS = @LASSO_PUB_CFLAGS@
 LASSO_STATIC_BINARIES = @LASSO_STATIC_BINARIES@
 LASSO_VERSION_INFO = @LASSO_VERSION_INFO@
+LASSO_WSF_SUPPORT = @LASSO_WSF_SUPPORT@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
@@ -171,10 +178,17 @@ PACKAGE_STRING = @PACKAGE_STRING@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
+PERL = @PERL@
+PERLINSTALLSITEARCH = @PERLINSTALLSITEARCH@
+PERLMAN3DIR = @PERLMAN3DIR@
+PERL_ENABLED_FALSE = @PERL_ENABLED_FALSE@
+PERL_ENABLED_TRUE = @PERL_ENABLED_TRUE@
+PERL_VERSION = @PERL_VERSION@
 PHP = @PHP@
 PHP_CONFIG = @PHP_CONFIG@
 PHP_ENABLED_FALSE = @PHP_ENABLED_FALSE@
 PHP_ENABLED_TRUE = @PHP_ENABLED_TRUE@
+PHP_EXTENSION_DIR = @PHP_EXTENSION_DIR@
 PHP_INCLUDES = @PHP_INCLUDES@
 PHP_LDFLAGS = @PHP_LDFLAGS@
 PHP_LIBS = @PHP_LIBS@
@@ -203,9 +217,15 @@ SWIG = @SWIG@
 SWIG_PYTHON_ARGS = @SWIG_PYTHON_ARGS@
 TAR = @TAR@
 U = @U@
+UPCASED_DLL_FILENAME = @UPCASED_DLL_FILENAME@
 VERSION = @VERSION@
+VERSION_UNDERSCORED = @VERSION_UNDERSCORED@
+WINDOWS_VERSION = @WINDOWS_VERSION@
 WITH_TESTS_FALSE = @WITH_TESTS_FALSE@
 WITH_TESTS_TRUE = @WITH_TESTS_TRUE@
+WSF_ENABLED_FALSE = @WSF_ENABLED_FALSE@
+WSF_ENABLED_TRUE = @WSF_ENABLED_TRUE@
+XSLTPROC = @XSLTPROC@
 ac_ct_AR = @ac_ct_AR@
 ac_ct_AS = @ac_ct_AS@
 ac_ct_CC = @ac_ct_CC@
@@ -216,6 +236,7 @@ ac_ct_OBJDUMP = @ac_ct_OBJDUMP@
 ac_ct_RANLIB = @ac_ct_RANLIB@
 ac_ct_RC = @ac_ct_RC@
 ac_ct_STRIP = @ac_ct_STRIP@
+ac_pt_PKG_CONFIG = @ac_pt_PKG_CONFIG@
 am__fastdepCC_FALSE = @am__fastdepCC_FALSE@
 am__fastdepCC_TRUE = @am__fastdepCC_TRUE@
 am__fastdepCXX_FALSE = @am__fastdepCXX_FALSE@
@@ -253,12 +274,14 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-INCLUDES = -I$(top_srcdir)
+INCLUDES = -I$(top_srcdir) \
+	$(SASL_CFLAGS)
+
 pythondir = $(PY_SITE_PACKAGES)
 python_DATA = lasso.py
 python_LTLIBRARIES = _lasso.la
 _lasso_la_SOURCES = lasso_wrap.c
-_lasso_la_CFLAGS = $(LASSO_CFLAGS) -DSWIG_COBJECT_TYPES $(PY_CFLAGS)
+_lasso_la_CFLAGS = $(LASSO_CORE_CFLAGS) -DSWIG_COBJECT_TYPES $(PY_CFLAGS)
 _lasso_la_LIBADD = $(top_builddir)/lasso/liblasso.la $(LASSO_LIBS)
 @DARWIN_FALSE@@MINGW_FALSE@_lasso_la_LDFLAGS = -no-undefined -module -avoid-version
 @DARWIN_FALSE@@MINGW_TRUE@_lasso_la_LDFLAGS = -no-undefined -module -avoid-version -Wl,--add-stdcall-alias
@@ -525,8 +548,8 @@ maintainer-clean-generic:
 	-test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
 clean: clean-am
 
-clean-am: clean-generic clean-libtool clean-pythonLTLIBRARIES \
-	mostlyclean-am
+clean-am: clean-generic clean-libtool clean-local \
+	clean-pythonLTLIBRARIES mostlyclean-am
 
 distclean: distclean-am
 	-rm -rf ./$(DEPDIR)
@@ -576,20 +599,38 @@ uninstall-am: uninstall-info-am uninstall-pythonDATA \
 	uninstall-pythonLTLIBRARIES
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
-	clean-libtool clean-pythonLTLIBRARIES ctags distclean \
-	distclean-compile distclean-generic distclean-libtool \
-	distclean-tags distdir dvi dvi-am html html-am info info-am \
-	install install-am install-data install-data-am install-exec \
-	install-exec-am install-info install-info-am install-man \
-	install-pythonDATA install-pythonLTLIBRARIES install-strip \
-	installcheck installcheck-am installdirs maintainer-clean \
+	clean-libtool clean-local clean-pythonLTLIBRARIES ctags \
+	distclean distclean-compile distclean-generic \
+	distclean-libtool distclean-tags distdir dvi dvi-am html \
+	html-am info info-am install install-am install-data \
+	install-data-am install-exec install-exec-am install-info \
+	install-info-am install-man install-pythonDATA \
+	install-pythonLTLIBRARIES install-strip installcheck \
+	installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-compile \
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
 	tags uninstall uninstall-am uninstall-info-am \
 	uninstall-pythonDATA uninstall-pythonLTLIBRARIES
 
-lasso_wrap.c lasso.py: $(top_srcdir)/swig/Lasso.i
-	$(SWIG) -v -python -module lasso -o lasso_wrap.c $<
+lasso_wrap.c lasso.py: $(top_srcdir)/swig/Lasso.i $(top_srcdir)/swig/Lasso-wsf.i \
+		$(top_srcdir)/swig/inheritance.h
+	$(SWIG) -v -python -module lasso -o lasso_wrap.c $(top_srcdir)/swig/Lasso.i
+	cp lasso_wrap.c lasso_wrap.c.bak
+	sed -e 's/free(result)/g_free(result)/' \
+			< lasso_wrap.c.bak > lasso_wrap.c
+	cp lasso_wrap.c lasso_wrap.c.bak
+	sed -e 's/^  int res = 0;$$//' \
+			< lasso_wrap.c.bak > lasso_wrap.c
+	cp lasso_wrap.c lasso_wrap.c.bak
+	sed -e 's/\/\*  if (val) \*val = PyObject_IsTrue(obj); return 1; \*\//int res = 0;/' \
+			< lasso_wrap.c.bak > lasso_wrap.c
+	cp lasso_wrap.c lasso_wrap.c.bak
+	grep -q "int res =" lasso_wrap.c || \
+		sed -e 's/if (obj == Py_True) /int res = 0; if (obj == Py_True) /' \
+			< lasso_wrap.c.bak > lasso_wrap.c
+
+clean-local:
+	-rm lasso_wrap.c.bak
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

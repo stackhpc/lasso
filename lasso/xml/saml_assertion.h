@@ -1,12 +1,11 @@
-/* $Id: saml_assertion.h,v 1.8 2004/08/20 08:04:38 fpeters Exp $ 
+/* $Id: saml_assertion.h,v 1.17 2005/01/22 15:57:55 eraviart Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,64 +34,58 @@ extern "C" {
 #include <lasso/xml/saml_authentication_statement.h>
 #include <lasso/xml/saml_conditions.h>
 #include <lasso/xml/saml_statement_abstract.h>
-#include <lasso/xml/saml_subject_statement_abstract.h>
+#include <lasso/xml/saml_subject_statement.h>
+#include <lasso/xml/saml_attribute_statement.h>
 
 #define LASSO_TYPE_SAML_ASSERTION (lasso_saml_assertion_get_type())
-#define LASSO_SAML_ASSERTION(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_SAML_ASSERTION, LassoSamlAssertion))
-#define LASSO_SAML_ASSERTION_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_SAML_ASSERTION, LassoSamlAssertionClass))
-#define LASSO_IS_SAML_ASSERTION(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_SAML_ASSERTION))
-#define LASSO_IS_SAML_ASSERTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_SAML_ASSERTION))
-#define LASSO_SAML_ASSERTION_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_SAML_ASSERTION, LassoSamlAssertionClass)) 
+#define LASSO_SAML_ASSERTION(obj) \
+	(G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_SAML_ASSERTION, LassoSamlAssertion))
+#define LASSO_SAML_ASSERTION_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_SAML_ASSERTION, LassoSamlAssertionClass))
+#define LASSO_IS_SAML_ASSERTION(obj) \
+	(G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_SAML_ASSERTION))
+#define LASSO_IS_SAML_ASSERTION_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_SAML_ASSERTION))
+#define LASSO_SAML_ASSERTION_GET_CLASS(o) \
+	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_SAML_ASSERTION, LassoSamlAssertionClass)) 
 
 typedef struct _LassoSamlAssertion LassoSamlAssertion;
 typedef struct _LassoSamlAssertionClass LassoSamlAssertionClass;
 
 struct _LassoSamlAssertion {
-  LassoNode parent;
-  /*< private >*/
+	LassoNode parent;
+
+	/*< public >*/
+	/* <element ref="saml:Conditions" minOccurs="0"/> */
+	LassoSamlConditions *Conditions;
+	/* <element ref="saml:Advice" minOccurs="0"/> */
+	LassoSamlAdvice *Advice;
+	void *Statement; /* XXX LassoSamlStatement missing from lasso */
+	LassoSamlSubjectStatement *SubjectStatement;
+	LassoSamlAuthenticationStatement *AuthenticationStatement;
+	void *AuthorizationDecisionStatement;
+		/* XXX LassoSamlAuthorizationDecisionStatement missing from lasso*/
+	LassoSamlAttributeStatement *AttributeStatement;
+
+	int MajorVersion;
+	int MinorVersion;
+	char *AssertionID;
+	char *Issuer;
+	char *IssueInstant;
+
+	/* ds:Signature stuff */
+	LassoSignatureType sign_type;
+	LassoSignatureMethod sign_method;
+	char *private_key_file;
+	char *certificate_file;
 };
 
 struct _LassoSamlAssertionClass {
-  LassoNodeClass parent;
+	LassoNodeClass parent;
 };
 
 LASSO_EXPORT GType lasso_saml_assertion_get_type(void);
-LASSO_EXPORT LassoNode* lasso_saml_assertion_new(void);
-
-LASSO_EXPORT void lasso_saml_assertion_add_authenticationStatement (LassoSamlAssertion *node,
-								    LassoSamlAuthenticationStatement *authenticationStatement);
-
-LASSO_EXPORT void lasso_saml_assertion_add_statement               (LassoSamlAssertion *node,
-								    LassoSamlStatementAbstract *statement);
-
-LASSO_EXPORT void lasso_saml_assertion_add_subjectStatement        (LassoSamlAssertion *node,
-								    LassoSamlSubjectStatementAbstract *subjectStatement);
-
-LASSO_EXPORT void lasso_saml_assertion_set_advice                  (LassoSamlAssertion *node,
-								    LassoSamlAdvice *advice);
-
-LASSO_EXPORT void lasso_saml_assertion_set_assertionID             (LassoSamlAssertion *node,
-								    const xmlChar *assertionID);
-
-LASSO_EXPORT void lasso_saml_assertion_set_conditions              (LassoSamlAssertion *node,
-								    LassoSamlConditions *conditions);
-
-LASSO_EXPORT void lasso_saml_assertion_set_issueInstant            (LassoSamlAssertion *node,
-								    const xmlChar *issueInstant);
-
-LASSO_EXPORT void lasso_saml_assertion_set_issuer                  (LassoSamlAssertion *node,
-								    const xmlChar *issuer);
-
-LASSO_EXPORT void lasso_saml_assertion_set_majorVersion            (LassoSamlAssertion *node,
-								    const xmlChar *majorVersion);
-
-LASSO_EXPORT void lasso_saml_assertion_set_minorVersion            (LassoSamlAssertion *node,
-								    const xmlChar *minorVersion);
-
-LASSO_EXPORT gint lasso_saml_assertion_set_signature               (LassoSamlAssertion  *node,
-								    gint                 sign_method,
-								    const xmlChar       *private_key_file,
-								    const xmlChar       *certificate_file);
+LASSO_EXPORT LassoSamlAssertion* lasso_saml_assertion_new(void);
 
 #ifdef __cplusplus
 }

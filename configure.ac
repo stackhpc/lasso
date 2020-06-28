@@ -15,16 +15,16 @@ dnl - Second number is the number of supported API versions where API version >
 dnl   first number.
 dnl - Third number is the current API version implementation version number.
 dnl See libtool explanations about current, age and release, later in this file.
-AC_INIT([Liberty Alliance Single Sign On], 0.4.1, lasso-devel@lists.labs.libre-entreprise.org)
+AC_INIT([Liberty Alliance Single Sign On], 0.6.2, lasso-devel@lists.labs.libre-entreprise.org)
 dnl Check if autoconf ver > 2.53
 AC_PREREQ(2.53)
 dnl Check existence of a relative pathed source file.
 AC_CONFIG_SRCDIR(lasso/lasso.c)
 dnl Copy stamp REVISIO-INFO in the configure script.
-AC_REVISION($Revision: 1.94 $)
+AC_REVISION($Revision: 1.139 $)
 
 dnl Run many macros mostly needed by configure.ac.
-AM_INIT_AUTOMAKE(lasso, 0.4.1)
+AM_INIT_AUTOMAKE(lasso, 0.6.2)
 dnl Create rules to automaticaly regenerate the config header.
 AM_CONFIG_HEADER(lasso/lasso_config.h)
 dnl Add --enable-maintainer-mode option to configure.
@@ -82,7 +82,7 @@ dnl         fi
     *linux*)
         SUN_EXTRA_INCLUDE="linux"
         ;;
-    *Darwin*)
+    *darwin*)
         DARWIN=1
         ;;
 esac
@@ -117,17 +117,30 @@ dnl Check existence of binding programs
 AC_CHECK_PROGS(JAVA, java)
 AC_CHECK_PROGS(JAVAC, gcj javac)
 AC_CHECK_PROGS(JAR, fastjar jar)
-AC_CHECK_PROGS(PYTHON, python)
+AC_CHECK_PROGS(PERL, perl)
 AC_CHECK_PROGS(PHP, php)
-AC_PATH_PROGS(PHP_PATH, php)
 AC_CHECK_PROG(PHP_CONFIG, php-config, php-config)
+AC_PATH_PROGS(PHP_PATH, php)
+AC_CHECK_PROGS(PYTHON, python)
 AC_CHECK_PROGS(SWIG, swig)
-
-LIBTOOL_EXPORT_OPTIONS='-export-symbols-regex "^[^_].*"'
 
 dnl Make sure we have an ANSI compiler
 AM_C_PROTOTYPES
 test "z$U" != "z" && AC_MSG_ERROR(Compiler not ANSI compliant)
+
+dnl Check for variadic macros
+AC_CACHE_CHECK([for variadic cpp macros],
+    [ac_cv_cpp_variadic_macros],
+    [AC_TRY_COMPILE(
+         [#include <stdio.h>
+          #define a(b,c...) printf(b,##c)],
+         [a("foo");a("%s","bar");a("%s%s","baz","quux");],
+         ac_cv_cpp_variadic_macros=yes,
+         ac_cv_cpp_variadic_macros=no)])
+if test "x${ac_cv_cpp_variadic_macros}" != "xno"; then
+    AC_DEFINE(HAVE_VARIADIC_MACROS, 1, Support for variadic macros)
+fi
+
 
 dnl ==========================================================================
 dnl Version Super.Size.Me.L
@@ -138,18 +151,18 @@ VERSION_MAJOR=`echo $VERSION | $SED -e 's/^\([^\.]*\)\.\([^\.]*\)\.\(.*\)$/\1/'`
 VERSION_MINOR=`echo $VERSION | $SED -e 's/^\([^\.]*\)\.\([^\.]*\)\.\(.*\)$/\2/'`
 VERSION_RELEASE=`echo $VERSION | $SED -e 's/^\([^\.]*\)\.\([^\.]*\)\.\(.*\)$/\3/'`
 changequote([, ])dnl
+VERSION_UNDERSCORED=`echo $VERSION | $SED -e 's/\./_/g'`
+AC_SUBST(VERSION_UNDERSCORED)
 
-version_decimal=`expr $VERSION_MAJOR \* 10000 + $VERSION_MINOR \* 100 + $VERSION_RELEASE`
-windows_version=`echo $VERSION_MAJOR,$VERSION_MINOR,$VERSION_RELEASE,0`
 
-dnl Add versionning & package defines to lasso_config.h
+dnl Add versionning & package defines to lasso_.h
 AC_DEFINE_UNQUOTED(LASSO_VERSION_MAJOR, $VERSION_MAJOR, [Major version number])
 AC_DEFINE_UNQUOTED(LASSO_VERSION_MINOR, $VERSION_MINOR, [Minor version number])
 AC_DEFINE_UNQUOTED(LASSO_VERSION_SUBMINOR, $VERSION_RELEASE, [Release version number])
-AC_DEFINE_UNQUOTED(LASSO_VERSION_DECIMAL, $version_decimal, [Release version as a decimal])
 
 dnl Dirty hack in order to have dynamic resource version numbering.
-AC_DEFINE_UNQUOTED(LASSO_WINDOWS_VERSION, $windows_version, [Windows version of the lasso version])
+WINDOWS_VERSION=`echo $VERSION_MAJOR,$VERSION_MINOR,$VERSION_RELEASE,0`
+AC_SUBST(WINDOWS_VERSION)
 
 dnl CURRENT, REVISION, AGE
 dnl - library source changed -> increment REVISION
@@ -163,8 +176,15 @@ dnl - interfaces removed -> AGE = 0
 # m = a
 # r = r
 current=`expr $VERSION_MAJOR + $VERSION_MINOR`
-LASSO_VERSION_INFO="1:1:0"
+LASSO_VERSION_INFO="5:0:2"
 AC_SUBST(LASSO_VERSION_INFO)
+
+dnl Compute the minimal supported ABI version for Win32 scripts and resources files.
+minimal_version=`echo $LASSO_VERSION_INFO | $AWK -F: '{printf("%d\n",$1-$3)};'`
+UPCASED_DLL_FILENAME="LIBLASSO-$minimal_version.DLL"
+DLL_FILENAME="liblasso-$minimal_version.dll"
+AC_SUBST(UPCASED_DLL_FILENAME)
+AC_SUBST(DLL_FILENAME)
 
 dnl ==========================================================================
 dnl Swig
@@ -185,7 +205,7 @@ if test "X$SWIG" != "X"; then
     AC_MSG_RESULT($SWIG_VERSION - OK)
   else
     AC_MSG_RESULT($SWIG_VERSION - too old to generate language interfaces)
-    if test -r $srcdir/perl/CORE_wrap.c ; then
+    if test -r $srcdir/python/lasso_wrap.c ; then
       AC_MSG_WARN(Pre-generated language interface files are present)
       AC_MSG_WARN(If you want to change the interfaces you will need)
       AC_MSG_WARN(SWIG version $SWIG_MIN_VERSION from http://www.swig.org/)
@@ -207,18 +227,20 @@ AC_SUBST(SWIG_PYTHON_ARGS)
 dnl Detect available languages binding.
 languages_available=
 
-dnl ==========================================================================
-dnl Java(tm) API
-dnl ==========================================================================
+
+# ------------
+# JAVA binding
+# ------------
+
 dnl Check if java is explicitly disabled.
-AC_ARG_ENABLE(java, [  --disable-java          disable the Java bindings],,
+AC_ARG_ENABLE(java, [  --disable-java          disable the Java binding],,
               enable_java="yes")
 AC_ARG_WITH(java-home,
             [  --with-java-home=(JAVA_HOME)  set the full path to the java home directory.])
 JAVAC_FLAGS=
 JDK_INCLUDE=
 SUN=no
-if test "X$with_java_home" != X; then
+if test "X$with_java_home" != "X"; then
     JDK_INCLUDE="$with_java_home/include"
 fi
 
@@ -233,7 +255,7 @@ if test "x$JAVA" = "xjava" && test "x$JAVAC" = "xjavac"; then
     if test "x$JAVA_VERSION" = x; then
         JAVA_VERSION=`$JAVA -version 2>&1 | grep "Java Version" | $SED 's/^.*Java Version: //g'`
         dnl If the java environment is kaffe, specify the JDK_INCLUDE directory.
-        if test "x$JAVA_VERSION" != x; then
+        if test "x$JAVA_VERSION" != "x"; then
             JDK_INCLUDE="/usr/lib/kaffe/include"
         fi
     else
@@ -256,11 +278,11 @@ if test "x$JAVAC" = "xgcj"; then
     dnl JNI compatible header files. (not used with SWIG.)
     dnl JAVAH_FLAGS="-jni"
     dnl Checking for jni.h if gcj is the java interpreter.
-    AC_CHECK_HEADERS([jni.h], [], [JAVA_VERSION=$(NULL)])
+    AC_CHECK_HEADERS([jni.h], [], [JAVA_VERSION=""])
 fi
 
 dnl Now transform JDK_INCLUDE in CFLAG option if applicable.
-if test "X$JDK_INCLUDE" != X; then
+if test "X$JDK_INCLUDE" != "X"; then
     dnl If it is a sun environment
     if test "x$SUN" = "xyes"; then
         JDK_INCLUDE="$JDK_INCLUDE -I$JDK_INCLUDE/$SUN_EXTRA_INCLUDE"
@@ -269,7 +291,7 @@ if test "X$JDK_INCLUDE" != X; then
 fi
 
 dnl If we found a java version information, we have java compilation environment.
-if test "X$JAVA_VERSION" != X && test "X$JAR" != X; then
+if test "X$JAVA_VERSION" != "X" && test "X$JAR" != "X"; then
   languages_available="$languages_available $JAVA($JAVA_VERSION)"
 else
   enable_java=no
@@ -283,20 +305,20 @@ AC_SUBST(JAVAC_FLAGS)
 AC_SUBST(JDK_INCLUDE)
 
 
-dnl ==========================================================================
-dnl Python API
-dnl ==========================================================================
+# --------------
+# Python binding
+# --------------
+
 dnl Check if python is explicitly disabled.
-AC_ARG_ENABLE(python, [  --disable-python        disable the Python bindings],,
+AC_ARG_ENABLE(python, [  --disable-python        disable the Python binding],,
               enable_python="yes")
 
 dnl Check if user passed a specific python program.
 AC_ARG_WITH(python,
             [  --with-python=(PYTHON)  set the full path to the python program to use.])
-AC_MSG_CHECKING(for Python development files)
 
 dnl specific program passed, set PYTHON to it.
-if test "X$with_python" != X; then
+if test "X$with_python" != "X"; then
     PYTHON=$with_python
 fi
 
@@ -306,8 +328,11 @@ changequote(<<, >>)dnl
 PYTHON_VERSION=`$PYTHON -c 'import sys; print sys.version[:3]' 2>/dev/null`
 changequote([, ])dnl
 
+test "x$PYTHON" != "x" || AC_MSG_ERROR(Python must be installed to compile lasso)
+
+AC_MSG_CHECKING(for Python development files)
 dnl Check if we were be able to extract a good version number.
-if test "X$PYTHON_VERSION" != X; then
+if test "X$PYTHON_VERSION" != "X"; then
     PY_PREFIX=`$PYTHON -c 'import sys ; print sys.prefix'`
     PY_EXEC_PREFIX=`$PYTHON -c 'import sys ; print sys.exec_prefix'`
     changequote(<<, >>)dnl
@@ -341,30 +366,44 @@ AM_CONDITIONAL([PYTHON_ENABLED],[test "x$enable_python" = "xyes"])
 AC_MSG_RESULT($enable_python)
 AC_SUBST(PYTHON_VERSION)
 
+# -----------
+# PHP binding
+# -----------
+
 dnl Check if php is explicitly disabled.
-AC_ARG_ENABLE(php, [  --disable-php           disable the PHP bindings],,
+AC_ARG_ENABLE(php, [  --disable-php           disable the PHP binding],,
               enable_php="yes")
+
+AC_ARG_ENABLE(php-force, [  --enable-php-force      always enable of the PHP binding (win32)],
+              [ENABLE_PHP_FORCE="yes"],
+              [ENABLE_PHP_FORCE="no"])
 
 AC_ARG_WITH(php-config,
             [  --with-php-config=(PHP_CONFIG)      Specify full path to php-config.])
+
+AC_ARG_WITH(php-extension-dir,
+            [  --with-php-extension-dir=(PHP_EXTENSION_DIR)      Specify full path to php extension dir.],
+            [PHP_EXTENSION_DIR="$withval"],[PHP_EXTENSION_DIR=])
+
 dnl Check if user passed a specific php-config program.
-if test "X$with_php_config" != X ; then
+if test "X$with_php_config" != "X" ; then
     PHP_CONFIG=$with_php_config
 fi
 
-if test "X$PHP_CONFIG" != X ; then
+if test "X$PHP_CONFIG" != "X" ; then
   PHP_INCLUDES=`$PHP_CONFIG --includes`
   PHP_LDFLAGS=`$PHP_CONFIG --ldflags`
   PHP_LIBS=`$PHP_CONFIG --libs`
   PHP_UNPREFIXED_EXTENSION_DIR=`$PHP_CONFIG --extension-dir | $SED 's/\/usr//g'`
   PHP_PREFIX=`$PHP_CONFIG --prefix`
 else
-  # This allows 'make clean' in the php directory to work when
-  # php isn't available
-  PHP=:
-  PHP_INCLUDES=
+  # We assumes PHP are in /usr/local directory.
+  if test $MINGW -eq 1; then 
+    CFLAGS="$CFLAGS -DZTS -DZEND_WIN32 -DWIN32 -D_MBCS"
+  fi
+  PHP_INCLUDES="-I/usr/local/include/php4 -I/usr/local/include/php4/main -I/usr/local/include/php4/Zend -I/usr/local/include/php4/TSRM -I/usr/local/include/php4/win32"
   PHP_LDFLAGS=
-  PHP_LIBS=
+  PHP_LIBS=-lphp4ts -lxmlparse -lxmltok
   PHP_UNPREFIXED_EXTENSION_DIR=
   PHP_PREFIX=
 fi
@@ -372,11 +411,16 @@ AC_SUBST(PHP_INCLUDES)
 AC_SUBST(PHP_LDFLAGS)
 AC_SUBST(PHP_LIBS)
 AC_SUBST(PHP_UNPREFIXED_EXTENSION_DIR)
+AC_SUBST(PHP_EXTENSION_DIR)
 AC_SUBST(PHP_PREFIX)
 
 dnl Check for expat
 have_expat_include=no
-AC_CHECK_LIB(expat, XML_ParserCreate, have_expat_lib=yes, have_expat_lib=no)
+if test $MINGW -eq 1; then 
+    AC_CHECK_LIB(xmlparse, XML_ParserCreate, have_expat_lib=yes, have_expat_lib=no)
+else
+    AC_CHECK_LIB(expat, XML_ParserCreate, have_expat_lib=yes, have_expat_lib=no)
+fi
   
 if test x$have_expat_lib = xno; then
     enable_php=no
@@ -385,7 +429,7 @@ fi
 AC_MSG_CHECKING(for PHP development files)
 PHP_VERSION=`$PHP_CONFIG --version 2>/dev/null`
 dnl Check if we were be able to extract a good version number.
-if test "X$PHP_VERSION" != X; then
+if test "X$PHP_VERSION" != "X" || test "X$ENABLE_PHP_FORCE" == "Xyes"; then
     languages_available="$languages_available php($PHP_VERSION)"
 else
     enable_php=no
@@ -396,11 +440,11 @@ AC_SUBST(PHP_VERSION)
 
 
 
-# -----------
-# C# bindings
-# -----------
+# ----------
+# C# binding
+# ----------
 
-AC_ARG_ENABLE(csharp, [  --disable-csharp        disable the C Sharp bindings],,
+AC_ARG_ENABLE(csharp, [  --disable-csharp        disable the C Sharp binding],,
               enable_csharp="yes")
 
 AC_ARG_WITH(cil-interpreter, [  --with-cil-interpreter=path     set location of CIL interpreter for CSharp],[CSHARPBIN="$withval"], [CSHARPBIN=])
@@ -482,6 +526,42 @@ fi
 AM_CONDITIONAL([CSHARP_ENABLED], [test "x$enable_csharp" = "xyes"])
 
 
+# ------------
+# Perl binding
+# ------------
+
+AC_ARG_ENABLE(perl, [  --disable-perl          disable the Perl binding],,
+              enable_perl="yes")
+
+if test "X$PERL" != "X"; then
+  PERLINSTALLSITEARCH=`$PERL -MConfig -e 'print $Config{installsitearch};'`
+  PERLMAN3DIR=`$PERL -MConfig -e 'print $Config{man3dir};'`
+else
+  PERLINSTALLSITEARCH=none
+  PERLMAN3DIR=none
+fi
+AC_SUBST(PERLINSTALLSITEARCH)
+AC_SUBST(PERLMAN3DIR)
+
+AC_MSG_CHECKING(for Perl API)
+if test "X$enable_perl" != "Xno" ; then
+  if test "X$enable_perl" != "Xyes"; then
+    PERL=$enable_perl
+  fi
+  enable_perl=yes
+fi
+
+PERL_VERSION=`$PERL -MConfig -e 'print $Config{version}' 2>/dev/null`
+if test "X$PERL_VERSION" != "X"; then
+  languages_available="$languages_available perl($PERL_VERSION)"
+  if test $enable_perl = yes; then
+    languages="$languages perl"
+  fi
+fi
+AM_CONDITIONAL([PERL_ENABLED],[test "x$enable_perl" = "xyes"])
+AC_MSG_RESULT($enable_perl)
+AC_SUBST(PERL_VERSION)
+
 
 dnl ==========================================================================
 dnl Test suite (requires check)
@@ -489,10 +569,13 @@ dnl ==========================================================================
 dnl Check if user disabled the tests.
 AC_ARG_ENABLE(tests, [  --disable-tests         disable the test suite],,
               enable_tests="yes")
-AC_DEFINE([CHECK_IS_XML], [], [Define if check available with XML support])
 if test "x$enable_tests" = xyes ; then
-  AM_PATH_CHECK
-  AC_CHECK_LIB(check, srunner_set_xml, [AC_DEFINE(CHECK_IS_XML)])
+  AC_CHECK_LIB(check, srunner_set_log, enable_tests="yes", enable_tests="no")
+  CHECK_CFLAGS=""
+  CHECK_LIBS="-lcheck"
+  AC_SUBST(CHECK_CFLAGS)
+  AC_SUBST(CHECK_LIBS)
+  AC_CHECK_LIB(check, srunner_set_xml, [AC_DEFINE(CHECK_IS_XML, [], [Define if check available with XML support])])
 fi
 
 AM_CONDITIONAL(WITH_TESTS, [test "x$enable_tests" = "xyes"])
@@ -502,6 +585,37 @@ AM_MISSING_PROG(ACLOCAL, aclocal, $missing_dir)
 AM_MISSING_PROG(AUTOCONF, autoconf, $missing_dir)
 AM_MISSING_PROG(AUTOMAKE, automake, $missing_dir)
 AM_MISSING_PROG(AUTOHEADER, autoheader, $missing_dir)
+
+dnl Check if wsf is explicitly disabled.
+AC_ARG_ENABLE(wsf, [  --enable-wsf            enable experimental ID-WSF],
+		enable_wsf="yes", enable_wsf="no")
+
+AM_CONDITIONAL([WSF_ENABLED],[test "x$enable_wsf" = "xyes"])
+LASSO_WSF_SUPPORT=0
+if test "x$enable_wsf" = "xyes"; then
+	AC_DEFINE(LASSO_WSF_ENABLED, [], [Define if ID-WSF support is enabled])
+	LASSO_WSF_SUPPORT=1
+	if grep -q 'WSF_SUPPORT.*0' $srcdir/*/lasso_wrap.c;
+	then
+		if test "x$SWIG" = "xecho"; then
+			AC_MSG_WARN(Bindings were pre-generated without ID-WSF support)
+			AC_MSG_ERROR(and you don't have SWIG to regenerate their files)
+		fi
+		echo "removing pre-generated language interface files"
+		rm -f $srcdir/*/lasso_wrap.c $srcdir/csharp/liblassosharpglue_wrap.c
+	fi
+else
+	if grep -q 'WSF_SUPPORT.*1' $srcdir/*/lasso_wrap.c;
+	then
+		if test "x$SWIG" = "xecho"; then
+			AC_MSG_WARN(Bindings were pre-generated with ID-WSF support)
+			AC_MSG_ERROR(and you don't have SWIG to regenerate their files)
+		fi
+		echo "removing pre-generated language interface files"
+		rm -f $srcdir/*/lasso_wrap.c $srcdir/csharp/liblassosharpglue_wrap.c
+	fi
+fi
+AC_SUBST(LASSO_WSF_SUPPORT)
 
 
 dnl ==========================================================================
@@ -527,10 +641,6 @@ else
 fi
 AC_SUBST(HTML_DIR)
 
-AC_CHECK_PROGS(REST2HTML, rest2html)
-
-AM_CONDITIONAL(HAVE_REST2HTML, test -n "$ac_cv_prog_REST2HTML")
-
 
 dnl pkg-config path
 AC_ARG_WITH(pkg-config, [  --with-pkg-config=PATH set pkg-config metadata search path.],
@@ -539,7 +649,22 @@ if test "z$PKG_CONFIG_PATH" != "z"; then
     export PKG_CONFIG_PATH
 fi
 
-PKG_CHECK_MODULES(LASSO, glib-2.0 gobject-2.0 libxml-2.0 libxslt xmlsec1 xmlsec1-openssl openssl)
+PKG_CHECK_MODULES(LASSO, glib-2.0 >= 2.4.0 gobject-2.0 >= 2.4.0 libxml-2.0 libxslt xmlsec1 >= 1.2.6 xmlsec1-openssl >= 1.2.6 openssl)
+
+AC_ARG_WITH(sasl2, [  --with-sasl2[=PFX]         Use Cyrus SASL library version 2 for WSF-Auth])
+if test "x$enable_wsf" = "xyes"; then
+	if test "$with_sasl2" != "no" && test "$with_sasl2" != "yes"
+	then
+		CPPFLAGS="$CPPFLAGS -I$with_sasl2/include"
+		LDFLAGS="$LDFLAGS -L$with_sasl2/lib"
+	fi
+		
+	saved_LIBS="$LIBS"
+	AC_CHECK_LIB(sasl2, sasl_server_init,,
+		AC_MSG_ERROR([libsasl must be installed for WSF support]),)
+	LIBS="$saved_LIBS"
+	LASSO_LIBS="$LASSO_LIBS -lsasl2"
+fi
 
 dnl Let people disable the gtk-doc stuff.
 AC_ARG_ENABLE(gtk-doc, [  --disable-gtk-doc       disable documentation build],,
@@ -552,6 +677,16 @@ if test "x$enable_gtk_doc" = "xyes" ; then
 fi
 dnl Conditional docs sub dir test.
 AM_CONDITIONAL([GTK_DOC_ENABLED],[test "x$enable_gtk_doc" = "xyes"])
+
+
+AC_CHECK_PROGS(REST2HTML, rest2html)
+AM_CONDITIONAL(HAVE_REST2HTML, test -n "$ac_cv_prog_REST2HTML")
+
+AC_CHECK_PROGS(XSLTPROC, xsltproc)
+AM_CONDITIONAL(HAVE_XSLTPROC, test -n "$ac_cv_prog_XSLTPROC")
+
+AC_CHECK_PROGS(INKSCAPE, inkscape)
+AM_CONDITIONAL(HAVE_INKSCAPE, test -n "$ac_cv_prog_INKSCAPE")
 
 
 dnl Debug 
@@ -604,7 +739,8 @@ AC_SUBST(LASSO_STATIC_BINARIES)
 dnl ==========================================================================
 dnl Final steps: lasso config
 dnl ==========================================================================
-LASSO_CORE_CFLAGS="$LASSO_DEFINES" 
+LASSO_PUB_CFLAGS="$LASSO_DEFINES"
+LASSO_CORE_CFLAGS="$LASSO_CFLAGS $LASSO_DEFINES -DLASSO_INTERNALS" 
 if test $MINGW -eq 1; then 
   LASSO_CORE_LIBS="-llasso-0"
 else
@@ -613,11 +749,11 @@ fi
 AC_SUBST(LASSO_CORE_CFLAGS)
 AC_SUBST(LASSO_CORE_LIBS)
 
-LASSO_CFLAGS="$LASSO_CORE_CFLAGS $LASSO_CFLAGS"
 LASSO_LIBS="-L${libdir} $LASSO_LIBS"
 AC_SUBST(LASSO_CFLAGS)
 AC_SUBST(LASSO_LIBS)
 
+AC_SUBST(LASSO_PUB_CFLAGS)
 AC_SUBST(LASSO_DEFINES)
 AC_SUBST(LASSO_APP_DEFINES)
 AC_SUBST(CFLAGS)
@@ -632,25 +768,26 @@ AM_CONDITIONAL(DARWIN, test $DARWIN == 1)
 dnl ==========================================================================
 dnl Writing result files
 dnl ==========================================================================
+AC_CONFIG_FILES([lasso-src-config], [chmod +x lasso-src-config])
 AC_OUTPUT(
 [Makefile
 csharp/Makefile
 csharp/lasso-sharp.pc
 docs/Makefile
 docs/lasso-book/Makefile
+docs/lasso-book/figures/Makefile
 docs/reference/Makefile
-docs/tutorial/Makefile
+docs/reference/version.xml
 java/Makefile
 lasso/Makefile
-lasso/environs/Makefile
-lasso/protocols/elements/Makefile
-lasso/protocols/Makefile
+lasso/id-ff/Makefile
+lasso/id-wsf/Makefile
 lasso/xml/Makefile
+perl/Makefile
 php/Makefile
-php/examples/Makefile
-php/examples/sample-sp/Makefile
 python/Makefile
 swig/Makefile
+swig/wsf-support.i
 tests/Makefile
 tests/data/Makefile
 tests/data/ca1-la/Makefile
@@ -659,8 +796,21 @@ tests/data/lecp1-la/Makefile
 tests/data/sp1-la/Makefile
 lasso.pc
 win32/Makefile
+win32/lasso.rc
+win32/msvc/Makefile
+win32/msvc/lasso.dsp
+win32/msvc/lasso_config.h
+win32/msvc/java/Makefile
+win32/msvc/php/Makefile
+win32/msvc/python/Makefile
 win32/nsis/Makefile
+win32/nsis/jlasso-lite.nsi
+win32/nsis/lasso-deps.nsi
+win32/nsis/lasso-full.nsi
+win32/nsis/lasso-lite.nsi
+win32/nsis/python.nsi
 ])
+
 languages_available=`echo $languages_available | sed -e "s/^ //" `
 AC_MSG_RESULT(
 
@@ -674,6 +824,7 @@ Main
 Compiler:               ${CC} 
 Install prefix:         ${prefix}
 Debugging:              $enable_debugging
+Experimental ID-WSF:    $enable_wsf
 
 Optionals builds
 ----------------
@@ -682,6 +833,7 @@ Available languages:    ${languages_available}
 
 C# binding:             ${enable_csharp}
 Java binding:           ${enable_java}
+Perl binding:           ${enable_perl}
 PHP binding:            ${enable_php}
 Python binding:         ${enable_python}
 

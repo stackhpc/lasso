@@ -1,12 +1,11 @@
-/* $Id: saml_subject.c,v 1.4 2004/08/13 15:16:13 fpeters Exp $
+/* $Id: saml_subject.c,v 1.16 2005/01/22 15:57:55 eraviart Exp $
  *
  * Lasso - A free implementation of the Samlerty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,97 +25,86 @@
 #include <lasso/xml/saml_subject.h>
 
 /*
-The schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
-
-<element name="Subject" type="saml:SubjectType"/>
-<complexType name="SubjectType">
-  <choice>
-    <sequence>
-      <element ref="saml:NameIdentifier"/>
-      <element ref="saml:SubjectConfirmation" minOccurs="0"/>
-    </sequence>
-    <element ref="saml:SubjectConfirmation"/>
-  </choice>
-</complexType>
-*/
+ * Schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
+ * 
+ * <element name="Subject" type="saml:SubjectType"/>
+ * <complexType name="SubjectType">
+ *   <choice>
+ *     <sequence>
+ *       <element ref="saml:NameIdentifier"/>
+ *       <element ref="saml:SubjectConfirmation" minOccurs="0"/>
+ *     </sequence>
+ *     <element ref="saml:SubjectConfirmation"/>
+ *   </choice>
+ * </complexType>
+ */
 
 /*****************************************************************************/
-/* public methods                                                            */
+/* private methods                                                           */
 /*****************************************************************************/
 
-void
-lasso_saml_subject_set_nameIdentifier(LassoSamlSubject *node,
-				      LassoSamlNameIdentifier *nameIdentifier)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_SAML_SUBJECT(node));
-  g_assert(LASSO_IS_SAML_NAME_IDENTIFIER(nameIdentifier));
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->add_child(LASSO_NODE (node), LASSO_NODE(nameIdentifier), FALSE);
-}
-
-void
-lasso_saml_subject_set_subjectConfirmation(LassoSamlSubject *node,
-					   LassoSamlSubjectConfirmation *subjectConfirmation)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_SAML_SUBJECT(node));
-  g_assert(LASSO_IS_SAML_SUBJECT_CONFIRMATION(subjectConfirmation));
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->add_child(LASSO_NODE (node), LASSO_NODE (subjectConfirmation), FALSE);
-}
+static struct XmlSnippet schema_snippets[] = {
+	{ "NameIdentifier", SNIPPET_NODE,
+		G_STRUCT_OFFSET(LassoSamlSubject, NameIdentifier) },
+	{ "SubjectConfirmation", SNIPPET_NODE,
+		G_STRUCT_OFFSET(LassoSamlSubject, SubjectConfirmation) },
+	{ NULL, 0, 0}
+};
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
 static void
-lasso_saml_subject_instance_init(LassoSamlSubject *node)
+instance_init(LassoSamlSubject *node)
 {
-  LassoNodeClass *class = LASSO_NODE_GET_CLASS(LASSO_NODE(node));
-
-  class->set_ns(LASSO_NODE(node), lassoSamlAssertionHRef,
-		lassoSamlAssertionPrefix);
-  class->set_name(LASSO_NODE(node), "Subject");
+	node->NameIdentifier = NULL;
+	node->SubjectConfirmation = NULL;
 }
 
 static void
-lasso_saml_subject_class_init(LassoSamlSubjectClass *klass) {
+class_init(LassoSamlSubjectClass *klass)
+{
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
+
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "Subject");
+	lasso_node_class_set_ns(nclass, LASSO_SAML_ASSERTION_HREF, LASSO_SAML_ASSERTION_PREFIX);
+	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
 
-GType lasso_saml_subject_get_type() {
-  static GType this_type = 0;
+GType
+lasso_saml_subject_get_type()
+{
+	static GType this_type = 0;
 
-  if (!this_type) {
-    static const GTypeInfo this_info = {
-      sizeof (LassoSamlSubjectClass),
-      NULL,
-      NULL,
-      (GClassInitFunc) lasso_saml_subject_class_init,
-      NULL,
-      NULL,
-      sizeof(LassoSamlSubject),
-      0,
-      (GInstanceInitFunc) lasso_saml_subject_instance_init,
-    };
-    
-    this_type = g_type_register_static(LASSO_TYPE_NODE,
-				       "LassoSamlSubject",
-				       &this_info, 0);
-  }
-  return this_type;
+	if (!this_type) {
+		static const GTypeInfo this_info = {
+			sizeof (LassoSamlSubjectClass),
+			NULL,
+			NULL,
+			(GClassInitFunc) class_init,
+			NULL,
+			NULL,
+			sizeof(LassoSamlSubject),
+			0,
+			(GInstanceInitFunc) instance_init,
+		};
+
+		this_type = g_type_register_static(LASSO_TYPE_NODE,
+				"LassoSamlSubject", &this_info, 0);
+	}
+	return this_type;
 }
 
 /**
  * lasso_saml_subject_new:
  * 
- * Creates a new <saml:Subject> node object.
+ * Creates a new #LassoSamlSubject object.
  *
- * Return value: the new @LassoSamlSubject
+ * Return value: a newly created #LassoSamlSubject object
  **/
 LassoNode* lasso_saml_subject_new()
 {
-  return LASSO_NODE(g_object_new(LASSO_TYPE_SAML_SUBJECT, NULL));
+	return g_object_new(LASSO_TYPE_SAML_SUBJECT, NULL);
 }

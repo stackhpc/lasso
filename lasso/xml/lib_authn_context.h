@@ -1,12 +1,11 @@
-/* $Id: lib_authn_context.h,v 1.2 2004/07/22 06:59:02 eraviart Exp $ 
+/* $Id: lib_authn_context.h,v 1.8 2005/01/22 15:57:55 eraviart Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,32 +32,38 @@ extern "C" {
 #include <lasso/xml/xml.h>
 
 #define LASSO_TYPE_LIB_AUTHN_CONTEXT (lasso_lib_authn_context_get_type())
-#define LASSO_LIB_AUTHN_CONTEXT(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_LIB_AUTHN_CONTEXT, LassoLibAuthnContext))
-#define LASSO_LIB_AUTHN_CONTEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_LIB_AUTHN_CONTEXT, LassoLibAuthnContextClass))
-#define LASSO_IS_LIB_AUTHN_CONTEXT(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_LIB_AUTHN_CONTEXT))
-#define LASSO_IS_LIB_AUTHN_CONTEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_LIB_AUTHN_CONTEXT))
-#define LASSO_LIB_AUTHN_CONTEXT_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_LIB_AUTHN_CONTEXT, LassoLibAuthnContextClass)) 
+#define LASSO_LIB_AUTHN_CONTEXT(obj) \
+	(G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_LIB_AUTHN_CONTEXT, LassoLibAuthnContext))
+#define LASSO_LIB_AUTHN_CONTEXT_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_CAST((klass), LASSO_TYPE_LIB_AUTHN_CONTEXT, LassoLibAuthnContextClass))
+#define LASSO_IS_LIB_AUTHN_CONTEXT(obj) \
+	(G_TYPE_CHECK_INSTANCE_TYPE((obj), LASSO_TYPE_LIB_AUTHN_CONTEXT))
+#define LASSO_IS_LIB_AUTHN_CONTEXT_CLASS(klass) \
+	(G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_LIB_AUTHN_CONTEXT))
+#define LASSO_LIB_AUTHN_CONTEXT_GET_CLASS(o) \
+	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_LIB_AUTHN_CONTEXT, LassoLibAuthnContextClass)) 
 
 typedef struct _LassoLibAuthnContext LassoLibAuthnContext;
 typedef struct _LassoLibAuthnContextClass LassoLibAuthnContextClass;
 
 struct _LassoLibAuthnContext {
-  LassoNode parent;
-  /*< private >*/
+	LassoNode parent;
+
+	/*< public >*/
+	/* <xs:element name="AuthnContextClassRef" type="xs:anyURI" minOccurs="0"/> */
+	char *AuthnContextClassRef;
+	/* <xs:element name="AuthnContextStatementRef" type="xs:anyURI"/> */
+	char *AuthnContextStatementRef;
+	/* <xs:element ref="ac:AuthenticationContextStatement"/> */
+	void *AuthenticationContextStatement; /* TODO: support that element */
 };
 
 struct _LassoLibAuthnContextClass {
-  LassoNodeClass parent;
+	LassoNodeClass parent;
 };
 
 LASSO_EXPORT GType lasso_lib_authn_context_get_type(void);
 LASSO_EXPORT LassoNode* lasso_lib_authn_context_new(void);
-
-LASSO_EXPORT void lasso_lib_authn_context_set_authnContextClassRef     (LassoLibAuthnContext *node,
-									const xmlChar *authnContextClassRef);
-
-LASSO_EXPORT void lasso_lib_authn_context_set_authnContextStatementRef (LassoLibAuthnContext *node,
-									const xmlChar *authnContextStatementRef);
 
 #ifdef __cplusplus
 }

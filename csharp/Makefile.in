@@ -42,8 +42,7 @@ subdir = csharp
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
 	$(srcdir)/lasso-sharp.pc.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/macros/check.m4 \
-	$(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(mkdir_p)
@@ -112,6 +111,7 @@ DARWIN_TRUE = @DARWIN_TRUE@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
 DLLTOOL = @DLLTOOL@
+DLL_FILENAME = @DLL_FILENAME@
 ECHO = @ECHO@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
@@ -128,9 +128,14 @@ GTK_DOC_CFLAGS = @GTK_DOC_CFLAGS@
 GTK_DOC_ENABLED_FALSE = @GTK_DOC_ENABLED_FALSE@
 GTK_DOC_ENABLED_TRUE = @GTK_DOC_ENABLED_TRUE@
 GTK_DOC_LIBS = @GTK_DOC_LIBS@
+HAVE_INKSCAPE_FALSE = @HAVE_INKSCAPE_FALSE@
+HAVE_INKSCAPE_TRUE = @HAVE_INKSCAPE_TRUE@
 HAVE_REST2HTML_FALSE = @HAVE_REST2HTML_FALSE@
 HAVE_REST2HTML_TRUE = @HAVE_REST2HTML_TRUE@
+HAVE_XSLTPROC_FALSE = @HAVE_XSLTPROC_FALSE@
+HAVE_XSLTPROC_TRUE = @HAVE_XSLTPROC_TRUE@
 HTML_DIR = @HTML_DIR@
+INKSCAPE = @INKSCAPE@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
@@ -150,8 +155,10 @@ LASSO_CORE_LIBS = @LASSO_CORE_LIBS@
 LASSO_DEFINES = @LASSO_DEFINES@
 LASSO_DOCDIR = @LASSO_DOCDIR@
 LASSO_LIBS = @LASSO_LIBS@
+LASSO_PUB_CFLAGS = @LASSO_PUB_CFLAGS@
 LASSO_STATIC_BINARIES = @LASSO_STATIC_BINARIES@
 LASSO_VERSION_INFO = @LASSO_VERSION_INFO@
+LASSO_WSF_SUPPORT = @LASSO_WSF_SUPPORT@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
@@ -174,10 +181,17 @@ PACKAGE_STRING = @PACKAGE_STRING@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
+PERL = @PERL@
+PERLINSTALLSITEARCH = @PERLINSTALLSITEARCH@
+PERLMAN3DIR = @PERLMAN3DIR@
+PERL_ENABLED_FALSE = @PERL_ENABLED_FALSE@
+PERL_ENABLED_TRUE = @PERL_ENABLED_TRUE@
+PERL_VERSION = @PERL_VERSION@
 PHP = @PHP@
 PHP_CONFIG = @PHP_CONFIG@
 PHP_ENABLED_FALSE = @PHP_ENABLED_FALSE@
 PHP_ENABLED_TRUE = @PHP_ENABLED_TRUE@
+PHP_EXTENSION_DIR = @PHP_EXTENSION_DIR@
 PHP_INCLUDES = @PHP_INCLUDES@
 PHP_LDFLAGS = @PHP_LDFLAGS@
 PHP_LIBS = @PHP_LIBS@
@@ -206,9 +220,15 @@ SWIG = @SWIG@
 SWIG_PYTHON_ARGS = @SWIG_PYTHON_ARGS@
 TAR = @TAR@
 U = @U@
+UPCASED_DLL_FILENAME = @UPCASED_DLL_FILENAME@
 VERSION = @VERSION@
+VERSION_UNDERSCORED = @VERSION_UNDERSCORED@
+WINDOWS_VERSION = @WINDOWS_VERSION@
 WITH_TESTS_FALSE = @WITH_TESTS_FALSE@
 WITH_TESTS_TRUE = @WITH_TESTS_TRUE@
+WSF_ENABLED_FALSE = @WSF_ENABLED_FALSE@
+WSF_ENABLED_TRUE = @WSF_ENABLED_TRUE@
+XSLTPROC = @XSLTPROC@
 ac_ct_AR = @ac_ct_AR@
 ac_ct_AS = @ac_ct_AS@
 ac_ct_CC = @ac_ct_CC@
@@ -219,6 +239,7 @@ ac_ct_OBJDUMP = @ac_ct_OBJDUMP@
 ac_ct_RANLIB = @ac_ct_RANLIB@
 ac_ct_RC = @ac_ct_RC@
 ac_ct_STRIP = @ac_ct_STRIP@
+ac_pt_PKG_CONFIG = @ac_pt_PKG_CONFIG@
 am__fastdepCC_FALSE = @am__fastdepCC_FALSE@
 am__fastdepCC_TRUE = @am__fastdepCC_TRUE@
 am__fastdepCXX_FALSE = @am__fastdepCXX_FALSE@
@@ -262,7 +283,7 @@ liblassosharpglue_la_SOURCES = \
 	liblassosharpglue_wrap.c
 
 liblassosharpglue_la_CFLAGS = \
-	$(LASSO_CFLAGS) \
+	$(LASSO_CORE_CFLAGS) \
 	-DSWIG_COBJECT_TYPES
 
 liblassosharpglue_la_LIBADD = \
@@ -275,12 +296,27 @@ dotnetlib_DATA = lasso.dll lasso.dll.config
 pkgconfig_DATA = lasso-sharp.pc
 pkgconfigdir = $(libdir)/pkgconfig
 SWIG_FILES = liblassosharpglue_wrap.c \
-	lassoPINVOKE.cs        lasso.cs          Server.cs  \
-	Defederation.cs        Request.cs        Session.cs \
-	Identity.cs            Response.cs       AuthnRequest.cs \
-	Lecp.cs                AuthnResponse.cs  Login.cs \
-	Logout.cs              LogoutResponse.cs LogoutRequest.cs \
-	FederationTerminationNotification.cs     Assertion.cs
+	Defederation.cs CheckVersionMode.cs \
+	DowncastableNode.cs \
+	Federation.cs Identity.cs \
+	lasso.cs lassoPINVOKE.cs Lecp.cs LibAssertion.cs \
+	LibAuthnRequest.cs \
+	LibAuthnResponse.cs LibFederationTerminationNotification.cs \
+	LibLogoutRequest.cs LibLogoutResponse.cs LibRegisterNameIdentifierRequest.cs \
+	LibRegisterNameIdentifierResponse.cs LibRequestAuthnContext.cs \
+	LibStatusResponse.cs Login.cs Logout.cs NameIdentifierMapping.cs \
+	NameRegistration.cs Node.cs NodeList.cs Provider.cs \
+	SamlAdvice.cs SamlAssertion.cs SamlAttribute.cs SamlAttributeDesignator.cs \
+	SamlAttributeStatement.cs SamlAttributeValue.cs SamlAudienceRestrictionCondition.cs \
+	SamlAuthenticationStatement.cs SamlAuthorityBinding.cs SamlConditionAbstract.cs \
+	SamlConditions.cs SamlNameIdentifier.cs SamlpRequestAbstract.cs SamlpRequest.cs \
+	SamlpResponseAbstract.cs SamlpResponse.cs SamlpStatusCode.cs SamlpStatus.cs \
+	SamlStatementAbstract.cs SamlSubjectConfirmation.cs SamlSubject.cs \
+	SamlSubjectLocality.cs SamlSubjectStatementAbstract.cs SamlSubjectStatement.cs \
+	Server.cs Session.cs StringList.cs SWIGTYPE_p_LassoMdProtocolType.cs \
+	SWIGTYPE_p_LassoSignatureType.cs SWIGTYPE_p_void.cs \
+	HttpMethod.cs ProviderRole.cs SignatureMethod.cs LoginProtocolProfile.cs \
+	RequestType.cs
 
 EXTRA_DIST = lasso-sharp.pc.in lasso.dll.config AssemblyInfo.cs lasso-sharp.snk $(SWIG_FILES)
 MAINTAINERCLEANFILES = $(SWIG_FILES)
@@ -625,10 +661,12 @@ uninstall-am: uninstall-dotnetlibDATA uninstall-info-am \
 	uninstall-libLTLIBRARIES uninstall-pkgconfigDATA
 
 
-liblassosharpglue_wrap.c: $(top_srcdir)/swig/Lasso.i
-	$(SWIG) -v -csharp -package lasso -module lasso -o liblassosharpglue_wrap.c $<
+liblassosharpglue_wrap.c: $(top_srcdir)/swig/Lasso.i $(top_srcdir)/swig/Lasso-wsf.i \
+		$(top_srcdir)/swig/inheritance.h
+	$(SWIG) -v -csharp -namespace lasso -module lasso \
+		-o liblassosharpglue_wrap.c $(top_srcdir)/swig/Lasso.i
 	cp liblassosharpglue_wrap.c liblassosharpglue_wrap.c.bak
-	sed -e 's/(char \*) "\(.*\)"/malloc("\1")/' \
+	sed -e 's/(char \*) "\(.*\)"/strdup("\1")/' \
 		< liblassosharpglue_wrap.c.bak > liblassosharpglue_wrap.c
 
 lasso.dll: liblassosharpglue.la

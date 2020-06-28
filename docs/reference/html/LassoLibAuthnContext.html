@@ -1,0 +1,30 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>LassoLibAuthnContext</title><meta name="generator" content="DocBook XSL Stylesheets V1.68.1"><link rel="start" href="index.html" title="Lasso Reference Manual"><link rel="up" href="xml.html" title="Schemas"><link rel="prev" href="LassoLibAuthenticationStatement.html" title="LassoLibAuthenticationStatement"><link rel="next" href="LassoLibAuthnRequest.html" title="LassoLibAuthnRequest"><meta name="generator" content="GTK-Doc V1.3 (XML mode)"><link rel="stylesheet" href="style.css" type="text/css"><link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview"><link rel="chapter" href="architecture.html" title="Lasso Architecture"><link rel="chapter" href="idff.html" title="Identity Federation Framework"><link rel="chapter" href="idwsf.html" title="Identity Web Services Framework"><link rel="chapter" href="xml.html" title="Schemas"><link rel="chapter" href="misc.html" title="Misc"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="LassoLibAuthenticationStatement.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="xml.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">Lasso Reference Manual</th><td><a accesskey="n" href="LassoLibAuthnRequest.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="LassoLibAuthnContext"></a><div class="titlepage"></div><div class="refnamediv"><table width="100%"><tr><td valign="top"><h2><span class="refentrytitle">LassoLibAuthnContext</span></h2><p>LassoLibAuthnContext &#8212; </p></td><td valign="top" align="right"></td></tr></table></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+#include &lt;lasso/lasso.h&gt;
+
+
+            <a href="LassoLibAuthnContext.html#LassoLibAuthnContext-struct">LassoLibAuthnContext</a>;
+<a href="LassoNode.html" title="LassoNode">LassoNode</a>*  <a href="LassoLibAuthnContext.html#lasso-lib-authn-context-new">lasso_lib_authn_context_new</a>     (void);
+
+</pre></div><div class="refsect1" lang="en"><a name="id2569765"></a><h2>Object Hierarchy</h2><pre class="synopsis">
+
+  <GTKDOCLINK HREF="GObject">GObject</GTKDOCLINK>
+   +----<a href="LassoNode.html" title="LassoNode">LassoNode</a>
+         +----LassoLibAuthnContext
+</pre></div><div class="refsect1" lang="en"><a name="id2570769"></a><h2>Description</h2><p>
+
+</p></div><div class="refsect1" lang="en"><a name="id2570779"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2570785"></a><h3><a name="LassoLibAuthnContext-struct"></a>LassoLibAuthnContext</h3><a class="indexterm" name="id2570796"></a><pre class="programlisting">typedef struct {
+	/* &lt;xs:element name="AuthnContextClassRef" type="xs:anyURI" minOccurs="0"/&gt; */
+	char *AuthnContextClassRef;
+	/* &lt;xs:element name="AuthnContextStatementRef" type="xs:anyURI"/&gt; */
+	char *AuthnContextStatementRef;
+	/* &lt;xs:element ref="ac:AuthenticationContextStatement"/&gt; */
+	void *AuthenticationContextStatement; /* TODO: support that element */
+} LassoLibAuthnContext;
+</pre><p>
+
+</p></div><hr><div class="refsect2" lang="en"><a name="id2570820"></a><h3><a name="lasso-lib-authn-context-new"></a>lasso_lib_authn_context_new ()</h3><a class="indexterm" name="id2570831"></a><pre class="programlisting"><a href="LassoNode.html" title="LassoNode">LassoNode</a>*  lasso_lib_authn_context_new     (void);</pre><p>
+Creates a new <a href="LassoLibAuthnContext.html" title="LassoLibAuthnContext"><span class="type">LassoLibAuthnContext</span></a> object.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a newly created <a href="LassoLibAuthnContext.html" title="LassoLibAuthnContext"><span class="type">LassoLibAuthnContext</span></a> object
+</td></tr></tbody></table></div></div></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="LassoLibAuthenticationStatement.html"><b>&lt;&lt; LassoLibAuthenticationStatement</b></a></td><td align="right"><a accesskey="n" href="LassoLibAuthnRequest.html"><b>LassoLibAuthnRequest &gt;&gt;</b></a></td></tr></table></body></html>

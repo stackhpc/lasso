@@ -1,11 +1,8 @@
-SUBDIRS = xml protocols environs
+SUBDIRS = xml id-ff id-wsf
 
 liblassoincludedir = $(includedir)/lasso
 
-INCLUDES = \
-	-I$(top_srcdir) \
-	$(LASSO_DEFINES) \
-	$(LASSO_CFLAGS)
+INCLUDES = -I$(top_srcdir) $(LASSO_CORE_CFLAGS)
 
 ## Added to activate libtool 1.5.6 windows resources partial support
 LTRCCOMPILE = $(LIBTOOL) --tag=RC --mode=compile $(RC) \
@@ -19,15 +16,35 @@ lasso.rc.lo: $(top_srcdir)/win32/lasso.rc
 
 lib_LTLIBRARIES = liblasso.la
 
-liblassoinclude_HEADERS = export.h lasso.h lasso_config.h
+liblassoinclude_HEADERS = export.h lasso.h lasso_config.h errors.h
+BUILT_SOURCES = types.c symbols.sym
 
-liblasso_la_SOURCES = lasso.c
+liblasso_la_SOURCES = lasso.c errors.c
+
+if WSF_ENABLED
+SYMBOLS_ARGS = -wsf
+endif
+
+types.c:
+	$(PYTHON) $(srcdir)/extract_types.py $(srcdir) $(SYMBOLS_ARGS)
+
+symbols.sym:
+	$(PYTHON) $(srcdir)/extract_symbols.py $(srcdir) $(SYMBOLS_ARGS) > symbols.sym
+
+clean-local:
+	-rm types.c symbols.sym
+
+EXTRA_DIST = extract_types.py extract_symbols.py
+
+if WSF_ENABLED
+WSF_LIB_FILE = $(top_builddir)/lasso/id-wsf/liblasso-id-wsf.la
+endif
 
 if MINGW
 liblasso_la_LIBADD = \
 	$(top_builddir)/lasso/xml/liblasso-xml.la \
-	$(top_builddir)/lasso/protocols/liblasso-protocols.la \
-	$(top_builddir)/lasso/environs/liblasso-environs.la \
+	$(top_builddir)/lasso/id-ff/liblasso-id-ff.la \
+	$(WSF_LIB_FILE) \
 	$(LASSO_LIBS) \
 	lasso.rc.lo
 # Just make damn sure the ABI stays the same between
@@ -38,13 +55,14 @@ liblasso_la_LDFLAGS = -no-undefined -version-info @LASSO_VERSION_INFO@ \
 else
 liblasso_la_LIBADD = \
 	$(top_builddir)/lasso/xml/liblasso-xml.la \
-	$(top_builddir)/lasso/protocols/liblasso-protocols.la \
-	$(top_builddir)/lasso/environs/liblasso-environs.la \
+	$(top_builddir)/lasso/id-ff/liblasso-id-ff.la \
+	$(WSF_LIB_FILE) \
 	$(LASSO_LIBS)
 # Just make damn sure the ABI stays the same between
 # upgrades.
 # Obviously if you don't, fixing the situation up again can be painful. 
-liblasso_la_LDFLAGS = -no-undefined -version-info @LASSO_VERSION_INFO@
+liblasso_la_LDFLAGS = -no-undefined -version-info @LASSO_VERSION_INFO@ \
+	-export-symbols symbols.sym
 endif
 
-
+.PHONY: types.c symbols.sym

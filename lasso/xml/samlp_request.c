@@ -1,12 +1,11 @@
-/* $Id: samlp_request.c,v 1.6 2004/08/13 15:16:13 fpeters Exp $ 
+/* $Id: samlp_request.c,v 1.16 2005/01/22 15:57:55 eraviart Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004 Entr'ouvert
+ * Copyright (C) 2004, 2005 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
- * Authors: Nicolas Clapies <nclapies@entrouvert.com>
- *          Valery Febvre <vfebvre@easter-eggs.com>
+ * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,85 +25,91 @@
 #include <lasso/xml/samlp_request.h>
 
 /*
-<element name="Request" type="samlp:RequestType"/>
-<complexType name="RequestType">
-   <complexContent>
-     <extension base="samlp:RequestAbstractType">
-	<choice>
-	   <element ref="samlp:Query"/>
-	   <element ref="samlp:SubjectQuery"/>
-	   <element ref="samlp:AuthenticationQuery"/>
-	   <element ref="samlp:AttributeQuery"/>
-	   <element ref="samlp:AuthorizationDecisionQuery"/>
-	   <element ref="saml:AssertionIDReference" maxOccurs="unbounded"/>
-	   <element ref="samlp:AssertionArtifact" maxOccurs="unbounded"/>
-	</choice>
-     </extension>
-   </complexContent>
-</complexType>
-
-<element name="AssertionArtifact" type="string"/>
-
-*/
+ * <element name="Request" type="samlp:RequestType"/>
+ * <complexType name="RequestType">
+ *    <complexContent>
+ *      <extension base="samlp:RequestAbstractType">
+ * 	<choice>
+ * 	   <element ref="samlp:Query"/>
+ * 	   <element ref="samlp:SubjectQuery"/>
+ * 	   <element ref="samlp:AuthenticationQuery"/>
+ * 	   <element ref="samlp:AttributeQuery"/>
+ * 	   <element ref="samlp:AuthorizationDecisionQuery"/>
+ * 	   <element ref="saml:AssertionIDReference" maxOccurs="unbounded"/>
+ * 	   <element ref="samlp:AssertionArtifact" maxOccurs="unbounded"/>
+ * 	</choice>
+ *      </extension>
+ *    </complexContent>
+ * </complexType>
+ * 
+ * <element name="AssertionArtifact" type="string"/>
+ */
 
 /*****************************************************************************/
-/* public methods                                                            */
+/* private methods                                                           */
 /*****************************************************************************/
 
-void
-lasso_samlp_request_set_assertionArtifact(LassoSamlpRequest *node,
-					  const xmlChar *assertionArtifact)
-{
-  LassoNodeClass *class;
-  g_assert(LASSO_IS_SAMLP_REQUEST(node));
-  g_assert(assertionArtifact != NULL);
-
-  class = LASSO_NODE_GET_CLASS(node);
-  class->new_child(LASSO_NODE (node), "AssertionArtifact", assertionArtifact, FALSE);
-}
+static struct XmlSnippet schema_snippets[] = {
+	{ "AssertionArtifact", SNIPPET_CONTENT,
+		G_STRUCT_OFFSET(LassoSamlpRequest, AssertionArtifact) },
+	{ NULL, 0, 0}
+};
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
 static void
-lasso_samlp_request_instance_init(LassoSamlpRequest *node)
+instance_init(LassoSamlpRequest *node)
 {
-  LassoNodeClass *class = LASSO_NODE_GET_CLASS(LASSO_NODE(node));
-
-  /* namespace herited from samlp:RequestAbstract */
-  class->set_name(LASSO_NODE(node), "Request");
+	node->AssertionArtifact = NULL;
 }
 
 static void
-lasso_samlp_request_class_init(LassoSamlpRequestClass *klass)
+class_init(LassoSamlpRequestClass *klass)
 {
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
+
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "Request");
+	lasso_node_class_set_ns(nclass, LASSO_SAML_PROTOCOL_HREF, LASSO_SAML_PROTOCOL_PREFIX);
+	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
 
-GType lasso_samlp_request_get_type() {
-  static GType this_type = 0;
+GType
+lasso_samlp_request_get_type()
+{
+	static GType this_type = 0;
 
-  if (!this_type) {
-    static const GTypeInfo this_info = {
-      sizeof (LassoSamlpRequestClass),
-      NULL,
-      NULL,
-      (GClassInitFunc) lasso_samlp_request_class_init,
-      NULL,
-      NULL,
-      sizeof(LassoSamlpRequest),
-      0,
-      (GInstanceInitFunc) lasso_samlp_request_instance_init,
-    };
-    
-    this_type = g_type_register_static(LASSO_TYPE_SAMLP_REQUEST_ABSTRACT,
-				       "LassoSamlpRequest",
-				       &this_info, 0);
-  }
-  return this_type;
+	if (!this_type) {
+		static const GTypeInfo this_info = {
+			sizeof (LassoSamlpRequestClass),
+			NULL,
+			NULL,
+			(GClassInitFunc) class_init,
+			NULL,
+			NULL,
+			sizeof(LassoSamlpRequest),
+			0,
+			(GInstanceInitFunc) instance_init,
+		};
+
+		this_type = g_type_register_static(LASSO_TYPE_SAMLP_REQUEST_ABSTRACT,
+				"LassoSamlpRequest", &this_info, 0);
+	}
+	return this_type;
 }
 
-LassoNode* lasso_samlp_request_new() {
-  return LASSO_NODE(g_object_new(LASSO_TYPE_SAMLP_REQUEST,
-				 NULL));
+
+/**
+ * lasso_samlp_request_new:
+ *
+ * Creates a new #LassoSamlpRequest object.
+ *
+ * Return value: a newly created #LassoSamlpRequest object
+ **/
+LassoNode*
+lasso_samlp_request_new()
+{
+	return g_object_new(LASSO_TYPE_SAMLP_REQUEST, NULL);
 }
