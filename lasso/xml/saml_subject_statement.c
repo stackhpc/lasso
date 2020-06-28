@@ -1,28 +1,29 @@
-/* $Id: saml_subject_statement.c 3237 2007-05-30 17:17:45Z dlaniel $
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/saml_subject_statement.h>
+#include "private.h"
+#include "saml_subject_statement.h"
 
 /*
 The schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
@@ -37,11 +38,6 @@ The schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
-
-static void
-instance_init(LassoSamlSubjectStatement *node)
-{
-}
 
 static void
 class_init(LassoSamlSubjectStatementClass *klass)
@@ -68,7 +64,8 @@ lasso_saml_subject_statement_get_type()
 			NULL,
 			sizeof(LassoSamlSubjectStatement),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_SAML_SUBJECT_STATEMENT_ABSTRACT,
@@ -79,9 +76,9 @@ lasso_saml_subject_statement_get_type()
 
 /**
  * lasso_saml_subject_statement_new:
- * 
+ *
  * Creates a new #LassoSamlSubjectStatement object.
- * 
+ *
  * Return value: a newly created #LassoSamlSubjectStatement object
  **/
 LassoNode*

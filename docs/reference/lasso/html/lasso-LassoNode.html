@@ -1,0 +1,900 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>LassoNode</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="Lasso Reference Manual">
+<link rel="up" href="architecture.html" title="Lasso Architecture">
+<link rel="prev" href="lasso-Initialization-functions.html" title="Initialization functions">
+<link rel="next" href="lasso-Base-Strings.html" title="Base Strings">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
+<link rel="reference" href="rn01.html" title="Application Programming Interface">
+<link rel="chapter" href="architecture.html" title="Lasso Architecture">
+<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
+<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
+<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
+<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
+<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
+<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
+<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
+<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
+<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
+<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
+<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
+<link rel="part" href="pt01.html" title="Part II. Appendix">
+<link rel="index" href="api-index.html" title="API Index">
+<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="lasso-Initialization-functions.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="architecture.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Lasso Reference Manual</th>
+<td><a accesskey="n" href="lasso-Base-Strings.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#lasso-LassoNode.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#lasso-LassoNode.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" title="LassoNode">
+<a name="lasso-LassoNode"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="lasso-LassoNode.top_of_page"></a>LassoNode</span></h2>
+<p>LassoNode — Base class for all Lasso objects</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="lasso-LassoNode.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+enum                LassoMessageFormat;
+enum                LassoSignatureType;
+enum                LassoSignatureMethod;
+                    LassoNodeClassData;
+                    LassoNode;
+LassoNode*          lasso_node_new                      (void);
+LassoNode*          lasso_node_new_from_dump            (const char *dump);
+LassoNode*          lasso_node_new_from_soap            (const char *soap);
+LassoNode*          lasso_node_new_from_xmlNode         (xmlNode *node);
+void                lasso_node_cleanup_original_xmlnodes
+                                                        (LassoNode *node);
+void                lasso_node_destroy                  (LassoNode *node);
+char*               lasso_node_dump                     (LassoNode *node);
+char*               lasso_node_debug                    (LassoNode *node,
+                                                         int level);
+char*               lasso_node_export_to_base64         (LassoNode *node);
+char*               lasso_node_export_to_query          (LassoNode *node,
+                                                         LassoSignatureMethod sign_method,
+                                                         const char *private_key_file);
+char*               lasso_node_export_to_query_with_password
+                                                        (LassoNode *node,
+                                                         LassoSignatureMethod sign_method,
+                                                         const char *private_key_file,
+                                                         const char *private_key_file_password);
+char*               lasso_node_export_to_soap           (LassoNode *node);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*              lasso_node_export_to_xml            (LassoNode *node);
+char*               lasso_node_export_to_paos_request   (LassoNode *node,
+                                                         const char *issuer,
+                                                         const char *responseConsumerURL,
+                                                         const char *relay_state);
+char*               lasso_node_export_to_ecp_soap_response
+                                                        (LassoNode *node,
+                                                         const char *assertionConsumerURL);
+xmlNode*            lasso_node_get_xmlNode              (LassoNode *node,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> lasso_dump);
+const char*         lasso_node_get_name                 (LassoNode *node);
+xmlNode*            lasso_node_get_original_xmlnode     (LassoNode *node);
+void                lasso_node_set_original_xmlnode     (LassoNode *node,
+                                                         xmlNode *xmlnode);
+void                lasso_node_set_custom_namespace     (LassoNode *node,
+                                                         const char *prefix,
+                                                         const char *href);
+void                lasso_node_set_custom_nodename      (LassoNode *node,
+                                                         const char *nodename);
+const char*         lasso_node_get_namespace            (LassoNode *node);
+LassoMessageFormat  lasso_node_init_from_message        (LassoNode *node,
+                                                         const char *message);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            lasso_node_init_from_query          (LassoNode *node,
+                                                         const char *query);
+lasso_error_t       lasso_node_init_from_xml            (LassoNode *node,
+                                                         xmlNode *xmlnode);
+const char*         lasso_strerror                      (int error_code);
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="lasso-LassoNode.description"></a><h2>Description</h2>
+<p>
+<span class="type">LassoNode</span> is the base class for Lasso objects; just a step over GObject as
+defined in glib.</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="lasso-LassoNode.details"></a><h2>Details</h2>
+<div class="refsect2" title="enum LassoMessageFormat">
+<a name="LassoMessageFormat"></a><h3>enum LassoMessageFormat</h3>
+<pre class="programlisting">typedef enum {
+	LASSO_MESSAGE_FORMAT_XSCHEMA_ERROR = -2,
+	LASSO_MESSAGE_FORMAT_ERROR = -1,
+	LASSO_MESSAGE_FORMAT_UNKNOWN,
+	LASSO_MESSAGE_FORMAT_XML,
+	LASSO_MESSAGE_FORMAT_BASE64,
+	LASSO_MESSAGE_FORMAT_QUERY,
+	LASSO_MESSAGE_FORMAT_SOAP
+} LassoMessageFormat;
+</pre>
+<p>
+Return code for lasso_node_init_from_message; it describes the type of the
+message that was passed to that function.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="LASSO-MESSAGE-FORMAT-XSCHEMA-ERROR--CAPS"></a><span class="term"><code class="literal">LASSO_MESSAGE_FORMAT_XSCHEMA_ERROR</code></span></p></td>
+<td></td>
+</tr>
+<tr>
+<td><p><a name="LASSO-MESSAGE-FORMAT-ERROR--CAPS"></a><span class="term"><code class="literal">LASSO_MESSAGE_FORMAT_ERROR</code></span></p></td>
+<td> error while determining format
+</td>
+</tr>
+<tr>
+<td><p><a name="LASSO-MESSAGE-FORMAT-UNKNOWN--CAPS"></a><span class="term"><code class="literal">LASSO_MESSAGE_FORMAT_UNKNOWN</code></span></p></td>
+<td> unknown format
+</td>
+</tr>
+<tr>
+<td><p><a name="LASSO-MESSAGE-FORMAT-XML--CAPS"></a><span class="term"><code class="literal">LASSO_MESSAGE_FORMAT_XML</code></span></p></td>
+<td> XML
+</td>
+</tr>
+<tr>
+<td><p><a name="LASSO-MESSAGE-FORMAT-BASE64--CAPS"></a><span class="term"><code class="literal">LASSO_MESSAGE_FORMAT_BASE64</code></span></p></td>
+<td> base-64 encoded
+</td>
+</tr>
+<tr>
+<td><p><a name="LASSO-MESSAGE-FORMAT-QUERY--CAPS"></a><span class="term"><code class="literal">LASSO_MESSAGE_FORMAT_QUERY</code></span></p></td>
+<td> query string
+</td>
+</tr>
+<tr>
+<td><p><a name="LASSO-MESSAGE-FORMAT-SOAP--CAPS"></a><span class="term"><code class="literal">LASSO_MESSAGE_FORMAT_SOAP</code></span></p></td>
+<td> SOAP
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="enum LassoSignatureType">
+<a name="LassoSignatureType"></a><h3>enum LassoSignatureType</h3>
+<pre class="programlisting">typedef enum {
+	LASSO_SIGNATURE_TYPE_NONE = 0,
+	LASSO_SIGNATURE_TYPE_SIMPLE,
+	LASSO_SIGNATURE_TYPE_WITHX509,
+	LASSO_SIGNATURE_TYPE_LAST
+} LassoSignatureType;
+</pre>
+<p>
+Signature type.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="LASSO-SIGNATURE-TYPE-NONE--CAPS"></a><span class="term"><code class="literal">LASSO_SIGNATURE_TYPE_NONE</code></span></p></td>
+<td> no signature
+</td>
+</tr>
+<tr>
+<td><p><a name="LASSO-SIGNATURE-TYPE-SIMPLE--CAPS"></a><span class="term"><code class="literal">LASSO_SIGNATURE_TYPE_SIMPLE</code></span></p></td>
+<td> sign with the private key, copy the public part in the signature.
+</td>
+</tr>
+<tr>
+<td><p><a name="LASSO-SIGNATURE-TYPE-WITHX509--CAPS"></a><span class="term"><code class="literal">LASSO_SIGNATURE_TYPE_WITHX509</code></span></p></td>
+<td> sign with the private key, copy the associated certificat in the
+signature.
+</td>
+</tr>
+<tr>
+<td><p><a name="LASSO-SIGNATURE-TYPE-LAST--CAPS"></a><span class="term"><code class="literal">LASSO_SIGNATURE_TYPE_LAST</code></span></p></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="enum LassoSignatureMethod">
+<a name="LassoSignatureMethod"></a><h3>enum LassoSignatureMethod</h3>
+<pre class="programlisting">typedef enum {
+	LASSO_SIGNATURE_METHOD_RSA_SHA1 = 1,
+	LASSO_SIGNATURE_METHOD_DSA_SHA1,
+	LASSO_SIGNATURE_METHOD_LAST
+} LassoSignatureMethod;
+</pre>
+<p>
+Signature method.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="LASSO-SIGNATURE-METHOD-RSA-SHA1--CAPS"></a><span class="term"><code class="literal">LASSO_SIGNATURE_METHOD_RSA_SHA1</code></span></p></td>
+<td> sign using a RSA private key
+</td>
+</tr>
+<tr>
+<td><p><a name="LASSO-SIGNATURE-METHOD-DSA-SHA1--CAPS"></a><span class="term"><code class="literal">LASSO_SIGNATURE_METHOD_DSA_SHA1</code></span></p></td>
+<td> sign using a DSA private key
+</td>
+</tr>
+<tr>
+<td><p><a name="LASSO-SIGNATURE-METHOD-LAST--CAPS"></a><span class="term"><code class="literal">LASSO_SIGNATURE_METHOD_LAST</code></span></p></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="LassoNodeClassData">
+<a name="LassoNodeClassData"></a><h3>LassoNodeClassData</h3>
+<pre class="programlisting">typedef struct _LassoNodeClassData LassoNodeClassData;</pre>
+</div>
+<hr>
+<div class="refsect2" title="LassoNode">
+<a name="LassoNode"></a><h3>LassoNode</h3>
+<pre class="programlisting">typedef struct {
+	GObject parent;
+} LassoNode;
+</pre>
+<p>
+Base type for all XML contents, or for object using serialization to XML.</p>
+</div>
+<hr>
+<div class="refsect2" title="lasso_node_new ()">
+<a name="lasso-node-new"></a><h3>lasso_node_new ()</h3>
+<pre class="programlisting">LassoNode*          lasso_node_new                      (void);</pre>
+<p>
+Creates a new <span class="type">LassoNode</span>.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a newly created <span class="type">LassoNode</span> object
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_node_new_from_dump ()">
+<a name="lasso-node-new-from-dump"></a><h3>lasso_node_new_from_dump ()</h3>
+<pre class="programlisting">LassoNode*          lasso_node_new_from_dump            (const char *dump);</pre>
+<p>
+Restores the <em class="parameter"><code>dump</code></em> to a new <span class="type">LassoNode</span> subclass.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dump</code></em> :</span></p></td>
+<td> XML object dump
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a newly created object; or NULL if an error occured.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_node_new_from_soap ()">
+<a name="lasso-node-new-from-soap"></a><h3>lasso_node_new_from_soap ()</h3>
+<pre class="programlisting">LassoNode*          lasso_node_new_from_soap            (const char *soap);</pre>
+<p>
+Parses SOAP message and creates a new Lasso object with the right class.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>soap</code></em> :</span></p></td>
+<td> the SOAP message
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> node if success; NULL otherwise
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_node_new_from_xmlNode ()">
+<a name="lasso-node-new-from-xmlNode"></a><h3>lasso_node_new_from_xmlNode ()</h3>
+<pre class="programlisting">LassoNode*          lasso_node_new_from_xmlNode         (xmlNode *node);</pre>
+<p>
+Builds a new <span class="type">LassoNode</span> from an xmlNode.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td> an xmlNode
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a new node
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_node_cleanup_original_xmlnodes ()">
+<a name="lasso-node-cleanup-original-xmlnodes"></a><h3>lasso_node_cleanup_original_xmlnodes ()</h3>
+<pre class="programlisting">void                lasso_node_cleanup_original_xmlnodes
+                                                        (LassoNode *node);</pre>
+<p>
+<em class="parameter"><code>node</code></em>: a <span class="type">LassoNode</span>
+</p>
+<p>
+Traverse the <span class="type">LassoNode</span> tree starting at Node and remove keeped xmlNode if one is found.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> None
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_node_destroy ()">
+<a name="lasso-node-destroy"></a><h3>lasso_node_destroy ()</h3>
+<pre class="programlisting">void                lasso_node_destroy                  (LassoNode *node);</pre>
+<p>
+Destroys the <span class="type">LassoNode</span>.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td> a <span class="type">LassoNode</span>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_node_dump ()">
+<a name="lasso-node-dump"></a><h3>lasso_node_dump ()</h3>
+<pre class="programlisting">char*               lasso_node_dump                     (LassoNode *node);</pre>
+<p>
+Dumps <em class="parameter"><code>node</code></em>.  All datas in object are dumped in an XML format.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td> a <span class="type">LassoNode</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>transfer full. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> full. </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_node_debug ()">
+<a name="lasso-node-debug"></a><h3>lasso_node_debug ()</h3>
+<pre class="programlisting">char*               lasso_node_debug                    (LassoNode *node,
+                                                         int level);</pre>
+<p>
+Create a debug dump for <em class="parameter"><code>node</code></em>, it is pretty printed so any contained signature will be
+uncheckable.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td> a <span class="type">LassoNode</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>level</code></em> :</span></p></td>
+<td> the indentation depth, i.e. the depth of the last nodes to be indented.. <acronym title="Default parameter value (for in case the shadows-to function has less parameters)."><span class="acronym">default</span></acronym> 10. </td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>transfer full. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> full. </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_node_export_to_base64 ()">
+<a name="lasso-node-export-to-base64"></a><h3>lasso_node_export_to_base64 ()</h3>
+<pre class="programlisting">char*               lasso_node_export_to_base64         (LassoNode *node);</pre>
+<p>
+Exports <em class="parameter"><code>node</code></em> to a base64-encoded message.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td> a <span class="type">LassoNode</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a base64-encoded export of <em class="parameter"><code>node</code></em>.  The string must be freed by
+     the caller.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_node_export_to_query ()">
+<a name="lasso-node-export-to-query"></a><h3>lasso_node_export_to_query ()</h3>
+<pre class="programlisting">char*               lasso_node_export_to_query          (LassoNode *node,
+                                                         LassoSignatureMethod sign_method,
+                                                         const char *private_key_file);</pre>
+<p>
+Exports <em class="parameter"><code>node</code></em> to a HTTP query string.  If <em class="parameter"><code>private_key_file</code></em> is NULL,
+query won't be signed.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td> a <span class="type">LassoNode</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sign_method</code></em> :</span></p></td>
+<td> the Signature transform method. <acronym title="Default parameter value (for in case the shadows-to function has less parameters)."><span class="acronym">default</span></acronym> 1. </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>private_key_file:(allow-none)</code></em> :</span></p></td>
+<td> the path to the private key (may be NULL)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a HTTP query export of <em class="parameter"><code>node</code></em>.  The string must be freed by the
+     caller.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_node_export_to_query_with_password ()">
+<a name="lasso-node-export-to-query-with-password"></a><h3>lasso_node_export_to_query_with_password ()</h3>
+<pre class="programlisting">char*               lasso_node_export_to_query_with_password
+                                                        (LassoNode *node,
+                                                         LassoSignatureMethod sign_method,
+                                                         const char *private_key_file,
+                                                         const char *private_key_file_password);</pre>
+<p>
+Exports <em class="parameter"><code>node</code></em> to a HTTP query string.  If <em class="parameter"><code>private_key_file</code></em> is NULL,
+query won't be signed.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td> a <span class="type">LassoNode</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sign_method</code></em> :</span></p></td>
+<td> the Signature transform method. <acronym title="Default parameter value (for in case the shadows-to function has less parameters)."><span class="acronym">default</span></acronym> 1. </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>private_key_file:(allow-none)</code></em> :</span></p></td>
+<td> the path to the private key (may be NULL)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>private_key_file_password:(allow-none)</code></em> :</span></p></td>
+<td> the password needed to decrypt the private key
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a HTTP query export of <em class="parameter"><code>node</code></em>.  The string must be freed by the
+     caller.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_node_export_to_soap ()">
+<a name="lasso-node-export-to-soap"></a><h3>lasso_node_export_to_soap ()</h3>
+<pre class="programlisting">char*               lasso_node_export_to_soap           (LassoNode *node);</pre>
+<p>
+Exports <em class="parameter"><code>node</code></em> to a SOAP message.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td> a <span class="type">LassoNode</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a SOAP export of <em class="parameter"><code>node</code></em>.  The string must be freed by the
+     caller.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_node_export_to_xml ()">
+<a name="lasso-node-export-to-xml"></a><h3>lasso_node_export_to_xml ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*              lasso_node_export_to_xml            (LassoNode *node);</pre>
+<p>
+Exports <em class="parameter"><code>node</code></em> to an xml message.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td> a <span class="type">LassoNode</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> an xml export of <em class="parameter"><code>node</code></em>.  The string must be freed by the
+     caller.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_node_export_to_paos_request ()">
+<a name="lasso-node-export-to-paos-request"></a><h3>lasso_node_export_to_paos_request ()</h3>
+<pre class="programlisting">char*               lasso_node_export_to_paos_request   (LassoNode *node,
+                                                         const char *issuer,
+                                                         const char *responseConsumerURL,
+                                                         const char *relay_state);</pre>
+<p>
+Exports <em class="parameter"><code>node</code></em> to a PAOS message.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td> a <span class="type">LassoNode</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a PAOS export of <em class="parameter"><code>node</code></em>.  The string must be freed by the
+     caller.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_node_export_to_ecp_soap_response ()">
+<a name="lasso-node-export-to-ecp-soap-response"></a><h3>lasso_node_export_to_ecp_soap_response ()</h3>
+<pre class="programlisting">char*               lasso_node_export_to_ecp_soap_response
+                                                        (LassoNode *node,
+                                                         const char *assertionConsumerURL);</pre>
+<p>
+Exports <em class="parameter"><code>node</code></em> to a ECP SOAP message.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td> a <span class="type">LassoNode</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a ECP SOAP export of <em class="parameter"><code>node</code></em>.  The string must be freed by the
+     caller.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_node_get_xmlNode ()">
+<a name="lasso-node-get-xmlNode"></a><h3>lasso_node_get_xmlNode ()</h3>
+<pre class="programlisting">xmlNode*            lasso_node_get_xmlNode              (LassoNode *node,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a> lasso_dump);</pre>
+<p>
+Builds an XML representation of <em class="parameter"><code>node</code></em>.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td> a <span class="type">LassoNode</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>lasso_dump</code></em> :</span></p></td>
+<td> whether to include lasso-specific nodes
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a new xmlNode.  It must be freed by the caller.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_node_get_name ()">
+<a name="lasso-node-get-name"></a><h3>lasso_node_get_name ()</h3>
+<pre class="programlisting">const char*         lasso_node_get_name                 (LassoNode *node);</pre>
+<p>
+Return the XML element name for this object, the one that would be used in the XML dump of this
+object.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td> a <span class="type">LassoNode</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the name of the object, the value must not be stored.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_node_get_original_xmlnode ()">
+<a name="lasso-node-get-original-xmlnode"></a><h3>lasso_node_get_original_xmlnode ()</h3>
+<pre class="programlisting">xmlNode*            lasso_node_get_original_xmlnode     (LassoNode *node);</pre>
+<p>
+Retrieve the original xmlNode eventually associated to this <span class="type">LassoNode</span>.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td> a <span class="type">LassoNode</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> an <span class="type">xmlNodePtr</span> or NULL.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_node_set_original_xmlnode ()">
+<a name="lasso-node-set-original-xmlnode"></a><h3>lasso_node_set_original_xmlnode ()</h3>
+<pre class="programlisting">void                lasso_node_set_original_xmlnode     (LassoNode *node,
+                                                         xmlNode *xmlnode);</pre>
+<p>
+Set the underlying XML representation of the object.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td> the <span class="type">LassoNode</span> object
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>xmlnode</code></em> :</span></p></td>
+<td> an <span class="type">xmlNode</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_node_set_custom_namespace ()">
+<a name="lasso-node-set-custom-namespace"></a><h3>lasso_node_set_custom_namespace ()</h3>
+<pre class="programlisting">void                lasso_node_set_custom_namespace     (LassoNode *node,
+                                                         const char *prefix,
+                                                         const char *href);</pre>
+<p>
+Set a custom namespace for an object instance, use it with object existing a lot of revision of
+the nearly same namespace.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td> a <span class="type">LassoNode</span> object
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>prefix</code></em> :</span></p></td>
+<td> the prefix to use for the definition
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>href</code></em> :</span></p></td>
+<td> the URI of the namespace
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_node_set_custom_nodename ()">
+<a name="lasso-node-set-custom-nodename"></a><h3>lasso_node_set_custom_nodename ()</h3>
+<pre class="programlisting">void                lasso_node_set_custom_nodename      (LassoNode *node,
+                                                         const char *nodename);</pre>
+<p>
+Set a custom nodename for an object instance, use it with object implement a schema type and not
+a real element.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td> a <span class="type">LassoNode</span> object
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>nodename</code></em> :</span></p></td>
+<td> the name to use for the node
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_node_get_namespace ()">
+<a name="lasso-node-get-namespace"></a><h3>lasso_node_get_namespace ()</h3>
+<pre class="programlisting">const char*         lasso_node_get_namespace            (LassoNode *node);</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_node_init_from_message ()">
+<a name="lasso-node-init-from-message"></a><h3>lasso_node_init_from_message ()</h3>
+<pre class="programlisting">LassoMessageFormat  lasso_node_init_from_message        (LassoNode *node,
+                                                         const char *message);</pre>
+<p>
+Parses <em class="parameter"><code>message</code></em> and initialiazes <em class="parameter"><code>node</code></em> fields with data from it.  Message
+type may be base64, SOAP, XML or query string, correct type is found
+automatically.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td> a <span class="type">LassoNode</span> (or derived class)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>message</code></em> :</span></p></td>
+<td> a Liberty message
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a <span class="type">LassoMessageFormat</span> value.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_node_init_from_query ()">
+<a name="lasso-node-init-from-query"></a><h3>lasso_node_init_from_query ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            lasso_node_init_from_query          (LassoNode *node,
+                                                         const char *query);</pre>
+<p>
+Initialiazes <em class="parameter"><code>node</code></em> fields with data from <em class="parameter"><code>query</code></em> string.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td> a <span class="type">LassoNode</span> (or derived class)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>query</code></em> :</span></p></td>
+<td> the query string
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> <code class="literal">TRUE</code> if success
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_node_init_from_xml ()">
+<a name="lasso-node-init-from-xml"></a><h3>lasso_node_init_from_xml ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_node_init_from_xml            (LassoNode *node,
+                                                         xmlNode *xmlnode);</pre>
+<p>
+Initialiazes <em class="parameter"><code>node</code></em> fields with data from <em class="parameter"><code>xmlnode</code></em> XML node.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
+<td> a <span class="type">LassoNode</span> (or derived class)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>xmlnode</code></em> :</span></p></td>
+<td> the libxml2 node
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_strerror ()">
+<a name="lasso-strerror"></a><h3>lasso_strerror ()</h3>
+<pre class="programlisting">const char*         lasso_strerror                      (int error_code);</pre>
+<p>
+Convert an error code from a lasso fuction to a human readable string.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error_code</code></em> :</span></p></td>
+<td> a gint error code returned by a lasso function
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a static string.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

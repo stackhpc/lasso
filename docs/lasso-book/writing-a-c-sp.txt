@@ -4,8 +4,8 @@ Writing a Liberty service provider in C
 
 :author: Frederic Peters
 :contact: fpeters@entrouvert.com
-:date: $Date: 2007-06-14 19:50:40 +0200 (Thu, 14 Jun 2007) $
-:revision: $Revision: 3322 $
+:date: $Date$
+:revision: $Revision$
 :copyright: Copyright © 2004-2007 Entr'ouvert
 
 .. contents:: Table of Contents

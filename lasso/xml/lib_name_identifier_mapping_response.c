@@ -1,28 +1,29 @@
-/* $Id: lib_name_identifier_mapping_response.c 3704 2008-05-15 21:17:44Z fpeters $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/lib_name_identifier_mapping_response.h>
+#include "private.h"
+#include "lib_name_identifier_mapping_response.h"
 
 /**
  * SECTION:lib_name_identifier_mapping_response
@@ -53,28 +54,20 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "Extension", SNIPPET_EXTENSION,
-		G_STRUCT_OFFSET(LassoLibNameIdentifierMappingResponse, Extension) },
+		G_STRUCT_OFFSET(LassoLibNameIdentifierMappingResponse, Extension), NULL, NULL, NULL},
 	{ "ProviderID", SNIPPET_CONTENT,
-		G_STRUCT_OFFSET(LassoLibNameIdentifierMappingResponse, ProviderID) },
+		G_STRUCT_OFFSET(LassoLibNameIdentifierMappingResponse, ProviderID), NULL, NULL, NULL},
 	{ "Status", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoLibNameIdentifierMappingResponse, Status) },
+		G_STRUCT_OFFSET(LassoLibNameIdentifierMappingResponse, Status), NULL, NULL, NULL},
 	{ "NameIdentifier", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoLibNameIdentifierMappingResponse, NameIdentifier) },
-	{ NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoLibNameIdentifierMappingResponse, NameIdentifier), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoLibNameIdentifierMappingResponse *node)
-{
-	node->Extension = NULL;
-	node->ProviderID = NULL;
-	node->Status = NULL;
-	node->NameIdentifier = NULL;
-}
 
 static void
 class_init(LassoLibNameIdentifierMappingResponseClass *klass)
@@ -102,7 +95,8 @@ lasso_lib_name_identifier_mapping_response_get_type()
 			NULL,
 			sizeof(LassoLibNameIdentifierMappingResponse),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		name_identifier_mapping_response_type = g_type_register_static
@@ -129,11 +123,11 @@ lasso_lib_name_identifier_mapping_response_new()
 
 /**
  * lasso_lib_name_identifier_mapping_response_new_full:
- * @providerID:
- * @statusCodeValue:
- * @request: the request this is a response to
- * @sign_type:
- * @sign_method:
+ * @providerID: the providerID of the responder
+ * @statusCodeValue: a response status code
+ * @request: the request which is asnwered by this response
+ * @sign_type: a #LassoSignatureType value
+ * @sign_method: a #LassoSignatureMethod value
  *
  * Creates a new #LassoLibNameIdentifierMappingResponse object and initializes
  * it with the parameters.

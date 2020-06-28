@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Utility functions for SAML 2.0</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="Lasso Reference Manual">
+<link rel="up" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
+<link rel="prev" href="lasso-LassoEcp.html" title="LassoEcp">
+<link rel="next" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
+<link rel="reference" href="rn01.html" title="Application Programming Interface">
+<link rel="chapter" href="architecture.html" title="Lasso Architecture">
+<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
+<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
+<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
+<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
+<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
+<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
+<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
+<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
+<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
+<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
+<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
+<link rel="part" href="pt01.html" title="Part II. Appendix">
+<link rel="index" href="api-index.html" title="API Index">
+<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="lasso-LassoEcp.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="saml2.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Lasso Reference Manual</th>
+<td><a accesskey="n" href="xml-samlv2.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#lasso-Utility-functions-for-SAML-20.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#lasso-Utility-functions-for-SAML-20.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" title="Utility functions for SAML 2.0">
+<a name="lasso-Utility-functions-for-SAML-20"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="lasso-Utility-functions-for-SAML-20.top_of_page"></a>Utility functions for SAML 2.0</span></h2>
+<p>Utility functions for SAML 2.0</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="lasso-Utility-functions-for-SAML-20.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+char*               lasso_build_unique_id               (unsigned int size);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            lasso_profile_is_saml_query         (const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *query);
+LassoSaml2EncryptedElement* lasso_provider_saml2_node_encrypt
+                                                        (const LassoProvider *provider,
+                                                         LassoNode *lasso_node);
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="lasso-Utility-functions-for-SAML-20.description"></a><h2>Description</h2>
+</div>
+<div class="refsect1" title="Details">
+<a name="lasso-Utility-functions-for-SAML-20.details"></a><h2>Details</h2>
+<div class="refsect2" title="lasso_build_unique_id ()">
+<a name="lasso-build-unique-id"></a><h3>lasso_build_unique_id ()</h3>
+<pre class="programlisting">char*               lasso_build_unique_id               (unsigned int size);</pre>
+<p>
+Builds an ID which has an unicity probability of 2^(-size*4).</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>size</code></em> :</span></p></td>
+<td> the ID's length (between 32 and 40)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a "unique" ID (begin always with _ character). <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> full. </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_profile_is_saml_query ()">
+<a name="lasso-profile-is-saml-query"></a><h3>lasso_profile_is_saml_query ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            lasso_profile_is_saml_query         (const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *query);</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_provider_saml2_node_encrypt ()">
+<a name="lasso-provider-saml2-node-encrypt"></a><h3>lasso_provider_saml2_node_encrypt ()</h3>
+<pre class="programlisting">LassoSaml2EncryptedElement* lasso_provider_saml2_node_encrypt
+                                                        (const LassoProvider *provider,
+                                                         LassoNode *lasso_node);</pre>
+<p>
+Dump the node object to an XML fragment, then encrypt this fragment using encryption key of
+<em class="parameter"><code>provider</code></em>, then encapsulate the resulting encrypted content into a <span class="type">LassoSaml2EncryptedElement</span>.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>provider</code></em> :</span></p></td>
+<td> a <span class="type">LassoProvider</span> object
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>lasso_node</code></em> :</span></p></td>
+<td> a <span class="type">LassoNode</span> object
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a newly created <span class="type">LassoSaml2EncryptedElement</span> if successfull, NULL otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

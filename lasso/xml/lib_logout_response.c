@@ -1,28 +1,29 @@
-/* $Id: lib_logout_response.c 3704 2008-05-15 21:17:44Z fpeters $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/lib_logout_response.h>
+#include "private.h"
+#include "lib_logout_response.h"
 
 /**
  * SECTION:lib_logout_response
@@ -44,17 +45,13 @@
 /*****************************************************************************/
 
 static void
-instance_init(LassoLibLogoutResponse *node)
-{
-}
-
-static void
 class_init(LassoLibLogoutResponseClass *klass)
 {
 	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
 
 	nclass->node_data = g_new0(LassoNodeClassData, 1);
 	lasso_node_class_set_nodename(nclass, "LogoutResponse");
+	lasso_node_class_set_ns(nclass, LASSO_LIB_HREF, LASSO_LIB_PREFIX);
 }
 
 GType
@@ -72,7 +69,8 @@ lasso_lib_logout_response_get_type()
 			NULL,
 			sizeof(LassoLibLogoutResponse),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL,
 		};
 
 		logout_response_type = g_type_register_static(LASSO_TYPE_LIB_STATUS_RESPONSE,
@@ -97,11 +95,11 @@ lasso_lib_logout_response_new()
 
 /**
  * lasso_lib_logout_response_new_full:
- * @providerID:
- * @statusCodeValue:
+ * @providerID: the providerID of the responded
+ * @statusCodeValue: a response status code
  * @request: the request this is a response to
- * @sign_type:
- * @sign_method:
+ * @sign_type: a #LassoSignatureType value
+ * @sign_method: a #LassoSignatureMethod value
  *
  * Creates a new #LassoLibLogoutResponse object and initializes it with the
  * parameters.

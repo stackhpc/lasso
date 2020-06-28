@@ -1,22 +1,22 @@
-/* $Id: lib_name_identifier_mapping_response.h 3437 2007-11-03 21:23:50Z fpeters $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -27,12 +27,12 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* __cplusplus */ 
+#endif /* __cplusplus */
 
-#include <lasso/xml/samlp_response_abstract.h>
-#include <lasso/xml/samlp_status.h>
-#include <lasso/xml/saml_name_identifier.h>
-#include <lasso/xml/lib_name_identifier_mapping_request.h>
+#include "samlp_response_abstract.h"
+#include "samlp_status.h"
+#include "saml_name_identifier.h"
+#include "lib_name_identifier_mapping_request.h"
 
 #define LASSO_TYPE_LIB_NAME_IDENTIFIER_MAPPING_RESPONSE \
 	(lasso_lib_name_identifier_mapping_response_get_type())
@@ -48,7 +48,7 @@ extern "C" {
 	(G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_LIB_NAME_IDENTIFIER_MAPPING_RESPONSE))
 #define LASSO_LIB_NAME_IDENTIFIER_MAPPING_RESPONSE_GET_CLASS(o) \
 	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_LIB_NAME_IDENTIFIER_MAPPING_RESPONSE, \
-				    LassoLibNameIdentifierMappingResponseClass)) 
+				    LassoLibNameIdentifierMappingResponseClass))
 
 typedef struct _LassoLibNameIdentifierMappingResponse LassoLibNameIdentifierMappingResponse;
 typedef struct _LassoLibNameIdentifierMappingResponseClass \

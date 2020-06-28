@@ -1,22 +1,22 @@
-/* $Id: ecp.c 3704 2008-05-15 21:17:44Z fpeters $
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -28,18 +28,20 @@
  *
  **/
 
+#include "../xml/private.h"
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
 
-#include <lasso/saml-2.0/providerprivate.h>
-#include <lasso/saml-2.0/profileprivate.h>
-#include <lasso/id-ff/providerprivate.h>
-#include <lasso/id-ff/identityprivate.h>
-#include <lasso/id-ff/serverprivate.h>
+#include "providerprivate.h"
+#include "profileprivate.h"
+#include "../id-ff/providerprivate.h"
+#include "../id-ff/identityprivate.h"
+#include "../id-ff/serverprivate.h"
 
-#include <lasso/saml-2.0/ecpprivate.h>
+#include "ecpprivate.h"
 
-#include <lasso/saml-2.0/ecp.h>
+#include "ecp.h"
+#include "../utils.h"
 
 /*****************************************************************************/
 /* public methods                                                            */
@@ -50,7 +52,7 @@
  * @ecp: a #LassoEcp
  *
  * Destroys a #LassoEcp object
- * 
+ *
  **/
 void
 lasso_ecp_destroy(LassoEcp *ecp)
@@ -90,7 +92,7 @@ static void
 finalize(GObject *object)
 {
 	LassoEcp *ecp = LASSO_ECP(object);
-	g_free(ecp->private_data);
+	lasso_release(ecp->private_data);
 	ecp->private_data = NULL;
 
 	G_OBJECT_CLASS(parent_class)->finalize(object);
@@ -103,7 +105,7 @@ finalize(GObject *object)
 static void
 instance_init(LassoEcp *ecp)
 {
-	ecp->private_data = g_new(LassoEcpPrivate, 1);
+	ecp->private_data = g_new0(LassoEcpPrivate, 1);
 	ecp->private_data->messageID = NULL;
 	ecp->private_data->relay_state = NULL;
 
@@ -160,6 +162,7 @@ lasso_ecp_process_authn_request_msg(LassoEcp *ecp, const char *authn_request_msg
 	if (xpathObj && xpathObj->nodesetval && xpathObj->nodesetval->nodeNr) {
 		xmlnode = xpathObj->nodesetval->nodeTab[0];
 		xmlUnlinkNode(xmlnode);
+		xmlFreeNode(xmlnode);
 	}
 	xmlXPathFreeObject(xpathObj);
 	xmlXPathFreeContext(xpathCtx);
@@ -174,15 +177,14 @@ lasso_ecp_process_authn_request_msg(LassoEcp *ecp, const char *authn_request_msg
 	LASSO_PROFILE(ecp)->msg_body = g_strdup(
 			(char*)(buf->conv ? buf->conv->content : buf->buffer->content));
 	xmlOutputBufferClose(buf);
-	xmlFreeDoc(doc);
+	lasso_release_doc(doc);
 
-	profile->remote_providerID = lasso_server_get_first_providerID(profile->server);
+	profile->remote_providerID = lasso_server_get_first_providerID_by_role(profile->server, LASSO_PROVIDER_ROLE_IDP);
 	if (profile->remote_providerID == NULL) {
 		return critical_error(LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND);
 	}
 
-	remote_provider = g_hash_table_lookup(profile->server->providers,
-				profile->remote_providerID);
+	remote_provider = lasso_server_get_provider(profile->server, profile->remote_providerID);
 	if (LASSO_IS_PROVIDER(remote_provider) == FALSE) {
 		return critical_error(LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND);
 	}
@@ -277,7 +279,7 @@ lasso_ecp_process_response_msg(LassoEcp *ecp, const char *response_msg)
 			(char*)(buf->conv ? buf->conv->content : buf->buffer->content));
 	xmlOutputBufferClose(buf);
 
-	xmlFreeDoc(doc);
+	lasso_release_doc(doc);
 
 	return 0;
 }
@@ -298,6 +300,7 @@ lasso_ecp_get_type()
 			sizeof(LassoEcp),
 			0,
 			(GInstanceInitFunc) instance_init,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_PROFILE,

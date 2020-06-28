@@ -1,28 +1,30 @@
-/* $Id: samlp_status.c 3704 2008-05-15 21:17:44Z fpeters $
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/samlp_status.h>
+#include "../utils.h"
+#include "private.h"
+#include "samlp_status.h"
 
 /**
  * SECTION:samlp_status
@@ -30,7 +32,7 @@
  *
  * <figure><title>Schema fragment for samlp:Status</title>
  * <programlisting><![CDATA[
- * 
+ *
  * <element name="Status" type="samlp:StatusType"/>
  * <complexType name="StatusType">
  *   <sequence>
@@ -39,7 +41,7 @@
  *     <element ref="samlp:StatusDetail" minOccurs="0"/>
  *   </sequence>
  * </complexType>
- * 
+ *
  * <element name="StatusMessage" type="string"/>
  * ]]></programlisting>
  * </figure>
@@ -50,9 +52,9 @@
 /*****************************************************************************/
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "StatusCode", SNIPPET_NODE, G_STRUCT_OFFSET(LassoSamlpStatus, StatusCode) },
-	{ "StatusMessage", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoSamlpStatus, StatusMessage) },
-	{ NULL, 0, 0}
+	{ "StatusCode", SNIPPET_NODE, G_STRUCT_OFFSET(LassoSamlpStatus, StatusCode), NULL, NULL, NULL},
+	{ "StatusMessage", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoSamlpStatus, StatusMessage), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 static gchar*
@@ -71,7 +73,7 @@ build_query(LassoNode *node)
 	}
 
 	t = s->str;
-	g_string_free(s, FALSE);
+	lasso_release_gstring(s, FALSE);
 	return t;
 }
 
@@ -101,12 +103,6 @@ init_from_query(LassoNode *node, char **query_fields)
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoSamlpStatus *node)
-{
-	node->StatusCode = NULL;
-	node->StatusMessage = NULL;
-}
 
 static void
 class_init(LassoSamlpStatusClass *klass)
@@ -136,7 +132,8 @@ lasso_samlp_status_get_type()
 			NULL,
 			sizeof(LassoSamlpStatus),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,

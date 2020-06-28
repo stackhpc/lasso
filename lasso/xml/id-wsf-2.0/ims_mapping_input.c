@@ -1,28 +1,30 @@
-/* $Id: ims_mapping_input.c,v 1.0 2005/10/14 15:17:55 fpeters Exp $ 
+/* $Id: ims_mapping_input.c,v 1.0 2005/10/14 15:17:55 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include "../private.h"
 #include "ims_mapping_input.h"
+#include "./idwsf2_strings.h"
 
 /**
  * SECTION:ims_mapping_input
@@ -49,12 +51,12 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "TokenPolicy", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoIdWsf2ImsMappingInput, TokenPolicy) },
+		G_STRUCT_OFFSET(LassoIdWsf2ImsMappingInput, TokenPolicy), NULL, NULL, NULL},
 	{ "Token", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoIdWsf2ImsMappingInput, Token) },
+		G_STRUCT_OFFSET(LassoIdWsf2ImsMappingInput, Token), NULL, NULL, NULL},
 	{ "reqID", SNIPPET_ATTRIBUTE | SNIPPET_OPTIONAL,
-		G_STRUCT_OFFSET(LassoIdWsf2ImsMappingInput, reqID) },
-	{NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoIdWsf2ImsMappingInput, reqID), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 static LassoNodeClass *parent_class = NULL;
@@ -64,13 +66,6 @@ static LassoNodeClass *parent_class = NULL;
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoIdWsf2ImsMappingInput *node)
-{
-	node->TokenPolicy = NULL;
-	node->Token = NULL;
-	node->reqID = NULL;
-}
 
 static void
 class_init(LassoIdWsf2ImsMappingInputClass *klass)
@@ -99,7 +94,8 @@ lasso_idwsf2_ims_mapping_input_get_type()
 			NULL,
 			sizeof(LassoIdWsf2ImsMappingInput),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,

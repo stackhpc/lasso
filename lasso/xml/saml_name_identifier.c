@@ -1,28 +1,29 @@
-/* $Id: saml_name_identifier.c 3704 2008-05-15 21:17:44Z fpeters $
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/saml_name_identifier.h>
+#include "private.h"
+#include "saml_name_identifier.h"
 #include <libxml/uri.h>
 
 /**
@@ -31,7 +32,7 @@
  *
  * <figure><title>Schema fragment for saml:NameIdentifier</title>
  * <programlisting><![CDATA[
- * 
+ *
  * <element name="NameIdentifier" type="saml:NameIdentifierType"/>
  * <complexType name="NameIdentifierType">
  *   <simpleContent>
@@ -51,23 +52,15 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "NameQualifier", SNIPPET_ATTRIBUTE,
-		G_STRUCT_OFFSET(LassoSamlNameIdentifier, NameQualifier) },
-	{ "Format", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoSamlNameIdentifier, Format) },
-	{ "content", SNIPPET_TEXT_CHILD, G_STRUCT_OFFSET(LassoSamlNameIdentifier, content) },
-	{ NULL, 0, 0 }
+		G_STRUCT_OFFSET(LassoSamlNameIdentifier, NameQualifier), NULL, NULL, NULL},
+	{ "Format", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoSamlNameIdentifier, Format), NULL, NULL, NULL},
+	{ "content", SNIPPET_TEXT_CHILD, G_STRUCT_OFFSET(LassoSamlNameIdentifier, content), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
-
-static void
-instance_init(LassoSamlNameIdentifier *node)
-{
-	node->NameQualifier = NULL;
-	node->Format = NULL;
-	node->content = NULL;
-}
 
 static void
 class_init(LassoSamlNameIdentifierClass *klass)
@@ -95,7 +88,8 @@ lasso_saml_name_identifier_get_type()
 			NULL,
 			sizeof(LassoSamlNameIdentifier),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,
@@ -106,9 +100,9 @@ lasso_saml_name_identifier_get_type()
 
 /**
  * lasso_saml_name_identifier_new:
- * 
+ *
  * Creates a new #LassoSamlNameIdentifier object.
- * 
+ *
  * Return value: a newly created #LassoSamlNameIdentifier object
  **/
 LassoSamlNameIdentifier*

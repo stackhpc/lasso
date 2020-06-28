@@ -17,9 +17,14 @@
     <param name="subminor"/>
     <param name="mode" optional="true" default="c:LASSO_CHECK_VERSION_NUMERIC"/>
   </func>
+  <func name="lasso_saml2_encrypted_element_decrypt" skip="true"/>
+  <func name="lasso_registry_default_add_direct_mapping" skip="true"/>
+  <func name="lasso_registry_default_add_functional_mapping" skip="true"/>
+  <func name="lasso_registry_default_get_mapping" skip="true"/>
   <!-- LassoProvider -->
   <func name="lasso_provider_get_metadata_list" return_owner="false"/>
   <!-- LassoProfile -->
+  <func name="lasso_profile_get_server" skip="true"/>
   <func name="lasso_profile_get_nameIdentifier"
   	rename="lasso_profile_get_federation_nameIdentifier"
 	return_owner="false" />
@@ -32,6 +37,14 @@
   <!-- LassoWsfProfile -->
   <func name="lasso_wsf_profile_get_identity" return_owner="false" />
   <func name="lasso_wsf_profile_get_session" return_owner="false" />
+  <func name="lasso_wsf_profile_get_remote_provider" skip="java,perl"/>
+  <func name="lasso_data_service_get_answer" skip="java,perl"/>
+  <func name="lasso_data_service_get_query_item" skip="java,perl"/>
+  <func name="lasso_data_service_add_modification" skip="java,perl"/>
+  <func name="lasso_data_service_get_answers" skip="java,perl"/>
+  <func name="lasso_data_service_get_answers_by_select" skip="java,perl"/>
+  <func name="lasso_data_service_get_answers_by_item_id" skip="java,perl"/>
+  <func name="lasso_saml2_encrypted_element_decrypt" skip="true"/>
   <!-- LassoIdentity -->
   <func name="lasso_identity_get_federation" return_owner="false" />
   <func name="lasso_identity_get_svc_md_ids" return_type_qualifier="char*"/>
@@ -129,6 +142,8 @@
     <param name="item_id" optional="true"/>
   </func>
   <!-- LassoDiscovery -->
+  <func name="lasso_discovery_register_constructor_for_service_type" skip="true"/>
+  <func name="lasso_discovery_unregister_constructor_for_service_type" skip="true"/>
   <func name="lasso_discovery_init_insert">
     <param name="new_offering"/>
     <param name="security_mech_id" optional="true"/>
@@ -136,9 +151,6 @@
   <func name="lasso_discovery_add_requested_service_type" return_owner="false">
     <param name="service_type"/>
     <param name="option" optional="true"/>
-  </func>
-  <func name="lasso_discovery_init_query">
-    <param name="security_mech_id" optional="true"/>
   </func>
   <func name="lasso_discovery_process_modify_msg">
     <param name="message"/>
@@ -152,76 +164,38 @@
     <param name="service_type" optional="true"/>
   </func>
   <func name="lasso_discovery_get_description_auto" return_owner="false"/>
-  <!-- LassoDataService -->
-  <func name="lasso_data_service_init_query">
-    <param name="select" optional="true"/>
-    <param name="item_id" optional="true"/>
-    <param name="security_mech_id" optional="true"/>
-  </func>
-  <func name="lasso_data_service_process_query_msg">
-    <param name="message"/>
-    <param name="security_mech_id" optional="true"/>
-  </func>
-  <func name="lasso_data_service_get_answer">
-    <param name="select" optional="true"/>
-  </func>
-  <func name="lasso_data_service_process_modify_msg">
-    <param name="soap_msg"/>
-    <param name="security_mech_id" optional="true"/>
-  </func>
-  <func name="lasso_data_service_add_query_item" return_owner="false"/>
-
   <func name="lasso_server_get_service" skip="unless-id-wsf" />
   <func name="lasso_login_set_encryptedResourceId" skip="unless-id-wsf"/>
   <func name="lasso_node_new_from_dump" skip="java"/>
   <func name="lasso_node_new_from_soap" skip="java"/>
   <func name="lasso_node_new_from_xmlNode" skip="java"/>
   <func name="lasso_provider_new_from_dump" skip="java"/>
-  <func name="lasso_saml2_name_id_new_with_string" return_type="LassoSaml2NameID*"/>
-  <func name="lasso_saml2_action_new_with_string" return_type="LassoSaml2Action*"/>
-  <func name="lasso_misc_text_node_new_with_string" return_type="LassoMiscTextNode*"/>
-
-  <func name="lasso_lib_name_identifier_mapping_response_new_full" return_type="LassoLibNameIdentifierMappingResponse*"/>
-  <func name="lasso_lib_logout_request_new_full" return_type="LassoLibLogoutRequest*"/>
-  <func name="lasso_lib_logout_response_new_full" return_type="LassoLibLogoutResponse*"/>
-  <func name="lasso_lib_register_name_identifier_response_new_full" return_type="LassoLibRegisterNameIdentifierResponse*"/>
-  <func name="lasso_lib_federation_termination_notification_new_full" return_type="LassoLibFederationTerminationNotification*"/>
-  <func name="lasso_lib_name_identifier_mapping_request_new_full" return_type="LassoLibNameIdentifierMappingRequest*"/>
-  <func name="lasso_lib_register_name_identifier_request_new_full" return_type="LassoLibRegisterNameIdentifierRequest*"/>
   <!-- LassoServer -->
   <func name="lasso_server_get_provider" return_owner="false" />
   <!-- IdWsf -->
   <arg name="abstract" rename="abstract_" language="java"/>
   <func name="lasso_personal_profile_service_new_full" rename="lasso_personal_profile_server_new_personal_profile_service_full"/>
+  <func name="lasso_wsf_profile_new_full" rename="lasso_wsf_profile_wsf_profile_new_full"/>
+  <func name="lasso_wsa_endpoint_reference_get_target_identity_token" skip="true"/>
+  <func name="lasso_wsa_endpoint_reference_get_security_token" skip="true"/>
+  <func name="lasso_wsa_endpoint_reference_associate_service_to_type" skip="true"/>
+  <func name="lasso_authentication_get_type" skip="true"/>
+  <func name="lasso_authentication_get_type" skip="true"/>
+  <func name="lasso_authentication_new" skip="true"/>
+  <func name="lasso_authentication_destroy" skip="true"/>
+  <func name="lasso_authentication_client_start" skip="true"/>
+  <func name="lasso_authentication_client_step" skip="true"/>
+  <func name="lasso_authentication_get_mechanism_list" skip="true"/>
   <func name="lasso_authentication_init_request" skip="true"/>
-  <!-- LassoIdWsf2Discovery -->
-  <func name="lasso_idwsf2_discovery_metadata_register_self">>
-    <param name="service_type"/>
-    <param name="abstract"/>
-    <param name="soap_endpoint"/>
-    <param name="svcMDID" optional="true"/>
-  </func>
-  <func name="lasso_idwsf2_discovery_init_query">
-    <param name="security_mech_id" optional="true"/>
-  </func>
-  <func name="lasso_idwsf2_discovery_get_service">
-    <param name="service_type" optional="true"/>
-  </func>
-  <!-- LassoIdWsf2DataService -->
-  <func name="lasso_idwsf2_data_service_get_attribute_nodes" return_type_qualifier="xmlNode*"/>
-  <func name="lasso_idwsf2_data_service_get_attribute_node">
-    <param name="item_id" optional="true"/>
-  </func>
-  <func name="lasso_idwsf2_data_service_get_attribute_strings" return_type_qualifier="char*"/>
-  <func name="lasso_idwsf2_data_service_get_attribute_string">
-    <param name="item_id" optional="true"/>
-  </func>
-  <func name="lasso_idwsf2_data_service_add_modify_item">
-    <param name="item_xpath"/>
-    <param name="item_id"/>
-    <param name="new_data"/>
-    <param name="overrideAllowed" optional="true" default="b:False"/>
-  </func>
+  <func name="lasso_authentication_process_request_msg" skip="true"/>
+  <func name="lasso_authentication_process_response_msg" skip="true"/>
+  <func name="lasso_authentication_server_start" skip="true"/>
+  <func name="lasso_authentication_server_step" skip="true"/>
+  <struct name="LassoAuthentication" skip="true"/>
+  <func name="lasso_wsse_username_token_derive_key" skip="true"/>
+  <func name="lasso_wsa_endpoint_reference_add_security_token" skip="true"/>
+  <func name="lasso_log_set_handler" skip="true"/>
+  <func name="lasso_log_remove_handler" skip="true"/>
   <!-- Exceptions -->
   <exception>
     <category name="Profile"/>

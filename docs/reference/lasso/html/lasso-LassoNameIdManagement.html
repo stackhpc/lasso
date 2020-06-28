@@ -1,0 +1,376 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>LassoNameIdManagement</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="Lasso Reference Manual">
+<link rel="up" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
+<link rel="prev" href="lasso-LassoAssertionQuery.html" title="LassoAssertionQuery">
+<link rel="next" href="lasso-LassoEcp.html" title="LassoEcp">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
+<link rel="reference" href="rn01.html" title="Application Programming Interface">
+<link rel="chapter" href="architecture.html" title="Lasso Architecture">
+<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
+<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
+<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
+<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
+<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
+<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
+<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
+<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
+<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
+<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
+<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
+<link rel="part" href="pt01.html" title="Part II. Appendix">
+<link rel="index" href="api-index.html" title="API Index">
+<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="lasso-LassoAssertionQuery.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="saml2.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Lasso Reference Manual</th>
+<td><a accesskey="n" href="lasso-LassoEcp.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#lasso-LassoNameIdManagement.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#lasso-LassoNameIdManagement.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" title="LassoNameIdManagement">
+<a name="lasso-LassoNameIdManagement"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="lasso-LassoNameIdManagement.top_of_page"></a>LassoNameIdManagement</span></h2>
+<p>LassoNameIdManagement — Name Id Management Profile (SAMLv2)</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="lasso-LassoNameIdManagement.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    LassoNameIdManagement;
+LassoNameIdManagement * lasso_name_id_management_new    (LassoServer *server);
+LassoNameIdManagement * lasso_name_id_management_new_from_dump
+                                                        (LassoServer *server,
+                                                         const char *dump);
+char*               lasso_name_id_management_dump       (LassoNameIdManagement *name_id_management);
+void                lasso_name_id_management_destroy    (LassoNameIdManagement *name_id_management);
+lasso_error_t       lasso_name_id_management_init_request
+                                                        (LassoNameIdManagement *name_id_management,
+                                                         char *remote_provider_id,
+                                                         char *new_name_id,
+                                                         LassoHttpMethod http_method);
+lasso_error_t       lasso_name_id_management_build_request_msg
+                                                        (LassoNameIdManagement *name_id_management);
+lasso_error_t       lasso_name_id_management_process_request_msg
+                                                        (LassoNameIdManagement *name_id_management,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *request_msg);
+lasso_error_t       lasso_name_id_management_validate_request
+                                                        (LassoNameIdManagement *name_id_management);
+lasso_error_t       lasso_name_id_management_build_response_msg
+                                                        (LassoNameIdManagement *name_id_management);
+lasso_error_t       lasso_name_id_management_process_response_msg
+                                                        (LassoNameIdManagement *name_id_management,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *response_msg);
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="lasso-LassoNameIdManagement.description"></a><h2>Description</h2>
+<p>
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="lasso-LassoNameIdManagement.details"></a><h2>Details</h2>
+<div class="refsect2" title="LassoNameIdManagement">
+<a name="LassoNameIdManagement"></a><h3>LassoNameIdManagement</h3>
+<pre class="programlisting">typedef struct {
+	LassoProfile parent;
+} LassoNameIdManagement;
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_id_management_new ()">
+<a name="lasso-name-id-management-new"></a><h3>lasso_name_id_management_new ()</h3>
+<pre class="programlisting">LassoNameIdManagement * lasso_name_id_management_new    (LassoServer *server);</pre>
+<p>
+Creates a new <span class="type">LassoNameIdManagement</span>.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td> the <span class="type">LassoServer</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a newly created <span class="type">LassoNameIdManagement</span> object; or NULL if an error
+    occured
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_id_management_new_from_dump ()">
+<a name="lasso-name-id-management-new-from-dump"></a><h3>lasso_name_id_management_new_from_dump ()</h3>
+<pre class="programlisting">LassoNameIdManagement * lasso_name_id_management_new_from_dump
+                                                        (LassoServer *server,
+                                                         const char *dump);</pre>
+<p>
+Restores the <em class="parameter"><code>dump</code></em> to a new <span class="type">LassoLogout</span>.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>server</code></em> :</span></p></td>
+<td> the <span class="type">LassoServer</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dump</code></em> :</span></p></td>
+<td> XML name_id_management dump
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a newly created <span class="type">LassoLogout</span>; or NULL if an error occured
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_id_management_dump ()">
+<a name="lasso-name-id-management-dump"></a><h3>lasso_name_id_management_dump ()</h3>
+<pre class="programlisting">char*               lasso_name_id_management_dump       (LassoNameIdManagement *name_id_management);</pre>
+<p>
+Dumps <em class="parameter"><code>name_id_management</code></em> content to an XML string.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name_id_management</code></em> :</span></p></td>
+<td> a <span class="type">LassoLogout</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the dump string.  It must be freed by the caller.. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> full. </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_id_management_destroy ()">
+<a name="lasso-name-id-management-destroy"></a><h3>lasso_name_id_management_destroy ()</h3>
+<pre class="programlisting">void                lasso_name_id_management_destroy    (LassoNameIdManagement *name_id_management);</pre>
+<p>
+Destroys a <span class="type">LassoNameIdManagement</span> object.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>name_id_management</code></em> :</span></p></td>
+<td> a <span class="type">LassoNameIdManagement</span>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_id_management_init_request ()">
+<a name="lasso-name-id-management-init-request"></a><h3>lasso_name_id_management_init_request ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_name_id_management_init_request
+                                                        (LassoNameIdManagement *name_id_management,
+                                                         char *remote_provider_id,
+                                                         char *new_name_id,
+                                                         LassoHttpMethod http_method);</pre>
+<p>
+Initializes a new Name Id Management Request. If <em class="parameter"><code>new_name_id</code></em> is NULL, it is a Termination
+request, if not and we are an IdP is a NameID change request, if we are a SP, it is a request to
+add a SP provided Id to the NameID of the IdP. It can be useful if the SP do not want to store
+the federation, instead he can export its own identifiers to the IdP.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name_id_management</code></em> :</span></p></td>
+<td> a <span class="type">LassoNameIdManagement</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>remote_provider_id</code></em> :</span></p></td>
+<td> the providerID of the remote provider.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>new_name_id</code></em> :</span></p></td>
+<td> the new NameId or NULL to terminate a federation
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>http_method</code></em> :</span></p></td>
+<td> if set, then it get the protocol profile in metadata
+    corresponding of this HTTP request method.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_id_management_build_request_msg ()">
+<a name="lasso-name-id-management-build-request-msg"></a><h3>lasso_name_id_management_build_request_msg ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_name_id_management_build_request_msg
+                                                        (LassoNameIdManagement *name_id_management);</pre>
+<p>
+Builds the Name Id Management request message.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name_id_management</code></em> :</span></p></td>
+<td> a <span class="type">LassoNameIdManagement</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_id_management_process_request_msg ()">
+<a name="lasso-name-id-management-process-request-msg"></a><h3>lasso_name_id_management_process_request_msg ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_name_id_management_process_request_msg
+                                                        (LassoNameIdManagement *name_id_management,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *request_msg);</pre>
+<p>
+Processes a Name Id Management request message.  Rebuilds a request object
+from the message and check its signature.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name_id_management</code></em> :</span></p></td>
+<td> a <span class="type">LassoNameIdManagement</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request_msg</code></em> :</span></p></td>
+<td> the Name Id Management request message
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_id_management_validate_request ()">
+<a name="lasso-name-id-management-validate-request"></a><h3>lasso_name_id_management_validate_request ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_name_id_management_validate_request
+                                                        (LassoNameIdManagement *name_id_management);</pre>
+<p>
+Processes a Name Id Management request, performing requested actions against
+principal federations.  Profile identity may have to be saved afterwards.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name_id_management</code></em> :</span></p></td>
+<td> a <span class="type">LassoNameIdManagement</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_id_management_build_response_msg ()">
+<a name="lasso-name-id-management-build-response-msg"></a><h3>lasso_name_id_management_build_response_msg ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_name_id_management_build_response_msg
+                                                        (LassoNameIdManagement *name_id_management);</pre>
+<p>
+Builds the Name Id Management response message.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name_id_management</code></em> :</span></p></td>
+<td> a <span class="type">LassoNameIdManagement</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_name_id_management_process_response_msg ()">
+<a name="lasso-name-id-management-process-response-msg"></a><h3>lasso_name_id_management_process_response_msg ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_name_id_management_process_response_msg
+                                                        (LassoNameIdManagement *name_id_management,
+                                                         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *response_msg);</pre>
+<p>
+Parses the response message and builds the corresponding response object.
+Performs requested actions against principal federations.  Profile identity
+may have to be saved afterwards.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name_id_management</code></em> :</span></p></td>
+<td> a <span class="type">LassoNameIdManagement</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>response_msg</code></em> :</span></p></td>
+<td> the response message
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

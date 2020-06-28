@@ -1,32 +1,34 @@
-/* $Id: is_interaction_statement.c,v 1.0 2005/10/14 15:17:55 fpeters Exp $ 
+/* $Id: is_interaction_statement.c,v 1.0 2005/10/14 15:17:55 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 
+#include "../private.h"
 #include <xmlsec/xmldsig.h>
 #include <xmlsec/templates.h>
 
 #include "is_interaction_statement.h"
+#include "./idwsf2_strings.h"
 
 /**
  * SECTION:is_interaction_statement
@@ -52,20 +54,20 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "Inquiry", SNIPPET_LIST_NODES,
-		G_STRUCT_OFFSET(LassoIdWsf2IsInteractionStatement, Inquiry) },
-	{ "Signature", SNIPPET_SIGNATURE  },
+		G_STRUCT_OFFSET(LassoIdWsf2IsInteractionStatement, Inquiry), NULL, NULL, NULL},
+	{ "Signature", SNIPPET_SIGNATURE, 0, NULL, NULL, NULL  },
 
 	/* hidden fields; used in lasso dumps */
 	{ "SignType", SNIPPET_ATTRIBUTE | SNIPPET_INTEGER | SNIPPET_LASSO_DUMP,
-		G_STRUCT_OFFSET(LassoIdWsf2IsInteractionStatement, sign_type) },
+		G_STRUCT_OFFSET(LassoIdWsf2IsInteractionStatement, sign_type), NULL, NULL, NULL},
 	{ "SignMethod", SNIPPET_ATTRIBUTE | SNIPPET_INTEGER | SNIPPET_LASSO_DUMP,
-		G_STRUCT_OFFSET(LassoIdWsf2IsInteractionStatement, sign_method) },
+		G_STRUCT_OFFSET(LassoIdWsf2IsInteractionStatement, sign_method), NULL, NULL, NULL},
 	{ "PrivateKeyFile", SNIPPET_CONTENT | SNIPPET_LASSO_DUMP,
-		G_STRUCT_OFFSET(LassoIdWsf2IsInteractionStatement, private_key_file) },
+		G_STRUCT_OFFSET(LassoIdWsf2IsInteractionStatement, private_key_file), NULL, NULL, NULL},
 	{ "CertificateFile", SNIPPET_CONTENT | SNIPPET_LASSO_DUMP,
-		G_STRUCT_OFFSET(LassoIdWsf2IsInteractionStatement, certificate_file) },
+		G_STRUCT_OFFSET(LassoIdWsf2IsInteractionStatement, certificate_file), NULL, NULL, NULL},
 
-	{NULL, 0, 0}
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 static LassoNodeClass *parent_class = NULL;
@@ -78,7 +80,6 @@ static LassoNodeClass *parent_class = NULL;
 static void
 instance_init(LassoIdWsf2IsInteractionStatement *node)
 {
-	node->Inquiry = NULL;
 	node->sign_type = LASSO_SIGNATURE_TYPE_NONE;
 }
 
@@ -97,6 +98,10 @@ class_init(LassoIdWsf2IsInteractionStatementClass *klass)
 			LassoIdWsf2IsInteractionStatement, sign_type);
 	nclass->node_data->sign_method_offset = G_STRUCT_OFFSET(
 			LassoIdWsf2IsInteractionStatement, sign_method);
+	nclass->node_data->private_key_file_offset = G_STRUCT_OFFSET(
+			LassoIdWsf2IsInteractionStatement, private_key_file);
+	nclass->node_data->certificate_file_offset = G_STRUCT_OFFSET(
+			LassoIdWsf2IsInteractionStatement, certificate_file);
 }
 
 GType
@@ -115,6 +120,7 @@ lasso_idwsf2_is_interaction_statement_get_type()
 			sizeof(LassoIdWsf2IsInteractionStatement),
 			0,
 			(GInstanceInitFunc) instance_init,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,

@@ -1,28 +1,30 @@
-/* $Id: disco_query_response.c 3704 2008-05-15 21:17:44Z fpeters $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/disco_query_response.h>
+#include "private.h"
+#include "disco_query_response.h"
+#include "./idwsf_strings.h"
 
 /**
  * SECTION:disco_query_response
@@ -56,14 +58,14 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "Status", SNIPPET_NODE,
-	  G_STRUCT_OFFSET(LassoDiscoQueryResponse, Status) },
+		G_STRUCT_OFFSET(LassoDiscoQueryResponse, Status), NULL, NULL, NULL},
 	{ "ResourceOffering", SNIPPET_LIST_NODES,
-	  G_STRUCT_OFFSET(LassoDiscoQueryResponse, ResourceOffering) },
+		G_STRUCT_OFFSET(LassoDiscoQueryResponse, ResourceOffering), NULL, NULL, NULL},
 	{ "Credentials", SNIPPET_NODE,
-	  G_STRUCT_OFFSET(LassoDiscoQueryResponse, Credentials) },
+		G_STRUCT_OFFSET(LassoDiscoQueryResponse, Credentials), NULL, NULL, NULL},
 	{ "id", SNIPPET_ATTRIBUTE,
-	  G_STRUCT_OFFSET(LassoDiscoQueryResponse, id) },
-	{ NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoDiscoQueryResponse, id), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 static LassoNodeClass *parent_class = NULL;
@@ -99,16 +101,6 @@ get_xmlNode(LassoNode *node, gboolean lasso_dump)
 /*****************************************************************************/
 
 static void
-instance_init(LassoDiscoQueryResponse *node)
-{
-	node->Status = NULL;
-	node->ResourceOffering = NULL;
-	node->Credentials = NULL;
-	
-	node->id = NULL;
-}
-
-static void
 class_init(LassoDiscoQueryResponseClass *class)
 {
 	LassoNodeClass *nclass = LASSO_NODE_CLASS(class);
@@ -136,7 +128,8 @@ lasso_disco_query_response_get_type()
 			NULL,
 			sizeof(LassoDiscoQueryResponse),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,
@@ -157,17 +150,4 @@ lasso_disco_query_response_new(LassoUtilityStatus *status)
 	node->Status = status;
 
 	return node;
-}
-
-LassoDiscoQueryResponse*
-lasso_disco_query_response_new_from_message(const gchar *message)
-{
-	LassoDiscoQueryResponse *response;
-
-	g_return_val_if_fail(message != NULL, NULL);
-
-	response = g_object_new(LASSO_TYPE_DISCO_QUERY_RESPONSE, NULL);
-	lasso_node_init_from_message(LASSO_NODE(response), message);
-
-	return response;
 }

@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>LassoFederation</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="Lasso Reference Manual">
+<link rel="up" href="architecture.html" title="Lasso Architecture">
+<link rel="prev" href="lasso-LassoIdentity.html" title="LassoIdentity">
+<link rel="next" href="lasso-LassoSession.html" title="LassoSession">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
+<link rel="reference" href="rn01.html" title="Application Programming Interface">
+<link rel="chapter" href="architecture.html" title="Lasso Architecture">
+<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
+<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
+<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
+<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
+<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
+<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
+<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
+<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
+<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
+<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
+<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
+<link rel="part" href="pt01.html" title="Part II. Appendix">
+<link rel="index" href="api-index.html" title="API Index">
+<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="lasso-LassoIdentity.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="architecture.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Lasso Reference Manual</th>
+<td><a accesskey="n" href="lasso-LassoSession.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#lasso-LassoFederation.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#lasso-LassoFederation.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" title="LassoFederation">
+<a name="lasso-LassoFederation"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="lasso-LassoFederation.top_of_page"></a>LassoFederation</span></h2>
+<p>LassoFederation — Principal federation between two providers</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="lasso-LassoFederation.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    LassoFederation;
+LassoFederation*    lasso_federation_new                (const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *remote_providerID);
+void                lasso_federation_build_local_name_identifier
+                                                        (LassoFederation *federation,
+                                                         const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *nameQualifier,
+                                                         const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *format,
+                                                         const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *content);
+void                lasso_federation_destroy            (LassoFederation *federation);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            lasso_federation_verify_name_identifier
+                                                        (LassoFederation *federation,
+                                                         LassoNode *name_identifier);
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="lasso-LassoFederation.description"></a><h2>Description</h2>
+<p>
+A <span class="type">LassoFederation</span> represents the an identifier shared by two provider, usually an identity
+provider and a service provider. Instance of this class are usually never accessed directly.</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="lasso-LassoFederation.details"></a><h2>Details</h2>
+<div class="refsect2" title="LassoFederation">
+<a name="LassoFederation"></a><h3>LassoFederation</h3>
+<pre class="programlisting">typedef struct {
+	LassoNode parent;
+
+	gchar *remote_providerID;
+	LassoNode *local_nameIdentifier;
+	LassoNode *remote_nameIdentifier;
+} LassoFederation;
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_federation_new ()">
+<a name="lasso-federation-new"></a><h3>lasso_federation_new ()</h3>
+<pre class="programlisting">LassoFederation*    lasso_federation_new                (const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *remote_providerID);</pre>
+<p>
+Creates a new <span class="type">LassoFederation</span> with the remote provider.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>remote_providerID</code></em> :</span></p></td>
+<td> remote Provider ID
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a newly created <span class="type">LassoFederation</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_federation_build_local_name_identifier ()">
+<a name="lasso-federation-build-local-name-identifier"></a><h3>lasso_federation_build_local_name_identifier ()</h3>
+<pre class="programlisting">void                lasso_federation_build_local_name_identifier
+                                                        (LassoFederation *federation,
+                                                         const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *nameQualifier,
+                                                         const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *format,
+                                                         const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *content);</pre>
+<p>
+Builds federation local name identifier.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>federation</code></em> :</span></p></td>
+<td> a <span class="type">LassoFederation</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>nameQualifier</code></em> :</span></p></td>
+<td> the name identifier qualifier
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>format</code></em> :</span></p></td>
+<td> the name identifier format
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>content</code></em> :</span></p></td>
+<td> the name identifier content
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_federation_destroy ()">
+<a name="lasso-federation-destroy"></a><h3>lasso_federation_destroy ()</h3>
+<pre class="programlisting">void                lasso_federation_destroy            (LassoFederation *federation);</pre>
+<p>
+Destroys a federation.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>federation</code></em> :</span></p></td>
+<td> a <span class="type">LassoFederation</span>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_federation_verify_name_identifier ()">
+<a name="lasso-federation-verify-name-identifier"></a><h3>lasso_federation_verify_name_identifier ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            lasso_federation_verify_name_identifier
+                                                        (LassoFederation *federation,
+                                                         LassoNode *name_identifier);</pre>
+<p>
+Checks whether federation is for <em class="parameter"><code>name_identifier</code></em>.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>federation</code></em> :</span></p></td>
+<td> a <span class="type">LassoFederation</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name_identifier</code></em> :</span></p></td>
+<td> the <span class="type">LassoSamlNameIdentifier</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> <code class="literal">TRUE</code> if the federation is for <em class="parameter"><code>name_identifier</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

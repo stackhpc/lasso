@@ -1,28 +1,30 @@
-/* $Id: dstref_modify.c,v 1.0 2005/10/14 15:17:55 fpeters Exp $ 
+/* $Id: dstref_modify.c,v 1.0 2005/10/14 15:17:55 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include "../private.h"
 #include "dstref_modify.h"
+#include "./idwsf2_strings.h"
 
 /**
  * SECTION:dstref_modify
@@ -53,11 +55,11 @@
 static struct XmlSnippet schema_snippets[] = {
 	{ "ModifyItem", SNIPPET_LIST_NODES,
 		G_STRUCT_OFFSET(LassoIdWsf2DstRefModify, ModifyItem),
-		"LassoIdWsf2DstRefModifyItem" },
+		"LassoIdWsf2DstRefModifyItem", NULL, NULL },
 	{ "ResultQuery", SNIPPET_LIST_NODES,
 		G_STRUCT_OFFSET(LassoIdWsf2DstRefModify, ResultQuery),
-		"LassoIdWsf2DstRefResultQuery" },
-	{NULL, 0, 0}
+		"LassoIdWsf2DstRefResultQuery", NULL, NULL },
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 static LassoNodeClass *parent_class = NULL;
@@ -100,14 +102,6 @@ init_from_xml(LassoNode *node, xmlNode *xmlnode)
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoIdWsf2DstRefModify *node)
-{
-	node->ModifyItem = NULL;
-	node->ResultQuery = NULL;
-	node->prefixServiceType = NULL;
-	node->hrefServiceType = NULL;
-}
 
 static void
 class_init(LassoIdWsf2DstRefModifyClass *klass)
@@ -138,7 +132,8 @@ lasso_idwsf2_dstref_modify_get_type()
 			NULL,
 			sizeof(LassoIdWsf2DstRefModify),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_IDWSF2_DST_REQUEST,

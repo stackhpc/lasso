@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Initialization functions</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="Lasso Reference Manual">
+<link rel="up" href="architecture.html" title="Lasso Architecture">
+<link rel="prev" href="lasso-Error-Codes.html" title="Error Codes">
+<link rel="next" href="lasso-LassoNode.html" title="LassoNode">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
+<link rel="reference" href="rn01.html" title="Application Programming Interface">
+<link rel="chapter" href="architecture.html" title="Lasso Architecture">
+<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
+<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
+<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
+<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
+<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
+<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
+<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
+<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
+<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
+<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
+<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
+<link rel="part" href="pt01.html" title="Part II. Appendix">
+<link rel="index" href="api-index.html" title="API Index">
+<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="lasso-Error-Codes.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="architecture.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Lasso Reference Manual</th>
+<td><a accesskey="n" href="lasso-LassoNode.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#lasso-Initialization-functions.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#lasso-Initialization-functions.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" title="Initialization functions">
+<a name="lasso-Initialization-functions"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="lasso-Initialization-functions.top_of_page"></a>Initialization functions</span></h2>
+<p>Initialization functions</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="lasso-Initialization-functions.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+#define             LASSO_EXPORT
+#define             LASSO_EXPORT_VAR
+lasso_error_t       lasso_init                          (void);
+lasso_error_t       lasso_shutdown                      (void);
+enum                LassoCheckVersionMode;
+int                 lasso_check_version                 (int major,
+                                                         int minor,
+                                                         int subminor,
+                                                         LassoCheckVersionMode mode);
+void                lasso_set_flag                      (char *flag);
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="lasso-Initialization-functions.description"></a><h2>Description</h2>
+</div>
+<div class="refsect1" title="Details">
+<a name="lasso-Initialization-functions.details"></a><h2>Details</h2>
+<div class="refsect2" title="LASSO_EXPORT">
+<a name="LASSO-EXPORT--CAPS"></a><h3>LASSO_EXPORT</h3>
+<pre class="programlisting">#define             LASSO_EXPORT</pre>
+</div>
+<hr>
+<div class="refsect2" title="LASSO_EXPORT_VAR">
+<a name="LASSO-EXPORT-VAR--CAPS"></a><h3>LASSO_EXPORT_VAR</h3>
+<pre class="programlisting">#define             LASSO_EXPORT_VAR</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_init ()">
+<a name="lasso-init"></a><h3>lasso_init ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_init                          (void);</pre>
+<p>
+Initializes Lasso library.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_shutdown ()">
+<a name="lasso-shutdown"></a><h3>lasso_shutdown ()</h3>
+<pre class="programlisting">lasso_error_t       lasso_shutdown                      (void);</pre>
+<p>
+Clean ups Lasso library.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="enum LassoCheckVersionMode">
+<a name="LassoCheckVersionMode"></a><h3>enum LassoCheckVersionMode</h3>
+<pre class="programlisting">typedef enum {
+	LASSO_CHECK_VERSION_EXACT = 0,
+	LASSO_CHECK_VERSIONABI_COMPATIBLE,
+	LASSO_CHECK_VERSION_NUMERIC
+} LassoCheckVersionMode;
+</pre>
+<p>
+Lasso library version check mode.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="LASSO-CHECK-VERSION-EXACT--CAPS"></a><span class="term"><code class="literal">LASSO_CHECK_VERSION_EXACT</code></span></p></td>
+<td> version should match exactly
+</td>
+</tr>
+<tr>
+<td><p><a name="LASSO-CHECK-VERSIONABI-COMPATIBLE--CAPS"></a><span class="term"><code class="literal">LASSO_CHECK_VERSIONABI_COMPATIBLE</code></span></p></td>
+<td> version should be ABI compatible
+</td>
+</tr>
+<tr>
+<td><p><a name="LASSO-CHECK-VERSION-NUMERIC--CAPS"></a><span class="term"><code class="literal">LASSO_CHECK_VERSION_NUMERIC</code></span></p></td>
+<td> version should be at least that number
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_check_version ()">
+<a name="lasso-check-version"></a><h3>lasso_check_version ()</h3>
+<pre class="programlisting">int                 lasso_check_version                 (int major,
+                                                         int minor,
+                                                         int subminor,
+                                                         LassoCheckVersionMode mode);</pre>
+<p>
+Checks if the loaded version of Lasso library could be used.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>major</code></em> :</span></p></td>
+<td> major version numbe
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>minor</code></em> :</span></p></td>
+<td> minor version number
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>subminor</code></em> :</span></p></td>
+<td> subminor version number
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mode</code></em> :</span></p></td>
+<td> version check mode
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 1 if the loaded lasso library version is OK to use
+    0 if it is not; or a negative value if an error occurs.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_set_flag ()">
+<a name="lasso-set-flag"></a><h3>lasso_set_flag ()</h3>
+<pre class="programlisting">void                lasso_set_flag                      (char *flag);</pre>
+<p>
+Set a debugging flag. You can also use the environment variable LASSO_FLAG
+to get the same effect. LASSO_FLAG must contain flag name separated by spaces, commas,
+tabulations or colons.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>flag</code></em> :</span></p></td>
+<td> a string representing a flag name, prefix with 'no-' to disable it.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

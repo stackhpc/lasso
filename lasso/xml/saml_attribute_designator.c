@@ -1,37 +1,48 @@
-/* $Id: saml_attribute_designator.c 3237 2007-05-30 17:17:45Z dlaniel $
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/saml_attribute_designator.h>
+#include "private.h"
+#include "saml_attribute_designator.h"
 
-/*
- * The schema fragment (oasis-sstc-saml-schema-assertion-1.1.xsd):
- * 
+/**
+ * SECTION:saml_attribute_designator
+ * @short_description: object mapping for a saml:AttributeDesignator
+ *
+ * The schema fragment (oasis-sstc-saml-schema-assertion-1.1.xsd) is:
+ *
+ * <figure>
+ * <title>Schema fragment for saml:AttributeDesignator</title>
+ * <programlisting>
+ * <![CDATA[
  * <element name="AttributeDesignator" type="saml:AttributeDesignatorType"/>
  * <complexType name="AttributeDesignatorType">
  *   <attribute name="AttributeName" type="string" use="required"/>
  *   <attribute name="AttributeNamespace" type="anyURI" use="required"/>
  * </complexType>
+ * ]]>
+ * </programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/
@@ -40,22 +51,16 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "AttributeName", SNIPPET_ATTRIBUTE,
-		G_STRUCT_OFFSET(LassoSamlAttributeDesignator, AttributeName) },
+		G_STRUCT_OFFSET(LassoSamlAttributeDesignator, AttributeName), NULL, NULL, NULL},
 	{ "AttributeNamespace", SNIPPET_ATTRIBUTE,
-		G_STRUCT_OFFSET(LassoSamlAttributeDesignator, AttributeNamespace) },
-	{ NULL, 0, 0 }
+		G_STRUCT_OFFSET(LassoSamlAttributeDesignator, AttributeNamespace), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoSamlAttributeDesignator *node)
-{
-	node->AttributeName = NULL;
-	node->AttributeNamespace = NULL;
-}
 
 static void
 class_init(LassoSamlAttributeDesignatorClass *klass)
@@ -83,20 +88,21 @@ lasso_saml_attribute_designator_get_type()
 			NULL,
 			sizeof(LassoSamlAttributeDesignator),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,
-						   "LassoSamlAttributeDesignator", &this_info, 0);
+				"LassoSamlAttributeDesignator", &this_info, 0);
 	}
 	return this_type;
 }
 
 /**
  * lasso_saml_attribute_designator_new:
- * 
+ *
  * Creates a new #LassoSamlAttributeDesignator object.
- * 
+ *
  * Return value: a newly created #LassoSamlAttributeDesignator object
  **/
 LassoNode*

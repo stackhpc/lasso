@@ -1,28 +1,30 @@
-/* $Id: ps_query_objects_request.c,v 1.0 2005/10/14 15:17:55 fpeters Exp $ 
+/* $Id: ps_query_objects_request.c,v 1.0 2005/10/14 15:17:55 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include "../private.h"
 #include "ps_query_objects_request.h"
+#include "./idwsf2_strings.h"
 
 /**
  * SECTION:ps_query_objects_request
@@ -54,14 +56,14 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "Filter", SNIPPET_CONTENT,
-		G_STRUCT_OFFSET(LassoIdWsf2PsQueryObjectsRequest, Filter) },
+		G_STRUCT_OFFSET(LassoIdWsf2PsQueryObjectsRequest, Filter), NULL, NULL, NULL},
 	{ "Subscription", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoIdWsf2PsQueryObjectsRequest, Subscription) },
+		G_STRUCT_OFFSET(LassoIdWsf2PsQueryObjectsRequest, Subscription), NULL, NULL, NULL},
 	{ "Count", SNIPPET_ATTRIBUTE | SNIPPET_INTEGER | SNIPPET_OPTIONAL_NEG,
-		G_STRUCT_OFFSET(LassoIdWsf2PsQueryObjectsRequest, Count) },
+		G_STRUCT_OFFSET(LassoIdWsf2PsQueryObjectsRequest, Count), NULL, NULL, NULL},
 	{ "Offset", SNIPPET_ATTRIBUTE | SNIPPET_INTEGER | SNIPPET_OPTIONAL_NEG,
-		G_STRUCT_OFFSET(LassoIdWsf2PsQueryObjectsRequest, Offset) },
-	{NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoIdWsf2PsQueryObjectsRequest, Offset), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 static LassoNodeClass *parent_class = NULL;
@@ -74,8 +76,6 @@ static LassoNodeClass *parent_class = NULL;
 static void
 instance_init(LassoIdWsf2PsQueryObjectsRequest *node)
 {
-	node->Filter = NULL;
-	node->Subscription = NULL;
 	node->Count = -1;
 	node->Offset = -1;
 }
@@ -108,6 +108,7 @@ lasso_idwsf2_ps_query_objects_request_get_type()
 			sizeof(LassoIdWsf2PsQueryObjectsRequest),
 			0,
 			(GInstanceInitFunc) instance_init,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_IDWSF2_PS_REQUEST_ABSTRACT,

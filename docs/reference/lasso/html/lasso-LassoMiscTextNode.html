@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>LassoMiscTextNode</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="Lasso Reference Manual">
+<link rel="up" href="architecture.html" title="Lasso Architecture">
+<link rel="prev" href="lasso-registry.html" title="registry">
+<link rel="next" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
+<link rel="reference" href="rn01.html" title="Application Programming Interface">
+<link rel="chapter" href="architecture.html" title="Lasso Architecture">
+<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
+<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
+<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
+<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
+<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
+<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
+<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
+<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
+<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
+<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
+<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
+<link rel="part" href="pt01.html" title="Part II. Appendix">
+<link rel="index" href="api-index.html" title="API Index">
+<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="lasso-registry.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="architecture.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Lasso Reference Manual</th>
+<td><a accesskey="n" href="idff.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#lasso-LassoMiscTextNode.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#lasso-LassoMiscTextNode.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" title="LassoMiscTextNode">
+<a name="lasso-LassoMiscTextNode"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="lasso-LassoMiscTextNode.top_of_page"></a>LassoMiscTextNode</span></h2>
+<p>LassoMiscTextNode</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="lasso-LassoMiscTextNode.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    LassoMiscTextNode;
+LassoNode*          lasso_misc_text_node_new            (void);
+LassoMiscTextNode*  lasso_misc_text_node_new_with_string
+                                                        (const char *content);
+LassoMiscTextNode*  lasso_misc_text_node_new_with_xml_node
+                                                        (xmlNode *xml_node);
+xmlNode*            lasso_misc_text_node_get_xml_content
+                                                        (LassoMiscTextNode *misc_text_node);
+void                lasso_misc_text_node_set_xml_content
+                                                        (LassoMiscTextNode *misc_text_node,
+                                                         xmlNode *node);
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="lasso-LassoMiscTextNode.description"></a><h2>Description</h2>
+</div>
+<div class="refsect1" title="Details">
+<a name="lasso-LassoMiscTextNode.details"></a><h2>Details</h2>
+<div class="refsect2" title="LassoMiscTextNode">
+<a name="LassoMiscTextNode"></a><h3>LassoMiscTextNode</h3>
+<pre class="programlisting">typedef struct {
+	LassoNode parent;
+
+	/* elements */
+	char *content;
+
+	char *name;
+	char *ns_href;
+	char *ns_prefix;
+	gboolean text_child;
+} LassoMiscTextNode;
+</pre>
+</div>
+<hr>
+<div class="refsect2" title="lasso_misc_text_node_new ()">
+<a name="lasso-misc-text-node-new"></a><h3>lasso_misc_text_node_new ()</h3>
+<pre class="programlisting">LassoNode*          lasso_misc_text_node_new            (void);</pre>
+<p>
+Creates a new <span class="type">LassoMiscTextNode</span> object.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a newly created <span class="type">LassoMiscTextNode</span> object
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_misc_text_node_new_with_string ()">
+<a name="lasso-misc-text-node-new-with-string"></a><h3>lasso_misc_text_node_new_with_string ()</h3>
+<pre class="programlisting">LassoMiscTextNode*  lasso_misc_text_node_new_with_string
+                                                        (const char *content);</pre>
+<p>
+Creates a new <span class="type">LassoMiscTextNode</span> object and initializes it with <em class="parameter"><code>content</code></em>. Beware that no
+nodename, so it would create a text child, not an element.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>content</code></em> :</span></p></td>
+<td> the content of newly created <span class="type">LassoMiscTextNode</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a newly created <span class="type">LassoMiscTextNode</span> object
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_misc_text_node_new_with_xml_node ()">
+<a name="lasso-misc-text-node-new-with-xml-node"></a><h3>lasso_misc_text_node_new_with_xml_node ()</h3>
+<pre class="programlisting">LassoMiscTextNode*  lasso_misc_text_node_new_with_xml_node
+                                                        (xmlNode *xml_node);</pre>
+<p>
+Creates a new <span class="type">LassoMiscTextNode</span> object and initialize it with <em class="parameter"><code>xml_node</code></em>.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>xml_node</code></em> :</span></p></td>
+<td> an <span class="type">xmlNode</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a newly created <span class="type">LassoMiscTextNode</span> object
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_misc_text_node_get_xml_content ()">
+<a name="lasso-misc-text-node-get-xml-content"></a><h3>lasso_misc_text_node_get_xml_content ()</h3>
+<pre class="programlisting">xmlNode*            lasso_misc_text_node_get_xml_content
+                                                        (LassoMiscTextNode *misc_text_node);</pre>
+<p>
+Return the xml content in this node.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>misc_text_node</code></em> :</span></p></td>
+<td> a <span class="type">LassoMiscTextNode</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> an <span class="type">xmlNode</span> or NULL.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="lasso_misc_text_node_set_xml_content ()">
+<a name="lasso-misc-text-node-set-xml-content"></a><h3>lasso_misc_text_node_set_xml_content ()</h3>
+<pre class="programlisting">void                lasso_misc_text_node_set_xml_content
+                                                        (LassoMiscTextNode *misc_text_node,
+                                                         xmlNode *node);</pre>
+<p>
+Set the xml content of this <span class="type">LassoMiscTextNode</span></p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>misc_text_node</code></em> :</span></p></td>
+<td> a <span class="type">LassoMiscTextNode</span>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

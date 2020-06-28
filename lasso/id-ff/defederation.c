@@ -1,22 +1,22 @@
-/* $Id: defederation.c 3704 2008-05-15 21:17:44Z fpeters $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -26,15 +26,22 @@
  * SECTION:defederation
  * @short_description: Federation Termination Notification Profile (ID-FF)
  *
+ * The Federation Termination Notification Profiles serves to suppress federations between identity
+ * providers and services providers. It can be initiated by any of the partners using Redirect
+ * or SOAP binding.
+ *
  **/
 
-#include <lasso/id-ff/defederation.h>
+#include "../xml/private.h"
+#include "defederation.h"
 
-#include <lasso/id-ff/providerprivate.h>
-#include <lasso/id-ff/sessionprivate.h>
-#include <lasso/id-ff/identityprivate.h>
-#include <lasso/id-ff/profileprivate.h>
-#include <lasso/id-ff/serverprivate.h>
+#include "providerprivate.h"
+#include "sessionprivate.h"
+#include "identityprivate.h"
+#include "profileprivate.h"
+#include "serverprivate.h"
+#include "../xml/private.h"
+#include "../utils.h"
 
 /*****************************************************************************/
 /* public methods                                                            */
@@ -43,9 +50,9 @@
 /**
  * lasso_defederation_build_notification_msg:
  * @defederation: a #LassoDefederation
- * 
+ *
  * Builds the federation termination notification message.
- * 
+ *
  * It gets the federation termination notification protocol profile and:
  * <itemizedlist>
  * <listitem><para>
@@ -62,7 +69,7 @@
  *   object, sets @msg_body to NULL.
  * </para></listitem>
  * </itemizedlist>
- * 
+ *
  * Return value: 0 on success; or a negative value otherwise.
  **/
 gint
@@ -84,24 +91,21 @@ lasso_defederation_build_notification_msg(LassoDefederation *defederation)
 	}
 
 	/* get the remote provider object */
-	remote_provider = g_hash_table_lookup(profile->server->providers,
-			profile->remote_providerID);
+	remote_provider = lasso_server_get_provider(profile->server, profile->remote_providerID);
 	if (LASSO_IS_PROVIDER(remote_provider) == FALSE) {
 		return critical_error(LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND);
 	}
 
-	/* get the protocol profile type */
-
 	/* build the federation termination notification message (SOAP or HTTP-Redirect) */
 	if (profile->http_request_method == LASSO_HTTP_METHOD_SOAP) {
 		/* build the logout request message */
-		profile->msg_url = lasso_provider_get_metadata_one(
-				remote_provider, "SoapEndpoint");
-		LASSO_SAMLP_REQUEST_ABSTRACT(profile->request)->private_key_file = 
-			profile->server->private_key;
-		LASSO_SAMLP_REQUEST_ABSTRACT(profile->request)->certificate_file = 
-			profile->server->certificate;
-		profile->msg_body = lasso_node_export_to_soap(LASSO_NODE(profile->request));
+		lasso_assign_new_string(profile->msg_url, lasso_provider_get_metadata_one(
+				remote_provider, "SoapEndpoint"));
+		lasso_assign_string(LASSO_SAMLP_REQUEST_ABSTRACT(profile->request)->private_key_file,
+			profile->server->private_key);
+		lasso_assign_string(LASSO_SAMLP_REQUEST_ABSTRACT(profile->request)->certificate_file,
+			profile->server->certificate);
+		lasso_assign_new_string(profile->msg_body, lasso_node_export_to_soap(LASSO_NODE(profile->request)));
 		return 0;
 	}
 
@@ -113,19 +117,20 @@ lasso_defederation_build_notification_msg(LassoDefederation *defederation)
 		if (url == NULL) {
 			return critical_error(LASSO_PROFILE_ERROR_UNKNOWN_PROFILE_URL);
 		}
-		query = lasso_node_export_to_query(LASSO_NODE(profile->request),
+		query = lasso_node_export_to_query_with_password(LASSO_NODE(profile->request),
 				profile->server->signature_method,
-				profile->server->private_key);
+				profile->server->private_key,
+				profile->server->private_key_password);
 
 		if (query == NULL) {
-			g_free(url);
+			lasso_release(url);
 			return critical_error(LASSO_PROFILE_ERROR_BUILDING_QUERY_FAILED);
 		}
 
-		profile->msg_url = lasso_concat_url_query(url, query);
-		profile->msg_body = NULL;
-		g_free(url);
-		g_free(query);
+		lasso_assign_new_string(profile->msg_url, lasso_concat_url_query(url, query));
+		lasso_release(profile->msg_body);
+		lasso_release(url);
+		lasso_release(query);
 
 		return 0;
 	}
@@ -136,7 +141,7 @@ lasso_defederation_build_notification_msg(LassoDefederation *defederation)
 /**
  * lasso_defederation_destroy:
  * @defederation: a #LassoDefederation
- * 
+ *
  * Destroys a #LassoDefederation object.
  **/
 void
@@ -155,7 +160,7 @@ lasso_defederation_destroy(LassoDefederation *defederation)
  * Sets a new federation termination notification to the remote provider id
  * with the provider id of the requester (from the server object) and the name
  * identifier of the federated principal.
- * 
+ *
  * Return value: 0 on success; or a negative value otherwise.
  **/
 gint
@@ -167,28 +172,35 @@ lasso_defederation_init_notification(LassoDefederation *defederation, gchar *rem
 	LassoFederation *federation;
 	LassoSamlNameIdentifier *nameIdentifier;
 	LassoNode *nameIdentifier_n;
+	gint rc = 0;
 
 	g_return_val_if_fail(LASSO_IS_DEFEDERATION(defederation),
 			LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
 
 	profile = LASSO_PROFILE(defederation);
 
-	if (profile->remote_providerID)
-		g_free(profile->remote_providerID);
-	if (profile->request)
-		lasso_node_destroy(LASSO_NODE(profile->request));
+	lasso_release(profile->remote_providerID);
+	lasso_release_gobject(profile->request);
 
 	if (remote_providerID != NULL) {
-		profile->remote_providerID = g_strdup(remote_providerID);
+		lasso_assign_string(profile->remote_providerID, remote_providerID);
 	} else {
-		profile->remote_providerID = lasso_server_get_first_providerID(profile->server);
-		if (profile->remote_providerID == NULL) {
-			return critical_error(LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND);
+		LassoProvider *my_provider;
+		LassoProviderRole role = LASSO_PROVIDER_ROLE_IDP;
+
+		lasso_extract_node_or_fail(my_provider, profile->server, PROVIDER,
+				LASSO_PROFILE_ERROR_MISSING_SERVER);
+		if (my_provider->role == LASSO_PROVIDER_ROLE_IDP) {
+			role = LASSO_PROVIDER_ROLE_SP;
 		}
+		lasso_assign_new_string(profile->remote_providerID,
+				lasso_server_get_first_providerID_by_role(profile->server, role));
+	}
+	if (profile->remote_providerID == NULL) {
+		return critical_error(LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND);
 	}
 
-	remote_provider = g_hash_table_lookup(
-			profile->server->providers, profile->remote_providerID);
+	remote_provider = lasso_server_get_provider(profile->server, profile->remote_providerID);
 	if (LASSO_IS_PROVIDER(remote_provider) == FALSE) {
 		return critical_error(LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND);
 	}
@@ -212,9 +224,9 @@ lasso_defederation_init_notification(LassoDefederation *defederation, gchar *rem
 	nameIdentifier = LASSO_SAML_NAME_IDENTIFIER(nameIdentifier_n);
 
 	if (federation->local_nameIdentifier) {
-		profile->nameIdentifier = g_object_ref(federation->local_nameIdentifier);
+		lasso_assign_gobject(profile->nameIdentifier, federation->local_nameIdentifier);
 	} else {
-		profile->nameIdentifier = g_object_ref(nameIdentifier);
+		lasso_assign_gobject(profile->nameIdentifier, LASSO_NODE(nameIdentifier));
 	}
 
 	/* get / verify http method */
@@ -238,13 +250,13 @@ lasso_defederation_init_notification(LassoDefederation *defederation, gchar *rem
 		profile->request = lasso_lib_federation_termination_notification_new_full(
 				LASSO_PROVIDER(profile->server)->ProviderID,
 				nameIdentifier,
-				profile->server->certificate ? 
+				profile->server->certificate ?
 					LASSO_SIGNATURE_TYPE_WITHX509 : LASSO_SIGNATURE_TYPE_SIMPLE,
 				LASSO_SIGNATURE_METHOD_RSA_SHA1);
 		if (profile->msg_relayState) {
 			message(G_LOG_LEVEL_WARNING,
 					"RelayState was defined but can't be used "\
-					"in SOAP Federation Termination Notification");
+					"in SOAP Federation Termination Notification", NULL);
 		}
 
 	} else { /* LASSO_HTTP_METHOD_REDIRECT */
@@ -253,8 +265,8 @@ lasso_defederation_init_notification(LassoDefederation *defederation, gchar *rem
 				nameIdentifier,
 				LASSO_SIGNATURE_TYPE_NONE,
 				0);
-		LASSO_LIB_FEDERATION_TERMINATION_NOTIFICATION(profile->request)->RelayState = 
-			g_strdup(profile->msg_relayState);
+		lasso_assign_string(LASSO_LIB_FEDERATION_TERMINATION_NOTIFICATION(profile->request)->RelayState,
+			profile->msg_relayState);
 	}
 
 	if (lasso_provider_get_protocol_conformance(remote_provider) < LASSO_PROTOCOL_LIBERTY_1_2) {
@@ -275,17 +287,18 @@ lasso_defederation_init_notification(LassoDefederation *defederation, gchar *rem
 	/* Save notification method */
 	profile->http_request_method = http_method;
 
-	return 0;
+cleanup:
+	return rc;
 }
 
 /**
  * lasso_defederation_process_notification_msg:
  * @defederation: the federation termination object
  * @notification_msg: the federation termination notification message
- * 
+ *
  * Processes a lib:FederationTerminationNotification message.  Rebuilds a
  * request object from the message and optionally verifies its signature.
- * 
+ *
  * Set the msg_nameIdentifier attribute with the NameIdentifier content of the
  * notification object and optionally set the msg_relayState attribute with the
  * RelayState content of the notification object.
@@ -305,16 +318,20 @@ lasso_defederation_process_notification_msg(LassoDefederation *defederation, cha
 
 	profile = LASSO_PROFILE(defederation);
 
-	profile->request = lasso_lib_federation_termination_notification_new();
+	lasso_assign_new_gobject(profile->request, lasso_lib_federation_termination_notification_new());
 	format = lasso_node_init_from_message(LASSO_NODE(profile->request), request_msg);
 	if (format == LASSO_MESSAGE_FORMAT_UNKNOWN || format == LASSO_MESSAGE_FORMAT_ERROR) {
 		return critical_error(LASSO_PROFILE_ERROR_INVALID_MSG);
 	}
 
-	profile->remote_providerID = g_strdup(LASSO_LIB_FEDERATION_TERMINATION_NOTIFICATION(
+	if (format == LASSO_MESSAGE_FORMAT_QUERY) {
+		lasso_assign_new_string(profile->msg_relayState,
+				lasso_get_relaystate_from_query(request_msg));
+	}
+
+	lasso_assign_string(profile->remote_providerID, LASSO_LIB_FEDERATION_TERMINATION_NOTIFICATION(
 				profile->request)->ProviderID);
-	remote_provider = g_hash_table_lookup(profile->server->providers,
-			profile->remote_providerID);
+	remote_provider = lasso_server_get_provider(profile->server, profile->remote_providerID);
 	if (LASSO_IS_PROVIDER(remote_provider) == FALSE) {
 		return critical_error(LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND);
 	}
@@ -328,12 +345,12 @@ lasso_defederation_process_notification_msg(LassoDefederation *defederation, cha
 	if (format == LASSO_MESSAGE_FORMAT_QUERY)
 		profile->http_request_method = LASSO_HTTP_METHOD_REDIRECT;
 
-	profile->nameIdentifier = g_object_ref(LASSO_LIB_FEDERATION_TERMINATION_NOTIFICATION(
-				profile->request)->NameIdentifier);
+	lasso_assign_gobject(profile->nameIdentifier, LASSO_NODE(LASSO_LIB_FEDERATION_TERMINATION_NOTIFICATION(
+				profile->request)->NameIdentifier));
 
 	/* get the RelayState (only available in redirect mode) */
 	if (LASSO_LIB_FEDERATION_TERMINATION_NOTIFICATION(profile->request)->RelayState)
-		profile->msg_relayState = g_strdup(
+		lasso_assign_string(profile->msg_relayState,
 				LASSO_LIB_FEDERATION_TERMINATION_NOTIFICATION(
 					profile->request)->RelayState);
 
@@ -343,10 +360,10 @@ lasso_defederation_process_notification_msg(LassoDefederation *defederation, cha
 /**
  * lasso_defederation_validate_notification:
  * @defederation: a #LassoDefederation
- * 
+ *
  * Checks notification with regards to message status and principal
  * federations; update them accordingly.
- * 
+ *
  * Return value: 0 on success; or a negative value otherwise.
  **/
 gint
@@ -369,11 +386,11 @@ lasso_defederation_validate_notification(LassoDefederation *defederation)
 	/* If SOAP notification, then msg_url and msg_body are NULL */
 	/* if HTTP-Redirect notification, set msg_url with the federation
 	 * termination service return url, and set msg_body to NULL */
-	profile->msg_url = NULL;
-	profile->msg_body = NULL;
+	lasso_release(profile->msg_url)
+	lasso_release(profile->msg_body)
 
 	if (profile->http_request_method == LASSO_HTTP_METHOD_REDIRECT) {
-		remote_provider = g_hash_table_lookup(profile->server->providers,
+		remote_provider = lasso_server_get_provider(profile->server,
 				profile->remote_providerID);
 		if (LASSO_IS_PROVIDER(remote_provider) == FALSE) {
 			return critical_error(LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND);
@@ -393,9 +410,8 @@ lasso_defederation_validate_notification(LassoDefederation *defederation)
 			gchar *url;
 			gchar *query = g_strdup_printf("RelayState=%s", profile->msg_relayState);
 			url = lasso_concat_url_query(profile->msg_url, query);
-			g_free(profile->msg_url);
-			g_free(query);
-			profile->msg_url = url;
+			lasso_release(query);
+			lasso_assign_new_string(profile->msg_url, url);
 		}
 	}
 
@@ -452,6 +468,7 @@ lasso_defederation_get_type()
 			sizeof(LassoDefederation),
 			0,
 			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_PROFILE,
@@ -463,7 +480,7 @@ lasso_defederation_get_type()
 /**
  * lasso_defederation_new:
  * @server: the #LassoServer
- * 
+ *
  * Creates a new #LassoDefederation.
  *
  * Return value: a newly created #LassoDefederation object; or NULL if an error

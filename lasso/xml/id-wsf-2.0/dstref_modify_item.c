@@ -1,28 +1,30 @@
-/* $Id: dstref_modify_item.c,v 1.0 2005/10/14 15:17:55 fpeters Exp $ 
+/* $Id: dstref_modify_item.c,v 1.0 2005/10/14 15:17:55 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include "../private.h"
 #include "dstref_modify_item.h"
+#include "./idwsf2_strings.h"
 
 /**
  * SECTION:dstref_modify_item
@@ -49,19 +51,19 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "Select", SNIPPET_CONTENT,
-		G_STRUCT_OFFSET(LassoIdWsf2DstRefModifyItem, Select) },
+		G_STRUCT_OFFSET(LassoIdWsf2DstRefModifyItem, Select), NULL, NULL, NULL},
 	{ "NewData", SNIPPET_NODE,
 		G_STRUCT_OFFSET(LassoIdWsf2DstRefModifyItem, NewData),
-		"LassoIdWsf2DstRefAppData" },
+		"LassoIdWsf2DstRefAppData", NULL, NULL },
 	{ "notChangedSince", SNIPPET_ATTRIBUTE | SNIPPET_OPTIONAL,
-		G_STRUCT_OFFSET(LassoIdWsf2DstRefModifyItem, notChangedSince) },
+		G_STRUCT_OFFSET(LassoIdWsf2DstRefModifyItem, notChangedSince), NULL, NULL, NULL},
 	{ "overrideAllowed", SNIPPET_ATTRIBUTE | SNIPPET_BOOLEAN | SNIPPET_OPTIONAL,
-		G_STRUCT_OFFSET(LassoIdWsf2DstRefModifyItem, overrideAllowed) },
+		G_STRUCT_OFFSET(LassoIdWsf2DstRefModifyItem, overrideAllowed), NULL, NULL, NULL},
 	{ "id", SNIPPET_ATTRIBUTE | SNIPPET_OPTIONAL,
-		G_STRUCT_OFFSET(LassoIdWsf2DstRefModifyItem, id) },
+		G_STRUCT_OFFSET(LassoIdWsf2DstRefModifyItem, id), NULL, NULL, NULL},
 	{ "itemID", SNIPPET_ATTRIBUTE,
-		G_STRUCT_OFFSET(LassoIdWsf2DstRefModifyItem, itemID) },
-	{NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoIdWsf2DstRefModifyItem, itemID), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 static LassoNodeClass *parent_class = NULL;
@@ -71,16 +73,6 @@ static LassoNodeClass *parent_class = NULL;
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoIdWsf2DstRefModifyItem *node)
-{
-	node->Select = NULL;
-	node->NewData = NULL;
-	node->notChangedSince = NULL;
-	node->overrideAllowed = FALSE;
-	node->id = NULL;
-	node->itemID = NULL;
-}
 
 static void
 class_init(LassoIdWsf2DstRefModifyItemClass *klass)
@@ -109,7 +101,8 @@ lasso_idwsf2_dstref_modify_item_get_type()
 			NULL,
 			sizeof(LassoIdWsf2DstRefModifyItem),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,

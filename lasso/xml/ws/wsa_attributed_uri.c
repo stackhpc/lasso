@@ -1,28 +1,31 @@
-/* $Id: wsa_attributed_uri.c,v 1.0 2005/10/14 15:17:55 fpeters Exp $ 
+/* $Id: wsa_attributed_uri.c,v 1.0 2005/10/14 15:17:55 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include "../private.h"
 #include "wsa_attributed_uri.h"
+#include "../idwsf_strings.h"
+#include "../../registry.h"
 
 /*
  * Schema fragment (ws-addr.xsd):
@@ -43,10 +46,10 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "content", SNIPPET_TEXT_CHILD,
-		G_STRUCT_OFFSET(LassoWsAddrAttributedURI, content) },
+		G_STRUCT_OFFSET(LassoWsAddrAttributedURI, content), NULL, NULL, NULL},
 	{ "attributes", SNIPPET_ATTRIBUTE | SNIPPET_ANY,
-		G_STRUCT_OFFSET(LassoWsAddrAttributedURI, attributes) },
-	{NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoWsAddrAttributedURI, attributes), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 static LassoNodeClass *parent_class = NULL;
@@ -59,7 +62,6 @@ static LassoNodeClass *parent_class = NULL;
 static void
 instance_init(LassoWsAddrAttributedURI *node)
 {
-	node->content = NULL;
 	node->attributes = g_hash_table_new_full(
 		g_str_hash, g_str_equal, g_free, g_free);
 }
@@ -92,10 +94,17 @@ lasso_wsa_attributed_uri_get_type()
 			sizeof(LassoWsAddrAttributedURI),
 			0,
 			(GInstanceInitFunc) instance_init,
+			NULL
 		};
 
 		this_type = g_type_register_static(LASSO_TYPE_NODE,
 				"LassoWsAddrAttributedURI", &this_info, 0);
+		lasso_registry_default_add_direct_mapping(LASSO_WSA_HREF, "Action",
+				LASSO_LASSO_HREF, "LassoWsAddrAttributedURI");
+		lasso_registry_default_add_direct_mapping(LASSO_WSA_HREF, "MessageID",
+				LASSO_LASSO_HREF, "LassoWsAddrAttributedURI");
+		lasso_registry_default_add_direct_mapping(LASSO_WSA_HREF, "To", LASSO_LASSO_HREF,
+				"LassoWsAddrAttributedURI");
 	}
 	return this_type;
 }
@@ -116,15 +125,15 @@ lasso_wsa_attributed_uri_new()
 
 /**
  * lasso_wsa_attributed_uri_new_with_string:
- * @content: 
+ * @content: a content string
  *
  * Creates a new #LassoWsAddrAttributedURI object and initializes it
- * with @content.
+ * with @content as content.
  *
  * Return value: a newly created #LassoWsAddrAttributedURI object
  **/
 LassoWsAddrAttributedURI*
-lasso_wsa_attributed_uri_new_with_string(char *content)
+lasso_wsa_attributed_uri_new_with_string(const char *content)
 {
 	LassoWsAddrAttributedURI *object;
 	object = g_object_new(LASSO_TYPE_WSA_ATTRIBUTED_URI, NULL);

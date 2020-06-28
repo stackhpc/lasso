@@ -1,22 +1,22 @@
-/* $Id: disco_description.h 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -27,9 +27,9 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* __cplusplus */ 
+#endif /* __cplusplus */
 
-#include <lasso/xml/xml.h>
+#include "xml.h"
 
 #define LASSO_TYPE_DISCO_DESCRIPTION (lasso_disco_description_get_type())
 #define LASSO_DISCO_DESCRIPTION(obj) \
@@ -43,7 +43,7 @@ extern "C" {
 	(G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_DISCO_DESCRIPTION))
 #define LASSO_DISCO_DESCRIPTION_GET_CLASS(o) \
 	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_DISCO_DESCRIPTION, \
-				    LassoDiscoDescriptionClass)) 
+				    LassoDiscoDescriptionClass))
 
 typedef struct _LassoDiscoDescription LassoDiscoDescription;
 typedef struct _LassoDiscoDescriptionClass LassoDiscoDescriptionClass;
@@ -59,8 +59,8 @@ struct _LassoDiscoDescription {
 	 *   client fails to gain access to the service because it picked the wrong security
 	 *   mechanism.
 	 */
-	GList *SecurityMechID;
-	GList *CredentialRef;
+	GList *SecurityMechID; /* of strings */
+	GList *CredentialRef; /* of strings */
 
 	/* WsdlRef group */
 	gchar *WsdlURI;
@@ -93,6 +93,12 @@ LASSO_EXPORT LassoDiscoDescription* lasso_disco_description_new_with_BriefSoapHt
 	const gchar *securityMechID,
 	const gchar *endpoint,
 	const gchar *soapAction);
+
+LASSO_EXPORT gboolean lasso_disco_description_has_saml_authentication(
+	LassoDiscoDescription *description);
+
+LASSO_EXPORT gboolean lasso_disco_description_has_x509_authentication(
+	LassoDiscoDescription *description);
 
 #ifdef __cplusplus
 }

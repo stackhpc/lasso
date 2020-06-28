@@ -1,22 +1,22 @@
-/* $Id: authentication.h 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -28,12 +28,12 @@
 #ifdef __cplusplus
 extern "C" {
 
-#endif /* __cplusplus */ 
+#endif /* __cplusplus */
 
 #include <sasl/sasl.h>
 
-#include <lasso/id-wsf/wsf_profile.h>
-#include <lasso/xml/disco_description.h>
+#include "wsf_profile.h"
+#include "../xml/disco_description.h"
 
 #define LASSO_TYPE_AUTHENTICATION (lasso_authentication_get_type())
 #define LASSO_AUTHENTICATION(obj) \
@@ -44,7 +44,7 @@ extern "C" {
 #define LASSO_IS_AUTHENTICATION_CLASS(klass) \
 	(G_TYPE_CHECK_CLASS_TYPE ((klass), LASSO_TYPE_AUTHENTICATION))
 #define LASSO_AUTHENTICATION_GET_CLASS(o) \
-	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_AUTHENTICATION, LassoAuthenticationClass)) 
+	(G_TYPE_INSTANCE_GET_CLASS ((o), LASSO_TYPE_AUTHENTICATION, LassoAuthenticationClass))
 
 typedef struct _LassoAuthentication LassoAuthentication;
 typedef struct _LassoAuthenticationClass LassoAuthenticationClass;
@@ -84,26 +84,26 @@ LASSO_EXPORT LassoAuthentication* lasso_authentication_new(LassoServer *server);
 
 LASSO_EXPORT void lasso_authentication_destroy(LassoAuthentication *authentication);
 
-LASSO_EXPORT gint lasso_authentication_client_start(LassoAuthentication *authentication);
+LASSO_EXPORT lasso_error_t lasso_authentication_client_start(LassoAuthentication *authentication);
 
-LASSO_EXPORT gint lasso_authentication_client_step(LassoAuthentication *authentication);
+LASSO_EXPORT lasso_error_t lasso_authentication_client_step(LassoAuthentication *authentication);
 
 LASSO_EXPORT char *lasso_authentication_get_mechanism_list(LassoAuthentication *authentication);
 
-LASSO_EXPORT gint lasso_authentication_init_request(LassoAuthentication *authentication,
+LASSO_EXPORT lasso_error_t lasso_authentication_init_request(LassoAuthentication *authentication,
 						    LassoDiscoDescription *description,
 						    const gchar *mechanisms,
 						    LassoUserAccount *account);
 
-LASSO_EXPORT gint lasso_authentication_process_request_msg(LassoAuthentication *authentication,
+LASSO_EXPORT lasso_error_t lasso_authentication_process_request_msg(LassoAuthentication *authentication,
 							   const gchar *soap_msg);
 
-LASSO_EXPORT gint lasso_authentication_process_response_msg(LassoAuthentication *authentication,
+LASSO_EXPORT lasso_error_t lasso_authentication_process_response_msg(LassoAuthentication *authentication,
 							    const gchar *soap_msg);
 
-LASSO_EXPORT gint lasso_authentication_server_start(LassoAuthentication *authentication);
+LASSO_EXPORT lasso_error_t lasso_authentication_server_start(LassoAuthentication *authentication);
 
-LASSO_EXPORT gint lasso_authentication_server_step(LassoAuthentication *authentication);
+LASSO_EXPORT lasso_error_t lasso_authentication_server_step(LassoAuthentication *authentication);
 
 #ifdef __cplusplus
 }

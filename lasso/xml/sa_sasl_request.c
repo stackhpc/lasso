@@ -1,28 +1,30 @@
-/* $Id: sa_sasl_request.c 3704 2008-05-15 21:17:44Z fpeters $
+/* $Id$
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
  * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
- * 
+ *
  * Authors: See AUTHORS file in top-level directory.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <lasso/xml/sa_sasl_request.h>
+#include "private.h"
+#include "sa_sasl_request.h"
+#include "./idwsf_strings.h"
 
 /**
  * SECTION:sa_sasl_request
@@ -30,7 +32,7 @@
  *
  * <figure><title>Schema fragment for sa:SASLRequest</title>
  * <programlisting><![CDATA[
- * 
+ *
  *  <xs:element name="SASLRequest">
  *    <xs:complexType>
  *      <xs:sequence>
@@ -41,7 +43,7 @@
  *            </xs:simpleContent>
  *          </xs:complexType>
  *        </xs:element>
- *        <xs:element ref="lib:RequestAuthnContext" minOccurs="0"/> 
+ *        <xs:element ref="lib:RequestAuthnContext" minOccurs="0"/>
  *      </xs:sequence>
  *      <xs:attribute name="mechanism"type="xs:string" use="required"/>
  *      <xs:attribute name="authzID" type="xs:string" use="optional"/>
@@ -51,7 +53,7 @@
  *  </xs:element>
  * ]]></programlisting>
  * </figure>
- */ 
+ */
 
 /*****************************************************************************/
 /* private methods                                                           */
@@ -59,35 +61,24 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "Data", SNIPPET_LIST_CONTENT,
-	  G_STRUCT_OFFSET(LassoSaSASLRequest, Data) },
+		G_STRUCT_OFFSET(LassoSaSASLRequest, Data), NULL, NULL, NULL},
 	{ "RequestAuthnContext", SNIPPET_NODE,
-	  G_STRUCT_OFFSET(LassoSaSASLRequest, RequestAuthnContext) },
+		G_STRUCT_OFFSET(LassoSaSASLRequest, RequestAuthnContext), NULL, NULL, NULL},
 	{ "mechanism", SNIPPET_ATTRIBUTE,
-	  G_STRUCT_OFFSET(LassoSaSASLRequest, mechanism) },
+		G_STRUCT_OFFSET(LassoSaSASLRequest, mechanism), NULL, NULL, NULL},
 	{ "authzID", SNIPPET_ATTRIBUTE,
-	  G_STRUCT_OFFSET(LassoSaSASLRequest, authzID) },
+		G_STRUCT_OFFSET(LassoSaSASLRequest, authzID), NULL, NULL, NULL},
 	{ "advisoryAuthnID", SNIPPET_ATTRIBUTE,
-	  G_STRUCT_OFFSET(LassoSaSASLRequest, advisoryAuthnID) },
+		G_STRUCT_OFFSET(LassoSaSASLRequest, advisoryAuthnID), NULL, NULL, NULL},
 	{ "id", SNIPPET_ATTRIBUTE,
-	  G_STRUCT_OFFSET(LassoSaSASLRequest, id) },
-	{ NULL, 0, 0}
+		G_STRUCT_OFFSET(LassoSaSASLRequest, id), NULL, NULL, NULL},
+	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
-static void
-instance_init(LassoSaSASLRequest *node)
-{
-	node->Data = NULL;
-	node->RequestAuthnContext = NULL;
-
-	node->mechanism = NULL;
-	node->authzID = NULL;
-	node->advisoryAuthnID = NULL;
-	node->id = NULL;
-}
 
 static void
 class_init(LassoSaSASLRequestClass *klass)
@@ -115,9 +106,10 @@ lasso_sa_sasl_request_get_type()
 			NULL,
 			sizeof(LassoSaSASLRequest),
 			0,
-			(GInstanceInitFunc) instance_init,
+			NULL,
+			NULL
 		};
-		
+
 		this_type = g_type_register_static(LASSO_TYPE_NODE,
 				"LassoSaSASLRequest", &this_info, 0);
 	}
@@ -133,19 +125,6 @@ lasso_sa_sasl_request_new(const gchar *mechanism)
 
 	node = g_object_new(LASSO_TYPE_SA_SASL_REQUEST, NULL);
 	node->mechanism = g_strdup(mechanism);
-
-	return node;
-}
-
-LassoSaSASLRequest*
-lasso_sa_sasl_request_new_from_message(const gchar *message)
-{
-	LassoSaSASLRequest *node;
-
-	g_return_val_if_fail(message != NULL, NULL);
-
-	node = g_object_new(LASSO_TYPE_SA_SASL_REQUEST, NULL);
-	lasso_node_init_from_message(LASSO_NODE(node), message);
 
 	return node;
 }
