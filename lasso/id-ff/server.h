@@ -1,8 +1,8 @@
-/* $Id: server.h,v 1.50 2006/11/19 20:07:46 fpeters Exp $ 
+/* $Id: server.h 3237 2007-05-30 17:17:45Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -36,6 +36,7 @@ extern "C" {
 #else
 typedef void LassoDiscoServiceInstance;
 #endif
+
 #include <lasso/id-ff/provider.h>
 
 
@@ -85,7 +86,8 @@ LASSO_EXPORT gint lasso_server_add_provider (LassoServer *server,
 		LassoProviderRole role, const gchar *metadata,
 		const gchar *public_key, const gchar *ca_cert_chain);
 
-LASSO_EXPORT gint lasso_server_add_service(LassoServer *server, LassoDiscoServiceInstance *service);
+LASSO_EXPORT gint lasso_server_add_service(LassoServer *server, LassoNode *service);
+LASSO_EXPORT gint lasso_server_add_service_from_dump(LassoServer *server, const gchar *dump);
 
 LASSO_EXPORT void lasso_server_destroy(LassoServer *server);
 

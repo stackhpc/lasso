@@ -1,8 +1,8 @@
-/* $Id: dst_modification.c,v 1.3 2005/01/23 16:36:44 eraviart Exp $ 
+/* $Id: dst_modification.c 3237 2007-05-30 17:17:45Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.

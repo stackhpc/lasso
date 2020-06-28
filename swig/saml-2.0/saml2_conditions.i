@@ -1,29 +1,66 @@
+/* $Id: saml2_conditions.i 3385 2007-08-21 11:17:52Z fpeters $ 
+ *
+ * Lasso - A free implementation of the Liberty Alliance specifications.
+ *
+ * Copyright (C) 2004-2007 Entr'ouvert
+ * http://lasso.entrouvert.org
+ * 
+ * Authors: See AUTHORS file in top-level directory.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(Saml2Conditions) LassoSaml2Conditions;
 #endif
 typedef struct {
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(notBefore) NotBefore;
 #endif
 	char *NotBefore;
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(notOnOrAfter) NotOnOrAfter;
 #endif
 	char *NotOnOrAfter;
 } LassoSaml2Conditions;
 %extend LassoSaml2Conditions {
-#ifndef SWIGPHP4
+
+#ifndef SWIG_PHP_RENAMES
 	%rename(condition) Condition;
 #endif
 	%newobject Condition_get;
 	LassoNodeList *Condition;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(audienceRestriction) AudienceRestriction;
 #endif
 	%newobject AudienceRestriction_get;
 	LassoNodeList *AudienceRestriction;
+
+#ifndef SWIG_PHP_RENAMES
+	%rename(oneTimeUse) OneTimeUse;
+#endif
+	%newobject OneTimeUse_get;
+	LassoNodeList *OneTimeUse;
+
+#ifndef SWIG_PHP_RENAMES
+	%rename(proxyRestriction) ProxyRestriction;
+#endif
+	%newobject ProxyRestriction_get;
+	LassoNodeList *ProxyRestriction;
+
 
 	/* Constructor, Destructor & Static Methods */
 	LassoSaml2Conditions();
@@ -40,17 +77,33 @@ typedef struct {
 
 #define LassoSaml2Conditions_get_Condition(self) get_node_list((self)->Condition)
 #define LassoSaml2Conditions_Condition_get(self) get_node_list((self)->Condition)
-#define LassoSaml2Conditions_set_Condition(self, value) set_node_list(&(self)->Condition, (value))
-#define LassoSaml2Conditions_Condition_set(self, value) set_node_list(&(self)->Condition, (value))
+#define LassoSaml2Conditions_set_Condition(self,value) set_node_list(&(self)->Condition, (value))
+#define LassoSaml2Conditions_Condition_set(self,value) set_node_list(&(self)->Condition, (value))
+                    
 
 /* AudienceRestriction */
 
 #define LassoSaml2Conditions_get_AudienceRestriction(self) get_node_list((self)->AudienceRestriction)
 #define LassoSaml2Conditions_AudienceRestriction_get(self) get_node_list((self)->AudienceRestriction)
-#define LassoSaml2Conditions_set_AudienceRestriction(self, value) set_node_list(&(self)->AudienceRestriction, (value))
-#define LassoSaml2Conditions_AudienceRestriction_set(self, value) set_node_list(&(self)->AudienceRestriction, (value))
+#define LassoSaml2Conditions_set_AudienceRestriction(self,value) set_node_list(&(self)->AudienceRestriction, (value))
+#define LassoSaml2Conditions_AudienceRestriction_set(self,value) set_node_list(&(self)->AudienceRestriction, (value))
+                    
 
+/* OneTimeUse */
 
+#define LassoSaml2Conditions_get_OneTimeUse(self) get_node_list((self)->OneTimeUse)
+#define LassoSaml2Conditions_OneTimeUse_get(self) get_node_list((self)->OneTimeUse)
+#define LassoSaml2Conditions_set_OneTimeUse(self,value) set_node_list(&(self)->OneTimeUse, (value))
+#define LassoSaml2Conditions_OneTimeUse_set(self,value) set_node_list(&(self)->OneTimeUse, (value))
+                    
+
+/* ProxyRestriction */
+
+#define LassoSaml2Conditions_get_ProxyRestriction(self) get_node_list((self)->ProxyRestriction)
+#define LassoSaml2Conditions_ProxyRestriction_get(self) get_node_list((self)->ProxyRestriction)
+#define LassoSaml2Conditions_set_ProxyRestriction(self,value) set_node_list(&(self)->ProxyRestriction, (value))
+#define LassoSaml2Conditions_ProxyRestriction_set(self,value) set_node_list(&(self)->ProxyRestriction, (value))
+                    
 
 
 /* Constructors, destructors & static methods implementations */

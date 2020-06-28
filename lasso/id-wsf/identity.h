@@ -1,8 +1,8 @@
-/* $Id: identity.h,v 1.2 2005/09/05 10:00:07 nclapies Exp $
+/* $Id: identity.h 3237 2007-05-30 17:17:45Z dlaniel $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -39,7 +39,6 @@ LASSO_EXPORT GList* lasso_identity_get_offerings(LassoIdentity *identity,
 		const char *service_type);
 LASSO_EXPORT LassoDiscoResourceOffering* lasso_identity_get_resource_offering(
 		LassoIdentity *identity, const char *entryID);
-
 
 #ifdef __cplusplus
 }

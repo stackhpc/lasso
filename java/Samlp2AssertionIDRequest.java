@@ -25,12 +25,12 @@ public class Samlp2AssertionIDRequest extends Samlp2RequestAbstract {
   super.delete();
 }
 
-  public void setAssertionIdRef(String value) {
-    lassoJNI.Samlp2AssertionIDRequest_assertionIdRef_set(swigCPtr, this, value);
+  public void setAssertionIDRef(String value) {
+    lassoJNI.Samlp2AssertionIDRequest_assertionIDRef_set(swigCPtr, this, value);
   }
 
-  public String getAssertionIdRef() {
-    return lassoJNI.Samlp2AssertionIDRequest_assertionIdRef_get(swigCPtr, this);
+  public String getAssertionIDRef() {
+    return lassoJNI.Samlp2AssertionIDRequest_assertionIDRef_get(swigCPtr, this);
   }
 
   public void setIssuer(Saml2NameID value) {

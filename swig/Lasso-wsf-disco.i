@@ -1,10 +1,10 @@
 /* -*- Mode: c; c-basic-offset: 8 -*-
  *
- * $Id: Lasso-wsf-disco.i,v 1.7 2006/12/20 23:41:44 fpeters Exp $
+ * $Id: Lasso-wsf-disco.i 3334 2007-07-02 16:39:58Z dlaniel $
  *
  * SWIG bindings for Lasso Library
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  *
  * Authors: See AUTHORS file in top-level directory.
@@ -34,7 +34,7 @@
 %}
 
 /* WSF prefix & href */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(DISCO_HREF) LASSO_DISCO_HREF;
 %rename(DISCO_PREFIX) LASSO_DISCO_PREFIX;
 #endif
@@ -42,7 +42,7 @@
 #define LASSO_DISCO_PREFIX "disco"
 
 /* WSF status code */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(DISCO_STATUS_CODE_OK) LASSO_DISCO_STATUS_CODE_OK;
 %rename(DISCO_STATUS_CODE_FAILED) LASSO_DISCO_STATUS_CODE_FAILED;
 %rename(DISCO_STATUS_CODE_REMOVE_ENTRY) LASSO_DISCO_STATUS_CODE_REMOVE_ENTRY;
@@ -68,12 +68,12 @@
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(DiscoAuthenticateRequester) LassoDiscoAuthenticateRequester;
 #endif
 typedef struct {
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(descriptionIdRefs) descriptionIDRefs;
 #endif
 	char *descriptionIDRefs;
@@ -115,12 +115,12 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(DiscoAuthorizeRequester) LassoDiscoAuthorizeRequester;
 #endif
 typedef struct {
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(descriptionIdRefs) descriptionIDRefs;
 #endif
 	char *descriptionIDRefs;
@@ -162,12 +162,12 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(DiscoAuthenticateSessionContext) LassoDiscoAuthenticateSessionContext;
 #endif
 typedef struct {
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(descriptionIdRefs) descriptionIDRefs;
 #endif
 	char *descriptionIDRefs;
@@ -209,12 +209,12 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(DiscoEncryptResourceID) LassoDiscoEncryptResourceID;
 #endif
 typedef struct {
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(descriptionIdRefs) descriptionIDRefs;
 #endif
 	char *descriptionIDRefs;
@@ -256,12 +256,12 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(DiscoSendSingleLogout) LassoDiscoSendSingleLogout;
 #endif
 typedef struct {
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(descriptionIdRefs) descriptionIDRefs;
 #endif
 	char *descriptionIDRefs;
@@ -303,12 +303,12 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(DiscoGenerateBearerToken) LassoDiscoGenerateBearerToken;
 #endif
 typedef struct {
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(descriptionIdRefs) descriptionIDRefs;
 #endif
 	char *descriptionIDRefs;
@@ -350,7 +350,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(DiscoCredentials) LassoDiscoCredentials;
 #endif
 typedef struct {
@@ -400,30 +400,30 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(DiscoDescription) LassoDiscoDescription;
 #endif
 typedef struct {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(endpoint) Endpoint;
 #endif
 	char *Endpoint;
 
 	char *id;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(serviceNameRef) ServiceNameRef;
 #endif
 	char *ServiceNameRef;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(soapAction) SoapAction;
 #endif
 	char *SoapAction;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(wsdlUri) WsdlURI;
 #endif
 	char *WsdlURI;
@@ -431,13 +431,13 @@ typedef struct {
 %extend LassoDiscoDescription {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(credentialRef) CredentialRef;
 #endif
 	%newobject CredentialRef_get;
 	LassoStringList *CredentialRef;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(securityMechId) SecurityMechID;
 #endif
 	%newobject SecurityMechID_get;
@@ -465,6 +465,7 @@ typedef struct {
 	char *dump();
 
 	/* Methods */
+
 	void addSecurityMechId(const char *security_mech_id);
 }
 
@@ -492,15 +493,18 @@ typedef struct {
 #define new_LassoDiscoDescription lasso_disco_description_new
 #define delete_LassoDiscoDescription(self) lasso_node_destroy(LASSO_NODE(self))
 
+/* Implementations of methods inherited from LassoNode */
+
+#define LassoDiscoDescription_dump(self) lasso_node_dump(LASSO_NODE(self))
+
 /* Implementations of methods */
 
-/* Implementations of methods inherited from LassoNode */
+void
+LassoDiscoDescription_addSecurityMechId(LassoDiscoDescription *self, const char *security_mech_id);
 void
 LassoDiscoDescription_addSecurityMechId(LassoDiscoDescription *self, const char *security_mech_id) {
 	self->SecurityMechID = g_list_append(self->SecurityMechID, g_strdup(security_mech_id));
 }
-
-#define LassoDiscoDescription_dump(self) lasso_node_dump(LASSO_NODE(self))
 
 %}
 
@@ -510,7 +514,7 @@ LassoDiscoDescription_addSecurityMechId(LassoDiscoDescription *self, const char 
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(DiscoEncryptedResourceID) LassoDiscoEncryptedResourceID;
 #endif
 typedef struct {
@@ -551,7 +555,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(DiscoInsertEntry) LassoDiscoInsertEntry;
 #endif
 typedef struct {
@@ -562,7 +566,7 @@ typedef struct {
 	%newobject any_get;
 	LassoNodeList *any;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(resourceOffering) ResourceOffering;
 #endif
 	%newobject ResourceOffering_get;
@@ -613,7 +617,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(DiscoModify) LassoDiscoModify;
 #endif
 typedef struct {
@@ -624,25 +628,25 @@ typedef struct {
 %extend LassoDiscoModify {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(insertEntry) InsertEntry;
 #endif
 	%newobject InsertEntry_get;
 	LassoNodeList *InsertEntry;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(removeEntry) RemoveEntry;
 #endif
 	%newobject RemoveEntry_get;
 	LassoNodeList *RemoveEntry;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(resourceId) ResourceID;
 #endif
 	%newobject ResourceID_get;
 	LassoDiscoResourceID *ResourceID;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(encryptedResourceId) EncryptedResourceID;
 #endif
 	%newobject EncryptedResourceID_get;
@@ -710,7 +714,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(DiscoModifyResponse) LassoDiscoModifyResponse;
 #endif
 typedef struct {
@@ -718,7 +722,7 @@ typedef struct {
 
 	char *id;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(newEntryIds) newEntryIDs;
 #endif
 	char *newEntryIDs;
@@ -727,13 +731,13 @@ typedef struct {
 	/* Attributes */
 
 	/* FIXME: Missing from Lasso. */
-/* #ifndef SWIGPHP4 */
+/* #ifndef SWIG_PHP_RENAMES */
 /* 	%rename(extension) Extension; */
 /* #endif */
 /* 	%newobject Extension_get; */
 /* 	xmlNode *Extension; */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(status) Status;
 #endif
 	%newobject Status_get;
@@ -785,7 +789,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(DiscoOptions) LassoDiscoOptions;
 #endif
 typedef struct {
@@ -793,7 +797,7 @@ typedef struct {
 %extend LassoDiscoOptions {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(option) Option;
 #endif
 	%newobject Option_get;
@@ -838,7 +842,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(DiscoQuery) LassoDiscoQuery;
 #endif
 typedef struct {
@@ -849,19 +853,19 @@ typedef struct {
 %extend LassoDiscoQuery {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(encryptedResourceId) EncryptedResourceID;
 #endif
 	%newobject EncryptedResourceID_get;
 	LassoDiscoEncryptedResourceID *EncryptedResourceID;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(requestedServiceType) RequestedServiceType;
 #endif
 	%newobject RequestedServiceType_get;
 	LassoNodeList *RequestedServiceType;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(resourceId) ResourceID;
 #endif
 	%newobject ResourceID_get;
@@ -918,7 +922,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(DiscoQueryResponse) LassoDiscoQueryResponse;
 #endif
 typedef struct {
@@ -929,19 +933,19 @@ typedef struct {
 %extend LassoDiscoQueryResponse {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(credentials) Credentials;
 #endif
 	%newobject Credentials_get;
 	LassoDiscoCredentials *Credentials;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(resourceOffering) ResourceOffering;
 #endif
 	%newobject ResourceOffering_get;
 	LassoNodeList *ResourceOffering;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(status) Status;
 #endif
 	%newobject Status_get;
@@ -998,13 +1002,13 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(DiscoRemoveEntry) LassoDiscoRemoveEntry;
 #endif
 typedef struct {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(entryId) entryID;
 #endif
 	char *entryID;
@@ -1041,13 +1045,13 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(DiscoRequestedServiceType) LassoDiscoRequestedServiceType;
 #endif
 typedef struct {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(serviceType) ServiceType;
 #endif
 	char *ServiceType;
@@ -1055,7 +1059,7 @@ typedef struct {
 %extend LassoDiscoRequestedServiceType {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(options) Options;
 #endif
 	%newobject Options_get;
@@ -1100,7 +1104,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(DiscoResourceID) LassoDiscoResourceID;
 #endif
 typedef struct {
@@ -1142,25 +1146,25 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(DiscoResourceOffering) LassoDiscoResourceOffering;
 #endif
 typedef struct {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
   /* XXX: SWIG 1.3.31 fails to compile the PHP binding it generates if this
    * part is present */
 
-#if !defined(SWIGPHP4) && !defined(SWIGCSHARP) && !defined(SWIGJAVA)
+#if !defined(SWIG_PHP_RENAMES) && !defined(SWIGCSHARP) && !defined(SWIGJAVA)
 	/* "abstract" is a reserved word in PHP, C# and Java. */
 	%rename(abstract) Abstract;
 #endif
 	char *Abstract;
 
-#endif /* !SWIGPHP4 */
+#endif /* !SWIG_PHP_RENAMES */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(entryId) entryID;
 #endif
 	char *entryID;
@@ -1168,25 +1172,25 @@ typedef struct {
 %extend LassoDiscoResourceOffering {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(encryptedResourceId) EncryptedResourceID;
 #endif
 	%newobject EncryptedResourceID_get;
 	LassoDiscoEncryptedResourceID *EncryptedResourceID;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(options) Options;
 #endif
 	%newobject Options_get;
 	LassoDiscoOptions *Options;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(resourceId) ResourceID;
 #endif
 	%newobject ResourceID_get;
 	LassoDiscoResourceID *ResourceID;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(serviceInstance) ServiceInstance;
 #endif
 	%newobject ServiceInstance_get;
@@ -1249,18 +1253,18 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(DiscoServiceInstance) LassoDiscoServiceInstance;
 #endif
 typedef struct {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(serviceType) ServiceType;
 #endif
 	char *ServiceType;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(providerId) ProviderID;
 #endif
 	char *ProviderID;
@@ -1268,7 +1272,7 @@ typedef struct {
 %extend LassoDiscoServiceInstance {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(description) Description;
 #endif
 	%newobject Description_get;

@@ -1,10 +1,10 @@
 /* -*- Mode: c; c-basic-offset: 8 -*-
  *
- * $Id: Lasso.i,v 1.246 2007/01/03 23:17:52 fpeters Exp $
+ * $Id: Lasso.i 3382 2007-08-21 08:42:58Z fpeters $
  *
  * SWIG bindings for Lasso Library
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  *
  * Authors: See AUTHORS file in top-level directory.
@@ -28,10 +28,15 @@
 %module lasso
 
 
-%include exception.i       
+%include exception.i
 %include typemaps.i
 
-#ifndef SWIGPHP4
+#if defined(SWIGPHP4) || defined(SWIGPHP5)
+#define SWIG_PHP_RENAMES
+#endif
+
+
+#ifndef SWIG_PHP_RENAMES
 %rename(WSF_SUPPORT) LASSO_WSF_SUPPORT;
 #endif
 %include wsf-support.i
@@ -40,7 +45,7 @@
 #define LASSO_WSF_ENABLED
 #endif
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SAML2_SUPPORT) LASSO_SAML2_SUPPORT;
 #endif
 
@@ -59,6 +64,7 @@
 #include <lasso/lasso.h>
 #include <lasso/xml/lib_assertion.h>
 #include <lasso/xml/saml_attribute_value.h>
+#include <lasso/xml/misc_text_node.h>
 
 #ifdef LASSO_WSF_ENABLED
 #include <lasso/xml/disco_resource_id.h>
@@ -91,14 +97,14 @@
 
 %{
 
-/* 
+/*
  * Thanks to the patch in this Debian bug for the solution
  * to the crash inside vsnprintf on some architectures.
  *
  * "reuse of args inside the while(1) loop is in violation of the
  * specs and only happens to work by accident on other systems."
  *
- * http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=104325 
+ * http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=104325
  */
 
 #ifndef va_copy
@@ -114,7 +120,7 @@
 /*#define %nonewobject %feature("new","")*/
 
 /*
- * In Windows, function free() segfaults when used for strings allocated 
+ * In Windows, function free() segfaults when used for strings allocated
  * using Glib.
  */
 
@@ -128,6 +134,12 @@
 
 #ifdef SWIGPYTHON
 %typemap(in,parse="z") char * "";
+%{
+/* hack around swig not declaring functions by declaring it ourself here,
+ * but it may break in a future swig version, this is just to get a clean
+ * build without any warning of the Python binding with SWIG 1.3.31... */
+SWIGEXPORT void init_lasso(void);
+%}
 #endif
 
 
@@ -225,8 +237,8 @@ static void throw_exception_msg(int errorCode) {
 
 %{
 
-PyObject *lassoError;
-PyObject *lassoWarning;
+PyObject *lassoError = NULL;
+PyObject *lassoWarning = NULL;
 
 static void lasso_exception(int errorCode) {
 	char errorMsg[256];
@@ -294,8 +306,7 @@ static void build_exception_msg(int errorCode, char *errorMsg) {
 	if (errorCode) {
 		char errorMsg[256];
 		int swig_error = SWIG_RuntimeError;
-		if (errorCode == LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ || 
-				errorCode == LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ) {
+		if (errorCode == LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ) {
 			swig_error = SWIG_ValueError;
 		}
 		build_exception_msg(errorCode, errorMsg);
@@ -526,7 +537,8 @@ typedef struct node_info {
 #endif
 } node_info;
 
-static node_info node_infos[250]; /* FIXME: Size should be computed */
+#define NODE_INFOS_SIZE 500
+static node_info node_infos[NODE_INFOS_SIZE]; /* FIXME: Size should be computed */
 
 /* Cast a LassoNode into the appropriate derivated class. */
 static swig_type_info *dynamic_cast_node(void **nodePointer) {
@@ -543,6 +555,7 @@ static swig_type_info *dynamic_cast_node(void **nodePointer) {
 	return NULL;
 }
 
+#ifndef SWIGPYTHON
 static node_info *get_node_info_with_swig(swig_type_info *swig) {
 	node_info *info;
 
@@ -552,6 +565,7 @@ static node_info *get_node_info_with_swig(swig_type_info *swig) {
 	}
 	return NULL;
 }
+#endif
 
 #if defined(PHP_VERSION) && ! defined(PHP_VERSION_ID)
 static void set_node_info(node_info *info, char *name, char *superName, swig_type_info *swig,
@@ -560,6 +574,7 @@ static void set_node_info(node_info *info, char *name, char *superName, swig_typ
 static void set_node_info(node_info *info, char *name, char *superName, swig_type_info *swig) {
 #endif
 	node_info *super;
+	static int node_info_count = 0;
 
 	info->name = name;
 	if (superName) {
@@ -568,7 +583,7 @@ static void set_node_info(node_info *info, char *name, char *superName, swig_typ
 				break;
 		if (super == info) {
 			printf("Lasso Swig Alert: Unknown super class %s for class %s\n",
-			       superName, name);
+					superName, name);
 			super = NULL;
 		}
 	} else {
@@ -579,6 +594,11 @@ static void set_node_info(node_info *info, char *name, char *superName, swig_typ
 #if defined(PHP_VERSION) && ! defined(PHP_VERSION_ID)
 	info->php = php;
 #endif
+	node_info_count++;
+	if (node_info_count >= NODE_INFOS_SIZE) {
+		fprintf(stderr,	"Too many allocated objects. You must increase NODE_INFOS_SIZE constant in Lasso.i.\n");
+		abort();
+	}
 }
 
 %}
@@ -660,6 +680,10 @@ DYNAMIC_CAST(SWIGTYPE_p_LassoSamlpResponseAbstract, dynamic_cast_node);
 SET_NODE_INFO(Node, DowncastableNode)
 %include inheritance.h
 %include saml-2.0/inheritance.h
+#ifdef LASSO_WSF_ENABLED
+%include ws/inheritance.h
+%include id-wsf-2.0/inheritance.h
+#endif /* ifdef LASSO_WSF_ENABLED */
 
 #else /* ifdef SWIGCSHARP */
 
@@ -675,6 +699,10 @@ SET_NODE_INFO(Node, DowncastableNode)
 SET_NODE_INFO(Node, DowncastableNode)
 %include inheritance.h
 %include saml-2.0/inheritance.h
+#ifdef LASSO_WSF_ENABLED
+%include ws/inheritance.h
+%include id-wsf-2.0/inheritance.h
+#endif /* ifdef LASSO_WSF_ENABLED */
 
 #else /* ifdef SWIGJAVA */
 
@@ -697,6 +725,10 @@ SET_NODE_INFO(Node, DowncastableNode)
 
 #include <swig/inheritance.h>
 #include <swig/saml-2.0/inheritance.h>
+#ifdef LASSO_WSF_ENABLED
+#include <swig/ws/inheritance.h>
+#include <swig/id-wsf-2.0/inheritance.h>
+#endif /* ifdef LASSO_WSF_ENABLED */
 
 	info->name = NULL;
 	info->swig = NULL;
@@ -720,7 +752,7 @@ SET_NODE_INFO(Node, DowncastableNode)
 #endif /* ifdef SWIGJAVA */
 
 /* HttpMethod */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(HTTP_METHOD_NONE) LASSO_HTTP_METHOD_NONE;
 %rename(HTTP_METHOD_ANY) LASSO_HTTP_METHOD_ANY;
 %rename(HTTP_METHOD_IDP_INITIATED) LASSO_HTTP_METHOD_IDP_INITIATED;
@@ -745,7 +777,7 @@ typedef enum {
 } LassoHttpMethod;
 
 /* MdProtocolType */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(MD_PROTOCOL_TYPE_FEDERATION_TERMINATION) LASSO_MD_PROTOCOL_TYPE_FEDERATION_TERMINATION;
 %rename(MD_PROTOCOL_TYPE_NAME_IDENTIFIER_MAPPING) LASSO_MD_PROTOCOL_TYPE_NAME_IDENTIFIER_MAPPING;
 %rename(MD_PROTOCOL_TYPE_REGISTER_NAME_IDENTIFIER) LASSO_MD_PROTOCOL_TYPE_REGISTER_NAME_IDENTIFIER;
@@ -767,7 +799,7 @@ typedef enum {
 } LassoMdProtocolType;
 
 /* Consent */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(LIB_CONSENT_OBTAINED) LASSO_LIB_CONSENT_OBTAINED;
 %rename(LIB_CONSENT_OBTAINED_PRIOR) LASSO_LIB_CONSENT_OBTAINED_PRIOR;
 %rename(LIB_CONSENT_OBTAINED_CURRENT_IMPLICIT) LASSO_LIB_CONSENT_OBTAINED_CURRENT_IMPLICIT;
@@ -783,7 +815,7 @@ typedef enum {
 #define LASSO_LIB_CONSENT_INAPPLICABLE "urn:liberty:consent:inapplicable"
 
 /* NameIdPolicyType */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(LIB_NAMEID_POLICY_TYPE_NONE) LASSO_LIB_NAMEID_POLICY_TYPE_NONE;
 %rename(LIB_NAMEID_POLICY_TYPE_ONE_TIME) LASSO_LIB_NAMEID_POLICY_TYPE_ONE_TIME;
 %rename(LIB_NAMEID_POLICY_TYPE_FEDERATED) LASSO_LIB_NAMEID_POLICY_TYPE_FEDERATED;
@@ -795,7 +827,7 @@ typedef enum {
 #define LASSO_LIB_NAMEID_POLICY_TYPE_ANY "any"
 
 /* ProtocolProfile */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(LIB_PROTOCOL_PROFILE_BRWS_ART) LASSO_LIB_PROTOCOL_PROFILE_BRWS_ART;
 %rename(LIB_PROTOCOL_PROFILE_BRWS_POST) LASSO_LIB_PROTOCOL_PROFILE_BRWS_POST;
 %rename(LIB_PROTOCOL_PROFILE_BRWS_LECP) LASSO_LIB_PROTOCOL_PROFILE_BRWS_LECP;
@@ -829,7 +861,7 @@ typedef enum {
 #define LASSO_LIB_PROTOCOL_PROFILE_SLO_SP_SOAP "http://projectliberty.org/profiles/slo-sp-soap"
 
 /* LoginProtocolProfile */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(LOGIN_PROTOCOL_PROFILE_BRWS_ART) LASSO_LOGIN_PROTOCOL_PROFILE_BRWS_ART;
 %rename(LOGIN_PROTOCOL_PROFILE_BRWS_POST) LASSO_LOGIN_PROTOCOL_PROFILE_BRWS_POST;
 %rename(LOGIN_PROTOCOL_PROFILE_BRWS_LECP) LASSO_LOGIN_PROTOCOL_PROFILE_BRWS_LECP;
@@ -842,7 +874,7 @@ typedef enum {
 } LassoLoginProtocolProfile;
 
 /* ProviderRole */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(PROVIDER_ROLE_NONE) LASSO_PROVIDER_ROLE_NONE;
 %rename(PROVIDER_ROLE_SP) LASSO_PROVIDER_ROLE_SP;
 %rename(PROVIDER_ROLE_IDP) LASSO_PROVIDER_ROLE_IDP;
@@ -855,7 +887,7 @@ typedef enum {
 } LassoProviderRole;
 
 /* ProtocolConformance */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(PROTOCOL_LIBERTY_1_0) LASSO_PROTOCOL_LIBERTY_1_0;
 %rename(PROTOCOL_LIBERTY_1_1) LASSO_PROTOCOL_LIBERTY_1_1;
 %rename(PROTOCOL_LIBERTY_1_2) LASSO_PROTOCOL_LIBERTY_1_2;
@@ -870,7 +902,7 @@ typedef enum {
 } LassoProtocolConformance;
 
 /* RequestType */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(REQUEST_TYPE_INVALID) LASSO_REQUEST_TYPE_INVALID;
 %rename(REQUEST_TYPE_LOGIN) LASSO_REQUEST_TYPE_LOGIN;
 %rename(REQUEST_TYPE_LOGOUT) LASSO_REQUEST_TYPE_LOGOUT;
@@ -884,6 +916,9 @@ typedef enum {
 %rename(REQUEST_TYPE_DST_MODIFY) LASSO_REQUEST_TYPE_DST_MODIFY;
 %rename(REQUEST_TYPE_SASL_REQUEST) LASSO_REQUEST_TYPE_SASL_REQUEST;
 %rename(REQUEST_TYPE_NAME_ID_MANAGEMENT) LASSO_REQUEST_TYPE_NAME_ID_MANAGEMENT;
+%rename(REQUEST_TYPE_IDWSF2_DISCO_SVCMD_REGISTER) LASSO_REQUEST_TYPE_IDWSF2_DISCO_SVCMD_REGISTER;
+%rename(REQUEST_TYPE_IDWSF2_DISCO_SVCMD_ASSOCIATION_ADD) LASSO_REQUEST_TYPE_IDWSF2_DISCO_SVCMD_ASSOCIATION_ADD;
+%rename(REQUEST_TYPE_IDWSF2_DISCO_QUERY) LASSO_REQUEST_TYPE_IDWSF2_DISCO_QUERY;
 %rename(RequestType) LassoRequestType;
 #endif
 typedef enum {
@@ -900,10 +935,13 @@ typedef enum {
 	LASSO_REQUEST_TYPE_DST_MODIFY = 10,
 	LASSO_REQUEST_TYPE_SASL_REQUEST = 11,
 	LASSO_REQUEST_TYPE_NAME_ID_MANAGEMENT = 12,
+	LASSO_REQUEST_TYPE_IDWSF2_DISCO_SVCMD_REGISTER = 13,
+	LASSO_REQUEST_TYPE_IDWSF2_DISCO_SVCMD_ASSOCIATION_ADD = 14,
+	LASSO_REQUEST_TYPE_IDWSF2_DISCO_QUERY = 15,
 } LassoRequestType;
 
 /* lib:AuthnContextClassRef */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(LIB_AUTHN_CONTEXT_CLASS_REF_INTERNET_PROTOCOL)
 	LASSO_LIB_AUTHN_CONTEXT_CLASS_REF_INTERNET_PROTOCOL;
 %rename(LIB_AUTHN_CONTEXT_CLASS_REF_INTERNET_PROTOCOL_PASSWORD)
@@ -959,7 +997,7 @@ typedef enum {
 	"http://www.projectliberty.org/schemas/authctx/classes/TimeSyncToken"
 
 /* lib:AuthnContextComparison */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(LIB_AUTHN_CONTEXT_COMPARISON_EXACT) LASSO_LIB_AUTHN_CONTEXT_COMPARISON_EXACT;
 %rename(LIB_AUTHN_CONTEXT_COMPARISON_MINIMUM) LASSO_LIB_AUTHN_CONTEXT_COMPARISON_MINIMUM;
 %rename(LIB_AUTHN_CONTEXT_COMPARISON_MAXIMUM) LASSO_LIB_AUTHN_CONTEXT_COMPARISON_MAXIMUM;
@@ -971,7 +1009,7 @@ typedef enum {
 #define LASSO_LIB_AUTHN_CONTEXT_COMPARISON_BETTER "better"
 
 /* saml:AuthenticationMethod */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SAML_AUTHENTICATION_METHOD_PASSWORD) LASSO_SAML_AUTHENTICATION_METHOD_PASSWORD;
 %rename(SAML_AUTHENTICATION_METHOD_KERBEROS) LASSO_SAML_AUTHENTICATION_METHOD_KERBEROS;
 %rename(SAML_AUTHENTICATION_METHOD_SECURE_REMOTE_PASSWORD) LASSO_SAML_AUTHENTICATION_METHOD_SECURE_REMOTE_PASSWORD;
@@ -998,8 +1036,21 @@ typedef enum {
 #define LASSO_SAML_AUTHENTICATION_METHOD_UNSPECIFIED "urn:oasis:names:tc:SAML:1.0:am:unspecified"
 #define LASSO_SAML_AUTHENTICATION_METHOD_LIBERTY "urn:liberty:ac:2003-08"
 
+/* SignatureType */
+#ifndef SWIG_PHP_RENAMES
+%rename(SIGNATURE_TYPE_NONE) LASSO_SIGNATURE_TYPE_NONE;
+%rename(SIGNATURE_TYPE_SIMPLE) LASSO_SIGNATURE_TYPE_SIMPLE;
+%rename(SIGNATURE_TYPE_WITHX509) LASSO_SIGNATURE_TYPE_WITHX509;
+%rename(SignatureType) LassoSignatureType;
+#endif
+typedef enum {
+	LASSO_SIGNATURE_TYPE_NONE = 0,
+	LASSO_SIGNATURE_TYPE_SIMPLE,
+	LASSO_SIGNATURE_TYPE_WITHX509
+} LassoSignatureType;
+
 /* SignatureMethod */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SIGNATURE_METHOD_RSA_SHA1) LASSO_SIGNATURE_METHOD_RSA_SHA1;
 %rename(SIGNATURE_METHOD_DSA_SHA1) LASSO_SIGNATURE_METHOD_DSA_SHA1;
 %rename(SignatureMethod) LassoSignatureMethod;
@@ -1010,7 +1061,7 @@ typedef enum {
 } LassoSignatureMethod;
 
 /* Encryption mode */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(ENCRYPTION_MODE_NONE) LASSO_ENCRYPTION_MODE_NONE;
 %rename(ENCRYPTION_MODE_NAMEID) LASSO_ENCRYPTION_MODE_NAMEID;
 %rename(ENCRYPTION_MODE_ASSERTION) LASSO_ENCRYPTION_MODE_ASSERTION;
@@ -1024,7 +1075,7 @@ typedef enum {
 
 
 /* Encryption symetric key type */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(ENCRYPTION_SYM_KEY_TYPE_DEFAULT) LASSO_ENCRYPTION_SYM_KEY_TYPE_DEFAULT;
 %rename(ENCRYPTION_SYM_KEY_TYPE_AES_256) LASSO_ENCRYPTION_SYM_KEY_TYPE_AES_256;
 %rename(ENCRYPTION_SYM_KEY_TYPE_AES_128) LASSO_ENCRYPTION_SYM_KEY_TYPE_AES_128;
@@ -1044,13 +1095,13 @@ typedef enum {
 
 
 /* undefined */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(ERROR_UNDEFINED) LASSO_ERROR_UNDEFINED;
 %rename(ERROR_UNIMPLEMENTED) LASSO_ERROR_UNIMPLEMENTED;
 #endif
 
 /* generic XML */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(XML_ERROR_NODE_NOT_FOUND) LASSO_XML_ERROR_NODE_NOT_FOUND;
 %rename(XML_ERROR_NODE_CONTENT_NOT_FOUND) LASSO_XML_ERROR_NODE_CONTENT_NOT_FOUND;
 %rename(XML_ERROR_ATTR_NOT_FOUND) LASSO_XML_ERROR_ATTR_NOT_FOUND;
@@ -1060,7 +1111,7 @@ typedef enum {
 #endif
 
 /* XMLDSig */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(DS_ERROR_SIGNATURE_NOT_FOUND) LASSO_DS_ERROR_SIGNATURE_NOT_FOUND;
 %rename(DS_ERROR_INVALID_SIGNATURE) LASSO_DS_ERROR_INVALID_SIGNATURE;
 %rename(DS_ERROR_SIGNATURE_TMPL_CREATION_FAILED) LASSO_DS_ERROR_SIGNATURE_TMPL_CREATION_FAILED;
@@ -1079,16 +1130,17 @@ typedef enum {
 #endif
 
 /* Server */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SERVER_ERROR_PROVIDER_NOT_FOUND) LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND;
 %rename(SERVER_ERROR_ADD_PROVIDER_FAILED) LASSO_SERVER_ERROR_ADD_PROVIDER_FAILED;
 %rename(SERVER_ERROR_ADD_PROVIDER_PROTOCOL_MISMATCH) \
 		LASSO_SERVER_ERROR_ADD_PROVIDER_PROTOCOL_MISMATCH;
-%rename(SERVER_ERROR_SET_ENCRYPTION_PRIVATE_KEY_FAILED) LASSO_SERVER_ERROR_SET_ENCRYPTION_PRIVATE_KEY_FAILED;
+%rename(SERVER_ERROR_SET_ENCRYPTION_PRIVATE_KEY_FAILED) \
+		LASSO_SERVER_ERROR_SET_ENCRYPTION_PRIVATE_KEY_FAILED;
 #endif
 
 /* Single Logout */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(LOGOUT_ERROR_UNSUPPORTED_PROFILE) LASSO_LOGOUT_ERROR_UNSUPPORTED_PROFILE;
 %rename(LOGOUT_ERROR_REQUEST_DENIED) LASSO_LOGOUT_ERROR_REQUEST_DENIED;
 %rename(LOGOUT_ERROR_FEDERATION_NOT_FOUND) LASSO_LOGOUT_ERROR_FEDERATION_NOT_FOUND;
@@ -1096,7 +1148,7 @@ typedef enum {
 #endif
 
 /* Profile */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(PROFILE_ERROR_INVALID_QUERY) LASSO_PROFILE_ERROR_INVALID_QUERY;
 %rename(PROFILE_ERROR_INVALID_POST_MSG) LASSO_PROFILE_ERROR_INVALID_POST_MSG;
 %rename(PROFILE_ERROR_INVALID_SOAP_MSG) LASSO_PROFILE_ERROR_INVALID_SOAP_MSG;
@@ -1130,17 +1182,22 @@ typedef enum {
 %rename(PROFILE_ERROR_MISSING_ENCRYPTION_PRIVATE_KEY) \
 		LASSO_PROFILE_ERROR_MISSING_ENCRYPTION_PRIVATE_KEY;
 %rename(PROFILE_ERROR_STATUS_NOT_SUCCESS) LASSO_PROFILE_ERROR_STATUS_NOT_SUCCESS;
+%rename(PROFILE_ERROR_MISSING_ISSUER) LASSO_PROFILE_ERROR_MISSING_ISSUER;
+%rename(PROFILE_ERROR_MISSING_SERVICE_INSTANCE) LASSO_PROFILE_ERROR_MISSING_SERVICE_INSTANCE;
+%rename(PROFILE_ERROR_MISSING_ENDPOINT_REFERENCE) LASSO_PROFILE_ERROR_MISSING_ENDPOINT_REFERENCE;
+%rename(PROFILE_ERROR_MISSING_ENDPOINT_REFERENCE_ADDRESS) \
+		LASSO_PROFILE_ERROR_MISSING_ENDPOINT_REFERENCE_ADDRESS;
 #endif
 
 /* functions/methods parameters checking */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(PARAM_ERROR_BADTYPE_OR_NULL_OBJ) LASSO_PARAM_ERROR_BADTYPE_OR_NULL_OBJ;
 %rename(PARAM_ERROR_INVALID_VALUE) LASSO_PARAM_ERROR_INVALID_VALUE;
 %rename(PARAM_ERROR_ERR_CHECK_FAILED) LASSO_PARAM_ERROR_ERR_CHECK_FAILED;
 #endif
 
 /* Single Sign-On */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(LOGIN_ERROR_FEDERATION_NOT_FOUND) LASSO_LOGIN_ERROR_FEDERATION_NOT_FOUND;
 %rename(LOGIN_ERROR_CONSENT_NOT_OBTAINED) LASSO_LOGIN_ERROR_CONSENT_NOT_OBTAINED;
 %rename(LOGIN_ERROR_INVALID_NAMEIDPOLICY) LASSO_LOGIN_ERROR_INVALID_NAMEIDPOLICY;
@@ -1154,17 +1211,20 @@ typedef enum {
 #endif
 
 /* Federation Termination Notification */
-#ifndef SWIGPHP4
-%rename(DEFEDERATION_ERROR_MISSING_NAME_IDENTIFIER) LASSO_DEFEDERATION_ERROR_MISSING_NAME_IDENTIFIER;
+#ifndef SWIG_PHP_RENAMES
+%rename(DEFEDERATION_ERROR_MISSING_NAME_IDENTIFIER) \
+		LASSO_DEFEDERATION_ERROR_MISSING_NAME_IDENTIFIER;
 #endif
 
 /* Soap */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SOAP_FAULT_REDIRECT_REQUEST) LASSO_SOAP_FAULT_REDIRECT_REQUEST;
+%rename(SOAP_ERROR_MISSING_HEADER) LASSO_SOAP_ERROR_MISSING_HEADER;
+%rename(SOAP_ERROR_MISSING_BODY) LASSO_SOAP_ERROR_MISSING_BODY;
 #endif
 
 /* Name Identifier Mapping */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(NAME_IDENTIFIER_MAPPING_ERROR_MISSING_TARGET_NAMESPACE) \
 		LASSO_NAME_IDENTIFIER_MAPPING_ERROR_MISSING_TARGET_NAMESPACE;
 %rename(NAME_IDENTIFIER_MAPPING_ERROR_FORBIDDEN_CALL_ON_THIS_SIDE) \
@@ -1173,7 +1233,36 @@ typedef enum {
 		LASSO_NAME_IDENTIFIER_MAPPING_ERROR_MISSING_TARGET_IDENTIFIER;
 #endif
 
-#ifndef SWIGPHP4
+/* Data Service */
+#ifndef SWIG_PHP_RENAMES
+%rename(DATA_SERVICE_ERROR_UNREGISTERED_DST) LASSO_DATA_SERVICE_ERROR_UNREGISTERED_DST;
+#endif
+
+/* WSF Profile */
+#ifndef SWIG_PHP_RENAMES
+%rename(WSF_PROFILE_ERROR_MISSING_CORRELATION) LASSO_WSF_PROFILE_ERROR_MISSING_CORRELATION;
+%rename(WSF_PROFILE_ERROR_MISSING_SECURITY) LASSO_WSF_PROFILE_ERROR_MISSING_SECURITY;
+#endif
+
+/* ID-WSF 2 Discovery */
+#ifndef SWIG_PHP_RENAMES
+%rename(DISCOVERY_ERROR_SVC_METADATA_REGISTER_FAILED) \
+		LASSO_DISCOVERY_ERROR_SVC_METADATA_REGISTER_FAILED;
+%rename(DISCOVERY_ERROR_SVC_METADATA_ASSOCIATION_ADD_FAILED) \
+		LASSO_DISCOVERY_ERROR_SVC_METADATA_ASSOCIATION_ADD_FAILED;
+%rename(DISCOVERY_ERROR_MISSING_REQUESTED_SERVICE) \
+		LASSO_DISCOVERY_ERROR_MISSING_REQUESTED_SERVICE;
+%rename(DISCOVERY_ERROR_FAILED_TO_BUILD_ENDPOINT_REFERENCE) \
+		LASSO_DISCOVERY_ERROR_FAILED_TO_BUILD_ENDPOINT_REFERENCE;
+#endif
+
+/* ID-WSF 2 Data Service */
+#ifndef SWIG_PHP_RENAMES
+%rename(DST_ERROR_QUERY_FAILED) LASSO_DST_ERROR_QUERY_FAILED;
+%rename(DST_ERROR_QUERY_PARTIALLY_FAILED) LASSO_DST_ERROR_QUERY_PARTIALLY_FAILED;
+#endif
+
+#ifndef SWIG_PHP_RENAMES
 %rename(strerror) lasso_strerror;
 #endif
 %ignore lasso_strerror;
@@ -1196,18 +1285,18 @@ typedef enum {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(init) lasso_init;
 #endif
 int lasso_init(void);
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(shutdown) lasso_shutdown;
 #endif
 int lasso_shutdown(void);
 
 /* CheckVersionMode */
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(CHECK_VERSION_EXACT) LASSO_CHECK_VERSION_EXACT;
 %rename(CHECK_VERSIONABI_COMPATIBLE) LASSO_CHECK_VERSIONABI_COMPATIBLE;
 %rename(CHECK_VERSION_NUMERIC) LASSO_CHECK_VERSION_NUMERIC;
@@ -1219,17 +1308,18 @@ typedef enum {
 	LASSO_CHECK_VERSION_NUMERIC
 } LassoCheckVersionMode;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(checkVersion) lasso_check_version;
 #endif
 int lasso_check_version(int major, int minor, int subminor,
 		LassoCheckVersionMode mode = LASSO_CHECK_VERSION_NUMERIC);
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(registerDstService) lasso_register_dst_service;
+%rename(registerIdWsf2DstService) lasso_register_idwsf2_dst_service;
 #endif
 void lasso_register_dst_service(const char *prefix, const char *href);
-
+void lasso_register_idwsf2_dst_service(const char *prefix, const char *href);
 
 /***********************************************************************
  * Utility functions to handle nodes, strings, lists...
@@ -1271,9 +1361,9 @@ static void add_xml_to_array(xmlNode *xmlnode, GPtrArray *array)
 		xmlNodeDumpOutput(buf, NULL, xmlnode, 0, 1, NULL);
 		xmlOutputBufferFlush(buf);
 		if (buf->conv == NULL) {
-			xmlString = g_strdup(buf->buffer->content);
+			xmlString = g_strdup((char*)buf->buffer->content);
 		} else {
-			xmlString = g_strdup(buf->conv->content);
+			xmlString = g_strdup((char*)buf->conv->content);
 		}
 		xmlOutputBufferClose(buf);
 	}
@@ -1372,9 +1462,9 @@ static char* get_xml_string(xmlNode *xmlnode)
 		xmlNodeDumpOutput(buf, NULL, xmlnode, 0, 1, NULL);
 		xmlOutputBufferFlush(buf);
 		if (buf->conv == NULL) {
-			xmlString = g_strdup(buf->buffer->content);
+			xmlString = g_strdup((char*)buf->buffer->content);
 		} else {
-			xmlString = g_strdup(buf->conv->content);
+			xmlString = g_strdup((char*)buf->conv->content);
 		}
 		xmlOutputBufferClose(buf);
 	}
@@ -1386,7 +1476,7 @@ static xmlNode *get_string_xml(const char *string) {
 	xmlDoc *doc;
 	xmlNode *node;
 
-	doc = xmlReadDoc(string, NULL, NULL, XML_PARSE_NONET);
+	doc = xmlReadDoc((xmlChar*)string, NULL, NULL, XML_PARSE_NONET);
 	node = xmlDocGetRootElement(doc);
 	if (node != NULL) {
 		node = xmlCopyNode(node, 1);
@@ -1503,7 +1593,7 @@ static void set_xml_string(xmlNode **xmlnode, const char* string)
 	xmlDoc *doc;
 	xmlNode *node;
 
-	doc = xmlReadDoc(string, NULL, NULL, XML_PARSE_NONET);
+	doc = xmlReadDoc((xmlChar*)string, NULL, NULL, XML_PARSE_NONET);
 	node = xmlDocGetRootElement(doc);
 	if (node != NULL) {
 		node = xmlCopyNode(node, 1);
@@ -1582,7 +1672,7 @@ static void set_xml_string(xmlNode **xmlnode, const char* string)
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(Node) LassoNode;
 #endif
 typedef struct {
@@ -1619,7 +1709,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(NodeList) LassoNodeList;
 #endif
 %{
@@ -1719,6 +1809,7 @@ typedef struct {
 
 #define new_LassoNodeList g_ptr_array_new
 
+void delete_LassoNodeList(GPtrArray *self);
 void delete_LassoNodeList(GPtrArray *self) {
 	g_ptr_array_foreach(self, (GFunc) free_node_array_item, NULL);
 	g_ptr_array_free(self, false);
@@ -1732,7 +1823,7 @@ void delete_LassoNodeList(GPtrArray *self) {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(StringList) LassoStringList;
 #endif
 %{
@@ -1821,6 +1912,109 @@ typedef struct {
 %}
 
 
+/* map GHashTable to Python dict */
+
+
+#ifndef SWIG_PHP_RENAMES
+%rename(StringDict) LassoStringDict;
+#endif
+%{
+typedef GHashTable LassoStringDict;
+%}
+typedef struct {
+	%extend {
+		/* Constructor, Destructor & Static Methods */
+
+		LassoStringDict();
+
+		~LassoStringDict();
+
+		/* Methods */
+
+		GHashTable* cast() {
+			return self;
+		}
+
+		static LassoStringDict *frompointer(GHashTable *stringDict) {
+			return (LassoStringDict*)stringDict;
+		}
+
+#if defined(SWIGPYTHON)
+		%rename(__getitem__) getItem;
+#endif
+		char* getItem(char *key) {
+			return g_strdup(g_hash_table_lookup(self, key));
+		}
+		%exception getItem;
+
+#if defined(SWIGPYTHON)
+		%rename(__setitem__) setItem;
+#endif
+		void setItem(char *key, char *item) {
+			g_hash_table_insert(self, g_strdup(key), g_strdup(item));
+		}
+		%exception setItem;
+	}
+} LassoStringDict;
+
+%{
+
+/* Constructors, destructors & static methods implementations */
+
+static GHashTable* lasso_string_dict_new()
+{
+	return g_hash_table_new_full(g_str_hash, g_str_equal, g_free, NULL);
+}
+
+#define new_LassoStringDict lasso_string_dict_new
+#define delete_LassoStringDict(self) g_hash_table_destroy(self)
+
+%}
+
+
+
+/* General utility elements */
+
+#ifndef SWIG_PHP_RENAMES
+%rename(MiscTextNode) LassoMiscTextNode;
+#endif
+typedef struct {
+	char *content;
+
+	char *name;
+	char *ns_href;
+	char *ns_prefix;
+	gboolean text_child;
+} LassoMiscTextNode;
+%extend LassoMiscTextNode {
+
+	/* Constructor, Destructor & Static Methods */
+	LassoMiscTextNode();
+	~LassoMiscTextNode();
+
+	/* Method inherited from LassoNode */
+	%newobject dump;
+	char* dump();
+}
+
+%{
+
+/* Constructors, destructors & static methods implementations */
+
+#define new_LassoMiscTextNode lasso_misc_text_node_new
+#define delete_LassoMiscTextNode(self) lasso_node_destroy(LASSO_NODE(self))
+
+/* Implementations of methods inherited from LassoNode */
+
+#define LassoMiscTextNode_dump(self) lasso_node_dump(LASSO_NODE(self))
+
+%}
+
+
+
+
+
+
 /***********************************************************************
  ***********************************************************************
  * XML Elements in SAML Namespace
@@ -1833,7 +2027,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SamlAdvice) LassoSamlAdvice;
 #endif
 typedef struct {
@@ -1841,7 +2035,7 @@ typedef struct {
 %extend LassoSamlAdvice {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(assertion) Assertion;
 #endif
 	%newobject Assertion_get;
@@ -1894,53 +2088,53 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SamlAssertion) LassoSamlAssertion;
 #endif
 typedef struct {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(assertionId) AssertionID;
 #endif
 	char *AssertionID;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(certificateFile) certificate_file;
 #endif
 	char *certificate_file;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(issueInstant) IssueInstant;
 #endif
 	char *IssueInstant;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(issuer) Issuer;
 #endif
 	char *Issuer;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(majorVersion) MajorVersion;
 #endif
 	int MajorVersion;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(minorVersion) MinorVersion;
 #endif
 	int MinorVersion;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(privateKeyFile) private_key_file;
 #endif
 	char *private_key_file;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(signMethod) sign_method;
 #endif
 	LassoSignatureMethod sign_method;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(signType) sign_type;
 #endif
 	LassoSignatureType sign_type;
@@ -1948,19 +2142,19 @@ typedef struct {
 %extend LassoSamlAssertion {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(advice) Advice;
 #endif
 	%newobject Advice_get;
 	LassoSamlAdvice *Advice;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(attributeStatement) AttributeStatement;
 #endif
 	%newobject AttributeStatement_get;
 	LassoSamlAttributeStatement *AttributeStatement;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(authenticationStatement) AuthenticationStatement;
 #endif
 	%newobject AuthenticationStatement_get;
@@ -1969,7 +2163,7 @@ typedef struct {
 	/* LassoSamlAuthorizationDecisionsStatement *AuthorizationDecisionStatement;
 	   FIXME: missing from lasso */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(conditions) Conditions;
 #endif
 	%newobject Conditions_get;
@@ -1977,7 +2171,7 @@ typedef struct {
 
 	/* LassoSamlStatement *Statement; FIXME: missing from lasso */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(subjectStatement) SubjectStatement;
 #endif
 	%newobject SubjectStatement_get;
@@ -2046,7 +2240,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SamlAttribute) LassoSamlAttribute;
 #endif
 typedef struct {
@@ -2054,19 +2248,19 @@ typedef struct {
 %extend LassoSamlAttribute {
 	/* Attributes inherited from SamlAttributeDesignator */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(attributeName) AttributeName;
 #endif
 	char *AttributeName;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(attributeNamespace) AttributeNamespace;
 #endif
 	char *AttributeNamespace;
 
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(attributeValue) AttributeValue;
 #endif
 	%newobject AttributeValue_get;
@@ -2125,18 +2319,18 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SamlAttributeDesignator) LassoSamlAttributeDesignator;
 #endif
 typedef struct {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(attributeName) AttributeName;
 #endif
 	char *AttributeName;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(attributeNamespace) AttributeNamespace;
 #endif
 	char *AttributeNamespace;
@@ -2173,7 +2367,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SamlAttributeStatement) LassoSamlAttributeStatement;
 #endif
 typedef struct {
@@ -2181,7 +2375,7 @@ typedef struct {
 %extend LassoSamlAttributeStatement {
 	/* Attributes inherited from SamlSubjectStatementAbstract */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(subject) Subject;
 #endif
 	%newobject Subject_get;
@@ -2189,7 +2383,7 @@ typedef struct {
 
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(attribute) Attribute;
 #endif
 	%newobject Attribute_get;
@@ -2242,7 +2436,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SamlAttributeValue) LassoSamlAttributeValue;
 #endif
 typedef struct {
@@ -2292,7 +2486,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SamlAudienceRestrictionCondition) LassoSamlAudienceRestrictionCondition;
 #endif
 typedef struct {
@@ -2342,18 +2536,18 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SamlAuthenticationStatement) LassoSamlAuthenticationStatement;
 #endif
 typedef struct {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(authenticationInstant) AuthenticationInstant;
 #endif
 	char *AuthenticationInstant;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(authenticationMethod) AuthenticationMethod;
 #endif
 	char *AuthenticationMethod;
@@ -2361,13 +2555,13 @@ typedef struct {
 %extend LassoSamlAuthenticationStatement {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(authorityBinding) AuthorityBinding;
 #endif
 	%newobject AuthorityBinding_get;
 	LassoNodeList *AuthorityBinding;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(subjectLocality) SubjectLocality;
 #endif
 	%newobject SubjectLocality_get;
@@ -2418,23 +2612,23 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SamlAuthorityBinding) LassoSamlAuthorityBinding;
 #endif
 typedef struct {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(authorityKind) AuthorityKind;
 #endif
 	char *AuthorityKind;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(location) Location;
 #endif
 	char *Location;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(binding) Binding;
 #endif
 	char *Binding;
@@ -2471,7 +2665,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SamlConditionAbstract) LassoSamlConditionAbstract;
 #endif
 %nodefault LassoSamlConditionAbstract;
@@ -2498,18 +2692,18 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SamlConditions) LassoSamlConditions;
 #endif
 typedef struct {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(notBefore) NotBefore;
 #endif
 	char *NotBefore;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(notOnOrAfter) NotOnOrAfter;
 #endif
 	char *NotOnOrAfter;
@@ -2517,13 +2711,13 @@ typedef struct {
 %extend LassoSamlConditions {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(audienceRestrictionCondition) AudienceRestrictionCondition;
 #endif
 	%newobject AudienceRestrictionCondition_get;
 	LassoNodeList *AudienceRestrictionCondition;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(condition) Condition;
 #endif
 	%newobject Condition_get;
@@ -2576,7 +2770,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SamlNameIdentifier) LassoSamlNameIdentifier;
 #endif
 typedef struct {
@@ -2584,12 +2778,12 @@ typedef struct {
 
 	char *content;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(format) Format;
 #endif
 	char *Format;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(nameQualifier) NameQualifier;
 #endif
 	char *NameQualifier;
@@ -2626,7 +2820,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SamlStatementAbstract) LassoSamlStatementAbstract;
 #endif
 %nodefault LassoSamlStatementAbstract;
@@ -2653,7 +2847,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SamlSubject) LassoSamlSubject;
 #endif
 typedef struct {
@@ -2661,13 +2855,13 @@ typedef struct {
 %extend LassoSamlSubject {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(nameIdentifier) NameIdentifier;
 #endif
 	%newobject NameIdentifier_get;
 	LassoSamlNameIdentifier *NameIdentifier;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(subjectConfirmation) SubjectConfirmation;
 #endif
 	%newobject SubjectConfirmation_get;
@@ -2718,13 +2912,13 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SamlSubjectConfirmation) LassoSamlSubjectConfirmation;
 #endif
 typedef struct {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(subjectConfirmationData) SubjectConfirmationData;
 #endif
 	char *SubjectConfirmationData;
@@ -2774,18 +2968,18 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SamlSubjectLocality) LassoSamlSubjectLocality;
 #endif
 typedef struct {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(dnsAddress) DNSAddress;
 #endif
 	char *DNSAddress;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(ipAddress) IPAddress;
 #endif
 	char *IPAddress;
@@ -2822,7 +3016,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SamlSubjectStatement) LassoSamlSubjectStatement;
 #endif
 typedef struct {
@@ -2830,7 +3024,7 @@ typedef struct {
 %extend LassoSamlSubjectStatement {
 	/* Attributes inherited from SamlSubjectStatementAbstract */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(subject) Subject;
 #endif
 	%newobject Subject_get;
@@ -2875,7 +3069,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SamlSubjectStatementAbstract) LassoSamlSubjectStatementAbstract;
 #endif
 %nodefault LassoSamlSubjectStatementAbstract;
@@ -2884,7 +3078,7 @@ typedef struct {
 %extend LassoSamlSubjectStatementAbstract {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(subject) Subject;
 #endif
 	%newobject Subject_get;
@@ -2925,13 +3119,13 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SamlpRequest) LassoSamlpRequest;
 #endif
 typedef struct {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(assertionArtifact) AssertionArtifact;
 #endif
 	char *AssertionArtifact;
@@ -2939,48 +3133,48 @@ typedef struct {
 %extend LassoSamlpRequest {
 	/* Attributes inherited from SamlpRequestAbstract */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(certificateFile) certificate_file;
 #endif
 	char *certificate_file;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(issueInstant) IssueInstant;
 #endif
 	char *IssueInstant;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(majorVersion) MajorVersion;
 #endif
 	int MajorVersion;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(minorVersion) MinorVersion;
 #endif
 	int MinorVersion;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(privateKeyFile) private_key_file;
 #endif
 	char *private_key_file;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(requestId) RequestID;
 #endif
 	char *RequestID;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(respondWith) RespondWith;
 #endif
 	%newobject RespondWith_get;
 	LassoStringList *RespondWith;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(signMethod) sign_method;
 #endif
 	LassoSignatureMethod sign_method;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(signType) sign_type;
 #endif
 	LassoSignatureType sign_type;
@@ -3072,49 +3266,49 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SamlpRequestAbstract) LassoSamlpRequestAbstract;
 #endif
 %nodefault LassoSamlpRequestAbstract;
 typedef struct {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(certificateFile) certificate_file;
 #endif
 	char *certificate_file;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(issueInstant) IssueInstant;
 #endif
 	char *IssueInstant;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(majorVersion) MajorVersion;
 #endif
 	int MajorVersion;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(minorVersion) MinorVersion;
 #endif
 	int MinorVersion;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(privateKeyFile) private_key_file;
 #endif
 	char *private_key_file;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(requestId) RequestID;
 #endif
 	char *RequestID;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(signMethod) sign_method;
 #endif
 	LassoSignatureMethod sign_method;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(signType) sign_type;
 #endif
 	LassoSignatureType sign_type;
@@ -3122,7 +3316,7 @@ typedef struct {
 %extend LassoSamlpRequestAbstract {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(respondWith) RespondWith;
 #endif
 	%newobject RespondWith_get;
@@ -3156,7 +3350,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SamlpResponse) LassoSamlpResponse;
 #endif
 typedef struct {
@@ -3164,65 +3358,65 @@ typedef struct {
 %extend LassoSamlpResponse {
 	/* Attributes inherited from SamlpResponseAbstract */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(certificateFile) certificate_file;
 #endif
 	char *certificate_file;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(inResponseTo) InResponseTo;
 #endif
 	char *InResponseTo;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(issueInstant) IssueInstant;
 #endif
 	char *IssueInstant;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(majorVersion) MajorVersion;
 #endif
 	int MajorVersion;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(minorVersion) MinorVersion;
 #endif
 	int MinorVersion;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(privateKeyFile) private_key_file;
 #endif
 	char *private_key_file;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(recipient) Recipient;
 #endif
 	char *Recipient;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(responseId) ResponseID;
 #endif
 	char *ResponseID;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(signMethod) sign_method;
 #endif
 	LassoSignatureMethod sign_method;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(signType) sign_type;
 #endif
 	LassoSignatureType sign_type;
 
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(assertion) Assertion;
 #endif
 	%newobject Assertion_get;
 	LassoNodeList *Assertion;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(status) Status;
 #endif
 	%newobject Status_get;
@@ -3335,59 +3529,59 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SamlpResponseAbstract) LassoSamlpResponseAbstract;
 #endif
 %nodefault LassoSamlpResponseAbstract;
 typedef struct {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(certificateFile) certificate_file;
 #endif
 	char *certificate_file;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(inResponseTo) InResponseTo;
 #endif
 	char *InResponseTo;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(issueInstant) IssueInstant;
 #endif
 	char *IssueInstant;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(majorVersion) MajorVersion;
 #endif
 	int MajorVersion;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(minorVersion) MinorVersion;
 #endif
 	int MinorVersion;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(privateKeyFile) private_key_file;
 #endif
 	char *private_key_file;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(recipient) Recipient;
 #endif
 	char *Recipient;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(responseId) ResponseID;
 #endif
 	char *ResponseID;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(signMethod) sign_method;
 #endif
 	LassoSignatureMethod sign_method;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(signType) sign_type;
 #endif
 	LassoSignatureType sign_type;
@@ -3413,13 +3607,13 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SamlpStatus) LassoSamlpStatus;
 #endif
 typedef struct {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(statusMessage) StatusMessage;
 #endif
 	char *StatusMessage;
@@ -3427,7 +3621,7 @@ typedef struct {
 %extend LassoSamlpStatus {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(statusCode) StatusCode;
 #endif
 	%newobject StatusCode_get;
@@ -3472,13 +3666,13 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(SamlpStatusCode) LassoSamlpStatusCode;
 #endif
 typedef struct {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(value) Value;
 #endif
 	char *Value;
@@ -3486,7 +3680,7 @@ typedef struct {
 %extend LassoSamlpStatusCode {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(statusCode) StatusCode;
 #endif
 	%newobject StatusCode_get;
@@ -3538,7 +3732,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(LibAssertion) LassoLibAssertion;
 #endif
 typedef struct {
@@ -3546,24 +3740,24 @@ typedef struct {
 %extend LassoLibAssertion {
 	/* Attributes inherited from SamlAssertion */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(advice) Advice;
 #endif
 	%newobject Advice_get;
 	LassoSamlAdvice *Advice;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(assertionId) AssertionID;
 #endif
 	char *AssertionID;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(attributeStatement) AttributeStatement;
 #endif
 	%newobject AttributeStatement_get;
 	LassoSamlAttributeStatement *AttributeStatement;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(authenticationStatement) AuthenticationStatement;
 #endif
 	%newobject AuthenticationStatement_get;
@@ -3572,55 +3766,55 @@ typedef struct {
 	/* LassoSamlAuthorizationDecisionsStatement *AuthorizationDecisionStatement;
 	   FIXME: missing from lasso */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(certificateFile) certificate_file;
 #endif
 	char *certificate_file;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(conditions) Conditions;
 #endif
 	%newobject Conditions_get;
 	LassoSamlConditions *Conditions;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(issueInstant) IssueInstant;
 #endif
 	char *IssueInstant;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(issuer) Issuer;
 #endif
 	char *Issuer;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(majorVersion) MajorVersion;
 #endif
 	int MajorVersion;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(minorVersion) MinorVersion;
 #endif
 	int MinorVersion;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(privateKeyFile) private_key_file;
 #endif
 	char *private_key_file;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(signMethod) sign_method;
 #endif
 	LassoSignatureMethod sign_method;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(signType) sign_type;
 #endif
 	LassoSignatureType sign_type;
 
 	/* LassoSamlStatement *Statement; FIXME: missing from lasso */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(subjectStatement) SubjectStatement;
 #endif
 	%newobject SubjectStatement_get;
@@ -3750,50 +3944,50 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(LibAuthnRequest) LassoLibAuthnRequest;
 #endif
 typedef struct {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(affiliationId) AffiliationID;
 #endif
 	char *AffiliationID;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(assertionConsumerServiceId) AssertionConsumerServiceID;
 #endif
 	char *AssertionConsumerServiceID;
 
 	char *consent;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(forceAuthn) ForceAuthn;
 #endif
 	gboolean ForceAuthn;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(isPassive) IsPassive;
 #endif
 	gboolean IsPassive;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(nameIdPolicy) NameIDPolicy;
 #endif
 	char *NameIDPolicy;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(protocolProfile) ProtocolProfile;
 #endif
 	char *ProtocolProfile;	
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(providerId) ProviderID;
 #endif
 	char *ProviderID;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(relayState) RelayState;
 #endif
 	char *RelayState;
@@ -3802,61 +3996,61 @@ typedef struct {
 %extend LassoLibAuthnRequest {
 	/* Attributes inherited from SamlpRequestAbstract */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(certificateFile) certificate_file;
 #endif
 	char *certificate_file;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(issueInstant) IssueInstant;
 #endif
 	char *IssueInstant;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(majorVersion) MajorVersion;
 #endif
 	int MajorVersion;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(minorVersion) MinorVersion;
 #endif
 	int MinorVersion;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(privateKeyFile) private_key_file;
 #endif
 	char *private_key_file;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(requestId) RequestID;
 #endif
 	char *RequestID;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(respondWith) RespondWith;
 #endif
 	%newobject RespondWith_get;
 	LassoStringList *RespondWith;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(signMethod) sign_method;
 #endif
 	LassoSignatureMethod sign_method;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(signType) sign_type;
 #endif
 	LassoSignatureType sign_type;
 
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(extension) Extension;
 #endif
 	%newobject Extension_get;
 	LassoStringList *Extension;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(requestAuthnContext) RequestAuthnContext;
 #endif
 	%newobject RequestAuthnContext_get;
@@ -3965,7 +4159,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(LibAuthnResponse) LassoLibAuthnResponse;
 #endif
 typedef struct {
@@ -3973,12 +4167,12 @@ typedef struct {
 
 	char *consent;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(providerId) ProviderID;
 #endif
 	char *ProviderID;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(relayState) RelayState;
 #endif
 	char *RelayState;
@@ -3988,13 +4182,13 @@ typedef struct {
 
 	/* LassoSamlAssertion *Assertion; FIXME: unbounded */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(extension) Extension;
 #endif
 	%newobject Extension_get;
 	LassoStringList *Extension;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(status) Status;
 #endif
 	%newobject Status_get;
@@ -4045,7 +4239,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(LibFederationTerminationNotification) LassoLibFederationTerminationNotification;
 #endif
 typedef struct {
@@ -4053,12 +4247,12 @@ typedef struct {
 
 	char *consent;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(providerId) ProviderID;
 #endif
 	char *ProviderID;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(relayState) RelayState;
 #endif
 	char *RelayState;	/* not in schema but allowed in redirects */
@@ -4066,61 +4260,61 @@ typedef struct {
 %extend LassoLibFederationTerminationNotification {
 	/* Attributes inherited from SamlpRequestAbstract */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(certificateFile) certificate_file;
 #endif
 	char *certificate_file;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(issueInstant) IssueInstant;
 #endif
 	char *IssueInstant;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(majorVersion) MajorVersion;
 #endif
 	int MajorVersion;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(minorVersion) MinorVersion;
 #endif
 	int MinorVersion;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(privateKeyFile) private_key_file;
 #endif
 	char *private_key_file;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(requestId) RequestID;
 #endif
 	char *RequestID;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(respondWith) RespondWith;
 #endif
 	%newobject RespondWith_get;
 	LassoStringList *RespondWith;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(signMethod) sign_method;
 #endif
 	LassoSignatureMethod sign_method;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(signType) sign_type;
 #endif
 	LassoSignatureType sign_type;
 
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(extension) Extension;
 #endif
 	%newobject Extension_get;
 	LassoStringList *Extension;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(nameIdentifier) NameIdentifier;
 #endif
 	%newobject NameIdentifier_get;
@@ -4233,7 +4427,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(LibLogoutRequest) LassoLibLogoutRequest;
 #endif
 typedef struct {
@@ -4241,22 +4435,22 @@ typedef struct {
 
 	char *consent;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(notOnOrAfter) NotOnOrAfter;
 #endif
 	char *NotOnOrAfter;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(providerId) ProviderID;
 #endif
 	char *ProviderID;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(relayState) RelayState;
 #endif
 	char *RelayState;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(sessionIndex) SessionIndex;
 #endif
 	char *SessionIndex;
@@ -4264,61 +4458,61 @@ typedef struct {
 %extend LassoLibLogoutRequest {
 	/* Attributes inherited from SamlpRequestAbstract */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(certificateFile) certificate_file;
 #endif
 	char *certificate_file;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(issueInstant) IssueInstant;
 #endif
 	char *IssueInstant;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(majorVersion) MajorVersion;
 #endif
 	int MajorVersion;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(minorVersion) MinorVersion;
 #endif
 	int MinorVersion;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(privateKeyFile) private_key_file;
 #endif
 	char *private_key_file;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(requestId) RequestID;
 #endif
 	char *RequestID;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(respondWith) RespondWith;
 #endif
 	%newobject RespondWith_get;
 	LassoStringList *RespondWith;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(signMethod) sign_method;
 #endif
 	LassoSignatureMethod sign_method;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(signType) sign_type;
 #endif
 	LassoSignatureType sign_type;
 
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(extension) Extension;
 #endif
 	%newobject Extension_get;
 	LassoStringList *Extension;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(nameIdentifier) NameIdentifier;
 #endif
 	%newobject NameIdentifier_get;
@@ -4431,7 +4625,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(LibLogoutResponse) LassoLibLogoutResponse;
 #endif
 typedef struct {
@@ -4439,23 +4633,23 @@ typedef struct {
 %extend LassoLibLogoutResponse {
 	/* Attributes inherited from LibStatusResponse */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(extension) Extension;
 #endif
 	%newobject Extension_get;
 	LassoStringList *Extension;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(providerId) ProviderID;
 #endif
 	char *ProviderID;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(relayState) RelayState;
 #endif
 	char *RelayState;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(status) Status;
 #endif
 	%newobject Status_get;
@@ -4525,18 +4719,18 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(LibRegisterNameIdentifierRequest) LassoLibRegisterNameIdentifierRequest;
 #endif
 typedef struct {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(providerId) ProviderID;
 #endif
 	char *ProviderID;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(relayState) RelayState;
 #endif
 	char *RelayState;
@@ -4544,73 +4738,73 @@ typedef struct {
 %extend LassoLibRegisterNameIdentifierRequest {
 	/* Attributes inherited from SamlpRequestAbstract */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(certificateFile) certificate_file;
 #endif
 	char *certificate_file;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(issueInstant) IssueInstant;
 #endif
 	char *IssueInstant;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(majorVersion) MajorVersion;
 #endif
 	int MajorVersion;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(minorVersion) MinorVersion;
 #endif
 	int MinorVersion;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(privateKeyFile) private_key_file;
 #endif
 	char *private_key_file;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(requestId) RequestID;
 #endif
 	char *RequestID;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(respondWith) RespondWith;
 #endif
 	%newobject RespondWith_get;
 	LassoStringList *RespondWith;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(signMethod) sign_method;
 #endif
 	LassoSignatureMethod sign_method;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(signType) sign_type;
 #endif
 	LassoSignatureType sign_type;
 
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(extension) Extension;
 #endif
 	%newobject Extension_get;
 	LassoStringList *Extension;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(idpProvidedNameIdentifier) IDPProvidedNameIdentifier;
 #endif
 	%newobject IDPProvidedNameIdentifier_get;
 	LassoSamlNameIdentifier *IDPProvidedNameIdentifier;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(oldProvidedNameIdentifier) OldProvidedNameIdentifier;
 #endif
 	%newobject OldProvidedNameIdentifier_get;
 	LassoSamlNameIdentifier *OldProvidedNameIdentifier;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(spProvidedNameIdentifier) SPProvidedNameIdentifier;
 #endif
 	%newobject SPProvidedNameIdentifier_get;
@@ -4738,7 +4932,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(LibRegisterNameIdentifierResponse) LassoLibRegisterNameIdentifierResponse;
 #endif
 typedef struct {
@@ -4746,23 +4940,23 @@ typedef struct {
 %extend LassoLibRegisterNameIdentifierResponse {
 	/* Attributes inherited from LibStatusResponse */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(extension) Extension;
 #endif
 	%newobject Extension_get;
 	LassoStringList *Extension;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(providerId) ProviderID;
 #endif
 	char *ProviderID;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(relayState) RelayState;
 #endif
 	char *RelayState;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(status) Status;
 #endif
 	%newobject Status_get;
@@ -4832,11 +5026,11 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(LibRequestAuthnContext) LassoLibRequestAuthnContext;
 #endif
 typedef struct {
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(authnContextComparison) AuthnContextComparison;
 #endif
 	char *AuthnContextComparison;
@@ -4895,18 +5089,18 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(LibStatusResponse) LassoLibStatusResponse;
 #endif
 typedef struct {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(providerId) ProviderID;
 #endif
 	char *ProviderID;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(relayState) RelayState;
 #endif
 	char *RelayState;
@@ -4914,13 +5108,13 @@ typedef struct {
 %extend LassoLibStatusResponse {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(extension) Extension;
 #endif
 	%newobject Extension_get;
 	LassoStringList *Extension;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(status) Status;
 #endif
 	%newobject Status_get;
@@ -4978,26 +5172,26 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(Provider) LassoProvider;
 #endif
 typedef struct {
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(caCertChain) ca_cert_chain;
 #endif
 	char *ca_cert_chain;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(metadataFilename) metadata_filename;
 #endif
 	char *metadata_filename;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(providerId) ProviderID;
 #endif
 	char *ProviderID;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(publicKey) public_key;
 #endif
 	char *public_key;
@@ -5087,7 +5281,7 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(Server) LassoServer;
 #endif
 typedef struct {
@@ -5095,17 +5289,17 @@ typedef struct {
 
 	char *certificate;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(privateKey) private_key;
 #endif
 	char *private_key;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(privateKeyPassword) private_key_password;
 #endif
 	char *private_key_password;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(signatureMethod) signature_method;
 #endif
 	LassoSignatureMethod signature_method;
@@ -5113,22 +5307,22 @@ typedef struct {
 %extend LassoServer {
 	/* Attributes inherited from Provider */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(caCertChain) ca_cert_chain;
 #endif
 	char *ca_cert_chain;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(metadataFilename) metadata_filename;
 #endif
 	char *metadata_filename;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(providerId) ProviderID;
 #endif
 	char *ProviderID;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(publicKey) public_key;
 #endif
 	char *public_key;
@@ -5197,6 +5391,10 @@ typedef struct {
 	THROW_ERROR()
 	int addService(LassoDiscoServiceInstance *service);
 	END_THROW_ERROR()
+
+	THROW_ERROR()
+	int addServiceFromDump(const char *dump);
+	END_THROW_ERROR()
 #endif
 
 	%newobject dump;
@@ -5247,6 +5445,7 @@ typedef struct {
 
 /* providerIds */
 #define LassoServer_get_providerIds LassoServer_providerIds_get
+LassoStringList *LassoServer_providerIds_get(LassoServer *self);
 LassoStringList *LassoServer_providerIds_get(LassoServer *self) {
 	GPtrArray *providerIds = g_ptr_array_sized_new(g_hash_table_size(self->providers));
 	g_hash_table_foreach(self->providers, (GHFunc) add_key_to_array, providerIds);
@@ -5273,7 +5472,8 @@ LassoStringList *LassoServer_providerIds_get(LassoServer *self) {
 /* Methods implementations */
 
 #define LassoServer_addProvider lasso_server_add_provider
-#define LassoServer_addService lasso_server_add_service
+#define LassoServer_addService(self, service) lasso_server_add_service(self, LASSO_NODE(service))
+#define LassoServer_addServiceFromDump lasso_server_add_service_from_dump
 #define LassoServer_dump lasso_server_dump
 #define LassoServer_getProvider lasso_server_get_provider
 #define LassoServer_getService lasso_server_get_service
@@ -5288,13 +5488,13 @@ LassoStringList *LassoServer_providerIds_get(LassoServer *self) {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(Federation) LassoFederation;
 #endif
 typedef struct {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(remoteProviderId) remote_providerID;
 #endif
 	gchar *remote_providerID;
@@ -5302,13 +5502,13 @@ typedef struct {
 %extend LassoFederation {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(localNameIdentifier) local_nameIdentifier;
 #endif
 	%newobject local_nameIdentifier_get;
 	LassoNode *local_nameIdentifier;
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(remoteNameIdentifier) remote_nameIdentifier;
 #endif
 	%newobject remote_nameIdentifier_get;
@@ -5370,13 +5570,13 @@ typedef struct {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(Identity) LassoIdentity;
 #endif
 typedef struct {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(isDirty) is_dirty;
 #endif
 	%immutable is_dirty;
@@ -5414,6 +5614,9 @@ typedef struct {
 
 	%newobject getOfferings;
 	LassoNodeList *getOfferings(const char *service_type = NULL);
+
+	%newobject getSvcMDIDs;
+	LassoStringList *getSvcMDIDs();
 #endif
 }
 
@@ -5423,6 +5626,7 @@ typedef struct {
 
 /* providerIds */
 #define LassoIdentity_get_providerIds LassoIdentity_providerIds_get
+LassoStringList *LassoIdentity_providerIds_get(LassoIdentity *self);
 LassoStringList *LassoIdentity_providerIds_get(LassoIdentity *self) {
 	GPtrArray *providerIds = g_ptr_array_sized_new(g_hash_table_size(self->federations));
 	g_hash_table_foreach(self->federations, (GHFunc) add_key_to_array, providerIds);
@@ -5447,6 +5651,7 @@ LassoStringList *LassoIdentity_providerIds_get(LassoIdentity *self) {
 #define LassoIdentity_addResourceOffering lasso_identity_add_resource_offering
 #define LassoIdentity_removeResourceOffering lasso_identity_remove_resource_offering
 
+LassoNodeList *LassoIdentity_getOfferings(LassoIdentity *self, const char *service_type);
 LassoNodeList *LassoIdentity_getOfferings(LassoIdentity *self, const char *service_type) {
 	GPtrArray *array = NULL;
 	GList *list;
@@ -5459,6 +5664,22 @@ LassoNodeList *LassoIdentity_getOfferings(LassoIdentity *self, const char *servi
 	}
 	return array;
 }
+
+#include <lasso/id-wsf-2.0/identity.h>
+
+LassoStringList* LassoIdentity_getSvcMDIDs(LassoIdentity *self);
+LassoStringList* LassoIdentity_getSvcMDIDs(LassoIdentity *self) {
+	GList *list = lasso_identity_get_svc_md_ids(self);
+	GPtrArray *svcMDIDs = g_ptr_array_sized_new(g_list_length(list));
+	
+	if (list) {
+		g_list_foreach(list, (GFunc)add_string_to_array, svcMDIDs);
+		g_list_free(list);
+	}
+
+	return svcMDIDs;
+}
+
 #endif
 
 %}
@@ -5469,13 +5690,13 @@ LassoNodeList *LassoIdentity_getOfferings(LassoIdentity *self, const char *servi
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(Session) LassoSession;
 #endif
 typedef struct {
 	/* Attributes */
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 	%rename(isDirty) is_dirty;
 #endif
 	%immutable is_dirty;
@@ -5512,6 +5733,7 @@ typedef struct {
 
 /* providerIds */
 #define LassoSession_get_providerIds LassoSession_providerIds_get
+LassoStringList *LassoSession_providerIds_get(LassoSession *self);
 LassoStringList *LassoSession_providerIds_get(LassoSession *self) {
 	GPtrArray *providerIds = g_ptr_array_sized_new(g_hash_table_size(self->assertions));
 	g_hash_table_foreach(self->assertions, (GHFunc) add_key_to_array, providerIds);
@@ -5528,6 +5750,7 @@ LassoStringList *LassoSession_providerIds_get(LassoSession *self) {
 
 #define LassoSession_dump lasso_session_dump
 
+LassoNodeList *LassoSession_getAssertions(LassoSession *self, char *providerId);
 LassoNodeList *LassoSession_getAssertions(LassoSession *self, char *providerId) {
 	GPtrArray *assertionsArray;
 	GList *assertionsList;
@@ -5552,14 +5775,14 @@ LassoNodeList *LassoSession_getAssertions(LassoSession *self, char *providerId) 
 
 /* Functions */
 
-#ifdef SWIGPHP4
+#ifdef SWIG_PHP_RENAMES
 %rename(lasso_getRequestTypeFromSoapMsg) lasso_profile_get_request_type_from_soap_msg;
 #else
 %rename(getRequestTypeFromSoapMsg) lasso_profile_get_request_type_from_soap_msg;
 #endif
 LassoRequestType lasso_profile_get_request_type_from_soap_msg(char *soap);
 
-#ifdef SWIGPHP4
+#ifdef SWIG_PHP_RENAMES
 %rename(lasso_isLibertyQuery) lasso_profile_is_liberty_query;
 #else
 %rename(isLibertyQuery) lasso_profile_is_liberty_query;
@@ -5572,7 +5795,7 @@ gboolean lasso_profile_is_liberty_query(char *query);
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(Defederation) LassoDefederation;
 #endif
 typedef struct {
@@ -5643,7 +5866,7 @@ typedef struct {
 
 	THROW_ERROR()
 	int initNotification(char *remoteProviderId = NULL,
-			      LassoHttpMethod httpMethod = LASSO_HTTP_METHOD_ANY);
+			LassoHttpMethod httpMethod = LASSO_HTTP_METHOD_ANY);
 	END_THROW_ERROR()
 
 	THROW_ERROR()
@@ -5738,13 +5961,10 @@ typedef struct {
 
 /* Implementations of methods inherited from Profile */
 
-int LassoDefederation_setIdentityFromDump(LassoDefederation *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoDefederation_setSessionFromDump(LassoDefederation *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoDefederation_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoDefederation_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Methods implementations */
 
@@ -5761,7 +5981,7 @@ int LassoDefederation_setSessionFromDump(LassoDefederation *self, char *dump) {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(Login) LassoLogin;
 #endif
 typedef struct {
@@ -5772,6 +5992,9 @@ typedef struct {
 
 	%immutable protocolProfile;
 	LassoLoginProtocolProfile protocolProfile;
+
+	%newobject assertion_get;
+	LassoSamlAssertion *assertion;
 } LassoLogin;
 %extend LassoLogin {
 	/* Attributes inherited from Profile */
@@ -5871,7 +6094,7 @@ typedef struct {
 
 	THROW_ERROR()
 	int initAuthnRequest(char *remoteProviderId = NULL,
-			     LassoHttpMethod httpMethod = LASSO_HTTP_METHOD_REDIRECT);
+			LassoHttpMethod httpMethod = LASSO_HTTP_METHOD_REDIRECT);
 	END_THROW_ERROR()
 
 	THROW_ERROR()
@@ -6008,13 +6231,10 @@ typedef struct {
 
 /* Implementations of methods inherited from Profile */
 
-int LassoLogin_setIdentityFromDump(LassoLogin *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoLogin_setSessionFromDump(LassoLogin *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoLogin_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoLogin_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Methods implementations */
 
@@ -6035,7 +6255,7 @@ int LassoLogin_setSessionFromDump(LassoLogin *self, char *dump) {
 #define LassoLogin_processAuthnResponseMsg lasso_login_process_authn_response_msg
 #define LassoLogin_processRequestMsg lasso_login_process_request_msg
 #define LassoLogin_processResponseMsg lasso_login_process_response_msg
-#define LassoLogin_setEncryptedResourceId lasso_login_set_encryptedResourceId 
+#define LassoLogin_setEncryptedResourceId lasso_login_set_encryptedResourceId
 #define LassoLogin_setResourceId lasso_login_set_resourceId
 #define LassoLogin_validateRequestMsg lasso_login_validate_request_msg
 #define LassoLogin_processPaosResponseMsg lasso_login_process_paos_response_msg
@@ -6048,7 +6268,7 @@ int LassoLogin_setSessionFromDump(LassoLogin *self, char *dump) {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(Logout) LassoLogout;
 #endif
 typedef struct {
@@ -6236,13 +6456,10 @@ typedef struct {
 
 /* Implementations of methods inherited from Profile */
 
-int LassoLogout_setIdentityFromDump(LassoLogout *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoLogout_setSessionFromDump(LassoLogout *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoLogout_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoLogout_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Methods implementations */
 
@@ -6264,7 +6481,7 @@ int LassoLogout_setSessionFromDump(LassoLogout *self, char *dump) {
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(Lecp) LassoLecp;
 #endif
 typedef struct {
@@ -6470,39 +6687,28 @@ typedef struct {
 
 /* Implementations of methods inherited from Profile */
 
-int LassoLecp_setIdentityFromDump(LassoLecp *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoLecp_setSessionFromDump(LassoLecp *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoLecp_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoLecp_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Implementations of methods inherited from Login */
 
-int LassoLecp_buildAssertion(LassoLecp *self, char *authenticationMethod,
-		char *authenticationInstant, char *reauthenticateOnOrAfter, char *notBefore,
-		char *notOnOrAfter) {
-	return lasso_login_build_assertion(LASSO_LOGIN(self), authenticationMethod,
-			authenticationInstant, reauthenticateOnOrAfter, notBefore, notOnOrAfter);
-}
+#define LassoLecp_buildAssertion(self, authenticationMethod, authenticationInstant, \
+		reauthenticateOnOrAfter, notBefore, notOnOrAfter) \
+	lasso_login_build_assertion(LASSO_LOGIN(self), authenticationMethod, \
+		authenticationInstant, reauthenticateOnOrAfter, notBefore, notOnOrAfter)
 
 #ifdef LASSO_WSF_ENABLED
-int LassoLecp_setEncryptedResourceId(LassoLecp *self,
-		LassoDiscoEncryptedResourceID *encryptedResourceId) {
-	return lasso_login_set_encryptedResourceId(LASSO_LOGIN(self), encryptedResourceId);
-}
+#define LassoLecp_setEncryptedResourceId(self, encryptedResourceId) \
+	lasso_login_set_encryptedResourceId(LASSO_LOGIN(self), encryptedResourceId)
 #endif
 
-int LassoLecp_setResourceId(LassoLecp *self, char *content) {
-	return lasso_login_set_resourceId(LASSO_LOGIN(self), content);
-}
+#define LassoLecp_setResourceId(self, content) \
+	lasso_login_set_resourceId(LASSO_LOGIN(self), content)
 
-int LassoLecp_validateRequestMsg(LassoLecp *self, gboolean authenticationResult,
-		gboolean isConsentObtained) {
-	return lasso_login_validate_request_msg(LASSO_LOGIN(self), authenticationResult,
-			isConsentObtained);
-}
+#define LassoLecp_validateRequestMsg(self, authenticationResult, isConsentObtained) \
+	lasso_login_validate_request_msg(LASSO_LOGIN(self), authenticationResult, isConsentObtained)
 
 /* Methods implementations */
 
@@ -6523,7 +6729,7 @@ int LassoLecp_validateRequestMsg(LassoLecp *self, gboolean authenticationResult,
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(NameIdentifierMapping) LassoNameIdentifierMapping;
 #endif
 typedef struct {
@@ -6695,13 +6901,10 @@ typedef struct {
 
 /* Implementations of methods inherited from Profile */
 
-int LassoNameIdentifierMapping_setIdentityFromDump(LassoNameIdentifierMapping *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoNameIdentifierMapping_setSessionFromDump(LassoNameIdentifierMapping *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoNameIdentifierMapping_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoNameIdentifierMapping_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Methods implementations */
 
@@ -6720,7 +6923,7 @@ int LassoNameIdentifierMapping_setSessionFromDump(LassoNameIdentifierMapping *se
  ***********************************************************************/
 
 
-#ifndef SWIGPHP4
+#ifndef SWIG_PHP_RENAMES
 %rename(NameRegistration) LassoNameRegistration;
 #endif
 typedef struct {
@@ -6914,13 +7117,10 @@ typedef struct {
 
 /* Implementations of methods inherited from Profile */
 
-int LassoNameRegistration_setIdentityFromDump(LassoNameRegistration *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoNameRegistration_setSessionFromDump(LassoNameRegistration *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoNameRegistration_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoNameRegistration_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Methods implementations */
 
@@ -6936,6 +7136,9 @@ int LassoNameRegistration_setSessionFromDump(LassoNameRegistration *self, char *
 
 #ifdef LASSO_WSF_ENABLED
 %include Lasso-wsf.i
+%include Lasso-wsf2.i
+%include id-wsf-2.0/main.h
+%include ws/main.h
 #endif
 
 %include Lasso-saml2.i

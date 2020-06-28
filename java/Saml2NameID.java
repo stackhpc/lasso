@@ -41,12 +41,12 @@ public class Saml2NameID extends Node {
     return lassoJNI.Saml2NameID_format_get(swigCPtr, this);
   }
 
-  public void setSPProvidedID(String value) {
-    lassoJNI.Saml2NameID_SPProvidedID_set(swigCPtr, this, value);
+  public void setSpProvidedId(String value) {
+    lassoJNI.Saml2NameID_spProvidedId_set(swigCPtr, this, value);
   }
 
-  public String getSPProvidedID() {
-    return lassoJNI.Saml2NameID_SPProvidedID_get(swigCPtr, this);
+  public String getSpProvidedId() {
+    return lassoJNI.Saml2NameID_spProvidedId_get(swigCPtr, this);
   }
 
   public void setNameQualifier(String value) {

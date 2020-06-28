@@ -1,4 +1,4 @@
-SUBDIRS = saml-2.0
+SUBDIRS = saml-2.0 id-wsf-2.0 ws
 
 liblassoincludedir = $(includedir)/lasso/xml
 
@@ -169,6 +169,7 @@ liblasso_xml_la_SOURCES = \
 	lib_scoping.c \
 	lib_status_response.c \
 	lib_subject.c \
+	misc_text_node.c \
 	saml_advice.c \
 	saml_assertion.c \
 	saml_attribute.c \
@@ -222,6 +223,7 @@ liblassoinclude_HEADERS = \
 	lib_scoping.h \
 	lib_status_response.h \
 	lib_subject.h \
+	misc_text_node.h \
 	saml_advice.h \
 	saml_assertion.h \
 	saml_attribute.h \
@@ -246,10 +248,10 @@ liblassoinclude_HEADERS = \
 	samlp_response_abstract.h \
 	samlp_status.h \
 	samlp_status_code.h \
+	xml_enc.h \
 	$(WSF_H_FILES)
 
 lasso_private_h_sources = \
-	private.h \
-	xml_enc.h
+	private.h
 
 EXTRA_DIST = $(lasso_private_h_sources)

@@ -106,12 +106,12 @@ public class LibRegisterNameIdentifierRequest extends SamlpRequestAbstract {
     return lassoJNI.LibRegisterNameIdentifierRequest_signMethod_get(swigCPtr, this);
   }
 
-  public void setSignType(SWIGTYPE_p_LassoSignatureType value) {
-    lassoJNI.LibRegisterNameIdentifierRequest_signType_set(swigCPtr, this, SWIGTYPE_p_LassoSignatureType.getCPtr(value));
+  public void setSignType(int value) {
+    lassoJNI.LibRegisterNameIdentifierRequest_signType_set(swigCPtr, this, value);
   }
 
-  public SWIGTYPE_p_LassoSignatureType getSignType() {
-    return new SWIGTYPE_p_LassoSignatureType(lassoJNI.LibRegisterNameIdentifierRequest_signType_get(swigCPtr, this), true);
+  public int getSignType() {
+    return lassoJNI.LibRegisterNameIdentifierRequest_signType_get(swigCPtr, this);
   }
 
   public void setExtension(StringList value) {
@@ -154,8 +154,8 @@ public class LibRegisterNameIdentifierRequest extends SamlpRequestAbstract {
     this(lassoJNI.new_LibRegisterNameIdentifierRequest(), true);
   }
 
-  public static LibRegisterNameIdentifierRequest newFull(String providerID, SamlNameIdentifier idpNameIdentifier, SamlNameIdentifier spNameIdentifier, SamlNameIdentifier oldNameIdentifier, SWIGTYPE_p_LassoSignatureType sign_type, int sign_method) {
-    long cPtr = lassoJNI.LibRegisterNameIdentifierRequest_newFull(providerID, SamlNameIdentifier.getCPtr(idpNameIdentifier), idpNameIdentifier, SamlNameIdentifier.getCPtr(spNameIdentifier), spNameIdentifier, SamlNameIdentifier.getCPtr(oldNameIdentifier), oldNameIdentifier, SWIGTYPE_p_LassoSignatureType.getCPtr(sign_type), sign_method);
+  public static LibRegisterNameIdentifierRequest newFull(String providerID, SamlNameIdentifier idpNameIdentifier, SamlNameIdentifier spNameIdentifier, SamlNameIdentifier oldNameIdentifier, int sign_type, int sign_method) {
+    long cPtr = lassoJNI.LibRegisterNameIdentifierRequest_newFull(providerID, SamlNameIdentifier.getCPtr(idpNameIdentifier), idpNameIdentifier, SamlNameIdentifier.getCPtr(spNameIdentifier), spNameIdentifier, SamlNameIdentifier.getCPtr(oldNameIdentifier), oldNameIdentifier, sign_type, sign_method);
     return (cPtr == 0) ? null : new LibRegisterNameIdentifierRequest(cPtr, true);
   }
 

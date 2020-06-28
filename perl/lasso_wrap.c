@@ -1409,119 +1409,122 @@ SWIG_Perl_SetModule(swig_module_info *module) {
 
 /* -------- TYPES TABLE (BEGIN) -------- */
 
-#define SWIGTYPE_p_LassoCheckVersionMode swig_types[0]
-#define SWIGTYPE_p_LassoDefederation swig_types[1]
-#define SWIGTYPE_p_LassoEcp swig_types[2]
-#define SWIGTYPE_p_LassoEncryptionMode swig_types[3]
-#define SWIGTYPE_p_LassoEncryptionSymKeyType swig_types[4]
-#define SWIGTYPE_p_LassoFederation swig_types[5]
-#define SWIGTYPE_p_LassoHttpMethod swig_types[6]
-#define SWIGTYPE_p_LassoIdentity swig_types[7]
-#define SWIGTYPE_p_LassoLecp swig_types[8]
-#define SWIGTYPE_p_LassoLibAssertion swig_types[9]
-#define SWIGTYPE_p_LassoLibAuthnRequest swig_types[10]
-#define SWIGTYPE_p_LassoLibAuthnResponse swig_types[11]
-#define SWIGTYPE_p_LassoLibFederationTerminationNotification swig_types[12]
-#define SWIGTYPE_p_LassoLibLogoutRequest swig_types[13]
-#define SWIGTYPE_p_LassoLibLogoutResponse swig_types[14]
-#define SWIGTYPE_p_LassoLibRegisterNameIdentifierRequest swig_types[15]
-#define SWIGTYPE_p_LassoLibRegisterNameIdentifierResponse swig_types[16]
-#define SWIGTYPE_p_LassoLibRequestAuthnContext swig_types[17]
-#define SWIGTYPE_p_LassoLibStatusResponse swig_types[18]
-#define SWIGTYPE_p_LassoLogin swig_types[19]
-#define SWIGTYPE_p_LassoLoginProtocolProfile swig_types[20]
-#define SWIGTYPE_p_LassoLogout swig_types[21]
-#define SWIGTYPE_p_LassoMdProtocolType swig_types[22]
-#define SWIGTYPE_p_LassoNameIdManagement swig_types[23]
-#define SWIGTYPE_p_LassoNameIdentifierMapping swig_types[24]
-#define SWIGTYPE_p_LassoNameRegistration swig_types[25]
-#define SWIGTYPE_p_LassoNode swig_types[26]
-#define SWIGTYPE_p_LassoNodeList swig_types[27]
-#define SWIGTYPE_p_LassoProtocolConformance swig_types[28]
-#define SWIGTYPE_p_LassoProvider swig_types[29]
-#define SWIGTYPE_p_LassoProviderRole swig_types[30]
-#define SWIGTYPE_p_LassoRequestType swig_types[31]
-#define SWIGTYPE_p_LassoSaml2Action swig_types[32]
-#define SWIGTYPE_p_LassoSaml2Advice swig_types[33]
-#define SWIGTYPE_p_LassoSaml2Assertion swig_types[34]
-#define SWIGTYPE_p_LassoSaml2Attribute swig_types[35]
-#define SWIGTYPE_p_LassoSaml2AttributeStatement swig_types[36]
-#define SWIGTYPE_p_LassoSaml2AudienceRestriction swig_types[37]
-#define SWIGTYPE_p_LassoSaml2AuthnContext swig_types[38]
-#define SWIGTYPE_p_LassoSaml2AuthnStatement swig_types[39]
-#define SWIGTYPE_p_LassoSaml2AuthzDecisionStatement swig_types[40]
-#define SWIGTYPE_p_LassoSaml2BaseIDAbstract swig_types[41]
-#define SWIGTYPE_p_LassoSaml2ConditionAbstract swig_types[42]
-#define SWIGTYPE_p_LassoSaml2Conditions swig_types[43]
-#define SWIGTYPE_p_LassoSaml2EncryptedElement swig_types[44]
-#define SWIGTYPE_p_LassoSaml2Evidence swig_types[45]
-#define SWIGTYPE_p_LassoSaml2KeyInfoConfirmationData swig_types[46]
-#define SWIGTYPE_p_LassoSaml2NameID swig_types[47]
-#define SWIGTYPE_p_LassoSaml2OneTimeUse swig_types[48]
-#define SWIGTYPE_p_LassoSaml2ProxyRestriction swig_types[49]
-#define SWIGTYPE_p_LassoSaml2StatementAbstract swig_types[50]
-#define SWIGTYPE_p_LassoSaml2Subject swig_types[51]
-#define SWIGTYPE_p_LassoSaml2SubjectConfirmation swig_types[52]
-#define SWIGTYPE_p_LassoSaml2SubjectConfirmationData swig_types[53]
-#define SWIGTYPE_p_LassoSaml2SubjectLocality swig_types[54]
-#define SWIGTYPE_p_LassoSamlAdvice swig_types[55]
-#define SWIGTYPE_p_LassoSamlAssertion swig_types[56]
-#define SWIGTYPE_p_LassoSamlAttribute swig_types[57]
-#define SWIGTYPE_p_LassoSamlAttributeDesignator swig_types[58]
-#define SWIGTYPE_p_LassoSamlAttributeStatement swig_types[59]
-#define SWIGTYPE_p_LassoSamlAttributeValue swig_types[60]
-#define SWIGTYPE_p_LassoSamlAudienceRestrictionCondition swig_types[61]
-#define SWIGTYPE_p_LassoSamlAuthenticationStatement swig_types[62]
-#define SWIGTYPE_p_LassoSamlAuthorityBinding swig_types[63]
-#define SWIGTYPE_p_LassoSamlConditionAbstract swig_types[64]
-#define SWIGTYPE_p_LassoSamlConditions swig_types[65]
-#define SWIGTYPE_p_LassoSamlNameIdentifier swig_types[66]
-#define SWIGTYPE_p_LassoSamlStatementAbstract swig_types[67]
-#define SWIGTYPE_p_LassoSamlSubject swig_types[68]
-#define SWIGTYPE_p_LassoSamlSubjectConfirmation swig_types[69]
-#define SWIGTYPE_p_LassoSamlSubjectLocality swig_types[70]
-#define SWIGTYPE_p_LassoSamlSubjectStatement swig_types[71]
-#define SWIGTYPE_p_LassoSamlSubjectStatementAbstract swig_types[72]
-#define SWIGTYPE_p_LassoSamlp2ArtifactResolve swig_types[73]
-#define SWIGTYPE_p_LassoSamlp2ArtifactResponse swig_types[74]
-#define SWIGTYPE_p_LassoSamlp2AssertionIDRequest swig_types[75]
-#define SWIGTYPE_p_LassoSamlp2AttributeQuery swig_types[76]
-#define SWIGTYPE_p_LassoSamlp2AuthnQuery swig_types[77]
-#define SWIGTYPE_p_LassoSamlp2AuthnRequest swig_types[78]
-#define SWIGTYPE_p_LassoSamlp2AuthzDecisionQuery swig_types[79]
-#define SWIGTYPE_p_LassoSamlp2Extensions swig_types[80]
-#define SWIGTYPE_p_LassoSamlp2IDPEntry swig_types[81]
-#define SWIGTYPE_p_LassoSamlp2IDPList swig_types[82]
-#define SWIGTYPE_p_LassoSamlp2LogoutRequest swig_types[83]
-#define SWIGTYPE_p_LassoSamlp2ManageNameIDRequest swig_types[84]
-#define SWIGTYPE_p_LassoSamlp2NameIDMappingRequest swig_types[85]
-#define SWIGTYPE_p_LassoSamlp2NameIDMappingResponse swig_types[86]
-#define SWIGTYPE_p_LassoSamlp2NameIDPolicy swig_types[87]
-#define SWIGTYPE_p_LassoSamlp2RequestAbstract swig_types[88]
-#define SWIGTYPE_p_LassoSamlp2RequestedAuthnContext swig_types[89]
-#define SWIGTYPE_p_LassoSamlp2Response swig_types[90]
-#define SWIGTYPE_p_LassoSamlp2Scoping swig_types[91]
-#define SWIGTYPE_p_LassoSamlp2Status swig_types[92]
-#define SWIGTYPE_p_LassoSamlp2StatusCode swig_types[93]
-#define SWIGTYPE_p_LassoSamlp2StatusDetail swig_types[94]
-#define SWIGTYPE_p_LassoSamlp2StatusResponse swig_types[95]
-#define SWIGTYPE_p_LassoSamlp2SubjectQueryAbstract swig_types[96]
-#define SWIGTYPE_p_LassoSamlp2Terminate swig_types[97]
-#define SWIGTYPE_p_LassoSamlpRequest swig_types[98]
-#define SWIGTYPE_p_LassoSamlpRequestAbstract swig_types[99]
-#define SWIGTYPE_p_LassoSamlpResponse swig_types[100]
-#define SWIGTYPE_p_LassoSamlpResponseAbstract swig_types[101]
-#define SWIGTYPE_p_LassoSamlpStatus swig_types[102]
-#define SWIGTYPE_p_LassoSamlpStatusCode swig_types[103]
-#define SWIGTYPE_p_LassoServer swig_types[104]
-#define SWIGTYPE_p_LassoSession swig_types[105]
-#define SWIGTYPE_p_LassoSignatureMethod swig_types[106]
-#define SWIGTYPE_p_LassoSignatureType swig_types[107]
-#define SWIGTYPE_p_LassoStringList swig_types[108]
-#define SWIGTYPE_p_char swig_types[109]
-#define SWIGTYPE_p_void swig_types[110]
-static swig_type_info *swig_types[112];
-static swig_module_info swig_module = {swig_types, 111, 0, 0, 0, 0};
+#define SWIGTYPE_p_GHashTable swig_types[0]
+#define SWIGTYPE_p_LassoCheckVersionMode swig_types[1]
+#define SWIGTYPE_p_LassoDefederation swig_types[2]
+#define SWIGTYPE_p_LassoEcp swig_types[3]
+#define SWIGTYPE_p_LassoEncryptionMode swig_types[4]
+#define SWIGTYPE_p_LassoEncryptionSymKeyType swig_types[5]
+#define SWIGTYPE_p_LassoFederation swig_types[6]
+#define SWIGTYPE_p_LassoHttpMethod swig_types[7]
+#define SWIGTYPE_p_LassoIdentity swig_types[8]
+#define SWIGTYPE_p_LassoLecp swig_types[9]
+#define SWIGTYPE_p_LassoLibAssertion swig_types[10]
+#define SWIGTYPE_p_LassoLibAuthnRequest swig_types[11]
+#define SWIGTYPE_p_LassoLibAuthnResponse swig_types[12]
+#define SWIGTYPE_p_LassoLibFederationTerminationNotification swig_types[13]
+#define SWIGTYPE_p_LassoLibLogoutRequest swig_types[14]
+#define SWIGTYPE_p_LassoLibLogoutResponse swig_types[15]
+#define SWIGTYPE_p_LassoLibRegisterNameIdentifierRequest swig_types[16]
+#define SWIGTYPE_p_LassoLibRegisterNameIdentifierResponse swig_types[17]
+#define SWIGTYPE_p_LassoLibRequestAuthnContext swig_types[18]
+#define SWIGTYPE_p_LassoLibStatusResponse swig_types[19]
+#define SWIGTYPE_p_LassoLogin swig_types[20]
+#define SWIGTYPE_p_LassoLoginProtocolProfile swig_types[21]
+#define SWIGTYPE_p_LassoLogout swig_types[22]
+#define SWIGTYPE_p_LassoMdProtocolType swig_types[23]
+#define SWIGTYPE_p_LassoMiscTextNode swig_types[24]
+#define SWIGTYPE_p_LassoNameIdManagement swig_types[25]
+#define SWIGTYPE_p_LassoNameIdentifierMapping swig_types[26]
+#define SWIGTYPE_p_LassoNameRegistration swig_types[27]
+#define SWIGTYPE_p_LassoNode swig_types[28]
+#define SWIGTYPE_p_LassoNodeList swig_types[29]
+#define SWIGTYPE_p_LassoProtocolConformance swig_types[30]
+#define SWIGTYPE_p_LassoProvider swig_types[31]
+#define SWIGTYPE_p_LassoProviderRole swig_types[32]
+#define SWIGTYPE_p_LassoRequestType swig_types[33]
+#define SWIGTYPE_p_LassoSaml2Action swig_types[34]
+#define SWIGTYPE_p_LassoSaml2Advice swig_types[35]
+#define SWIGTYPE_p_LassoSaml2Assertion swig_types[36]
+#define SWIGTYPE_p_LassoSaml2Attribute swig_types[37]
+#define SWIGTYPE_p_LassoSaml2AttributeStatement swig_types[38]
+#define SWIGTYPE_p_LassoSaml2AudienceRestriction swig_types[39]
+#define SWIGTYPE_p_LassoSaml2AuthnContext swig_types[40]
+#define SWIGTYPE_p_LassoSaml2AuthnStatement swig_types[41]
+#define SWIGTYPE_p_LassoSaml2AuthzDecisionStatement swig_types[42]
+#define SWIGTYPE_p_LassoSaml2BaseIDAbstract swig_types[43]
+#define SWIGTYPE_p_LassoSaml2ConditionAbstract swig_types[44]
+#define SWIGTYPE_p_LassoSaml2Conditions swig_types[45]
+#define SWIGTYPE_p_LassoSaml2EncryptedElement swig_types[46]
+#define SWIGTYPE_p_LassoSaml2Evidence swig_types[47]
+#define SWIGTYPE_p_LassoSaml2KeyInfoConfirmationData swig_types[48]
+#define SWIGTYPE_p_LassoSaml2NameID swig_types[49]
+#define SWIGTYPE_p_LassoSaml2OneTimeUse swig_types[50]
+#define SWIGTYPE_p_LassoSaml2ProxyRestriction swig_types[51]
+#define SWIGTYPE_p_LassoSaml2StatementAbstract swig_types[52]
+#define SWIGTYPE_p_LassoSaml2Subject swig_types[53]
+#define SWIGTYPE_p_LassoSaml2SubjectConfirmation swig_types[54]
+#define SWIGTYPE_p_LassoSaml2SubjectConfirmationData swig_types[55]
+#define SWIGTYPE_p_LassoSaml2SubjectLocality swig_types[56]
+#define SWIGTYPE_p_LassoSamlAdvice swig_types[57]
+#define SWIGTYPE_p_LassoSamlAssertion swig_types[58]
+#define SWIGTYPE_p_LassoSamlAttribute swig_types[59]
+#define SWIGTYPE_p_LassoSamlAttributeDesignator swig_types[60]
+#define SWIGTYPE_p_LassoSamlAttributeStatement swig_types[61]
+#define SWIGTYPE_p_LassoSamlAttributeValue swig_types[62]
+#define SWIGTYPE_p_LassoSamlAudienceRestrictionCondition swig_types[63]
+#define SWIGTYPE_p_LassoSamlAuthenticationStatement swig_types[64]
+#define SWIGTYPE_p_LassoSamlAuthorityBinding swig_types[65]
+#define SWIGTYPE_p_LassoSamlConditionAbstract swig_types[66]
+#define SWIGTYPE_p_LassoSamlConditions swig_types[67]
+#define SWIGTYPE_p_LassoSamlNameIdentifier swig_types[68]
+#define SWIGTYPE_p_LassoSamlStatementAbstract swig_types[69]
+#define SWIGTYPE_p_LassoSamlSubject swig_types[70]
+#define SWIGTYPE_p_LassoSamlSubjectConfirmation swig_types[71]
+#define SWIGTYPE_p_LassoSamlSubjectLocality swig_types[72]
+#define SWIGTYPE_p_LassoSamlSubjectStatement swig_types[73]
+#define SWIGTYPE_p_LassoSamlSubjectStatementAbstract swig_types[74]
+#define SWIGTYPE_p_LassoSamlp2ArtifactResolve swig_types[75]
+#define SWIGTYPE_p_LassoSamlp2ArtifactResponse swig_types[76]
+#define SWIGTYPE_p_LassoSamlp2AssertionIDRequest swig_types[77]
+#define SWIGTYPE_p_LassoSamlp2AttributeQuery swig_types[78]
+#define SWIGTYPE_p_LassoSamlp2AuthnQuery swig_types[79]
+#define SWIGTYPE_p_LassoSamlp2AuthnRequest swig_types[80]
+#define SWIGTYPE_p_LassoSamlp2AuthzDecisionQuery swig_types[81]
+#define SWIGTYPE_p_LassoSamlp2Extensions swig_types[82]
+#define SWIGTYPE_p_LassoSamlp2IDPEntry swig_types[83]
+#define SWIGTYPE_p_LassoSamlp2IDPList swig_types[84]
+#define SWIGTYPE_p_LassoSamlp2LogoutRequest swig_types[85]
+#define SWIGTYPE_p_LassoSamlp2ManageNameIDRequest swig_types[86]
+#define SWIGTYPE_p_LassoSamlp2NameIDMappingRequest swig_types[87]
+#define SWIGTYPE_p_LassoSamlp2NameIDMappingResponse swig_types[88]
+#define SWIGTYPE_p_LassoSamlp2NameIDPolicy swig_types[89]
+#define SWIGTYPE_p_LassoSamlp2RequestAbstract swig_types[90]
+#define SWIGTYPE_p_LassoSamlp2RequestedAuthnContext swig_types[91]
+#define SWIGTYPE_p_LassoSamlp2Response swig_types[92]
+#define SWIGTYPE_p_LassoSamlp2Scoping swig_types[93]
+#define SWIGTYPE_p_LassoSamlp2Status swig_types[94]
+#define SWIGTYPE_p_LassoSamlp2StatusCode swig_types[95]
+#define SWIGTYPE_p_LassoSamlp2StatusDetail swig_types[96]
+#define SWIGTYPE_p_LassoSamlp2StatusResponse swig_types[97]
+#define SWIGTYPE_p_LassoSamlp2SubjectQueryAbstract swig_types[98]
+#define SWIGTYPE_p_LassoSamlp2Terminate swig_types[99]
+#define SWIGTYPE_p_LassoSamlpRequest swig_types[100]
+#define SWIGTYPE_p_LassoSamlpRequestAbstract swig_types[101]
+#define SWIGTYPE_p_LassoSamlpResponse swig_types[102]
+#define SWIGTYPE_p_LassoSamlpResponseAbstract swig_types[103]
+#define SWIGTYPE_p_LassoSamlpStatus swig_types[104]
+#define SWIGTYPE_p_LassoSamlpStatusCode swig_types[105]
+#define SWIGTYPE_p_LassoServer swig_types[106]
+#define SWIGTYPE_p_LassoSession swig_types[107]
+#define SWIGTYPE_p_LassoSignatureMethod swig_types[108]
+#define SWIGTYPE_p_LassoSignatureType swig_types[109]
+#define SWIGTYPE_p_LassoStringDict swig_types[110]
+#define SWIGTYPE_p_LassoStringList swig_types[111]
+#define SWIGTYPE_p_char swig_types[112]
+#define SWIGTYPE_p_void swig_types[113]
+static swig_type_info *swig_types[115];
+static swig_module_info swig_module = {swig_types, 114, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -1584,6 +1587,7 @@ SWIG_From_int  SWIG_PERL_DECL_ARGS_1(int value)
 #include <lasso/lasso.h>
 #include <lasso/xml/lib_assertion.h>
 #include <lasso/xml/saml_attribute_value.h>
+#include <lasso/xml/misc_text_node.h>
 
 #ifdef LASSO_WSF_ENABLED
 #include <lasso/xml/disco_resource_id.h>
@@ -1598,14 +1602,14 @@ SWIG_From_int  SWIG_PERL_DECL_ARGS_1(int value)
 
 
 
-/* 
+/*
  * Thanks to the patch in this Debian bug for the solution
  * to the crash inside vsnprintf on some architectures.
  *
  * "reuse of args inside the while(1) loop is in violation of the
  * specs and only happens to work by accident on other systems."
  *
- * http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=104325 
+ * http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=104325
  */
 
 #ifndef va_copy
@@ -1639,7 +1643,8 @@ typedef struct node_info {
 #endif
 } node_info;
 
-static node_info node_infos[250]; /* FIXME: Size should be computed */
+#define NODE_INFOS_SIZE 500
+static node_info node_infos[NODE_INFOS_SIZE]; /* FIXME: Size should be computed */
 
 /* Cast a LassoNode into the appropriate derivated class. */
 static swig_type_info *dynamic_cast_node(void **nodePointer) {
@@ -1656,6 +1661,7 @@ static swig_type_info *dynamic_cast_node(void **nodePointer) {
 	return NULL;
 }
 
+#ifndef SWIGPYTHON
 static node_info *get_node_info_with_swig(swig_type_info *swig) {
 	node_info *info;
 
@@ -1665,6 +1671,7 @@ static node_info *get_node_info_with_swig(swig_type_info *swig) {
 	}
 	return NULL;
 }
+#endif
 
 #if defined(PHP_VERSION) && ! defined(PHP_VERSION_ID)
 static void set_node_info(node_info *info, char *name, char *superName, swig_type_info *swig,
@@ -1673,6 +1680,7 @@ static void set_node_info(node_info *info, char *name, char *superName, swig_typ
 static void set_node_info(node_info *info, char *name, char *superName, swig_type_info *swig) {
 #endif
 	node_info *super;
+	static int node_info_count = 0;
 
 	info->name = name;
 	if (superName) {
@@ -1681,7 +1689,7 @@ static void set_node_info(node_info *info, char *name, char *superName, swig_typ
 				break;
 		if (super == info) {
 			printf("Lasso Swig Alert: Unknown super class %s for class %s\n",
-			       superName, name);
+					superName, name);
 			super = NULL;
 		}
 	} else {
@@ -1692,6 +1700,11 @@ static void set_node_info(node_info *info, char *name, char *superName, swig_typ
 #if defined(PHP_VERSION) && ! defined(PHP_VERSION_ID)
 	info->php = php;
 #endif
+	node_info_count++;
+	if (node_info_count >= NODE_INFOS_SIZE) {
+		fprintf(stderr,	"Too many allocated objects. You must increase NODE_INFOS_SIZE constant in Lasso.i.\n");
+		abort();
+	}
 }
 
 
@@ -1940,9 +1953,9 @@ static void add_xml_to_array(xmlNode *xmlnode, GPtrArray *array)
 		xmlNodeDumpOutput(buf, NULL, xmlnode, 0, 1, NULL);
 		xmlOutputBufferFlush(buf);
 		if (buf->conv == NULL) {
-			xmlString = g_strdup(buf->buffer->content);
+			xmlString = g_strdup((char*)buf->buffer->content);
 		} else {
-			xmlString = g_strdup(buf->conv->content);
+			xmlString = g_strdup((char*)buf->conv->content);
 		}
 		xmlOutputBufferClose(buf);
 	}
@@ -2041,9 +2054,9 @@ static char* get_xml_string(xmlNode *xmlnode)
 		xmlNodeDumpOutput(buf, NULL, xmlnode, 0, 1, NULL);
 		xmlOutputBufferFlush(buf);
 		if (buf->conv == NULL) {
-			xmlString = g_strdup(buf->buffer->content);
+			xmlString = g_strdup((char*)buf->buffer->content);
 		} else {
-			xmlString = g_strdup(buf->conv->content);
+			xmlString = g_strdup((char*)buf->conv->content);
 		}
 		xmlOutputBufferClose(buf);
 	}
@@ -2055,7 +2068,7 @@ static xmlNode *get_string_xml(const char *string) {
 	xmlDoc *doc;
 	xmlNode *node;
 
-	doc = xmlReadDoc(string, NULL, NULL, XML_PARSE_NONET);
+	doc = xmlReadDoc((xmlChar*)string, NULL, NULL, XML_PARSE_NONET);
 	node = xmlDocGetRootElement(doc);
 	if (node != NULL) {
 		node = xmlCopyNode(node, 1);
@@ -2172,7 +2185,7 @@ static void set_xml_string(xmlNode **xmlnode, const char* string)
 	xmlDoc *doc;
 	xmlNode *node;
 
-	doc = xmlReadDoc(string, NULL, NULL, XML_PARSE_NONET);
+	doc = xmlReadDoc((xmlChar*)string, NULL, NULL, XML_PARSE_NONET);
 	node = xmlDocGetRootElement(doc);
 	if (node != NULL) {
 		node = xmlCopyNode(node, 1);
@@ -2251,6 +2264,7 @@ SWIGINTERN void LassoNodeList_setItem(LassoNodeList *self,int index,LassoNode *i
 
 #define new_LassoNodeList g_ptr_array_new
 
+void delete_LassoNodeList(GPtrArray *self);
 void delete_LassoNodeList(GPtrArray *self) {
 	g_ptr_array_foreach(self, (GFunc) free_node_array_item, NULL);
 	g_ptr_array_free(self, false);
@@ -2294,6 +2308,76 @@ SWIGINTERN void LassoStringList_setItem(LassoStringList *self,int index,char *it
 
 #define new_LassoStringList g_ptr_array_new
 #define delete_LassoStringList(self) g_ptr_array_free(self, true)
+
+
+
+typedef GHashTable LassoStringDict;
+
+SWIGINTERN GHashTable *LassoStringDict_cast(LassoStringDict *self){
+			return self;
+		}
+SWIGINTERN LassoStringDict *LassoStringDict_frompointer(GHashTable *stringDict){
+			return (LassoStringDict*)stringDict;
+		}
+SWIGINTERN char *LassoStringDict_getItem(LassoStringDict *self,char *key){
+			return g_strdup(g_hash_table_lookup(self, key));
+		}
+SWIGINTERN void LassoStringDict_setItem(LassoStringDict *self,char *key,char *item){
+			g_hash_table_insert(self, g_strdup(key), g_strdup(item));
+		}
+
+
+/* Constructors, destructors & static methods implementations */
+
+static GHashTable* lasso_string_dict_new()
+{
+	return g_hash_table_new_full(g_str_hash, g_str_equal, g_free, NULL);
+}
+
+#define new_LassoStringDict lasso_string_dict_new
+#define delete_LassoStringDict(self) g_hash_table_destroy(self)
+
+
+
+SWIGINTERN int
+SWIG_AsVal_bool SWIG_PERL_DECL_ARGS_2(SV *obj, bool* val)
+{
+  if (obj == &PL_sv_yes) {
+    if (val) *val = true;
+    return SWIG_OK;
+  } else if (obj == &PL_sv_no) { 
+    if (val) *val = false;
+    return SWIG_OK;
+  } else {
+    if (val) *val = SvTRUE(obj) ? true: false;
+    return SWIG_AddCast(SWIG_OK);    
+  }
+  return SWIG_TypeError;
+}
+
+
+SWIGINTERNINLINE SV *
+SWIG_From_bool  SWIG_PERL_DECL_ARGS_1(bool value)
+{    
+  SV *obj = sv_newmortal();
+  if (value) {
+    sv_setsv(obj, &PL_sv_yes);
+  } else {
+    sv_setsv(obj, &PL_sv_no); 
+  }
+  return obj;
+}
+
+
+
+/* Constructors, destructors & static methods implementations */
+
+#define new_LassoMiscTextNode lasso_misc_text_node_new
+#define delete_LassoMiscTextNode(self) lasso_node_destroy(LASSO_NODE(self))
+
+/* Implementations of methods inherited from LassoNode */
+
+#define LassoMiscTextNode_dump(self) lasso_node_dump(LASSO_NODE(self))
 
 
 
@@ -2982,36 +3066,6 @@ SWIGINTERN void LassoStringList_setItem(LassoStringList *self,int index,char *it
 
 
 
-SWIGINTERN int
-SWIG_AsVal_bool SWIG_PERL_DECL_ARGS_2(SV *obj, bool* val)
-{
-  if (obj == &PL_sv_yes) {
-    if (val) *val = true;
-    return SWIG_OK;
-  } else if (obj == &PL_sv_no) { 
-    if (val) *val = false;
-    return SWIG_OK;
-  } else {
-    if (val) *val = SvTRUE(obj) ? true: false;
-    return SWIG_AddCast(SWIG_OK);    
-  }
-  return SWIG_TypeError;
-}
-
-
-SWIGINTERNINLINE SV *
-SWIG_From_bool  SWIG_PERL_DECL_ARGS_1(bool value)
-{    
-  SV *obj = sv_newmortal();
-  if (value) {
-    sv_setsv(obj, &PL_sv_yes);
-  } else {
-    sv_setsv(obj, &PL_sv_no); 
-  }
-  return obj;
-}
-
-
 
 /* Implementations of attributes inherited from SamlpRequestAbstract */
 
@@ -3574,6 +3628,7 @@ SWIG_From_bool  SWIG_PERL_DECL_ARGS_1(bool value)
 
 /* providerIds */
 #define LassoServer_get_providerIds LassoServer_providerIds_get
+LassoStringList *LassoServer_providerIds_get(LassoServer *self);
 LassoStringList *LassoServer_providerIds_get(LassoServer *self) {
 	GPtrArray *providerIds = g_ptr_array_sized_new(g_hash_table_size(self->providers));
 	g_hash_table_foreach(self->providers, (GHFunc) add_key_to_array, providerIds);
@@ -3600,7 +3655,8 @@ LassoStringList *LassoServer_providerIds_get(LassoServer *self) {
 /* Methods implementations */
 
 #define LassoServer_addProvider lasso_server_add_provider
-#define LassoServer_addService lasso_server_add_service
+#define LassoServer_addService(self, service) lasso_server_add_service(self, LASSO_NODE(service))
+#define LassoServer_addServiceFromDump lasso_server_add_service_from_dump
 #define LassoServer_dump lasso_server_dump
 #define LassoServer_getProvider lasso_server_get_provider
 #define LassoServer_getService lasso_server_get_service
@@ -3645,6 +3701,7 @@ LassoStringList *LassoServer_providerIds_get(LassoServer *self) {
 
 /* providerIds */
 #define LassoIdentity_get_providerIds LassoIdentity_providerIds_get
+LassoStringList *LassoIdentity_providerIds_get(LassoIdentity *self);
 LassoStringList *LassoIdentity_providerIds_get(LassoIdentity *self) {
 	GPtrArray *providerIds = g_ptr_array_sized_new(g_hash_table_size(self->federations));
 	g_hash_table_foreach(self->federations, (GHFunc) add_key_to_array, providerIds);
@@ -3669,6 +3726,7 @@ LassoStringList *LassoIdentity_providerIds_get(LassoIdentity *self) {
 #define LassoIdentity_addResourceOffering lasso_identity_add_resource_offering
 #define LassoIdentity_removeResourceOffering lasso_identity_remove_resource_offering
 
+LassoNodeList *LassoIdentity_getOfferings(LassoIdentity *self, const char *service_type);
 LassoNodeList *LassoIdentity_getOfferings(LassoIdentity *self, const char *service_type) {
 	GPtrArray *array = NULL;
 	GList *list;
@@ -3681,6 +3739,22 @@ LassoNodeList *LassoIdentity_getOfferings(LassoIdentity *self, const char *servi
 	}
 	return array;
 }
+
+#include <lasso/id-wsf-2.0/identity.h>
+
+LassoStringList* LassoIdentity_getSvcMDIDs(LassoIdentity *self);
+LassoStringList* LassoIdentity_getSvcMDIDs(LassoIdentity *self) {
+	GList *list = lasso_identity_get_svc_md_ids(self);
+	GPtrArray *svcMDIDs = g_ptr_array_sized_new(g_list_length(list));
+	
+	if (list) {
+		g_list_foreach(list, (GFunc)add_string_to_array, svcMDIDs);
+		g_list_free(list);
+	}
+
+	return svcMDIDs;
+}
+
 #endif
 
 
@@ -3690,6 +3764,7 @@ LassoNodeList *LassoIdentity_getOfferings(LassoIdentity *self, const char *servi
 
 /* providerIds */
 #define LassoSession_get_providerIds LassoSession_providerIds_get
+LassoStringList *LassoSession_providerIds_get(LassoSession *self);
 LassoStringList *LassoSession_providerIds_get(LassoSession *self) {
 	GPtrArray *providerIds = g_ptr_array_sized_new(g_hash_table_size(self->assertions));
 	g_hash_table_foreach(self->assertions, (GHFunc) add_key_to_array, providerIds);
@@ -3706,6 +3781,7 @@ LassoStringList *LassoSession_providerIds_get(LassoSession *self) {
 
 #define LassoSession_dump lasso_session_dump
 
+LassoNodeList *LassoSession_getAssertions(LassoSession *self, char *providerId);
 LassoNodeList *LassoSession_getAssertions(LassoSession *self, char *providerId) {
 	GPtrArray *assertionsArray;
 	GList *assertionsList;
@@ -3804,13 +3880,10 @@ LassoNodeList *LassoSession_getAssertions(LassoSession *self, char *providerId) 
 
 /* Implementations of methods inherited from Profile */
 
-int LassoDefederation_setIdentityFromDump(LassoDefederation *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoDefederation_setSessionFromDump(LassoDefederation *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoDefederation_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoDefederation_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Methods implementations */
 
@@ -3906,13 +3979,10 @@ int LassoDefederation_setSessionFromDump(LassoDefederation *self, char *dump) {
 
 /* Implementations of methods inherited from Profile */
 
-int LassoLogin_setIdentityFromDump(LassoLogin *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoLogin_setSessionFromDump(LassoLogin *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoLogin_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoLogin_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Methods implementations */
 
@@ -3933,7 +4003,7 @@ int LassoLogin_setSessionFromDump(LassoLogin *self, char *dump) {
 #define LassoLogin_processAuthnResponseMsg lasso_login_process_authn_response_msg
 #define LassoLogin_processRequestMsg lasso_login_process_request_msg
 #define LassoLogin_processResponseMsg lasso_login_process_response_msg
-#define LassoLogin_setEncryptedResourceId lasso_login_set_encryptedResourceId 
+#define LassoLogin_setEncryptedResourceId lasso_login_set_encryptedResourceId
 #define LassoLogin_setResourceId lasso_login_set_resourceId
 #define LassoLogin_validateRequestMsg lasso_login_validate_request_msg
 #define LassoLogin_processPaosResponseMsg lasso_login_process_paos_response_msg
@@ -4023,13 +4093,10 @@ int LassoLogin_setSessionFromDump(LassoLogin *self, char *dump) {
 
 /* Implementations of methods inherited from Profile */
 
-int LassoLogout_setIdentityFromDump(LassoLogout *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoLogout_setSessionFromDump(LassoLogout *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoLogout_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoLogout_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Methods implementations */
 
@@ -4127,39 +4194,28 @@ int LassoLogout_setSessionFromDump(LassoLogout *self, char *dump) {
 
 /* Implementations of methods inherited from Profile */
 
-int LassoLecp_setIdentityFromDump(LassoLecp *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoLecp_setSessionFromDump(LassoLecp *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoLecp_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoLecp_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Implementations of methods inherited from Login */
 
-int LassoLecp_buildAssertion(LassoLecp *self, char *authenticationMethod,
-		char *authenticationInstant, char *reauthenticateOnOrAfter, char *notBefore,
-		char *notOnOrAfter) {
-	return lasso_login_build_assertion(LASSO_LOGIN(self), authenticationMethod,
-			authenticationInstant, reauthenticateOnOrAfter, notBefore, notOnOrAfter);
-}
+#define LassoLecp_buildAssertion(self, authenticationMethod, authenticationInstant, \
+		reauthenticateOnOrAfter, notBefore, notOnOrAfter) \
+	lasso_login_build_assertion(LASSO_LOGIN(self), authenticationMethod, \
+		authenticationInstant, reauthenticateOnOrAfter, notBefore, notOnOrAfter)
 
 #ifdef LASSO_WSF_ENABLED
-int LassoLecp_setEncryptedResourceId(LassoLecp *self,
-		LassoDiscoEncryptedResourceID *encryptedResourceId) {
-	return lasso_login_set_encryptedResourceId(LASSO_LOGIN(self), encryptedResourceId);
-}
+#define LassoLecp_setEncryptedResourceId(self, encryptedResourceId) \
+	lasso_login_set_encryptedResourceId(LASSO_LOGIN(self), encryptedResourceId)
 #endif
 
-int LassoLecp_setResourceId(LassoLecp *self, char *content) {
-	return lasso_login_set_resourceId(LASSO_LOGIN(self), content);
-}
+#define LassoLecp_setResourceId(self, content) \
+	lasso_login_set_resourceId(LASSO_LOGIN(self), content)
 
-int LassoLecp_validateRequestMsg(LassoLecp *self, gboolean authenticationResult,
-		gboolean isConsentObtained) {
-	return lasso_login_validate_request_msg(LASSO_LOGIN(self), authenticationResult,
-			isConsentObtained);
-}
+#define LassoLecp_validateRequestMsg(self, authenticationResult, isConsentObtained) \
+	lasso_login_validate_request_msg(LASSO_LOGIN(self), authenticationResult, isConsentObtained)
 
 /* Methods implementations */
 
@@ -4256,13 +4312,10 @@ int LassoLecp_validateRequestMsg(LassoLecp *self, gboolean authenticationResult,
 
 /* Implementations of methods inherited from Profile */
 
-int LassoNameIdentifierMapping_setIdentityFromDump(LassoNameIdentifierMapping *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoNameIdentifierMapping_setSessionFromDump(LassoNameIdentifierMapping *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoNameIdentifierMapping_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoNameIdentifierMapping_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Methods implementations */
 
@@ -4366,13 +4419,10 @@ int LassoNameIdentifierMapping_setSessionFromDump(LassoNameIdentifierMapping *se
 
 /* Implementations of methods inherited from Profile */
 
-int LassoNameRegistration_setIdentityFromDump(LassoNameRegistration *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoNameRegistration_setSessionFromDump(LassoNameRegistration *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoNameRegistration_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoNameRegistration_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Methods implementations */
 
@@ -4390,7 +4440,7 @@ int LassoNameRegistration_setSessionFromDump(LassoNameRegistration *self, char *
 
 
 
-/* Implementations of attributes inherited from Profile */
+/* Implementations of attributes inherited from LassoProfile */
 
 /* identity */
 #define LassoNameIdManagement_get_identity(self) lasso_profile_get_identity(LASSO_PROFILE(self))
@@ -4470,15 +4520,12 @@ int LassoNameRegistration_setSessionFromDump(LassoNameRegistration *self, char *
 #define delete_LassoNameIdManagement(self) lasso_node_destroy(LASSO_NODE(self))
 #define LassoNameIdManagement_newFromDump lasso_name_id_management_new_from_dump
 
-/* Implementations of methods inherited from Profile */
+/* Implementations of methods inherited from LassoProfile */
 
-int LassoNameIdManagement_setIdentityFromDump(LassoNameIdManagement *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoNameIdManagement_setSessionFromDump(LassoNameIdManagement *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoNameIdManagement_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoNameIdManagement_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Methods implementations */
 
@@ -4602,17 +4649,21 @@ int LassoNameIdManagement_setSessionFromDump(LassoNameIdManagement *self, char *
 
 
 
-/* authnContextClassRef */
-#define LassoSamlp2RequestedAuthnContext_get_authnContextClassRef(self) get_string_list((self)->AuthnContextClassRef)
-#define LassoSamlp2RequestedAuthnContext_authnContextClassRef_get(self) get_string_list((self)->AuthnContextClassRef)
-#define LassoSamlp2RequestedAuthnContext_set_authnContextClassRef(self, value) set_string_list(&(self)->AuthnContextClassRef, (value))
-#define LassoSamlp2RequestedAuthnContext_authnContextClassRef_set(self, value) set_string_list(&(self)->AuthnContextClassRef, (value))
+/* AuthnContextClassRef */
 
-/* authnContextDeclRef */
-#define LassoSamlp2RequestedAuthnContext_get_authnContextDeclRef(self) get_string_list((self)->AuthnContextDeclRef)
-#define LassoSamlp2RequestedAuthnContext_authnContextDeclRef_get(self) get_string_list((self)->AuthnContextDeclRef)
-#define LassoSamlp2RequestedAuthnContext_set_authnContextDeclRef(self, value) set_string_list(&(self)->AuthnContextDeclRef, (value))
-#define LassoSamlp2RequestedAuthnContext_authnContextDeclRef_set(self, value) set_string_list(&(self)->AuthnContextDeclRef, (value))
+#define LassoSamlp2RequestedAuthnContext_get_AuthnContextClassRef(self) get_string_list((self)->AuthnContextClassRef)
+#define LassoSamlp2RequestedAuthnContext_AuthnContextClassRef_get(self) get_string_list((self)->AuthnContextClassRef)
+#define LassoSamlp2RequestedAuthnContext_set_AuthnContextClassRef(self,value) set_string_list(&(self)->AuthnContextClassRef, (value))
+#define LassoSamlp2RequestedAuthnContext_AuthnContextClassRef_set(self,value) set_string_list(&(self)->AuthnContextClassRef, (value))
+                    
+
+/* AuthnContextDeclRef */
+
+#define LassoSamlp2RequestedAuthnContext_get_AuthnContextDeclRef(self) get_string_list((self)->AuthnContextDeclRef)
+#define LassoSamlp2RequestedAuthnContext_AuthnContextDeclRef_get(self) get_string_list((self)->AuthnContextDeclRef)
+#define LassoSamlp2RequestedAuthnContext_set_AuthnContextDeclRef(self,value) set_string_list(&(self)->AuthnContextDeclRef, (value))
+#define LassoSamlp2RequestedAuthnContext_AuthnContextDeclRef_set(self,value) set_string_list(&(self)->AuthnContextDeclRef, (value))
+                    
 
 
 /* Constructors, destructors & static methods implementations */
@@ -4658,12 +4709,38 @@ int LassoNameIdManagement_setSessionFromDump(LassoNameIdManagement *self, char *
 #define LassoSaml2Assertion_set_Advice(self,value) set_node((gpointer*)&(self)->Advice, (value))
 #define LassoSaml2Assertion_Advice_set(self,value) set_node((gpointer*)&(self)->Advice, (value))
                     
+
+/* Statement */
+
+#define LassoSaml2Assertion_get_Statement(self) get_node_list((self)->Statement)
+#define LassoSaml2Assertion_Statement_get(self) get_node_list((self)->Statement)
+#define LassoSaml2Assertion_set_Statement(self,value) set_node_list(&(self)->Statement, (value))
+#define LassoSaml2Assertion_Statement_set(self,value) set_node_list(&(self)->Statement, (value))
+                    
+
 /* AuthnStatement */
 
 #define LassoSaml2Assertion_get_AuthnStatement(self) get_node_list((self)->AuthnStatement)
 #define LassoSaml2Assertion_AuthnStatement_get(self) get_node_list((self)->AuthnStatement)
-#define LassoSaml2Assertion_set_AuthnStatement(self, value) set_node_list(&(self)->AuthnStatement, (value))
-#define LassoSaml2Assertion_AuthnStatement_set(self, value) set_node_list(&(self)->AuthnStatement, (value))
+#define LassoSaml2Assertion_set_AuthnStatement(self,value) set_node_list(&(self)->AuthnStatement, (value))
+#define LassoSaml2Assertion_AuthnStatement_set(self,value) set_node_list(&(self)->AuthnStatement, (value))
+                    
+
+/* AuthzDecisionStatement */
+
+#define LassoSaml2Assertion_get_AuthzDecisionStatement(self) get_node_list((self)->AuthzDecisionStatement)
+#define LassoSaml2Assertion_AuthzDecisionStatement_get(self) get_node_list((self)->AuthzDecisionStatement)
+#define LassoSaml2Assertion_set_AuthzDecisionStatement(self,value) set_node_list(&(self)->AuthzDecisionStatement, (value))
+#define LassoSaml2Assertion_AuthzDecisionStatement_set(self,value) set_node_list(&(self)->AuthzDecisionStatement, (value))
+                    
+
+/* AttributeStatement */
+
+#define LassoSaml2Assertion_get_AttributeStatement(self) get_node_list((self)->AttributeStatement)
+#define LassoSaml2Assertion_AttributeStatement_get(self) get_node_list((self)->AttributeStatement)
+#define LassoSaml2Assertion_set_AttributeStatement(self,value) set_node_list(&(self)->AttributeStatement, (value))
+#define LassoSaml2Assertion_AttributeStatement_set(self,value) set_node_list(&(self)->AttributeStatement, (value))
+                    
 
 
 /* Constructors, destructors & static methods implementations */
@@ -4716,17 +4793,33 @@ int LassoNameIdManagement_setSessionFromDump(LassoNameIdManagement *self, char *
 
 #define LassoSaml2Conditions_get_Condition(self) get_node_list((self)->Condition)
 #define LassoSaml2Conditions_Condition_get(self) get_node_list((self)->Condition)
-#define LassoSaml2Conditions_set_Condition(self, value) set_node_list(&(self)->Condition, (value))
-#define LassoSaml2Conditions_Condition_set(self, value) set_node_list(&(self)->Condition, (value))
+#define LassoSaml2Conditions_set_Condition(self,value) set_node_list(&(self)->Condition, (value))
+#define LassoSaml2Conditions_Condition_set(self,value) set_node_list(&(self)->Condition, (value))
+                    
 
 /* AudienceRestriction */
 
 #define LassoSaml2Conditions_get_AudienceRestriction(self) get_node_list((self)->AudienceRestriction)
 #define LassoSaml2Conditions_AudienceRestriction_get(self) get_node_list((self)->AudienceRestriction)
-#define LassoSaml2Conditions_set_AudienceRestriction(self, value) set_node_list(&(self)->AudienceRestriction, (value))
-#define LassoSaml2Conditions_AudienceRestriction_set(self, value) set_node_list(&(self)->AudienceRestriction, (value))
+#define LassoSaml2Conditions_set_AudienceRestriction(self,value) set_node_list(&(self)->AudienceRestriction, (value))
+#define LassoSaml2Conditions_AudienceRestriction_set(self,value) set_node_list(&(self)->AudienceRestriction, (value))
+                    
 
+/* OneTimeUse */
 
+#define LassoSaml2Conditions_get_OneTimeUse(self) get_node_list((self)->OneTimeUse)
+#define LassoSaml2Conditions_OneTimeUse_get(self) get_node_list((self)->OneTimeUse)
+#define LassoSaml2Conditions_set_OneTimeUse(self,value) set_node_list(&(self)->OneTimeUse, (value))
+#define LassoSaml2Conditions_OneTimeUse_set(self,value) set_node_list(&(self)->OneTimeUse, (value))
+                    
+
+/* ProxyRestriction */
+
+#define LassoSaml2Conditions_get_ProxyRestriction(self) get_node_list((self)->ProxyRestriction)
+#define LassoSaml2Conditions_ProxyRestriction_get(self) get_node_list((self)->ProxyRestriction)
+#define LassoSaml2Conditions_set_ProxyRestriction(self,value) set_node_list(&(self)->ProxyRestriction, (value))
+#define LassoSaml2Conditions_ProxyRestriction_set(self,value) set_node_list(&(self)->ProxyRestriction, (value))
+                    
 
 
 /* Constructors, destructors & static methods implementations */
@@ -4740,6 +4833,38 @@ int LassoNameIdManagement_setSessionFromDump(LassoNameIdManagement *self, char *
 
 
 
+
+/* AssertionIDRef */
+
+#define LassoSaml2Evidence_get_AssertionIDRef(self) get_node_list((self)->AssertionIDRef)
+#define LassoSaml2Evidence_AssertionIDRef_get(self) get_node_list((self)->AssertionIDRef)
+#define LassoSaml2Evidence_set_AssertionIDRef(self,value) set_node_list(&(self)->AssertionIDRef, (value))
+#define LassoSaml2Evidence_AssertionIDRef_set(self,value) set_node_list(&(self)->AssertionIDRef, (value))
+                    
+
+/* AssertionURIRef */
+
+#define LassoSaml2Evidence_get_AssertionURIRef(self) get_string_list((self)->AssertionURIRef)
+#define LassoSaml2Evidence_AssertionURIRef_get(self) get_string_list((self)->AssertionURIRef)
+#define LassoSaml2Evidence_set_AssertionURIRef(self,value) set_string_list(&(self)->AssertionURIRef, (value))
+#define LassoSaml2Evidence_AssertionURIRef_set(self,value) set_string_list(&(self)->AssertionURIRef, (value))
+                    
+
+/* Assertion */
+
+#define LassoSaml2Evidence_get_Assertion(self) get_node_list((self)->Assertion)
+#define LassoSaml2Evidence_Assertion_get(self) get_node_list((self)->Assertion)
+#define LassoSaml2Evidence_set_Assertion(self,value) set_node_list(&(self)->Assertion, (value))
+#define LassoSaml2Evidence_Assertion_set(self,value) set_node_list(&(self)->Assertion, (value))
+                    
+
+/* EncryptedAssertion */
+
+#define LassoSaml2Evidence_get_EncryptedAssertion(self) get_node_list((self)->EncryptedAssertion)
+#define LassoSaml2Evidence_EncryptedAssertion_get(self) get_node_list((self)->EncryptedAssertion)
+#define LassoSaml2Evidence_set_EncryptedAssertion(self,value) set_node_list(&(self)->EncryptedAssertion, (value))
+#define LassoSaml2Evidence_EncryptedAssertion_set(self,value) set_node_list(&(self)->EncryptedAssertion, (value))
+                    
 
 
 /* Constructors, destructors & static methods implementations */
@@ -4842,6 +4967,38 @@ int LassoNameIdManagement_setSessionFromDump(LassoNameIdManagement *self, char *
 
 
 
+
+/* AssertionIDRef */
+
+#define LassoSaml2Advice_get_AssertionIDRef(self) get_node_list((self)->AssertionIDRef)
+#define LassoSaml2Advice_AssertionIDRef_get(self) get_node_list((self)->AssertionIDRef)
+#define LassoSaml2Advice_set_AssertionIDRef(self,value) set_node_list(&(self)->AssertionIDRef, (value))
+#define LassoSaml2Advice_AssertionIDRef_set(self,value) set_node_list(&(self)->AssertionIDRef, (value))
+                    
+
+/* AssertionURIRef */
+
+#define LassoSaml2Advice_get_AssertionURIRef(self) get_string_list((self)->AssertionURIRef)
+#define LassoSaml2Advice_AssertionURIRef_get(self) get_string_list((self)->AssertionURIRef)
+#define LassoSaml2Advice_set_AssertionURIRef(self,value) set_string_list(&(self)->AssertionURIRef, (value))
+#define LassoSaml2Advice_AssertionURIRef_set(self,value) set_string_list(&(self)->AssertionURIRef, (value))
+                    
+
+/* Assertion */
+
+#define LassoSaml2Advice_get_Assertion(self) get_node_list((self)->Assertion)
+#define LassoSaml2Advice_Assertion_get(self) get_node_list((self)->Assertion)
+#define LassoSaml2Advice_set_Assertion(self,value) set_node_list(&(self)->Assertion, (value))
+#define LassoSaml2Advice_Assertion_set(self,value) set_node_list(&(self)->Assertion, (value))
+                    
+
+/* EncryptedAssertion */
+
+#define LassoSaml2Advice_get_EncryptedAssertion(self) get_node_list((self)->EncryptedAssertion)
+#define LassoSaml2Advice_EncryptedAssertion_get(self) get_node_list((self)->EncryptedAssertion)
+#define LassoSaml2Advice_set_EncryptedAssertion(self,value) set_node_list(&(self)->EncryptedAssertion, (value))
+#define LassoSaml2Advice_EncryptedAssertion_set(self,value) set_node_list(&(self)->EncryptedAssertion, (value))
+                    
 
 
 /* Constructors, destructors & static methods implementations */
@@ -5008,6 +5165,22 @@ int LassoNameIdManagement_setSessionFromDump(LassoNameIdManagement *self, char *
 
 
 
+/* Attribute */
+
+#define LassoSaml2AttributeStatement_get_Attribute(self) get_node_list((self)->Attribute)
+#define LassoSaml2AttributeStatement_Attribute_get(self) get_node_list((self)->Attribute)
+#define LassoSaml2AttributeStatement_set_Attribute(self,value) set_node_list(&(self)->Attribute, (value))
+#define LassoSaml2AttributeStatement_Attribute_set(self,value) set_node_list(&(self)->Attribute, (value))
+                    
+
+/* EncryptedAttribute */
+
+#define LassoSaml2AttributeStatement_get_EncryptedAttribute(self) get_node_list((self)->EncryptedAttribute)
+#define LassoSaml2AttributeStatement_EncryptedAttribute_get(self) get_node_list((self)->EncryptedAttribute)
+#define LassoSaml2AttributeStatement_set_EncryptedAttribute(self,value) set_node_list(&(self)->EncryptedAttribute, (value))
+#define LassoSaml2AttributeStatement_EncryptedAttribute_set(self,value) set_node_list(&(self)->EncryptedAttribute, (value))
+                    
+
 
 /* Constructors, destructors & static methods implementations */
 
@@ -5097,6 +5270,22 @@ int LassoNameIdManagement_setSessionFromDump(LassoNameIdManagement *self, char *
 
 
 
+/* Assertion */
+
+#define LassoSamlp2Response_get_Assertion(self) get_node_list((self)->Assertion)
+#define LassoSamlp2Response_Assertion_get(self) get_node_list((self)->Assertion)
+#define LassoSamlp2Response_set_Assertion(self,value) set_node_list(&(self)->Assertion, (value))
+#define LassoSamlp2Response_Assertion_set(self,value) set_node_list(&(self)->Assertion, (value))
+                    
+
+/* EncryptedAssertion */
+
+#define LassoSamlp2Response_get_EncryptedAssertion(self) get_node_list((self)->EncryptedAssertion)
+#define LassoSamlp2Response_EncryptedAssertion_get(self) get_node_list((self)->EncryptedAssertion)
+#define LassoSamlp2Response_set_EncryptedAssertion(self,value) set_node_list(&(self)->EncryptedAssertion, (value))
+#define LassoSamlp2Response_EncryptedAssertion_set(self,value) set_node_list(&(self)->EncryptedAssertion, (value))
+                    
+
 /* inherited from StatusResponse */
 
 /* Issuer */
@@ -5170,14 +5359,6 @@ int LassoNameIdManagement_setSessionFromDump(LassoNameIdManagement *self, char *
 
 #define LassoSamlp2Response_set_Consent(self,value) set_string(&LASSO_SAMLP2_STATUS_RESPONSE(self)->Consent, (value))
 #define LassoSamlp2Response_Consent_set(self,value) set_string(&LASSO_SAMLP2_STATUS_RESPONSE(self)->Consent, (value))
-
-
-/* Assertion */
-
-#define LassoSamlp2Response_get_Assertion(self) get_node_list((self)->Assertion)
-#define LassoSamlp2Response_Assertion_get(self) get_node_list((self)->Assertion)
-#define LassoSamlp2Response_set_Assertion(self, value) set_node_list(&(self)->Assertion, (value))
-#define LassoSamlp2Response_Assertion_set(self, value) set_node_list(&(self)->Assertion, (value))
 
 
 /* Constructors, destructors & static methods implementations */
@@ -6641,6 +6822,45 @@ XS(_wrap_registerDstService) {
 }
 
 
+XS(_wrap_registerIdWsf2DstService) {
+  {
+    char *arg1 = (char *) 0 ;
+    char *arg2 = (char *) 0 ;
+    int res1 ;
+    char *buf1 = 0 ;
+    int alloc1 = 0 ;
+    int res2 ;
+    char *buf2 = 0 ;
+    int alloc2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: registerIdWsf2DstService(prefix,href);");
+    }
+    res1 = SWIG_AsCharPtrAndSize(ST(0), &buf1, NULL, &alloc1);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "registerIdWsf2DstService" "', argument " "1"" of type '" "char const *""'");
+    }
+    arg1 = (char *)(buf1);
+    res2 = SWIG_AsCharPtrAndSize(ST(1), &buf2, NULL, &alloc2);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "registerIdWsf2DstService" "', argument " "2"" of type '" "char const *""'");
+    }
+    arg2 = (char *)(buf2);
+    lasso_register_idwsf2_dst_service((char const *)arg1,(char const *)arg2);
+    
+    if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+    if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+    XSRETURN(argvi);
+  fail:
+    if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+    if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+    SWIG_croak_null();
+  }
+}
+
+
 XS(_wrap_new_Node) {
   {
     LassoNode *result = 0 ;
@@ -7397,6 +7617,625 @@ XS(_wrap_StringList_setItem) {
     
     
     if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_new_StringDict) {
+  {
+    LassoStringDict *result = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 0) || (items > 0)) {
+      SWIG_croak("Usage: new_StringDict();");
+    }
+    result = (LassoStringDict *)new_LassoStringDict();
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LassoStringDict, SWIG_OWNER | SWIG_SHADOW); argvi++ ;
+    XSRETURN(argvi);
+  fail:
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_delete_StringDict) {
+  {
+    LassoStringDict *arg1 = (LassoStringDict *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: delete_StringDict(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoStringDict, SWIG_POINTER_DISOWN |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_StringDict" "', argument " "1"" of type '" "LassoStringDict *""'"); 
+    }
+    arg1 = (LassoStringDict *)(argp1);
+    delete_LassoStringDict(arg1);
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_StringDict_cast) {
+  {
+    LassoStringDict *arg1 = (LassoStringDict *) 0 ;
+    GHashTable *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: StringDict_cast(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoStringDict, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StringDict_cast" "', argument " "1"" of type '" "LassoStringDict *""'"); 
+    }
+    arg1 = (LassoStringDict *)(argp1);
+    result = (GHashTable *)LassoStringDict_cast(arg1);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_GHashTable, 0 | 0); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_StringDict_frompointer) {
+  {
+    GHashTable *arg1 = (GHashTable *) 0 ;
+    LassoStringDict *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: StringDict_frompointer(stringDict);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_GHashTable, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StringDict_frompointer" "', argument " "1"" of type '" "GHashTable *""'"); 
+    }
+    arg1 = (GHashTable *)(argp1);
+    result = (LassoStringDict *)LassoStringDict_frompointer(arg1);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LassoStringDict, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_StringDict_getItem) {
+  {
+    LassoStringDict *arg1 = (LassoStringDict *) 0 ;
+    char *arg2 = (char *) 0 ;
+    char *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int res2 ;
+    char *buf2 = 0 ;
+    int alloc2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: StringDict_getItem(self,key);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoStringDict, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StringDict_getItem" "', argument " "1"" of type '" "LassoStringDict *""'"); 
+    }
+    arg1 = (LassoStringDict *)(argp1);
+    res2 = SWIG_AsCharPtrAndSize(ST(1), &buf2, NULL, &alloc2);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "StringDict_getItem" "', argument " "2"" of type '" "char *""'");
+    }
+    arg2 = (char *)(buf2);
+    result = (char *)LassoStringDict_getItem(arg1,arg2);
+    ST(argvi) = SWIG_FromCharPtr((const char *)result); argvi++ ;
+    
+    if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+    XSRETURN(argvi);
+  fail:
+    
+    if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_StringDict_setItem) {
+  {
+    LassoStringDict *arg1 = (LassoStringDict *) 0 ;
+    char *arg2 = (char *) 0 ;
+    char *arg3 = (char *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int res2 ;
+    char *buf2 = 0 ;
+    int alloc2 = 0 ;
+    int res3 ;
+    char *buf3 = 0 ;
+    int alloc3 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 3) || (items > 3)) {
+      SWIG_croak("Usage: StringDict_setItem(self,key,item);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoStringDict, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StringDict_setItem" "', argument " "1"" of type '" "LassoStringDict *""'"); 
+    }
+    arg1 = (LassoStringDict *)(argp1);
+    res2 = SWIG_AsCharPtrAndSize(ST(1), &buf2, NULL, &alloc2);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "StringDict_setItem" "', argument " "2"" of type '" "char *""'");
+    }
+    arg2 = (char *)(buf2);
+    res3 = SWIG_AsCharPtrAndSize(ST(2), &buf3, NULL, &alloc3);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "StringDict_setItem" "', argument " "3"" of type '" "char *""'");
+    }
+    arg3 = (char *)(buf3);
+    LassoStringDict_setItem(arg1,arg2,arg3);
+    
+    
+    if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+    if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
+    XSRETURN(argvi);
+  fail:
+    
+    if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+    if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_MiscTextNode_content_set) {
+  {
+    LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+    char *arg2 = (char *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int res2 ;
+    char *buf2 = 0 ;
+    int alloc2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: MiscTextNode_content_set(self,content);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoMiscTextNode, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MiscTextNode_content_set" "', argument " "1"" of type '" "LassoMiscTextNode *""'"); 
+    }
+    arg1 = (LassoMiscTextNode *)(argp1);
+    res2 = SWIG_AsCharPtrAndSize(ST(1), &buf2, NULL, &alloc2);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "MiscTextNode_content_set" "', argument " "2"" of type '" "char *""'");
+    }
+    arg2 = (char *)(buf2);
+    if (arg1->content) free((char*)arg1->content);
+    if (arg2) {
+      size_t size = strlen((const char *)(arg2)) + 1;
+      arg1->content = (char *)(char *)memcpy((char *)malloc((size)*sizeof(char)), (const char *)(arg2), sizeof(char)*(size));
+    } else {
+      arg1->content = 0;
+    }
+    
+    
+    if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+    XSRETURN(argvi);
+  fail:
+    
+    if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_MiscTextNode_content_get) {
+  {
+    LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+    char *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: MiscTextNode_content_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoMiscTextNode, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MiscTextNode_content_get" "', argument " "1"" of type '" "LassoMiscTextNode *""'"); 
+    }
+    arg1 = (LassoMiscTextNode *)(argp1);
+    result = (char *) ((arg1)->content);
+    ST(argvi) = SWIG_FromCharPtr((const char *)result); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_MiscTextNode_name_set) {
+  {
+    LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+    char *arg2 = (char *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int res2 ;
+    char *buf2 = 0 ;
+    int alloc2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: MiscTextNode_name_set(self,name);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoMiscTextNode, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MiscTextNode_name_set" "', argument " "1"" of type '" "LassoMiscTextNode *""'"); 
+    }
+    arg1 = (LassoMiscTextNode *)(argp1);
+    res2 = SWIG_AsCharPtrAndSize(ST(1), &buf2, NULL, &alloc2);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "MiscTextNode_name_set" "', argument " "2"" of type '" "char *""'");
+    }
+    arg2 = (char *)(buf2);
+    if (arg1->name) free((char*)arg1->name);
+    if (arg2) {
+      size_t size = strlen((const char *)(arg2)) + 1;
+      arg1->name = (char *)(char *)memcpy((char *)malloc((size)*sizeof(char)), (const char *)(arg2), sizeof(char)*(size));
+    } else {
+      arg1->name = 0;
+    }
+    
+    
+    if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+    XSRETURN(argvi);
+  fail:
+    
+    if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_MiscTextNode_name_get) {
+  {
+    LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+    char *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: MiscTextNode_name_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoMiscTextNode, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MiscTextNode_name_get" "', argument " "1"" of type '" "LassoMiscTextNode *""'"); 
+    }
+    arg1 = (LassoMiscTextNode *)(argp1);
+    result = (char *) ((arg1)->name);
+    ST(argvi) = SWIG_FromCharPtr((const char *)result); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_MiscTextNode_ns_href_set) {
+  {
+    LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+    char *arg2 = (char *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int res2 ;
+    char *buf2 = 0 ;
+    int alloc2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: MiscTextNode_ns_href_set(self,ns_href);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoMiscTextNode, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MiscTextNode_ns_href_set" "', argument " "1"" of type '" "LassoMiscTextNode *""'"); 
+    }
+    arg1 = (LassoMiscTextNode *)(argp1);
+    res2 = SWIG_AsCharPtrAndSize(ST(1), &buf2, NULL, &alloc2);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "MiscTextNode_ns_href_set" "', argument " "2"" of type '" "char *""'");
+    }
+    arg2 = (char *)(buf2);
+    if (arg1->ns_href) free((char*)arg1->ns_href);
+    if (arg2) {
+      size_t size = strlen((const char *)(arg2)) + 1;
+      arg1->ns_href = (char *)(char *)memcpy((char *)malloc((size)*sizeof(char)), (const char *)(arg2), sizeof(char)*(size));
+    } else {
+      arg1->ns_href = 0;
+    }
+    
+    
+    if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+    XSRETURN(argvi);
+  fail:
+    
+    if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_MiscTextNode_ns_href_get) {
+  {
+    LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+    char *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: MiscTextNode_ns_href_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoMiscTextNode, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MiscTextNode_ns_href_get" "', argument " "1"" of type '" "LassoMiscTextNode *""'"); 
+    }
+    arg1 = (LassoMiscTextNode *)(argp1);
+    result = (char *) ((arg1)->ns_href);
+    ST(argvi) = SWIG_FromCharPtr((const char *)result); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_MiscTextNode_ns_prefix_set) {
+  {
+    LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+    char *arg2 = (char *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int res2 ;
+    char *buf2 = 0 ;
+    int alloc2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: MiscTextNode_ns_prefix_set(self,ns_prefix);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoMiscTextNode, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MiscTextNode_ns_prefix_set" "', argument " "1"" of type '" "LassoMiscTextNode *""'"); 
+    }
+    arg1 = (LassoMiscTextNode *)(argp1);
+    res2 = SWIG_AsCharPtrAndSize(ST(1), &buf2, NULL, &alloc2);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "MiscTextNode_ns_prefix_set" "', argument " "2"" of type '" "char *""'");
+    }
+    arg2 = (char *)(buf2);
+    if (arg1->ns_prefix) free((char*)arg1->ns_prefix);
+    if (arg2) {
+      size_t size = strlen((const char *)(arg2)) + 1;
+      arg1->ns_prefix = (char *)(char *)memcpy((char *)malloc((size)*sizeof(char)), (const char *)(arg2), sizeof(char)*(size));
+    } else {
+      arg1->ns_prefix = 0;
+    }
+    
+    
+    if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+    XSRETURN(argvi);
+  fail:
+    
+    if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_MiscTextNode_ns_prefix_get) {
+  {
+    LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+    char *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: MiscTextNode_ns_prefix_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoMiscTextNode, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MiscTextNode_ns_prefix_get" "', argument " "1"" of type '" "LassoMiscTextNode *""'"); 
+    }
+    arg1 = (LassoMiscTextNode *)(argp1);
+    result = (char *) ((arg1)->ns_prefix);
+    ST(argvi) = SWIG_FromCharPtr((const char *)result); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_MiscTextNode_text_child_set) {
+  {
+    LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+    bool arg2 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    bool val2 ;
+    int ecode2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: MiscTextNode_text_child_set(self,text_child);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoMiscTextNode, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MiscTextNode_text_child_set" "', argument " "1"" of type '" "LassoMiscTextNode *""'"); 
+    }
+    arg1 = (LassoMiscTextNode *)(argp1);
+    ecode2 = SWIG_AsVal_bool SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "MiscTextNode_text_child_set" "', argument " "2"" of type '" "bool""'");
+    } 
+    arg2 = (bool)(val2);
+    if (arg1) (arg1)->text_child = arg2;
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_MiscTextNode_text_child_get) {
+  {
+    LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+    bool result;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: MiscTextNode_text_child_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoMiscTextNode, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MiscTextNode_text_child_get" "', argument " "1"" of type '" "LassoMiscTextNode *""'"); 
+    }
+    arg1 = (LassoMiscTextNode *)(argp1);
+    result = (bool) ((arg1)->text_child);
+    ST(argvi) = SWIG_From_bool  SWIG_PERL_CALL_ARGS_1((bool)(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_new_MiscTextNode) {
+  {
+    LassoMiscTextNode *result = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 0) || (items > 0)) {
+      SWIG_croak("Usage: new_MiscTextNode();");
+    }
+    result = (LassoMiscTextNode *)new_LassoMiscTextNode();
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LassoMiscTextNode, SWIG_OWNER | SWIG_SHADOW); argvi++ ;
+    XSRETURN(argvi);
+  fail:
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_delete_MiscTextNode) {
+  {
+    LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: delete_MiscTextNode(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoMiscTextNode, SWIG_POINTER_DISOWN |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_MiscTextNode" "', argument " "1"" of type '" "LassoMiscTextNode *""'"); 
+    }
+    arg1 = (LassoMiscTextNode *)(argp1);
+    delete_LassoMiscTextNode(arg1);
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_MiscTextNode_dump) {
+  {
+    LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+    char *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: MiscTextNode_dump(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoMiscTextNode, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MiscTextNode_dump" "', argument " "1"" of type '" "LassoMiscTextNode *""'"); 
+    }
+    arg1 = (LassoMiscTextNode *)(argp1);
+    result = (char *)LassoMiscTextNode_dump(arg1);
+    ST(argvi) = SWIG_FromCharPtr((const char *)result); argvi++ ;
+    
+    g_free(result);
+    XSRETURN(argvi);
+  fail:
+    
     SWIG_croak_null();
   }
 }
@@ -8173,8 +9012,8 @@ XS(_wrap_SamlAssertion_signType_set) {
     LassoSignatureType arg2 ;
     void *argp1 = 0 ;
     int res1 = 0 ;
-    void *argp2 ;
-    int res2 = 0 ;
+    int val2 ;
+    int ecode2 = 0 ;
     int argvi = 0;
     dXSARGS;
     
@@ -8186,23 +9025,19 @@ XS(_wrap_SamlAssertion_signType_set) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SamlAssertion_signType_set" "', argument " "1"" of type '" "LassoSamlAssertion *""'"); 
     }
     arg1 = (LassoSamlAssertion *)(argp1);
-    {
-      res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_LassoSignatureType,  0 );
-      if (!SWIG_IsOK(res2)) {
-        SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SamlAssertion_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'"); 
-      }  
-      if (!argp2) {
-        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SamlAssertion_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'");
-      } else {
-        arg2 = *((LassoSignatureType *)(argp2));
-      }
-    }
+    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SamlAssertion_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'");
+    } 
+    arg2 = (LassoSignatureType)(val2);
     if (arg1) (arg1)->sign_type = arg2;
+    
     
     
     
     XSRETURN(argvi);
   fail:
+    
     
     SWIG_croak_null();
   }
@@ -8226,8 +9061,8 @@ XS(_wrap_SamlAssertion_signType_get) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SamlAssertion_signType_get" "', argument " "1"" of type '" "LassoSamlAssertion *""'"); 
     }
     arg1 = (LassoSamlAssertion *)(argp1);
-    result =  ((arg1)->sign_type);
-    ST(argvi) = SWIG_NewPointerObj((LassoSignatureType *)memcpy((LassoSignatureType *)malloc(sizeof(LassoSignatureType)),&result,sizeof(LassoSignatureType)), SWIGTYPE_p_LassoSignatureType, SWIG_POINTER_OWN | 0); argvi++ ;
+    result = (LassoSignatureType) ((arg1)->sign_type);
+    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(result)); argvi++ ;
     
     XSRETURN(argvi);
   fail:
@@ -12452,8 +13287,8 @@ XS(_wrap_SamlpRequest_signType_set) {
     LassoSignatureType arg2 ;
     void *argp1 = 0 ;
     int res1 = 0 ;
-    void *argp2 ;
-    int res2 = 0 ;
+    int val2 ;
+    int ecode2 = 0 ;
     int argvi = 0;
     dXSARGS;
     
@@ -12465,23 +13300,19 @@ XS(_wrap_SamlpRequest_signType_set) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SamlpRequest_signType_set" "', argument " "1"" of type '" "LassoSamlpRequest *""'"); 
     }
     arg1 = (LassoSamlpRequest *)(argp1);
-    {
-      res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_LassoSignatureType,  0 );
-      if (!SWIG_IsOK(res2)) {
-        SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SamlpRequest_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'"); 
-      }  
-      if (!argp2) {
-        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SamlpRequest_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'");
-      } else {
-        arg2 = *((LassoSignatureType *)(argp2));
-      }
-    }
+    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SamlpRequest_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'");
+    } 
+    arg2 = (LassoSignatureType)(val2);
     LassoSamlpRequest_sign_type_set(arg1,arg2);
+    
     
     
     
     XSRETURN(argvi);
   fail:
+    
     
     SWIG_croak_null();
   }
@@ -12505,8 +13336,8 @@ XS(_wrap_SamlpRequest_signType_get) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SamlpRequest_signType_get" "', argument " "1"" of type '" "LassoSamlpRequest *""'"); 
     }
     arg1 = (LassoSamlpRequest *)(argp1);
-    result = LassoSamlpRequest_sign_type_get(arg1);
-    ST(argvi) = SWIG_NewPointerObj((LassoSignatureType *)memcpy((LassoSignatureType *)malloc(sizeof(LassoSignatureType)),&result,sizeof(LassoSignatureType)), SWIGTYPE_p_LassoSignatureType, SWIG_POINTER_OWN | 0); argvi++ ;
+    result = (LassoSignatureType)LassoSamlpRequest_sign_type_get(arg1);
+    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(result)); argvi++ ;
     
     XSRETURN(argvi);
   fail:
@@ -13627,8 +14458,8 @@ XS(_wrap_SamlpRequestAbstract_signType_set) {
   {
     LassoSamlpRequestAbstract *arg1 = (LassoSamlpRequestAbstract *) 0 ;
     LassoSignatureType arg2 ;
-    void *argp2 ;
-    int res2 = 0 ;
+    int val2 ;
+    int ecode2 = 0 ;
     int argvi = 0;
     dXSARGS;
     
@@ -13681,23 +14512,19 @@ XS(_wrap_SamlpRequestAbstract_signType_set) {
       
       
     }
-    {
-      res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_LassoSignatureType,  0 );
-      if (!SWIG_IsOK(res2)) {
-        SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SamlpRequestAbstract_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'"); 
-      }  
-      if (!argp2) {
-        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SamlpRequestAbstract_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'");
-      } else {
-        arg2 = *((LassoSignatureType *)(argp2));
-      }
-    }
+    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SamlpRequestAbstract_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'");
+    } 
+    arg2 = (LassoSignatureType)(val2);
     if (arg1) (arg1)->sign_type = arg2;
+    
     
     
     
     XSRETURN(argvi);
   fail:
+    
     
     SWIG_croak_null();
   }
@@ -13760,8 +14587,8 @@ XS(_wrap_SamlpRequestAbstract_signType_get) {
       
       
     }
-    result =  ((arg1)->sign_type);
-    ST(argvi) = SWIG_NewPointerObj((LassoSignatureType *)memcpy((LassoSignatureType *)malloc(sizeof(LassoSignatureType)),&result,sizeof(LassoSignatureType)), SWIGTYPE_p_LassoSignatureType, SWIG_POINTER_OWN | 0); argvi++ ;
+    result = (LassoSignatureType) ((arg1)->sign_type);
+    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(result)); argvi++ ;
     
     XSRETURN(argvi);
   fail:
@@ -14589,8 +15416,8 @@ XS(_wrap_SamlpResponse_signType_set) {
     LassoSignatureType arg2 ;
     void *argp1 = 0 ;
     int res1 = 0 ;
-    void *argp2 ;
-    int res2 = 0 ;
+    int val2 ;
+    int ecode2 = 0 ;
     int argvi = 0;
     dXSARGS;
     
@@ -14602,23 +15429,19 @@ XS(_wrap_SamlpResponse_signType_set) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SamlpResponse_signType_set" "', argument " "1"" of type '" "LassoSamlpResponse *""'"); 
     }
     arg1 = (LassoSamlpResponse *)(argp1);
-    {
-      res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_LassoSignatureType,  0 );
-      if (!SWIG_IsOK(res2)) {
-        SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SamlpResponse_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'"); 
-      }  
-      if (!argp2) {
-        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SamlpResponse_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'");
-      } else {
-        arg2 = *((LassoSignatureType *)(argp2));
-      }
-    }
+    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SamlpResponse_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'");
+    } 
+    arg2 = (LassoSignatureType)(val2);
     LassoSamlpResponse_sign_type_set(arg1,arg2);
+    
     
     
     
     XSRETURN(argvi);
   fail:
+    
     
     SWIG_croak_null();
   }
@@ -14642,8 +15465,8 @@ XS(_wrap_SamlpResponse_signType_get) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SamlpResponse_signType_get" "', argument " "1"" of type '" "LassoSamlpResponse *""'"); 
     }
     arg1 = (LassoSamlpResponse *)(argp1);
-    result = LassoSamlpResponse_sign_type_get(arg1);
-    ST(argvi) = SWIG_NewPointerObj((LassoSignatureType *)memcpy((LassoSignatureType *)malloc(sizeof(LassoSignatureType)),&result,sizeof(LassoSignatureType)), SWIGTYPE_p_LassoSignatureType, SWIG_POINTER_OWN | 0); argvi++ ;
+    result = (LassoSignatureType)LassoSamlpResponse_sign_type_get(arg1);
+    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(result)); argvi++ ;
     
     XSRETURN(argvi);
   fail:
@@ -16196,8 +17019,8 @@ XS(_wrap_SamlpResponseAbstract_signType_set) {
   {
     LassoSamlpResponseAbstract *arg1 = (LassoSamlpResponseAbstract *) 0 ;
     LassoSignatureType arg2 ;
-    void *argp2 ;
-    int res2 = 0 ;
+    int val2 ;
+    int ecode2 = 0 ;
     int argvi = 0;
     dXSARGS;
     
@@ -16250,23 +17073,19 @@ XS(_wrap_SamlpResponseAbstract_signType_set) {
       
       
     }
-    {
-      res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_LassoSignatureType,  0 );
-      if (!SWIG_IsOK(res2)) {
-        SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SamlpResponseAbstract_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'"); 
-      }  
-      if (!argp2) {
-        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SamlpResponseAbstract_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'");
-      } else {
-        arg2 = *((LassoSignatureType *)(argp2));
-      }
-    }
+    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SamlpResponseAbstract_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'");
+    } 
+    arg2 = (LassoSignatureType)(val2);
     if (arg1) (arg1)->sign_type = arg2;
+    
     
     
     
     XSRETURN(argvi);
   fail:
+    
     
     SWIG_croak_null();
   }
@@ -16329,8 +17148,8 @@ XS(_wrap_SamlpResponseAbstract_signType_get) {
       
       
     }
-    result =  ((arg1)->sign_type);
-    ST(argvi) = SWIG_NewPointerObj((LassoSignatureType *)memcpy((LassoSignatureType *)malloc(sizeof(LassoSignatureType)),&result,sizeof(LassoSignatureType)), SWIGTYPE_p_LassoSignatureType, SWIG_POINTER_OWN | 0); argvi++ ;
+    result = (LassoSignatureType) ((arg1)->sign_type);
+    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(result)); argvi++ ;
     
     XSRETURN(argvi);
   fail:
@@ -17637,8 +18456,8 @@ XS(_wrap_LibAssertion_signType_set) {
     LassoSignatureType arg2 ;
     void *argp1 = 0 ;
     int res1 = 0 ;
-    void *argp2 ;
-    int res2 = 0 ;
+    int val2 ;
+    int ecode2 = 0 ;
     int argvi = 0;
     dXSARGS;
     
@@ -17650,23 +18469,19 @@ XS(_wrap_LibAssertion_signType_set) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LibAssertion_signType_set" "', argument " "1"" of type '" "LassoLibAssertion *""'"); 
     }
     arg1 = (LassoLibAssertion *)(argp1);
-    {
-      res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_LassoSignatureType,  0 );
-      if (!SWIG_IsOK(res2)) {
-        SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "LibAssertion_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'"); 
-      }  
-      if (!argp2) {
-        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "LibAssertion_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'");
-      } else {
-        arg2 = *((LassoSignatureType *)(argp2));
-      }
-    }
+    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "LibAssertion_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'");
+    } 
+    arg2 = (LassoSignatureType)(val2);
     LassoLibAssertion_sign_type_set(arg1,arg2);
+    
     
     
     
     XSRETURN(argvi);
   fail:
+    
     
     SWIG_croak_null();
   }
@@ -17690,8 +18505,8 @@ XS(_wrap_LibAssertion_signType_get) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LibAssertion_signType_get" "', argument " "1"" of type '" "LassoLibAssertion *""'"); 
     }
     arg1 = (LassoLibAssertion *)(argp1);
-    result = LassoLibAssertion_sign_type_get(arg1);
-    ST(argvi) = SWIG_NewPointerObj((LassoSignatureType *)memcpy((LassoSignatureType *)malloc(sizeof(LassoSignatureType)),&result,sizeof(LassoSignatureType)), SWIGTYPE_p_LassoSignatureType, SWIG_POINTER_OWN | 0); argvi++ ;
+    result = (LassoSignatureType)LassoLibAssertion_sign_type_get(arg1);
+    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(result)); argvi++ ;
     
     XSRETURN(argvi);
   fail:
@@ -19089,8 +19904,8 @@ XS(_wrap_LibAuthnRequest_signType_set) {
     LassoSignatureType arg2 ;
     void *argp1 = 0 ;
     int res1 = 0 ;
-    void *argp2 ;
-    int res2 = 0 ;
+    int val2 ;
+    int ecode2 = 0 ;
     int argvi = 0;
     dXSARGS;
     
@@ -19102,23 +19917,19 @@ XS(_wrap_LibAuthnRequest_signType_set) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LibAuthnRequest_signType_set" "', argument " "1"" of type '" "LassoLibAuthnRequest *""'"); 
     }
     arg1 = (LassoLibAuthnRequest *)(argp1);
-    {
-      res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_LassoSignatureType,  0 );
-      if (!SWIG_IsOK(res2)) {
-        SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "LibAuthnRequest_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'"); 
-      }  
-      if (!argp2) {
-        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "LibAuthnRequest_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'");
-      } else {
-        arg2 = *((LassoSignatureType *)(argp2));
-      }
-    }
+    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "LibAuthnRequest_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'");
+    } 
+    arg2 = (LassoSignatureType)(val2);
     LassoLibAuthnRequest_sign_type_set(arg1,arg2);
+    
     
     
     
     XSRETURN(argvi);
   fail:
+    
     
     SWIG_croak_null();
   }
@@ -19142,8 +19953,8 @@ XS(_wrap_LibAuthnRequest_signType_get) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LibAuthnRequest_signType_get" "', argument " "1"" of type '" "LassoLibAuthnRequest *""'"); 
     }
     arg1 = (LassoLibAuthnRequest *)(argp1);
-    result = LassoLibAuthnRequest_sign_type_get(arg1);
-    ST(argvi) = SWIG_NewPointerObj((LassoSignatureType *)memcpy((LassoSignatureType *)malloc(sizeof(LassoSignatureType)),&result,sizeof(LassoSignatureType)), SWIGTYPE_p_LassoSignatureType, SWIG_POINTER_OWN | 0); argvi++ ;
+    result = (LassoSignatureType)LassoLibAuthnRequest_sign_type_get(arg1);
+    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(result)); argvi++ ;
     
     XSRETURN(argvi);
   fail:
@@ -20558,8 +21369,8 @@ XS(_wrap_LibFederationTerminationNotification_signType_set) {
     LassoSignatureType arg2 ;
     void *argp1 = 0 ;
     int res1 = 0 ;
-    void *argp2 ;
-    int res2 = 0 ;
+    int val2 ;
+    int ecode2 = 0 ;
     int argvi = 0;
     dXSARGS;
     
@@ -20571,23 +21382,19 @@ XS(_wrap_LibFederationTerminationNotification_signType_set) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LibFederationTerminationNotification_signType_set" "', argument " "1"" of type '" "LassoLibFederationTerminationNotification *""'"); 
     }
     arg1 = (LassoLibFederationTerminationNotification *)(argp1);
-    {
-      res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_LassoSignatureType,  0 );
-      if (!SWIG_IsOK(res2)) {
-        SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "LibFederationTerminationNotification_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'"); 
-      }  
-      if (!argp2) {
-        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "LibFederationTerminationNotification_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'");
-      } else {
-        arg2 = *((LassoSignatureType *)(argp2));
-      }
-    }
+    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "LibFederationTerminationNotification_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'");
+    } 
+    arg2 = (LassoSignatureType)(val2);
     LassoLibFederationTerminationNotification_sign_type_set(arg1,arg2);
+    
     
     
     
     XSRETURN(argvi);
   fail:
+    
     
     SWIG_croak_null();
   }
@@ -20611,8 +21418,8 @@ XS(_wrap_LibFederationTerminationNotification_signType_get) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LibFederationTerminationNotification_signType_get" "', argument " "1"" of type '" "LassoLibFederationTerminationNotification *""'"); 
     }
     arg1 = (LassoLibFederationTerminationNotification *)(argp1);
-    result = LassoLibFederationTerminationNotification_sign_type_get(arg1);
-    ST(argvi) = SWIG_NewPointerObj((LassoSignatureType *)memcpy((LassoSignatureType *)malloc(sizeof(LassoSignatureType)),&result,sizeof(LassoSignatureType)), SWIGTYPE_p_LassoSignatureType, SWIG_POINTER_OWN | 0); argvi++ ;
+    result = (LassoSignatureType)LassoLibFederationTerminationNotification_sign_type_get(arg1);
+    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(result)); argvi++ ;
     
     XSRETURN(argvi);
   fail:
@@ -20812,8 +21619,8 @@ XS(_wrap_LibFederationTerminationNotification_newFull) {
     int alloc1 = 0 ;
     void *argp2 = 0 ;
     int res2 = 0 ;
-    void *argp3 ;
-    int res3 = 0 ;
+    int val3 ;
+    int ecode3 = 0 ;
     int val4 ;
     int ecode4 = 0 ;
     int argvi = 0;
@@ -20832,17 +21639,11 @@ XS(_wrap_LibFederationTerminationNotification_newFull) {
       SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "LibFederationTerminationNotification_newFull" "', argument " "2"" of type '" "LassoSamlNameIdentifier *""'"); 
     }
     arg2 = (LassoSamlNameIdentifier *)(argp2);
-    {
-      res3 = SWIG_ConvertPtr(ST(2), &argp3, SWIGTYPE_p_LassoSignatureType,  0 );
-      if (!SWIG_IsOK(res3)) {
-        SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "LibFederationTerminationNotification_newFull" "', argument " "3"" of type '" "LassoSignatureType""'"); 
-      }  
-      if (!argp3) {
-        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "LibFederationTerminationNotification_newFull" "', argument " "3"" of type '" "LassoSignatureType""'");
-      } else {
-        arg3 = *((LassoSignatureType *)(argp3));
-      }
-    }
+    ecode3 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(2), &val3);
+    if (!SWIG_IsOK(ecode3)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "LibFederationTerminationNotification_newFull" "', argument " "3"" of type '" "LassoSignatureType""'");
+    } 
+    arg3 = (LassoSignatureType)(val3);
     ecode4 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(3), &val4);
     if (!SWIG_IsOK(ecode4)) {
       SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "LibFederationTerminationNotification_newFull" "', argument " "4"" of type '" "LassoSignatureMethod""'");
@@ -20853,9 +21654,11 @@ XS(_wrap_LibFederationTerminationNotification_newFull) {
     if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
     
     
+    
     XSRETURN(argvi);
   fail:
     if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+    
     
     
     SWIG_croak_null();
@@ -21790,8 +22593,8 @@ XS(_wrap_LibLogoutRequest_signType_set) {
     LassoSignatureType arg2 ;
     void *argp1 = 0 ;
     int res1 = 0 ;
-    void *argp2 ;
-    int res2 = 0 ;
+    int val2 ;
+    int ecode2 = 0 ;
     int argvi = 0;
     dXSARGS;
     
@@ -21803,23 +22606,19 @@ XS(_wrap_LibLogoutRequest_signType_set) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LibLogoutRequest_signType_set" "', argument " "1"" of type '" "LassoLibLogoutRequest *""'"); 
     }
     arg1 = (LassoLibLogoutRequest *)(argp1);
-    {
-      res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_LassoSignatureType,  0 );
-      if (!SWIG_IsOK(res2)) {
-        SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "LibLogoutRequest_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'"); 
-      }  
-      if (!argp2) {
-        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "LibLogoutRequest_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'");
-      } else {
-        arg2 = *((LassoSignatureType *)(argp2));
-      }
-    }
+    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "LibLogoutRequest_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'");
+    } 
+    arg2 = (LassoSignatureType)(val2);
     LassoLibLogoutRequest_sign_type_set(arg1,arg2);
+    
     
     
     
     XSRETURN(argvi);
   fail:
+    
     
     SWIG_croak_null();
   }
@@ -21843,8 +22642,8 @@ XS(_wrap_LibLogoutRequest_signType_get) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LibLogoutRequest_signType_get" "', argument " "1"" of type '" "LassoLibLogoutRequest *""'"); 
     }
     arg1 = (LassoLibLogoutRequest *)(argp1);
-    result = LassoLibLogoutRequest_sign_type_get(arg1);
-    ST(argvi) = SWIG_NewPointerObj((LassoSignatureType *)memcpy((LassoSignatureType *)malloc(sizeof(LassoSignatureType)),&result,sizeof(LassoSignatureType)), SWIGTYPE_p_LassoSignatureType, SWIG_POINTER_OWN | 0); argvi++ ;
+    result = (LassoSignatureType)LassoLibLogoutRequest_sign_type_get(arg1);
+    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(result)); argvi++ ;
     
     XSRETURN(argvi);
   fail:
@@ -22044,8 +22843,8 @@ XS(_wrap_LibLogoutRequest_newFull) {
     int alloc1 = 0 ;
     void *argp2 = 0 ;
     int res2 = 0 ;
-    void *argp3 ;
-    int res3 = 0 ;
+    int val3 ;
+    int ecode3 = 0 ;
     int val4 ;
     int ecode4 = 0 ;
     int argvi = 0;
@@ -22064,17 +22863,11 @@ XS(_wrap_LibLogoutRequest_newFull) {
       SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "LibLogoutRequest_newFull" "', argument " "2"" of type '" "LassoSamlNameIdentifier *""'"); 
     }
     arg2 = (LassoSamlNameIdentifier *)(argp2);
-    {
-      res3 = SWIG_ConvertPtr(ST(2), &argp3, SWIGTYPE_p_LassoSignatureType,  0 );
-      if (!SWIG_IsOK(res3)) {
-        SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "LibLogoutRequest_newFull" "', argument " "3"" of type '" "LassoSignatureType""'"); 
-      }  
-      if (!argp3) {
-        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "LibLogoutRequest_newFull" "', argument " "3"" of type '" "LassoSignatureType""'");
-      } else {
-        arg3 = *((LassoSignatureType *)(argp3));
-      }
-    }
+    ecode3 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(2), &val3);
+    if (!SWIG_IsOK(ecode3)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "LibLogoutRequest_newFull" "', argument " "3"" of type '" "LassoSignatureType""'");
+    } 
+    arg3 = (LassoSignatureType)(val3);
     ecode4 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(3), &val4);
     if (!SWIG_IsOK(ecode4)) {
       SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "LibLogoutRequest_newFull" "', argument " "4"" of type '" "LassoSignatureMethod""'");
@@ -22085,9 +22878,11 @@ XS(_wrap_LibLogoutRequest_newFull) {
     if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
     
     
+    
     XSRETURN(argvi);
   fail:
     if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+    
     
     
     SWIG_croak_null();
@@ -22452,8 +23247,8 @@ XS(_wrap_LibLogoutResponse_newFull) {
     int alloc2 = 0 ;
     void *argp3 = 0 ;
     int res3 = 0 ;
-    void *argp4 ;
-    int res4 = 0 ;
+    int val4 ;
+    int ecode4 = 0 ;
     int val5 ;
     int ecode5 = 0 ;
     int argvi = 0;
@@ -22477,17 +23272,11 @@ XS(_wrap_LibLogoutResponse_newFull) {
       SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "LibLogoutResponse_newFull" "', argument " "3"" of type '" "LassoLibLogoutRequest *""'"); 
     }
     arg3 = (LassoLibLogoutRequest *)(argp3);
-    {
-      res4 = SWIG_ConvertPtr(ST(3), &argp4, SWIGTYPE_p_LassoSignatureType,  0 );
-      if (!SWIG_IsOK(res4)) {
-        SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "LibLogoutResponse_newFull" "', argument " "4"" of type '" "LassoSignatureType""'"); 
-      }  
-      if (!argp4) {
-        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "LibLogoutResponse_newFull" "', argument " "4"" of type '" "LassoSignatureType""'");
-      } else {
-        arg4 = *((LassoSignatureType *)(argp4));
-      }
-    }
+    ecode4 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(3), &val4);
+    if (!SWIG_IsOK(ecode4)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "LibLogoutResponse_newFull" "', argument " "4"" of type '" "LassoSignatureType""'");
+    } 
+    arg4 = (LassoSignatureType)(val4);
     ecode5 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(4), &val5);
     if (!SWIG_IsOK(ecode5)) {
       SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "LibLogoutResponse_newFull" "', argument " "5"" of type '" "LassoSignatureMethod""'");
@@ -22499,10 +23288,12 @@ XS(_wrap_LibLogoutResponse_newFull) {
     if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
     
     
+    
     XSRETURN(argvi);
   fail:
     if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
     if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+    
     
     
     SWIG_croak_null();
@@ -23221,8 +24012,8 @@ XS(_wrap_LibRegisterNameIdentifierRequest_signType_set) {
     LassoSignatureType arg2 ;
     void *argp1 = 0 ;
     int res1 = 0 ;
-    void *argp2 ;
-    int res2 = 0 ;
+    int val2 ;
+    int ecode2 = 0 ;
     int argvi = 0;
     dXSARGS;
     
@@ -23234,23 +24025,19 @@ XS(_wrap_LibRegisterNameIdentifierRequest_signType_set) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LibRegisterNameIdentifierRequest_signType_set" "', argument " "1"" of type '" "LassoLibRegisterNameIdentifierRequest *""'"); 
     }
     arg1 = (LassoLibRegisterNameIdentifierRequest *)(argp1);
-    {
-      res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_LassoSignatureType,  0 );
-      if (!SWIG_IsOK(res2)) {
-        SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "LibRegisterNameIdentifierRequest_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'"); 
-      }  
-      if (!argp2) {
-        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "LibRegisterNameIdentifierRequest_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'");
-      } else {
-        arg2 = *((LassoSignatureType *)(argp2));
-      }
-    }
+    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "LibRegisterNameIdentifierRequest_signType_set" "', argument " "2"" of type '" "LassoSignatureType""'");
+    } 
+    arg2 = (LassoSignatureType)(val2);
     LassoLibRegisterNameIdentifierRequest_sign_type_set(arg1,arg2);
+    
     
     
     
     XSRETURN(argvi);
   fail:
+    
     
     SWIG_croak_null();
   }
@@ -23274,8 +24061,8 @@ XS(_wrap_LibRegisterNameIdentifierRequest_signType_get) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "LibRegisterNameIdentifierRequest_signType_get" "', argument " "1"" of type '" "LassoLibRegisterNameIdentifierRequest *""'"); 
     }
     arg1 = (LassoLibRegisterNameIdentifierRequest *)(argp1);
-    result = LassoLibRegisterNameIdentifierRequest_sign_type_get(arg1);
-    ST(argvi) = SWIG_NewPointerObj((LassoSignatureType *)memcpy((LassoSignatureType *)malloc(sizeof(LassoSignatureType)),&result,sizeof(LassoSignatureType)), SWIGTYPE_p_LassoSignatureType, SWIG_POINTER_OWN | 0); argvi++ ;
+    result = (LassoSignatureType)LassoLibRegisterNameIdentifierRequest_sign_type_get(arg1);
+    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(result)); argvi++ ;
     
     XSRETURN(argvi);
   fail:
@@ -23613,8 +24400,8 @@ XS(_wrap_LibRegisterNameIdentifierRequest_newFull) {
     int res3 = 0 ;
     void *argp4 = 0 ;
     int res4 = 0 ;
-    void *argp5 ;
-    int res5 = 0 ;
+    int val5 ;
+    int ecode5 = 0 ;
     int val6 ;
     int ecode6 = 0 ;
     int argvi = 0;
@@ -23643,17 +24430,11 @@ XS(_wrap_LibRegisterNameIdentifierRequest_newFull) {
       SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "LibRegisterNameIdentifierRequest_newFull" "', argument " "4"" of type '" "LassoSamlNameIdentifier *""'"); 
     }
     arg4 = (LassoSamlNameIdentifier *)(argp4);
-    {
-      res5 = SWIG_ConvertPtr(ST(4), &argp5, SWIGTYPE_p_LassoSignatureType,  0 );
-      if (!SWIG_IsOK(res5)) {
-        SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "LibRegisterNameIdentifierRequest_newFull" "', argument " "5"" of type '" "LassoSignatureType""'"); 
-      }  
-      if (!argp5) {
-        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "LibRegisterNameIdentifierRequest_newFull" "', argument " "5"" of type '" "LassoSignatureType""'");
-      } else {
-        arg5 = *((LassoSignatureType *)(argp5));
-      }
-    }
+    ecode5 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(4), &val5);
+    if (!SWIG_IsOK(ecode5)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "LibRegisterNameIdentifierRequest_newFull" "', argument " "5"" of type '" "LassoSignatureType""'");
+    } 
+    arg5 = (LassoSignatureType)(val5);
     ecode6 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(5), &val6);
     if (!SWIG_IsOK(ecode6)) {
       SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "LibRegisterNameIdentifierRequest_newFull" "', argument " "6"" of type '" "LassoSignatureMethod""'");
@@ -23666,9 +24447,11 @@ XS(_wrap_LibRegisterNameIdentifierRequest_newFull) {
     
     
     
+    
     XSRETURN(argvi);
   fail:
     if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+    
     
     
     
@@ -24035,8 +24818,8 @@ XS(_wrap_LibRegisterNameIdentifierResponse_newFull) {
     int alloc2 = 0 ;
     void *argp3 = 0 ;
     int res3 = 0 ;
-    void *argp4 ;
-    int res4 = 0 ;
+    int val4 ;
+    int ecode4 = 0 ;
     int val5 ;
     int ecode5 = 0 ;
     int argvi = 0;
@@ -24060,17 +24843,11 @@ XS(_wrap_LibRegisterNameIdentifierResponse_newFull) {
       SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "LibRegisterNameIdentifierResponse_newFull" "', argument " "3"" of type '" "LassoLibRegisterNameIdentifierRequest *""'"); 
     }
     arg3 = (LassoLibRegisterNameIdentifierRequest *)(argp3);
-    {
-      res4 = SWIG_ConvertPtr(ST(3), &argp4, SWIGTYPE_p_LassoSignatureType,  0 );
-      if (!SWIG_IsOK(res4)) {
-        SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "LibRegisterNameIdentifierResponse_newFull" "', argument " "4"" of type '" "LassoSignatureType""'"); 
-      }  
-      if (!argp4) {
-        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "LibRegisterNameIdentifierResponse_newFull" "', argument " "4"" of type '" "LassoSignatureType""'");
-      } else {
-        arg4 = *((LassoSignatureType *)(argp4));
-      }
-    }
+    ecode4 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(3), &val4);
+    if (!SWIG_IsOK(ecode4)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "LibRegisterNameIdentifierResponse_newFull" "', argument " "4"" of type '" "LassoSignatureType""'");
+    } 
+    arg4 = (LassoSignatureType)(val4);
     ecode5 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(4), &val5);
     if (!SWIG_IsOK(ecode5)) {
       SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "LibRegisterNameIdentifierResponse_newFull" "', argument " "5"" of type '" "LassoSignatureMethod""'");
@@ -24082,10 +24859,12 @@ XS(_wrap_LibRegisterNameIdentifierResponse_newFull) {
     if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
     
     
+    
     XSRETURN(argvi);
   fail:
     if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
     if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+    
     
     
     SWIG_croak_null();
@@ -26822,8 +27601,7 @@ XS(_wrap_Server_addProvider) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -26880,8 +27658,7 @@ XS(_wrap_Server_setEncryptionPrivateKey) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -26932,8 +27709,7 @@ XS(_wrap_Server_loadAffiliation) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -28884,8 +29660,7 @@ XS(_wrap_Defederation_setIdentityFromDump) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -28936,8 +29711,7 @@ XS(_wrap_Defederation_setSessionFromDump) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -28979,8 +29753,7 @@ XS(_wrap_Defederation_buildNotificationMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -29041,8 +29814,7 @@ XS(_wrap_Defederation_initNotification) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -29095,8 +29867,7 @@ XS(_wrap_Defederation_processNotificationMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -29138,8 +29909,7 @@ XS(_wrap_Defederation_validateNotification) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -29203,6 +29973,72 @@ XS(_wrap_Login_protocolProfile_get) {
     arg1 = (LassoLogin *)(argp1);
     result = (LassoLoginProtocolProfile) ((arg1)->protocolProfile);
     ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Login_assertion_set) {
+  {
+    LassoLogin *arg1 = (LassoLogin *) 0 ;
+    LassoSamlAssertion *arg2 = (LassoSamlAssertion *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: Login_assertion_set(self,assertion);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoLogin, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Login_assertion_set" "', argument " "1"" of type '" "LassoLogin *""'"); 
+    }
+    arg1 = (LassoLogin *)(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_LassoSamlAssertion, SWIG_POINTER_DISOWN |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Login_assertion_set" "', argument " "2"" of type '" "LassoSamlAssertion *""'"); 
+    }
+    arg2 = (LassoSamlAssertion *)(argp2);
+    if (arg1) (arg1)->assertion = arg2;
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Login_assertion_get) {
+  {
+    LassoLogin *arg1 = (LassoLogin *) 0 ;
+    LassoSamlAssertion *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: Login_assertion_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoLogin, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Login_assertion_get" "', argument " "1"" of type '" "LassoLogin *""'"); 
+    }
+    arg1 = (LassoLogin *)(argp1);
+    result = (LassoSamlAssertion *) ((arg1)->assertion);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LassoSamlAssertion, 0 | SWIG_SHADOW); argvi++ ;
     
     XSRETURN(argvi);
   fail:
@@ -30154,8 +30990,7 @@ XS(_wrap_Login_setIdentityFromDump) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -30206,8 +31041,7 @@ XS(_wrap_Login_setSessionFromDump) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -30249,8 +31083,7 @@ XS(_wrap_Login_acceptSso) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -30298,8 +31131,7 @@ XS(_wrap_Login_buildArtifactMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -30386,8 +31218,7 @@ XS(_wrap_Login_buildAssertion) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -30437,8 +31268,7 @@ XS(_wrap_Login_buildAuthnRequestMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -30478,8 +31308,7 @@ XS(_wrap_Login_buildAuthnResponseMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -30519,8 +31348,7 @@ XS(_wrap_Login_buildRequestMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -30569,8 +31397,7 @@ XS(_wrap_Login_buildResponseMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -30662,8 +31489,7 @@ XS(_wrap_Login_initAuthnRequest) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -30726,8 +31552,7 @@ XS(_wrap_Login_initRequest) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -30782,8 +31607,7 @@ XS(_wrap_Login_initIdpInitiatedAuthnRequest) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -30890,8 +31714,7 @@ XS(_wrap_Login_processAuthnRequestMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -30942,8 +31765,7 @@ XS(_wrap_Login_processAuthnResponseMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -30994,8 +31816,7 @@ XS(_wrap_Login_processRequestMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -31046,8 +31867,7 @@ XS(_wrap_Login_processResponseMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -31098,8 +31918,7 @@ XS(_wrap_Login_setResourceId) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -31157,8 +31976,7 @@ XS(_wrap_Login_validateRequestMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -31211,8 +32029,7 @@ XS(_wrap_Login_processPaosResponseMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -32173,8 +32990,7 @@ XS(_wrap_Logout_setIdentityFromDump) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -32225,8 +33041,7 @@ XS(_wrap_Logout_setSessionFromDump) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -32268,8 +33083,7 @@ XS(_wrap_Logout_buildRequestMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -32309,8 +33123,7 @@ XS(_wrap_Logout_buildResponseMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -32429,8 +33242,7 @@ XS(_wrap_Logout_initRequest) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -32483,8 +33295,7 @@ XS(_wrap_Logout_processRequestMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -32535,8 +33346,7 @@ XS(_wrap_Logout_processResponseMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -32578,8 +33388,7 @@ XS(_wrap_Logout_resetProviderIdIndex) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -32619,8 +33428,7 @@ XS(_wrap_Logout_validateRequest) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -33540,8 +34348,7 @@ XS(_wrap_Lecp_setIdentityFromDump) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -33592,8 +34399,7 @@ XS(_wrap_Lecp_setSessionFromDump) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -33680,8 +34486,7 @@ XS(_wrap_Lecp_buildAssertion) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -33740,8 +34545,7 @@ XS(_wrap_Lecp_setResourceId) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -33799,8 +34603,7 @@ XS(_wrap_Lecp_validateRequestMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -33844,8 +34647,7 @@ XS(_wrap_Lecp_buildAuthnRequestEnvelopeMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -33885,8 +34687,7 @@ XS(_wrap_Lecp_buildAuthnRequestMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -33926,8 +34727,7 @@ XS(_wrap_Lecp_buildAuthnResponseEnvelopeMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -33967,8 +34767,7 @@ XS(_wrap_Lecp_buildAuthnResponseMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -34019,8 +34818,7 @@ XS(_wrap_Lecp_initAuthnRequest) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -34071,8 +34869,7 @@ XS(_wrap_Lecp_processAuthnRequestEnvelopeMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -34123,8 +34920,7 @@ XS(_wrap_Lecp_processAuthnRequestMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -34175,8 +34971,7 @@ XS(_wrap_Lecp_processAuthnResponseEnvelopeMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -35098,8 +35893,7 @@ XS(_wrap_NameIdentifierMapping_setIdentityFromDump) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -35150,8 +35944,7 @@ XS(_wrap_NameIdentifierMapping_setSessionFromDump) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -35193,8 +35986,7 @@ XS(_wrap_NameIdentifierMapping_buildRequestMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -35234,8 +36026,7 @@ XS(_wrap_NameIdentifierMapping_buildResponseMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -35295,8 +36086,7 @@ XS(_wrap_NameIdentifierMapping_initRequest) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -35349,8 +36139,7 @@ XS(_wrap_NameIdentifierMapping_processRequestMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -35401,8 +36190,7 @@ XS(_wrap_NameIdentifierMapping_processResponseMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -35444,8 +36232,7 @@ XS(_wrap_NameIdentifierMapping_validateRequest) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -36470,8 +37257,7 @@ XS(_wrap_NameRegistration_setIdentityFromDump) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -36522,8 +37308,7 @@ XS(_wrap_NameRegistration_setSessionFromDump) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -36565,8 +37350,7 @@ XS(_wrap_NameRegistration_buildRequestMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -36606,8 +37390,7 @@ XS(_wrap_NameRegistration_buildResponseMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -36695,8 +37478,7 @@ XS(_wrap_NameRegistration_initRequest) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -36749,8 +37531,7 @@ XS(_wrap_NameRegistration_processRequestMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -36801,8 +37582,7 @@ XS(_wrap_NameRegistration_processResponseMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -36844,8 +37624,7 @@ XS(_wrap_NameRegistration_validateRequest) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -37833,8 +38612,7 @@ XS(_wrap_NameIdManagement_setIdentityFromDump) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -37885,8 +38663,7 @@ XS(_wrap_NameIdManagement_setSessionFromDump) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -37928,8 +38705,7 @@ XS(_wrap_NameIdManagement_buildRequestMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -37969,8 +38745,7 @@ XS(_wrap_NameIdManagement_buildResponseMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -38071,8 +38846,7 @@ XS(_wrap_NameIdManagement_initRequest) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -38127,8 +38901,7 @@ XS(_wrap_NameIdManagement_processRequestMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -38179,8 +38952,7 @@ XS(_wrap_NameIdManagement_processResponseMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -38222,8 +38994,7 @@ XS(_wrap_NameIdManagement_validateRequest) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -38650,8 +39421,7 @@ XS(_wrap_Ecp_processAuthnRequestMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -38702,8 +39472,7 @@ XS(_wrap_Ecp_processResponseMsg) {
       if (errorCode) {
         char errorMsg[256];
         int swig_error = SWIG_RuntimeError;
-        if (errorCode == -501 || 
-          errorCode == -501) {
+        if (errorCode == -501) {
           swig_error = SWIG_ValueError;
         }
         build_exception_msg(errorCode, errorMsg);
@@ -39091,7 +39860,7 @@ XS(_wrap_Samlp2RequestedAuthnContext_authnContextClassRef_set) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: Samlp2RequestedAuthnContext_authnContextClassRef_set(self,authnContextClassRef);");
+      SWIG_croak("Usage: Samlp2RequestedAuthnContext_authnContextClassRef_set(self,AuthnContextClassRef);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSamlp2RequestedAuthnContext, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -39103,7 +39872,7 @@ XS(_wrap_Samlp2RequestedAuthnContext_authnContextClassRef_set) {
       SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Samlp2RequestedAuthnContext_authnContextClassRef_set" "', argument " "2"" of type '" "LassoStringList *""'"); 
     }
     arg2 = (LassoStringList *)(argp2);
-    LassoSamlp2RequestedAuthnContext_authnContextClassRef_set(arg1,arg2);
+    LassoSamlp2RequestedAuthnContext_AuthnContextClassRef_set(arg1,arg2);
     
     
     
@@ -39134,7 +39903,7 @@ XS(_wrap_Samlp2RequestedAuthnContext_authnContextClassRef_get) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2RequestedAuthnContext_authnContextClassRef_get" "', argument " "1"" of type '" "LassoSamlp2RequestedAuthnContext *""'"); 
     }
     arg1 = (LassoSamlp2RequestedAuthnContext *)(argp1);
-    result = (LassoStringList *)LassoSamlp2RequestedAuthnContext_authnContextClassRef_get(arg1);
+    result = (LassoStringList *)LassoSamlp2RequestedAuthnContext_AuthnContextClassRef_get(arg1);
     ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LassoStringList, 0 | SWIG_SHADOW); argvi++ ;
     
     XSRETURN(argvi);
@@ -39157,7 +39926,7 @@ XS(_wrap_Samlp2RequestedAuthnContext_authnContextDeclRef_set) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: Samlp2RequestedAuthnContext_authnContextDeclRef_set(self,authnContextDeclRef);");
+      SWIG_croak("Usage: Samlp2RequestedAuthnContext_authnContextDeclRef_set(self,AuthnContextDeclRef);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSamlp2RequestedAuthnContext, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
@@ -39169,7 +39938,7 @@ XS(_wrap_Samlp2RequestedAuthnContext_authnContextDeclRef_set) {
       SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Samlp2RequestedAuthnContext_authnContextDeclRef_set" "', argument " "2"" of type '" "LassoStringList *""'"); 
     }
     arg2 = (LassoStringList *)(argp2);
-    LassoSamlp2RequestedAuthnContext_authnContextDeclRef_set(arg1,arg2);
+    LassoSamlp2RequestedAuthnContext_AuthnContextDeclRef_set(arg1,arg2);
     
     
     
@@ -39200,7 +39969,7 @@ XS(_wrap_Samlp2RequestedAuthnContext_authnContextDeclRef_get) {
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2RequestedAuthnContext_authnContextDeclRef_get" "', argument " "1"" of type '" "LassoSamlp2RequestedAuthnContext *""'"); 
     }
     arg1 = (LassoSamlp2RequestedAuthnContext *)(argp1);
-    result = (LassoStringList *)LassoSamlp2RequestedAuthnContext_authnContextDeclRef_get(arg1);
+    result = (LassoStringList *)LassoSamlp2RequestedAuthnContext_AuthnContextDeclRef_get(arg1);
     ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LassoStringList, 0 | SWIG_SHADOW); argvi++ ;
     
     XSRETURN(argvi);
@@ -39766,6 +40535,72 @@ XS(_wrap_Saml2Assertion_advice_get) {
 }
 
 
+XS(_wrap_Saml2Assertion_statement_set) {
+  {
+    LassoSaml2Assertion *arg1 = (LassoSaml2Assertion *) 0 ;
+    LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: Saml2Assertion_statement_set(self,Statement);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2Assertion, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2Assertion_statement_set" "', argument " "1"" of type '" "LassoSaml2Assertion *""'"); 
+    }
+    arg1 = (LassoSaml2Assertion *)(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_LassoNodeList, SWIG_POINTER_DISOWN |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Saml2Assertion_statement_set" "', argument " "2"" of type '" "LassoNodeList *""'"); 
+    }
+    arg2 = (LassoNodeList *)(argp2);
+    LassoSaml2Assertion_Statement_set(arg1,arg2);
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Saml2Assertion_statement_get) {
+  {
+    LassoSaml2Assertion *arg1 = (LassoSaml2Assertion *) 0 ;
+    LassoNodeList *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: Saml2Assertion_statement_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2Assertion, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2Assertion_statement_get" "', argument " "1"" of type '" "LassoSaml2Assertion *""'"); 
+    }
+    arg1 = (LassoSaml2Assertion *)(argp1);
+    result = (LassoNodeList *)LassoSaml2Assertion_Statement_get(arg1);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LassoNodeList, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
 XS(_wrap_Saml2Assertion_authnStatement_set) {
   {
     LassoSaml2Assertion *arg1 = (LassoSaml2Assertion *) 0 ;
@@ -39822,6 +40657,138 @@ XS(_wrap_Saml2Assertion_authnStatement_get) {
     }
     arg1 = (LassoSaml2Assertion *)(argp1);
     result = (LassoNodeList *)LassoSaml2Assertion_AuthnStatement_get(arg1);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LassoNodeList, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Saml2Assertion_authzDecisionStatement_set) {
+  {
+    LassoSaml2Assertion *arg1 = (LassoSaml2Assertion *) 0 ;
+    LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: Saml2Assertion_authzDecisionStatement_set(self,AuthzDecisionStatement);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2Assertion, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2Assertion_authzDecisionStatement_set" "', argument " "1"" of type '" "LassoSaml2Assertion *""'"); 
+    }
+    arg1 = (LassoSaml2Assertion *)(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_LassoNodeList, SWIG_POINTER_DISOWN |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Saml2Assertion_authzDecisionStatement_set" "', argument " "2"" of type '" "LassoNodeList *""'"); 
+    }
+    arg2 = (LassoNodeList *)(argp2);
+    LassoSaml2Assertion_AuthzDecisionStatement_set(arg1,arg2);
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Saml2Assertion_authzDecisionStatement_get) {
+  {
+    LassoSaml2Assertion *arg1 = (LassoSaml2Assertion *) 0 ;
+    LassoNodeList *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: Saml2Assertion_authzDecisionStatement_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2Assertion, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2Assertion_authzDecisionStatement_get" "', argument " "1"" of type '" "LassoSaml2Assertion *""'"); 
+    }
+    arg1 = (LassoSaml2Assertion *)(argp1);
+    result = (LassoNodeList *)LassoSaml2Assertion_AuthzDecisionStatement_get(arg1);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LassoNodeList, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Saml2Assertion_attributeStatement_set) {
+  {
+    LassoSaml2Assertion *arg1 = (LassoSaml2Assertion *) 0 ;
+    LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: Saml2Assertion_attributeStatement_set(self,AttributeStatement);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2Assertion, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2Assertion_attributeStatement_set" "', argument " "1"" of type '" "LassoSaml2Assertion *""'"); 
+    }
+    arg1 = (LassoSaml2Assertion *)(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_LassoNodeList, SWIG_POINTER_DISOWN |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Saml2Assertion_attributeStatement_set" "', argument " "2"" of type '" "LassoNodeList *""'"); 
+    }
+    arg2 = (LassoNodeList *)(argp2);
+    LassoSaml2Assertion_AttributeStatement_set(arg1,arg2);
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Saml2Assertion_attributeStatement_get) {
+  {
+    LassoSaml2Assertion *arg1 = (LassoSaml2Assertion *) 0 ;
+    LassoNodeList *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: Saml2Assertion_attributeStatement_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2Assertion, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2Assertion_attributeStatement_get" "', argument " "1"" of type '" "LassoSaml2Assertion *""'"); 
+    }
+    arg1 = (LassoSaml2Assertion *)(argp1);
+    result = (LassoNodeList *)LassoSaml2Assertion_AttributeStatement_get(arg1);
     ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LassoNodeList, 0 | SWIG_SHADOW); argvi++ ;
     
     XSRETURN(argvi);
@@ -40471,6 +41438,138 @@ XS(_wrap_Saml2Conditions_audienceRestriction_get) {
 }
 
 
+XS(_wrap_Saml2Conditions_oneTimeUse_set) {
+  {
+    LassoSaml2Conditions *arg1 = (LassoSaml2Conditions *) 0 ;
+    LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: Saml2Conditions_oneTimeUse_set(self,OneTimeUse);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2Conditions, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2Conditions_oneTimeUse_set" "', argument " "1"" of type '" "LassoSaml2Conditions *""'"); 
+    }
+    arg1 = (LassoSaml2Conditions *)(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_LassoNodeList, SWIG_POINTER_DISOWN |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Saml2Conditions_oneTimeUse_set" "', argument " "2"" of type '" "LassoNodeList *""'"); 
+    }
+    arg2 = (LassoNodeList *)(argp2);
+    LassoSaml2Conditions_OneTimeUse_set(arg1,arg2);
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Saml2Conditions_oneTimeUse_get) {
+  {
+    LassoSaml2Conditions *arg1 = (LassoSaml2Conditions *) 0 ;
+    LassoNodeList *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: Saml2Conditions_oneTimeUse_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2Conditions, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2Conditions_oneTimeUse_get" "', argument " "1"" of type '" "LassoSaml2Conditions *""'"); 
+    }
+    arg1 = (LassoSaml2Conditions *)(argp1);
+    result = (LassoNodeList *)LassoSaml2Conditions_OneTimeUse_get(arg1);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LassoNodeList, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Saml2Conditions_proxyRestriction_set) {
+  {
+    LassoSaml2Conditions *arg1 = (LassoSaml2Conditions *) 0 ;
+    LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: Saml2Conditions_proxyRestriction_set(self,ProxyRestriction);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2Conditions, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2Conditions_proxyRestriction_set" "', argument " "1"" of type '" "LassoSaml2Conditions *""'"); 
+    }
+    arg1 = (LassoSaml2Conditions *)(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_LassoNodeList, SWIG_POINTER_DISOWN |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Saml2Conditions_proxyRestriction_set" "', argument " "2"" of type '" "LassoNodeList *""'"); 
+    }
+    arg2 = (LassoNodeList *)(argp2);
+    LassoSaml2Conditions_ProxyRestriction_set(arg1,arg2);
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Saml2Conditions_proxyRestriction_get) {
+  {
+    LassoSaml2Conditions *arg1 = (LassoSaml2Conditions *) 0 ;
+    LassoNodeList *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: Saml2Conditions_proxyRestriction_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2Conditions, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2Conditions_proxyRestriction_get" "', argument " "1"" of type '" "LassoSaml2Conditions *""'"); 
+    }
+    arg1 = (LassoSaml2Conditions *)(argp1);
+    result = (LassoNodeList *)LassoSaml2Conditions_ProxyRestriction_get(arg1);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LassoNodeList, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
 XS(_wrap_new_Saml2Conditions) {
   {
     LassoSaml2Conditions *result = 0 ;
@@ -40538,6 +41637,270 @@ XS(_wrap_Saml2Conditions_dump) {
     ST(argvi) = SWIG_FromCharPtr((const char *)result); argvi++ ;
     
     g_free(result);
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Saml2Evidence_assertionIDRef_set) {
+  {
+    LassoSaml2Evidence *arg1 = (LassoSaml2Evidence *) 0 ;
+    LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: Saml2Evidence_assertionIDRef_set(self,AssertionIDRef);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2Evidence, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2Evidence_assertionIDRef_set" "', argument " "1"" of type '" "LassoSaml2Evidence *""'"); 
+    }
+    arg1 = (LassoSaml2Evidence *)(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_LassoNodeList, SWIG_POINTER_DISOWN |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Saml2Evidence_assertionIDRef_set" "', argument " "2"" of type '" "LassoNodeList *""'"); 
+    }
+    arg2 = (LassoNodeList *)(argp2);
+    LassoSaml2Evidence_AssertionIDRef_set(arg1,arg2);
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Saml2Evidence_assertionIDRef_get) {
+  {
+    LassoSaml2Evidence *arg1 = (LassoSaml2Evidence *) 0 ;
+    LassoNodeList *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: Saml2Evidence_assertionIDRef_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2Evidence, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2Evidence_assertionIDRef_get" "', argument " "1"" of type '" "LassoSaml2Evidence *""'"); 
+    }
+    arg1 = (LassoSaml2Evidence *)(argp1);
+    result = (LassoNodeList *)LassoSaml2Evidence_AssertionIDRef_get(arg1);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LassoNodeList, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Saml2Evidence_assertionURIRef_set) {
+  {
+    LassoSaml2Evidence *arg1 = (LassoSaml2Evidence *) 0 ;
+    LassoStringList *arg2 = (LassoStringList *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: Saml2Evidence_assertionURIRef_set(self,AssertionURIRef);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2Evidence, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2Evidence_assertionURIRef_set" "', argument " "1"" of type '" "LassoSaml2Evidence *""'"); 
+    }
+    arg1 = (LassoSaml2Evidence *)(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_LassoStringList, SWIG_POINTER_DISOWN |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Saml2Evidence_assertionURIRef_set" "', argument " "2"" of type '" "LassoStringList *""'"); 
+    }
+    arg2 = (LassoStringList *)(argp2);
+    LassoSaml2Evidence_AssertionURIRef_set(arg1,arg2);
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Saml2Evidence_assertionURIRef_get) {
+  {
+    LassoSaml2Evidence *arg1 = (LassoSaml2Evidence *) 0 ;
+    LassoStringList *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: Saml2Evidence_assertionURIRef_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2Evidence, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2Evidence_assertionURIRef_get" "', argument " "1"" of type '" "LassoSaml2Evidence *""'"); 
+    }
+    arg1 = (LassoSaml2Evidence *)(argp1);
+    result = (LassoStringList *)LassoSaml2Evidence_AssertionURIRef_get(arg1);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LassoStringList, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Saml2Evidence_assertion_set) {
+  {
+    LassoSaml2Evidence *arg1 = (LassoSaml2Evidence *) 0 ;
+    LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: Saml2Evidence_assertion_set(self,Assertion);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2Evidence, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2Evidence_assertion_set" "', argument " "1"" of type '" "LassoSaml2Evidence *""'"); 
+    }
+    arg1 = (LassoSaml2Evidence *)(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_LassoNodeList, SWIG_POINTER_DISOWN |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Saml2Evidence_assertion_set" "', argument " "2"" of type '" "LassoNodeList *""'"); 
+    }
+    arg2 = (LassoNodeList *)(argp2);
+    LassoSaml2Evidence_Assertion_set(arg1,arg2);
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Saml2Evidence_assertion_get) {
+  {
+    LassoSaml2Evidence *arg1 = (LassoSaml2Evidence *) 0 ;
+    LassoNodeList *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: Saml2Evidence_assertion_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2Evidence, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2Evidence_assertion_get" "', argument " "1"" of type '" "LassoSaml2Evidence *""'"); 
+    }
+    arg1 = (LassoSaml2Evidence *)(argp1);
+    result = (LassoNodeList *)LassoSaml2Evidence_Assertion_get(arg1);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LassoNodeList, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Saml2Evidence_encryptedAssertion_set) {
+  {
+    LassoSaml2Evidence *arg1 = (LassoSaml2Evidence *) 0 ;
+    LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: Saml2Evidence_encryptedAssertion_set(self,EncryptedAssertion);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2Evidence, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2Evidence_encryptedAssertion_set" "', argument " "1"" of type '" "LassoSaml2Evidence *""'"); 
+    }
+    arg1 = (LassoSaml2Evidence *)(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_LassoNodeList, SWIG_POINTER_DISOWN |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Saml2Evidence_encryptedAssertion_set" "', argument " "2"" of type '" "LassoNodeList *""'"); 
+    }
+    arg2 = (LassoNodeList *)(argp2);
+    LassoSaml2Evidence_EncryptedAssertion_set(arg1,arg2);
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Saml2Evidence_encryptedAssertion_get) {
+  {
+    LassoSaml2Evidence *arg1 = (LassoSaml2Evidence *) 0 ;
+    LassoNodeList *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: Saml2Evidence_encryptedAssertion_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2Evidence, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2Evidence_encryptedAssertion_get" "', argument " "1"" of type '" "LassoSaml2Evidence *""'"); 
+    }
+    arg1 = (LassoSaml2Evidence *)(argp1);
+    result = (LassoNodeList *)LassoSaml2Evidence_EncryptedAssertion_get(arg1);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LassoNodeList, 0 | SWIG_SHADOW); argvi++ ;
+    
     XSRETURN(argvi);
   fail:
     
@@ -40765,7 +42128,7 @@ XS(_wrap_Saml2NameID_format_get) {
 }
 
 
-XS(_wrap_Saml2NameID_SPProvidedID_set) {
+XS(_wrap_Saml2NameID_spProvidedId_set) {
   {
     LassoSaml2NameID *arg1 = (LassoSaml2NameID *) 0 ;
     char *arg2 = (char *) 0 ;
@@ -40778,16 +42141,16 @@ XS(_wrap_Saml2NameID_SPProvidedID_set) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: Saml2NameID_SPProvidedID_set(self,SPProvidedID);");
+      SWIG_croak("Usage: Saml2NameID_spProvidedId_set(self,SPProvidedID);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2NameID, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2NameID_SPProvidedID_set" "', argument " "1"" of type '" "LassoSaml2NameID *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2NameID_spProvidedId_set" "', argument " "1"" of type '" "LassoSaml2NameID *""'"); 
     }
     arg1 = (LassoSaml2NameID *)(argp1);
     res2 = SWIG_AsCharPtrAndSize(ST(1), &buf2, NULL, &alloc2);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Saml2NameID_SPProvidedID_set" "', argument " "2"" of type '" "char *""'");
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Saml2NameID_spProvidedId_set" "', argument " "2"" of type '" "char *""'");
     }
     arg2 = (char *)(buf2);
     if (arg1->SPProvidedID) free((char*)arg1->SPProvidedID);
@@ -40809,7 +42172,7 @@ XS(_wrap_Saml2NameID_SPProvidedID_set) {
 }
 
 
-XS(_wrap_Saml2NameID_SPProvidedID_get) {
+XS(_wrap_Saml2NameID_spProvidedId_get) {
   {
     LassoSaml2NameID *arg1 = (LassoSaml2NameID *) 0 ;
     char *result = 0 ;
@@ -40819,11 +42182,11 @@ XS(_wrap_Saml2NameID_SPProvidedID_get) {
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: Saml2NameID_SPProvidedID_get(self);");
+      SWIG_croak("Usage: Saml2NameID_spProvidedId_get(self);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2NameID, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2NameID_SPProvidedID_get" "', argument " "1"" of type '" "LassoSaml2NameID *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2NameID_spProvidedId_get" "', argument " "1"" of type '" "LassoSaml2NameID *""'"); 
     }
     arg1 = (LassoSaml2NameID *)(argp1);
     result = (char *) ((arg1)->SPProvidedID);
@@ -41698,6 +43061,270 @@ XS(_wrap_Saml2OneTimeUse_dump) {
 }
 
 
+XS(_wrap_Saml2Advice_assertionIDRef_set) {
+  {
+    LassoSaml2Advice *arg1 = (LassoSaml2Advice *) 0 ;
+    LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: Saml2Advice_assertionIDRef_set(self,AssertionIDRef);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2Advice, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2Advice_assertionIDRef_set" "', argument " "1"" of type '" "LassoSaml2Advice *""'"); 
+    }
+    arg1 = (LassoSaml2Advice *)(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_LassoNodeList, SWIG_POINTER_DISOWN |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Saml2Advice_assertionIDRef_set" "', argument " "2"" of type '" "LassoNodeList *""'"); 
+    }
+    arg2 = (LassoNodeList *)(argp2);
+    LassoSaml2Advice_AssertionIDRef_set(arg1,arg2);
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Saml2Advice_assertionIDRef_get) {
+  {
+    LassoSaml2Advice *arg1 = (LassoSaml2Advice *) 0 ;
+    LassoNodeList *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: Saml2Advice_assertionIDRef_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2Advice, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2Advice_assertionIDRef_get" "', argument " "1"" of type '" "LassoSaml2Advice *""'"); 
+    }
+    arg1 = (LassoSaml2Advice *)(argp1);
+    result = (LassoNodeList *)LassoSaml2Advice_AssertionIDRef_get(arg1);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LassoNodeList, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Saml2Advice_assertionURIRef_set) {
+  {
+    LassoSaml2Advice *arg1 = (LassoSaml2Advice *) 0 ;
+    LassoStringList *arg2 = (LassoStringList *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: Saml2Advice_assertionURIRef_set(self,AssertionURIRef);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2Advice, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2Advice_assertionURIRef_set" "', argument " "1"" of type '" "LassoSaml2Advice *""'"); 
+    }
+    arg1 = (LassoSaml2Advice *)(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_LassoStringList, SWIG_POINTER_DISOWN |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Saml2Advice_assertionURIRef_set" "', argument " "2"" of type '" "LassoStringList *""'"); 
+    }
+    arg2 = (LassoStringList *)(argp2);
+    LassoSaml2Advice_AssertionURIRef_set(arg1,arg2);
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Saml2Advice_assertionURIRef_get) {
+  {
+    LassoSaml2Advice *arg1 = (LassoSaml2Advice *) 0 ;
+    LassoStringList *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: Saml2Advice_assertionURIRef_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2Advice, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2Advice_assertionURIRef_get" "', argument " "1"" of type '" "LassoSaml2Advice *""'"); 
+    }
+    arg1 = (LassoSaml2Advice *)(argp1);
+    result = (LassoStringList *)LassoSaml2Advice_AssertionURIRef_get(arg1);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LassoStringList, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Saml2Advice_assertion_set) {
+  {
+    LassoSaml2Advice *arg1 = (LassoSaml2Advice *) 0 ;
+    LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: Saml2Advice_assertion_set(self,Assertion);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2Advice, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2Advice_assertion_set" "', argument " "1"" of type '" "LassoSaml2Advice *""'"); 
+    }
+    arg1 = (LassoSaml2Advice *)(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_LassoNodeList, SWIG_POINTER_DISOWN |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Saml2Advice_assertion_set" "', argument " "2"" of type '" "LassoNodeList *""'"); 
+    }
+    arg2 = (LassoNodeList *)(argp2);
+    LassoSaml2Advice_Assertion_set(arg1,arg2);
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Saml2Advice_assertion_get) {
+  {
+    LassoSaml2Advice *arg1 = (LassoSaml2Advice *) 0 ;
+    LassoNodeList *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: Saml2Advice_assertion_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2Advice, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2Advice_assertion_get" "', argument " "1"" of type '" "LassoSaml2Advice *""'"); 
+    }
+    arg1 = (LassoSaml2Advice *)(argp1);
+    result = (LassoNodeList *)LassoSaml2Advice_Assertion_get(arg1);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LassoNodeList, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Saml2Advice_encryptedAssertion_set) {
+  {
+    LassoSaml2Advice *arg1 = (LassoSaml2Advice *) 0 ;
+    LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: Saml2Advice_encryptedAssertion_set(self,EncryptedAssertion);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2Advice, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2Advice_encryptedAssertion_set" "', argument " "1"" of type '" "LassoSaml2Advice *""'"); 
+    }
+    arg1 = (LassoSaml2Advice *)(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_LassoNodeList, SWIG_POINTER_DISOWN |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Saml2Advice_encryptedAssertion_set" "', argument " "2"" of type '" "LassoNodeList *""'"); 
+    }
+    arg2 = (LassoNodeList *)(argp2);
+    LassoSaml2Advice_EncryptedAssertion_set(arg1,arg2);
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Saml2Advice_encryptedAssertion_get) {
+  {
+    LassoSaml2Advice *arg1 = (LassoSaml2Advice *) 0 ;
+    LassoNodeList *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: Saml2Advice_encryptedAssertion_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2Advice, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2Advice_encryptedAssertion_get" "', argument " "1"" of type '" "LassoSaml2Advice *""'"); 
+    }
+    arg1 = (LassoSaml2Advice *)(argp1);
+    result = (LassoNodeList *)LassoSaml2Advice_EncryptedAssertion_get(arg1);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LassoNodeList, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
 XS(_wrap_new_Saml2Advice) {
   {
     LassoSaml2Advice *result = 0 ;
@@ -42136,7 +43763,7 @@ XS(_wrap_Saml2AuthnContext_authnContextDeclRef_get) {
 }
 
 
-XS(_wrap_Saml2AuthnContext_AuthenticatingAuthority_set) {
+XS(_wrap_Saml2AuthnContext_authenticatingAuthority_set) {
   {
     LassoSaml2AuthnContext *arg1 = (LassoSaml2AuthnContext *) 0 ;
     char *arg2 = (char *) 0 ;
@@ -42149,16 +43776,16 @@ XS(_wrap_Saml2AuthnContext_AuthenticatingAuthority_set) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: Saml2AuthnContext_AuthenticatingAuthority_set(self,AuthenticatingAuthority);");
+      SWIG_croak("Usage: Saml2AuthnContext_authenticatingAuthority_set(self,AuthenticatingAuthority);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2AuthnContext, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2AuthnContext_AuthenticatingAuthority_set" "', argument " "1"" of type '" "LassoSaml2AuthnContext *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2AuthnContext_authenticatingAuthority_set" "', argument " "1"" of type '" "LassoSaml2AuthnContext *""'"); 
     }
     arg1 = (LassoSaml2AuthnContext *)(argp1);
     res2 = SWIG_AsCharPtrAndSize(ST(1), &buf2, NULL, &alloc2);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Saml2AuthnContext_AuthenticatingAuthority_set" "', argument " "2"" of type '" "char *""'");
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Saml2AuthnContext_authenticatingAuthority_set" "', argument " "2"" of type '" "char *""'");
     }
     arg2 = (char *)(buf2);
     if (arg1->AuthenticatingAuthority) free((char*)arg1->AuthenticatingAuthority);
@@ -42180,7 +43807,7 @@ XS(_wrap_Saml2AuthnContext_AuthenticatingAuthority_set) {
 }
 
 
-XS(_wrap_Saml2AuthnContext_AuthenticatingAuthority_get) {
+XS(_wrap_Saml2AuthnContext_authenticatingAuthority_get) {
   {
     LassoSaml2AuthnContext *arg1 = (LassoSaml2AuthnContext *) 0 ;
     char *result = 0 ;
@@ -42190,11 +43817,11 @@ XS(_wrap_Saml2AuthnContext_AuthenticatingAuthority_get) {
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: Saml2AuthnContext_AuthenticatingAuthority_get(self);");
+      SWIG_croak("Usage: Saml2AuthnContext_authenticatingAuthority_get(self);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2AuthnContext, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2AuthnContext_AuthenticatingAuthority_get" "', argument " "1"" of type '" "LassoSaml2AuthnContext *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2AuthnContext_authenticatingAuthority_get" "', argument " "1"" of type '" "LassoSaml2AuthnContext *""'"); 
     }
     arg1 = (LassoSaml2AuthnContext *)(argp1);
     result = (char *) ((arg1)->AuthenticatingAuthority);
@@ -42355,7 +43982,7 @@ XS(_wrap_Saml2SubjectLocality_address_get) {
 }
 
 
-XS(_wrap_Saml2SubjectLocality_dnsName_set) {
+XS(_wrap_Saml2SubjectLocality_dNSName_set) {
   {
     LassoSaml2SubjectLocality *arg1 = (LassoSaml2SubjectLocality *) 0 ;
     char *arg2 = (char *) 0 ;
@@ -42368,16 +43995,16 @@ XS(_wrap_Saml2SubjectLocality_dnsName_set) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: Saml2SubjectLocality_dnsName_set(self,DNSName);");
+      SWIG_croak("Usage: Saml2SubjectLocality_dNSName_set(self,DNSName);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2SubjectLocality, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2SubjectLocality_dnsName_set" "', argument " "1"" of type '" "LassoSaml2SubjectLocality *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2SubjectLocality_dNSName_set" "', argument " "1"" of type '" "LassoSaml2SubjectLocality *""'"); 
     }
     arg1 = (LassoSaml2SubjectLocality *)(argp1);
     res2 = SWIG_AsCharPtrAndSize(ST(1), &buf2, NULL, &alloc2);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Saml2SubjectLocality_dnsName_set" "', argument " "2"" of type '" "char *""'");
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Saml2SubjectLocality_dNSName_set" "', argument " "2"" of type '" "char *""'");
     }
     arg2 = (char *)(buf2);
     if (arg1->DNSName) free((char*)arg1->DNSName);
@@ -42399,7 +44026,7 @@ XS(_wrap_Saml2SubjectLocality_dnsName_set) {
 }
 
 
-XS(_wrap_Saml2SubjectLocality_dnsName_get) {
+XS(_wrap_Saml2SubjectLocality_dNSName_get) {
   {
     LassoSaml2SubjectLocality *arg1 = (LassoSaml2SubjectLocality *) 0 ;
     char *result = 0 ;
@@ -42409,11 +44036,11 @@ XS(_wrap_Saml2SubjectLocality_dnsName_get) {
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: Saml2SubjectLocality_dnsName_get(self);");
+      SWIG_croak("Usage: Saml2SubjectLocality_dNSName_get(self);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2SubjectLocality, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2SubjectLocality_dnsName_get" "', argument " "1"" of type '" "LassoSaml2SubjectLocality *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2SubjectLocality_dNSName_get" "', argument " "1"" of type '" "LassoSaml2SubjectLocality *""'"); 
     }
     arg1 = (LassoSaml2SubjectLocality *)(argp1);
     result = (char *) ((arg1)->DNSName);
@@ -44065,6 +45692,138 @@ XS(_wrap_Saml2AuthnStatement_dump) {
 }
 
 
+XS(_wrap_Saml2AttributeStatement_attribute_set) {
+  {
+    LassoSaml2AttributeStatement *arg1 = (LassoSaml2AttributeStatement *) 0 ;
+    LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: Saml2AttributeStatement_attribute_set(self,Attribute);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2AttributeStatement, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2AttributeStatement_attribute_set" "', argument " "1"" of type '" "LassoSaml2AttributeStatement *""'"); 
+    }
+    arg1 = (LassoSaml2AttributeStatement *)(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_LassoNodeList, SWIG_POINTER_DISOWN |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Saml2AttributeStatement_attribute_set" "', argument " "2"" of type '" "LassoNodeList *""'"); 
+    }
+    arg2 = (LassoNodeList *)(argp2);
+    LassoSaml2AttributeStatement_Attribute_set(arg1,arg2);
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Saml2AttributeStatement_attribute_get) {
+  {
+    LassoSaml2AttributeStatement *arg1 = (LassoSaml2AttributeStatement *) 0 ;
+    LassoNodeList *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: Saml2AttributeStatement_attribute_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2AttributeStatement, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2AttributeStatement_attribute_get" "', argument " "1"" of type '" "LassoSaml2AttributeStatement *""'"); 
+    }
+    arg1 = (LassoSaml2AttributeStatement *)(argp1);
+    result = (LassoNodeList *)LassoSaml2AttributeStatement_Attribute_get(arg1);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LassoNodeList, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Saml2AttributeStatement_encryptedAttribute_set) {
+  {
+    LassoSaml2AttributeStatement *arg1 = (LassoSaml2AttributeStatement *) 0 ;
+    LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: Saml2AttributeStatement_encryptedAttribute_set(self,EncryptedAttribute);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2AttributeStatement, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2AttributeStatement_encryptedAttribute_set" "', argument " "1"" of type '" "LassoSaml2AttributeStatement *""'"); 
+    }
+    arg1 = (LassoSaml2AttributeStatement *)(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_LassoNodeList, SWIG_POINTER_DISOWN |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Saml2AttributeStatement_encryptedAttribute_set" "', argument " "2"" of type '" "LassoNodeList *""'"); 
+    }
+    arg2 = (LassoNodeList *)(argp2);
+    LassoSaml2AttributeStatement_EncryptedAttribute_set(arg1,arg2);
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Saml2AttributeStatement_encryptedAttribute_get) {
+  {
+    LassoSaml2AttributeStatement *arg1 = (LassoSaml2AttributeStatement *) 0 ;
+    LassoNodeList *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: Saml2AttributeStatement_encryptedAttribute_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSaml2AttributeStatement, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Saml2AttributeStatement_encryptedAttribute_get" "', argument " "1"" of type '" "LassoSaml2AttributeStatement *""'"); 
+    }
+    arg1 = (LassoSaml2AttributeStatement *)(argp1);
+    result = (LassoNodeList *)LassoSaml2AttributeStatement_EncryptedAttribute_get(arg1);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LassoNodeList, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
 XS(_wrap_new_Saml2AttributeStatement) {
   {
     LassoSaml2AttributeStatement *result = 0 ;
@@ -44140,7 +45899,7 @@ XS(_wrap_Saml2AttributeStatement_dump) {
 }
 
 
-XS(_wrap_Samlp2IDPEntry_providerId_set) {
+XS(_wrap_Samlp2IDPEntry_providerID_set) {
   {
     LassoSamlp2IDPEntry *arg1 = (LassoSamlp2IDPEntry *) 0 ;
     char *arg2 = (char *) 0 ;
@@ -44153,16 +45912,16 @@ XS(_wrap_Samlp2IDPEntry_providerId_set) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: Samlp2IDPEntry_providerId_set(self,ProviderID);");
+      SWIG_croak("Usage: Samlp2IDPEntry_providerID_set(self,ProviderID);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSamlp2IDPEntry, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2IDPEntry_providerId_set" "', argument " "1"" of type '" "LassoSamlp2IDPEntry *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2IDPEntry_providerID_set" "', argument " "1"" of type '" "LassoSamlp2IDPEntry *""'"); 
     }
     arg1 = (LassoSamlp2IDPEntry *)(argp1);
     res2 = SWIG_AsCharPtrAndSize(ST(1), &buf2, NULL, &alloc2);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Samlp2IDPEntry_providerId_set" "', argument " "2"" of type '" "char *""'");
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Samlp2IDPEntry_providerID_set" "', argument " "2"" of type '" "char *""'");
     }
     arg2 = (char *)(buf2);
     if (arg1->ProviderID) free((char*)arg1->ProviderID);
@@ -44184,7 +45943,7 @@ XS(_wrap_Samlp2IDPEntry_providerId_set) {
 }
 
 
-XS(_wrap_Samlp2IDPEntry_providerId_get) {
+XS(_wrap_Samlp2IDPEntry_providerID_get) {
   {
     LassoSamlp2IDPEntry *arg1 = (LassoSamlp2IDPEntry *) 0 ;
     char *result = 0 ;
@@ -44194,11 +45953,11 @@ XS(_wrap_Samlp2IDPEntry_providerId_get) {
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: Samlp2IDPEntry_providerId_get(self);");
+      SWIG_croak("Usage: Samlp2IDPEntry_providerID_get(self);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSamlp2IDPEntry, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2IDPEntry_providerId_get" "', argument " "1"" of type '" "LassoSamlp2IDPEntry *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2IDPEntry_providerID_get" "', argument " "1"" of type '" "LassoSamlp2IDPEntry *""'"); 
     }
     arg1 = (LassoSamlp2IDPEntry *)(argp1);
     result = (char *) ((arg1)->ProviderID);
@@ -45430,6 +47189,138 @@ XS(_wrap_Samlp2StatusResponse_dump) {
 }
 
 
+XS(_wrap_Samlp2Response_assertion_set) {
+  {
+    LassoSamlp2Response *arg1 = (LassoSamlp2Response *) 0 ;
+    LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: Samlp2Response_assertion_set(self,Assertion);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSamlp2Response, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2Response_assertion_set" "', argument " "1"" of type '" "LassoSamlp2Response *""'"); 
+    }
+    arg1 = (LassoSamlp2Response *)(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_LassoNodeList, SWIG_POINTER_DISOWN |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Samlp2Response_assertion_set" "', argument " "2"" of type '" "LassoNodeList *""'"); 
+    }
+    arg2 = (LassoNodeList *)(argp2);
+    LassoSamlp2Response_Assertion_set(arg1,arg2);
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Samlp2Response_assertion_get) {
+  {
+    LassoSamlp2Response *arg1 = (LassoSamlp2Response *) 0 ;
+    LassoNodeList *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: Samlp2Response_assertion_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSamlp2Response, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2Response_assertion_get" "', argument " "1"" of type '" "LassoSamlp2Response *""'"); 
+    }
+    arg1 = (LassoSamlp2Response *)(argp1);
+    result = (LassoNodeList *)LassoSamlp2Response_Assertion_get(arg1);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LassoNodeList, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Samlp2Response_encryptedAssertion_set) {
+  {
+    LassoSamlp2Response *arg1 = (LassoSamlp2Response *) 0 ;
+    LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: Samlp2Response_encryptedAssertion_set(self,EncryptedAssertion);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSamlp2Response, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2Response_encryptedAssertion_set" "', argument " "1"" of type '" "LassoSamlp2Response *""'"); 
+    }
+    arg1 = (LassoSamlp2Response *)(argp1);
+    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_LassoNodeList, SWIG_POINTER_DISOWN |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Samlp2Response_encryptedAssertion_set" "', argument " "2"" of type '" "LassoNodeList *""'"); 
+    }
+    arg2 = (LassoNodeList *)(argp2);
+    LassoSamlp2Response_EncryptedAssertion_set(arg1,arg2);
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_Samlp2Response_encryptedAssertion_get) {
+  {
+    LassoSamlp2Response *arg1 = (LassoSamlp2Response *) 0 ;
+    LassoNodeList *result = 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: Samlp2Response_encryptedAssertion_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSamlp2Response, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2Response_encryptedAssertion_get" "', argument " "1"" of type '" "LassoSamlp2Response *""'"); 
+    }
+    arg1 = (LassoSamlp2Response *)(argp1);
+    result = (LassoNodeList *)LassoSamlp2Response_EncryptedAssertion_get(arg1);
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LassoNodeList, 0 | SWIG_SHADOW); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
 XS(_wrap_Samlp2Response_issuer_set) {
   {
     LassoSamlp2Response *arg1 = (LassoSamlp2Response *) 0 ;
@@ -46021,72 +47912,6 @@ XS(_wrap_Samlp2Response_consent_get) {
     arg1 = (LassoSamlp2Response *)(argp1);
     result = (char *)LassoSamlp2Response_Consent_get(arg1);
     ST(argvi) = SWIG_FromCharPtr((const char *)result); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_Samlp2Response_assertion_set) {
-  {
-    LassoSamlp2Response *arg1 = (LassoSamlp2Response *) 0 ;
-    LassoNodeList *arg2 = (LassoNodeList *) 0 ;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    void *argp2 = 0 ;
-    int res2 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: Samlp2Response_assertion_set(self,Assertion);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSamlp2Response, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2Response_assertion_set" "', argument " "1"" of type '" "LassoSamlp2Response *""'"); 
-    }
-    arg1 = (LassoSamlp2Response *)(argp1);
-    res2 = SWIG_ConvertPtr(ST(1), &argp2,SWIGTYPE_p_LassoNodeList, SWIG_POINTER_DISOWN |  0 );
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Samlp2Response_assertion_set" "', argument " "2"" of type '" "LassoNodeList *""'"); 
-    }
-    arg2 = (LassoNodeList *)(argp2);
-    LassoSamlp2Response_Assertion_set(arg1,arg2);
-    
-    
-    
-    
-    XSRETURN(argvi);
-  fail:
-    
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_Samlp2Response_assertion_get) {
-  {
-    LassoSamlp2Response *arg1 = (LassoSamlp2Response *) 0 ;
-    LassoNodeList *result = 0 ;
-    void *argp1 = 0 ;
-    int res1 = 0 ;
-    int argvi = 0;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: Samlp2Response_assertion_get(self);");
-    }
-    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSamlp2Response, 0 |  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2Response_assertion_get" "', argument " "1"" of type '" "LassoSamlp2Response *""'"); 
-    }
-    arg1 = (LassoSamlp2Response *)(argp1);
-    result = (LassoNodeList *)LassoSamlp2Response_Assertion_get(arg1);
-    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_LassoNodeList, 0 | SWIG_SHADOW); argvi++ ;
     
     XSRETURN(argvi);
   fail:
@@ -47518,7 +49343,7 @@ XS(_wrap_Samlp2RequestAbstract_dump) {
 }
 
 
-XS(_wrap_Samlp2AssertionIDRequest_assertionIdRef_set) {
+XS(_wrap_Samlp2AssertionIDRequest_assertionIDRef_set) {
   {
     LassoSamlp2AssertionIDRequest *arg1 = (LassoSamlp2AssertionIDRequest *) 0 ;
     char *arg2 = (char *) 0 ;
@@ -47531,16 +49356,16 @@ XS(_wrap_Samlp2AssertionIDRequest_assertionIdRef_set) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: Samlp2AssertionIDRequest_assertionIdRef_set(self,AssertionIDRef);");
+      SWIG_croak("Usage: Samlp2AssertionIDRequest_assertionIDRef_set(self,AssertionIDRef);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSamlp2AssertionIDRequest, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2AssertionIDRequest_assertionIdRef_set" "', argument " "1"" of type '" "LassoSamlp2AssertionIDRequest *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2AssertionIDRequest_assertionIDRef_set" "', argument " "1"" of type '" "LassoSamlp2AssertionIDRequest *""'"); 
     }
     arg1 = (LassoSamlp2AssertionIDRequest *)(argp1);
     res2 = SWIG_AsCharPtrAndSize(ST(1), &buf2, NULL, &alloc2);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Samlp2AssertionIDRequest_assertionIdRef_set" "', argument " "2"" of type '" "char *""'");
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Samlp2AssertionIDRequest_assertionIDRef_set" "', argument " "2"" of type '" "char *""'");
     }
     arg2 = (char *)(buf2);
     if (arg1->AssertionIDRef) free((char*)arg1->AssertionIDRef);
@@ -47562,7 +49387,7 @@ XS(_wrap_Samlp2AssertionIDRequest_assertionIdRef_set) {
 }
 
 
-XS(_wrap_Samlp2AssertionIDRequest_assertionIdRef_get) {
+XS(_wrap_Samlp2AssertionIDRequest_assertionIDRef_get) {
   {
     LassoSamlp2AssertionIDRequest *arg1 = (LassoSamlp2AssertionIDRequest *) 0 ;
     char *result = 0 ;
@@ -47572,11 +49397,11 @@ XS(_wrap_Samlp2AssertionIDRequest_assertionIdRef_get) {
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: Samlp2AssertionIDRequest_assertionIdRef_get(self);");
+      SWIG_croak("Usage: Samlp2AssertionIDRequest_assertionIDRef_get(self);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSamlp2AssertionIDRequest, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2AssertionIDRequest_assertionIdRef_get" "', argument " "1"" of type '" "LassoSamlp2AssertionIDRequest *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2AssertionIDRequest_assertionIDRef_get" "', argument " "1"" of type '" "LassoSamlp2AssertionIDRequest *""'"); 
     }
     arg1 = (LassoSamlp2AssertionIDRequest *)(argp1);
     result = (char *) ((arg1)->AssertionIDRef);
@@ -49822,7 +51647,7 @@ XS(_wrap_Samlp2AuthnRequest_assertionConsumerServiceIndex_get) {
 }
 
 
-XS(_wrap_Samlp2AuthnRequest_AssertionConsumerServiceURL_set) {
+XS(_wrap_Samlp2AuthnRequest_assertionConsumerServiceURL_set) {
   {
     LassoSamlp2AuthnRequest *arg1 = (LassoSamlp2AuthnRequest *) 0 ;
     char *arg2 = (char *) 0 ;
@@ -49835,16 +51660,16 @@ XS(_wrap_Samlp2AuthnRequest_AssertionConsumerServiceURL_set) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: Samlp2AuthnRequest_AssertionConsumerServiceURL_set(self,AssertionConsumerServiceURL);");
+      SWIG_croak("Usage: Samlp2AuthnRequest_assertionConsumerServiceURL_set(self,AssertionConsumerServiceURL);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSamlp2AuthnRequest, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2AuthnRequest_AssertionConsumerServiceURL_set" "', argument " "1"" of type '" "LassoSamlp2AuthnRequest *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2AuthnRequest_assertionConsumerServiceURL_set" "', argument " "1"" of type '" "LassoSamlp2AuthnRequest *""'"); 
     }
     arg1 = (LassoSamlp2AuthnRequest *)(argp1);
     res2 = SWIG_AsCharPtrAndSize(ST(1), &buf2, NULL, &alloc2);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Samlp2AuthnRequest_AssertionConsumerServiceURL_set" "', argument " "2"" of type '" "char *""'");
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Samlp2AuthnRequest_assertionConsumerServiceURL_set" "', argument " "2"" of type '" "char *""'");
     }
     arg2 = (char *)(buf2);
     if (arg1->AssertionConsumerServiceURL) free((char*)arg1->AssertionConsumerServiceURL);
@@ -49866,7 +51691,7 @@ XS(_wrap_Samlp2AuthnRequest_AssertionConsumerServiceURL_set) {
 }
 
 
-XS(_wrap_Samlp2AuthnRequest_AssertionConsumerServiceURL_get) {
+XS(_wrap_Samlp2AuthnRequest_assertionConsumerServiceURL_get) {
   {
     LassoSamlp2AuthnRequest *arg1 = (LassoSamlp2AuthnRequest *) 0 ;
     char *result = 0 ;
@@ -49876,11 +51701,11 @@ XS(_wrap_Samlp2AuthnRequest_AssertionConsumerServiceURL_get) {
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: Samlp2AuthnRequest_AssertionConsumerServiceURL_get(self);");
+      SWIG_croak("Usage: Samlp2AuthnRequest_assertionConsumerServiceURL_get(self);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSamlp2AuthnRequest, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2AuthnRequest_AssertionConsumerServiceURL_get" "', argument " "1"" of type '" "LassoSamlp2AuthnRequest *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2AuthnRequest_assertionConsumerServiceURL_get" "', argument " "1"" of type '" "LassoSamlp2AuthnRequest *""'"); 
     }
     arg1 = (LassoSamlp2AuthnRequest *)(argp1);
     result = (char *) ((arg1)->AssertionConsumerServiceURL);
@@ -49960,7 +51785,7 @@ XS(_wrap_Samlp2AuthnRequest_attributeConsumingServiceIndex_get) {
 }
 
 
-XS(_wrap_Samlp2AuthnRequest_ProviderName_set) {
+XS(_wrap_Samlp2AuthnRequest_providerName_set) {
   {
     LassoSamlp2AuthnRequest *arg1 = (LassoSamlp2AuthnRequest *) 0 ;
     char *arg2 = (char *) 0 ;
@@ -49973,16 +51798,16 @@ XS(_wrap_Samlp2AuthnRequest_ProviderName_set) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: Samlp2AuthnRequest_ProviderName_set(self,ProviderName);");
+      SWIG_croak("Usage: Samlp2AuthnRequest_providerName_set(self,ProviderName);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSamlp2AuthnRequest, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2AuthnRequest_ProviderName_set" "', argument " "1"" of type '" "LassoSamlp2AuthnRequest *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2AuthnRequest_providerName_set" "', argument " "1"" of type '" "LassoSamlp2AuthnRequest *""'"); 
     }
     arg1 = (LassoSamlp2AuthnRequest *)(argp1);
     res2 = SWIG_AsCharPtrAndSize(ST(1), &buf2, NULL, &alloc2);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Samlp2AuthnRequest_ProviderName_set" "', argument " "2"" of type '" "char *""'");
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Samlp2AuthnRequest_providerName_set" "', argument " "2"" of type '" "char *""'");
     }
     arg2 = (char *)(buf2);
     if (arg1->ProviderName) free((char*)arg1->ProviderName);
@@ -50004,7 +51829,7 @@ XS(_wrap_Samlp2AuthnRequest_ProviderName_set) {
 }
 
 
-XS(_wrap_Samlp2AuthnRequest_ProviderName_get) {
+XS(_wrap_Samlp2AuthnRequest_providerName_get) {
   {
     LassoSamlp2AuthnRequest *arg1 = (LassoSamlp2AuthnRequest *) 0 ;
     char *result = 0 ;
@@ -50014,11 +51839,11 @@ XS(_wrap_Samlp2AuthnRequest_ProviderName_get) {
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: Samlp2AuthnRequest_ProviderName_get(self);");
+      SWIG_croak("Usage: Samlp2AuthnRequest_providerName_get(self);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSamlp2AuthnRequest, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2AuthnRequest_ProviderName_get" "', argument " "1"" of type '" "LassoSamlp2AuthnRequest *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2AuthnRequest_providerName_get" "', argument " "1"" of type '" "LassoSamlp2AuthnRequest *""'"); 
     }
     arg1 = (LassoSamlp2AuthnRequest *)(argp1);
     result = (char *) ((arg1)->ProviderName);
@@ -56521,7 +58346,7 @@ XS(_wrap_Saml2EncryptedElement_dump) {
 }
 
 
-XS(_wrap_Samlp2ManageNameIDRequest_newId_set) {
+XS(_wrap_Samlp2ManageNameIDRequest_newID_set) {
   {
     LassoSamlp2ManageNameIDRequest *arg1 = (LassoSamlp2ManageNameIDRequest *) 0 ;
     char *arg2 = (char *) 0 ;
@@ -56534,16 +58359,16 @@ XS(_wrap_Samlp2ManageNameIDRequest_newId_set) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: Samlp2ManageNameIDRequest_newId_set(self,NewID);");
+      SWIG_croak("Usage: Samlp2ManageNameIDRequest_newID_set(self,NewID);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSamlp2ManageNameIDRequest, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2ManageNameIDRequest_newId_set" "', argument " "1"" of type '" "LassoSamlp2ManageNameIDRequest *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2ManageNameIDRequest_newID_set" "', argument " "1"" of type '" "LassoSamlp2ManageNameIDRequest *""'"); 
     }
     arg1 = (LassoSamlp2ManageNameIDRequest *)(argp1);
     res2 = SWIG_AsCharPtrAndSize(ST(1), &buf2, NULL, &alloc2);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Samlp2ManageNameIDRequest_newId_set" "', argument " "2"" of type '" "char *""'");
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Samlp2ManageNameIDRequest_newID_set" "', argument " "2"" of type '" "char *""'");
     }
     arg2 = (char *)(buf2);
     if (arg1->NewID) free((char*)arg1->NewID);
@@ -56565,7 +58390,7 @@ XS(_wrap_Samlp2ManageNameIDRequest_newId_set) {
 }
 
 
-XS(_wrap_Samlp2ManageNameIDRequest_newId_get) {
+XS(_wrap_Samlp2ManageNameIDRequest_newID_get) {
   {
     LassoSamlp2ManageNameIDRequest *arg1 = (LassoSamlp2ManageNameIDRequest *) 0 ;
     char *result = 0 ;
@@ -56575,11 +58400,11 @@ XS(_wrap_Samlp2ManageNameIDRequest_newId_get) {
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: Samlp2ManageNameIDRequest_newId_get(self);");
+      SWIG_croak("Usage: Samlp2ManageNameIDRequest_newID_get(self);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSamlp2ManageNameIDRequest, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2ManageNameIDRequest_newId_get" "', argument " "1"" of type '" "LassoSamlp2ManageNameIDRequest *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2ManageNameIDRequest_newID_get" "', argument " "1"" of type '" "LassoSamlp2ManageNameIDRequest *""'"); 
     }
     arg1 = (LassoSamlp2ManageNameIDRequest *)(argp1);
     result = (char *) ((arg1)->NewID);
@@ -57399,7 +59224,7 @@ XS(_wrap_Samlp2ManageNameIDRequest_dump) {
 }
 
 
-XS(_wrap_Samlp2Scoping_requesterId_set) {
+XS(_wrap_Samlp2Scoping_requesterID_set) {
   {
     LassoSamlp2Scoping *arg1 = (LassoSamlp2Scoping *) 0 ;
     char *arg2 = (char *) 0 ;
@@ -57412,16 +59237,16 @@ XS(_wrap_Samlp2Scoping_requesterId_set) {
     dXSARGS;
     
     if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: Samlp2Scoping_requesterId_set(self,RequesterID);");
+      SWIG_croak("Usage: Samlp2Scoping_requesterID_set(self,RequesterID);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSamlp2Scoping, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2Scoping_requesterId_set" "', argument " "1"" of type '" "LassoSamlp2Scoping *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2Scoping_requesterID_set" "', argument " "1"" of type '" "LassoSamlp2Scoping *""'"); 
     }
     arg1 = (LassoSamlp2Scoping *)(argp1);
     res2 = SWIG_AsCharPtrAndSize(ST(1), &buf2, NULL, &alloc2);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Samlp2Scoping_requesterId_set" "', argument " "2"" of type '" "char *""'");
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Samlp2Scoping_requesterID_set" "', argument " "2"" of type '" "char *""'");
     }
     arg2 = (char *)(buf2);
     if (arg1->RequesterID) free((char*)arg1->RequesterID);
@@ -57443,7 +59268,7 @@ XS(_wrap_Samlp2Scoping_requesterId_set) {
 }
 
 
-XS(_wrap_Samlp2Scoping_requesterId_get) {
+XS(_wrap_Samlp2Scoping_requesterID_get) {
   {
     LassoSamlp2Scoping *arg1 = (LassoSamlp2Scoping *) 0 ;
     char *result = 0 ;
@@ -57453,11 +59278,11 @@ XS(_wrap_Samlp2Scoping_requesterId_get) {
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: Samlp2Scoping_requesterId_get(self);");
+      SWIG_croak("Usage: Samlp2Scoping_requesterID_get(self);");
     }
     res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_LassoSamlp2Scoping, 0 |  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2Scoping_requesterId_get" "', argument " "1"" of type '" "LassoSamlp2Scoping *""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Samlp2Scoping_requesterID_get" "', argument " "1"" of type '" "LassoSamlp2Scoping *""'"); 
     }
     arg1 = (LassoSamlp2Scoping *)(argp1);
     result = (char *) ((arg1)->RequesterID);
@@ -58026,6 +59851,7 @@ XS(_wrap_Saml2Subject_dump) {
 
 /* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */
 
+static swig_type_info _swigt__p_GHashTable = {"_p_GHashTable", "GHashTable *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_LassoCheckVersionMode = {"_p_LassoCheckVersionMode", "enum LassoCheckVersionMode *|LassoCheckVersionMode *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_LassoDefederation = {"_p_LassoDefederation", "LassoDefederation *", 0, 0, (void*)"lasso::Defederation", 0};
 static swig_type_info _swigt__p_LassoEcp = {"_p_LassoEcp", "LassoEcp *", 0, 0, (void*)"lasso::Ecp", 0};
@@ -58049,6 +59875,7 @@ static swig_type_info _swigt__p_LassoLogin = {"_p_LassoLogin", "LassoLogin *", 0
 static swig_type_info _swigt__p_LassoLoginProtocolProfile = {"_p_LassoLoginProtocolProfile", "enum LassoLoginProtocolProfile *|LassoLoginProtocolProfile *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_LassoLogout = {"_p_LassoLogout", "LassoLogout *", 0, 0, (void*)"lasso::Logout", 0};
 static swig_type_info _swigt__p_LassoMdProtocolType = {"_p_LassoMdProtocolType", "enum LassoMdProtocolType *|LassoMdProtocolType *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_LassoMiscTextNode = {"_p_LassoMiscTextNode", "LassoMiscTextNode *", 0, 0, (void*)"lasso::MiscTextNode", 0};
 static swig_type_info _swigt__p_LassoNameIdManagement = {"_p_LassoNameIdManagement", "LassoNameIdManagement *", 0, 0, (void*)"lasso::NameIdManagement", 0};
 static swig_type_info _swigt__p_LassoNameIdentifierMapping = {"_p_LassoNameIdentifierMapping", "LassoNameIdentifierMapping *", 0, 0, (void*)"lasso::NameIdentifierMapping", 0};
 static swig_type_info _swigt__p_LassoNameRegistration = {"_p_LassoNameRegistration", "LassoNameRegistration *", 0, 0, (void*)"lasso::NameRegistration", 0};
@@ -58133,12 +59960,14 @@ static swig_type_info _swigt__p_LassoSamlpStatusCode = {"_p_LassoSamlpStatusCode
 static swig_type_info _swigt__p_LassoServer = {"_p_LassoServer", "LassoServer *", 0, 0, (void*)"lasso::Server", 0};
 static swig_type_info _swigt__p_LassoSession = {"_p_LassoSession", "LassoSession *", 0, 0, (void*)"lasso::Session", 0};
 static swig_type_info _swigt__p_LassoSignatureMethod = {"_p_LassoSignatureMethod", "enum LassoSignatureMethod *|LassoSignatureMethod *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_LassoSignatureType = {"_p_LassoSignatureType", "LassoSignatureType *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_LassoSignatureType = {"_p_LassoSignatureType", "enum LassoSignatureType *|LassoSignatureType *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_LassoStringDict = {"_p_LassoStringDict", "LassoStringDict *", 0, 0, (void*)"lasso::StringDict", 0};
 static swig_type_info _swigt__p_LassoStringList = {"_p_LassoStringList", "LassoStringList *", 0, 0, (void*)"lasso::StringList", 0};
 static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_void = {"_p_void", "void *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
+  &_swigt__p_GHashTable,
   &_swigt__p_LassoCheckVersionMode,
   &_swigt__p_LassoDefederation,
   &_swigt__p_LassoEcp,
@@ -58162,6 +59991,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_LassoLoginProtocolProfile,
   &_swigt__p_LassoLogout,
   &_swigt__p_LassoMdProtocolType,
+  &_swigt__p_LassoMiscTextNode,
   &_swigt__p_LassoNameIdManagement,
   &_swigt__p_LassoNameIdentifierMapping,
   &_swigt__p_LassoNameRegistration,
@@ -58247,11 +60077,13 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_LassoSession,
   &_swigt__p_LassoSignatureMethod,
   &_swigt__p_LassoSignatureType,
+  &_swigt__p_LassoStringDict,
   &_swigt__p_LassoStringList,
   &_swigt__p_char,
   &_swigt__p_void,
 };
 
+static swig_cast_info _swigc__p_GHashTable[] = {  {&_swigt__p_GHashTable, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_LassoCheckVersionMode[] = {  {&_swigt__p_LassoCheckVersionMode, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_LassoDefederation[] = {  {&_swigt__p_LassoDefederation, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_LassoEcp[] = {  {&_swigt__p_LassoEcp, 0, 0, 0},{0, 0, 0, 0}};
@@ -58275,6 +60107,7 @@ static swig_cast_info _swigc__p_LassoLogin[] = {  {&_swigt__p_LassoLogin, 0, 0, 
 static swig_cast_info _swigc__p_LassoLoginProtocolProfile[] = {  {&_swigt__p_LassoLoginProtocolProfile, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_LassoLogout[] = {  {&_swigt__p_LassoLogout, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_LassoMdProtocolType[] = {  {&_swigt__p_LassoMdProtocolType, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_LassoMiscTextNode[] = {  {&_swigt__p_LassoMiscTextNode, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_LassoNameIdManagement[] = {  {&_swigt__p_LassoNameIdManagement, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_LassoNameIdentifierMapping[] = {  {&_swigt__p_LassoNameIdentifierMapping, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_LassoNameRegistration[] = {  {&_swigt__p_LassoNameRegistration, 0, 0, 0},{0, 0, 0, 0}};
@@ -58360,11 +60193,13 @@ static swig_cast_info _swigc__p_LassoServer[] = {  {&_swigt__p_LassoServer, 0, 0
 static swig_cast_info _swigc__p_LassoSession[] = {  {&_swigt__p_LassoSession, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_LassoSignatureMethod[] = {  {&_swigt__p_LassoSignatureMethod, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_LassoSignatureType[] = {  {&_swigt__p_LassoSignatureType, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_LassoStringDict[] = {  {&_swigt__p_LassoStringDict, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_LassoStringList[] = {  {&_swigt__p_LassoStringList, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_void[] = {  {&_swigt__p_void, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
+  _swigc__p_GHashTable,
   _swigc__p_LassoCheckVersionMode,
   _swigc__p_LassoDefederation,
   _swigc__p_LassoEcp,
@@ -58388,6 +60223,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_LassoLoginProtocolProfile,
   _swigc__p_LassoLogout,
   _swigc__p_LassoMdProtocolType,
+  _swigc__p_LassoMiscTextNode,
   _swigc__p_LassoNameIdManagement,
   _swigc__p_LassoNameIdentifierMapping,
   _swigc__p_LassoNameRegistration,
@@ -58473,6 +60309,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_LassoSession,
   _swigc__p_LassoSignatureMethod,
   _swigc__p_LassoSignatureType,
+  _swigc__p_LassoStringDict,
   _swigc__p_LassoStringList,
   _swigc__p_char,
   _swigc__p_void,
@@ -58495,6 +60332,7 @@ static swig_command_info swig_commands[] = {
 {"lassoc::shutdown", _wrap_shutdown},
 {"lassoc::checkVersion", _wrap_checkVersion},
 {"lassoc::registerDstService", _wrap_registerDstService},
+{"lassoc::registerIdWsf2DstService", _wrap_registerIdWsf2DstService},
 {"lassoc::new_Node", _wrap_new_Node},
 {"lassoc::delete_Node", _wrap_delete_Node},
 {"lassoc::Node_dump", _wrap_Node_dump},
@@ -58514,6 +60352,25 @@ static swig_command_info swig_commands[] = {
 {"lassoc::StringList_getItem", _wrap_StringList_getItem},
 {"lassoc::StringList_length", _wrap_StringList_length},
 {"lassoc::StringList_setItem", _wrap_StringList_setItem},
+{"lassoc::new_StringDict", _wrap_new_StringDict},
+{"lassoc::delete_StringDict", _wrap_delete_StringDict},
+{"lassoc::StringDict_cast", _wrap_StringDict_cast},
+{"lassoc::StringDict_frompointer", _wrap_StringDict_frompointer},
+{"lassoc::StringDict_getItem", _wrap_StringDict_getItem},
+{"lassoc::StringDict_setItem", _wrap_StringDict_setItem},
+{"lassoc::MiscTextNode_content_set", _wrap_MiscTextNode_content_set},
+{"lassoc::MiscTextNode_content_get", _wrap_MiscTextNode_content_get},
+{"lassoc::MiscTextNode_name_set", _wrap_MiscTextNode_name_set},
+{"lassoc::MiscTextNode_name_get", _wrap_MiscTextNode_name_get},
+{"lassoc::MiscTextNode_ns_href_set", _wrap_MiscTextNode_ns_href_set},
+{"lassoc::MiscTextNode_ns_href_get", _wrap_MiscTextNode_ns_href_get},
+{"lassoc::MiscTextNode_ns_prefix_set", _wrap_MiscTextNode_ns_prefix_set},
+{"lassoc::MiscTextNode_ns_prefix_get", _wrap_MiscTextNode_ns_prefix_get},
+{"lassoc::MiscTextNode_text_child_set", _wrap_MiscTextNode_text_child_set},
+{"lassoc::MiscTextNode_text_child_get", _wrap_MiscTextNode_text_child_get},
+{"lassoc::new_MiscTextNode", _wrap_new_MiscTextNode},
+{"lassoc::delete_MiscTextNode", _wrap_delete_MiscTextNode},
+{"lassoc::MiscTextNode_dump", _wrap_MiscTextNode_dump},
 {"lassoc::SamlAdvice_assertion_set", _wrap_SamlAdvice_assertion_set},
 {"lassoc::SamlAdvice_assertion_get", _wrap_SamlAdvice_assertion_get},
 {"lassoc::SamlAdvice_assertionIdReference_set", _wrap_SamlAdvice_assertionIdReference_set},
@@ -59112,6 +60969,8 @@ static swig_command_info swig_commands[] = {
 {"lassoc::Defederation_validateNotification", _wrap_Defederation_validateNotification},
 {"lassoc::Login_assertionArtifact_get", _wrap_Login_assertionArtifact_get},
 {"lassoc::Login_protocolProfile_get", _wrap_Login_protocolProfile_get},
+{"lassoc::Login_assertion_set", _wrap_Login_assertion_set},
+{"lassoc::Login_assertion_get", _wrap_Login_assertion_get},
 {"lassoc::Login_artifact_get", _wrap_Login_artifact_get},
 {"lassoc::Login_artifactMessage_set", _wrap_Login_artifactMessage_set},
 {"lassoc::Login_artifactMessage_get", _wrap_Login_artifactMessage_get},
@@ -59379,8 +61238,14 @@ static swig_command_info swig_commands[] = {
 {"lassoc::Saml2Assertion_conditions_get", _wrap_Saml2Assertion_conditions_get},
 {"lassoc::Saml2Assertion_advice_set", _wrap_Saml2Assertion_advice_set},
 {"lassoc::Saml2Assertion_advice_get", _wrap_Saml2Assertion_advice_get},
+{"lassoc::Saml2Assertion_statement_set", _wrap_Saml2Assertion_statement_set},
+{"lassoc::Saml2Assertion_statement_get", _wrap_Saml2Assertion_statement_get},
 {"lassoc::Saml2Assertion_authnStatement_set", _wrap_Saml2Assertion_authnStatement_set},
 {"lassoc::Saml2Assertion_authnStatement_get", _wrap_Saml2Assertion_authnStatement_get},
+{"lassoc::Saml2Assertion_authzDecisionStatement_set", _wrap_Saml2Assertion_authzDecisionStatement_set},
+{"lassoc::Saml2Assertion_authzDecisionStatement_get", _wrap_Saml2Assertion_authzDecisionStatement_get},
+{"lassoc::Saml2Assertion_attributeStatement_set", _wrap_Saml2Assertion_attributeStatement_set},
+{"lassoc::Saml2Assertion_attributeStatement_get", _wrap_Saml2Assertion_attributeStatement_get},
 {"lassoc::new_Saml2Assertion", _wrap_new_Saml2Assertion},
 {"lassoc::delete_Saml2Assertion", _wrap_delete_Saml2Assertion},
 {"lassoc::Saml2Assertion_dump", _wrap_Saml2Assertion_dump},
@@ -59402,9 +61267,21 @@ static swig_command_info swig_commands[] = {
 {"lassoc::Saml2Conditions_condition_get", _wrap_Saml2Conditions_condition_get},
 {"lassoc::Saml2Conditions_audienceRestriction_set", _wrap_Saml2Conditions_audienceRestriction_set},
 {"lassoc::Saml2Conditions_audienceRestriction_get", _wrap_Saml2Conditions_audienceRestriction_get},
+{"lassoc::Saml2Conditions_oneTimeUse_set", _wrap_Saml2Conditions_oneTimeUse_set},
+{"lassoc::Saml2Conditions_oneTimeUse_get", _wrap_Saml2Conditions_oneTimeUse_get},
+{"lassoc::Saml2Conditions_proxyRestriction_set", _wrap_Saml2Conditions_proxyRestriction_set},
+{"lassoc::Saml2Conditions_proxyRestriction_get", _wrap_Saml2Conditions_proxyRestriction_get},
 {"lassoc::new_Saml2Conditions", _wrap_new_Saml2Conditions},
 {"lassoc::delete_Saml2Conditions", _wrap_delete_Saml2Conditions},
 {"lassoc::Saml2Conditions_dump", _wrap_Saml2Conditions_dump},
+{"lassoc::Saml2Evidence_assertionIDRef_set", _wrap_Saml2Evidence_assertionIDRef_set},
+{"lassoc::Saml2Evidence_assertionIDRef_get", _wrap_Saml2Evidence_assertionIDRef_get},
+{"lassoc::Saml2Evidence_assertionURIRef_set", _wrap_Saml2Evidence_assertionURIRef_set},
+{"lassoc::Saml2Evidence_assertionURIRef_get", _wrap_Saml2Evidence_assertionURIRef_get},
+{"lassoc::Saml2Evidence_assertion_set", _wrap_Saml2Evidence_assertion_set},
+{"lassoc::Saml2Evidence_assertion_get", _wrap_Saml2Evidence_assertion_get},
+{"lassoc::Saml2Evidence_encryptedAssertion_set", _wrap_Saml2Evidence_encryptedAssertion_set},
+{"lassoc::Saml2Evidence_encryptedAssertion_get", _wrap_Saml2Evidence_encryptedAssertion_get},
 {"lassoc::new_Saml2Evidence", _wrap_new_Saml2Evidence},
 {"lassoc::delete_Saml2Evidence", _wrap_delete_Saml2Evidence},
 {"lassoc::Saml2Evidence_dump", _wrap_Saml2Evidence_dump},
@@ -59412,8 +61289,8 @@ static swig_command_info swig_commands[] = {
 {"lassoc::Saml2NameID_content_get", _wrap_Saml2NameID_content_get},
 {"lassoc::Saml2NameID_format_set", _wrap_Saml2NameID_format_set},
 {"lassoc::Saml2NameID_format_get", _wrap_Saml2NameID_format_get},
-{"lassoc::Saml2NameID_SPProvidedID_set", _wrap_Saml2NameID_SPProvidedID_set},
-{"lassoc::Saml2NameID_SPProvidedID_get", _wrap_Saml2NameID_SPProvidedID_get},
+{"lassoc::Saml2NameID_spProvidedId_set", _wrap_Saml2NameID_spProvidedId_set},
+{"lassoc::Saml2NameID_spProvidedId_get", _wrap_Saml2NameID_spProvidedId_get},
 {"lassoc::Saml2NameID_nameQualifier_set", _wrap_Saml2NameID_nameQualifier_set},
 {"lassoc::Saml2NameID_nameQualifier_get", _wrap_Saml2NameID_nameQualifier_get},
 {"lassoc::Saml2NameID_spNameQualifier_set", _wrap_Saml2NameID_spNameQualifier_set},
@@ -59443,6 +61320,14 @@ static swig_command_info swig_commands[] = {
 {"lassoc::new_Saml2OneTimeUse", _wrap_new_Saml2OneTimeUse},
 {"lassoc::delete_Saml2OneTimeUse", _wrap_delete_Saml2OneTimeUse},
 {"lassoc::Saml2OneTimeUse_dump", _wrap_Saml2OneTimeUse_dump},
+{"lassoc::Saml2Advice_assertionIDRef_set", _wrap_Saml2Advice_assertionIDRef_set},
+{"lassoc::Saml2Advice_assertionIDRef_get", _wrap_Saml2Advice_assertionIDRef_get},
+{"lassoc::Saml2Advice_assertionURIRef_set", _wrap_Saml2Advice_assertionURIRef_set},
+{"lassoc::Saml2Advice_assertionURIRef_get", _wrap_Saml2Advice_assertionURIRef_get},
+{"lassoc::Saml2Advice_assertion_set", _wrap_Saml2Advice_assertion_set},
+{"lassoc::Saml2Advice_assertion_get", _wrap_Saml2Advice_assertion_get},
+{"lassoc::Saml2Advice_encryptedAssertion_set", _wrap_Saml2Advice_encryptedAssertion_set},
+{"lassoc::Saml2Advice_encryptedAssertion_get", _wrap_Saml2Advice_encryptedAssertion_get},
 {"lassoc::new_Saml2Advice", _wrap_new_Saml2Advice},
 {"lassoc::delete_Saml2Advice", _wrap_delete_Saml2Advice},
 {"lassoc::Saml2Advice_dump", _wrap_Saml2Advice_dump},
@@ -59457,15 +61342,15 @@ static swig_command_info swig_commands[] = {
 {"lassoc::Saml2AuthnContext_authnContextClassRef_get", _wrap_Saml2AuthnContext_authnContextClassRef_get},
 {"lassoc::Saml2AuthnContext_authnContextDeclRef_set", _wrap_Saml2AuthnContext_authnContextDeclRef_set},
 {"lassoc::Saml2AuthnContext_authnContextDeclRef_get", _wrap_Saml2AuthnContext_authnContextDeclRef_get},
-{"lassoc::Saml2AuthnContext_AuthenticatingAuthority_set", _wrap_Saml2AuthnContext_AuthenticatingAuthority_set},
-{"lassoc::Saml2AuthnContext_AuthenticatingAuthority_get", _wrap_Saml2AuthnContext_AuthenticatingAuthority_get},
+{"lassoc::Saml2AuthnContext_authenticatingAuthority_set", _wrap_Saml2AuthnContext_authenticatingAuthority_set},
+{"lassoc::Saml2AuthnContext_authenticatingAuthority_get", _wrap_Saml2AuthnContext_authenticatingAuthority_get},
 {"lassoc::new_Saml2AuthnContext", _wrap_new_Saml2AuthnContext},
 {"lassoc::delete_Saml2AuthnContext", _wrap_delete_Saml2AuthnContext},
 {"lassoc::Saml2AuthnContext_dump", _wrap_Saml2AuthnContext_dump},
 {"lassoc::Saml2SubjectLocality_address_set", _wrap_Saml2SubjectLocality_address_set},
 {"lassoc::Saml2SubjectLocality_address_get", _wrap_Saml2SubjectLocality_address_get},
-{"lassoc::Saml2SubjectLocality_dnsName_set", _wrap_Saml2SubjectLocality_dnsName_set},
-{"lassoc::Saml2SubjectLocality_dnsName_get", _wrap_Saml2SubjectLocality_dnsName_get},
+{"lassoc::Saml2SubjectLocality_dNSName_set", _wrap_Saml2SubjectLocality_dNSName_set},
+{"lassoc::Saml2SubjectLocality_dNSName_get", _wrap_Saml2SubjectLocality_dNSName_get},
 {"lassoc::new_Saml2SubjectLocality", _wrap_new_Saml2SubjectLocality},
 {"lassoc::delete_Saml2SubjectLocality", _wrap_delete_Saml2SubjectLocality},
 {"lassoc::Saml2SubjectLocality_dump", _wrap_Saml2SubjectLocality_dump},
@@ -59518,11 +61403,15 @@ static swig_command_info swig_commands[] = {
 {"lassoc::new_Saml2AuthnStatement", _wrap_new_Saml2AuthnStatement},
 {"lassoc::delete_Saml2AuthnStatement", _wrap_delete_Saml2AuthnStatement},
 {"lassoc::Saml2AuthnStatement_dump", _wrap_Saml2AuthnStatement_dump},
+{"lassoc::Saml2AttributeStatement_attribute_set", _wrap_Saml2AttributeStatement_attribute_set},
+{"lassoc::Saml2AttributeStatement_attribute_get", _wrap_Saml2AttributeStatement_attribute_get},
+{"lassoc::Saml2AttributeStatement_encryptedAttribute_set", _wrap_Saml2AttributeStatement_encryptedAttribute_set},
+{"lassoc::Saml2AttributeStatement_encryptedAttribute_get", _wrap_Saml2AttributeStatement_encryptedAttribute_get},
 {"lassoc::new_Saml2AttributeStatement", _wrap_new_Saml2AttributeStatement},
 {"lassoc::delete_Saml2AttributeStatement", _wrap_delete_Saml2AttributeStatement},
 {"lassoc::Saml2AttributeStatement_dump", _wrap_Saml2AttributeStatement_dump},
-{"lassoc::Samlp2IDPEntry_providerId_set", _wrap_Samlp2IDPEntry_providerId_set},
-{"lassoc::Samlp2IDPEntry_providerId_get", _wrap_Samlp2IDPEntry_providerId_get},
+{"lassoc::Samlp2IDPEntry_providerID_set", _wrap_Samlp2IDPEntry_providerID_set},
+{"lassoc::Samlp2IDPEntry_providerID_get", _wrap_Samlp2IDPEntry_providerID_get},
 {"lassoc::Samlp2IDPEntry_name_set", _wrap_Samlp2IDPEntry_name_set},
 {"lassoc::Samlp2IDPEntry_name_get", _wrap_Samlp2IDPEntry_name_get},
 {"lassoc::Samlp2IDPEntry_loc_set", _wrap_Samlp2IDPEntry_loc_set},
@@ -59561,6 +61450,10 @@ static swig_command_info swig_commands[] = {
 {"lassoc::new_Samlp2StatusResponse", _wrap_new_Samlp2StatusResponse},
 {"lassoc::delete_Samlp2StatusResponse", _wrap_delete_Samlp2StatusResponse},
 {"lassoc::Samlp2StatusResponse_dump", _wrap_Samlp2StatusResponse_dump},
+{"lassoc::Samlp2Response_assertion_set", _wrap_Samlp2Response_assertion_set},
+{"lassoc::Samlp2Response_assertion_get", _wrap_Samlp2Response_assertion_get},
+{"lassoc::Samlp2Response_encryptedAssertion_set", _wrap_Samlp2Response_encryptedAssertion_set},
+{"lassoc::Samlp2Response_encryptedAssertion_get", _wrap_Samlp2Response_encryptedAssertion_get},
 {"lassoc::Samlp2Response_issuer_set", _wrap_Samlp2Response_issuer_set},
 {"lassoc::Samlp2Response_issuer_get", _wrap_Samlp2Response_issuer_get},
 {"lassoc::Samlp2Response_extensions_set", _wrap_Samlp2Response_extensions_set},
@@ -59579,8 +61472,6 @@ static swig_command_info swig_commands[] = {
 {"lassoc::Samlp2Response_destination_get", _wrap_Samlp2Response_destination_get},
 {"lassoc::Samlp2Response_consent_set", _wrap_Samlp2Response_consent_set},
 {"lassoc::Samlp2Response_consent_get", _wrap_Samlp2Response_consent_get},
-{"lassoc::Samlp2Response_assertion_set", _wrap_Samlp2Response_assertion_set},
-{"lassoc::Samlp2Response_assertion_get", _wrap_Samlp2Response_assertion_get},
 {"lassoc::new_Samlp2Response", _wrap_new_Samlp2Response},
 {"lassoc::delete_Samlp2Response", _wrap_delete_Samlp2Response},
 {"lassoc::Samlp2Response_dump", _wrap_Samlp2Response_dump},
@@ -59624,8 +61515,8 @@ static swig_command_info swig_commands[] = {
 {"lassoc::new_Samlp2RequestAbstract", _wrap_new_Samlp2RequestAbstract},
 {"lassoc::delete_Samlp2RequestAbstract", _wrap_delete_Samlp2RequestAbstract},
 {"lassoc::Samlp2RequestAbstract_dump", _wrap_Samlp2RequestAbstract_dump},
-{"lassoc::Samlp2AssertionIDRequest_assertionIdRef_set", _wrap_Samlp2AssertionIDRequest_assertionIdRef_set},
-{"lassoc::Samlp2AssertionIDRequest_assertionIdRef_get", _wrap_Samlp2AssertionIDRequest_assertionIdRef_get},
+{"lassoc::Samlp2AssertionIDRequest_assertionIDRef_set", _wrap_Samlp2AssertionIDRequest_assertionIDRef_set},
+{"lassoc::Samlp2AssertionIDRequest_assertionIDRef_get", _wrap_Samlp2AssertionIDRequest_assertionIDRef_get},
 {"lassoc::Samlp2AssertionIDRequest_issuer_set", _wrap_Samlp2AssertionIDRequest_issuer_set},
 {"lassoc::Samlp2AssertionIDRequest_issuer_get", _wrap_Samlp2AssertionIDRequest_issuer_get},
 {"lassoc::Samlp2AssertionIDRequest_extensions_set", _wrap_Samlp2AssertionIDRequest_extensions_set},
@@ -59695,12 +61586,12 @@ static swig_command_info swig_commands[] = {
 {"lassoc::Samlp2AuthnRequest_protocolBinding_get", _wrap_Samlp2AuthnRequest_protocolBinding_get},
 {"lassoc::Samlp2AuthnRequest_assertionConsumerServiceIndex_set", _wrap_Samlp2AuthnRequest_assertionConsumerServiceIndex_set},
 {"lassoc::Samlp2AuthnRequest_assertionConsumerServiceIndex_get", _wrap_Samlp2AuthnRequest_assertionConsumerServiceIndex_get},
-{"lassoc::Samlp2AuthnRequest_AssertionConsumerServiceURL_set", _wrap_Samlp2AuthnRequest_AssertionConsumerServiceURL_set},
-{"lassoc::Samlp2AuthnRequest_AssertionConsumerServiceURL_get", _wrap_Samlp2AuthnRequest_AssertionConsumerServiceURL_get},
+{"lassoc::Samlp2AuthnRequest_assertionConsumerServiceURL_set", _wrap_Samlp2AuthnRequest_assertionConsumerServiceURL_set},
+{"lassoc::Samlp2AuthnRequest_assertionConsumerServiceURL_get", _wrap_Samlp2AuthnRequest_assertionConsumerServiceURL_get},
 {"lassoc::Samlp2AuthnRequest_attributeConsumingServiceIndex_set", _wrap_Samlp2AuthnRequest_attributeConsumingServiceIndex_set},
 {"lassoc::Samlp2AuthnRequest_attributeConsumingServiceIndex_get", _wrap_Samlp2AuthnRequest_attributeConsumingServiceIndex_get},
-{"lassoc::Samlp2AuthnRequest_ProviderName_set", _wrap_Samlp2AuthnRequest_ProviderName_set},
-{"lassoc::Samlp2AuthnRequest_ProviderName_get", _wrap_Samlp2AuthnRequest_ProviderName_get},
+{"lassoc::Samlp2AuthnRequest_providerName_set", _wrap_Samlp2AuthnRequest_providerName_set},
+{"lassoc::Samlp2AuthnRequest_providerName_get", _wrap_Samlp2AuthnRequest_providerName_get},
 {"lassoc::Samlp2AuthnRequest_subject_set", _wrap_Samlp2AuthnRequest_subject_set},
 {"lassoc::Samlp2AuthnRequest_subject_get", _wrap_Samlp2AuthnRequest_subject_get},
 {"lassoc::Samlp2AuthnRequest_nameIDPolicy_set", _wrap_Samlp2AuthnRequest_nameIDPolicy_set},
@@ -59904,8 +61795,8 @@ static swig_command_info swig_commands[] = {
 {"lassoc::new_Saml2EncryptedElement", _wrap_new_Saml2EncryptedElement},
 {"lassoc::delete_Saml2EncryptedElement", _wrap_delete_Saml2EncryptedElement},
 {"lassoc::Saml2EncryptedElement_dump", _wrap_Saml2EncryptedElement_dump},
-{"lassoc::Samlp2ManageNameIDRequest_newId_set", _wrap_Samlp2ManageNameIDRequest_newId_set},
-{"lassoc::Samlp2ManageNameIDRequest_newId_get", _wrap_Samlp2ManageNameIDRequest_newId_get},
+{"lassoc::Samlp2ManageNameIDRequest_newID_set", _wrap_Samlp2ManageNameIDRequest_newID_set},
+{"lassoc::Samlp2ManageNameIDRequest_newID_get", _wrap_Samlp2ManageNameIDRequest_newID_get},
 {"lassoc::Samlp2ManageNameIDRequest_nameID_set", _wrap_Samlp2ManageNameIDRequest_nameID_set},
 {"lassoc::Samlp2ManageNameIDRequest_nameID_get", _wrap_Samlp2ManageNameIDRequest_nameID_get},
 {"lassoc::Samlp2ManageNameIDRequest_encryptedID_set", _wrap_Samlp2ManageNameIDRequest_encryptedID_set},
@@ -59931,8 +61822,8 @@ static swig_command_info swig_commands[] = {
 {"lassoc::new_Samlp2ManageNameIDRequest", _wrap_new_Samlp2ManageNameIDRequest},
 {"lassoc::delete_Samlp2ManageNameIDRequest", _wrap_delete_Samlp2ManageNameIDRequest},
 {"lassoc::Samlp2ManageNameIDRequest_dump", _wrap_Samlp2ManageNameIDRequest_dump},
-{"lassoc::Samlp2Scoping_requesterId_set", _wrap_Samlp2Scoping_requesterId_set},
-{"lassoc::Samlp2Scoping_requesterId_get", _wrap_Samlp2Scoping_requesterId_get},
+{"lassoc::Samlp2Scoping_requesterID_set", _wrap_Samlp2Scoping_requesterID_set},
+{"lassoc::Samlp2Scoping_requesterID_get", _wrap_Samlp2Scoping_requesterID_get},
 {"lassoc::Samlp2Scoping_proxyCount_set", _wrap_Samlp2Scoping_proxyCount_set},
 {"lassoc::Samlp2Scoping_proxyCount_get", _wrap_Samlp2Scoping_proxyCount_get},
 {"lassoc::Samlp2Scoping_iDPList_set", _wrap_Samlp2Scoping_iDPList_set},
@@ -60270,6 +62161,10 @@ XS(SWIG_init) {
     
 #include <swig/inheritance.h>
 #include <swig/saml-2.0/inheritance.h>
+#ifdef LASSO_WSF_ENABLED
+#include <swig/ws/inheritance.h>
+#include <swig/id-wsf-2.0/inheritance.h>
+#endif /* ifdef LASSO_WSF_ENABLED */
     
     info->name = NULL;
     info->swig = NULL;
@@ -60601,6 +62496,21 @@ XS(SWIG_init) {
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
   /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "REQUEST_TYPE_IDWSF2_DISCO_SVCMD_REGISTER", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(LASSO_REQUEST_TYPE_IDWSF2_DISCO_SVCMD_REGISTER)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "REQUEST_TYPE_IDWSF2_DISCO_SVCMD_ASSOCIATION_ADD", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(LASSO_REQUEST_TYPE_IDWSF2_DISCO_SVCMD_ASSOCIATION_ADD)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "REQUEST_TYPE_IDWSF2_DISCO_QUERY", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(LASSO_REQUEST_TYPE_IDWSF2_DISCO_QUERY)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "LIB_AUTHN_CONTEXT_CLASS_REF_INTERNET_PROTOCOL", TRUE | 0x2);
     sv_setsv(sv, SWIG_FromCharPtr("http://www.projectliberty.org/schemas/authctx/classes/InternetProtocol"));
     SvREADONLY_on(sv);
@@ -60743,6 +62653,21 @@ XS(SWIG_init) {
   /*@SWIG:%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SAML_AUTHENTICATION_METHOD_LIBERTY", TRUE | 0x2);
     sv_setsv(sv, SWIG_FromCharPtr("urn:liberty:ac:2003-08"));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "SIGNATURE_TYPE_NONE", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(LASSO_SIGNATURE_TYPE_NONE)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "SIGNATURE_TYPE_SIMPLE", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(LASSO_SIGNATURE_TYPE_SIMPLE)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "SIGNATURE_TYPE_WITHX509", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(LASSO_SIGNATURE_TYPE_WITHX509)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
   /*@SWIG:%set_constant@*/ do {
@@ -61116,13 +63041,23 @@ XS(SWIG_init) {
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
   /*@SWIG:%set_constant@*/ do {
-    SV *sv = get_sv((char*) SWIG_prefix "LASSO_PROFILE_ERROR_MISSING_ISSUER", TRUE | 0x2);
+    SV *sv = get_sv((char*) SWIG_prefix "PROFILE_ERROR_MISSING_ISSUER", TRUE | 0x2);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(-433)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
   /*@SWIG:%set_constant@*/ do {
-    SV *sv = get_sv((char*) SWIG_prefix "LASSO_PROFILE_ERROR_MISSING_SERVICE_INSTANCE", TRUE | 0x2);
+    SV *sv = get_sv((char*) SWIG_prefix "PROFILE_ERROR_MISSING_SERVICE_INSTANCE", TRUE | 0x2);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(-434)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "PROFILE_ERROR_MISSING_ENDPOINT_REFERENCE", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(-435)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "PROFILE_ERROR_MISSING_ENDPOINT_REFERENCE_ADDRESS", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(-436)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
   /*@SWIG:%set_constant@*/ do {
@@ -61201,13 +63136,23 @@ XS(SWIG_init) {
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
   /*@SWIG:%set_constant@*/ do {
-    SV *sv = get_sv((char*) SWIG_prefix "LASSO_SOAP_ERROR_MISSING_HEADER", TRUE | 0x2);
+    SV *sv = get_sv((char*) SWIG_prefix "LASSO_SOAP_ERROR_MISSING_ENVELOPE", TRUE | 0x2);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(-801)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
   /*@SWIG:%set_constant@*/ do {
-    SV *sv = get_sv((char*) SWIG_prefix "LASSO_SOAP_ERROR_MISSING_BODY", TRUE | 0x2);
+    SV *sv = get_sv((char*) SWIG_prefix "SOAP_ERROR_MISSING_HEADER", TRUE | 0x2);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(-802)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "SOAP_ERROR_MISSING_BODY", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(-803)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "LASSO_SOAP_ERROR_MISSING_SOAP_FAULT_DETAIL", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(-804)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
   /*@SWIG:%set_constant@*/ do {
@@ -61226,18 +63171,68 @@ XS(SWIG_init) {
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
   /*@SWIG:%set_constant@*/ do {
-    SV *sv = get_sv((char*) SWIG_prefix "LASSO_DATA_SERVICE_ERROR_UNREGISTERED_DST", TRUE | 0x2);
+    SV *sv = get_sv((char*) SWIG_prefix "DATA_SERVICE_ERROR_UNREGISTERED_DST", TRUE | 0x2);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(-1000)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
   /*@SWIG:%set_constant@*/ do {
-    SV *sv = get_sv((char*) SWIG_prefix "LASSO_WSF_PROFILE_ERROR_MISSING_CORRELATION", TRUE | 0x2);
+    SV *sv = get_sv((char*) SWIG_prefix "WSF_PROFILE_ERROR_MISSING_CORRELATION", TRUE | 0x2);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(-1100)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
   /*@SWIG:%set_constant@*/ do {
-    SV *sv = get_sv((char*) SWIG_prefix "LASSO_WSF_PROFILE_ERROR_MISSING_SECURITY", TRUE | 0x2);
+    SV *sv = get_sv((char*) SWIG_prefix "WSF_PROFILE_ERROR_MISSING_SECURITY", TRUE | 0x2);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(-1101)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "DISCOVERY_ERROR_SVC_METADATA_REGISTER_FAILED", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(-1200)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "DISCOVERY_ERROR_SVC_METADATA_ASSOCIATION_ADD_FAILED", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(-1201)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "DISCOVERY_ERROR_MISSING_REQUESTED_SERVICE", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(-1202)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "DISCOVERY_ERROR_FAILED_TO_BUILD_ENDPOINT_REFERENCE", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(-1203)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "LASSO_DST_ERROR_MISSING_SERVICE_DATA", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(-1300)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "DST_ERROR_QUERY_FAILED", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(-1301)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "DST_ERROR_QUERY_PARTIALLY_FAILED", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(-1302)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "LASSO_DST_ERROR_MODIFY_FAILED", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(-1303)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "LASSO_DST_ERROR_MODIFY_PARTIALLY_FAILED", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(-1304)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "LASSO_DST_ERROR_NEW_DATA_MISSING", TRUE | 0x2);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(-1305)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
   /*@SWIG:%set_constant@*/ do {
@@ -61261,6 +63256,8 @@ XS(SWIG_init) {
   SWIG_TypeClientData(SWIGTYPE_p_LassoNode, (void*) "lasso::Node");
   SWIG_TypeClientData(SWIGTYPE_p_LassoNodeList, (void*) "lasso::NodeList");
   SWIG_TypeClientData(SWIGTYPE_p_LassoStringList, (void*) "lasso::StringList");
+  SWIG_TypeClientData(SWIGTYPE_p_LassoStringDict, (void*) "lasso::StringDict");
+  SWIG_TypeClientData(SWIGTYPE_p_LassoMiscTextNode, (void*) "lasso::MiscTextNode");
   SWIG_TypeClientData(SWIGTYPE_p_LassoSamlAdvice, (void*) "lasso::SamlAdvice");
   SWIG_TypeClientData(SWIGTYPE_p_LassoSamlAssertion, (void*) "lasso::SamlAssertion");
   SWIG_TypeClientData(SWIGTYPE_p_LassoSamlAttribute, (void*) "lasso::SamlAttribute");

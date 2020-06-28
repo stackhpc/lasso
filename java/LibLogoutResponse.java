@@ -63,8 +63,8 @@ public class LibLogoutResponse extends LibStatusResponse {
     this(lassoJNI.new_LibLogoutResponse(), true);
   }
 
-  public static LibLogoutResponse newFull(String providerID, String statusCodeValue, LibLogoutRequest request, SWIGTYPE_p_LassoSignatureType sign_type, int sign_method) {
-    long cPtr = lassoJNI.LibLogoutResponse_newFull(providerID, statusCodeValue, LibLogoutRequest.getCPtr(request), request, SWIGTYPE_p_LassoSignatureType.getCPtr(sign_type), sign_method);
+  public static LibLogoutResponse newFull(String providerID, String statusCodeValue, LibLogoutRequest request, int sign_type, int sign_method) {
+    long cPtr = lassoJNI.LibLogoutResponse_newFull(providerID, statusCodeValue, LibLogoutRequest.getCPtr(request), request, sign_type, sign_method);
     return (cPtr == 0) ? null : new LibLogoutResponse(cPtr, true);
   }
 

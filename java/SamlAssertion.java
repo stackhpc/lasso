@@ -89,12 +89,12 @@ public class SamlAssertion extends Node {
     return lassoJNI.SamlAssertion_signMethod_get(swigCPtr, this);
   }
 
-  public void setSignType(SWIGTYPE_p_LassoSignatureType value) {
-    lassoJNI.SamlAssertion_signType_set(swigCPtr, this, SWIGTYPE_p_LassoSignatureType.getCPtr(value));
+  public void setSignType(int value) {
+    lassoJNI.SamlAssertion_signType_set(swigCPtr, this, value);
   }
 
-  public SWIGTYPE_p_LassoSignatureType getSignType() {
-    return new SWIGTYPE_p_LassoSignatureType(lassoJNI.SamlAssertion_signType_get(swigCPtr, this), true);
+  public int getSignType() {
+    return lassoJNI.SamlAssertion_signType_get(swigCPtr, this);
   }
 
   public void setAdvice(SamlAdvice value) {

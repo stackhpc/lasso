@@ -58,11 +58,11 @@ public class Samlp2AuthnRequest extends Samlp2RequestAbstract {
   }
 
   public void setAssertionConsumerServiceURL(String value) {
-    lassoJNI.Samlp2AuthnRequest_AssertionConsumerServiceURL_set(swigCPtr, this, value);
+    lassoJNI.Samlp2AuthnRequest_assertionConsumerServiceURL_set(swigCPtr, this, value);
   }
 
   public String getAssertionConsumerServiceURL() {
-    return lassoJNI.Samlp2AuthnRequest_AssertionConsumerServiceURL_get(swigCPtr, this);
+    return lassoJNI.Samlp2AuthnRequest_assertionConsumerServiceURL_get(swigCPtr, this);
   }
 
   public void setAttributeConsumingServiceIndex(int value) {
@@ -74,11 +74,11 @@ public class Samlp2AuthnRequest extends Samlp2RequestAbstract {
   }
 
   public void setProviderName(String value) {
-    lassoJNI.Samlp2AuthnRequest_ProviderName_set(swigCPtr, this, value);
+    lassoJNI.Samlp2AuthnRequest_providerName_set(swigCPtr, this, value);
   }
 
   public String getProviderName() {
-    return lassoJNI.Samlp2AuthnRequest_ProviderName_get(swigCPtr, this);
+    return lassoJNI.Samlp2AuthnRequest_providerName_get(swigCPtr, this);
   }
 
   public void setSubject(Saml2Subject value) {

@@ -4,9 +4,9 @@ Writing a SAML2 service Provider in PHP
 
 :author Nicolas Clapiès
 :contact: nclapies@entrouvert.com
-:date: $Date: 2007/01/02 09:29:30 $
-:revision: $Revision: 1.2 $
-:copyright: Copyright © 2005, 2006 Entr'ouvert
+:date: $Date: 2007-05-30 19:44:30 +0200 (mer, 30 mai 2007) $
+:revision: $Revision: 3240 $
+:copyright: Copyright © 2004-2007 Entr'ouvert
 
 .. contents:: Table of Contents
 .. section-numbering::

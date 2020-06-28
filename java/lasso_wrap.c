@@ -237,6 +237,7 @@ SWIGINTERN void SWIG_JavaException(JNIEnv *jenv, int code, const char *msg) {
 #include <lasso/lasso.h>
 #include <lasso/xml/lib_assertion.h>
 #include <lasso/xml/saml_attribute_value.h>
+#include <lasso/xml/misc_text_node.h>
 
 #ifdef LASSO_WSF_ENABLED
 #include <lasso/xml/disco_resource_id.h>
@@ -251,14 +252,14 @@ SWIGINTERN void SWIG_JavaException(JNIEnv *jenv, int code, const char *msg) {
 
 
 
-/* 
+/*
  * Thanks to the patch in this Debian bug for the solution
  * to the crash inside vsnprintf on some architectures.
  *
  * "reuse of args inside the while(1) loop is in violation of the
  * specs and only happens to work by accident on other systems."
  *
- * http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=104325 
+ * http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=104325
  */
 
 #ifndef va_copy
@@ -329,9 +330,9 @@ static void add_xml_to_array(xmlNode *xmlnode, GPtrArray *array)
 		xmlNodeDumpOutput(buf, NULL, xmlnode, 0, 1, NULL);
 		xmlOutputBufferFlush(buf);
 		if (buf->conv == NULL) {
-			xmlString = g_strdup(buf->buffer->content);
+			xmlString = g_strdup((char*)buf->buffer->content);
 		} else {
-			xmlString = g_strdup(buf->conv->content);
+			xmlString = g_strdup((char*)buf->conv->content);
 		}
 		xmlOutputBufferClose(buf);
 	}
@@ -430,9 +431,9 @@ static char* get_xml_string(xmlNode *xmlnode)
 		xmlNodeDumpOutput(buf, NULL, xmlnode, 0, 1, NULL);
 		xmlOutputBufferFlush(buf);
 		if (buf->conv == NULL) {
-			xmlString = g_strdup(buf->buffer->content);
+			xmlString = g_strdup((char*)buf->buffer->content);
 		} else {
-			xmlString = g_strdup(buf->conv->content);
+			xmlString = g_strdup((char*)buf->conv->content);
 		}
 		xmlOutputBufferClose(buf);
 	}
@@ -444,7 +445,7 @@ static xmlNode *get_string_xml(const char *string) {
 	xmlDoc *doc;
 	xmlNode *node;
 
-	doc = xmlReadDoc(string, NULL, NULL, XML_PARSE_NONET);
+	doc = xmlReadDoc((xmlChar*)string, NULL, NULL, XML_PARSE_NONET);
 	node = xmlDocGetRootElement(doc);
 	if (node != NULL) {
 		node = xmlCopyNode(node, 1);
@@ -561,7 +562,7 @@ static void set_xml_string(xmlNode **xmlnode, const char* string)
 	xmlDoc *doc;
 	xmlNode *node;
 
-	doc = xmlReadDoc(string, NULL, NULL, XML_PARSE_NONET);
+	doc = xmlReadDoc((xmlChar*)string, NULL, NULL, XML_PARSE_NONET);
 	node = xmlDocGetRootElement(doc);
 	if (node != NULL) {
 		node = xmlCopyNode(node, 1);
@@ -640,6 +641,7 @@ SWIGINTERN void LassoNodeList_setItem(LassoNodeList *self,int index,LassoNode *i
 
 #define new_LassoNodeList g_ptr_array_new
 
+void delete_LassoNodeList(GPtrArray *self);
 void delete_LassoNodeList(GPtrArray *self) {
 	g_ptr_array_foreach(self, (GFunc) free_node_array_item, NULL);
 	g_ptr_array_free(self, false);
@@ -683,6 +685,46 @@ SWIGINTERN void LassoStringList_setItem(LassoStringList *self,int index,char *it
 
 #define new_LassoStringList g_ptr_array_new
 #define delete_LassoStringList(self) g_ptr_array_free(self, true)
+
+
+
+typedef GHashTable LassoStringDict;
+
+SWIGINTERN GHashTable *LassoStringDict_cast(LassoStringDict *self){
+			return self;
+		}
+SWIGINTERN LassoStringDict *LassoStringDict_frompointer(GHashTable *stringDict){
+			return (LassoStringDict*)stringDict;
+		}
+SWIGINTERN char *LassoStringDict_getItem(LassoStringDict *self,char *key){
+			return g_strdup(g_hash_table_lookup(self, key));
+		}
+SWIGINTERN void LassoStringDict_setItem(LassoStringDict *self,char *key,char *item){
+			g_hash_table_insert(self, g_strdup(key), g_strdup(item));
+		}
+
+
+/* Constructors, destructors & static methods implementations */
+
+static GHashTable* lasso_string_dict_new()
+{
+	return g_hash_table_new_full(g_str_hash, g_str_equal, g_free, NULL);
+}
+
+#define new_LassoStringDict lasso_string_dict_new
+#define delete_LassoStringDict(self) g_hash_table_destroy(self)
+
+
+
+
+/* Constructors, destructors & static methods implementations */
+
+#define new_LassoMiscTextNode lasso_misc_text_node_new
+#define delete_LassoMiscTextNode(self) lasso_node_destroy(LASSO_NODE(self))
+
+/* Implementations of methods inherited from LassoNode */
+
+#define LassoMiscTextNode_dump(self) lasso_node_dump(LASSO_NODE(self))
 
 
 
@@ -1933,6 +1975,7 @@ SWIGINTERN void LassoStringList_setItem(LassoStringList *self,int index,char *it
 
 /* providerIds */
 #define LassoServer_get_providerIds LassoServer_providerIds_get
+LassoStringList *LassoServer_providerIds_get(LassoServer *self);
 LassoStringList *LassoServer_providerIds_get(LassoServer *self) {
 	GPtrArray *providerIds = g_ptr_array_sized_new(g_hash_table_size(self->providers));
 	g_hash_table_foreach(self->providers, (GHFunc) add_key_to_array, providerIds);
@@ -1959,7 +2002,8 @@ LassoStringList *LassoServer_providerIds_get(LassoServer *self) {
 /* Methods implementations */
 
 #define LassoServer_addProvider lasso_server_add_provider
-#define LassoServer_addService lasso_server_add_service
+#define LassoServer_addService(self, service) lasso_server_add_service(self, LASSO_NODE(service))
+#define LassoServer_addServiceFromDump lasso_server_add_service_from_dump
 #define LassoServer_dump lasso_server_dump
 #define LassoServer_getProvider lasso_server_get_provider
 #define LassoServer_getService lasso_server_get_service
@@ -2004,6 +2048,7 @@ LassoStringList *LassoServer_providerIds_get(LassoServer *self) {
 
 /* providerIds */
 #define LassoIdentity_get_providerIds LassoIdentity_providerIds_get
+LassoStringList *LassoIdentity_providerIds_get(LassoIdentity *self);
 LassoStringList *LassoIdentity_providerIds_get(LassoIdentity *self) {
 	GPtrArray *providerIds = g_ptr_array_sized_new(g_hash_table_size(self->federations));
 	g_hash_table_foreach(self->federations, (GHFunc) add_key_to_array, providerIds);
@@ -2028,6 +2073,7 @@ LassoStringList *LassoIdentity_providerIds_get(LassoIdentity *self) {
 #define LassoIdentity_addResourceOffering lasso_identity_add_resource_offering
 #define LassoIdentity_removeResourceOffering lasso_identity_remove_resource_offering
 
+LassoNodeList *LassoIdentity_getOfferings(LassoIdentity *self, const char *service_type);
 LassoNodeList *LassoIdentity_getOfferings(LassoIdentity *self, const char *service_type) {
 	GPtrArray *array = NULL;
 	GList *list;
@@ -2040,6 +2086,22 @@ LassoNodeList *LassoIdentity_getOfferings(LassoIdentity *self, const char *servi
 	}
 	return array;
 }
+
+#include <lasso/id-wsf-2.0/identity.h>
+
+LassoStringList* LassoIdentity_getSvcMDIDs(LassoIdentity *self);
+LassoStringList* LassoIdentity_getSvcMDIDs(LassoIdentity *self) {
+	GList *list = lasso_identity_get_svc_md_ids(self);
+	GPtrArray *svcMDIDs = g_ptr_array_sized_new(g_list_length(list));
+	
+	if (list) {
+		g_list_foreach(list, (GFunc)add_string_to_array, svcMDIDs);
+		g_list_free(list);
+	}
+
+	return svcMDIDs;
+}
+
 #endif
 
 
@@ -2049,6 +2111,7 @@ LassoNodeList *LassoIdentity_getOfferings(LassoIdentity *self, const char *servi
 
 /* providerIds */
 #define LassoSession_get_providerIds LassoSession_providerIds_get
+LassoStringList *LassoSession_providerIds_get(LassoSession *self);
 LassoStringList *LassoSession_providerIds_get(LassoSession *self) {
 	GPtrArray *providerIds = g_ptr_array_sized_new(g_hash_table_size(self->assertions));
 	g_hash_table_foreach(self->assertions, (GHFunc) add_key_to_array, providerIds);
@@ -2065,6 +2128,7 @@ LassoStringList *LassoSession_providerIds_get(LassoSession *self) {
 
 #define LassoSession_dump lasso_session_dump
 
+LassoNodeList *LassoSession_getAssertions(LassoSession *self, char *providerId);
 LassoNodeList *LassoSession_getAssertions(LassoSession *self, char *providerId) {
 	GPtrArray *assertionsArray;
 	GList *assertionsList;
@@ -2163,13 +2227,10 @@ LassoNodeList *LassoSession_getAssertions(LassoSession *self, char *providerId) 
 
 /* Implementations of methods inherited from Profile */
 
-int LassoDefederation_setIdentityFromDump(LassoDefederation *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoDefederation_setSessionFromDump(LassoDefederation *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoDefederation_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoDefederation_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Methods implementations */
 
@@ -2265,13 +2326,10 @@ int LassoDefederation_setSessionFromDump(LassoDefederation *self, char *dump) {
 
 /* Implementations of methods inherited from Profile */
 
-int LassoLogin_setIdentityFromDump(LassoLogin *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoLogin_setSessionFromDump(LassoLogin *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoLogin_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoLogin_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Methods implementations */
 
@@ -2292,7 +2350,7 @@ int LassoLogin_setSessionFromDump(LassoLogin *self, char *dump) {
 #define LassoLogin_processAuthnResponseMsg lasso_login_process_authn_response_msg
 #define LassoLogin_processRequestMsg lasso_login_process_request_msg
 #define LassoLogin_processResponseMsg lasso_login_process_response_msg
-#define LassoLogin_setEncryptedResourceId lasso_login_set_encryptedResourceId 
+#define LassoLogin_setEncryptedResourceId lasso_login_set_encryptedResourceId
 #define LassoLogin_setResourceId lasso_login_set_resourceId
 #define LassoLogin_validateRequestMsg lasso_login_validate_request_msg
 #define LassoLogin_processPaosResponseMsg lasso_login_process_paos_response_msg
@@ -2382,13 +2440,10 @@ int LassoLogin_setSessionFromDump(LassoLogin *self, char *dump) {
 
 /* Implementations of methods inherited from Profile */
 
-int LassoLogout_setIdentityFromDump(LassoLogout *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoLogout_setSessionFromDump(LassoLogout *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoLogout_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoLogout_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Methods implementations */
 
@@ -2486,39 +2541,28 @@ int LassoLogout_setSessionFromDump(LassoLogout *self, char *dump) {
 
 /* Implementations of methods inherited from Profile */
 
-int LassoLecp_setIdentityFromDump(LassoLecp *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoLecp_setSessionFromDump(LassoLecp *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoLecp_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoLecp_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Implementations of methods inherited from Login */
 
-int LassoLecp_buildAssertion(LassoLecp *self, char *authenticationMethod,
-		char *authenticationInstant, char *reauthenticateOnOrAfter, char *notBefore,
-		char *notOnOrAfter) {
-	return lasso_login_build_assertion(LASSO_LOGIN(self), authenticationMethod,
-			authenticationInstant, reauthenticateOnOrAfter, notBefore, notOnOrAfter);
-}
+#define LassoLecp_buildAssertion(self, authenticationMethod, authenticationInstant, \
+		reauthenticateOnOrAfter, notBefore, notOnOrAfter) \
+	lasso_login_build_assertion(LASSO_LOGIN(self), authenticationMethod, \
+		authenticationInstant, reauthenticateOnOrAfter, notBefore, notOnOrAfter)
 
 #ifdef LASSO_WSF_ENABLED
-int LassoLecp_setEncryptedResourceId(LassoLecp *self,
-		LassoDiscoEncryptedResourceID *encryptedResourceId) {
-	return lasso_login_set_encryptedResourceId(LASSO_LOGIN(self), encryptedResourceId);
-}
+#define LassoLecp_setEncryptedResourceId(self, encryptedResourceId) \
+	lasso_login_set_encryptedResourceId(LASSO_LOGIN(self), encryptedResourceId)
 #endif
 
-int LassoLecp_setResourceId(LassoLecp *self, char *content) {
-	return lasso_login_set_resourceId(LASSO_LOGIN(self), content);
-}
+#define LassoLecp_setResourceId(self, content) \
+	lasso_login_set_resourceId(LASSO_LOGIN(self), content)
 
-int LassoLecp_validateRequestMsg(LassoLecp *self, gboolean authenticationResult,
-		gboolean isConsentObtained) {
-	return lasso_login_validate_request_msg(LASSO_LOGIN(self), authenticationResult,
-			isConsentObtained);
-}
+#define LassoLecp_validateRequestMsg(self, authenticationResult, isConsentObtained) \
+	lasso_login_validate_request_msg(LASSO_LOGIN(self), authenticationResult, isConsentObtained)
 
 /* Methods implementations */
 
@@ -2615,13 +2659,10 @@ int LassoLecp_validateRequestMsg(LassoLecp *self, gboolean authenticationResult,
 
 /* Implementations of methods inherited from Profile */
 
-int LassoNameIdentifierMapping_setIdentityFromDump(LassoNameIdentifierMapping *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoNameIdentifierMapping_setSessionFromDump(LassoNameIdentifierMapping *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoNameIdentifierMapping_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoNameIdentifierMapping_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Methods implementations */
 
@@ -2725,13 +2766,10 @@ int LassoNameIdentifierMapping_setSessionFromDump(LassoNameIdentifierMapping *se
 
 /* Implementations of methods inherited from Profile */
 
-int LassoNameRegistration_setIdentityFromDump(LassoNameRegistration *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoNameRegistration_setSessionFromDump(LassoNameRegistration *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoNameRegistration_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoNameRegistration_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Methods implementations */
 
@@ -2749,7 +2787,7 @@ int LassoNameRegistration_setSessionFromDump(LassoNameRegistration *self, char *
 
 
 
-/* Implementations of attributes inherited from Profile */
+/* Implementations of attributes inherited from LassoProfile */
 
 /* identity */
 #define LassoNameIdManagement_get_identity(self) lasso_profile_get_identity(LASSO_PROFILE(self))
@@ -2829,15 +2867,12 @@ int LassoNameRegistration_setSessionFromDump(LassoNameRegistration *self, char *
 #define delete_LassoNameIdManagement(self) lasso_node_destroy(LASSO_NODE(self))
 #define LassoNameIdManagement_newFromDump lasso_name_id_management_new_from_dump
 
-/* Implementations of methods inherited from Profile */
+/* Implementations of methods inherited from LassoProfile */
 
-int LassoNameIdManagement_setIdentityFromDump(LassoNameIdManagement *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoNameIdManagement_setSessionFromDump(LassoNameIdManagement *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoNameIdManagement_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoNameIdManagement_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Methods implementations */
 
@@ -2961,17 +2996,21 @@ int LassoNameIdManagement_setSessionFromDump(LassoNameIdManagement *self, char *
 
 
 
-/* authnContextClassRef */
-#define LassoSamlp2RequestedAuthnContext_get_authnContextClassRef(self) get_string_list((self)->AuthnContextClassRef)
-#define LassoSamlp2RequestedAuthnContext_authnContextClassRef_get(self) get_string_list((self)->AuthnContextClassRef)
-#define LassoSamlp2RequestedAuthnContext_set_authnContextClassRef(self, value) set_string_list(&(self)->AuthnContextClassRef, (value))
-#define LassoSamlp2RequestedAuthnContext_authnContextClassRef_set(self, value) set_string_list(&(self)->AuthnContextClassRef, (value))
+/* AuthnContextClassRef */
 
-/* authnContextDeclRef */
-#define LassoSamlp2RequestedAuthnContext_get_authnContextDeclRef(self) get_string_list((self)->AuthnContextDeclRef)
-#define LassoSamlp2RequestedAuthnContext_authnContextDeclRef_get(self) get_string_list((self)->AuthnContextDeclRef)
-#define LassoSamlp2RequestedAuthnContext_set_authnContextDeclRef(self, value) set_string_list(&(self)->AuthnContextDeclRef, (value))
-#define LassoSamlp2RequestedAuthnContext_authnContextDeclRef_set(self, value) set_string_list(&(self)->AuthnContextDeclRef, (value))
+#define LassoSamlp2RequestedAuthnContext_get_AuthnContextClassRef(self) get_string_list((self)->AuthnContextClassRef)
+#define LassoSamlp2RequestedAuthnContext_AuthnContextClassRef_get(self) get_string_list((self)->AuthnContextClassRef)
+#define LassoSamlp2RequestedAuthnContext_set_AuthnContextClassRef(self,value) set_string_list(&(self)->AuthnContextClassRef, (value))
+#define LassoSamlp2RequestedAuthnContext_AuthnContextClassRef_set(self,value) set_string_list(&(self)->AuthnContextClassRef, (value))
+                    
+
+/* AuthnContextDeclRef */
+
+#define LassoSamlp2RequestedAuthnContext_get_AuthnContextDeclRef(self) get_string_list((self)->AuthnContextDeclRef)
+#define LassoSamlp2RequestedAuthnContext_AuthnContextDeclRef_get(self) get_string_list((self)->AuthnContextDeclRef)
+#define LassoSamlp2RequestedAuthnContext_set_AuthnContextDeclRef(self,value) set_string_list(&(self)->AuthnContextDeclRef, (value))
+#define LassoSamlp2RequestedAuthnContext_AuthnContextDeclRef_set(self,value) set_string_list(&(self)->AuthnContextDeclRef, (value))
+                    
 
 
 /* Constructors, destructors & static methods implementations */
@@ -3017,12 +3056,38 @@ int LassoNameIdManagement_setSessionFromDump(LassoNameIdManagement *self, char *
 #define LassoSaml2Assertion_set_Advice(self,value) set_node((gpointer*)&(self)->Advice, (value))
 #define LassoSaml2Assertion_Advice_set(self,value) set_node((gpointer*)&(self)->Advice, (value))
                     
+
+/* Statement */
+
+#define LassoSaml2Assertion_get_Statement(self) get_node_list((self)->Statement)
+#define LassoSaml2Assertion_Statement_get(self) get_node_list((self)->Statement)
+#define LassoSaml2Assertion_set_Statement(self,value) set_node_list(&(self)->Statement, (value))
+#define LassoSaml2Assertion_Statement_set(self,value) set_node_list(&(self)->Statement, (value))
+                    
+
 /* AuthnStatement */
 
 #define LassoSaml2Assertion_get_AuthnStatement(self) get_node_list((self)->AuthnStatement)
 #define LassoSaml2Assertion_AuthnStatement_get(self) get_node_list((self)->AuthnStatement)
-#define LassoSaml2Assertion_set_AuthnStatement(self, value) set_node_list(&(self)->AuthnStatement, (value))
-#define LassoSaml2Assertion_AuthnStatement_set(self, value) set_node_list(&(self)->AuthnStatement, (value))
+#define LassoSaml2Assertion_set_AuthnStatement(self,value) set_node_list(&(self)->AuthnStatement, (value))
+#define LassoSaml2Assertion_AuthnStatement_set(self,value) set_node_list(&(self)->AuthnStatement, (value))
+                    
+
+/* AuthzDecisionStatement */
+
+#define LassoSaml2Assertion_get_AuthzDecisionStatement(self) get_node_list((self)->AuthzDecisionStatement)
+#define LassoSaml2Assertion_AuthzDecisionStatement_get(self) get_node_list((self)->AuthzDecisionStatement)
+#define LassoSaml2Assertion_set_AuthzDecisionStatement(self,value) set_node_list(&(self)->AuthzDecisionStatement, (value))
+#define LassoSaml2Assertion_AuthzDecisionStatement_set(self,value) set_node_list(&(self)->AuthzDecisionStatement, (value))
+                    
+
+/* AttributeStatement */
+
+#define LassoSaml2Assertion_get_AttributeStatement(self) get_node_list((self)->AttributeStatement)
+#define LassoSaml2Assertion_AttributeStatement_get(self) get_node_list((self)->AttributeStatement)
+#define LassoSaml2Assertion_set_AttributeStatement(self,value) set_node_list(&(self)->AttributeStatement, (value))
+#define LassoSaml2Assertion_AttributeStatement_set(self,value) set_node_list(&(self)->AttributeStatement, (value))
+                    
 
 
 /* Constructors, destructors & static methods implementations */
@@ -3075,17 +3140,33 @@ int LassoNameIdManagement_setSessionFromDump(LassoNameIdManagement *self, char *
 
 #define LassoSaml2Conditions_get_Condition(self) get_node_list((self)->Condition)
 #define LassoSaml2Conditions_Condition_get(self) get_node_list((self)->Condition)
-#define LassoSaml2Conditions_set_Condition(self, value) set_node_list(&(self)->Condition, (value))
-#define LassoSaml2Conditions_Condition_set(self, value) set_node_list(&(self)->Condition, (value))
+#define LassoSaml2Conditions_set_Condition(self,value) set_node_list(&(self)->Condition, (value))
+#define LassoSaml2Conditions_Condition_set(self,value) set_node_list(&(self)->Condition, (value))
+                    
 
 /* AudienceRestriction */
 
 #define LassoSaml2Conditions_get_AudienceRestriction(self) get_node_list((self)->AudienceRestriction)
 #define LassoSaml2Conditions_AudienceRestriction_get(self) get_node_list((self)->AudienceRestriction)
-#define LassoSaml2Conditions_set_AudienceRestriction(self, value) set_node_list(&(self)->AudienceRestriction, (value))
-#define LassoSaml2Conditions_AudienceRestriction_set(self, value) set_node_list(&(self)->AudienceRestriction, (value))
+#define LassoSaml2Conditions_set_AudienceRestriction(self,value) set_node_list(&(self)->AudienceRestriction, (value))
+#define LassoSaml2Conditions_AudienceRestriction_set(self,value) set_node_list(&(self)->AudienceRestriction, (value))
+                    
 
+/* OneTimeUse */
 
+#define LassoSaml2Conditions_get_OneTimeUse(self) get_node_list((self)->OneTimeUse)
+#define LassoSaml2Conditions_OneTimeUse_get(self) get_node_list((self)->OneTimeUse)
+#define LassoSaml2Conditions_set_OneTimeUse(self,value) set_node_list(&(self)->OneTimeUse, (value))
+#define LassoSaml2Conditions_OneTimeUse_set(self,value) set_node_list(&(self)->OneTimeUse, (value))
+                    
+
+/* ProxyRestriction */
+
+#define LassoSaml2Conditions_get_ProxyRestriction(self) get_node_list((self)->ProxyRestriction)
+#define LassoSaml2Conditions_ProxyRestriction_get(self) get_node_list((self)->ProxyRestriction)
+#define LassoSaml2Conditions_set_ProxyRestriction(self,value) set_node_list(&(self)->ProxyRestriction, (value))
+#define LassoSaml2Conditions_ProxyRestriction_set(self,value) set_node_list(&(self)->ProxyRestriction, (value))
+                    
 
 
 /* Constructors, destructors & static methods implementations */
@@ -3099,6 +3180,38 @@ int LassoNameIdManagement_setSessionFromDump(LassoNameIdManagement *self, char *
 
 
 
+
+/* AssertionIDRef */
+
+#define LassoSaml2Evidence_get_AssertionIDRef(self) get_node_list((self)->AssertionIDRef)
+#define LassoSaml2Evidence_AssertionIDRef_get(self) get_node_list((self)->AssertionIDRef)
+#define LassoSaml2Evidence_set_AssertionIDRef(self,value) set_node_list(&(self)->AssertionIDRef, (value))
+#define LassoSaml2Evidence_AssertionIDRef_set(self,value) set_node_list(&(self)->AssertionIDRef, (value))
+                    
+
+/* AssertionURIRef */
+
+#define LassoSaml2Evidence_get_AssertionURIRef(self) get_string_list((self)->AssertionURIRef)
+#define LassoSaml2Evidence_AssertionURIRef_get(self) get_string_list((self)->AssertionURIRef)
+#define LassoSaml2Evidence_set_AssertionURIRef(self,value) set_string_list(&(self)->AssertionURIRef, (value))
+#define LassoSaml2Evidence_AssertionURIRef_set(self,value) set_string_list(&(self)->AssertionURIRef, (value))
+                    
+
+/* Assertion */
+
+#define LassoSaml2Evidence_get_Assertion(self) get_node_list((self)->Assertion)
+#define LassoSaml2Evidence_Assertion_get(self) get_node_list((self)->Assertion)
+#define LassoSaml2Evidence_set_Assertion(self,value) set_node_list(&(self)->Assertion, (value))
+#define LassoSaml2Evidence_Assertion_set(self,value) set_node_list(&(self)->Assertion, (value))
+                    
+
+/* EncryptedAssertion */
+
+#define LassoSaml2Evidence_get_EncryptedAssertion(self) get_node_list((self)->EncryptedAssertion)
+#define LassoSaml2Evidence_EncryptedAssertion_get(self) get_node_list((self)->EncryptedAssertion)
+#define LassoSaml2Evidence_set_EncryptedAssertion(self,value) set_node_list(&(self)->EncryptedAssertion, (value))
+#define LassoSaml2Evidence_EncryptedAssertion_set(self,value) set_node_list(&(self)->EncryptedAssertion, (value))
+                    
 
 
 /* Constructors, destructors & static methods implementations */
@@ -3201,6 +3314,38 @@ int LassoNameIdManagement_setSessionFromDump(LassoNameIdManagement *self, char *
 
 
 
+
+/* AssertionIDRef */
+
+#define LassoSaml2Advice_get_AssertionIDRef(self) get_node_list((self)->AssertionIDRef)
+#define LassoSaml2Advice_AssertionIDRef_get(self) get_node_list((self)->AssertionIDRef)
+#define LassoSaml2Advice_set_AssertionIDRef(self,value) set_node_list(&(self)->AssertionIDRef, (value))
+#define LassoSaml2Advice_AssertionIDRef_set(self,value) set_node_list(&(self)->AssertionIDRef, (value))
+                    
+
+/* AssertionURIRef */
+
+#define LassoSaml2Advice_get_AssertionURIRef(self) get_string_list((self)->AssertionURIRef)
+#define LassoSaml2Advice_AssertionURIRef_get(self) get_string_list((self)->AssertionURIRef)
+#define LassoSaml2Advice_set_AssertionURIRef(self,value) set_string_list(&(self)->AssertionURIRef, (value))
+#define LassoSaml2Advice_AssertionURIRef_set(self,value) set_string_list(&(self)->AssertionURIRef, (value))
+                    
+
+/* Assertion */
+
+#define LassoSaml2Advice_get_Assertion(self) get_node_list((self)->Assertion)
+#define LassoSaml2Advice_Assertion_get(self) get_node_list((self)->Assertion)
+#define LassoSaml2Advice_set_Assertion(self,value) set_node_list(&(self)->Assertion, (value))
+#define LassoSaml2Advice_Assertion_set(self,value) set_node_list(&(self)->Assertion, (value))
+                    
+
+/* EncryptedAssertion */
+
+#define LassoSaml2Advice_get_EncryptedAssertion(self) get_node_list((self)->EncryptedAssertion)
+#define LassoSaml2Advice_EncryptedAssertion_get(self) get_node_list((self)->EncryptedAssertion)
+#define LassoSaml2Advice_set_EncryptedAssertion(self,value) set_node_list(&(self)->EncryptedAssertion, (value))
+#define LassoSaml2Advice_EncryptedAssertion_set(self,value) set_node_list(&(self)->EncryptedAssertion, (value))
+                    
 
 
 /* Constructors, destructors & static methods implementations */
@@ -3367,6 +3512,22 @@ int LassoNameIdManagement_setSessionFromDump(LassoNameIdManagement *self, char *
 
 
 
+/* Attribute */
+
+#define LassoSaml2AttributeStatement_get_Attribute(self) get_node_list((self)->Attribute)
+#define LassoSaml2AttributeStatement_Attribute_get(self) get_node_list((self)->Attribute)
+#define LassoSaml2AttributeStatement_set_Attribute(self,value) set_node_list(&(self)->Attribute, (value))
+#define LassoSaml2AttributeStatement_Attribute_set(self,value) set_node_list(&(self)->Attribute, (value))
+                    
+
+/* EncryptedAttribute */
+
+#define LassoSaml2AttributeStatement_get_EncryptedAttribute(self) get_node_list((self)->EncryptedAttribute)
+#define LassoSaml2AttributeStatement_EncryptedAttribute_get(self) get_node_list((self)->EncryptedAttribute)
+#define LassoSaml2AttributeStatement_set_EncryptedAttribute(self,value) set_node_list(&(self)->EncryptedAttribute, (value))
+#define LassoSaml2AttributeStatement_EncryptedAttribute_set(self,value) set_node_list(&(self)->EncryptedAttribute, (value))
+                    
+
 
 /* Constructors, destructors & static methods implementations */
 
@@ -3456,6 +3617,22 @@ int LassoNameIdManagement_setSessionFromDump(LassoNameIdManagement *self, char *
 
 
 
+/* Assertion */
+
+#define LassoSamlp2Response_get_Assertion(self) get_node_list((self)->Assertion)
+#define LassoSamlp2Response_Assertion_get(self) get_node_list((self)->Assertion)
+#define LassoSamlp2Response_set_Assertion(self,value) set_node_list(&(self)->Assertion, (value))
+#define LassoSamlp2Response_Assertion_set(self,value) set_node_list(&(self)->Assertion, (value))
+                    
+
+/* EncryptedAssertion */
+
+#define LassoSamlp2Response_get_EncryptedAssertion(self) get_node_list((self)->EncryptedAssertion)
+#define LassoSamlp2Response_EncryptedAssertion_get(self) get_node_list((self)->EncryptedAssertion)
+#define LassoSamlp2Response_set_EncryptedAssertion(self,value) set_node_list(&(self)->EncryptedAssertion, (value))
+#define LassoSamlp2Response_EncryptedAssertion_set(self,value) set_node_list(&(self)->EncryptedAssertion, (value))
+                    
+
 /* inherited from StatusResponse */
 
 /* Issuer */
@@ -3529,14 +3706,6 @@ int LassoNameIdManagement_setSessionFromDump(LassoNameIdManagement *self, char *
 
 #define LassoSamlp2Response_set_Consent(self,value) set_string(&LASSO_SAMLP2_STATUS_RESPONSE(self)->Consent, (value))
 #define LassoSamlp2Response_Consent_set(self,value) set_string(&LASSO_SAMLP2_STATUS_RESPONSE(self)->Consent, (value))
-
-
-/* Assertion */
-
-#define LassoSamlp2Response_get_Assertion(self) get_node_list((self)->Assertion)
-#define LassoSamlp2Response_Assertion_get(self) get_node_list((self)->Assertion)
-#define LassoSamlp2Response_set_Assertion(self, value) set_node_list(&(self)->Assertion, (value))
-#define LassoSamlp2Response_Assertion_set(self, value) set_node_list(&(self)->Assertion, (value))
 
 
 /* Constructors, destructors & static methods implementations */
@@ -5696,6 +5865,42 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_REQUEST_1TYPE_1NAME_1
 }
 
 
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_REQUEST_1TYPE_1IDWSF2_1DISCO_1SVCMD_1REGISTER_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  LassoRequestType result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (LassoRequestType)LASSO_REQUEST_TYPE_IDWSF2_DISCO_SVCMD_REGISTER;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_REQUEST_1TYPE_1IDWSF2_1DISCO_1SVCMD_1ASSOCIATION_1ADD_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  LassoRequestType result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (LassoRequestType)LASSO_REQUEST_TYPE_IDWSF2_DISCO_SVCMD_ASSOCIATION_ADD;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_REQUEST_1TYPE_1IDWSF2_1DISCO_1QUERY_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  LassoRequestType result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (LassoRequestType)LASSO_REQUEST_TYPE_IDWSF2_DISCO_QUERY;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_LIB_1AUTHN_1CONTEXT_1CLASS_1REF_1INTERNET_1PROTOCOL_1get(JNIEnv *jenv, jclass jcls) {
   jstring jresult = 0 ;
   char *result = 0 ;
@@ -6069,6 +6274,42 @@ SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_SAML_1AUTHENTICATI
   result = (char *) "urn:liberty:ac:2003-08";
   
   if(result) jresult = (*jenv)->NewStringUTF(jenv, (const char *)result);
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_SIGNATURE_1TYPE_1NONE_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  LassoSignatureType result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (LassoSignatureType)LASSO_SIGNATURE_TYPE_NONE;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_SIGNATURE_1TYPE_1SIMPLE_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  LassoSignatureType result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (LassoSignatureType)LASSO_SIGNATURE_TYPE_SIMPLE;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_SIGNATURE_1TYPE_1WITHX509_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  LassoSignatureType result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (LassoSignatureType)LASSO_SIGNATURE_TYPE_WITHX509;
+  jresult = (jint)result; 
   return jresult;
 }
 
@@ -7026,7 +7267,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_PROFILE_1ERROR_1STATU
 }
 
 
-SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_LASSO_1PROFILE_1ERROR_1MISSING_1ISSUER_1get(JNIEnv *jenv, jclass jcls) {
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_PROFILE_1ERROR_1MISSING_1ISSUER_1get(JNIEnv *jenv, jclass jcls) {
   jint jresult = 0 ;
   int result;
   
@@ -7039,13 +7280,39 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_LASSO_1PROFILE_1ERROR
 }
 
 
-SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_LASSO_1PROFILE_1ERROR_1MISSING_1SERVICE_1INSTANCE_1get(JNIEnv *jenv, jclass jcls) {
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_PROFILE_1ERROR_1MISSING_1SERVICE_1INSTANCE_1get(JNIEnv *jenv, jclass jcls) {
   jint jresult = 0 ;
   int result;
   
   (void)jenv;
   (void)jcls;
   result = (int) -434;
+  
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_PROFILE_1ERROR_1MISSING_1ENDPOINT_1REFERENCE_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int) -435;
+  
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_PROFILE_1ERROR_1MISSING_1ENDPOINT_1REFERENCE_1ADDRESS_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int) -436;
   
   jresult = (jint)result; 
   return jresult;
@@ -7247,7 +7514,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_SOAP_1FAULT_1REDIRECT
 }
 
 
-SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_LASSO_1SOAP_1ERROR_1MISSING_1HEADER_1get(JNIEnv *jenv, jclass jcls) {
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_LASSO_1SOAP_1ERROR_1MISSING_1ENVELOPE_1get(JNIEnv *jenv, jclass jcls) {
   jint jresult = 0 ;
   int result;
   
@@ -7260,13 +7527,39 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_LASSO_1SOAP_1ERROR_1M
 }
 
 
-SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_LASSO_1SOAP_1ERROR_1MISSING_1BODY_1get(JNIEnv *jenv, jclass jcls) {
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_SOAP_1ERROR_1MISSING_1HEADER_1get(JNIEnv *jenv, jclass jcls) {
   jint jresult = 0 ;
   int result;
   
   (void)jenv;
   (void)jcls;
   result = (int) -802;
+  
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_SOAP_1ERROR_1MISSING_1BODY_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int) -803;
+  
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_LASSO_1SOAP_1ERROR_1MISSING_1SOAP_1FAULT_1DETAIL_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int) -804;
   
   jresult = (jint)result; 
   return jresult;
@@ -7312,7 +7605,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_NAME_1IDENTIFIER_1MAP
 }
 
 
-SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_LASSO_1DATA_1SERVICE_1ERROR_1UNREGISTERED_1DST_1get(JNIEnv *jenv, jclass jcls) {
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_DATA_1SERVICE_1ERROR_1UNREGISTERED_1DST_1get(JNIEnv *jenv, jclass jcls) {
   jint jresult = 0 ;
   int result;
   
@@ -7325,7 +7618,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_LASSO_1DATA_1SERVICE_
 }
 
 
-SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_LASSO_1WSF_1PROFILE_1ERROR_1MISSING_1CORRELATION_1get(JNIEnv *jenv, jclass jcls) {
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_WSF_1PROFILE_1ERROR_1MISSING_1CORRELATION_1get(JNIEnv *jenv, jclass jcls) {
   jint jresult = 0 ;
   int result;
   
@@ -7338,13 +7631,143 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_LASSO_1WSF_1PROFILE_1
 }
 
 
-SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_LASSO_1WSF_1PROFILE_1ERROR_1MISSING_1SECURITY_1get(JNIEnv *jenv, jclass jcls) {
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_WSF_1PROFILE_1ERROR_1MISSING_1SECURITY_1get(JNIEnv *jenv, jclass jcls) {
   jint jresult = 0 ;
   int result;
   
   (void)jenv;
   (void)jcls;
   result = (int) -1101;
+  
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_DISCOVERY_1ERROR_1SVC_1METADATA_1REGISTER_1FAILED_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int) -1200;
+  
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_DISCOVERY_1ERROR_1SVC_1METADATA_1ASSOCIATION_1ADD_1FAILED_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int) -1201;
+  
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_DISCOVERY_1ERROR_1MISSING_1REQUESTED_1SERVICE_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int) -1202;
+  
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_DISCOVERY_1ERROR_1FAILED_1TO_1BUILD_1ENDPOINT_1REFERENCE_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int) -1203;
+  
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_LASSO_1DST_1ERROR_1MISSING_1SERVICE_1DATA_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int) -1300;
+  
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_DST_1ERROR_1QUERY_1FAILED_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int) -1301;
+  
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_DST_1ERROR_1QUERY_1PARTIALLY_1FAILED_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int) -1302;
+  
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_LASSO_1DST_1ERROR_1MODIFY_1FAILED_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int) -1303;
+  
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_LASSO_1DST_1ERROR_1MODIFY_1PARTIALLY_1FAILED_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int) -1304;
+  
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_LASSO_1DST_1ERROR_1NEW_1DATA_1MISSING_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (int) -1305;
   
   jresult = (jint)result; 
   return jresult;
@@ -7448,6 +7871,28 @@ SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_registerDstService(JN
     if (!arg2) return ;
   }
   lasso_register_dst_service((char const *)arg1,(char const *)arg2);
+  if (arg1) (*jenv)->ReleaseStringUTFChars(jenv, jarg1, (const char *)arg1);
+  if (arg2) (*jenv)->ReleaseStringUTFChars(jenv, jarg2, (const char *)arg2);
+}
+
+
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_registerIdWsf2DstService(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2) {
+  char *arg1 = (char *) 0 ;
+  char *arg2 = (char *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = 0;
+  if (jarg1) {
+    arg1 = (char *)(*jenv)->GetStringUTFChars(jenv, jarg1, 0);
+    if (!arg1) return ;
+  }
+  arg2 = 0;
+  if (jarg2) {
+    arg2 = (char *)(*jenv)->GetStringUTFChars(jenv, jarg2, 0);
+    if (!arg2) return ;
+  }
+  lasso_register_idwsf2_dst_service((char const *)arg1,(char const *)arg2);
   if (arg1) (*jenv)->ReleaseStringUTFChars(jenv, jarg1, (const char *)arg1);
   if (arg2) (*jenv)->ReleaseStringUTFChars(jenv, jarg2, (const char *)arg2);
 }
@@ -7761,6 +8206,337 @@ SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_StringList_1setItem(J
     LassoStringList_setItem(arg1,arg2,arg3);
   }
   if (arg3) (*jenv)->ReleaseStringUTFChars(jenv, jarg3, (const char *)arg3);
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_new_1StringDict(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  LassoStringDict *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (LassoStringDict *)new_LassoStringDict();
+  *(LassoStringDict **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_delete_1StringDict(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  LassoStringDict *arg1 = (LassoStringDict *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(LassoStringDict **)&jarg1; 
+  delete_LassoStringDict(arg1);
+  
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_StringDict_1cast(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  LassoStringDict *arg1 = (LassoStringDict *) 0 ;
+  GHashTable *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoStringDict **)&jarg1; 
+  result = (GHashTable *)LassoStringDict_cast(arg1);
+  *(GHashTable **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_StringDict_1frompointer(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  jlong jresult = 0 ;
+  GHashTable *arg1 = (GHashTable *) 0 ;
+  LassoStringDict *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(GHashTable **)&jarg1; 
+  result = (LassoStringDict *)LassoStringDict_frompointer(arg1);
+  *(LassoStringDict **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_StringDict_1getItem(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+  jstring jresult = 0 ;
+  LassoStringDict *arg1 = (LassoStringDict *) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoStringDict **)&jarg1; 
+  arg2 = 0;
+  if (jarg2) {
+    arg2 = (char *)(*jenv)->GetStringUTFChars(jenv, jarg2, 0);
+    if (!arg2) return 0;
+  }
+  result = (char *)LassoStringDict_getItem(arg1,arg2);
+  if(result) jresult = (*jenv)->NewStringUTF(jenv, (const char *)result);
+  if (arg2) (*jenv)->ReleaseStringUTFChars(jenv, jarg2, (const char *)arg2);
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_StringDict_1setItem(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2, jstring jarg3) {
+  LassoStringDict *arg1 = (LassoStringDict *) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoStringDict **)&jarg1; 
+  arg2 = 0;
+  if (jarg2) {
+    arg2 = (char *)(*jenv)->GetStringUTFChars(jenv, jarg2, 0);
+    if (!arg2) return ;
+  }
+  arg3 = 0;
+  if (jarg3) {
+    arg3 = (char *)(*jenv)->GetStringUTFChars(jenv, jarg3, 0);
+    if (!arg3) return ;
+  }
+  LassoStringDict_setItem(arg1,arg2,arg3);
+  if (arg2) (*jenv)->ReleaseStringUTFChars(jenv, jarg2, (const char *)arg2);
+  if (arg3) (*jenv)->ReleaseStringUTFChars(jenv, jarg3, (const char *)arg3);
+}
+
+
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_MiscTextNode_1content_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+  LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+  char *arg2 = (char *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoMiscTextNode **)&jarg1; 
+  arg2 = 0;
+  if (jarg2) {
+    arg2 = (char *)(*jenv)->GetStringUTFChars(jenv, jarg2, 0);
+    if (!arg2) return ;
+  }
+  {
+    if (arg1->content) free((char *)arg1->content);
+    if (arg2) {
+      arg1->content = (char *) malloc(strlen((const char *)arg2)+1);
+      strcpy((char *)arg1->content, (const char *)arg2);
+    } else {
+      arg1->content = 0;
+    }
+  }
+  if (arg2) (*jenv)->ReleaseStringUTFChars(jenv, jarg2, (const char *)arg2);
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_MiscTextNode_1content_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jstring jresult = 0 ;
+  LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+  char *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoMiscTextNode **)&jarg1; 
+  result = (char *) ((arg1)->content);
+  if(result) jresult = (*jenv)->NewStringUTF(jenv, (const char *)result);
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_MiscTextNode_1name_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+  LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+  char *arg2 = (char *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoMiscTextNode **)&jarg1; 
+  arg2 = 0;
+  if (jarg2) {
+    arg2 = (char *)(*jenv)->GetStringUTFChars(jenv, jarg2, 0);
+    if (!arg2) return ;
+  }
+  {
+    if (arg1->name) free((char *)arg1->name);
+    if (arg2) {
+      arg1->name = (char *) malloc(strlen((const char *)arg2)+1);
+      strcpy((char *)arg1->name, (const char *)arg2);
+    } else {
+      arg1->name = 0;
+    }
+  }
+  if (arg2) (*jenv)->ReleaseStringUTFChars(jenv, jarg2, (const char *)arg2);
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_MiscTextNode_1name_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jstring jresult = 0 ;
+  LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+  char *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoMiscTextNode **)&jarg1; 
+  result = (char *) ((arg1)->name);
+  if(result) jresult = (*jenv)->NewStringUTF(jenv, (const char *)result);
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_MiscTextNode_1ns_1href_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+  LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+  char *arg2 = (char *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoMiscTextNode **)&jarg1; 
+  arg2 = 0;
+  if (jarg2) {
+    arg2 = (char *)(*jenv)->GetStringUTFChars(jenv, jarg2, 0);
+    if (!arg2) return ;
+  }
+  {
+    if (arg1->ns_href) free((char *)arg1->ns_href);
+    if (arg2) {
+      arg1->ns_href = (char *) malloc(strlen((const char *)arg2)+1);
+      strcpy((char *)arg1->ns_href, (const char *)arg2);
+    } else {
+      arg1->ns_href = 0;
+    }
+  }
+  if (arg2) (*jenv)->ReleaseStringUTFChars(jenv, jarg2, (const char *)arg2);
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_MiscTextNode_1ns_1href_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jstring jresult = 0 ;
+  LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+  char *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoMiscTextNode **)&jarg1; 
+  result = (char *) ((arg1)->ns_href);
+  if(result) jresult = (*jenv)->NewStringUTF(jenv, (const char *)result);
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_MiscTextNode_1ns_1prefix_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+  LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+  char *arg2 = (char *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoMiscTextNode **)&jarg1; 
+  arg2 = 0;
+  if (jarg2) {
+    arg2 = (char *)(*jenv)->GetStringUTFChars(jenv, jarg2, 0);
+    if (!arg2) return ;
+  }
+  {
+    if (arg1->ns_prefix) free((char *)arg1->ns_prefix);
+    if (arg2) {
+      arg1->ns_prefix = (char *) malloc(strlen((const char *)arg2)+1);
+      strcpy((char *)arg1->ns_prefix, (const char *)arg2);
+    } else {
+      arg1->ns_prefix = 0;
+    }
+  }
+  if (arg2) (*jenv)->ReleaseStringUTFChars(jenv, jarg2, (const char *)arg2);
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_MiscTextNode_1ns_1prefix_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jstring jresult = 0 ;
+  LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+  char *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoMiscTextNode **)&jarg1; 
+  result = (char *) ((arg1)->ns_prefix);
+  if(result) jresult = (*jenv)->NewStringUTF(jenv, (const char *)result);
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_MiscTextNode_1text_1child_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
+  LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+  bool arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoMiscTextNode **)&jarg1; 
+  arg2 = jarg2 ? true : false; 
+  if (arg1) (arg1)->text_child = arg2;
+  
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_com_entrouvert_lasso_lassoJNI_MiscTextNode_1text_1child_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoMiscTextNode **)&jarg1; 
+  result = (bool) ((arg1)->text_child);
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_new_1MiscTextNode(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  LassoMiscTextNode *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (LassoMiscTextNode *)new_LassoMiscTextNode();
+  *(LassoMiscTextNode **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_delete_1MiscTextNode(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(LassoMiscTextNode **)&jarg1; 
+  delete_LassoMiscTextNode(arg1);
+  
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_MiscTextNode_1dump(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jstring jresult = 0 ;
+  LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+  char *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoMiscTextNode **)&jarg1; 
+  result = (char *)LassoMiscTextNode_dump(arg1);
+  if(result) jresult = (*jenv)->NewStringUTF(jenv, (const char *)result);
+  g_free(result);
+  return jresult;
 }
 
 
@@ -8155,28 +8931,22 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlAssertion_1signMe
 }
 
 
-SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlAssertion_1signType_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlAssertion_1signType_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   LassoSamlAssertion *arg1 = (LassoSamlAssertion *) 0 ;
   LassoSignatureType arg2 ;
-  LassoSignatureType *argp2 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(LassoSamlAssertion **)&jarg1; 
-  argp2 = *(LassoSignatureType **)&jarg2; 
-  if (!argp2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null LassoSignatureType");
-    return ;
-  }
-  arg2 = *argp2; 
+  arg2 = (LassoSignatureType)jarg2; 
   if (arg1) (arg1)->sign_type = arg2;
   
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlAssertion_1signType_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlAssertion_1signType_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
   LassoSamlAssertion *arg1 = (LassoSamlAssertion *) 0 ;
   LassoSignatureType result;
   
@@ -8184,12 +8954,8 @@ SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlAssertion_1signT
   (void)jcls;
   (void)jarg1_;
   arg1 = *(LassoSamlAssertion **)&jarg1; 
-  result =  ((arg1)->sign_type);
-  {
-    LassoSignatureType * resultptr = (LassoSignatureType *) malloc(sizeof(LassoSignatureType));
-    memmove(resultptr, &result, sizeof(LassoSignatureType));
-    *(LassoSignatureType **)&jresult = resultptr;
-  }
+  result = (LassoSignatureType) ((arg1)->sign_type);
+  jresult = (jint)result; 
   return jresult;
 }
 
@@ -10335,28 +11101,22 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlpRequest_1signMet
 }
 
 
-SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlpRequest_1signType_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlpRequest_1signType_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   LassoSamlpRequest *arg1 = (LassoSamlpRequest *) 0 ;
   LassoSignatureType arg2 ;
-  LassoSignatureType *argp2 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(LassoSamlpRequest **)&jarg1; 
-  argp2 = *(LassoSignatureType **)&jarg2; 
-  if (!argp2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null LassoSignatureType");
-    return ;
-  }
-  arg2 = *argp2; 
+  arg2 = (LassoSignatureType)jarg2; 
   LassoSamlpRequest_sign_type_set(arg1,arg2);
   
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlpRequest_1signType_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlpRequest_1signType_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
   LassoSamlpRequest *arg1 = (LassoSamlpRequest *) 0 ;
   LassoSignatureType result;
   
@@ -10364,12 +11124,8 @@ SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlpRequest_1signTy
   (void)jcls;
   (void)jarg1_;
   arg1 = *(LassoSamlpRequest **)&jarg1; 
-  result = LassoSamlpRequest_sign_type_get(arg1);
-  {
-    LassoSignatureType * resultptr = (LassoSignatureType *) malloc(sizeof(LassoSignatureType));
-    memmove(resultptr, &result, sizeof(LassoSignatureType));
-    *(LassoSignatureType **)&jresult = resultptr;
-  }
+  result = (LassoSignatureType)LassoSamlpRequest_sign_type_get(arg1);
+  jresult = (jint)result; 
   return jresult;
 }
 
@@ -10664,28 +11420,22 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlpRequestAbstract_
 }
 
 
-SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlpRequestAbstract_1signType_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlpRequestAbstract_1signType_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   LassoSamlpRequestAbstract *arg1 = (LassoSamlpRequestAbstract *) 0 ;
   LassoSignatureType arg2 ;
-  LassoSignatureType *argp2 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(LassoSamlpRequestAbstract **)&jarg1; 
-  argp2 = *(LassoSignatureType **)&jarg2; 
-  if (!argp2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null LassoSignatureType");
-    return ;
-  }
-  arg2 = *argp2; 
+  arg2 = (LassoSignatureType)jarg2; 
   if (arg1) (arg1)->sign_type = arg2;
   
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlpRequestAbstract_1signType_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlpRequestAbstract_1signType_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
   LassoSamlpRequestAbstract *arg1 = (LassoSamlpRequestAbstract *) 0 ;
   LassoSignatureType result;
   
@@ -10693,12 +11443,8 @@ SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlpRequestAbstract
   (void)jcls;
   (void)jarg1_;
   arg1 = *(LassoSamlpRequestAbstract **)&jarg1; 
-  result =  ((arg1)->sign_type);
-  {
-    LassoSignatureType * resultptr = (LassoSignatureType *) malloc(sizeof(LassoSignatureType));
-    memmove(resultptr, &result, sizeof(LassoSignatureType));
-    *(LassoSignatureType **)&jresult = resultptr;
-  }
+  result = (LassoSignatureType) ((arg1)->sign_type);
+  jresult = (jint)result; 
   return jresult;
 }
 
@@ -11040,28 +11786,22 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlpResponse_1signMe
 }
 
 
-SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlpResponse_1signType_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlpResponse_1signType_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   LassoSamlpResponse *arg1 = (LassoSamlpResponse *) 0 ;
   LassoSignatureType arg2 ;
-  LassoSignatureType *argp2 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(LassoSamlpResponse **)&jarg1; 
-  argp2 = *(LassoSignatureType **)&jarg2; 
-  if (!argp2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null LassoSignatureType");
-    return ;
-  }
-  arg2 = *argp2; 
+  arg2 = (LassoSignatureType)jarg2; 
   LassoSamlpResponse_sign_type_set(arg1,arg2);
   
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlpResponse_1signType_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlpResponse_1signType_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
   LassoSamlpResponse *arg1 = (LassoSamlpResponse *) 0 ;
   LassoSignatureType result;
   
@@ -11069,12 +11809,8 @@ SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlpResponse_1signT
   (void)jcls;
   (void)jarg1_;
   arg1 = *(LassoSamlpResponse **)&jarg1; 
-  result = LassoSamlpResponse_sign_type_get(arg1);
-  {
-    LassoSignatureType * resultptr = (LassoSignatureType *) malloc(sizeof(LassoSignatureType));
-    memmove(resultptr, &result, sizeof(LassoSignatureType));
-    *(LassoSignatureType **)&jresult = resultptr;
-  }
+  result = (LassoSignatureType)LassoSamlpResponse_sign_type_get(arg1);
+  jresult = (jint)result; 
   return jresult;
 }
 
@@ -11511,28 +12247,22 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlpResponseAbstract
 }
 
 
-SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlpResponseAbstract_1signType_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlpResponseAbstract_1signType_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   LassoSamlpResponseAbstract *arg1 = (LassoSamlpResponseAbstract *) 0 ;
   LassoSignatureType arg2 ;
-  LassoSignatureType *argp2 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(LassoSamlpResponseAbstract **)&jarg1; 
-  argp2 = *(LassoSignatureType **)&jarg2; 
-  if (!argp2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null LassoSignatureType");
-    return ;
-  }
-  arg2 = *argp2; 
+  arg2 = (LassoSignatureType)jarg2; 
   if (arg1) (arg1)->sign_type = arg2;
   
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlpResponseAbstract_1signType_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlpResponseAbstract_1signType_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
   LassoSamlpResponseAbstract *arg1 = (LassoSamlpResponseAbstract *) 0 ;
   LassoSignatureType result;
   
@@ -11540,12 +12270,8 @@ SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_SamlpResponseAbstrac
   (void)jcls;
   (void)jarg1_;
   arg1 = *(LassoSamlpResponseAbstract **)&jarg1; 
-  result =  ((arg1)->sign_type);
-  {
-    LassoSignatureType * resultptr = (LassoSignatureType *) malloc(sizeof(LassoSignatureType));
-    memmove(resultptr, &result, sizeof(LassoSignatureType));
-    *(LassoSignatureType **)&jresult = resultptr;
-  }
+  result = (LassoSignatureType) ((arg1)->sign_type);
+  jresult = (jint)result; 
   return jresult;
 }
 
@@ -12163,28 +12889,22 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_LibAssertion_1signMet
 }
 
 
-SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_LibAssertion_1signType_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_LibAssertion_1signType_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   LassoLibAssertion *arg1 = (LassoLibAssertion *) 0 ;
   LassoSignatureType arg2 ;
-  LassoSignatureType *argp2 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(LassoLibAssertion **)&jarg1; 
-  argp2 = *(LassoSignatureType **)&jarg2; 
-  if (!argp2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null LassoSignatureType");
-    return ;
-  }
-  arg2 = *argp2; 
+  arg2 = (LassoSignatureType)jarg2; 
   LassoLibAssertion_sign_type_set(arg1,arg2);
   
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibAssertion_1signType_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_LibAssertion_1signType_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
   LassoLibAssertion *arg1 = (LassoLibAssertion *) 0 ;
   LassoSignatureType result;
   
@@ -12192,12 +12912,8 @@ SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibAssertion_1signTy
   (void)jcls;
   (void)jarg1_;
   arg1 = *(LassoLibAssertion **)&jarg1; 
-  result = LassoLibAssertion_sign_type_get(arg1);
-  {
-    LassoSignatureType * resultptr = (LassoSignatureType *) malloc(sizeof(LassoSignatureType));
-    memmove(resultptr, &result, sizeof(LassoSignatureType));
-    *(LassoSignatureType **)&jresult = resultptr;
-  }
+  result = (LassoSignatureType)LassoLibAssertion_sign_type_get(arg1);
+  jresult = (jint)result; 
   return jresult;
 }
 
@@ -12916,28 +13632,22 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_LibAuthnRequest_1sign
 }
 
 
-SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_LibAuthnRequest_1signType_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_LibAuthnRequest_1signType_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   LassoLibAuthnRequest *arg1 = (LassoLibAuthnRequest *) 0 ;
   LassoSignatureType arg2 ;
-  LassoSignatureType *argp2 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(LassoLibAuthnRequest **)&jarg1; 
-  argp2 = *(LassoSignatureType **)&jarg2; 
-  if (!argp2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null LassoSignatureType");
-    return ;
-  }
-  arg2 = *argp2; 
+  arg2 = (LassoSignatureType)jarg2; 
   LassoLibAuthnRequest_sign_type_set(arg1,arg2);
   
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibAuthnRequest_1signType_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_LibAuthnRequest_1signType_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
   LassoLibAuthnRequest *arg1 = (LassoLibAuthnRequest *) 0 ;
   LassoSignatureType result;
   
@@ -12945,12 +13655,8 @@ SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibAuthnRequest_1sig
   (void)jcls;
   (void)jarg1_;
   arg1 = *(LassoLibAuthnRequest **)&jarg1; 
-  result = LassoLibAuthnRequest_sign_type_get(arg1);
-  {
-    LassoSignatureType * resultptr = (LassoSignatureType *) malloc(sizeof(LassoSignatureType));
-    memmove(resultptr, &result, sizeof(LassoSignatureType));
-    *(LassoSignatureType **)&jresult = resultptr;
-  }
+  result = (LassoSignatureType)LassoLibAuthnRequest_sign_type_get(arg1);
+  jresult = (jint)result; 
   return jresult;
 }
 
@@ -13662,28 +14368,22 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_LibFederationTerminat
 }
 
 
-SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_LibFederationTerminationNotification_1signType_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_LibFederationTerminationNotification_1signType_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   LassoLibFederationTerminationNotification *arg1 = (LassoLibFederationTerminationNotification *) 0 ;
   LassoSignatureType arg2 ;
-  LassoSignatureType *argp2 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(LassoLibFederationTerminationNotification **)&jarg1; 
-  argp2 = *(LassoSignatureType **)&jarg2; 
-  if (!argp2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null LassoSignatureType");
-    return ;
-  }
-  arg2 = *argp2; 
+  arg2 = (LassoSignatureType)jarg2; 
   LassoLibFederationTerminationNotification_sign_type_set(arg1,arg2);
   
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibFederationTerminationNotification_1signType_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_LibFederationTerminationNotification_1signType_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
   LassoLibFederationTerminationNotification *arg1 = (LassoLibFederationTerminationNotification *) 0 ;
   LassoSignatureType result;
   
@@ -13691,12 +14391,8 @@ SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibFederationTermina
   (void)jcls;
   (void)jarg1_;
   arg1 = *(LassoLibFederationTerminationNotification **)&jarg1; 
-  result = LassoLibFederationTerminationNotification_sign_type_get(arg1);
-  {
-    LassoSignatureType * resultptr = (LassoSignatureType *) malloc(sizeof(LassoSignatureType));
-    memmove(resultptr, &result, sizeof(LassoSignatureType));
-    *(LassoSignatureType **)&jresult = resultptr;
-  }
+  result = (LassoSignatureType)LassoLibFederationTerminationNotification_sign_type_get(arg1);
+  jresult = (jint)result; 
   return jresult;
 }
 
@@ -13784,14 +14480,13 @@ SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_delete_1LibFederation
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibFederationTerminationNotification_1newFull(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jlong jarg3, jint jarg4) {
+SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibFederationTerminationNotification_1newFull(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jint jarg3, jint jarg4) {
   jlong jresult = 0 ;
   char *arg1 = (char *) 0 ;
   LassoSamlNameIdentifier *arg2 = (LassoSamlNameIdentifier *) 0 ;
   LassoSignatureType arg3 ;
   LassoSignatureMethod arg4 ;
   LassoLibFederationTerminationNotification *result = 0 ;
-  LassoSignatureType *argp3 ;
   
   (void)jenv;
   (void)jcls;
@@ -13802,12 +14497,7 @@ SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibFederationTermina
     if (!arg1) return 0;
   }
   arg2 = *(LassoSamlNameIdentifier **)&jarg2; 
-  argp3 = *(LassoSignatureType **)&jarg3; 
-  if (!argp3) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null LassoSignatureType");
-    return 0;
-  }
-  arg3 = *argp3; 
+  arg3 = (LassoSignatureType)jarg3; 
   arg4 = (LassoSignatureMethod)jarg4; 
   result = (LassoLibFederationTerminationNotification *)LassoLibFederationTerminationNotification_newFull(arg1,arg2,arg3,arg4);
   *(LassoLibFederationTerminationNotification **)&jresult = result; 
@@ -14290,28 +14980,22 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_LibLogoutRequest_1sig
 }
 
 
-SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_LibLogoutRequest_1signType_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_LibLogoutRequest_1signType_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   LassoLibLogoutRequest *arg1 = (LassoLibLogoutRequest *) 0 ;
   LassoSignatureType arg2 ;
-  LassoSignatureType *argp2 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(LassoLibLogoutRequest **)&jarg1; 
-  argp2 = *(LassoSignatureType **)&jarg2; 
-  if (!argp2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null LassoSignatureType");
-    return ;
-  }
-  arg2 = *argp2; 
+  arg2 = (LassoSignatureType)jarg2; 
   LassoLibLogoutRequest_sign_type_set(arg1,arg2);
   
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibLogoutRequest_1signType_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_LibLogoutRequest_1signType_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
   LassoLibLogoutRequest *arg1 = (LassoLibLogoutRequest *) 0 ;
   LassoSignatureType result;
   
@@ -14319,12 +15003,8 @@ SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibLogoutRequest_1si
   (void)jcls;
   (void)jarg1_;
   arg1 = *(LassoLibLogoutRequest **)&jarg1; 
-  result = LassoLibLogoutRequest_sign_type_get(arg1);
-  {
-    LassoSignatureType * resultptr = (LassoSignatureType *) malloc(sizeof(LassoSignatureType));
-    memmove(resultptr, &result, sizeof(LassoSignatureType));
-    *(LassoSignatureType **)&jresult = resultptr;
-  }
+  result = (LassoSignatureType)LassoLibLogoutRequest_sign_type_get(arg1);
+  jresult = (jint)result; 
   return jresult;
 }
 
@@ -14412,14 +15092,13 @@ SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_delete_1LibLogoutRequ
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibLogoutRequest_1newFull(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jlong jarg3, jint jarg4) {
+SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibLogoutRequest_1newFull(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jint jarg3, jint jarg4) {
   jlong jresult = 0 ;
   char *arg1 = (char *) 0 ;
   LassoSamlNameIdentifier *arg2 = (LassoSamlNameIdentifier *) 0 ;
   LassoSignatureType arg3 ;
   LassoSignatureMethod arg4 ;
   LassoLibLogoutRequest *result = 0 ;
-  LassoSignatureType *argp3 ;
   
   (void)jenv;
   (void)jcls;
@@ -14430,12 +15109,7 @@ SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibLogoutRequest_1ne
     if (!arg1) return 0;
   }
   arg2 = *(LassoSamlNameIdentifier **)&jarg2; 
-  argp3 = *(LassoSignatureType **)&jarg3; 
-  if (!argp3) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null LassoSignatureType");
-    return 0;
-  }
-  arg3 = *argp3; 
+  arg3 = (LassoSignatureType)jarg3; 
   arg4 = (LassoSignatureMethod)jarg4; 
   result = (LassoLibLogoutRequest *)LassoLibLogoutRequest_newFull(arg1,arg2,arg3,arg4);
   *(LassoLibLogoutRequest **)&jresult = result; 
@@ -14611,7 +15285,7 @@ SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_delete_1LibLogoutResp
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibLogoutResponse_1newFull(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jlong jarg4, jint jarg5) {
+SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibLogoutResponse_1newFull(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jint jarg4, jint jarg5) {
   jlong jresult = 0 ;
   char *arg1 = (char *) 0 ;
   char *arg2 = (char *) 0 ;
@@ -14619,7 +15293,6 @@ SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibLogoutResponse_1n
   LassoSignatureType arg4 ;
   LassoSignatureMethod arg5 ;
   LassoLibLogoutResponse *result = 0 ;
-  LassoSignatureType *argp4 ;
   
   (void)jenv;
   (void)jcls;
@@ -14635,12 +15308,7 @@ SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibLogoutResponse_1n
     if (!arg2) return 0;
   }
   arg3 = *(LassoLibLogoutRequest **)&jarg3; 
-  argp4 = *(LassoSignatureType **)&jarg4; 
-  if (!argp4) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null LassoSignatureType");
-    return 0;
-  }
-  arg4 = *argp4; 
+  arg4 = (LassoSignatureType)jarg4; 
   arg5 = (LassoSignatureMethod)jarg5; 
   result = (LassoLibLogoutResponse *)LassoLibLogoutResponse_newFull(arg1,(char const *)arg2,arg3,arg4,arg5);
   *(LassoLibLogoutResponse **)&jresult = result; 
@@ -15001,28 +15669,22 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_LibRegisterNameIdenti
 }
 
 
-SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_LibRegisterNameIdentifierRequest_1signType_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_LibRegisterNameIdentifierRequest_1signType_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   LassoLibRegisterNameIdentifierRequest *arg1 = (LassoLibRegisterNameIdentifierRequest *) 0 ;
   LassoSignatureType arg2 ;
-  LassoSignatureType *argp2 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(LassoLibRegisterNameIdentifierRequest **)&jarg1; 
-  argp2 = *(LassoSignatureType **)&jarg2; 
-  if (!argp2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null LassoSignatureType");
-    return ;
-  }
-  arg2 = *argp2; 
+  arg2 = (LassoSignatureType)jarg2; 
   LassoLibRegisterNameIdentifierRequest_sign_type_set(arg1,arg2);
   
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibRegisterNameIdentifierRequest_1signType_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
+SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_LibRegisterNameIdentifierRequest_1signType_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
   LassoLibRegisterNameIdentifierRequest *arg1 = (LassoLibRegisterNameIdentifierRequest *) 0 ;
   LassoSignatureType result;
   
@@ -15030,12 +15692,8 @@ SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibRegisterNameIdent
   (void)jcls;
   (void)jarg1_;
   arg1 = *(LassoLibRegisterNameIdentifierRequest **)&jarg1; 
-  result = LassoLibRegisterNameIdentifierRequest_sign_type_get(arg1);
-  {
-    LassoSignatureType * resultptr = (LassoSignatureType *) malloc(sizeof(LassoSignatureType));
-    memmove(resultptr, &result, sizeof(LassoSignatureType));
-    *(LassoSignatureType **)&jresult = resultptr;
-  }
+  result = (LassoSignatureType)LassoLibRegisterNameIdentifierRequest_sign_type_get(arg1);
+  jresult = (jint)result; 
   return jresult;
 }
 
@@ -15183,7 +15841,7 @@ SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_delete_1LibRegisterNa
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibRegisterNameIdentifierRequest_1newFull(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_, jlong jarg4, jobject jarg4_, jlong jarg5, jint jarg6) {
+SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibRegisterNameIdentifierRequest_1newFull(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_, jlong jarg4, jobject jarg4_, jint jarg5, jint jarg6) {
   jlong jresult = 0 ;
   char *arg1 = (char *) 0 ;
   LassoSamlNameIdentifier *arg2 = (LassoSamlNameIdentifier *) 0 ;
@@ -15192,7 +15850,6 @@ SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibRegisterNameIdent
   LassoSignatureType arg5 ;
   LassoSignatureMethod arg6 ;
   LassoLibRegisterNameIdentifierRequest *result = 0 ;
-  LassoSignatureType *argp5 ;
   
   (void)jenv;
   (void)jcls;
@@ -15207,12 +15864,7 @@ SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibRegisterNameIdent
   arg2 = *(LassoSamlNameIdentifier **)&jarg2; 
   arg3 = *(LassoSamlNameIdentifier **)&jarg3; 
   arg4 = *(LassoSamlNameIdentifier **)&jarg4; 
-  argp5 = *(LassoSignatureType **)&jarg5; 
-  if (!argp5) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null LassoSignatureType");
-    return 0;
-  }
-  arg5 = *argp5; 
+  arg5 = (LassoSignatureType)jarg5; 
   arg6 = (LassoSignatureMethod)jarg6; 
   result = (LassoLibRegisterNameIdentifierRequest *)LassoLibRegisterNameIdentifierRequest_newFull(arg1,arg2,arg3,arg4,arg5,arg6);
   *(LassoLibRegisterNameIdentifierRequest **)&jresult = result; 
@@ -15388,7 +16040,7 @@ SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_delete_1LibRegisterNa
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibRegisterNameIdentifierResponse_1newFull(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jlong jarg4, jint jarg5) {
+SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibRegisterNameIdentifierResponse_1newFull(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jint jarg4, jint jarg5) {
   jlong jresult = 0 ;
   char *arg1 = (char *) 0 ;
   char *arg2 = (char *) 0 ;
@@ -15396,7 +16048,6 @@ SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibRegisterNameIdent
   LassoSignatureType arg4 ;
   LassoSignatureMethod arg5 ;
   LassoLibRegisterNameIdentifierResponse *result = 0 ;
-  LassoSignatureType *argp4 ;
   
   (void)jenv;
   (void)jcls;
@@ -15412,12 +16063,7 @@ SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_LibRegisterNameIdent
     if (!arg2) return 0;
   }
   arg3 = *(LassoLibRegisterNameIdentifierRequest **)&jarg3; 
-  argp4 = *(LassoSignatureType **)&jarg4; 
-  if (!argp4) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null LassoSignatureType");
-    return 0;
-  }
-  arg4 = *argp4; 
+  arg4 = (LassoSignatureType)jarg4; 
   arg5 = (LassoSignatureMethod)jarg5; 
   result = (LassoLibRegisterNameIdentifierResponse *)LassoLibRegisterNameIdentifierResponse_newFull(arg1,arg2,arg3,arg4,arg5);
   *(LassoLibRegisterNameIdentifierResponse **)&jresult = result; 
@@ -16823,8 +17469,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Server_1addProvider(J
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -16862,8 +17507,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Server_1setEncryption
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -16899,8 +17543,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Server_1loadAffiliati
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -17793,8 +18436,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Defederation_1setIden
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -17830,8 +18472,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Defederation_1setSess
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -17861,8 +18502,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Defederation_1buildNo
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -17899,8 +18539,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Defederation_1initNot
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -17936,8 +18575,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Defederation_1process
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -17967,8 +18605,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Defederation_1validat
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -18008,6 +18645,36 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Login_1protocolProfil
   arg1 = *(LassoLogin **)&jarg1; 
   result = (LassoLoginProtocolProfile) ((arg1)->protocolProfile);
   jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Login_1assertion_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  LassoLogin *arg1 = (LassoLogin *) 0 ;
+  LassoSamlAssertion *arg2 = (LassoSamlAssertion *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(LassoLogin **)&jarg1; 
+  arg2 = *(LassoSamlAssertion **)&jarg2; 
+  if (arg1) (arg1)->assertion = arg2;
+  
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_Login_1assertion_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  LassoLogin *arg1 = (LassoLogin *) 0 ;
+  LassoSamlAssertion *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoLogin **)&jarg1; 
+  result = (LassoSamlAssertion *) ((arg1)->assertion);
+  *(LassoSamlAssertion **)&jresult = result; 
   return jresult;
 }
 
@@ -18419,8 +19086,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Login_1setIdentityFro
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -18456,8 +19122,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Login_1setSessionFrom
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -18487,8 +19152,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Login_1acceptSso(JNIE
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -18519,8 +19183,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Login_1buildArtifactM
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -18579,8 +19242,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Login_1buildAssertion
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -18614,8 +19276,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Login_1buildAuthnRequ
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -18644,8 +19305,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Login_1buildAuthnResp
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -18674,8 +19334,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Login_1buildRequestMs
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -18710,8 +19369,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Login_1buildResponseM
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -18765,8 +19423,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Login_1initAuthnReque
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -18804,8 +19461,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Login_1initRequest(JN
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -18841,8 +19497,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Login_1initIdpInitiat
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -18908,8 +19563,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Login_1processAuthnRe
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -18945,8 +19599,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Login_1processAuthnRe
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -18982,8 +19635,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Login_1processRequest
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -19019,8 +19671,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Login_1processRespons
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -19056,8 +19707,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Login_1setResourceId(
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -19091,8 +19741,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Login_1validateReques
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -19127,8 +19776,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Login_1processPaosRes
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -19550,8 +20198,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Logout_1setIdentityFr
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -19587,8 +20234,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Logout_1setSessionFro
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -19618,8 +20264,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Logout_1buildRequestM
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -19648,8 +20293,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Logout_1buildResponse
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -19718,8 +20362,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Logout_1initRequest(J
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -19755,8 +20398,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Logout_1processReques
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -19792,8 +20434,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Logout_1processRespon
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -19823,8 +20464,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Logout_1resetProvider
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -19853,8 +20493,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Logout_1validateReque
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -20253,8 +20892,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Lecp_1setIdentityFrom
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -20290,8 +20928,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Lecp_1setSessionFromD
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -20351,8 +20988,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Lecp_1buildAssertion(
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -20392,8 +21028,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Lecp_1setResourceId(J
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -20427,8 +21062,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Lecp_1validateRequest
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -20457,8 +21091,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Lecp_1buildAuthnReque
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -20487,8 +21120,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Lecp_1buildAuthnReque
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -20517,8 +21149,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Lecp_1buildAuthnRespo
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -20547,8 +21178,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Lecp_1buildAuthnRespo
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -20583,8 +21213,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Lecp_1initAuthnReques
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -20620,8 +21249,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Lecp_1processAuthnReq
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -20657,8 +21285,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Lecp_1processAuthnReq
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -20694,8 +21321,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Lecp_1processAuthnRes
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -21095,8 +21721,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_NameIdentifierMapping
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -21132,8 +21757,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_NameIdentifierMapping
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -21163,8 +21787,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_NameIdentifierMapping
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -21193,8 +21816,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_NameIdentifierMapping
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -21235,8 +21857,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_NameIdentifierMapping
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -21273,8 +21894,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_NameIdentifierMapping
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -21310,8 +21930,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_NameIdentifierMapping
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -21341,8 +21960,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_NameIdentifierMapping
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -21793,8 +22411,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_NameRegistration_1set
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -21830,8 +22447,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_NameRegistration_1set
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -21861,8 +22477,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_NameRegistration_1bui
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -21891,8 +22506,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_NameRegistration_1bui
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -21945,8 +22559,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_NameRegistration_1ini
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -21982,8 +22595,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_NameRegistration_1pro
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -22019,8 +22631,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_NameRegistration_1pro
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -22050,8 +22661,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_NameRegistration_1val
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -22920,8 +23530,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_NameIdManagement_1set
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -22957,8 +23566,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_NameIdManagement_1set
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -22988,8 +23596,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_NameIdManagement_1bui
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -23018,8 +23625,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_NameIdManagement_1bui
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -23078,8 +23684,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_NameIdManagement_1ini
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -23116,8 +23721,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_NameIdManagement_1pro
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -23153,8 +23757,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_NameIdManagement_1pro
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -23184,8 +23787,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_NameIdManagement_1val
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -23366,8 +23968,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Ecp_1processAuthnRequ
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -23403,8 +24004,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Ecp_1processResponseM
     if (errorCode) {
       char errorMsg[256];
       int swig_error = SWIG_RuntimeError;
-      if (errorCode == -501 || 
-        errorCode == -501) {
+      if (errorCode == -501) {
         swig_error = SWIG_ValueError;
       }
       build_exception_msg(errorCode, errorMsg);
@@ -23620,7 +24220,7 @@ SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2RequestedAuthnC
   (void)jarg2_;
   arg1 = *(LassoSamlp2RequestedAuthnContext **)&jarg1; 
   arg2 = *(LassoStringList **)&jarg2; 
-  LassoSamlp2RequestedAuthnContext_authnContextClassRef_set(arg1,arg2);
+  LassoSamlp2RequestedAuthnContext_AuthnContextClassRef_set(arg1,arg2);
   
 }
 
@@ -23634,7 +24234,7 @@ SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2RequestedAuthn
   (void)jcls;
   (void)jarg1_;
   arg1 = *(LassoSamlp2RequestedAuthnContext **)&jarg1; 
-  result = (LassoStringList *)LassoSamlp2RequestedAuthnContext_authnContextClassRef_get(arg1);
+  result = (LassoStringList *)LassoSamlp2RequestedAuthnContext_AuthnContextClassRef_get(arg1);
   *(LassoStringList **)&jresult = result; 
   return jresult;
 }
@@ -23650,7 +24250,7 @@ SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2RequestedAuthnC
   (void)jarg2_;
   arg1 = *(LassoSamlp2RequestedAuthnContext **)&jarg1; 
   arg2 = *(LassoStringList **)&jarg2; 
-  LassoSamlp2RequestedAuthnContext_authnContextDeclRef_set(arg1,arg2);
+  LassoSamlp2RequestedAuthnContext_AuthnContextDeclRef_set(arg1,arg2);
   
 }
 
@@ -23664,7 +24264,7 @@ SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2RequestedAuthn
   (void)jcls;
   (void)jarg1_;
   arg1 = *(LassoSamlp2RequestedAuthnContext **)&jarg1; 
-  result = (LassoStringList *)LassoSamlp2RequestedAuthnContext_authnContextDeclRef_get(arg1);
+  result = (LassoStringList *)LassoSamlp2RequestedAuthnContext_AuthnContextDeclRef_get(arg1);
   *(LassoStringList **)&jresult = result; 
   return jresult;
 }
@@ -23952,6 +24552,36 @@ SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Assertion_1advi
 }
 
 
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Assertion_1statement_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  LassoSaml2Assertion *arg1 = (LassoSaml2Assertion *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(LassoSaml2Assertion **)&jarg1; 
+  arg2 = *(LassoNodeList **)&jarg2; 
+  LassoSaml2Assertion_Statement_set(arg1,arg2);
+  
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Assertion_1statement_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  LassoSaml2Assertion *arg1 = (LassoSaml2Assertion *) 0 ;
+  LassoNodeList *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoSaml2Assertion **)&jarg1; 
+  result = (LassoNodeList *)LassoSaml2Assertion_Statement_get(arg1);
+  *(LassoNodeList **)&jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Assertion_1authnStatement_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   LassoSaml2Assertion *arg1 = (LassoSaml2Assertion *) 0 ;
   LassoNodeList *arg2 = (LassoNodeList *) 0 ;
@@ -23977,6 +24607,66 @@ SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Assertion_1auth
   (void)jarg1_;
   arg1 = *(LassoSaml2Assertion **)&jarg1; 
   result = (LassoNodeList *)LassoSaml2Assertion_AuthnStatement_get(arg1);
+  *(LassoNodeList **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Assertion_1authzDecisionStatement_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  LassoSaml2Assertion *arg1 = (LassoSaml2Assertion *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(LassoSaml2Assertion **)&jarg1; 
+  arg2 = *(LassoNodeList **)&jarg2; 
+  LassoSaml2Assertion_AuthzDecisionStatement_set(arg1,arg2);
+  
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Assertion_1authzDecisionStatement_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  LassoSaml2Assertion *arg1 = (LassoSaml2Assertion *) 0 ;
+  LassoNodeList *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoSaml2Assertion **)&jarg1; 
+  result = (LassoNodeList *)LassoSaml2Assertion_AuthzDecisionStatement_get(arg1);
+  *(LassoNodeList **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Assertion_1attributeStatement_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  LassoSaml2Assertion *arg1 = (LassoSaml2Assertion *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(LassoSaml2Assertion **)&jarg1; 
+  arg2 = *(LassoNodeList **)&jarg2; 
+  LassoSaml2Assertion_AttributeStatement_set(arg1,arg2);
+  
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Assertion_1attributeStatement_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  LassoSaml2Assertion *arg1 = (LassoSaml2Assertion *) 0 ;
+  LassoNodeList *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoSaml2Assertion **)&jarg1; 
+  result = (LassoNodeList *)LassoSaml2Assertion_AttributeStatement_get(arg1);
   *(LassoNodeList **)&jresult = result; 
   return jresult;
 }
@@ -24312,6 +25002,66 @@ SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Conditions_1aud
 }
 
 
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Conditions_1oneTimeUse_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  LassoSaml2Conditions *arg1 = (LassoSaml2Conditions *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(LassoSaml2Conditions **)&jarg1; 
+  arg2 = *(LassoNodeList **)&jarg2; 
+  LassoSaml2Conditions_OneTimeUse_set(arg1,arg2);
+  
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Conditions_1oneTimeUse_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  LassoSaml2Conditions *arg1 = (LassoSaml2Conditions *) 0 ;
+  LassoNodeList *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoSaml2Conditions **)&jarg1; 
+  result = (LassoNodeList *)LassoSaml2Conditions_OneTimeUse_get(arg1);
+  *(LassoNodeList **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Conditions_1proxyRestriction_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  LassoSaml2Conditions *arg1 = (LassoSaml2Conditions *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(LassoSaml2Conditions **)&jarg1; 
+  arg2 = *(LassoNodeList **)&jarg2; 
+  LassoSaml2Conditions_ProxyRestriction_set(arg1,arg2);
+  
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Conditions_1proxyRestriction_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  LassoSaml2Conditions *arg1 = (LassoSaml2Conditions *) 0 ;
+  LassoNodeList *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoSaml2Conditions **)&jarg1; 
+  result = (LassoNodeList *)LassoSaml2Conditions_ProxyRestriction_get(arg1);
+  *(LassoNodeList **)&jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_new_1Saml2Conditions(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   LassoSaml2Conditions *result = 0 ;
@@ -24347,6 +25097,126 @@ SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Conditions_1d
   result = (char *)LassoSaml2Conditions_dump(arg1);
   if(result) jresult = (*jenv)->NewStringUTF(jenv, (const char *)result);
   g_free(result);
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Evidence_1assertionIDRef_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  LassoSaml2Evidence *arg1 = (LassoSaml2Evidence *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(LassoSaml2Evidence **)&jarg1; 
+  arg2 = *(LassoNodeList **)&jarg2; 
+  LassoSaml2Evidence_AssertionIDRef_set(arg1,arg2);
+  
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Evidence_1assertionIDRef_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  LassoSaml2Evidence *arg1 = (LassoSaml2Evidence *) 0 ;
+  LassoNodeList *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoSaml2Evidence **)&jarg1; 
+  result = (LassoNodeList *)LassoSaml2Evidence_AssertionIDRef_get(arg1);
+  *(LassoNodeList **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Evidence_1assertionURIRef_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  LassoSaml2Evidence *arg1 = (LassoSaml2Evidence *) 0 ;
+  LassoStringList *arg2 = (LassoStringList *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(LassoSaml2Evidence **)&jarg1; 
+  arg2 = *(LassoStringList **)&jarg2; 
+  LassoSaml2Evidence_AssertionURIRef_set(arg1,arg2);
+  
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Evidence_1assertionURIRef_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  LassoSaml2Evidence *arg1 = (LassoSaml2Evidence *) 0 ;
+  LassoStringList *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoSaml2Evidence **)&jarg1; 
+  result = (LassoStringList *)LassoSaml2Evidence_AssertionURIRef_get(arg1);
+  *(LassoStringList **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Evidence_1assertion_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  LassoSaml2Evidence *arg1 = (LassoSaml2Evidence *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(LassoSaml2Evidence **)&jarg1; 
+  arg2 = *(LassoNodeList **)&jarg2; 
+  LassoSaml2Evidence_Assertion_set(arg1,arg2);
+  
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Evidence_1assertion_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  LassoSaml2Evidence *arg1 = (LassoSaml2Evidence *) 0 ;
+  LassoNodeList *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoSaml2Evidence **)&jarg1; 
+  result = (LassoNodeList *)LassoSaml2Evidence_Assertion_get(arg1);
+  *(LassoNodeList **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Evidence_1encryptedAssertion_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  LassoSaml2Evidence *arg1 = (LassoSaml2Evidence *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(LassoSaml2Evidence **)&jarg1; 
+  arg2 = *(LassoNodeList **)&jarg2; 
+  LassoSaml2Evidence_EncryptedAssertion_set(arg1,arg2);
+  
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Evidence_1encryptedAssertion_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  LassoSaml2Evidence *arg1 = (LassoSaml2Evidence *) 0 ;
+  LassoNodeList *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoSaml2Evidence **)&jarg1; 
+  result = (LassoNodeList *)LassoSaml2Evidence_EncryptedAssertion_get(arg1);
+  *(LassoNodeList **)&jresult = result; 
   return jresult;
 }
 
@@ -24472,7 +25342,7 @@ SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2NameID_1forma
 }
 
 
-SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2NameID_1SPProvidedID_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2NameID_1spProvidedId_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   LassoSaml2NameID *arg1 = (LassoSaml2NameID *) 0 ;
   char *arg2 = (char *) 0 ;
   
@@ -24498,7 +25368,7 @@ SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2NameID_1SPProvid
 }
 
 
-SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2NameID_1SPProvidedID_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2NameID_1spProvidedId_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   LassoSaml2NameID *arg1 = (LassoSaml2NameID *) 0 ;
   char *result = 0 ;
@@ -24962,6 +25832,126 @@ SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2OneTimeUse_1d
 }
 
 
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Advice_1assertionIDRef_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  LassoSaml2Advice *arg1 = (LassoSaml2Advice *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(LassoSaml2Advice **)&jarg1; 
+  arg2 = *(LassoNodeList **)&jarg2; 
+  LassoSaml2Advice_AssertionIDRef_set(arg1,arg2);
+  
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Advice_1assertionIDRef_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  LassoSaml2Advice *arg1 = (LassoSaml2Advice *) 0 ;
+  LassoNodeList *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoSaml2Advice **)&jarg1; 
+  result = (LassoNodeList *)LassoSaml2Advice_AssertionIDRef_get(arg1);
+  *(LassoNodeList **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Advice_1assertionURIRef_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  LassoSaml2Advice *arg1 = (LassoSaml2Advice *) 0 ;
+  LassoStringList *arg2 = (LassoStringList *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(LassoSaml2Advice **)&jarg1; 
+  arg2 = *(LassoStringList **)&jarg2; 
+  LassoSaml2Advice_AssertionURIRef_set(arg1,arg2);
+  
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Advice_1assertionURIRef_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  LassoSaml2Advice *arg1 = (LassoSaml2Advice *) 0 ;
+  LassoStringList *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoSaml2Advice **)&jarg1; 
+  result = (LassoStringList *)LassoSaml2Advice_AssertionURIRef_get(arg1);
+  *(LassoStringList **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Advice_1assertion_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  LassoSaml2Advice *arg1 = (LassoSaml2Advice *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(LassoSaml2Advice **)&jarg1; 
+  arg2 = *(LassoNodeList **)&jarg2; 
+  LassoSaml2Advice_Assertion_set(arg1,arg2);
+  
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Advice_1assertion_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  LassoSaml2Advice *arg1 = (LassoSaml2Advice *) 0 ;
+  LassoNodeList *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoSaml2Advice **)&jarg1; 
+  result = (LassoNodeList *)LassoSaml2Advice_Assertion_get(arg1);
+  *(LassoNodeList **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Advice_1encryptedAssertion_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  LassoSaml2Advice *arg1 = (LassoSaml2Advice *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(LassoSaml2Advice **)&jarg1; 
+  arg2 = *(LassoNodeList **)&jarg2; 
+  LassoSaml2Advice_EncryptedAssertion_set(arg1,arg2);
+  
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2Advice_1encryptedAssertion_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  LassoSaml2Advice *arg1 = (LassoSaml2Advice *) 0 ;
+  LassoNodeList *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoSaml2Advice **)&jarg1; 
+  result = (LassoNodeList *)LassoSaml2Advice_EncryptedAssertion_get(arg1);
+  *(LassoNodeList **)&jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_new_1Saml2Advice(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   LassoSaml2Advice *result = 0 ;
@@ -25204,7 +26194,7 @@ SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2AuthnContext_
 }
 
 
-SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2AuthnContext_1AuthenticatingAuthority_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2AuthnContext_1authenticatingAuthority_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   LassoSaml2AuthnContext *arg1 = (LassoSaml2AuthnContext *) 0 ;
   char *arg2 = (char *) 0 ;
   
@@ -25230,7 +26220,7 @@ SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2AuthnContext_1Au
 }
 
 
-SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2AuthnContext_1AuthenticatingAuthority_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2AuthnContext_1authenticatingAuthority_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   LassoSaml2AuthnContext *arg1 = (LassoSaml2AuthnContext *) 0 ;
   char *result = 0 ;
@@ -25325,7 +26315,7 @@ SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2SubjectLocali
 }
 
 
-SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2SubjectLocality_1dnsName_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2SubjectLocality_1dNSName_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   LassoSaml2SubjectLocality *arg1 = (LassoSaml2SubjectLocality *) 0 ;
   char *arg2 = (char *) 0 ;
   
@@ -25351,7 +26341,7 @@ SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2SubjectLocality_
 }
 
 
-SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2SubjectLocality_1dnsName_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2SubjectLocality_1dNSName_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   LassoSaml2SubjectLocality *arg1 = (LassoSaml2SubjectLocality *) 0 ;
   char *result = 0 ;
@@ -26231,6 +27221,66 @@ SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2AuthnStatemen
 }
 
 
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2AttributeStatement_1attribute_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  LassoSaml2AttributeStatement *arg1 = (LassoSaml2AttributeStatement *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(LassoSaml2AttributeStatement **)&jarg1; 
+  arg2 = *(LassoNodeList **)&jarg2; 
+  LassoSaml2AttributeStatement_Attribute_set(arg1,arg2);
+  
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2AttributeStatement_1attribute_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  LassoSaml2AttributeStatement *arg1 = (LassoSaml2AttributeStatement *) 0 ;
+  LassoNodeList *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoSaml2AttributeStatement **)&jarg1; 
+  result = (LassoNodeList *)LassoSaml2AttributeStatement_Attribute_get(arg1);
+  *(LassoNodeList **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2AttributeStatement_1encryptedAttribute_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  LassoSaml2AttributeStatement *arg1 = (LassoSaml2AttributeStatement *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(LassoSaml2AttributeStatement **)&jarg1; 
+  arg2 = *(LassoNodeList **)&jarg2; 
+  LassoSaml2AttributeStatement_EncryptedAttribute_set(arg1,arg2);
+  
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2AttributeStatement_1encryptedAttribute_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  LassoSaml2AttributeStatement *arg1 = (LassoSaml2AttributeStatement *) 0 ;
+  LassoNodeList *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoSaml2AttributeStatement **)&jarg1; 
+  result = (LassoNodeList *)LassoSaml2AttributeStatement_EncryptedAttribute_get(arg1);
+  *(LassoNodeList **)&jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_new_1Saml2AttributeStatement(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   LassoSaml2AttributeStatement *result = 0 ;
@@ -26270,7 +27320,7 @@ SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2AttributeStat
 }
 
 
-SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2IDPEntry_1providerId_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2IDPEntry_1providerID_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   LassoSamlp2IDPEntry *arg1 = (LassoSamlp2IDPEntry *) 0 ;
   char *arg2 = (char *) 0 ;
   
@@ -26296,7 +27346,7 @@ SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2IDPEntry_1provi
 }
 
 
-SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2IDPEntry_1providerId_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2IDPEntry_1providerID_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   LassoSamlp2IDPEntry *arg1 = (LassoSamlp2IDPEntry *) 0 ;
   char *result = 0 ;
@@ -26967,6 +28017,66 @@ SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2StatusRespon
 }
 
 
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2Response_1assertion_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  LassoSamlp2Response *arg1 = (LassoSamlp2Response *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(LassoSamlp2Response **)&jarg1; 
+  arg2 = *(LassoNodeList **)&jarg2; 
+  LassoSamlp2Response_Assertion_set(arg1,arg2);
+  
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2Response_1assertion_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  LassoSamlp2Response *arg1 = (LassoSamlp2Response *) 0 ;
+  LassoNodeList *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoSamlp2Response **)&jarg1; 
+  result = (LassoNodeList *)LassoSamlp2Response_Assertion_get(arg1);
+  *(LassoNodeList **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2Response_1encryptedAssertion_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  LassoSamlp2Response *arg1 = (LassoSamlp2Response *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(LassoSamlp2Response **)&jarg1; 
+  arg2 = *(LassoNodeList **)&jarg2; 
+  LassoSamlp2Response_EncryptedAssertion_set(arg1,arg2);
+  
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2Response_1encryptedAssertion_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  LassoSamlp2Response *arg1 = (LassoSamlp2Response *) 0 ;
+  LassoNodeList *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(LassoSamlp2Response **)&jarg1; 
+  result = (LassoNodeList *)LassoSamlp2Response_EncryptedAssertion_get(arg1);
+  *(LassoNodeList **)&jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2Response_1issuer_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   LassoSamlp2Response *arg1 = (LassoSamlp2Response *) 0 ;
   LassoSaml2NameID *arg2 = (LassoSaml2NameID *) 0 ;
@@ -27257,36 +28367,6 @@ SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2Response_1co
   arg1 = *(LassoSamlp2Response **)&jarg1; 
   result = (char *)LassoSamlp2Response_Consent_get(arg1);
   if(result) jresult = (*jenv)->NewStringUTF(jenv, (const char *)result);
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2Response_1assertion_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
-  LassoSamlp2Response *arg1 = (LassoSamlp2Response *) 0 ;
-  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  (void)jarg2_;
-  arg1 = *(LassoSamlp2Response **)&jarg1; 
-  arg2 = *(LassoNodeList **)&jarg2; 
-  LassoSamlp2Response_Assertion_set(arg1,arg2);
-  
-}
-
-
-SWIGEXPORT jlong JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2Response_1assertion_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
-  LassoSamlp2Response *arg1 = (LassoSamlp2Response *) 0 ;
-  LassoNodeList *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(LassoSamlp2Response **)&jarg1; 
-  result = (LassoNodeList *)LassoSamlp2Response_Assertion_get(arg1);
-  *(LassoNodeList **)&jresult = result; 
   return jresult;
 }
 
@@ -27997,7 +29077,7 @@ SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2RequestAbstr
 }
 
 
-SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2AssertionIDRequest_1assertionIdRef_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2AssertionIDRequest_1assertionIDRef_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   LassoSamlp2AssertionIDRequest *arg1 = (LassoSamlp2AssertionIDRequest *) 0 ;
   char *arg2 = (char *) 0 ;
   
@@ -28023,7 +29103,7 @@ SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2AssertionIDRequ
 }
 
 
-SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2AssertionIDRequest_1assertionIdRef_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2AssertionIDRequest_1assertionIDRef_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   LassoSamlp2AssertionIDRequest *arg1 = (LassoSamlp2AssertionIDRequest *) 0 ;
   char *result = 0 ;
@@ -29134,7 +30214,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2AuthnRequest_1a
 }
 
 
-SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2AuthnRequest_1AssertionConsumerServiceURL_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2AuthnRequest_1assertionConsumerServiceURL_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   LassoSamlp2AuthnRequest *arg1 = (LassoSamlp2AuthnRequest *) 0 ;
   char *arg2 = (char *) 0 ;
   
@@ -29160,7 +30240,7 @@ SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2AuthnRequest_1A
 }
 
 
-SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2AuthnRequest_1AssertionConsumerServiceURL_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2AuthnRequest_1assertionConsumerServiceURL_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   LassoSamlp2AuthnRequest *arg1 = (LassoSamlp2AuthnRequest *) 0 ;
   char *result = 0 ;
@@ -29204,7 +30284,7 @@ SWIGEXPORT jint JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2AuthnRequest_1a
 }
 
 
-SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2AuthnRequest_1ProviderName_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2AuthnRequest_1providerName_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   LassoSamlp2AuthnRequest *arg1 = (LassoSamlp2AuthnRequest *) 0 ;
   char *arg2 = (char *) 0 ;
   
@@ -29230,7 +30310,7 @@ SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2AuthnRequest_1P
 }
 
 
-SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2AuthnRequest_1ProviderName_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2AuthnRequest_1providerName_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   LassoSamlp2AuthnRequest *arg1 = (LassoSamlp2AuthnRequest *) 0 ;
   char *result = 0 ;
@@ -32477,7 +33557,7 @@ SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Saml2EncryptedElem
 }
 
 
-SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2ManageNameIDRequest_1newId_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2ManageNameIDRequest_1newID_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   LassoSamlp2ManageNameIDRequest *arg1 = (LassoSamlp2ManageNameIDRequest *) 0 ;
   char *arg2 = (char *) 0 ;
   
@@ -32503,7 +33583,7 @@ SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2ManageNameIDReq
 }
 
 
-SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2ManageNameIDRequest_1newId_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2ManageNameIDRequest_1newID_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   LassoSamlp2ManageNameIDRequest *arg1 = (LassoSamlp2ManageNameIDRequest *) 0 ;
   char *result = 0 ;
@@ -32907,7 +33987,7 @@ SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2ManageNameID
 }
 
 
-SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2Scoping_1requesterId_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2Scoping_1requesterID_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   LassoSamlp2Scoping *arg1 = (LassoSamlp2Scoping *) 0 ;
   char *arg2 = (char *) 0 ;
   
@@ -32933,7 +34013,7 @@ SWIGEXPORT void JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2Scoping_1reques
 }
 
 
-SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2Scoping_1requesterId_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_com_entrouvert_lasso_lassoJNI_Samlp2Scoping_1requesterID_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   LassoSamlp2Scoping *arg1 = (LassoSamlp2Scoping *) 0 ;
   char *result = 0 ;

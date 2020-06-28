@@ -1,8 +1,8 @@
-/* $Id: serverprivate.h,v 1.3 2006/11/15 18:56:34 dlaniel Exp $ 
+/* $Id: serverprivate.h 3237 2007-05-30 17:17:45Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -33,6 +33,7 @@ struct _LassoServerPrivate
 {
 	gboolean dispose_has_run;
 	xmlSecKey *encryption_private_key;
+	GList *svc_metadatas;
 };
 
 gchar* lasso_server_get_first_providerID(LassoServer *server);

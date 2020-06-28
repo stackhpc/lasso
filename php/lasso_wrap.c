@@ -895,120 +895,123 @@ static void SWIG_Php4_SetModule(swig_module_info *pointer) {
 /* -------- TYPES TABLE (BEGIN) -------- */
 
 #define SWIGTYPE_int swig_types[0]
-#define SWIGTYPE_p_LassoCheckVersionMode swig_types[1]
-#define SWIGTYPE_p_LassoDefederation swig_types[2]
-#define SWIGTYPE_p_LassoEcp swig_types[3]
-#define SWIGTYPE_p_LassoEncryptionMode swig_types[4]
-#define SWIGTYPE_p_LassoEncryptionSymKeyType swig_types[5]
-#define SWIGTYPE_p_LassoFederation swig_types[6]
-#define SWIGTYPE_p_LassoHttpMethod swig_types[7]
-#define SWIGTYPE_p_LassoIdentity swig_types[8]
-#define SWIGTYPE_p_LassoLecp swig_types[9]
-#define SWIGTYPE_p_LassoLibAssertion swig_types[10]
-#define SWIGTYPE_p_LassoLibAuthnRequest swig_types[11]
-#define SWIGTYPE_p_LassoLibAuthnResponse swig_types[12]
-#define SWIGTYPE_p_LassoLibFederationTerminationNotification swig_types[13]
-#define SWIGTYPE_p_LassoLibLogoutRequest swig_types[14]
-#define SWIGTYPE_p_LassoLibLogoutResponse swig_types[15]
-#define SWIGTYPE_p_LassoLibRegisterNameIdentifierRequest swig_types[16]
-#define SWIGTYPE_p_LassoLibRegisterNameIdentifierResponse swig_types[17]
-#define SWIGTYPE_p_LassoLibRequestAuthnContext swig_types[18]
-#define SWIGTYPE_p_LassoLibStatusResponse swig_types[19]
-#define SWIGTYPE_p_LassoLogin swig_types[20]
-#define SWIGTYPE_p_LassoLoginProtocolProfile swig_types[21]
-#define SWIGTYPE_p_LassoLogout swig_types[22]
-#define SWIGTYPE_p_LassoMdProtocolType swig_types[23]
-#define SWIGTYPE_p_LassoNameIdManagement swig_types[24]
-#define SWIGTYPE_p_LassoNameIdentifierMapping swig_types[25]
-#define SWIGTYPE_p_LassoNameRegistration swig_types[26]
-#define SWIGTYPE_p_LassoNode swig_types[27]
-#define SWIGTYPE_p_LassoNodeList swig_types[28]
-#define SWIGTYPE_p_LassoProtocolConformance swig_types[29]
-#define SWIGTYPE_p_LassoProvider swig_types[30]
-#define SWIGTYPE_p_LassoProviderRole swig_types[31]
-#define SWIGTYPE_p_LassoRequestType swig_types[32]
-#define SWIGTYPE_p_LassoSaml2Action swig_types[33]
-#define SWIGTYPE_p_LassoSaml2Advice swig_types[34]
-#define SWIGTYPE_p_LassoSaml2Assertion swig_types[35]
-#define SWIGTYPE_p_LassoSaml2Attribute swig_types[36]
-#define SWIGTYPE_p_LassoSaml2AttributeStatement swig_types[37]
-#define SWIGTYPE_p_LassoSaml2AudienceRestriction swig_types[38]
-#define SWIGTYPE_p_LassoSaml2AuthnContext swig_types[39]
-#define SWIGTYPE_p_LassoSaml2AuthnStatement swig_types[40]
-#define SWIGTYPE_p_LassoSaml2AuthzDecisionStatement swig_types[41]
-#define SWIGTYPE_p_LassoSaml2BaseIDAbstract swig_types[42]
-#define SWIGTYPE_p_LassoSaml2ConditionAbstract swig_types[43]
-#define SWIGTYPE_p_LassoSaml2Conditions swig_types[44]
-#define SWIGTYPE_p_LassoSaml2EncryptedElement swig_types[45]
-#define SWIGTYPE_p_LassoSaml2Evidence swig_types[46]
-#define SWIGTYPE_p_LassoSaml2KeyInfoConfirmationData swig_types[47]
-#define SWIGTYPE_p_LassoSaml2NameID swig_types[48]
-#define SWIGTYPE_p_LassoSaml2OneTimeUse swig_types[49]
-#define SWIGTYPE_p_LassoSaml2ProxyRestriction swig_types[50]
-#define SWIGTYPE_p_LassoSaml2StatementAbstract swig_types[51]
-#define SWIGTYPE_p_LassoSaml2Subject swig_types[52]
-#define SWIGTYPE_p_LassoSaml2SubjectConfirmation swig_types[53]
-#define SWIGTYPE_p_LassoSaml2SubjectConfirmationData swig_types[54]
-#define SWIGTYPE_p_LassoSaml2SubjectLocality swig_types[55]
-#define SWIGTYPE_p_LassoSamlAdvice swig_types[56]
-#define SWIGTYPE_p_LassoSamlAssertion swig_types[57]
-#define SWIGTYPE_p_LassoSamlAttribute swig_types[58]
-#define SWIGTYPE_p_LassoSamlAttributeDesignator swig_types[59]
-#define SWIGTYPE_p_LassoSamlAttributeStatement swig_types[60]
-#define SWIGTYPE_p_LassoSamlAttributeValue swig_types[61]
-#define SWIGTYPE_p_LassoSamlAudienceRestrictionCondition swig_types[62]
-#define SWIGTYPE_p_LassoSamlAuthenticationStatement swig_types[63]
-#define SWIGTYPE_p_LassoSamlAuthorityBinding swig_types[64]
-#define SWIGTYPE_p_LassoSamlConditionAbstract swig_types[65]
-#define SWIGTYPE_p_LassoSamlConditions swig_types[66]
-#define SWIGTYPE_p_LassoSamlNameIdentifier swig_types[67]
-#define SWIGTYPE_p_LassoSamlStatementAbstract swig_types[68]
-#define SWIGTYPE_p_LassoSamlSubject swig_types[69]
-#define SWIGTYPE_p_LassoSamlSubjectConfirmation swig_types[70]
-#define SWIGTYPE_p_LassoSamlSubjectLocality swig_types[71]
-#define SWIGTYPE_p_LassoSamlSubjectStatement swig_types[72]
-#define SWIGTYPE_p_LassoSamlSubjectStatementAbstract swig_types[73]
-#define SWIGTYPE_p_LassoSamlp2ArtifactResolve swig_types[74]
-#define SWIGTYPE_p_LassoSamlp2ArtifactResponse swig_types[75]
-#define SWIGTYPE_p_LassoSamlp2AssertionIDRequest swig_types[76]
-#define SWIGTYPE_p_LassoSamlp2AttributeQuery swig_types[77]
-#define SWIGTYPE_p_LassoSamlp2AuthnQuery swig_types[78]
-#define SWIGTYPE_p_LassoSamlp2AuthnRequest swig_types[79]
-#define SWIGTYPE_p_LassoSamlp2AuthzDecisionQuery swig_types[80]
-#define SWIGTYPE_p_LassoSamlp2Extensions swig_types[81]
-#define SWIGTYPE_p_LassoSamlp2IDPEntry swig_types[82]
-#define SWIGTYPE_p_LassoSamlp2IDPList swig_types[83]
-#define SWIGTYPE_p_LassoSamlp2LogoutRequest swig_types[84]
-#define SWIGTYPE_p_LassoSamlp2ManageNameIDRequest swig_types[85]
-#define SWIGTYPE_p_LassoSamlp2NameIDMappingRequest swig_types[86]
-#define SWIGTYPE_p_LassoSamlp2NameIDMappingResponse swig_types[87]
-#define SWIGTYPE_p_LassoSamlp2NameIDPolicy swig_types[88]
-#define SWIGTYPE_p_LassoSamlp2RequestAbstract swig_types[89]
-#define SWIGTYPE_p_LassoSamlp2RequestedAuthnContext swig_types[90]
-#define SWIGTYPE_p_LassoSamlp2Response swig_types[91]
-#define SWIGTYPE_p_LassoSamlp2Scoping swig_types[92]
-#define SWIGTYPE_p_LassoSamlp2Status swig_types[93]
-#define SWIGTYPE_p_LassoSamlp2StatusCode swig_types[94]
-#define SWIGTYPE_p_LassoSamlp2StatusDetail swig_types[95]
-#define SWIGTYPE_p_LassoSamlp2StatusResponse swig_types[96]
-#define SWIGTYPE_p_LassoSamlp2SubjectQueryAbstract swig_types[97]
-#define SWIGTYPE_p_LassoSamlp2Terminate swig_types[98]
-#define SWIGTYPE_p_LassoSamlpRequest swig_types[99]
-#define SWIGTYPE_p_LassoSamlpRequestAbstract swig_types[100]
-#define SWIGTYPE_p_LassoSamlpResponse swig_types[101]
-#define SWIGTYPE_p_LassoSamlpResponseAbstract swig_types[102]
-#define SWIGTYPE_p_LassoSamlpStatus swig_types[103]
-#define SWIGTYPE_p_LassoSamlpStatusCode swig_types[104]
-#define SWIGTYPE_p_LassoServer swig_types[105]
-#define SWIGTYPE_p_LassoSession swig_types[106]
-#define SWIGTYPE_p_LassoSignatureMethod swig_types[107]
-#define SWIGTYPE_p_LassoSignatureType swig_types[108]
-#define SWIGTYPE_p_LassoStringList swig_types[109]
-#define SWIGTYPE_p_char swig_types[110]
-#define SWIGTYPE_p_p_void swig_types[111]
-#define SWIGTYPE_p_void swig_types[112]
-static swig_type_info *swig_types[114];
-static swig_module_info swig_module = {swig_types, 113, 0, 0, 0, 0};
+#define SWIGTYPE_p_GHashTable swig_types[1]
+#define SWIGTYPE_p_LassoCheckVersionMode swig_types[2]
+#define SWIGTYPE_p_LassoDefederation swig_types[3]
+#define SWIGTYPE_p_LassoEcp swig_types[4]
+#define SWIGTYPE_p_LassoEncryptionMode swig_types[5]
+#define SWIGTYPE_p_LassoEncryptionSymKeyType swig_types[6]
+#define SWIGTYPE_p_LassoFederation swig_types[7]
+#define SWIGTYPE_p_LassoHttpMethod swig_types[8]
+#define SWIGTYPE_p_LassoIdentity swig_types[9]
+#define SWIGTYPE_p_LassoLecp swig_types[10]
+#define SWIGTYPE_p_LassoLibAssertion swig_types[11]
+#define SWIGTYPE_p_LassoLibAuthnRequest swig_types[12]
+#define SWIGTYPE_p_LassoLibAuthnResponse swig_types[13]
+#define SWIGTYPE_p_LassoLibFederationTerminationNotification swig_types[14]
+#define SWIGTYPE_p_LassoLibLogoutRequest swig_types[15]
+#define SWIGTYPE_p_LassoLibLogoutResponse swig_types[16]
+#define SWIGTYPE_p_LassoLibRegisterNameIdentifierRequest swig_types[17]
+#define SWIGTYPE_p_LassoLibRegisterNameIdentifierResponse swig_types[18]
+#define SWIGTYPE_p_LassoLibRequestAuthnContext swig_types[19]
+#define SWIGTYPE_p_LassoLibStatusResponse swig_types[20]
+#define SWIGTYPE_p_LassoLogin swig_types[21]
+#define SWIGTYPE_p_LassoLoginProtocolProfile swig_types[22]
+#define SWIGTYPE_p_LassoLogout swig_types[23]
+#define SWIGTYPE_p_LassoMdProtocolType swig_types[24]
+#define SWIGTYPE_p_LassoMiscTextNode swig_types[25]
+#define SWIGTYPE_p_LassoNameIdManagement swig_types[26]
+#define SWIGTYPE_p_LassoNameIdentifierMapping swig_types[27]
+#define SWIGTYPE_p_LassoNameRegistration swig_types[28]
+#define SWIGTYPE_p_LassoNode swig_types[29]
+#define SWIGTYPE_p_LassoNodeList swig_types[30]
+#define SWIGTYPE_p_LassoProtocolConformance swig_types[31]
+#define SWIGTYPE_p_LassoProvider swig_types[32]
+#define SWIGTYPE_p_LassoProviderRole swig_types[33]
+#define SWIGTYPE_p_LassoRequestType swig_types[34]
+#define SWIGTYPE_p_LassoSaml2Action swig_types[35]
+#define SWIGTYPE_p_LassoSaml2Advice swig_types[36]
+#define SWIGTYPE_p_LassoSaml2Assertion swig_types[37]
+#define SWIGTYPE_p_LassoSaml2Attribute swig_types[38]
+#define SWIGTYPE_p_LassoSaml2AttributeStatement swig_types[39]
+#define SWIGTYPE_p_LassoSaml2AudienceRestriction swig_types[40]
+#define SWIGTYPE_p_LassoSaml2AuthnContext swig_types[41]
+#define SWIGTYPE_p_LassoSaml2AuthnStatement swig_types[42]
+#define SWIGTYPE_p_LassoSaml2AuthzDecisionStatement swig_types[43]
+#define SWIGTYPE_p_LassoSaml2BaseIDAbstract swig_types[44]
+#define SWIGTYPE_p_LassoSaml2ConditionAbstract swig_types[45]
+#define SWIGTYPE_p_LassoSaml2Conditions swig_types[46]
+#define SWIGTYPE_p_LassoSaml2EncryptedElement swig_types[47]
+#define SWIGTYPE_p_LassoSaml2Evidence swig_types[48]
+#define SWIGTYPE_p_LassoSaml2KeyInfoConfirmationData swig_types[49]
+#define SWIGTYPE_p_LassoSaml2NameID swig_types[50]
+#define SWIGTYPE_p_LassoSaml2OneTimeUse swig_types[51]
+#define SWIGTYPE_p_LassoSaml2ProxyRestriction swig_types[52]
+#define SWIGTYPE_p_LassoSaml2StatementAbstract swig_types[53]
+#define SWIGTYPE_p_LassoSaml2Subject swig_types[54]
+#define SWIGTYPE_p_LassoSaml2SubjectConfirmation swig_types[55]
+#define SWIGTYPE_p_LassoSaml2SubjectConfirmationData swig_types[56]
+#define SWIGTYPE_p_LassoSaml2SubjectLocality swig_types[57]
+#define SWIGTYPE_p_LassoSamlAdvice swig_types[58]
+#define SWIGTYPE_p_LassoSamlAssertion swig_types[59]
+#define SWIGTYPE_p_LassoSamlAttribute swig_types[60]
+#define SWIGTYPE_p_LassoSamlAttributeDesignator swig_types[61]
+#define SWIGTYPE_p_LassoSamlAttributeStatement swig_types[62]
+#define SWIGTYPE_p_LassoSamlAttributeValue swig_types[63]
+#define SWIGTYPE_p_LassoSamlAudienceRestrictionCondition swig_types[64]
+#define SWIGTYPE_p_LassoSamlAuthenticationStatement swig_types[65]
+#define SWIGTYPE_p_LassoSamlAuthorityBinding swig_types[66]
+#define SWIGTYPE_p_LassoSamlConditionAbstract swig_types[67]
+#define SWIGTYPE_p_LassoSamlConditions swig_types[68]
+#define SWIGTYPE_p_LassoSamlNameIdentifier swig_types[69]
+#define SWIGTYPE_p_LassoSamlStatementAbstract swig_types[70]
+#define SWIGTYPE_p_LassoSamlSubject swig_types[71]
+#define SWIGTYPE_p_LassoSamlSubjectConfirmation swig_types[72]
+#define SWIGTYPE_p_LassoSamlSubjectLocality swig_types[73]
+#define SWIGTYPE_p_LassoSamlSubjectStatement swig_types[74]
+#define SWIGTYPE_p_LassoSamlSubjectStatementAbstract swig_types[75]
+#define SWIGTYPE_p_LassoSamlp2ArtifactResolve swig_types[76]
+#define SWIGTYPE_p_LassoSamlp2ArtifactResponse swig_types[77]
+#define SWIGTYPE_p_LassoSamlp2AssertionIDRequest swig_types[78]
+#define SWIGTYPE_p_LassoSamlp2AttributeQuery swig_types[79]
+#define SWIGTYPE_p_LassoSamlp2AuthnQuery swig_types[80]
+#define SWIGTYPE_p_LassoSamlp2AuthnRequest swig_types[81]
+#define SWIGTYPE_p_LassoSamlp2AuthzDecisionQuery swig_types[82]
+#define SWIGTYPE_p_LassoSamlp2Extensions swig_types[83]
+#define SWIGTYPE_p_LassoSamlp2IDPEntry swig_types[84]
+#define SWIGTYPE_p_LassoSamlp2IDPList swig_types[85]
+#define SWIGTYPE_p_LassoSamlp2LogoutRequest swig_types[86]
+#define SWIGTYPE_p_LassoSamlp2ManageNameIDRequest swig_types[87]
+#define SWIGTYPE_p_LassoSamlp2NameIDMappingRequest swig_types[88]
+#define SWIGTYPE_p_LassoSamlp2NameIDMappingResponse swig_types[89]
+#define SWIGTYPE_p_LassoSamlp2NameIDPolicy swig_types[90]
+#define SWIGTYPE_p_LassoSamlp2RequestAbstract swig_types[91]
+#define SWIGTYPE_p_LassoSamlp2RequestedAuthnContext swig_types[92]
+#define SWIGTYPE_p_LassoSamlp2Response swig_types[93]
+#define SWIGTYPE_p_LassoSamlp2Scoping swig_types[94]
+#define SWIGTYPE_p_LassoSamlp2Status swig_types[95]
+#define SWIGTYPE_p_LassoSamlp2StatusCode swig_types[96]
+#define SWIGTYPE_p_LassoSamlp2StatusDetail swig_types[97]
+#define SWIGTYPE_p_LassoSamlp2StatusResponse swig_types[98]
+#define SWIGTYPE_p_LassoSamlp2SubjectQueryAbstract swig_types[99]
+#define SWIGTYPE_p_LassoSamlp2Terminate swig_types[100]
+#define SWIGTYPE_p_LassoSamlpRequest swig_types[101]
+#define SWIGTYPE_p_LassoSamlpRequestAbstract swig_types[102]
+#define SWIGTYPE_p_LassoSamlpResponse swig_types[103]
+#define SWIGTYPE_p_LassoSamlpResponseAbstract swig_types[104]
+#define SWIGTYPE_p_LassoSamlpStatus swig_types[105]
+#define SWIGTYPE_p_LassoSamlpStatusCode swig_types[106]
+#define SWIGTYPE_p_LassoServer swig_types[107]
+#define SWIGTYPE_p_LassoSession swig_types[108]
+#define SWIGTYPE_p_LassoSignatureMethod swig_types[109]
+#define SWIGTYPE_p_LassoSignatureType swig_types[110]
+#define SWIGTYPE_p_LassoStringDict swig_types[111]
+#define SWIGTYPE_p_LassoStringList swig_types[112]
+#define SWIGTYPE_p_char swig_types[113]
+#define SWIGTYPE_p_p_void swig_types[114]
+#define SWIGTYPE_p_void swig_types[115]
+static swig_type_info *swig_types[117];
+static swig_module_info swig_module = {swig_types, 116, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -1091,6 +1094,7 @@ extern "C" {
 #include <lasso/lasso.h>
 #include <lasso/xml/lib_assertion.h>
 #include <lasso/xml/saml_attribute_value.h>
+#include <lasso/xml/misc_text_node.h>
 
 #ifdef LASSO_WSF_ENABLED
 #include <lasso/xml/disco_resource_id.h>
@@ -1105,14 +1109,14 @@ extern "C" {
 
 
 
-/* 
+/*
  * Thanks to the patch in this Debian bug for the solution
  * to the crash inside vsnprintf on some architectures.
  *
  * "reuse of args inside the while(1) loop is in violation of the
  * specs and only happens to work by accident on other systems."
  *
- * http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=104325 
+ * http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=104325
  */
 
 #ifndef va_copy
@@ -1164,7 +1168,8 @@ typedef struct node_info {
 #endif
 } node_info;
 
-static node_info node_infos[250]; /* FIXME: Size should be computed */
+#define NODE_INFOS_SIZE 500
+static node_info node_infos[NODE_INFOS_SIZE]; /* FIXME: Size should be computed */
 
 /* Cast a LassoNode into the appropriate derivated class. */
 static swig_type_info *dynamic_cast_node(void **nodePointer) {
@@ -1181,6 +1186,7 @@ static swig_type_info *dynamic_cast_node(void **nodePointer) {
 	return NULL;
 }
 
+#ifndef SWIGPYTHON
 static node_info *get_node_info_with_swig(swig_type_info *swig) {
 	node_info *info;
 
@@ -1190,6 +1196,7 @@ static node_info *get_node_info_with_swig(swig_type_info *swig) {
 	}
 	return NULL;
 }
+#endif
 
 #if defined(PHP_VERSION) && ! defined(PHP_VERSION_ID)
 static void set_node_info(node_info *info, char *name, char *superName, swig_type_info *swig,
@@ -1198,6 +1205,7 @@ static void set_node_info(node_info *info, char *name, char *superName, swig_typ
 static void set_node_info(node_info *info, char *name, char *superName, swig_type_info *swig) {
 #endif
 	node_info *super;
+	static int node_info_count = 0;
 
 	info->name = name;
 	if (superName) {
@@ -1206,7 +1214,7 @@ static void set_node_info(node_info *info, char *name, char *superName, swig_typ
 				break;
 		if (super == info) {
 			printf("Lasso Swig Alert: Unknown super class %s for class %s\n",
-			       superName, name);
+					superName, name);
 			super = NULL;
 		}
 	} else {
@@ -1217,6 +1225,11 @@ static void set_node_info(node_info *info, char *name, char *superName, swig_typ
 #if defined(PHP_VERSION) && ! defined(PHP_VERSION_ID)
 	info->php = php;
 #endif
+	node_info_count++;
+	if (node_info_count >= NODE_INFOS_SIZE) {
+		fprintf(stderr,	"Too many allocated objects. You must increase NODE_INFOS_SIZE constant in Lasso.i.\n");
+		abort();
+	}
 }
 
 
@@ -1258,9 +1271,9 @@ static void add_xml_to_array(xmlNode *xmlnode, GPtrArray *array)
 		xmlNodeDumpOutput(buf, NULL, xmlnode, 0, 1, NULL);
 		xmlOutputBufferFlush(buf);
 		if (buf->conv == NULL) {
-			xmlString = g_strdup(buf->buffer->content);
+			xmlString = g_strdup((char*)buf->buffer->content);
 		} else {
-			xmlString = g_strdup(buf->conv->content);
+			xmlString = g_strdup((char*)buf->conv->content);
 		}
 		xmlOutputBufferClose(buf);
 	}
@@ -1359,9 +1372,9 @@ static char* get_xml_string(xmlNode *xmlnode)
 		xmlNodeDumpOutput(buf, NULL, xmlnode, 0, 1, NULL);
 		xmlOutputBufferFlush(buf);
 		if (buf->conv == NULL) {
-			xmlString = g_strdup(buf->buffer->content);
+			xmlString = g_strdup((char*)buf->buffer->content);
 		} else {
-			xmlString = g_strdup(buf->conv->content);
+			xmlString = g_strdup((char*)buf->conv->content);
 		}
 		xmlOutputBufferClose(buf);
 	}
@@ -1373,7 +1386,7 @@ static xmlNode *get_string_xml(const char *string) {
 	xmlDoc *doc;
 	xmlNode *node;
 
-	doc = xmlReadDoc(string, NULL, NULL, XML_PARSE_NONET);
+	doc = xmlReadDoc((xmlChar*)string, NULL, NULL, XML_PARSE_NONET);
 	node = xmlDocGetRootElement(doc);
 	if (node != NULL) {
 		node = xmlCopyNode(node, 1);
@@ -1490,7 +1503,7 @@ static void set_xml_string(xmlNode **xmlnode, const char* string)
 	xmlDoc *doc;
 	xmlNode *node;
 
-	doc = xmlReadDoc(string, NULL, NULL, XML_PARSE_NONET);
+	doc = xmlReadDoc((xmlChar*)string, NULL, NULL, XML_PARSE_NONET);
 	node = xmlDocGetRootElement(doc);
 	if (node != NULL) {
 		node = xmlCopyNode(node, 1);
@@ -1577,6 +1590,7 @@ static int _propget_LassoNodeList(zend_property_reference *property_reference, p
 
 #define new_LassoNodeList g_ptr_array_new
 
+void delete_LassoNodeList(GPtrArray *self);
 void delete_LassoNodeList(GPtrArray *self) {
 	g_ptr_array_foreach(self, (GFunc) free_node_array_item, NULL);
 	g_ptr_array_free(self, false);
@@ -1624,6 +1638,54 @@ static int _propget_LassoStringList(zend_property_reference *property_reference,
 
 #define new_LassoStringList g_ptr_array_new
 #define delete_LassoStringList(self) g_ptr_array_free(self, true)
+
+
+
+typedef GHashTable LassoStringDict;
+
+SWIGINTERN GHashTable *LassoStringDict_cast(LassoStringDict *self){
+			return self;
+		}
+SWIGINTERN LassoStringDict *LassoStringDict_frompointer(GHashTable *stringDict){
+			return (LassoStringDict*)stringDict;
+		}
+SWIGINTERN char *LassoStringDict_getItem(LassoStringDict *self,char *key){
+			return g_strdup(g_hash_table_lookup(self, key));
+		}
+SWIGINTERN void LassoStringDict_setItem(LassoStringDict *self,char *key,char *item){
+			g_hash_table_insert(self, g_strdup(key), g_strdup(item));
+		}
+static int _wrap_propset_LassoStringDict(zend_property_reference *property_reference, pval *value);
+static int _propset_LassoStringDict(zend_property_reference *property_reference, pval *value);
+static pval _wrap_propget_LassoStringDict(zend_property_reference *property_reference);
+static int _propget_LassoStringDict(zend_property_reference *property_reference, pval *value);
+
+
+/* Constructors, destructors & static methods implementations */
+
+static GHashTable* lasso_string_dict_new()
+{
+	return g_hash_table_new_full(g_str_hash, g_str_equal, g_free, NULL);
+}
+
+#define new_LassoStringDict lasso_string_dict_new
+#define delete_LassoStringDict(self) g_hash_table_destroy(self)
+
+
+static int _wrap_propset_LassoMiscTextNode(zend_property_reference *property_reference, pval *value);
+static int _propset_LassoMiscTextNode(zend_property_reference *property_reference, pval *value);
+static pval _wrap_propget_LassoMiscTextNode(zend_property_reference *property_reference);
+static int _propget_LassoMiscTextNode(zend_property_reference *property_reference, pval *value);
+
+
+/* Constructors, destructors & static methods implementations */
+
+#define new_LassoMiscTextNode lasso_misc_text_node_new
+#define delete_LassoMiscTextNode(self) lasso_node_destroy(LASSO_NODE(self))
+
+/* Implementations of methods inherited from LassoNode */
+
+#define LassoMiscTextNode_dump(self) lasso_node_dump(LASSO_NODE(self))
 
 
 static int _wrap_propset_LassoSamlAdvice(zend_property_reference *property_reference, pval *value);
@@ -3018,6 +3080,7 @@ static int _propget_LassoServer(zend_property_reference *property_reference, pva
 
 /* providerIds */
 #define LassoServer_get_providerIds LassoServer_providerIds_get
+LassoStringList *LassoServer_providerIds_get(LassoServer *self);
 LassoStringList *LassoServer_providerIds_get(LassoServer *self) {
 	GPtrArray *providerIds = g_ptr_array_sized_new(g_hash_table_size(self->providers));
 	g_hash_table_foreach(self->providers, (GHFunc) add_key_to_array, providerIds);
@@ -3044,7 +3107,8 @@ LassoStringList *LassoServer_providerIds_get(LassoServer *self) {
 /* Methods implementations */
 
 #define LassoServer_addProvider lasso_server_add_provider
-#define LassoServer_addService lasso_server_add_service
+#define LassoServer_addService(self, service) lasso_server_add_service(self, LASSO_NODE(service))
+#define LassoServer_addServiceFromDump lasso_server_add_service_from_dump
 #define LassoServer_dump lasso_server_dump
 #define LassoServer_getProvider lasso_server_get_provider
 #define LassoServer_getService lasso_server_get_service
@@ -3097,6 +3161,7 @@ static int _propget_LassoIdentity(zend_property_reference *property_reference, p
 
 /* providerIds */
 #define LassoIdentity_get_providerIds LassoIdentity_providerIds_get
+LassoStringList *LassoIdentity_providerIds_get(LassoIdentity *self);
 LassoStringList *LassoIdentity_providerIds_get(LassoIdentity *self) {
 	GPtrArray *providerIds = g_ptr_array_sized_new(g_hash_table_size(self->federations));
 	g_hash_table_foreach(self->federations, (GHFunc) add_key_to_array, providerIds);
@@ -3121,6 +3186,7 @@ LassoStringList *LassoIdentity_providerIds_get(LassoIdentity *self) {
 #define LassoIdentity_addResourceOffering lasso_identity_add_resource_offering
 #define LassoIdentity_removeResourceOffering lasso_identity_remove_resource_offering
 
+LassoNodeList *LassoIdentity_getOfferings(LassoIdentity *self, const char *service_type);
 LassoNodeList *LassoIdentity_getOfferings(LassoIdentity *self, const char *service_type) {
 	GPtrArray *array = NULL;
 	GList *list;
@@ -3133,6 +3199,22 @@ LassoNodeList *LassoIdentity_getOfferings(LassoIdentity *self, const char *servi
 	}
 	return array;
 }
+
+#include <lasso/id-wsf-2.0/identity.h>
+
+LassoStringList* LassoIdentity_getSvcMDIDs(LassoIdentity *self);
+LassoStringList* LassoIdentity_getSvcMDIDs(LassoIdentity *self) {
+	GList *list = lasso_identity_get_svc_md_ids(self);
+	GPtrArray *svcMDIDs = g_ptr_array_sized_new(g_list_length(list));
+	
+	if (list) {
+		g_list_foreach(list, (GFunc)add_string_to_array, svcMDIDs);
+		g_list_free(list);
+	}
+
+	return svcMDIDs;
+}
+
 #endif
 
 
@@ -3146,6 +3228,7 @@ static int _propget_LassoSession(zend_property_reference *property_reference, pv
 
 /* providerIds */
 #define LassoSession_get_providerIds LassoSession_providerIds_get
+LassoStringList *LassoSession_providerIds_get(LassoSession *self);
 LassoStringList *LassoSession_providerIds_get(LassoSession *self) {
 	GPtrArray *providerIds = g_ptr_array_sized_new(g_hash_table_size(self->assertions));
 	g_hash_table_foreach(self->assertions, (GHFunc) add_key_to_array, providerIds);
@@ -3162,6 +3245,7 @@ LassoStringList *LassoSession_providerIds_get(LassoSession *self) {
 
 #define LassoSession_dump lasso_session_dump
 
+LassoNodeList *LassoSession_getAssertions(LassoSession *self, char *providerId);
 LassoNodeList *LassoSession_getAssertions(LassoSession *self, char *providerId) {
 	GPtrArray *assertionsArray;
 	GList *assertionsList;
@@ -3264,13 +3348,10 @@ static int _propget_LassoDefederation(zend_property_reference *property_referenc
 
 /* Implementations of methods inherited from Profile */
 
-int LassoDefederation_setIdentityFromDump(LassoDefederation *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoDefederation_setSessionFromDump(LassoDefederation *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoDefederation_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoDefederation_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Methods implementations */
 
@@ -3370,13 +3451,10 @@ static int _propget_LassoLogin(zend_property_reference *property_reference, pval
 
 /* Implementations of methods inherited from Profile */
 
-int LassoLogin_setIdentityFromDump(LassoLogin *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoLogin_setSessionFromDump(LassoLogin *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoLogin_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoLogin_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Methods implementations */
 
@@ -3397,7 +3475,7 @@ int LassoLogin_setSessionFromDump(LassoLogin *self, char *dump) {
 #define LassoLogin_processAuthnResponseMsg lasso_login_process_authn_response_msg
 #define LassoLogin_processRequestMsg lasso_login_process_request_msg
 #define LassoLogin_processResponseMsg lasso_login_process_response_msg
-#define LassoLogin_setEncryptedResourceId lasso_login_set_encryptedResourceId 
+#define LassoLogin_setEncryptedResourceId lasso_login_set_encryptedResourceId
 #define LassoLogin_setResourceId lasso_login_set_resourceId
 #define LassoLogin_validateRequestMsg lasso_login_validate_request_msg
 #define LassoLogin_processPaosResponseMsg lasso_login_process_paos_response_msg
@@ -3491,13 +3569,10 @@ static int _propget_LassoLogout(zend_property_reference *property_reference, pva
 
 /* Implementations of methods inherited from Profile */
 
-int LassoLogout_setIdentityFromDump(LassoLogout *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoLogout_setSessionFromDump(LassoLogout *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoLogout_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoLogout_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Methods implementations */
 
@@ -3599,39 +3674,28 @@ static int _propget_LassoLecp(zend_property_reference *property_reference, pval 
 
 /* Implementations of methods inherited from Profile */
 
-int LassoLecp_setIdentityFromDump(LassoLecp *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoLecp_setSessionFromDump(LassoLecp *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoLecp_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoLecp_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Implementations of methods inherited from Login */
 
-int LassoLecp_buildAssertion(LassoLecp *self, char *authenticationMethod,
-		char *authenticationInstant, char *reauthenticateOnOrAfter, char *notBefore,
-		char *notOnOrAfter) {
-	return lasso_login_build_assertion(LASSO_LOGIN(self), authenticationMethod,
-			authenticationInstant, reauthenticateOnOrAfter, notBefore, notOnOrAfter);
-}
+#define LassoLecp_buildAssertion(self, authenticationMethod, authenticationInstant, \
+		reauthenticateOnOrAfter, notBefore, notOnOrAfter) \
+	lasso_login_build_assertion(LASSO_LOGIN(self), authenticationMethod, \
+		authenticationInstant, reauthenticateOnOrAfter, notBefore, notOnOrAfter)
 
 #ifdef LASSO_WSF_ENABLED
-int LassoLecp_setEncryptedResourceId(LassoLecp *self,
-		LassoDiscoEncryptedResourceID *encryptedResourceId) {
-	return lasso_login_set_encryptedResourceId(LASSO_LOGIN(self), encryptedResourceId);
-}
+#define LassoLecp_setEncryptedResourceId(self, encryptedResourceId) \
+	lasso_login_set_encryptedResourceId(LASSO_LOGIN(self), encryptedResourceId)
 #endif
 
-int LassoLecp_setResourceId(LassoLecp *self, char *content) {
-	return lasso_login_set_resourceId(LASSO_LOGIN(self), content);
-}
+#define LassoLecp_setResourceId(self, content) \
+	lasso_login_set_resourceId(LASSO_LOGIN(self), content)
 
-int LassoLecp_validateRequestMsg(LassoLecp *self, gboolean authenticationResult,
-		gboolean isConsentObtained) {
-	return lasso_login_validate_request_msg(LASSO_LOGIN(self), authenticationResult,
-			isConsentObtained);
-}
+#define LassoLecp_validateRequestMsg(self, authenticationResult, isConsentObtained) \
+	lasso_login_validate_request_msg(LASSO_LOGIN(self), authenticationResult, isConsentObtained)
 
 /* Methods implementations */
 
@@ -3732,13 +3796,10 @@ static int _propget_LassoNameIdentifierMapping(zend_property_reference *property
 
 /* Implementations of methods inherited from Profile */
 
-int LassoNameIdentifierMapping_setIdentityFromDump(LassoNameIdentifierMapping *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoNameIdentifierMapping_setSessionFromDump(LassoNameIdentifierMapping *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoNameIdentifierMapping_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoNameIdentifierMapping_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Methods implementations */
 
@@ -3846,13 +3907,10 @@ static int _propget_LassoNameRegistration(zend_property_reference *property_refe
 
 /* Implementations of methods inherited from Profile */
 
-int LassoNameRegistration_setIdentityFromDump(LassoNameRegistration *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoNameRegistration_setSessionFromDump(LassoNameRegistration *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoNameRegistration_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoNameRegistration_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Methods implementations */
 
@@ -3874,7 +3932,7 @@ static pval _wrap_propget_LassoNameIdManagement(zend_property_reference *propert
 static int _propget_LassoNameIdManagement(zend_property_reference *property_reference, pval *value);
 
 
-/* Implementations of attributes inherited from Profile */
+/* Implementations of attributes inherited from LassoProfile */
 
 /* identity */
 #define LassoNameIdManagement_get_identity(self) lasso_profile_get_identity(LASSO_PROFILE(self))
@@ -3954,15 +4012,12 @@ static int _propget_LassoNameIdManagement(zend_property_reference *property_refe
 #define delete_LassoNameIdManagement(self) lasso_node_destroy(LASSO_NODE(self))
 #define LassoNameIdManagement_newFromDump lasso_name_id_management_new_from_dump
 
-/* Implementations of methods inherited from Profile */
+/* Implementations of methods inherited from LassoProfile */
 
-int LassoNameIdManagement_setIdentityFromDump(LassoNameIdManagement *self, char *dump) {
-	return lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump);
-}
-
-int LassoNameIdManagement_setSessionFromDump(LassoNameIdManagement *self, char *dump) {
-	return lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump);
-}
+#define LassoNameIdManagement_setIdentityFromDump(self, dump) \
+	lasso_profile_set_identity_from_dump(LASSO_PROFILE(self), dump)
+#define LassoNameIdManagement_setSessionFromDump(self, dump) \
+	lasso_profile_set_session_from_dump(LASSO_PROFILE(self), dump)
 
 /* Methods implementations */
 
@@ -4098,17 +4153,21 @@ static pval _wrap_propget_LassoSamlp2RequestedAuthnContext(zend_property_referen
 static int _propget_LassoSamlp2RequestedAuthnContext(zend_property_reference *property_reference, pval *value);
 
 
-/* authnContextClassRef */
-#define LassoSamlp2RequestedAuthnContext_get_authnContextClassRef(self) get_string_list((self)->AuthnContextClassRef)
-#define LassoSamlp2RequestedAuthnContext_authnContextClassRef_get(self) get_string_list((self)->AuthnContextClassRef)
-#define LassoSamlp2RequestedAuthnContext_set_authnContextClassRef(self, value) set_string_list(&(self)->AuthnContextClassRef, (value))
-#define LassoSamlp2RequestedAuthnContext_authnContextClassRef_set(self, value) set_string_list(&(self)->AuthnContextClassRef, (value))
+/* AuthnContextClassRef */
 
-/* authnContextDeclRef */
-#define LassoSamlp2RequestedAuthnContext_get_authnContextDeclRef(self) get_string_list((self)->AuthnContextDeclRef)
-#define LassoSamlp2RequestedAuthnContext_authnContextDeclRef_get(self) get_string_list((self)->AuthnContextDeclRef)
-#define LassoSamlp2RequestedAuthnContext_set_authnContextDeclRef(self, value) set_string_list(&(self)->AuthnContextDeclRef, (value))
-#define LassoSamlp2RequestedAuthnContext_authnContextDeclRef_set(self, value) set_string_list(&(self)->AuthnContextDeclRef, (value))
+#define LassoSamlp2RequestedAuthnContext_get_AuthnContextClassRef(self) get_string_list((self)->AuthnContextClassRef)
+#define LassoSamlp2RequestedAuthnContext_AuthnContextClassRef_get(self) get_string_list((self)->AuthnContextClassRef)
+#define LassoSamlp2RequestedAuthnContext_set_AuthnContextClassRef(self,value) set_string_list(&(self)->AuthnContextClassRef, (value))
+#define LassoSamlp2RequestedAuthnContext_AuthnContextClassRef_set(self,value) set_string_list(&(self)->AuthnContextClassRef, (value))
+                    
+
+/* AuthnContextDeclRef */
+
+#define LassoSamlp2RequestedAuthnContext_get_AuthnContextDeclRef(self) get_string_list((self)->AuthnContextDeclRef)
+#define LassoSamlp2RequestedAuthnContext_AuthnContextDeclRef_get(self) get_string_list((self)->AuthnContextDeclRef)
+#define LassoSamlp2RequestedAuthnContext_set_AuthnContextDeclRef(self,value) set_string_list(&(self)->AuthnContextDeclRef, (value))
+#define LassoSamlp2RequestedAuthnContext_AuthnContextDeclRef_set(self,value) set_string_list(&(self)->AuthnContextDeclRef, (value))
+                    
 
 
 /* Constructors, destructors & static methods implementations */
@@ -4158,12 +4217,38 @@ static int _propget_LassoSaml2Assertion(zend_property_reference *property_refere
 #define LassoSaml2Assertion_set_Advice(self,value) set_node((gpointer*)&(self)->Advice, (value))
 #define LassoSaml2Assertion_Advice_set(self,value) set_node((gpointer*)&(self)->Advice, (value))
                     
+
+/* Statement */
+
+#define LassoSaml2Assertion_get_Statement(self) get_node_list((self)->Statement)
+#define LassoSaml2Assertion_Statement_get(self) get_node_list((self)->Statement)
+#define LassoSaml2Assertion_set_Statement(self,value) set_node_list(&(self)->Statement, (value))
+#define LassoSaml2Assertion_Statement_set(self,value) set_node_list(&(self)->Statement, (value))
+                    
+
 /* AuthnStatement */
 
 #define LassoSaml2Assertion_get_AuthnStatement(self) get_node_list((self)->AuthnStatement)
 #define LassoSaml2Assertion_AuthnStatement_get(self) get_node_list((self)->AuthnStatement)
-#define LassoSaml2Assertion_set_AuthnStatement(self, value) set_node_list(&(self)->AuthnStatement, (value))
-#define LassoSaml2Assertion_AuthnStatement_set(self, value) set_node_list(&(self)->AuthnStatement, (value))
+#define LassoSaml2Assertion_set_AuthnStatement(self,value) set_node_list(&(self)->AuthnStatement, (value))
+#define LassoSaml2Assertion_AuthnStatement_set(self,value) set_node_list(&(self)->AuthnStatement, (value))
+                    
+
+/* AuthzDecisionStatement */
+
+#define LassoSaml2Assertion_get_AuthzDecisionStatement(self) get_node_list((self)->AuthzDecisionStatement)
+#define LassoSaml2Assertion_AuthzDecisionStatement_get(self) get_node_list((self)->AuthzDecisionStatement)
+#define LassoSaml2Assertion_set_AuthzDecisionStatement(self,value) set_node_list(&(self)->AuthzDecisionStatement, (value))
+#define LassoSaml2Assertion_AuthzDecisionStatement_set(self,value) set_node_list(&(self)->AuthzDecisionStatement, (value))
+                    
+
+/* AttributeStatement */
+
+#define LassoSaml2Assertion_get_AttributeStatement(self) get_node_list((self)->AttributeStatement)
+#define LassoSaml2Assertion_AttributeStatement_get(self) get_node_list((self)->AttributeStatement)
+#define LassoSaml2Assertion_set_AttributeStatement(self,value) set_node_list(&(self)->AttributeStatement, (value))
+#define LassoSaml2Assertion_AttributeStatement_set(self,value) set_node_list(&(self)->AttributeStatement, (value))
+                    
 
 
 /* Constructors, destructors & static methods implementations */
@@ -4228,17 +4313,33 @@ static int _propget_LassoSaml2Conditions(zend_property_reference *property_refer
 
 #define LassoSaml2Conditions_get_Condition(self) get_node_list((self)->Condition)
 #define LassoSaml2Conditions_Condition_get(self) get_node_list((self)->Condition)
-#define LassoSaml2Conditions_set_Condition(self, value) set_node_list(&(self)->Condition, (value))
-#define LassoSaml2Conditions_Condition_set(self, value) set_node_list(&(self)->Condition, (value))
+#define LassoSaml2Conditions_set_Condition(self,value) set_node_list(&(self)->Condition, (value))
+#define LassoSaml2Conditions_Condition_set(self,value) set_node_list(&(self)->Condition, (value))
+                    
 
 /* AudienceRestriction */
 
 #define LassoSaml2Conditions_get_AudienceRestriction(self) get_node_list((self)->AudienceRestriction)
 #define LassoSaml2Conditions_AudienceRestriction_get(self) get_node_list((self)->AudienceRestriction)
-#define LassoSaml2Conditions_set_AudienceRestriction(self, value) set_node_list(&(self)->AudienceRestriction, (value))
-#define LassoSaml2Conditions_AudienceRestriction_set(self, value) set_node_list(&(self)->AudienceRestriction, (value))
+#define LassoSaml2Conditions_set_AudienceRestriction(self,value) set_node_list(&(self)->AudienceRestriction, (value))
+#define LassoSaml2Conditions_AudienceRestriction_set(self,value) set_node_list(&(self)->AudienceRestriction, (value))
+                    
 
+/* OneTimeUse */
 
+#define LassoSaml2Conditions_get_OneTimeUse(self) get_node_list((self)->OneTimeUse)
+#define LassoSaml2Conditions_OneTimeUse_get(self) get_node_list((self)->OneTimeUse)
+#define LassoSaml2Conditions_set_OneTimeUse(self,value) set_node_list(&(self)->OneTimeUse, (value))
+#define LassoSaml2Conditions_OneTimeUse_set(self,value) set_node_list(&(self)->OneTimeUse, (value))
+                    
+
+/* ProxyRestriction */
+
+#define LassoSaml2Conditions_get_ProxyRestriction(self) get_node_list((self)->ProxyRestriction)
+#define LassoSaml2Conditions_ProxyRestriction_get(self) get_node_list((self)->ProxyRestriction)
+#define LassoSaml2Conditions_set_ProxyRestriction(self,value) set_node_list(&(self)->ProxyRestriction, (value))
+#define LassoSaml2Conditions_ProxyRestriction_set(self,value) set_node_list(&(self)->ProxyRestriction, (value))
+                    
 
 
 /* Constructors, destructors & static methods implementations */
@@ -4256,6 +4357,38 @@ static int _propset_LassoSaml2Evidence(zend_property_reference *property_referen
 static pval _wrap_propget_LassoSaml2Evidence(zend_property_reference *property_reference);
 static int _propget_LassoSaml2Evidence(zend_property_reference *property_reference, pval *value);
 
+
+/* AssertionIDRef */
+
+#define LassoSaml2Evidence_get_AssertionIDRef(self) get_node_list((self)->AssertionIDRef)
+#define LassoSaml2Evidence_AssertionIDRef_get(self) get_node_list((self)->AssertionIDRef)
+#define LassoSaml2Evidence_set_AssertionIDRef(self,value) set_node_list(&(self)->AssertionIDRef, (value))
+#define LassoSaml2Evidence_AssertionIDRef_set(self,value) set_node_list(&(self)->AssertionIDRef, (value))
+                    
+
+/* AssertionURIRef */
+
+#define LassoSaml2Evidence_get_AssertionURIRef(self) get_string_list((self)->AssertionURIRef)
+#define LassoSaml2Evidence_AssertionURIRef_get(self) get_string_list((self)->AssertionURIRef)
+#define LassoSaml2Evidence_set_AssertionURIRef(self,value) set_string_list(&(self)->AssertionURIRef, (value))
+#define LassoSaml2Evidence_AssertionURIRef_set(self,value) set_string_list(&(self)->AssertionURIRef, (value))
+                    
+
+/* Assertion */
+
+#define LassoSaml2Evidence_get_Assertion(self) get_node_list((self)->Assertion)
+#define LassoSaml2Evidence_Assertion_get(self) get_node_list((self)->Assertion)
+#define LassoSaml2Evidence_set_Assertion(self,value) set_node_list(&(self)->Assertion, (value))
+#define LassoSaml2Evidence_Assertion_set(self,value) set_node_list(&(self)->Assertion, (value))
+                    
+
+/* EncryptedAssertion */
+
+#define LassoSaml2Evidence_get_EncryptedAssertion(self) get_node_list((self)->EncryptedAssertion)
+#define LassoSaml2Evidence_EncryptedAssertion_get(self) get_node_list((self)->EncryptedAssertion)
+#define LassoSaml2Evidence_set_EncryptedAssertion(self,value) set_node_list(&(self)->EncryptedAssertion, (value))
+#define LassoSaml2Evidence_EncryptedAssertion_set(self,value) set_node_list(&(self)->EncryptedAssertion, (value))
+                    
 
 
 /* Constructors, destructors & static methods implementations */
@@ -4382,6 +4515,38 @@ static int _propset_LassoSaml2Advice(zend_property_reference *property_reference
 static pval _wrap_propget_LassoSaml2Advice(zend_property_reference *property_reference);
 static int _propget_LassoSaml2Advice(zend_property_reference *property_reference, pval *value);
 
+
+/* AssertionIDRef */
+
+#define LassoSaml2Advice_get_AssertionIDRef(self) get_node_list((self)->AssertionIDRef)
+#define LassoSaml2Advice_AssertionIDRef_get(self) get_node_list((self)->AssertionIDRef)
+#define LassoSaml2Advice_set_AssertionIDRef(self,value) set_node_list(&(self)->AssertionIDRef, (value))
+#define LassoSaml2Advice_AssertionIDRef_set(self,value) set_node_list(&(self)->AssertionIDRef, (value))
+                    
+
+/* AssertionURIRef */
+
+#define LassoSaml2Advice_get_AssertionURIRef(self) get_string_list((self)->AssertionURIRef)
+#define LassoSaml2Advice_AssertionURIRef_get(self) get_string_list((self)->AssertionURIRef)
+#define LassoSaml2Advice_set_AssertionURIRef(self,value) set_string_list(&(self)->AssertionURIRef, (value))
+#define LassoSaml2Advice_AssertionURIRef_set(self,value) set_string_list(&(self)->AssertionURIRef, (value))
+                    
+
+/* Assertion */
+
+#define LassoSaml2Advice_get_Assertion(self) get_node_list((self)->Assertion)
+#define LassoSaml2Advice_Assertion_get(self) get_node_list((self)->Assertion)
+#define LassoSaml2Advice_set_Assertion(self,value) set_node_list(&(self)->Assertion, (value))
+#define LassoSaml2Advice_Assertion_set(self,value) set_node_list(&(self)->Assertion, (value))
+                    
+
+/* EncryptedAssertion */
+
+#define LassoSaml2Advice_get_EncryptedAssertion(self) get_node_list((self)->EncryptedAssertion)
+#define LassoSaml2Advice_EncryptedAssertion_get(self) get_node_list((self)->EncryptedAssertion)
+#define LassoSaml2Advice_set_EncryptedAssertion(self,value) set_node_list(&(self)->EncryptedAssertion, (value))
+#define LassoSaml2Advice_EncryptedAssertion_set(self,value) set_node_list(&(self)->EncryptedAssertion, (value))
+                    
 
 
 /* Constructors, destructors & static methods implementations */
@@ -4584,6 +4749,22 @@ static pval _wrap_propget_LassoSaml2AttributeStatement(zend_property_reference *
 static int _propget_LassoSaml2AttributeStatement(zend_property_reference *property_reference, pval *value);
 
 
+/* Attribute */
+
+#define LassoSaml2AttributeStatement_get_Attribute(self) get_node_list((self)->Attribute)
+#define LassoSaml2AttributeStatement_Attribute_get(self) get_node_list((self)->Attribute)
+#define LassoSaml2AttributeStatement_set_Attribute(self,value) set_node_list(&(self)->Attribute, (value))
+#define LassoSaml2AttributeStatement_Attribute_set(self,value) set_node_list(&(self)->Attribute, (value))
+                    
+
+/* EncryptedAttribute */
+
+#define LassoSaml2AttributeStatement_get_EncryptedAttribute(self) get_node_list((self)->EncryptedAttribute)
+#define LassoSaml2AttributeStatement_EncryptedAttribute_get(self) get_node_list((self)->EncryptedAttribute)
+#define LassoSaml2AttributeStatement_set_EncryptedAttribute(self,value) set_node_list(&(self)->EncryptedAttribute, (value))
+#define LassoSaml2AttributeStatement_EncryptedAttribute_set(self,value) set_node_list(&(self)->EncryptedAttribute, (value))
+                    
+
 
 /* Constructors, destructors & static methods implementations */
 
@@ -4693,6 +4874,22 @@ static pval _wrap_propget_LassoSamlp2Response(zend_property_reference *property_
 static int _propget_LassoSamlp2Response(zend_property_reference *property_reference, pval *value);
 
 
+/* Assertion */
+
+#define LassoSamlp2Response_get_Assertion(self) get_node_list((self)->Assertion)
+#define LassoSamlp2Response_Assertion_get(self) get_node_list((self)->Assertion)
+#define LassoSamlp2Response_set_Assertion(self,value) set_node_list(&(self)->Assertion, (value))
+#define LassoSamlp2Response_Assertion_set(self,value) set_node_list(&(self)->Assertion, (value))
+                    
+
+/* EncryptedAssertion */
+
+#define LassoSamlp2Response_get_EncryptedAssertion(self) get_node_list((self)->EncryptedAssertion)
+#define LassoSamlp2Response_EncryptedAssertion_get(self) get_node_list((self)->EncryptedAssertion)
+#define LassoSamlp2Response_set_EncryptedAssertion(self,value) set_node_list(&(self)->EncryptedAssertion, (value))
+#define LassoSamlp2Response_EncryptedAssertion_set(self,value) set_node_list(&(self)->EncryptedAssertion, (value))
+                    
+
 /* inherited from StatusResponse */
 
 /* Issuer */
@@ -4766,14 +4963,6 @@ static int _propget_LassoSamlp2Response(zend_property_reference *property_refere
 
 #define LassoSamlp2Response_set_Consent(self,value) set_string(&LASSO_SAMLP2_STATUS_RESPONSE(self)->Consent, (value))
 #define LassoSamlp2Response_Consent_set(self,value) set_string(&LASSO_SAMLP2_STATUS_RESPONSE(self)->Consent, (value))
-
-
-/* Assertion */
-
-#define LassoSamlp2Response_get_Assertion(self) get_node_list((self)->Assertion)
-#define LassoSamlp2Response_Assertion_get(self) get_node_list((self)->Assertion)
-#define LassoSamlp2Response_set_Assertion(self, value) set_node_list(&(self)->Assertion, (value))
-#define LassoSamlp2Response_Assertion_set(self, value) set_node_list(&(self)->Assertion, (value))
 
 
 /* Constructors, destructors & static methods implementations */
@@ -6169,6 +6358,7 @@ static int _propget_LassoSaml2Subject(zend_property_reference *property_referenc
 /* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */
 
 static swig_type_info _swigt__int = {"_int", "int", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_GHashTable = {"_p_GHashTable", "GHashTable *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_LassoCheckVersionMode = {"_p_LassoCheckVersionMode", "enum LassoCheckVersionMode *|LassoCheckVersionMode *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_LassoDefederation = {"_p_LassoDefederation", "LassoDefederation *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_LassoEcp = {"_p_LassoEcp", "LassoEcp *", 0, 0, (void*)0, 0};
@@ -6192,6 +6382,7 @@ static swig_type_info _swigt__p_LassoLogin = {"_p_LassoLogin", "LassoLogin *", 0
 static swig_type_info _swigt__p_LassoLoginProtocolProfile = {"_p_LassoLoginProtocolProfile", "enum LassoLoginProtocolProfile *|LassoLoginProtocolProfile *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_LassoLogout = {"_p_LassoLogout", "LassoLogout *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_LassoMdProtocolType = {"_p_LassoMdProtocolType", "enum LassoMdProtocolType *|LassoMdProtocolType *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_LassoMiscTextNode = {"_p_LassoMiscTextNode", "LassoMiscTextNode *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_LassoNameIdManagement = {"_p_LassoNameIdManagement", "LassoNameIdManagement *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_LassoNameIdentifierMapping = {"_p_LassoNameIdentifierMapping", "LassoNameIdentifierMapping *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_LassoNameRegistration = {"_p_LassoNameRegistration", "LassoNameRegistration *", 0, 0, (void*)0, 0};
@@ -6276,7 +6467,8 @@ static swig_type_info _swigt__p_LassoSamlpStatusCode = {"_p_LassoSamlpStatusCode
 static swig_type_info _swigt__p_LassoServer = {"_p_LassoServer", "LassoServer *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_LassoSession = {"_p_LassoSession", "LassoSession *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_LassoSignatureMethod = {"_p_LassoSignatureMethod", "enum LassoSignatureMethod *|LassoSignatureMethod *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_LassoSignatureType = {"_p_LassoSignatureType", "LassoSignatureType *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_LassoSignatureType = {"_p_LassoSignatureType", "enum LassoSignatureType *|LassoSignatureType *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_LassoStringDict = {"_p_LassoStringDict", "LassoStringDict *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_LassoStringList = {"_p_LassoStringList", "LassoStringList *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_void = {"_p_p_void", "void **", 0, 0, (void*)0, 0};
@@ -6284,6 +6476,7 @@ static swig_type_info _swigt__p_void = {"_p_void", "void *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
   &_swigt__int,
+  &_swigt__p_GHashTable,
   &_swigt__p_LassoCheckVersionMode,
   &_swigt__p_LassoDefederation,
   &_swigt__p_LassoEcp,
@@ -6307,6 +6500,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_LassoLoginProtocolProfile,
   &_swigt__p_LassoLogout,
   &_swigt__p_LassoMdProtocolType,
+  &_swigt__p_LassoMiscTextNode,
   &_swigt__p_LassoNameIdManagement,
   &_swigt__p_LassoNameIdentifierMapping,
   &_swigt__p_LassoNameRegistration,
@@ -6392,6 +6586,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_LassoSession,
   &_swigt__p_LassoSignatureMethod,
   &_swigt__p_LassoSignatureType,
+  &_swigt__p_LassoStringDict,
   &_swigt__p_LassoStringList,
   &_swigt__p_char,
   &_swigt__p_p_void,
@@ -6399,6 +6594,7 @@ static swig_type_info *swig_type_initial[] = {
 };
 
 static swig_cast_info _swigc__int[] = {  {&_swigt__int, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_GHashTable[] = {  {&_swigt__p_GHashTable, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_LassoCheckVersionMode[] = {  {&_swigt__p_LassoCheckVersionMode, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_LassoDefederation[] = {  {&_swigt__p_LassoDefederation, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_LassoEcp[] = {  {&_swigt__p_LassoEcp, 0, 0, 0},{0, 0, 0, 0}};
@@ -6422,6 +6618,7 @@ static swig_cast_info _swigc__p_LassoLogin[] = {  {&_swigt__p_LassoLogin, 0, 0, 
 static swig_cast_info _swigc__p_LassoLoginProtocolProfile[] = {  {&_swigt__p_LassoLoginProtocolProfile, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_LassoLogout[] = {  {&_swigt__p_LassoLogout, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_LassoMdProtocolType[] = {  {&_swigt__p_LassoMdProtocolType, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_LassoMiscTextNode[] = {  {&_swigt__p_LassoMiscTextNode, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_LassoNameIdManagement[] = {  {&_swigt__p_LassoNameIdManagement, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_LassoNameIdentifierMapping[] = {  {&_swigt__p_LassoNameIdentifierMapping, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_LassoNameRegistration[] = {  {&_swigt__p_LassoNameRegistration, 0, 0, 0},{0, 0, 0, 0}};
@@ -6507,6 +6704,7 @@ static swig_cast_info _swigc__p_LassoServer[] = {  {&_swigt__p_LassoServer, 0, 0
 static swig_cast_info _swigc__p_LassoSession[] = {  {&_swigt__p_LassoSession, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_LassoSignatureMethod[] = {  {&_swigt__p_LassoSignatureMethod, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_LassoSignatureType[] = {  {&_swigt__p_LassoSignatureType, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_LassoStringDict[] = {  {&_swigt__p_LassoStringDict, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_LassoStringList[] = {  {&_swigt__p_LassoStringList, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_void[] = {  {&_swigt__p_p_void, 0, 0, 0},{0, 0, 0, 0}};
@@ -6514,6 +6712,7 @@ static swig_cast_info _swigc__p_void[] = {  {&_swigt__p_void, 0, 0, 0},{0, 0, 0,
 
 static swig_cast_info *swig_cast_initial[] = {
   _swigc__int,
+  _swigc__p_GHashTable,
   _swigc__p_LassoCheckVersionMode,
   _swigc__p_LassoDefederation,
   _swigc__p_LassoEcp,
@@ -6537,6 +6736,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_LassoLoginProtocolProfile,
   _swigc__p_LassoLogout,
   _swigc__p_LassoMdProtocolType,
+  _swigc__p_LassoMiscTextNode,
   _swigc__p_LassoNameIdManagement,
   _swigc__p_LassoNameIdentifierMapping,
   _swigc__p_LassoNameRegistration,
@@ -6622,6 +6822,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_LassoSession,
   _swigc__p_LassoSignatureMethod,
   _swigc__p_LassoSignatureType,
+  _swigc__p_LassoStringDict,
   _swigc__p_LassoStringList,
   _swigc__p_char,
   _swigc__p_p_void,
@@ -6639,6 +6840,10 @@ static zend_class_entry ce_swig_LassoNodeList;
 static zend_class_entry* ptr_ce_swig_LassoNodeList=NULL;
 static zend_class_entry ce_swig_LassoStringList;
 static zend_class_entry* ptr_ce_swig_LassoStringList=NULL;
+static zend_class_entry ce_swig_LassoStringDict;
+static zend_class_entry* ptr_ce_swig_LassoStringDict=NULL;
+static zend_class_entry ce_swig_LassoMiscTextNode;
+static zend_class_entry* ptr_ce_swig_LassoMiscTextNode=NULL;
 static zend_class_entry ce_swig_LassoSamlAdvice;
 static zend_class_entry* ptr_ce_swig_LassoSamlAdvice=NULL;
 static zend_class_entry ce_swig_LassoSamlAssertion;
@@ -6832,8 +7037,8 @@ static zend_class_entry* ptr_ce_swig_LassoSaml2Subject=NULL;
 static int le_swig__p_LassoSamlp2StatusDetail=0; /* handle for LassoSamlp2StatusDetail */
 static int le_swig__p_LassoLoginProtocolProfile=0; /* handle for _p_LassoLoginProtocolProfile */
 static int le_swig__p_LassoProviderRole=0; /* handle for _p_LassoProviderRole */
-static int le_swig__p_LassoSaml2Advice=0; /* handle for LassoSaml2Advice */
 static int le_swig__p_LassoSamlAdvice=0; /* handle for LassoSamlAdvice */
+static int le_swig__p_LassoSaml2Advice=0; /* handle for LassoSaml2Advice */
 static int le_swig__p_LassoSamlpStatus=0; /* handle for LassoSamlpStatus */
 static int le_swig__p_LassoSamlp2Status=0; /* handle for LassoSamlp2Status */
 static int le_swig__p_LassoSamlp2IDPList=0; /* handle for LassoSamlp2IDPList */
@@ -6851,6 +7056,7 @@ static int le_swig__p_LassoSaml2AuthnStatement=0; /* handle for LassoSaml2AuthnS
 static int le_swig__p_LassoSaml2AttributeStatement=0; /* handle for LassoSaml2AttributeStatement */
 static int le_swig__p_LassoSaml2AudienceRestriction=0; /* handle for LassoSaml2AudienceRestriction */
 static int le_swig__p_LassoSaml2AuthzDecisionStatement=0; /* handle for LassoSaml2AuthzDecisionStatement */
+static int le_swig__p_GHashTable=0; /* handle for _p_GHashTable */
 static int le_swig__p_LassoNameIdentifierMapping=0; /* handle for LassoNameIdentifierMapping */
 static int le_swig__p_LassoSamlAttributeDesignator=0; /* handle for LassoSamlAttributeDesignator */
 static int le_swig__p_LassoCheckVersionMode=0; /* handle for _p_LassoCheckVersionMode */
@@ -6882,8 +7088,9 @@ static int le_swig__p_LassoLibRequestAuthnContext=0; /* handle for LassoLibReque
 static int le_swig__p_LassoSamlpResponseAbstract=0; /* handle for LassoSamlpResponseAbstract */
 static int le_swig__p_LassoSamlpRequestAbstract=0; /* handle for LassoSamlpRequestAbstract */
 static int le_swig__p_LassoSamlSubjectStatementAbstract=0; /* handle for LassoSamlSubjectStatementAbstract */
-static int le_swig__p_LassoSamlConditionAbstract=0; /* handle for LassoSamlConditionAbstract */
 static int le_swig__p_LassoSamlStatementAbstract=0; /* handle for LassoSamlStatementAbstract */
+static int le_swig__p_LassoSamlConditionAbstract=0; /* handle for LassoSamlConditionAbstract */
+static int le_swig__p_LassoMiscTextNode=0; /* handle for LassoMiscTextNode */
 static int le_swig__p_LassoSaml2ConditionAbstract=0; /* handle for LassoSaml2ConditionAbstract */
 static int le_swig__p_LassoSaml2BaseIDAbstract=0; /* handle for LassoSaml2BaseIDAbstract */
 static int le_swig__p_LassoSaml2AuthnContext=0; /* handle for LassoSaml2AuthnContext */
@@ -6903,6 +7110,7 @@ static int le_swig__p_char=0; /* handle for _p_char */
 static int le_swig__p_LassoSaml2Subject=0; /* handle for LassoSaml2Subject */
 static int le_swig__p_LassoSamlSubject=0; /* handle for LassoSamlSubject */
 static int le_swig__p_LassoNode=0; /* handle for LassoNode */
+static int le_swig__p_LassoStringDict=0; /* handle for LassoStringDict */
 static int le_swig__p_LassoNameRegistration=0; /* handle for LassoNameRegistration */
 static int le_swig__p_LassoProvider=0; /* handle for LassoProvider */
 static int le_swig__p_LassoNameIdManagement=0; /* handle for LassoNameIdManagement */
@@ -6919,12 +7127,12 @@ static int le_swig__p_LassoSamlp2AuthnRequest=0; /* handle for LassoSamlp2AuthnR
 static int le_swig__p_LassoSamlp2LogoutRequest=0; /* handle for LassoSamlp2LogoutRequest */
 static int le_swig__p_LassoSamlp2ManageNameIDRequest=0; /* handle for LassoSamlp2ManageNameIDRequest */
 static int le_swig__p_LassoSamlp2AttributeQuery=0; /* handle for LassoSamlp2AttributeQuery */
-static int le_swig__p_LassoSamlp2IDPEntry=0; /* handle for LassoSamlp2IDPEntry */
 static int le_swig__p_LassoLibStatusResponse=0; /* handle for LassoLibStatusResponse */
 static int le_swig__p_LassoLibRegisterNameIdentifierResponse=0; /* handle for LassoLibRegisterNameIdentifierResponse */
 static int le_swig__p_LassoLibLogoutResponse=0; /* handle for LassoLibLogoutResponse */
 static int le_swig__p_LassoLibAuthnResponse=0; /* handle for LassoLibAuthnResponse */
 static int le_swig__p_LassoSamlpResponse=0; /* handle for LassoSamlpResponse */
+static int le_swig__p_LassoSamlp2IDPEntry=0; /* handle for LassoSamlp2IDPEntry */
 static int le_swig__p_LassoSamlp2StatusResponse=0; /* handle for LassoSamlp2StatusResponse */
 static int le_swig__p_LassoSamlp2Response=0; /* handle for LassoSamlp2Response */
 static int le_swig__p_LassoSamlp2ArtifactResponse=0; /* handle for LassoSamlp2ArtifactResponse */
@@ -7054,6 +7262,36 @@ ZEND_NAMED_FUNCTION(_wrap_lasso_register_dst_service) {
     /*@SWIG@*/;
   }
   lasso_register_dst_service((char const *)arg1,(char const *)arg2);
+  
+  return;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+ZEND_NAMED_FUNCTION(_wrap_lasso_register_idwsf2_dst_service) {
+  char *arg1 = (char *) 0 ;
+  char *arg2 = (char *) 0 ;
+  zval **args[2];
+  
+  SWIG_ResetError();
+  if(ZEND_NUM_ARGS() != 2 || zend_get_parameters_array_ex(2, args) != SUCCESS) {
+    WRONG_PARAM_COUNT;
+  }
+  
+  {
+    /*@SWIG:CONVERT_STRING_IN@*/
+    convert_to_string_ex(args[0]);
+    arg1 = (char *) Z_STRVAL_PP(args[0]);
+    /*@SWIG@*/;
+  }
+  {
+    /*@SWIG:CONVERT_STRING_IN@*/
+    convert_to_string_ex(args[1]);
+    arg2 = (char *) Z_STRVAL_PP(args[1]);
+    /*@SWIG@*/;
+  }
+  lasso_register_idwsf2_dst_service((char const *)arg1,(char const *)arg2);
   
   return;
 fail:
@@ -8011,6 +8249,771 @@ static int _propset_LassoStringList(zend_property_reference *property_reference,
   return FAILURE;
 }
 
+ZEND_NAMED_FUNCTION(_wrap_new_LassoStringDict) {
+  LassoStringDict *result = 0 ;
+  
+  SWIG_ResetError();
+  /* NATIVE Constructor */
+  if(ZEND_NUM_ARGS() != 0) {
+    WRONG_PARAM_COUNT;
+  }
+  
+  result = (LassoStringDict *)new_LassoStringDict();
+  
+  if (!result) {
+    ZVAL_NULL(return_value);
+  } else {
+    SWIG_SetPointerZval(return_value, (void *)result, SWIGTYPE_p_LassoStringDict, 1);
+  /* Wrap this return value */
+  if (this_ptr) {
+    /* NATIVE Constructor, use this_ptr */
+    zval *_cPtr; MAKE_STD_ZVAL(_cPtr);
+    *_cPtr = *return_value;
+    INIT_ZVAL(*return_value);
+    add_property_zval(this_ptr,"_cPtr",_cPtr);
+  } else if (! this_ptr) {
+    /* ALTERNATIVE Constructor, make an object wrapper */
+    zval *obj, *_cPtr;
+    MAKE_STD_ZVAL(obj);
+    MAKE_STD_ZVAL(_cPtr);
+    *_cPtr = *return_value;
+    INIT_ZVAL(*return_value);
+    object_init_ex(obj,ptr_ce_swig_LassoStringDict);
+    add_property_zval(obj,"_cPtr",_cPtr);
+    *return_value=*obj;
+  }}
+  return;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+/* This function is designed to be called by the zend list destructors */
+/* to typecast and do the actual destruction */
+static void __wrap_delete_LassoStringDict(zend_rsrc_list_entry *rsrc, const char *type_name TSRMLS_DC) {
+  swig_object_wrapper *value=(swig_object_wrapper *) rsrc->ptr ;
+  void *ptr=value->ptr ;
+  int newobject=value->newobject ;
+  LassoStringDict *arg1 = (LassoStringDict *) 0 ;
+  
+  efree(value);
+  if (! newobject) return; /* can't delete it! */
+  arg1 = (LassoStringDict *)SWIG_ZTS_ConvertResourceData(ptr,type_name,SWIGTYPE_p_LassoStringDict TSRMLS_CC);
+  if (! arg1) zend_error(E_ERROR, "LassoStringDict resource already free'd");
+  delete_LassoStringDict(arg1);
+  
+}
+
+
+ZEND_NAMED_FUNCTION(_wrap_LassoStringDict_cast) {
+  LassoStringDict *arg1 = (LassoStringDict *) 0 ;
+  GHashTable *result = 0 ;
+  
+  SWIG_ResetError();
+  /* This function uses a this_ptr*/
+  if(ZEND_NUM_ARGS() != 0) {
+    WRONG_PARAM_COUNT;
+  }
+  
+  
+  if (SWIG_ConvertPtr(*&this_ptr, (void **) &arg1, SWIGTYPE_p_LassoStringDict, 0) < 0) {
+    if ((*&this_ptr)->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoStringDict_cast.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  result = (GHashTable *)LassoStringDict_cast(arg1);
+  
+  if (!result) {
+    ZVAL_NULL(return_value);
+  } else {
+    SWIG_SetPointerZval(return_value, (void *)result, SWIGTYPE_p_GHashTable, 0);
+  }
+  
+  return;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+ZEND_NAMED_FUNCTION(_wrap_LassoStringDict_frompointer) {
+  GHashTable *arg1 = (GHashTable *) 0 ;
+  LassoStringDict *result = 0 ;
+  zval **args[1];
+  
+  SWIG_ResetError();
+  if(ZEND_NUM_ARGS() != 1 || zend_get_parameters_array_ex(1, args) != SUCCESS) {
+    WRONG_PARAM_COUNT;
+  }
+  
+  
+  if (SWIG_ConvertPtr(*args[0], (void **) &arg1, SWIGTYPE_p_GHashTable, 0) < 0) {
+    if ((*args[0])->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoStringDict_frompointer.");
+    }
+  }
+  
+  result = (LassoStringDict *)LassoStringDict_frompointer(arg1);
+  
+  if (!result) {
+    ZVAL_NULL(return_value);
+  } else {
+    SWIG_SetPointerZval(return_value, (void *)result, SWIGTYPE_p_LassoStringDict, 0);
+  /* Wrap this return value */
+  {
+    /* ALTERNATIVE Constructor, make an object wrapper */
+    zval *obj, *_cPtr;
+    MAKE_STD_ZVAL(obj);
+    MAKE_STD_ZVAL(_cPtr);
+    *_cPtr = *return_value;
+    INIT_ZVAL(*return_value);
+    object_init_ex(obj,ptr_ce_swig_LassoStringDict);
+    add_property_zval(obj,"_cPtr",_cPtr);
+    *return_value=*obj;
+  }}
+  return;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+ZEND_NAMED_FUNCTION(_wrap_LassoStringDict_getItem) {
+  LassoStringDict *arg1 = (LassoStringDict *) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *result = 0 ;
+  zval **args[1];
+  
+  SWIG_ResetError();
+  /* This function uses a this_ptr*/
+  if(ZEND_NUM_ARGS() != 1 || zend_get_parameters_array_ex(1, args) != SUCCESS) {
+    WRONG_PARAM_COUNT;
+  }
+  
+  
+  if (SWIG_ConvertPtr(*&this_ptr, (void **) &arg1, SWIGTYPE_p_LassoStringDict, 0) < 0) {
+    if ((*&this_ptr)->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoStringDict_getItem.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  {
+    /*@SWIG:CONVERT_STRING_IN@*/
+    convert_to_string_ex(args[0]);
+    arg2 = (char *) Z_STRVAL_PP(args[0]);
+    /*@SWIG@*/;
+  }
+  result = (char *)LassoStringDict_getItem(arg1,arg2);
+  {
+    if(!result) {
+      ZVAL_NULL(return_value);
+    } else {
+      ZVAL_STRING(return_value,result, 1);
+    }
+  }
+  return;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+ZEND_NAMED_FUNCTION(_wrap_LassoStringDict_setItem) {
+  LassoStringDict *arg1 = (LassoStringDict *) 0 ;
+  char *arg2 = (char *) 0 ;
+  char *arg3 = (char *) 0 ;
+  zval **args[2];
+  
+  SWIG_ResetError();
+  /* This function uses a this_ptr*/
+  if(ZEND_NUM_ARGS() != 2 || zend_get_parameters_array_ex(2, args) != SUCCESS) {
+    WRONG_PARAM_COUNT;
+  }
+  
+  
+  if (SWIG_ConvertPtr(*&this_ptr, (void **) &arg1, SWIGTYPE_p_LassoStringDict, 0) < 0) {
+    if ((*&this_ptr)->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoStringDict_setItem.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  {
+    /*@SWIG:CONVERT_STRING_IN@*/
+    convert_to_string_ex(args[0]);
+    arg2 = (char *) Z_STRVAL_PP(args[0]);
+    /*@SWIG@*/;
+  }
+  {
+    /*@SWIG:CONVERT_STRING_IN@*/
+    convert_to_string_ex(args[1]);
+    arg3 = (char *) Z_STRVAL_PP(args[1]);
+    /*@SWIG@*/;
+  }
+  LassoStringDict_setItem(arg1,arg2,arg3);
+  
+  return;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+/* property handler for class LassoStringDict */
+static pval _wrap_propget_LassoStringDict(zend_property_reference *property_reference) {
+  pval result;
+  pval **_result;
+  zend_llist_element *element = property_reference->elements_list->head;
+  zend_overloaded_element *property=(zend_overloaded_element *)element->data;
+  result.type = IS_NULL;
+  if (_propget_LassoStringDict(property_reference, &result)==SUCCESS) return result;
+  /* return it ourselves */
+  if (zend_hash_find(Z_OBJPROP_P(property_reference->object),Z_STRVAL_P(&(property->element)),1+Z_STRLEN_P(&(property->element)),(void**)&_result)==SUCCESS) {
+  zval *_value;
+  MAKE_STD_ZVAL(_value);  *_value=**_result;
+  INIT_PZVAL(_value);
+  zval_copy_ctor(_value);
+  return *_value;
+  }
+  result.type = IS_NULL;
+  return result;
+}
+static int _propget_LassoStringDict(zend_property_reference *property_reference, pval *value) {
+  /* get the property name */
+  zend_llist_element *element = property_reference->elements_list->head;
+  zend_overloaded_element *property=(zend_overloaded_element *)element->data;
+  char *propname=Z_STRVAL_P(&(property->element));
+  return FAILURE;
+}
+
+static int _wrap_propset_LassoStringDict(zend_property_reference *property_reference, pval *value) { 
+  zval * _value;
+  zend_llist_element *element = property_reference->elements_list->head;
+  zend_overloaded_element *property=(zend_overloaded_element *)element->data;
+  if (_propset_LassoStringDict(property_reference, value)==SUCCESS) return SUCCESS;
+  /* set it ourselves as it is LassoStringDict */
+  MAKE_STD_ZVAL(_value);
+  *_value=*value;
+  INIT_PZVAL(_value);
+  zval_copy_ctor(_value);
+  return add_property_zval_ex(property_reference->object,Z_STRVAL_P(&(property->element)),1+Z_STRLEN_P(&(property->element)),_value);
+}
+static int _propset_LassoStringDict(zend_property_reference *property_reference, pval *value) {
+  /* get the property name */
+  zend_llist_element *element = property_reference->elements_list->head;
+  zend_overloaded_element *property=(zend_overloaded_element *)element->data;
+  char *propname=Z_STRVAL_P(&(property->element));
+  return FAILURE;
+}
+
+static int _wrap_LassoMiscTextNode_content_set(zend_property_reference *property_reference, pval *value) {
+  LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+  char *arg2 = (char *) 0 ;
+  zval **args[2];
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoMiscTextNode, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoMiscTextNode_content_set.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  {
+    /*@SWIG:CONVERT_STRING_IN@*/
+    convert_to_string_ex(&value);
+    arg2 = (char *) Z_STRVAL_PP(&value);
+    /*@SWIG@*/;
+  }
+  {
+    if (arg1->content) free((char *)arg1->content);
+    if (arg2) {
+      arg1->content = (char *) malloc(strlen((const char *)arg2)+1);
+      strcpy((char *)arg1->content, (const char *)arg2);
+    } else {
+      arg1->content = 0;
+    }
+  }
+  
+  return SUCCESS;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static pval _wrap_LassoMiscTextNode_content_get(zend_property_reference *property_reference) {
+  LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+  char *result = 0 ;
+  zval **args[1];
+  zval _return_value;
+  zval *return_value=&_return_value;
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoMiscTextNode, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoMiscTextNode_content_get.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  result = (char *) ((arg1)->content);
+  {
+    if(!result) {
+      ZVAL_NULL(return_value);
+    } else {
+      ZVAL_STRING(return_value,result, 1);
+    }
+  }
+  return _return_value;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static int _wrap_LassoMiscTextNode_name_set(zend_property_reference *property_reference, pval *value) {
+  LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+  char *arg2 = (char *) 0 ;
+  zval **args[2];
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoMiscTextNode, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoMiscTextNode_name_set.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  {
+    /*@SWIG:CONVERT_STRING_IN@*/
+    convert_to_string_ex(&value);
+    arg2 = (char *) Z_STRVAL_PP(&value);
+    /*@SWIG@*/;
+  }
+  {
+    if (arg1->name) free((char *)arg1->name);
+    if (arg2) {
+      arg1->name = (char *) malloc(strlen((const char *)arg2)+1);
+      strcpy((char *)arg1->name, (const char *)arg2);
+    } else {
+      arg1->name = 0;
+    }
+  }
+  
+  return SUCCESS;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static pval _wrap_LassoMiscTextNode_name_get(zend_property_reference *property_reference) {
+  LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+  char *result = 0 ;
+  zval **args[1];
+  zval _return_value;
+  zval *return_value=&_return_value;
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoMiscTextNode, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoMiscTextNode_name_get.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  result = (char *) ((arg1)->name);
+  {
+    if(!result) {
+      ZVAL_NULL(return_value);
+    } else {
+      ZVAL_STRING(return_value,result, 1);
+    }
+  }
+  return _return_value;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static int _wrap_LassoMiscTextNode_ns_href_set(zend_property_reference *property_reference, pval *value) {
+  LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+  char *arg2 = (char *) 0 ;
+  zval **args[2];
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoMiscTextNode, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoMiscTextNode_ns_href_set.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  {
+    /*@SWIG:CONVERT_STRING_IN@*/
+    convert_to_string_ex(&value);
+    arg2 = (char *) Z_STRVAL_PP(&value);
+    /*@SWIG@*/;
+  }
+  {
+    if (arg1->ns_href) free((char *)arg1->ns_href);
+    if (arg2) {
+      arg1->ns_href = (char *) malloc(strlen((const char *)arg2)+1);
+      strcpy((char *)arg1->ns_href, (const char *)arg2);
+    } else {
+      arg1->ns_href = 0;
+    }
+  }
+  
+  return SUCCESS;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static pval _wrap_LassoMiscTextNode_ns_href_get(zend_property_reference *property_reference) {
+  LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+  char *result = 0 ;
+  zval **args[1];
+  zval _return_value;
+  zval *return_value=&_return_value;
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoMiscTextNode, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoMiscTextNode_ns_href_get.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  result = (char *) ((arg1)->ns_href);
+  {
+    if(!result) {
+      ZVAL_NULL(return_value);
+    } else {
+      ZVAL_STRING(return_value,result, 1);
+    }
+  }
+  return _return_value;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static int _wrap_LassoMiscTextNode_ns_prefix_set(zend_property_reference *property_reference, pval *value) {
+  LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+  char *arg2 = (char *) 0 ;
+  zval **args[2];
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoMiscTextNode, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoMiscTextNode_ns_prefix_set.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  {
+    /*@SWIG:CONVERT_STRING_IN@*/
+    convert_to_string_ex(&value);
+    arg2 = (char *) Z_STRVAL_PP(&value);
+    /*@SWIG@*/;
+  }
+  {
+    if (arg1->ns_prefix) free((char *)arg1->ns_prefix);
+    if (arg2) {
+      arg1->ns_prefix = (char *) malloc(strlen((const char *)arg2)+1);
+      strcpy((char *)arg1->ns_prefix, (const char *)arg2);
+    } else {
+      arg1->ns_prefix = 0;
+    }
+  }
+  
+  return SUCCESS;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static pval _wrap_LassoMiscTextNode_ns_prefix_get(zend_property_reference *property_reference) {
+  LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+  char *result = 0 ;
+  zval **args[1];
+  zval _return_value;
+  zval *return_value=&_return_value;
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoMiscTextNode, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoMiscTextNode_ns_prefix_get.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  result = (char *) ((arg1)->ns_prefix);
+  {
+    if(!result) {
+      ZVAL_NULL(return_value);
+    } else {
+      ZVAL_STRING(return_value,result, 1);
+    }
+  }
+  return _return_value;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static int _wrap_LassoMiscTextNode_text_child_set(zend_property_reference *property_reference, pval *value) {
+  LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+  bool arg2 ;
+  zval **args[2];
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoMiscTextNode, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoMiscTextNode_text_child_set.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  {
+    /*@SWIG:CONVERT_BOOL_IN@*/
+    convert_to_boolean_ex(&value);
+    arg2 = (bool) Z_LVAL_PP(&value);
+    /*@SWIG@*/;
+  }
+  if (arg1) (arg1)->text_child = arg2;
+  
+  
+  return SUCCESS;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static pval _wrap_LassoMiscTextNode_text_child_get(zend_property_reference *property_reference) {
+  LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+  bool result;
+  zval **args[1];
+  zval _return_value;
+  zval *return_value=&_return_value;
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoMiscTextNode, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoMiscTextNode_text_child_get.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  result = (bool) ((arg1)->text_child);
+  {
+    ZVAL_BOOL(return_value,(result)?1:0);
+  }
+  return _return_value;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+ZEND_NAMED_FUNCTION(_wrap_new_LassoMiscTextNode) {
+  LassoMiscTextNode *result = 0 ;
+  
+  SWIG_ResetError();
+  /* NATIVE Constructor */
+  if(ZEND_NUM_ARGS() != 0) {
+    WRONG_PARAM_COUNT;
+  }
+  
+  result = (LassoMiscTextNode *)new_LassoMiscTextNode();
+  
+  if (!result) {
+    ZVAL_NULL(return_value);
+  } else {
+    SWIG_SetPointerZval(return_value, (void *)result, SWIGTYPE_p_LassoMiscTextNode, 1);
+  /* Wrap this return value */
+  if (this_ptr) {
+    /* NATIVE Constructor, use this_ptr */
+    zval *_cPtr; MAKE_STD_ZVAL(_cPtr);
+    *_cPtr = *return_value;
+    INIT_ZVAL(*return_value);
+    add_property_zval(this_ptr,"_cPtr",_cPtr);
+  } else if (! this_ptr) {
+    /* ALTERNATIVE Constructor, make an object wrapper */
+    zval *obj, *_cPtr;
+    MAKE_STD_ZVAL(obj);
+    MAKE_STD_ZVAL(_cPtr);
+    *_cPtr = *return_value;
+    INIT_ZVAL(*return_value);
+    object_init_ex(obj,ptr_ce_swig_LassoMiscTextNode);
+    add_property_zval(obj,"_cPtr",_cPtr);
+    *return_value=*obj;
+  }}
+  return;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+/* This function is designed to be called by the zend list destructors */
+/* to typecast and do the actual destruction */
+static void __wrap_delete_LassoMiscTextNode(zend_rsrc_list_entry *rsrc, const char *type_name TSRMLS_DC) {
+  swig_object_wrapper *value=(swig_object_wrapper *) rsrc->ptr ;
+  void *ptr=value->ptr ;
+  int newobject=value->newobject ;
+  LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+  
+  efree(value);
+  if (! newobject) return; /* can't delete it! */
+  arg1 = (LassoMiscTextNode *)SWIG_ZTS_ConvertResourceData(ptr,type_name,SWIGTYPE_p_LassoMiscTextNode TSRMLS_CC);
+  if (! arg1) zend_error(E_ERROR, "LassoMiscTextNode resource already free'd");
+  delete_LassoMiscTextNode(arg1);
+  
+}
+
+
+ZEND_NAMED_FUNCTION(_wrap_LassoMiscTextNode_dump) {
+  LassoMiscTextNode *arg1 = (LassoMiscTextNode *) 0 ;
+  char *result = 0 ;
+  
+  SWIG_ResetError();
+  /* This function uses a this_ptr*/
+  if(ZEND_NUM_ARGS() != 0) {
+    WRONG_PARAM_COUNT;
+  }
+  
+  
+  if (SWIG_ConvertPtr(*&this_ptr, (void **) &arg1, SWIGTYPE_p_LassoMiscTextNode, 0) < 0) {
+    if ((*&this_ptr)->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoMiscTextNode_dump.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  result = (char *)LassoMiscTextNode_dump(arg1);
+  {
+    if(!result) {
+      ZVAL_NULL(return_value);
+    } else {
+      ZVAL_STRING(return_value,result, 1);
+    }
+  }
+  return;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+/* property handler for class LassoMiscTextNode */
+static pval _wrap_propget_LassoMiscTextNode(zend_property_reference *property_reference) {
+  pval result;
+  pval **_result;
+  zend_llist_element *element = property_reference->elements_list->head;
+  zend_overloaded_element *property=(zend_overloaded_element *)element->data;
+  result.type = IS_NULL;
+  if (_propget_LassoMiscTextNode(property_reference, &result)==SUCCESS) return result;
+  /* return it ourselves */
+  if (zend_hash_find(Z_OBJPROP_P(property_reference->object),Z_STRVAL_P(&(property->element)),1+Z_STRLEN_P(&(property->element)),(void**)&_result)==SUCCESS) {
+  zval *_value;
+  MAKE_STD_ZVAL(_value);  *_value=**_result;
+  INIT_PZVAL(_value);
+  zval_copy_ctor(_value);
+  return *_value;
+  }
+  result.type = IS_NULL;
+  return result;
+}
+static int _propget_LassoMiscTextNode(zend_property_reference *property_reference, pval *value) {
+  /* get the property name */
+  zend_llist_element *element = property_reference->elements_list->head;
+  zend_overloaded_element *property=(zend_overloaded_element *)element->data;
+  char *propname=Z_STRVAL_P(&(property->element));
+  if (strcmp(propname,"ns_href")==0) {
+    *value=_wrap_LassoMiscTextNode_ns_href_get(property_reference);
+    return SUCCESS;
+  }
+  if (strcmp(propname,"content")==0) {
+    *value=_wrap_LassoMiscTextNode_content_get(property_reference);
+    return SUCCESS;
+  }
+  if (strcmp(propname,"ns_prefix")==0) {
+    *value=_wrap_LassoMiscTextNode_ns_prefix_get(property_reference);
+    return SUCCESS;
+  }
+  if (strcmp(propname,"name")==0) {
+    *value=_wrap_LassoMiscTextNode_name_get(property_reference);
+    return SUCCESS;
+  }
+  if (strcmp(propname,"text_child")==0) {
+    *value=_wrap_LassoMiscTextNode_text_child_get(property_reference);
+    return SUCCESS;
+  }
+  return FAILURE;
+}
+
+static int _wrap_propset_LassoMiscTextNode(zend_property_reference *property_reference, pval *value) { 
+  zval * _value;
+  zend_llist_element *element = property_reference->elements_list->head;
+  zend_overloaded_element *property=(zend_overloaded_element *)element->data;
+  if (_propset_LassoMiscTextNode(property_reference, value)==SUCCESS) return SUCCESS;
+  /* set it ourselves as it is LassoMiscTextNode */
+  MAKE_STD_ZVAL(_value);
+  *_value=*value;
+  INIT_PZVAL(_value);
+  zval_copy_ctor(_value);
+  return add_property_zval_ex(property_reference->object,Z_STRVAL_P(&(property->element)),1+Z_STRLEN_P(&(property->element)),_value);
+}
+static int _propset_LassoMiscTextNode(zend_property_reference *property_reference, pval *value) {
+  /* get the property name */
+  zend_llist_element *element = property_reference->elements_list->head;
+  zend_overloaded_element *property=(zend_overloaded_element *)element->data;
+  char *propname=Z_STRVAL_P(&(property->element));
+  if (strcmp(propname,"content")==0) return _wrap_LassoMiscTextNode_content_set(property_reference, value);
+  if (strcmp(propname,"ns_prefix")==0) return _wrap_LassoMiscTextNode_ns_prefix_set(property_reference, value);
+  if (strcmp(propname,"name")==0) return _wrap_LassoMiscTextNode_name_set(property_reference, value);
+  if (strcmp(propname,"text_child")==0) return _wrap_LassoMiscTextNode_text_child_set(property_reference, value);
+  if (strcmp(propname,"ns_href")==0) return _wrap_LassoMiscTextNode_ns_href_set(property_reference, value);
+  return FAILURE;
+}
+
 static int _wrap_LassoSamlAdvice_Assertion_set(zend_property_reference *property_reference, pval *value) {
   LassoSamlAdvice *arg1 = (LassoSamlAdvice *) 0 ;
   LassoSamlAssertion *arg2 = (LassoSamlAssertion *) 0 ;
@@ -8840,7 +9843,6 @@ fail:
 static int _wrap_LassoSamlAssertion_sign_type_set(zend_property_reference *property_reference, pval *value) {
   LassoSamlAssertion *arg1 = (LassoSamlAssertion *) 0 ;
   LassoSignatureType arg2 ;
-  LassoSignatureType *tmp2 ;
   zval **args[2];
   
   SWIG_ResetError();
@@ -8855,10 +9857,10 @@ static int _wrap_LassoSamlAssertion_sign_type_set(zend_property_reference *prope
   
   if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
   {
-    if(SWIG_ConvertPtr(*&value, (void **) &tmp2, SWIGTYPE_p_LassoSignatureType, 0) < 0 || tmp2 == NULL) {
-      SWIG_PHP_Error(E_ERROR, "Type error in argument 2 of LassoSamlAssertion_sign_type_set. Expected SWIGTYPE_p_LassoSignatureType");
-    }
-    arg2 = *tmp2;
+    /*@SWIG:CONVERT_INT_IN@*/
+    convert_to_long_ex(&value);
+    arg2 = (LassoSignatureType) Z_LVAL_PP(&value);
+    /*@SWIG@*/;
   }
   if (arg1) (arg1)->sign_type = arg2;
   
@@ -8887,11 +9889,9 @@ static pval _wrap_LassoSamlAssertion_sign_type_get(zend_property_reference *prop
   }
   
   if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
-  result =  ((arg1)->sign_type);
+  result = (LassoSignatureType) ((arg1)->sign_type);
   {
-    LassoSignatureType * resultobj = (LassoSignatureType *) emalloc(sizeof(LassoSignatureType));
-    memmove(resultobj, &result, sizeof(LassoSignatureType));
-    SWIG_SetPointerZval(return_value, (void *)resultobj, SWIGTYPE_p_LassoSignatureType, 1);
+    ZVAL_LONG(return_value,result);
   }
   return _return_value;
 fail:
@@ -14483,7 +15483,6 @@ fail:
 static int _wrap_LassoSamlpRequest_sign_type_set(zend_property_reference *property_reference, pval *value) {
   LassoSamlpRequest *arg1 = (LassoSamlpRequest *) 0 ;
   LassoSignatureType arg2 ;
-  LassoSignatureType *tmp2 ;
   zval **args[2];
   
   SWIG_ResetError();
@@ -14498,10 +15497,10 @@ static int _wrap_LassoSamlpRequest_sign_type_set(zend_property_reference *proper
   
   if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
   {
-    if(SWIG_ConvertPtr(*&value, (void **) &tmp2, SWIGTYPE_p_LassoSignatureType, 0) < 0 || tmp2 == NULL) {
-      SWIG_PHP_Error(E_ERROR, "Type error in argument 2 of LassoSamlpRequest_sign_type_set. Expected SWIGTYPE_p_LassoSignatureType");
-    }
-    arg2 = *tmp2;
+    /*@SWIG:CONVERT_INT_IN@*/
+    convert_to_long_ex(&value);
+    arg2 = (LassoSignatureType) Z_LVAL_PP(&value);
+    /*@SWIG@*/;
   }
   LassoSamlpRequest_sign_type_set(arg1,arg2);
   
@@ -14530,11 +15529,9 @@ static pval _wrap_LassoSamlpRequest_sign_type_get(zend_property_reference *prope
   }
   
   if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
-  result = LassoSamlpRequest_sign_type_get(arg1);
+  result = (LassoSignatureType)LassoSamlpRequest_sign_type_get(arg1);
   {
-    LassoSignatureType * resultobj = (LassoSignatureType *) emalloc(sizeof(LassoSignatureType));
-    memmove(resultobj, &result, sizeof(LassoSignatureType));
-    SWIG_SetPointerZval(return_value, (void *)resultobj, SWIGTYPE_p_LassoSignatureType, 1);
+    ZVAL_LONG(return_value,result);
   }
   return _return_value;
 fail:
@@ -15707,7 +16704,6 @@ fail:
 static int _wrap_LassoSamlpRequestAbstract_sign_type_set(zend_property_reference *property_reference, pval *value) {
   LassoSamlpRequestAbstract *arg1 = (LassoSamlpRequestAbstract *) 0 ;
   LassoSignatureType arg2 ;
-  LassoSignatureType *tmp2 ;
   zval **args[2];
   
   SWIG_ResetError();
@@ -15759,10 +16755,10 @@ static int _wrap_LassoSamlpRequestAbstract_sign_type_set(zend_property_reference
   }
   if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
   {
-    if(SWIG_ConvertPtr(*&value, (void **) &tmp2, SWIGTYPE_p_LassoSignatureType, 0) < 0 || tmp2 == NULL) {
-      SWIG_PHP_Error(E_ERROR, "Type error in argument 2 of LassoSamlpRequestAbstract_sign_type_set. Expected SWIGTYPE_p_LassoSignatureType");
-    }
-    arg2 = *tmp2;
+    /*@SWIG:CONVERT_INT_IN@*/
+    convert_to_long_ex(&value);
+    arg2 = (LassoSignatureType) Z_LVAL_PP(&value);
+    /*@SWIG@*/;
   }
   if (arg1) (arg1)->sign_type = arg2;
   
@@ -15828,11 +16824,9 @@ static pval _wrap_LassoSamlpRequestAbstract_sign_type_get(zend_property_referenc
     
   }
   if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
-  result =  ((arg1)->sign_type);
+  result = (LassoSignatureType) ((arg1)->sign_type);
   {
-    LassoSignatureType * resultobj = (LassoSignatureType *) emalloc(sizeof(LassoSignatureType));
-    memmove(resultobj, &result, sizeof(LassoSignatureType));
-    SWIG_SetPointerZval(return_value, (void *)resultobj, SWIGTYPE_p_LassoSignatureType, 1);
+    ZVAL_LONG(return_value,result);
   }
   return _return_value;
 fail:
@@ -16711,7 +17705,6 @@ fail:
 static int _wrap_LassoSamlpResponse_sign_type_set(zend_property_reference *property_reference, pval *value) {
   LassoSamlpResponse *arg1 = (LassoSamlpResponse *) 0 ;
   LassoSignatureType arg2 ;
-  LassoSignatureType *tmp2 ;
   zval **args[2];
   
   SWIG_ResetError();
@@ -16726,10 +17719,10 @@ static int _wrap_LassoSamlpResponse_sign_type_set(zend_property_reference *prope
   
   if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
   {
-    if(SWIG_ConvertPtr(*&value, (void **) &tmp2, SWIGTYPE_p_LassoSignatureType, 0) < 0 || tmp2 == NULL) {
-      SWIG_PHP_Error(E_ERROR, "Type error in argument 2 of LassoSamlpResponse_sign_type_set. Expected SWIGTYPE_p_LassoSignatureType");
-    }
-    arg2 = *tmp2;
+    /*@SWIG:CONVERT_INT_IN@*/
+    convert_to_long_ex(&value);
+    arg2 = (LassoSignatureType) Z_LVAL_PP(&value);
+    /*@SWIG@*/;
   }
   LassoSamlpResponse_sign_type_set(arg1,arg2);
   
@@ -16758,11 +17751,9 @@ static pval _wrap_LassoSamlpResponse_sign_type_get(zend_property_reference *prop
   }
   
   if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
-  result = LassoSamlpResponse_sign_type_get(arg1);
+  result = (LassoSignatureType)LassoSamlpResponse_sign_type_get(arg1);
   {
-    LassoSignatureType * resultobj = (LassoSignatureType *) emalloc(sizeof(LassoSignatureType));
-    memmove(resultobj, &result, sizeof(LassoSignatureType));
-    SWIG_SetPointerZval(return_value, (void *)resultobj, SWIGTYPE_p_LassoSignatureType, 1);
+    ZVAL_LONG(return_value,result);
   }
   return _return_value;
 fail:
@@ -18385,7 +19376,6 @@ fail:
 static int _wrap_LassoSamlpResponseAbstract_sign_type_set(zend_property_reference *property_reference, pval *value) {
   LassoSamlpResponseAbstract *arg1 = (LassoSamlpResponseAbstract *) 0 ;
   LassoSignatureType arg2 ;
-  LassoSignatureType *tmp2 ;
   zval **args[2];
   
   SWIG_ResetError();
@@ -18437,10 +19427,10 @@ static int _wrap_LassoSamlpResponseAbstract_sign_type_set(zend_property_referenc
   }
   if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
   {
-    if(SWIG_ConvertPtr(*&value, (void **) &tmp2, SWIGTYPE_p_LassoSignatureType, 0) < 0 || tmp2 == NULL) {
-      SWIG_PHP_Error(E_ERROR, "Type error in argument 2 of LassoSamlpResponseAbstract_sign_type_set. Expected SWIGTYPE_p_LassoSignatureType");
-    }
-    arg2 = *tmp2;
+    /*@SWIG:CONVERT_INT_IN@*/
+    convert_to_long_ex(&value);
+    arg2 = (LassoSignatureType) Z_LVAL_PP(&value);
+    /*@SWIG@*/;
   }
   if (arg1) (arg1)->sign_type = arg2;
   
@@ -18506,11 +19496,9 @@ static pval _wrap_LassoSamlpResponseAbstract_sign_type_get(zend_property_referen
     
   }
   if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
-  result =  ((arg1)->sign_type);
+  result = (LassoSignatureType) ((arg1)->sign_type);
   {
-    LassoSignatureType * resultobj = (LassoSignatureType *) emalloc(sizeof(LassoSignatureType));
-    memmove(resultobj, &result, sizeof(LassoSignatureType));
-    SWIG_SetPointerZval(return_value, (void *)resultobj, SWIGTYPE_p_LassoSignatureType, 1);
+    ZVAL_LONG(return_value,result);
   }
   return _return_value;
 fail:
@@ -20071,7 +21059,6 @@ fail:
 static int _wrap_LassoLibAssertion_sign_type_set(zend_property_reference *property_reference, pval *value) {
   LassoLibAssertion *arg1 = (LassoLibAssertion *) 0 ;
   LassoSignatureType arg2 ;
-  LassoSignatureType *tmp2 ;
   zval **args[2];
   
   SWIG_ResetError();
@@ -20086,10 +21073,10 @@ static int _wrap_LassoLibAssertion_sign_type_set(zend_property_reference *proper
   
   if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
   {
-    if(SWIG_ConvertPtr(*&value, (void **) &tmp2, SWIGTYPE_p_LassoSignatureType, 0) < 0 || tmp2 == NULL) {
-      SWIG_PHP_Error(E_ERROR, "Type error in argument 2 of LassoLibAssertion_sign_type_set. Expected SWIGTYPE_p_LassoSignatureType");
-    }
-    arg2 = *tmp2;
+    /*@SWIG:CONVERT_INT_IN@*/
+    convert_to_long_ex(&value);
+    arg2 = (LassoSignatureType) Z_LVAL_PP(&value);
+    /*@SWIG@*/;
   }
   LassoLibAssertion_sign_type_set(arg1,arg2);
   
@@ -20118,11 +21105,9 @@ static pval _wrap_LassoLibAssertion_sign_type_get(zend_property_reference *prope
   }
   
   if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
-  result = LassoLibAssertion_sign_type_get(arg1);
+  result = (LassoSignatureType)LassoLibAssertion_sign_type_get(arg1);
   {
-    LassoSignatureType * resultobj = (LassoSignatureType *) emalloc(sizeof(LassoSignatureType));
-    memmove(resultobj, &result, sizeof(LassoSignatureType));
-    SWIG_SetPointerZval(return_value, (void *)resultobj, SWIGTYPE_p_LassoSignatureType, 1);
+    ZVAL_LONG(return_value,result);
   }
   return _return_value;
 fail:
@@ -21597,7 +22582,6 @@ fail:
 static int _wrap_LassoLibAuthnRequest_sign_type_set(zend_property_reference *property_reference, pval *value) {
   LassoLibAuthnRequest *arg1 = (LassoLibAuthnRequest *) 0 ;
   LassoSignatureType arg2 ;
-  LassoSignatureType *tmp2 ;
   zval **args[2];
   
   SWIG_ResetError();
@@ -21612,10 +22596,10 @@ static int _wrap_LassoLibAuthnRequest_sign_type_set(zend_property_reference *pro
   
   if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
   {
-    if(SWIG_ConvertPtr(*&value, (void **) &tmp2, SWIGTYPE_p_LassoSignatureType, 0) < 0 || tmp2 == NULL) {
-      SWIG_PHP_Error(E_ERROR, "Type error in argument 2 of LassoLibAuthnRequest_sign_type_set. Expected SWIGTYPE_p_LassoSignatureType");
-    }
-    arg2 = *tmp2;
+    /*@SWIG:CONVERT_INT_IN@*/
+    convert_to_long_ex(&value);
+    arg2 = (LassoSignatureType) Z_LVAL_PP(&value);
+    /*@SWIG@*/;
   }
   LassoLibAuthnRequest_sign_type_set(arg1,arg2);
   
@@ -21644,11 +22628,9 @@ static pval _wrap_LassoLibAuthnRequest_sign_type_get(zend_property_reference *pr
   }
   
   if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
-  result = LassoLibAuthnRequest_sign_type_get(arg1);
+  result = (LassoSignatureType)LassoLibAuthnRequest_sign_type_get(arg1);
   {
-    LassoSignatureType * resultobj = (LassoSignatureType *) emalloc(sizeof(LassoSignatureType));
-    memmove(resultobj, &result, sizeof(LassoSignatureType));
-    SWIG_SetPointerZval(return_value, (void *)resultobj, SWIGTYPE_p_LassoSignatureType, 1);
+    ZVAL_LONG(return_value,result);
   }
   return _return_value;
 fail:
@@ -23305,7 +24287,6 @@ fail:
 static int _wrap_LassoLibFederationTerminationNotification_sign_type_set(zend_property_reference *property_reference, pval *value) {
   LassoLibFederationTerminationNotification *arg1 = (LassoLibFederationTerminationNotification *) 0 ;
   LassoSignatureType arg2 ;
-  LassoSignatureType *tmp2 ;
   zval **args[2];
   
   SWIG_ResetError();
@@ -23320,10 +24301,10 @@ static int _wrap_LassoLibFederationTerminationNotification_sign_type_set(zend_pr
   
   if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
   {
-    if(SWIG_ConvertPtr(*&value, (void **) &tmp2, SWIGTYPE_p_LassoSignatureType, 0) < 0 || tmp2 == NULL) {
-      SWIG_PHP_Error(E_ERROR, "Type error in argument 2 of LassoLibFederationTerminationNotification_sign_type_set. Expected SWIGTYPE_p_LassoSignatureType");
-    }
-    arg2 = *tmp2;
+    /*@SWIG:CONVERT_INT_IN@*/
+    convert_to_long_ex(&value);
+    arg2 = (LassoSignatureType) Z_LVAL_PP(&value);
+    /*@SWIG@*/;
   }
   LassoLibFederationTerminationNotification_sign_type_set(arg1,arg2);
   
@@ -23352,11 +24333,9 @@ static pval _wrap_LassoLibFederationTerminationNotification_sign_type_get(zend_p
   }
   
   if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
-  result = LassoLibFederationTerminationNotification_sign_type_get(arg1);
+  result = (LassoSignatureType)LassoLibFederationTerminationNotification_sign_type_get(arg1);
   {
-    LassoSignatureType * resultobj = (LassoSignatureType *) emalloc(sizeof(LassoSignatureType));
-    memmove(resultobj, &result, sizeof(LassoSignatureType));
-    SWIG_SetPointerZval(return_value, (void *)resultobj, SWIGTYPE_p_LassoSignatureType, 1);
+    ZVAL_LONG(return_value,result);
   }
   return _return_value;
 fail:
@@ -23578,7 +24557,6 @@ ZEND_NAMED_FUNCTION(_wrap_LassoLibFederationTerminationNotification_newFull) {
   LassoSignatureType arg3 ;
   LassoSignatureMethod arg4 ;
   LassoLibFederationTerminationNotification *result = 0 ;
-  LassoSignatureType *tmp3 ;
   zval **args[4];
   
   SWIG_ResetError();
@@ -23602,10 +24580,10 @@ ZEND_NAMED_FUNCTION(_wrap_LassoLibFederationTerminationNotification_newFull) {
   }
   
   {
-    if(SWIG_ConvertPtr(*args[2], (void **) &tmp3, SWIGTYPE_p_LassoSignatureType, 0) < 0 || tmp3 == NULL) {
-      SWIG_PHP_Error(E_ERROR, "Type error in argument 3 of LassoLibFederationTerminationNotification_newFull. Expected SWIGTYPE_p_LassoSignatureType");
-    }
-    arg3 = *tmp3;
+    /*@SWIG:CONVERT_INT_IN@*/
+    convert_to_long_ex(args[2]);
+    arg3 = (LassoSignatureType) Z_LVAL_PP(args[2]);
+    /*@SWIG@*/;
   }
   {
     /*@SWIG:CONVERT_INT_IN@*/
@@ -24646,7 +25624,6 @@ fail:
 static int _wrap_LassoLibLogoutRequest_sign_type_set(zend_property_reference *property_reference, pval *value) {
   LassoLibLogoutRequest *arg1 = (LassoLibLogoutRequest *) 0 ;
   LassoSignatureType arg2 ;
-  LassoSignatureType *tmp2 ;
   zval **args[2];
   
   SWIG_ResetError();
@@ -24661,10 +25638,10 @@ static int _wrap_LassoLibLogoutRequest_sign_type_set(zend_property_reference *pr
   
   if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
   {
-    if(SWIG_ConvertPtr(*&value, (void **) &tmp2, SWIGTYPE_p_LassoSignatureType, 0) < 0 || tmp2 == NULL) {
-      SWIG_PHP_Error(E_ERROR, "Type error in argument 2 of LassoLibLogoutRequest_sign_type_set. Expected SWIGTYPE_p_LassoSignatureType");
-    }
-    arg2 = *tmp2;
+    /*@SWIG:CONVERT_INT_IN@*/
+    convert_to_long_ex(&value);
+    arg2 = (LassoSignatureType) Z_LVAL_PP(&value);
+    /*@SWIG@*/;
   }
   LassoLibLogoutRequest_sign_type_set(arg1,arg2);
   
@@ -24693,11 +25670,9 @@ static pval _wrap_LassoLibLogoutRequest_sign_type_get(zend_property_reference *p
   }
   
   if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
-  result = LassoLibLogoutRequest_sign_type_get(arg1);
+  result = (LassoSignatureType)LassoLibLogoutRequest_sign_type_get(arg1);
   {
-    LassoSignatureType * resultobj = (LassoSignatureType *) emalloc(sizeof(LassoSignatureType));
-    memmove(resultobj, &result, sizeof(LassoSignatureType));
-    SWIG_SetPointerZval(return_value, (void *)resultobj, SWIGTYPE_p_LassoSignatureType, 1);
+    ZVAL_LONG(return_value,result);
   }
   return _return_value;
 fail:
@@ -24919,7 +25894,6 @@ ZEND_NAMED_FUNCTION(_wrap_LassoLibLogoutRequest_newFull) {
   LassoSignatureType arg3 ;
   LassoSignatureMethod arg4 ;
   LassoLibLogoutRequest *result = 0 ;
-  LassoSignatureType *tmp3 ;
   zval **args[4];
   
   SWIG_ResetError();
@@ -24943,10 +25917,10 @@ ZEND_NAMED_FUNCTION(_wrap_LassoLibLogoutRequest_newFull) {
   }
   
   {
-    if(SWIG_ConvertPtr(*args[2], (void **) &tmp3, SWIGTYPE_p_LassoSignatureType, 0) < 0 || tmp3 == NULL) {
-      SWIG_PHP_Error(E_ERROR, "Type error in argument 3 of LassoLibLogoutRequest_newFull. Expected SWIGTYPE_p_LassoSignatureType");
-    }
-    arg3 = *tmp3;
+    /*@SWIG:CONVERT_INT_IN@*/
+    convert_to_long_ex(args[2]);
+    arg3 = (LassoSignatureType) Z_LVAL_PP(args[2]);
+    /*@SWIG@*/;
   }
   {
     /*@SWIG:CONVERT_INT_IN@*/
@@ -25480,7 +26454,6 @@ ZEND_NAMED_FUNCTION(_wrap_LassoLibLogoutResponse_newFull) {
   LassoSignatureType arg4 ;
   LassoSignatureMethod arg5 ;
   LassoLibLogoutResponse *result = 0 ;
-  LassoSignatureType *tmp4 ;
   zval **args[5];
   
   SWIG_ResetError();
@@ -25510,10 +26483,10 @@ ZEND_NAMED_FUNCTION(_wrap_LassoLibLogoutResponse_newFull) {
   }
   
   {
-    if(SWIG_ConvertPtr(*args[3], (void **) &tmp4, SWIGTYPE_p_LassoSignatureType, 0) < 0 || tmp4 == NULL) {
-      SWIG_PHP_Error(E_ERROR, "Type error in argument 4 of LassoLibLogoutResponse_newFull. Expected SWIGTYPE_p_LassoSignatureType");
-    }
-    arg4 = *tmp4;
+    /*@SWIG:CONVERT_INT_IN@*/
+    convert_to_long_ex(args[3]);
+    arg4 = (LassoSignatureType) Z_LVAL_PP(args[3]);
+    /*@SWIG@*/;
   }
   {
     /*@SWIG:CONVERT_INT_IN@*/
@@ -26294,7 +27267,6 @@ fail:
 static int _wrap_LassoLibRegisterNameIdentifierRequest_sign_type_set(zend_property_reference *property_reference, pval *value) {
   LassoLibRegisterNameIdentifierRequest *arg1 = (LassoLibRegisterNameIdentifierRequest *) 0 ;
   LassoSignatureType arg2 ;
-  LassoSignatureType *tmp2 ;
   zval **args[2];
   
   SWIG_ResetError();
@@ -26309,10 +27281,10 @@ static int _wrap_LassoLibRegisterNameIdentifierRequest_sign_type_set(zend_proper
   
   if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
   {
-    if(SWIG_ConvertPtr(*&value, (void **) &tmp2, SWIGTYPE_p_LassoSignatureType, 0) < 0 || tmp2 == NULL) {
-      SWIG_PHP_Error(E_ERROR, "Type error in argument 2 of LassoLibRegisterNameIdentifierRequest_sign_type_set. Expected SWIGTYPE_p_LassoSignatureType");
-    }
-    arg2 = *tmp2;
+    /*@SWIG:CONVERT_INT_IN@*/
+    convert_to_long_ex(&value);
+    arg2 = (LassoSignatureType) Z_LVAL_PP(&value);
+    /*@SWIG@*/;
   }
   LassoLibRegisterNameIdentifierRequest_sign_type_set(arg1,arg2);
   
@@ -26341,11 +27313,9 @@ static pval _wrap_LassoLibRegisterNameIdentifierRequest_sign_type_get(zend_prope
   }
   
   if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
-  result = LassoLibRegisterNameIdentifierRequest_sign_type_get(arg1);
+  result = (LassoSignatureType)LassoLibRegisterNameIdentifierRequest_sign_type_get(arg1);
   {
-    LassoSignatureType * resultobj = (LassoSignatureType *) emalloc(sizeof(LassoSignatureType));
-    memmove(resultobj, &result, sizeof(LassoSignatureType));
-    SWIG_SetPointerZval(return_value, (void *)resultobj, SWIGTYPE_p_LassoSignatureType, 1);
+    ZVAL_LONG(return_value,result);
   }
   return _return_value;
 fail:
@@ -26721,7 +27691,6 @@ ZEND_NAMED_FUNCTION(_wrap_LassoLibRegisterNameIdentifierRequest_newFull) {
   LassoSignatureType arg5 ;
   LassoSignatureMethod arg6 ;
   LassoLibRegisterNameIdentifierRequest *result = 0 ;
-  LassoSignatureType *tmp5 ;
   zval **args[6];
   
   SWIG_ResetError();
@@ -26763,10 +27732,10 @@ ZEND_NAMED_FUNCTION(_wrap_LassoLibRegisterNameIdentifierRequest_newFull) {
   }
   
   {
-    if(SWIG_ConvertPtr(*args[4], (void **) &tmp5, SWIGTYPE_p_LassoSignatureType, 0) < 0 || tmp5 == NULL) {
-      SWIG_PHP_Error(E_ERROR, "Type error in argument 5 of LassoLibRegisterNameIdentifierRequest_newFull. Expected SWIGTYPE_p_LassoSignatureType");
-    }
-    arg5 = *tmp5;
+    /*@SWIG:CONVERT_INT_IN@*/
+    convert_to_long_ex(args[4]);
+    arg5 = (LassoSignatureType) Z_LVAL_PP(args[4]);
+    /*@SWIG@*/;
   }
   {
     /*@SWIG:CONVERT_INT_IN@*/
@@ -27295,7 +28264,6 @@ ZEND_NAMED_FUNCTION(_wrap_LassoLibRegisterNameIdentifierResponse_newFull) {
   LassoSignatureType arg4 ;
   LassoSignatureMethod arg5 ;
   LassoLibRegisterNameIdentifierResponse *result = 0 ;
-  LassoSignatureType *tmp4 ;
   zval **args[5];
   
   SWIG_ResetError();
@@ -27325,10 +28293,10 @@ ZEND_NAMED_FUNCTION(_wrap_LassoLibRegisterNameIdentifierResponse_newFull) {
   }
   
   {
-    if(SWIG_ConvertPtr(*args[3], (void **) &tmp4, SWIGTYPE_p_LassoSignatureType, 0) < 0 || tmp4 == NULL) {
-      SWIG_PHP_Error(E_ERROR, "Type error in argument 4 of LassoLibRegisterNameIdentifierResponse_newFull. Expected SWIGTYPE_p_LassoSignatureType");
-    }
-    arg4 = *tmp4;
+    /*@SWIG:CONVERT_INT_IN@*/
+    convert_to_long_ex(args[3]);
+    arg4 = (LassoSignatureType) Z_LVAL_PP(args[3]);
+    /*@SWIG@*/;
   }
   {
     /*@SWIG:CONVERT_INT_IN@*/
@@ -33204,6 +34172,82 @@ fail:
 }
 
 
+static int _wrap_LassoLogin_assertion_set(zend_property_reference *property_reference, pval *value) {
+  LassoLogin *arg1 = (LassoLogin *) 0 ;
+  LassoSamlAssertion *arg2 = (LassoSamlAssertion *) 0 ;
+  zval **args[2];
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoLogin, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoLogin_assertion_set.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  
+  if (SWIG_ConvertPtr(*&value, (void **) &arg2, SWIGTYPE_p_LassoSamlAssertion, 0) < 0) {
+    if ((*&value)->type == IS_NULL) {
+      arg2 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoLogin_assertion_set.");
+    }
+  }
+  
+  if (arg1) (arg1)->assertion = arg2;
+  
+  
+  return SUCCESS;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static pval _wrap_LassoLogin_assertion_get(zend_property_reference *property_reference) {
+  LassoLogin *arg1 = (LassoLogin *) 0 ;
+  LassoSamlAssertion *result = 0 ;
+  zval **args[1];
+  zval _return_value;
+  zval *return_value=&_return_value;
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoLogin, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoLogin_assertion_get.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  result = (LassoSamlAssertion *) ((arg1)->assertion);
+  
+  if (!result) {
+    ZVAL_NULL(return_value);
+  } else {
+    SWIG_SetPointerZval(return_value, (void *)result, SWIGTYPE_p_LassoSamlAssertion, 0);
+  /* Wrap this return value */
+  {
+    /* ALTERNATIVE Constructor, make an object wrapper */
+    zval *obj, *_cPtr;
+    MAKE_STD_ZVAL(obj);
+    MAKE_STD_ZVAL(_cPtr);
+    *_cPtr = *return_value;
+    INIT_ZVAL(*return_value);
+    object_init_ex(obj,ptr_ce_swig_LassoSamlAssertion);
+    add_property_zval(obj,"_cPtr",_cPtr);
+    *return_value=*obj;
+  }}
+  return _return_value;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
 static pval _wrap_LassoLogin_artifact_get(zend_property_reference *property_reference) {
   LassoLogin *arg1 = (LassoLogin *) 0 ;
   char *result = 0 ;
@@ -35079,6 +36123,10 @@ static int _propget_LassoLogin(zend_property_reference *property_reference, pval
     *value=_wrap_LassoLogin_identity_get(property_reference);
     return SUCCESS;
   }
+  if (strcmp(propname,"assertion")==0) {
+    *value=_wrap_LassoLogin_assertion_get(property_reference);
+    return SUCCESS;
+  }
   if (strcmp(propname,"session")==0) {
     *value=_wrap_LassoLogin_session_get(property_reference);
     return SUCCESS;
@@ -35126,6 +36174,7 @@ static int _propset_LassoLogin(zend_property_reference *property_reference, pval
   if (strcmp(propname,"request")==0) return _wrap_LassoLogin_request_set(property_reference, value);
   if (strcmp(propname,"server")==0) return _wrap_LassoLogin_server_set(property_reference, value);
   if (strcmp(propname,"identity")==0) return _wrap_LassoLogin_identity_set(property_reference, value);
+  if (strcmp(propname,"assertion")==0) return _wrap_LassoLogin_assertion_set(property_reference, value);
   if (strcmp(propname,"session")==0) return _wrap_LassoLogin_session_set(property_reference, value);
   return FAILURE;
 }
@@ -43536,7 +44585,7 @@ fail:
 }
 
 
-static int _wrap_LassoSamlp2RequestedAuthnContext_authnContextClassRef_set(zend_property_reference *property_reference, pval *value) {
+static int _wrap_LassoSamlp2RequestedAuthnContext_AuthnContextClassRef_set(zend_property_reference *property_reference, pval *value) {
   LassoSamlp2RequestedAuthnContext *arg1 = (LassoSamlp2RequestedAuthnContext *) 0 ;
   LassoStringList *arg2 = (LassoStringList *) 0 ;
   zval **args[2];
@@ -43547,7 +44596,7 @@ static int _wrap_LassoSamlp2RequestedAuthnContext_authnContextClassRef_set(zend_
     if ((*&(property_reference->object))->type == IS_NULL) {
       arg1 = 0;
     } else {
-      zend_error(E_ERROR, "Type error in argument of LassoSamlp2RequestedAuthnContext_authnContextClassRef_set.");
+      zend_error(E_ERROR, "Type error in argument of LassoSamlp2RequestedAuthnContext_AuthnContextClassRef_set.");
     }
   }
   
@@ -43557,11 +44606,11 @@ static int _wrap_LassoSamlp2RequestedAuthnContext_authnContextClassRef_set(zend_
     if ((*&value)->type == IS_NULL) {
       arg2 = 0;
     } else {
-      zend_error(E_ERROR, "Type error in argument of LassoSamlp2RequestedAuthnContext_authnContextClassRef_set.");
+      zend_error(E_ERROR, "Type error in argument of LassoSamlp2RequestedAuthnContext_AuthnContextClassRef_set.");
     }
   }
   
-  LassoSamlp2RequestedAuthnContext_authnContextClassRef_set(arg1,arg2);
+  LassoSamlp2RequestedAuthnContext_AuthnContextClassRef_set(arg1,arg2);
   
   
   return SUCCESS;
@@ -43570,7 +44619,7 @@ fail:
 }
 
 
-static pval _wrap_LassoSamlp2RequestedAuthnContext_authnContextClassRef_get(zend_property_reference *property_reference) {
+static pval _wrap_LassoSamlp2RequestedAuthnContext_AuthnContextClassRef_get(zend_property_reference *property_reference) {
   LassoSamlp2RequestedAuthnContext *arg1 = (LassoSamlp2RequestedAuthnContext *) 0 ;
   LassoStringList *result = 0 ;
   zval **args[1];
@@ -43583,12 +44632,12 @@ static pval _wrap_LassoSamlp2RequestedAuthnContext_authnContextClassRef_get(zend
     if ((*&(property_reference->object))->type == IS_NULL) {
       arg1 = 0;
     } else {
-      zend_error(E_ERROR, "Type error in argument of LassoSamlp2RequestedAuthnContext_authnContextClassRef_get.");
+      zend_error(E_ERROR, "Type error in argument of LassoSamlp2RequestedAuthnContext_AuthnContextClassRef_get.");
     }
   }
   
   if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
-  result = (LassoStringList *)LassoSamlp2RequestedAuthnContext_authnContextClassRef_get(arg1);
+  result = (LassoStringList *)LassoSamlp2RequestedAuthnContext_AuthnContextClassRef_get(arg1);
   
   if (!result) {
     ZVAL_NULL(return_value);
@@ -43612,7 +44661,7 @@ fail:
 }
 
 
-static int _wrap_LassoSamlp2RequestedAuthnContext_authnContextDeclRef_set(zend_property_reference *property_reference, pval *value) {
+static int _wrap_LassoSamlp2RequestedAuthnContext_AuthnContextDeclRef_set(zend_property_reference *property_reference, pval *value) {
   LassoSamlp2RequestedAuthnContext *arg1 = (LassoSamlp2RequestedAuthnContext *) 0 ;
   LassoStringList *arg2 = (LassoStringList *) 0 ;
   zval **args[2];
@@ -43623,7 +44672,7 @@ static int _wrap_LassoSamlp2RequestedAuthnContext_authnContextDeclRef_set(zend_p
     if ((*&(property_reference->object))->type == IS_NULL) {
       arg1 = 0;
     } else {
-      zend_error(E_ERROR, "Type error in argument of LassoSamlp2RequestedAuthnContext_authnContextDeclRef_set.");
+      zend_error(E_ERROR, "Type error in argument of LassoSamlp2RequestedAuthnContext_AuthnContextDeclRef_set.");
     }
   }
   
@@ -43633,11 +44682,11 @@ static int _wrap_LassoSamlp2RequestedAuthnContext_authnContextDeclRef_set(zend_p
     if ((*&value)->type == IS_NULL) {
       arg2 = 0;
     } else {
-      zend_error(E_ERROR, "Type error in argument of LassoSamlp2RequestedAuthnContext_authnContextDeclRef_set.");
+      zend_error(E_ERROR, "Type error in argument of LassoSamlp2RequestedAuthnContext_AuthnContextDeclRef_set.");
     }
   }
   
-  LassoSamlp2RequestedAuthnContext_authnContextDeclRef_set(arg1,arg2);
+  LassoSamlp2RequestedAuthnContext_AuthnContextDeclRef_set(arg1,arg2);
   
   
   return SUCCESS;
@@ -43646,7 +44695,7 @@ fail:
 }
 
 
-static pval _wrap_LassoSamlp2RequestedAuthnContext_authnContextDeclRef_get(zend_property_reference *property_reference) {
+static pval _wrap_LassoSamlp2RequestedAuthnContext_AuthnContextDeclRef_get(zend_property_reference *property_reference) {
   LassoSamlp2RequestedAuthnContext *arg1 = (LassoSamlp2RequestedAuthnContext *) 0 ;
   LassoStringList *result = 0 ;
   zval **args[1];
@@ -43659,12 +44708,12 @@ static pval _wrap_LassoSamlp2RequestedAuthnContext_authnContextDeclRef_get(zend_
     if ((*&(property_reference->object))->type == IS_NULL) {
       arg1 = 0;
     } else {
-      zend_error(E_ERROR, "Type error in argument of LassoSamlp2RequestedAuthnContext_authnContextDeclRef_get.");
+      zend_error(E_ERROR, "Type error in argument of LassoSamlp2RequestedAuthnContext_AuthnContextDeclRef_get.");
     }
   }
   
   if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
-  result = (LassoStringList *)LassoSamlp2RequestedAuthnContext_authnContextDeclRef_get(arg1);
+  result = (LassoStringList *)LassoSamlp2RequestedAuthnContext_AuthnContextDeclRef_get(arg1);
   
   if (!result) {
     ZVAL_NULL(return_value);
@@ -43806,12 +44855,12 @@ static int _propget_LassoSamlp2RequestedAuthnContext(zend_property_reference *pr
     *value=_wrap_LassoSamlp2RequestedAuthnContext_Comparison_get(property_reference);
     return SUCCESS;
   }
-  if (strcmp(propname,"authnContextClassRef")==0) {
-    *value=_wrap_LassoSamlp2RequestedAuthnContext_authnContextClassRef_get(property_reference);
+  if (strcmp(propname,"AuthnContextClassRef")==0) {
+    *value=_wrap_LassoSamlp2RequestedAuthnContext_AuthnContextClassRef_get(property_reference);
     return SUCCESS;
   }
-  if (strcmp(propname,"authnContextDeclRef")==0) {
-    *value=_wrap_LassoSamlp2RequestedAuthnContext_authnContextDeclRef_get(property_reference);
+  if (strcmp(propname,"AuthnContextDeclRef")==0) {
+    *value=_wrap_LassoSamlp2RequestedAuthnContext_AuthnContextDeclRef_get(property_reference);
     return SUCCESS;
   }
   return FAILURE;
@@ -43834,9 +44883,9 @@ static int _propset_LassoSamlp2RequestedAuthnContext(zend_property_reference *pr
   zend_llist_element *element = property_reference->elements_list->head;
   zend_overloaded_element *property=(zend_overloaded_element *)element->data;
   char *propname=Z_STRVAL_P(&(property->element));
-  if (strcmp(propname,"authnContextClassRef")==0) return _wrap_LassoSamlp2RequestedAuthnContext_authnContextClassRef_set(property_reference, value);
+  if (strcmp(propname,"AuthnContextClassRef")==0) return _wrap_LassoSamlp2RequestedAuthnContext_AuthnContextClassRef_set(property_reference, value);
   if (strcmp(propname,"Comparison")==0) return _wrap_LassoSamlp2RequestedAuthnContext_Comparison_set(property_reference, value);
-  if (strcmp(propname,"authnContextDeclRef")==0) return _wrap_LassoSamlp2RequestedAuthnContext_authnContextDeclRef_set(property_reference, value);
+  if (strcmp(propname,"AuthnContextDeclRef")==0) return _wrap_LassoSamlp2RequestedAuthnContext_AuthnContextDeclRef_set(property_reference, value);
   return FAILURE;
 }
 
@@ -44354,6 +45403,82 @@ fail:
 }
 
 
+static int _wrap_LassoSaml2Assertion_Statement_set(zend_property_reference *property_reference, pval *value) {
+  LassoSaml2Assertion *arg1 = (LassoSaml2Assertion *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  zval **args[2];
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2Assertion, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Assertion_Statement_set.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  
+  if (SWIG_ConvertPtr(*&value, (void **) &arg2, SWIGTYPE_p_LassoNodeList, 0) < 0) {
+    if ((*&value)->type == IS_NULL) {
+      arg2 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Assertion_Statement_set.");
+    }
+  }
+  
+  LassoSaml2Assertion_Statement_set(arg1,arg2);
+  
+  
+  return SUCCESS;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static pval _wrap_LassoSaml2Assertion_Statement_get(zend_property_reference *property_reference) {
+  LassoSaml2Assertion *arg1 = (LassoSaml2Assertion *) 0 ;
+  LassoNodeList *result = 0 ;
+  zval **args[1];
+  zval _return_value;
+  zval *return_value=&_return_value;
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2Assertion, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Assertion_Statement_get.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  result = (LassoNodeList *)LassoSaml2Assertion_Statement_get(arg1);
+  
+  if (!result) {
+    ZVAL_NULL(return_value);
+  } else {
+    SWIG_SetPointerZval(return_value, (void *)result, SWIGTYPE_p_LassoNodeList, 0);
+  /* Wrap this return value */
+  {
+    /* ALTERNATIVE Constructor, make an object wrapper */
+    zval *obj, *_cPtr;
+    MAKE_STD_ZVAL(obj);
+    MAKE_STD_ZVAL(_cPtr);
+    *_cPtr = *return_value;
+    INIT_ZVAL(*return_value);
+    object_init_ex(obj,ptr_ce_swig_LassoNodeList);
+    add_property_zval(obj,"_cPtr",_cPtr);
+    *return_value=*obj;
+  }}
+  return _return_value;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
 static int _wrap_LassoSaml2Assertion_AuthnStatement_set(zend_property_reference *property_reference, pval *value) {
   LassoSaml2Assertion *arg1 = (LassoSaml2Assertion *) 0 ;
   LassoNodeList *arg2 = (LassoNodeList *) 0 ;
@@ -44407,6 +45532,158 @@ static pval _wrap_LassoSaml2Assertion_AuthnStatement_get(zend_property_reference
   
   if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
   result = (LassoNodeList *)LassoSaml2Assertion_AuthnStatement_get(arg1);
+  
+  if (!result) {
+    ZVAL_NULL(return_value);
+  } else {
+    SWIG_SetPointerZval(return_value, (void *)result, SWIGTYPE_p_LassoNodeList, 0);
+  /* Wrap this return value */
+  {
+    /* ALTERNATIVE Constructor, make an object wrapper */
+    zval *obj, *_cPtr;
+    MAKE_STD_ZVAL(obj);
+    MAKE_STD_ZVAL(_cPtr);
+    *_cPtr = *return_value;
+    INIT_ZVAL(*return_value);
+    object_init_ex(obj,ptr_ce_swig_LassoNodeList);
+    add_property_zval(obj,"_cPtr",_cPtr);
+    *return_value=*obj;
+  }}
+  return _return_value;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static int _wrap_LassoSaml2Assertion_AuthzDecisionStatement_set(zend_property_reference *property_reference, pval *value) {
+  LassoSaml2Assertion *arg1 = (LassoSaml2Assertion *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  zval **args[2];
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2Assertion, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Assertion_AuthzDecisionStatement_set.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  
+  if (SWIG_ConvertPtr(*&value, (void **) &arg2, SWIGTYPE_p_LassoNodeList, 0) < 0) {
+    if ((*&value)->type == IS_NULL) {
+      arg2 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Assertion_AuthzDecisionStatement_set.");
+    }
+  }
+  
+  LassoSaml2Assertion_AuthzDecisionStatement_set(arg1,arg2);
+  
+  
+  return SUCCESS;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static pval _wrap_LassoSaml2Assertion_AuthzDecisionStatement_get(zend_property_reference *property_reference) {
+  LassoSaml2Assertion *arg1 = (LassoSaml2Assertion *) 0 ;
+  LassoNodeList *result = 0 ;
+  zval **args[1];
+  zval _return_value;
+  zval *return_value=&_return_value;
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2Assertion, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Assertion_AuthzDecisionStatement_get.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  result = (LassoNodeList *)LassoSaml2Assertion_AuthzDecisionStatement_get(arg1);
+  
+  if (!result) {
+    ZVAL_NULL(return_value);
+  } else {
+    SWIG_SetPointerZval(return_value, (void *)result, SWIGTYPE_p_LassoNodeList, 0);
+  /* Wrap this return value */
+  {
+    /* ALTERNATIVE Constructor, make an object wrapper */
+    zval *obj, *_cPtr;
+    MAKE_STD_ZVAL(obj);
+    MAKE_STD_ZVAL(_cPtr);
+    *_cPtr = *return_value;
+    INIT_ZVAL(*return_value);
+    object_init_ex(obj,ptr_ce_swig_LassoNodeList);
+    add_property_zval(obj,"_cPtr",_cPtr);
+    *return_value=*obj;
+  }}
+  return _return_value;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static int _wrap_LassoSaml2Assertion_AttributeStatement_set(zend_property_reference *property_reference, pval *value) {
+  LassoSaml2Assertion *arg1 = (LassoSaml2Assertion *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  zval **args[2];
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2Assertion, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Assertion_AttributeStatement_set.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  
+  if (SWIG_ConvertPtr(*&value, (void **) &arg2, SWIGTYPE_p_LassoNodeList, 0) < 0) {
+    if ((*&value)->type == IS_NULL) {
+      arg2 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Assertion_AttributeStatement_set.");
+    }
+  }
+  
+  LassoSaml2Assertion_AttributeStatement_set(arg1,arg2);
+  
+  
+  return SUCCESS;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static pval _wrap_LassoSaml2Assertion_AttributeStatement_get(zend_property_reference *property_reference) {
+  LassoSaml2Assertion *arg1 = (LassoSaml2Assertion *) 0 ;
+  LassoNodeList *result = 0 ;
+  zval **args[1];
+  zval _return_value;
+  zval *return_value=&_return_value;
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2Assertion, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Assertion_AttributeStatement_get.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  result = (LassoNodeList *)LassoSaml2Assertion_AttributeStatement_get(arg1);
   
   if (!result) {
     ZVAL_NULL(return_value);
@@ -44560,8 +45837,20 @@ static int _propget_LassoSaml2Assertion(zend_property_reference *property_refere
     *value=_wrap_LassoSaml2Assertion_IssueInstant_get(property_reference);
     return SUCCESS;
   }
+  if (strcmp(propname,"Statement")==0) {
+    *value=_wrap_LassoSaml2Assertion_Statement_get(property_reference);
+    return SUCCESS;
+  }
   if (strcmp(propname,"AuthnStatement")==0) {
     *value=_wrap_LassoSaml2Assertion_AuthnStatement_get(property_reference);
+    return SUCCESS;
+  }
+  if (strcmp(propname,"AuthzDecisionStatement")==0) {
+    *value=_wrap_LassoSaml2Assertion_AuthzDecisionStatement_get(property_reference);
+    return SUCCESS;
+  }
+  if (strcmp(propname,"AttributeStatement")==0) {
+    *value=_wrap_LassoSaml2Assertion_AttributeStatement_get(property_reference);
     return SUCCESS;
   }
   if (strcmp(propname,"ID")==0) {
@@ -44597,7 +45886,10 @@ static int _propset_LassoSaml2Assertion(zend_property_reference *property_refere
   zend_overloaded_element *property=(zend_overloaded_element *)element->data;
   char *propname=Z_STRVAL_P(&(property->element));
   if (strcmp(propname,"IssueInstant")==0) return _wrap_LassoSaml2Assertion_IssueInstant_set(property_reference, value);
+  if (strcmp(propname,"Statement")==0) return _wrap_LassoSaml2Assertion_Statement_set(property_reference, value);
   if (strcmp(propname,"AuthnStatement")==0) return _wrap_LassoSaml2Assertion_AuthnStatement_set(property_reference, value);
+  if (strcmp(propname,"AuthzDecisionStatement")==0) return _wrap_LassoSaml2Assertion_AuthzDecisionStatement_set(property_reference, value);
+  if (strcmp(propname,"AttributeStatement")==0) return _wrap_LassoSaml2Assertion_AttributeStatement_set(property_reference, value);
   if (strcmp(propname,"ID")==0) return _wrap_LassoSaml2Assertion_ID_set(property_reference, value);
   if (strcmp(propname,"Issuer")==0) return _wrap_LassoSaml2Assertion_Issuer_set(property_reference, value);
   if (strcmp(propname,"Advice")==0) return _wrap_LassoSaml2Assertion_Advice_set(property_reference, value);
@@ -45329,6 +46621,158 @@ fail:
 }
 
 
+static int _wrap_LassoSaml2Conditions_OneTimeUse_set(zend_property_reference *property_reference, pval *value) {
+  LassoSaml2Conditions *arg1 = (LassoSaml2Conditions *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  zval **args[2];
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2Conditions, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Conditions_OneTimeUse_set.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  
+  if (SWIG_ConvertPtr(*&value, (void **) &arg2, SWIGTYPE_p_LassoNodeList, 0) < 0) {
+    if ((*&value)->type == IS_NULL) {
+      arg2 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Conditions_OneTimeUse_set.");
+    }
+  }
+  
+  LassoSaml2Conditions_OneTimeUse_set(arg1,arg2);
+  
+  
+  return SUCCESS;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static pval _wrap_LassoSaml2Conditions_OneTimeUse_get(zend_property_reference *property_reference) {
+  LassoSaml2Conditions *arg1 = (LassoSaml2Conditions *) 0 ;
+  LassoNodeList *result = 0 ;
+  zval **args[1];
+  zval _return_value;
+  zval *return_value=&_return_value;
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2Conditions, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Conditions_OneTimeUse_get.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  result = (LassoNodeList *)LassoSaml2Conditions_OneTimeUse_get(arg1);
+  
+  if (!result) {
+    ZVAL_NULL(return_value);
+  } else {
+    SWIG_SetPointerZval(return_value, (void *)result, SWIGTYPE_p_LassoNodeList, 0);
+  /* Wrap this return value */
+  {
+    /* ALTERNATIVE Constructor, make an object wrapper */
+    zval *obj, *_cPtr;
+    MAKE_STD_ZVAL(obj);
+    MAKE_STD_ZVAL(_cPtr);
+    *_cPtr = *return_value;
+    INIT_ZVAL(*return_value);
+    object_init_ex(obj,ptr_ce_swig_LassoNodeList);
+    add_property_zval(obj,"_cPtr",_cPtr);
+    *return_value=*obj;
+  }}
+  return _return_value;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static int _wrap_LassoSaml2Conditions_ProxyRestriction_set(zend_property_reference *property_reference, pval *value) {
+  LassoSaml2Conditions *arg1 = (LassoSaml2Conditions *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  zval **args[2];
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2Conditions, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Conditions_ProxyRestriction_set.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  
+  if (SWIG_ConvertPtr(*&value, (void **) &arg2, SWIGTYPE_p_LassoNodeList, 0) < 0) {
+    if ((*&value)->type == IS_NULL) {
+      arg2 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Conditions_ProxyRestriction_set.");
+    }
+  }
+  
+  LassoSaml2Conditions_ProxyRestriction_set(arg1,arg2);
+  
+  
+  return SUCCESS;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static pval _wrap_LassoSaml2Conditions_ProxyRestriction_get(zend_property_reference *property_reference) {
+  LassoSaml2Conditions *arg1 = (LassoSaml2Conditions *) 0 ;
+  LassoNodeList *result = 0 ;
+  zval **args[1];
+  zval _return_value;
+  zval *return_value=&_return_value;
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2Conditions, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Conditions_ProxyRestriction_get.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  result = (LassoNodeList *)LassoSaml2Conditions_ProxyRestriction_get(arg1);
+  
+  if (!result) {
+    ZVAL_NULL(return_value);
+  } else {
+    SWIG_SetPointerZval(return_value, (void *)result, SWIGTYPE_p_LassoNodeList, 0);
+  /* Wrap this return value */
+  {
+    /* ALTERNATIVE Constructor, make an object wrapper */
+    zval *obj, *_cPtr;
+    MAKE_STD_ZVAL(obj);
+    MAKE_STD_ZVAL(_cPtr);
+    *_cPtr = *return_value;
+    INIT_ZVAL(*return_value);
+    object_init_ex(obj,ptr_ce_swig_LassoNodeList);
+    add_property_zval(obj,"_cPtr",_cPtr);
+    *return_value=*obj;
+  }}
+  return _return_value;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
 ZEND_NAMED_FUNCTION(_wrap_new_LassoSaml2Conditions) {
   LassoSaml2Conditions *result = 0 ;
   
@@ -45459,6 +46903,14 @@ static int _propget_LassoSaml2Conditions(zend_property_reference *property_refer
     *value=_wrap_LassoSaml2Conditions_AudienceRestriction_get(property_reference);
     return SUCCESS;
   }
+  if (strcmp(propname,"OneTimeUse")==0) {
+    *value=_wrap_LassoSaml2Conditions_OneTimeUse_get(property_reference);
+    return SUCCESS;
+  }
+  if (strcmp(propname,"ProxyRestriction")==0) {
+    *value=_wrap_LassoSaml2Conditions_ProxyRestriction_get(property_reference);
+    return SUCCESS;
+  }
   return FAILURE;
 }
 
@@ -45483,8 +46935,314 @@ static int _propset_LassoSaml2Conditions(zend_property_reference *property_refer
   if (strcmp(propname,"NotBefore")==0) return _wrap_LassoSaml2Conditions_NotBefore_set(property_reference, value);
   if (strcmp(propname,"Condition")==0) return _wrap_LassoSaml2Conditions_Condition_set(property_reference, value);
   if (strcmp(propname,"AudienceRestriction")==0) return _wrap_LassoSaml2Conditions_AudienceRestriction_set(property_reference, value);
+  if (strcmp(propname,"OneTimeUse")==0) return _wrap_LassoSaml2Conditions_OneTimeUse_set(property_reference, value);
+  if (strcmp(propname,"ProxyRestriction")==0) return _wrap_LassoSaml2Conditions_ProxyRestriction_set(property_reference, value);
   return FAILURE;
 }
+
+static int _wrap_LassoSaml2Evidence_AssertionIDRef_set(zend_property_reference *property_reference, pval *value) {
+  LassoSaml2Evidence *arg1 = (LassoSaml2Evidence *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  zval **args[2];
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2Evidence, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Evidence_AssertionIDRef_set.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  
+  if (SWIG_ConvertPtr(*&value, (void **) &arg2, SWIGTYPE_p_LassoNodeList, 0) < 0) {
+    if ((*&value)->type == IS_NULL) {
+      arg2 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Evidence_AssertionIDRef_set.");
+    }
+  }
+  
+  LassoSaml2Evidence_AssertionIDRef_set(arg1,arg2);
+  
+  
+  return SUCCESS;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static pval _wrap_LassoSaml2Evidence_AssertionIDRef_get(zend_property_reference *property_reference) {
+  LassoSaml2Evidence *arg1 = (LassoSaml2Evidence *) 0 ;
+  LassoNodeList *result = 0 ;
+  zval **args[1];
+  zval _return_value;
+  zval *return_value=&_return_value;
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2Evidence, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Evidence_AssertionIDRef_get.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  result = (LassoNodeList *)LassoSaml2Evidence_AssertionIDRef_get(arg1);
+  
+  if (!result) {
+    ZVAL_NULL(return_value);
+  } else {
+    SWIG_SetPointerZval(return_value, (void *)result, SWIGTYPE_p_LassoNodeList, 0);
+  /* Wrap this return value */
+  {
+    /* ALTERNATIVE Constructor, make an object wrapper */
+    zval *obj, *_cPtr;
+    MAKE_STD_ZVAL(obj);
+    MAKE_STD_ZVAL(_cPtr);
+    *_cPtr = *return_value;
+    INIT_ZVAL(*return_value);
+    object_init_ex(obj,ptr_ce_swig_LassoNodeList);
+    add_property_zval(obj,"_cPtr",_cPtr);
+    *return_value=*obj;
+  }}
+  return _return_value;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static int _wrap_LassoSaml2Evidence_AssertionURIRef_set(zend_property_reference *property_reference, pval *value) {
+  LassoSaml2Evidence *arg1 = (LassoSaml2Evidence *) 0 ;
+  LassoStringList *arg2 = (LassoStringList *) 0 ;
+  zval **args[2];
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2Evidence, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Evidence_AssertionURIRef_set.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  
+  if (SWIG_ConvertPtr(*&value, (void **) &arg2, SWIGTYPE_p_LassoStringList, 0) < 0) {
+    if ((*&value)->type == IS_NULL) {
+      arg2 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Evidence_AssertionURIRef_set.");
+    }
+  }
+  
+  LassoSaml2Evidence_AssertionURIRef_set(arg1,arg2);
+  
+  
+  return SUCCESS;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static pval _wrap_LassoSaml2Evidence_AssertionURIRef_get(zend_property_reference *property_reference) {
+  LassoSaml2Evidence *arg1 = (LassoSaml2Evidence *) 0 ;
+  LassoStringList *result = 0 ;
+  zval **args[1];
+  zval _return_value;
+  zval *return_value=&_return_value;
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2Evidence, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Evidence_AssertionURIRef_get.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  result = (LassoStringList *)LassoSaml2Evidence_AssertionURIRef_get(arg1);
+  
+  if (!result) {
+    ZVAL_NULL(return_value);
+  } else {
+    SWIG_SetPointerZval(return_value, (void *)result, SWIGTYPE_p_LassoStringList, 0);
+  /* Wrap this return value */
+  {
+    /* ALTERNATIVE Constructor, make an object wrapper */
+    zval *obj, *_cPtr;
+    MAKE_STD_ZVAL(obj);
+    MAKE_STD_ZVAL(_cPtr);
+    *_cPtr = *return_value;
+    INIT_ZVAL(*return_value);
+    object_init_ex(obj,ptr_ce_swig_LassoStringList);
+    add_property_zval(obj,"_cPtr",_cPtr);
+    *return_value=*obj;
+  }}
+  return _return_value;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static int _wrap_LassoSaml2Evidence_Assertion_set(zend_property_reference *property_reference, pval *value) {
+  LassoSaml2Evidence *arg1 = (LassoSaml2Evidence *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  zval **args[2];
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2Evidence, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Evidence_Assertion_set.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  
+  if (SWIG_ConvertPtr(*&value, (void **) &arg2, SWIGTYPE_p_LassoNodeList, 0) < 0) {
+    if ((*&value)->type == IS_NULL) {
+      arg2 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Evidence_Assertion_set.");
+    }
+  }
+  
+  LassoSaml2Evidence_Assertion_set(arg1,arg2);
+  
+  
+  return SUCCESS;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static pval _wrap_LassoSaml2Evidence_Assertion_get(zend_property_reference *property_reference) {
+  LassoSaml2Evidence *arg1 = (LassoSaml2Evidence *) 0 ;
+  LassoNodeList *result = 0 ;
+  zval **args[1];
+  zval _return_value;
+  zval *return_value=&_return_value;
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2Evidence, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Evidence_Assertion_get.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  result = (LassoNodeList *)LassoSaml2Evidence_Assertion_get(arg1);
+  
+  if (!result) {
+    ZVAL_NULL(return_value);
+  } else {
+    SWIG_SetPointerZval(return_value, (void *)result, SWIGTYPE_p_LassoNodeList, 0);
+  /* Wrap this return value */
+  {
+    /* ALTERNATIVE Constructor, make an object wrapper */
+    zval *obj, *_cPtr;
+    MAKE_STD_ZVAL(obj);
+    MAKE_STD_ZVAL(_cPtr);
+    *_cPtr = *return_value;
+    INIT_ZVAL(*return_value);
+    object_init_ex(obj,ptr_ce_swig_LassoNodeList);
+    add_property_zval(obj,"_cPtr",_cPtr);
+    *return_value=*obj;
+  }}
+  return _return_value;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static int _wrap_LassoSaml2Evidence_EncryptedAssertion_set(zend_property_reference *property_reference, pval *value) {
+  LassoSaml2Evidence *arg1 = (LassoSaml2Evidence *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  zval **args[2];
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2Evidence, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Evidence_EncryptedAssertion_set.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  
+  if (SWIG_ConvertPtr(*&value, (void **) &arg2, SWIGTYPE_p_LassoNodeList, 0) < 0) {
+    if ((*&value)->type == IS_NULL) {
+      arg2 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Evidence_EncryptedAssertion_set.");
+    }
+  }
+  
+  LassoSaml2Evidence_EncryptedAssertion_set(arg1,arg2);
+  
+  
+  return SUCCESS;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static pval _wrap_LassoSaml2Evidence_EncryptedAssertion_get(zend_property_reference *property_reference) {
+  LassoSaml2Evidence *arg1 = (LassoSaml2Evidence *) 0 ;
+  LassoNodeList *result = 0 ;
+  zval **args[1];
+  zval _return_value;
+  zval *return_value=&_return_value;
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2Evidence, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Evidence_EncryptedAssertion_get.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  result = (LassoNodeList *)LassoSaml2Evidence_EncryptedAssertion_get(arg1);
+  
+  if (!result) {
+    ZVAL_NULL(return_value);
+  } else {
+    SWIG_SetPointerZval(return_value, (void *)result, SWIGTYPE_p_LassoNodeList, 0);
+  /* Wrap this return value */
+  {
+    /* ALTERNATIVE Constructor, make an object wrapper */
+    zval *obj, *_cPtr;
+    MAKE_STD_ZVAL(obj);
+    MAKE_STD_ZVAL(_cPtr);
+    *_cPtr = *return_value;
+    INIT_ZVAL(*return_value);
+    object_init_ex(obj,ptr_ce_swig_LassoNodeList);
+    add_property_zval(obj,"_cPtr",_cPtr);
+    *return_value=*obj;
+  }}
+  return _return_value;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
 
 ZEND_NAMED_FUNCTION(_wrap_new_LassoSaml2Evidence) {
   LassoSaml2Evidence *result = 0 ;
@@ -45600,6 +47358,22 @@ static int _propget_LassoSaml2Evidence(zend_property_reference *property_referen
   zend_llist_element *element = property_reference->elements_list->head;
   zend_overloaded_element *property=(zend_overloaded_element *)element->data;
   char *propname=Z_STRVAL_P(&(property->element));
+  if (strcmp(propname,"AssertionIDRef")==0) {
+    *value=_wrap_LassoSaml2Evidence_AssertionIDRef_get(property_reference);
+    return SUCCESS;
+  }
+  if (strcmp(propname,"AssertionURIRef")==0) {
+    *value=_wrap_LassoSaml2Evidence_AssertionURIRef_get(property_reference);
+    return SUCCESS;
+  }
+  if (strcmp(propname,"Assertion")==0) {
+    *value=_wrap_LassoSaml2Evidence_Assertion_get(property_reference);
+    return SUCCESS;
+  }
+  if (strcmp(propname,"EncryptedAssertion")==0) {
+    *value=_wrap_LassoSaml2Evidence_EncryptedAssertion_get(property_reference);
+    return SUCCESS;
+  }
   return FAILURE;
 }
 
@@ -45620,6 +47394,10 @@ static int _propset_LassoSaml2Evidence(zend_property_reference *property_referen
   zend_llist_element *element = property_reference->elements_list->head;
   zend_overloaded_element *property=(zend_overloaded_element *)element->data;
   char *propname=Z_STRVAL_P(&(property->element));
+  if (strcmp(propname,"AssertionIDRef")==0) return _wrap_LassoSaml2Evidence_AssertionIDRef_set(property_reference, value);
+  if (strcmp(propname,"AssertionURIRef")==0) return _wrap_LassoSaml2Evidence_AssertionURIRef_set(property_reference, value);
+  if (strcmp(propname,"Assertion")==0) return _wrap_LassoSaml2Evidence_Assertion_set(property_reference, value);
+  if (strcmp(propname,"EncryptedAssertion")==0) return _wrap_LassoSaml2Evidence_EncryptedAssertion_set(property_reference, value);
   return FAILURE;
 }
 
@@ -47076,6 +48854,310 @@ static int _propset_LassoSaml2OneTimeUse(zend_property_reference *property_refer
   return FAILURE;
 }
 
+static int _wrap_LassoSaml2Advice_AssertionIDRef_set(zend_property_reference *property_reference, pval *value) {
+  LassoSaml2Advice *arg1 = (LassoSaml2Advice *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  zval **args[2];
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2Advice, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Advice_AssertionIDRef_set.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  
+  if (SWIG_ConvertPtr(*&value, (void **) &arg2, SWIGTYPE_p_LassoNodeList, 0) < 0) {
+    if ((*&value)->type == IS_NULL) {
+      arg2 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Advice_AssertionIDRef_set.");
+    }
+  }
+  
+  LassoSaml2Advice_AssertionIDRef_set(arg1,arg2);
+  
+  
+  return SUCCESS;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static pval _wrap_LassoSaml2Advice_AssertionIDRef_get(zend_property_reference *property_reference) {
+  LassoSaml2Advice *arg1 = (LassoSaml2Advice *) 0 ;
+  LassoNodeList *result = 0 ;
+  zval **args[1];
+  zval _return_value;
+  zval *return_value=&_return_value;
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2Advice, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Advice_AssertionIDRef_get.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  result = (LassoNodeList *)LassoSaml2Advice_AssertionIDRef_get(arg1);
+  
+  if (!result) {
+    ZVAL_NULL(return_value);
+  } else {
+    SWIG_SetPointerZval(return_value, (void *)result, SWIGTYPE_p_LassoNodeList, 0);
+  /* Wrap this return value */
+  {
+    /* ALTERNATIVE Constructor, make an object wrapper */
+    zval *obj, *_cPtr;
+    MAKE_STD_ZVAL(obj);
+    MAKE_STD_ZVAL(_cPtr);
+    *_cPtr = *return_value;
+    INIT_ZVAL(*return_value);
+    object_init_ex(obj,ptr_ce_swig_LassoNodeList);
+    add_property_zval(obj,"_cPtr",_cPtr);
+    *return_value=*obj;
+  }}
+  return _return_value;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static int _wrap_LassoSaml2Advice_AssertionURIRef_set(zend_property_reference *property_reference, pval *value) {
+  LassoSaml2Advice *arg1 = (LassoSaml2Advice *) 0 ;
+  LassoStringList *arg2 = (LassoStringList *) 0 ;
+  zval **args[2];
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2Advice, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Advice_AssertionURIRef_set.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  
+  if (SWIG_ConvertPtr(*&value, (void **) &arg2, SWIGTYPE_p_LassoStringList, 0) < 0) {
+    if ((*&value)->type == IS_NULL) {
+      arg2 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Advice_AssertionURIRef_set.");
+    }
+  }
+  
+  LassoSaml2Advice_AssertionURIRef_set(arg1,arg2);
+  
+  
+  return SUCCESS;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static pval _wrap_LassoSaml2Advice_AssertionURIRef_get(zend_property_reference *property_reference) {
+  LassoSaml2Advice *arg1 = (LassoSaml2Advice *) 0 ;
+  LassoStringList *result = 0 ;
+  zval **args[1];
+  zval _return_value;
+  zval *return_value=&_return_value;
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2Advice, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Advice_AssertionURIRef_get.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  result = (LassoStringList *)LassoSaml2Advice_AssertionURIRef_get(arg1);
+  
+  if (!result) {
+    ZVAL_NULL(return_value);
+  } else {
+    SWIG_SetPointerZval(return_value, (void *)result, SWIGTYPE_p_LassoStringList, 0);
+  /* Wrap this return value */
+  {
+    /* ALTERNATIVE Constructor, make an object wrapper */
+    zval *obj, *_cPtr;
+    MAKE_STD_ZVAL(obj);
+    MAKE_STD_ZVAL(_cPtr);
+    *_cPtr = *return_value;
+    INIT_ZVAL(*return_value);
+    object_init_ex(obj,ptr_ce_swig_LassoStringList);
+    add_property_zval(obj,"_cPtr",_cPtr);
+    *return_value=*obj;
+  }}
+  return _return_value;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static int _wrap_LassoSaml2Advice_Assertion_set(zend_property_reference *property_reference, pval *value) {
+  LassoSaml2Advice *arg1 = (LassoSaml2Advice *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  zval **args[2];
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2Advice, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Advice_Assertion_set.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  
+  if (SWIG_ConvertPtr(*&value, (void **) &arg2, SWIGTYPE_p_LassoNodeList, 0) < 0) {
+    if ((*&value)->type == IS_NULL) {
+      arg2 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Advice_Assertion_set.");
+    }
+  }
+  
+  LassoSaml2Advice_Assertion_set(arg1,arg2);
+  
+  
+  return SUCCESS;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static pval _wrap_LassoSaml2Advice_Assertion_get(zend_property_reference *property_reference) {
+  LassoSaml2Advice *arg1 = (LassoSaml2Advice *) 0 ;
+  LassoNodeList *result = 0 ;
+  zval **args[1];
+  zval _return_value;
+  zval *return_value=&_return_value;
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2Advice, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Advice_Assertion_get.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  result = (LassoNodeList *)LassoSaml2Advice_Assertion_get(arg1);
+  
+  if (!result) {
+    ZVAL_NULL(return_value);
+  } else {
+    SWIG_SetPointerZval(return_value, (void *)result, SWIGTYPE_p_LassoNodeList, 0);
+  /* Wrap this return value */
+  {
+    /* ALTERNATIVE Constructor, make an object wrapper */
+    zval *obj, *_cPtr;
+    MAKE_STD_ZVAL(obj);
+    MAKE_STD_ZVAL(_cPtr);
+    *_cPtr = *return_value;
+    INIT_ZVAL(*return_value);
+    object_init_ex(obj,ptr_ce_swig_LassoNodeList);
+    add_property_zval(obj,"_cPtr",_cPtr);
+    *return_value=*obj;
+  }}
+  return _return_value;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static int _wrap_LassoSaml2Advice_EncryptedAssertion_set(zend_property_reference *property_reference, pval *value) {
+  LassoSaml2Advice *arg1 = (LassoSaml2Advice *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  zval **args[2];
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2Advice, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Advice_EncryptedAssertion_set.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  
+  if (SWIG_ConvertPtr(*&value, (void **) &arg2, SWIGTYPE_p_LassoNodeList, 0) < 0) {
+    if ((*&value)->type == IS_NULL) {
+      arg2 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Advice_EncryptedAssertion_set.");
+    }
+  }
+  
+  LassoSaml2Advice_EncryptedAssertion_set(arg1,arg2);
+  
+  
+  return SUCCESS;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static pval _wrap_LassoSaml2Advice_EncryptedAssertion_get(zend_property_reference *property_reference) {
+  LassoSaml2Advice *arg1 = (LassoSaml2Advice *) 0 ;
+  LassoNodeList *result = 0 ;
+  zval **args[1];
+  zval _return_value;
+  zval *return_value=&_return_value;
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2Advice, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2Advice_EncryptedAssertion_get.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  result = (LassoNodeList *)LassoSaml2Advice_EncryptedAssertion_get(arg1);
+  
+  if (!result) {
+    ZVAL_NULL(return_value);
+  } else {
+    SWIG_SetPointerZval(return_value, (void *)result, SWIGTYPE_p_LassoNodeList, 0);
+  /* Wrap this return value */
+  {
+    /* ALTERNATIVE Constructor, make an object wrapper */
+    zval *obj, *_cPtr;
+    MAKE_STD_ZVAL(obj);
+    MAKE_STD_ZVAL(_cPtr);
+    *_cPtr = *return_value;
+    INIT_ZVAL(*return_value);
+    object_init_ex(obj,ptr_ce_swig_LassoNodeList);
+    add_property_zval(obj,"_cPtr",_cPtr);
+    *return_value=*obj;
+  }}
+  return _return_value;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
 ZEND_NAMED_FUNCTION(_wrap_new_LassoSaml2Advice) {
   LassoSaml2Advice *result = 0 ;
   
@@ -47190,6 +49272,22 @@ static int _propget_LassoSaml2Advice(zend_property_reference *property_reference
   zend_llist_element *element = property_reference->elements_list->head;
   zend_overloaded_element *property=(zend_overloaded_element *)element->data;
   char *propname=Z_STRVAL_P(&(property->element));
+  if (strcmp(propname,"AssertionIDRef")==0) {
+    *value=_wrap_LassoSaml2Advice_AssertionIDRef_get(property_reference);
+    return SUCCESS;
+  }
+  if (strcmp(propname,"AssertionURIRef")==0) {
+    *value=_wrap_LassoSaml2Advice_AssertionURIRef_get(property_reference);
+    return SUCCESS;
+  }
+  if (strcmp(propname,"Assertion")==0) {
+    *value=_wrap_LassoSaml2Advice_Assertion_get(property_reference);
+    return SUCCESS;
+  }
+  if (strcmp(propname,"EncryptedAssertion")==0) {
+    *value=_wrap_LassoSaml2Advice_EncryptedAssertion_get(property_reference);
+    return SUCCESS;
+  }
   return FAILURE;
 }
 
@@ -47210,6 +49308,10 @@ static int _propset_LassoSaml2Advice(zend_property_reference *property_reference
   zend_llist_element *element = property_reference->elements_list->head;
   zend_overloaded_element *property=(zend_overloaded_element *)element->data;
   char *propname=Z_STRVAL_P(&(property->element));
+  if (strcmp(propname,"AssertionIDRef")==0) return _wrap_LassoSaml2Advice_AssertionIDRef_set(property_reference, value);
+  if (strcmp(propname,"AssertionURIRef")==0) return _wrap_LassoSaml2Advice_AssertionURIRef_set(property_reference, value);
+  if (strcmp(propname,"Assertion")==0) return _wrap_LassoSaml2Advice_Assertion_set(property_reference, value);
+  if (strcmp(propname,"EncryptedAssertion")==0) return _wrap_LassoSaml2Advice_EncryptedAssertion_set(property_reference, value);
   return FAILURE;
 }
 
@@ -50145,6 +52247,158 @@ static int _propset_LassoSaml2AuthnStatement(zend_property_reference *property_r
   return FAILURE;
 }
 
+static int _wrap_LassoSaml2AttributeStatement_Attribute_set(zend_property_reference *property_reference, pval *value) {
+  LassoSaml2AttributeStatement *arg1 = (LassoSaml2AttributeStatement *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  zval **args[2];
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2AttributeStatement, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2AttributeStatement_Attribute_set.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  
+  if (SWIG_ConvertPtr(*&value, (void **) &arg2, SWIGTYPE_p_LassoNodeList, 0) < 0) {
+    if ((*&value)->type == IS_NULL) {
+      arg2 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2AttributeStatement_Attribute_set.");
+    }
+  }
+  
+  LassoSaml2AttributeStatement_Attribute_set(arg1,arg2);
+  
+  
+  return SUCCESS;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static pval _wrap_LassoSaml2AttributeStatement_Attribute_get(zend_property_reference *property_reference) {
+  LassoSaml2AttributeStatement *arg1 = (LassoSaml2AttributeStatement *) 0 ;
+  LassoNodeList *result = 0 ;
+  zval **args[1];
+  zval _return_value;
+  zval *return_value=&_return_value;
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2AttributeStatement, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2AttributeStatement_Attribute_get.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  result = (LassoNodeList *)LassoSaml2AttributeStatement_Attribute_get(arg1);
+  
+  if (!result) {
+    ZVAL_NULL(return_value);
+  } else {
+    SWIG_SetPointerZval(return_value, (void *)result, SWIGTYPE_p_LassoNodeList, 0);
+  /* Wrap this return value */
+  {
+    /* ALTERNATIVE Constructor, make an object wrapper */
+    zval *obj, *_cPtr;
+    MAKE_STD_ZVAL(obj);
+    MAKE_STD_ZVAL(_cPtr);
+    *_cPtr = *return_value;
+    INIT_ZVAL(*return_value);
+    object_init_ex(obj,ptr_ce_swig_LassoNodeList);
+    add_property_zval(obj,"_cPtr",_cPtr);
+    *return_value=*obj;
+  }}
+  return _return_value;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static int _wrap_LassoSaml2AttributeStatement_EncryptedAttribute_set(zend_property_reference *property_reference, pval *value) {
+  LassoSaml2AttributeStatement *arg1 = (LassoSaml2AttributeStatement *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  zval **args[2];
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2AttributeStatement, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2AttributeStatement_EncryptedAttribute_set.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  
+  if (SWIG_ConvertPtr(*&value, (void **) &arg2, SWIGTYPE_p_LassoNodeList, 0) < 0) {
+    if ((*&value)->type == IS_NULL) {
+      arg2 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2AttributeStatement_EncryptedAttribute_set.");
+    }
+  }
+  
+  LassoSaml2AttributeStatement_EncryptedAttribute_set(arg1,arg2);
+  
+  
+  return SUCCESS;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static pval _wrap_LassoSaml2AttributeStatement_EncryptedAttribute_get(zend_property_reference *property_reference) {
+  LassoSaml2AttributeStatement *arg1 = (LassoSaml2AttributeStatement *) 0 ;
+  LassoNodeList *result = 0 ;
+  zval **args[1];
+  zval _return_value;
+  zval *return_value=&_return_value;
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSaml2AttributeStatement, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSaml2AttributeStatement_EncryptedAttribute_get.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  result = (LassoNodeList *)LassoSaml2AttributeStatement_EncryptedAttribute_get(arg1);
+  
+  if (!result) {
+    ZVAL_NULL(return_value);
+  } else {
+    SWIG_SetPointerZval(return_value, (void *)result, SWIGTYPE_p_LassoNodeList, 0);
+  /* Wrap this return value */
+  {
+    /* ALTERNATIVE Constructor, make an object wrapper */
+    zval *obj, *_cPtr;
+    MAKE_STD_ZVAL(obj);
+    MAKE_STD_ZVAL(_cPtr);
+    *_cPtr = *return_value;
+    INIT_ZVAL(*return_value);
+    object_init_ex(obj,ptr_ce_swig_LassoNodeList);
+    add_property_zval(obj,"_cPtr",_cPtr);
+    *return_value=*obj;
+  }}
+  return _return_value;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
 ZEND_NAMED_FUNCTION(_wrap_new_LassoSaml2AttributeStatement) {
   LassoSaml2AttributeStatement *result = 0 ;
   
@@ -50259,6 +52513,14 @@ static int _propget_LassoSaml2AttributeStatement(zend_property_reference *proper
   zend_llist_element *element = property_reference->elements_list->head;
   zend_overloaded_element *property=(zend_overloaded_element *)element->data;
   char *propname=Z_STRVAL_P(&(property->element));
+  if (strcmp(propname,"EncryptedAttribute")==0) {
+    *value=_wrap_LassoSaml2AttributeStatement_EncryptedAttribute_get(property_reference);
+    return SUCCESS;
+  }
+  if (strcmp(propname,"Attribute")==0) {
+    *value=_wrap_LassoSaml2AttributeStatement_Attribute_get(property_reference);
+    return SUCCESS;
+  }
   return FAILURE;
 }
 
@@ -50279,6 +52541,8 @@ static int _propset_LassoSaml2AttributeStatement(zend_property_reference *proper
   zend_llist_element *element = property_reference->elements_list->head;
   zend_overloaded_element *property=(zend_overloaded_element *)element->data;
   char *propname=Z_STRVAL_P(&(property->element));
+  if (strcmp(propname,"Attribute")==0) return _wrap_LassoSaml2AttributeStatement_Attribute_set(property_reference, value);
+  if (strcmp(propname,"EncryptedAttribute")==0) return _wrap_LassoSaml2AttributeStatement_EncryptedAttribute_set(property_reference, value);
   return FAILURE;
 }
 
@@ -51898,6 +54162,158 @@ static int _propset_LassoSamlp2StatusResponse(zend_property_reference *property_
   return FAILURE;
 }
 
+static int _wrap_LassoSamlp2Response_Assertion_set(zend_property_reference *property_reference, pval *value) {
+  LassoSamlp2Response *arg1 = (LassoSamlp2Response *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  zval **args[2];
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSamlp2Response, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSamlp2Response_Assertion_set.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  
+  if (SWIG_ConvertPtr(*&value, (void **) &arg2, SWIGTYPE_p_LassoNodeList, 0) < 0) {
+    if ((*&value)->type == IS_NULL) {
+      arg2 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSamlp2Response_Assertion_set.");
+    }
+  }
+  
+  LassoSamlp2Response_Assertion_set(arg1,arg2);
+  
+  
+  return SUCCESS;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static pval _wrap_LassoSamlp2Response_Assertion_get(zend_property_reference *property_reference) {
+  LassoSamlp2Response *arg1 = (LassoSamlp2Response *) 0 ;
+  LassoNodeList *result = 0 ;
+  zval **args[1];
+  zval _return_value;
+  zval *return_value=&_return_value;
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSamlp2Response, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSamlp2Response_Assertion_get.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  result = (LassoNodeList *)LassoSamlp2Response_Assertion_get(arg1);
+  
+  if (!result) {
+    ZVAL_NULL(return_value);
+  } else {
+    SWIG_SetPointerZval(return_value, (void *)result, SWIGTYPE_p_LassoNodeList, 0);
+  /* Wrap this return value */
+  {
+    /* ALTERNATIVE Constructor, make an object wrapper */
+    zval *obj, *_cPtr;
+    MAKE_STD_ZVAL(obj);
+    MAKE_STD_ZVAL(_cPtr);
+    *_cPtr = *return_value;
+    INIT_ZVAL(*return_value);
+    object_init_ex(obj,ptr_ce_swig_LassoNodeList);
+    add_property_zval(obj,"_cPtr",_cPtr);
+    *return_value=*obj;
+  }}
+  return _return_value;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static int _wrap_LassoSamlp2Response_EncryptedAssertion_set(zend_property_reference *property_reference, pval *value) {
+  LassoSamlp2Response *arg1 = (LassoSamlp2Response *) 0 ;
+  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
+  zval **args[2];
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSamlp2Response, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSamlp2Response_EncryptedAssertion_set.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  
+  if (SWIG_ConvertPtr(*&value, (void **) &arg2, SWIGTYPE_p_LassoNodeList, 0) < 0) {
+    if ((*&value)->type == IS_NULL) {
+      arg2 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSamlp2Response_EncryptedAssertion_set.");
+    }
+  }
+  
+  LassoSamlp2Response_EncryptedAssertion_set(arg1,arg2);
+  
+  
+  return SUCCESS;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
+static pval _wrap_LassoSamlp2Response_EncryptedAssertion_get(zend_property_reference *property_reference) {
+  LassoSamlp2Response *arg1 = (LassoSamlp2Response *) 0 ;
+  LassoNodeList *result = 0 ;
+  zval **args[1];
+  zval _return_value;
+  zval *return_value=&_return_value;
+  
+  SWIG_ResetError();
+  
+  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSamlp2Response, 0) < 0) {
+    if ((*&(property_reference->object))->type == IS_NULL) {
+      arg1 = 0;
+    } else {
+      zend_error(E_ERROR, "Type error in argument of LassoSamlp2Response_EncryptedAssertion_get.");
+    }
+  }
+  
+  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
+  result = (LassoNodeList *)LassoSamlp2Response_EncryptedAssertion_get(arg1);
+  
+  if (!result) {
+    ZVAL_NULL(return_value);
+  } else {
+    SWIG_SetPointerZval(return_value, (void *)result, SWIGTYPE_p_LassoNodeList, 0);
+  /* Wrap this return value */
+  {
+    /* ALTERNATIVE Constructor, make an object wrapper */
+    zval *obj, *_cPtr;
+    MAKE_STD_ZVAL(obj);
+    MAKE_STD_ZVAL(_cPtr);
+    *_cPtr = *return_value;
+    INIT_ZVAL(*return_value);
+    object_init_ex(obj,ptr_ce_swig_LassoNodeList);
+    add_property_zval(obj,"_cPtr",_cPtr);
+    *return_value=*obj;
+  }}
+  return _return_value;
+fail:
+  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
+}
+
+
 static int _wrap_LassoSamlp2Response_Issuer_set(zend_property_reference *property_reference, pval *value) {
   LassoSamlp2Response *arg1 = (LassoSamlp2Response *) 0 ;
   LassoSaml2NameID *arg2 = (LassoSaml2NameID *) 0 ;
@@ -52504,82 +54920,6 @@ fail:
 }
 
 
-static int _wrap_LassoSamlp2Response_Assertion_set(zend_property_reference *property_reference, pval *value) {
-  LassoSamlp2Response *arg1 = (LassoSamlp2Response *) 0 ;
-  LassoNodeList *arg2 = (LassoNodeList *) 0 ;
-  zval **args[2];
-  
-  SWIG_ResetError();
-  
-  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSamlp2Response, 0) < 0) {
-    if ((*&(property_reference->object))->type == IS_NULL) {
-      arg1 = 0;
-    } else {
-      zend_error(E_ERROR, "Type error in argument of LassoSamlp2Response_Assertion_set.");
-    }
-  }
-  
-  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
-  
-  if (SWIG_ConvertPtr(*&value, (void **) &arg2, SWIGTYPE_p_LassoNodeList, 0) < 0) {
-    if ((*&value)->type == IS_NULL) {
-      arg2 = 0;
-    } else {
-      zend_error(E_ERROR, "Type error in argument of LassoSamlp2Response_Assertion_set.");
-    }
-  }
-  
-  LassoSamlp2Response_Assertion_set(arg1,arg2);
-  
-  
-  return SUCCESS;
-fail:
-  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
-}
-
-
-static pval _wrap_LassoSamlp2Response_Assertion_get(zend_property_reference *property_reference) {
-  LassoSamlp2Response *arg1 = (LassoSamlp2Response *) 0 ;
-  LassoNodeList *result = 0 ;
-  zval **args[1];
-  zval _return_value;
-  zval *return_value=&_return_value;
-  
-  SWIG_ResetError();
-  
-  if (SWIG_ConvertPtr(*&(property_reference->object), (void **) &arg1, SWIGTYPE_p_LassoSamlp2Response, 0) < 0) {
-    if ((*&(property_reference->object))->type == IS_NULL) {
-      arg1 = 0;
-    } else {
-      zend_error(E_ERROR, "Type error in argument of LassoSamlp2Response_Assertion_get.");
-    }
-  }
-  
-  if(!arg1) SWIG_PHP_Error(E_ERROR, "this pointer is NULL");
-  result = (LassoNodeList *)LassoSamlp2Response_Assertion_get(arg1);
-  
-  if (!result) {
-    ZVAL_NULL(return_value);
-  } else {
-    SWIG_SetPointerZval(return_value, (void *)result, SWIGTYPE_p_LassoNodeList, 0);
-  /* Wrap this return value */
-  {
-    /* ALTERNATIVE Constructor, make an object wrapper */
-    zval *obj, *_cPtr;
-    MAKE_STD_ZVAL(obj);
-    MAKE_STD_ZVAL(_cPtr);
-    *_cPtr = *return_value;
-    INIT_ZVAL(*return_value);
-    object_init_ex(obj,ptr_ce_swig_LassoNodeList);
-    add_property_zval(obj,"_cPtr",_cPtr);
-    *return_value=*obj;
-  }}
-  return _return_value;
-fail:
-  zend_error(SWIG_ErrorCode(),SWIG_ErrorMsg());
-}
-
-
 ZEND_NAMED_FUNCTION(_wrap_new_LassoSamlp2Response) {
   LassoSamlp2Response *result = 0 ;
   
@@ -52702,16 +55042,20 @@ static int _propget_LassoSamlp2Response(zend_property_reference *property_refere
     *value=_wrap_LassoSamlp2Response_Status_get(property_reference);
     return SUCCESS;
   }
+  if (strcmp(propname,"Assertion")==0) {
+    *value=_wrap_LassoSamlp2Response_Assertion_get(property_reference);
+    return SUCCESS;
+  }
+  if (strcmp(propname,"EncryptedAssertion")==0) {
+    *value=_wrap_LassoSamlp2Response_EncryptedAssertion_get(property_reference);
+    return SUCCESS;
+  }
   if (strcmp(propname,"Version")==0) {
     *value=_wrap_LassoSamlp2Response_Version_get(property_reference);
     return SUCCESS;
   }
   if (strcmp(propname,"Destination")==0) {
     *value=_wrap_LassoSamlp2Response_Destination_get(property_reference);
-    return SUCCESS;
-  }
-  if (strcmp(propname,"Assertion")==0) {
-    *value=_wrap_LassoSamlp2Response_Assertion_get(property_reference);
     return SUCCESS;
   }
   if (strcmp(propname,"InResponseTo")==0) {
@@ -52761,9 +55105,10 @@ static int _propset_LassoSamlp2Response(zend_property_reference *property_refere
   if (strcmp(propname,"ID")==0) return _wrap_LassoSamlp2Response_ID_set(property_reference, value);
   if (strcmp(propname,"Extensions")==0) return _wrap_LassoSamlp2Response_Extensions_set(property_reference, value);
   if (strcmp(propname,"Status")==0) return _wrap_LassoSamlp2Response_Status_set(property_reference, value);
+  if (strcmp(propname,"Assertion")==0) return _wrap_LassoSamlp2Response_Assertion_set(property_reference, value);
+  if (strcmp(propname,"EncryptedAssertion")==0) return _wrap_LassoSamlp2Response_EncryptedAssertion_set(property_reference, value);
   if (strcmp(propname,"Version")==0) return _wrap_LassoSamlp2Response_Version_set(property_reference, value);
   if (strcmp(propname,"Destination")==0) return _wrap_LassoSamlp2Response_Destination_set(property_reference, value);
-  if (strcmp(propname,"Assertion")==0) return _wrap_LassoSamlp2Response_Assertion_set(property_reference, value);
   return FAILURE;
 }
 
@@ -66989,12 +69334,12 @@ static ZEND_RSRC_DTOR_FUNC(_wrap_destroy_p_LassoProviderRole) {
   /* No destructor for simple type _p_LassoProviderRole */
 }
 /* NEW Destructor style */
-static ZEND_RSRC_DTOR_FUNC(_wrap_destroy_p_LassoSaml2Advice) {
-  __wrap_delete_LassoSaml2Advice(rsrc, SWIGTYPE_p_LassoSaml2Advice->name TSRMLS_CC);
-}
-/* NEW Destructor style */
 static ZEND_RSRC_DTOR_FUNC(_wrap_destroy_p_LassoSamlAdvice) {
   __wrap_delete_LassoSamlAdvice(rsrc, SWIGTYPE_p_LassoSamlAdvice->name TSRMLS_CC);
+}
+/* NEW Destructor style */
+static ZEND_RSRC_DTOR_FUNC(_wrap_destroy_p_LassoSaml2Advice) {
+  __wrap_delete_LassoSaml2Advice(rsrc, SWIGTYPE_p_LassoSaml2Advice->name TSRMLS_CC);
 }
 /* NEW Destructor style */
 static ZEND_RSRC_DTOR_FUNC(_wrap_destroy_p_LassoSamlpStatus) {
@@ -67063,6 +69408,10 @@ static ZEND_RSRC_DTOR_FUNC(_wrap_destroy_p_LassoSaml2AudienceRestriction) {
 /* NEW Destructor style */
 static ZEND_RSRC_DTOR_FUNC(_wrap_destroy_p_LassoSaml2AuthzDecisionStatement) {
   __wrap_delete_LassoSaml2AuthzDecisionStatement(rsrc, SWIGTYPE_p_LassoSaml2AuthzDecisionStatement->name TSRMLS_CC);
+}
+/* NEW Destructor style */
+static ZEND_RSRC_DTOR_FUNC(_wrap_destroy_p_GHashTable) {
+  /* No destructor for simple type _p_GHashTable */
 }
 /* NEW Destructor style */
 static ZEND_RSRC_DTOR_FUNC(_wrap_destroy_p_LassoNameIdentifierMapping) {
@@ -67189,12 +69538,16 @@ static ZEND_RSRC_DTOR_FUNC(_wrap_destroy_p_LassoSamlSubjectStatementAbstract) {
   /* No destructor for class LassoSamlSubjectStatementAbstract */
 }
 /* NEW Destructor style */
+static ZEND_RSRC_DTOR_FUNC(_wrap_destroy_p_LassoSamlStatementAbstract) {
+  /* No destructor for class LassoSamlStatementAbstract */
+}
+/* NEW Destructor style */
 static ZEND_RSRC_DTOR_FUNC(_wrap_destroy_p_LassoSamlConditionAbstract) {
   /* No destructor for class LassoSamlConditionAbstract */
 }
 /* NEW Destructor style */
-static ZEND_RSRC_DTOR_FUNC(_wrap_destroy_p_LassoSamlStatementAbstract) {
-  /* No destructor for class LassoSamlStatementAbstract */
+static ZEND_RSRC_DTOR_FUNC(_wrap_destroy_p_LassoMiscTextNode) {
+  __wrap_delete_LassoMiscTextNode(rsrc, SWIGTYPE_p_LassoMiscTextNode->name TSRMLS_CC);
 }
 /* NEW Destructor style */
 static ZEND_RSRC_DTOR_FUNC(_wrap_destroy_p_LassoSaml2ConditionAbstract) {
@@ -67273,6 +69626,10 @@ static ZEND_RSRC_DTOR_FUNC(_wrap_destroy_p_LassoNode) {
   __wrap_delete_LassoNode(rsrc, SWIGTYPE_p_LassoNode->name TSRMLS_CC);
 }
 /* NEW Destructor style */
+static ZEND_RSRC_DTOR_FUNC(_wrap_destroy_p_LassoStringDict) {
+  __wrap_delete_LassoStringDict(rsrc, SWIGTYPE_p_LassoStringDict->name TSRMLS_CC);
+}
+/* NEW Destructor style */
 static ZEND_RSRC_DTOR_FUNC(_wrap_destroy_p_LassoNameRegistration) {
   __wrap_delete_LassoNameRegistration(rsrc, SWIGTYPE_p_LassoNameRegistration->name TSRMLS_CC);
 }
@@ -67337,10 +69694,6 @@ static ZEND_RSRC_DTOR_FUNC(_wrap_destroy_p_LassoSamlp2AttributeQuery) {
   __wrap_delete_LassoSamlp2AttributeQuery(rsrc, SWIGTYPE_p_LassoSamlp2AttributeQuery->name TSRMLS_CC);
 }
 /* NEW Destructor style */
-static ZEND_RSRC_DTOR_FUNC(_wrap_destroy_p_LassoSamlp2IDPEntry) {
-  __wrap_delete_LassoSamlp2IDPEntry(rsrc, SWIGTYPE_p_LassoSamlp2IDPEntry->name TSRMLS_CC);
-}
-/* NEW Destructor style */
 static ZEND_RSRC_DTOR_FUNC(_wrap_destroy_p_LassoLibStatusResponse) {
   __wrap_delete_LassoLibStatusResponse(rsrc, SWIGTYPE_p_LassoLibStatusResponse->name TSRMLS_CC);
 }
@@ -67359,6 +69712,10 @@ static ZEND_RSRC_DTOR_FUNC(_wrap_destroy_p_LassoLibAuthnResponse) {
 /* NEW Destructor style */
 static ZEND_RSRC_DTOR_FUNC(_wrap_destroy_p_LassoSamlpResponse) {
   __wrap_delete_LassoSamlpResponse(rsrc, SWIGTYPE_p_LassoSamlpResponse->name TSRMLS_CC);
+}
+/* NEW Destructor style */
+static ZEND_RSRC_DTOR_FUNC(_wrap_destroy_p_LassoSamlp2IDPEntry) {
+  __wrap_delete_LassoSamlp2IDPEntry(rsrc, SWIGTYPE_p_LassoSamlp2IDPEntry->name TSRMLS_CC);
 }
 /* NEW Destructor style */
 static ZEND_RSRC_DTOR_FUNC(_wrap_destroy_p_LassoSamlp2StatusResponse) {
@@ -67456,6 +69813,21 @@ static zend_function_entry LassoStringList_functions[] = {
  ZEND_NAMED_FE(getitem,_wrap_LassoStringList_getItem,NULL)
  ZEND_NAMED_FE(length,_wrap_LassoStringList_length,NULL)
  ZEND_NAMED_FE(setitem,_wrap_LassoStringList_setItem,NULL)
+ { NULL, NULL, NULL}
+};
+/* Function entries for LassoStringDict */
+static zend_function_entry LassoStringDict_functions[] = {
+ ZEND_NAMED_FE(lassostringdict,_wrap_new_LassoStringDict,NULL)
+ ZEND_NAMED_FE(cast,_wrap_LassoStringDict_cast,NULL)
+ ZEND_NAMED_FE(frompointer,_wrap_LassoStringDict_frompointer,NULL)
+ ZEND_NAMED_FE(getitem,_wrap_LassoStringDict_getItem,NULL)
+ ZEND_NAMED_FE(setitem,_wrap_LassoStringDict_setItem,NULL)
+ { NULL, NULL, NULL}
+};
+/* Function entries for LassoMiscTextNode */
+static zend_function_entry LassoMiscTextNode_functions[] = {
+ ZEND_NAMED_FE(lassomisctextnode,_wrap_new_LassoMiscTextNode,NULL)
+ ZEND_NAMED_FE(dump,_wrap_LassoMiscTextNode_dump,NULL)
  { NULL, NULL, NULL}
 };
 /* Function entries for LassoSamlAdvice */
@@ -68144,6 +70516,7 @@ static function_entry lasso_functions[] = {
  ZEND_NAMED_FE(lasso_shutdown,_wrap_lasso_shutdown,NULL)
  ZEND_NAMED_FE(lasso_check_version,_wrap_lasso_check_version,NULL)
  ZEND_NAMED_FE(lasso_register_dst_service,_wrap_lasso_register_dst_service,NULL)
+ ZEND_NAMED_FE(lasso_register_idwsf2_dst_service,_wrap_lasso_register_idwsf2_dst_service,NULL)
  ZEND_NAMED_FE(lasso_getrequesttypefromsoapmsg,_wrap_lasso_getRequestTypeFromSoapMsg,NULL)
  ZEND_NAMED_FE(lasso_islibertyquery,_wrap_lasso_isLibertyQuery,NULL)
  ZEND_NAMED_FE(lasso_issamlquery,_wrap_lasso_isSamlQuery,NULL)
@@ -68438,6 +70811,10 @@ SWIG_PropagateClientData(void) {
 
 #include <swig/inheritance.h>
 #include <swig/saml-2.0/inheritance.h>
+#ifdef LASSO_WSF_ENABLED
+#include <swig/ws/inheritance.h>
+#include <swig/id-wsf-2.0/inheritance.h>
+#endif /* ifdef LASSO_WSF_ENABLED */
 
 	info->name = NULL;
 	info->swig = NULL;
@@ -68456,6 +70833,14 @@ if (! (ptr_ce_swig_LassoNodeList=zend_register_internal_class_ex(&ce_swig_LassoN
 /* Define class LassoStringList */
 INIT_OVERLOADED_CLASS_ENTRY(ce_swig_LassoStringList,"lassostringlist",LassoStringList_functions,NULL,_wrap_propget_LassoStringList,_wrap_propset_LassoStringList);
 if (! (ptr_ce_swig_LassoStringList=zend_register_internal_class_ex(&ce_swig_LassoStringList,NULL,NULL TSRMLS_CC))) zend_error(E_ERROR,"Error registering wrapper for class LassoStringList");
+
+/* Define class LassoStringDict */
+INIT_OVERLOADED_CLASS_ENTRY(ce_swig_LassoStringDict,"lassostringdict",LassoStringDict_functions,NULL,_wrap_propget_LassoStringDict,_wrap_propset_LassoStringDict);
+if (! (ptr_ce_swig_LassoStringDict=zend_register_internal_class_ex(&ce_swig_LassoStringDict,NULL,NULL TSRMLS_CC))) zend_error(E_ERROR,"Error registering wrapper for class LassoStringDict");
+
+/* Define class LassoMiscTextNode */
+INIT_OVERLOADED_CLASS_ENTRY(ce_swig_LassoMiscTextNode,"lassomisctextnode",LassoMiscTextNode_functions,NULL,_wrap_propget_LassoMiscTextNode,_wrap_propset_LassoMiscTextNode);
+if (! (ptr_ce_swig_LassoMiscTextNode=zend_register_internal_class_ex(&ce_swig_LassoMiscTextNode,NULL,NULL TSRMLS_CC))) zend_error(E_ERROR,"Error registering wrapper for class LassoMiscTextNode");
 
 /* Define class LassoSamlAdvice */
 INIT_OVERLOADED_CLASS_ENTRY(ce_swig_LassoSamlAdvice,"lassosamladvice",LassoSamlAdvice_functions,NULL,_wrap_propget_LassoSamlAdvice,_wrap_propset_LassoSamlAdvice);
@@ -68845,10 +71230,10 @@ le_swig__p_LassoLoginProtocolProfile=zend_register_list_destructors_ex(_wrap_des
 SWIG_TypeClientData(SWIGTYPE_p_LassoLoginProtocolProfile,&le_swig__p_LassoLoginProtocolProfile);
 le_swig__p_LassoProviderRole=zend_register_list_destructors_ex(_wrap_destroy_p_LassoProviderRole,NULL,(char *)(SWIGTYPE_p_LassoProviderRole->name),module_number);
 SWIG_TypeClientData(SWIGTYPE_p_LassoProviderRole,&le_swig__p_LassoProviderRole);
-le_swig__p_LassoSaml2Advice=zend_register_list_destructors_ex(_wrap_destroy_p_LassoSaml2Advice,NULL,(char *)(SWIGTYPE_p_LassoSaml2Advice->name),module_number);
-SWIG_TypeClientData(SWIGTYPE_p_LassoSaml2Advice,&le_swig__p_LassoSaml2Advice);
 le_swig__p_LassoSamlAdvice=zend_register_list_destructors_ex(_wrap_destroy_p_LassoSamlAdvice,NULL,(char *)(SWIGTYPE_p_LassoSamlAdvice->name),module_number);
 SWIG_TypeClientData(SWIGTYPE_p_LassoSamlAdvice,&le_swig__p_LassoSamlAdvice);
+le_swig__p_LassoSaml2Advice=zend_register_list_destructors_ex(_wrap_destroy_p_LassoSaml2Advice,NULL,(char *)(SWIGTYPE_p_LassoSaml2Advice->name),module_number);
+SWIG_TypeClientData(SWIGTYPE_p_LassoSaml2Advice,&le_swig__p_LassoSaml2Advice);
 le_swig__p_LassoSamlpStatus=zend_register_list_destructors_ex(_wrap_destroy_p_LassoSamlpStatus,NULL,(char *)(SWIGTYPE_p_LassoSamlpStatus->name),module_number);
 SWIG_TypeClientData(SWIGTYPE_p_LassoSamlpStatus,&le_swig__p_LassoSamlpStatus);
 le_swig__p_LassoSamlp2Status=zend_register_list_destructors_ex(_wrap_destroy_p_LassoSamlp2Status,NULL,(char *)(SWIGTYPE_p_LassoSamlp2Status->name),module_number);
@@ -68883,6 +71268,8 @@ le_swig__p_LassoSaml2AudienceRestriction=zend_register_list_destructors_ex(_wrap
 SWIG_TypeClientData(SWIGTYPE_p_LassoSaml2AudienceRestriction,&le_swig__p_LassoSaml2AudienceRestriction);
 le_swig__p_LassoSaml2AuthzDecisionStatement=zend_register_list_destructors_ex(_wrap_destroy_p_LassoSaml2AuthzDecisionStatement,NULL,(char *)(SWIGTYPE_p_LassoSaml2AuthzDecisionStatement->name),module_number);
 SWIG_TypeClientData(SWIGTYPE_p_LassoSaml2AuthzDecisionStatement,&le_swig__p_LassoSaml2AuthzDecisionStatement);
+le_swig__p_GHashTable=zend_register_list_destructors_ex(_wrap_destroy_p_GHashTable,NULL,(char *)(SWIGTYPE_p_GHashTable->name),module_number);
+SWIG_TypeClientData(SWIGTYPE_p_GHashTable,&le_swig__p_GHashTable);
 le_swig__p_LassoNameIdentifierMapping=zend_register_list_destructors_ex(_wrap_destroy_p_LassoNameIdentifierMapping,NULL,(char *)(SWIGTYPE_p_LassoNameIdentifierMapping->name),module_number);
 SWIG_TypeClientData(SWIGTYPE_p_LassoNameIdentifierMapping,&le_swig__p_LassoNameIdentifierMapping);
 le_swig__p_LassoSamlAttributeDesignator=zend_register_list_destructors_ex(_wrap_destroy_p_LassoSamlAttributeDesignator,NULL,(char *)(SWIGTYPE_p_LassoSamlAttributeDesignator->name),module_number);
@@ -68945,10 +71332,12 @@ le_swig__p_LassoSamlpRequestAbstract=zend_register_list_destructors_ex(_wrap_des
 SWIG_TypeClientData(SWIGTYPE_p_LassoSamlpRequestAbstract,&le_swig__p_LassoSamlpRequestAbstract);
 le_swig__p_LassoSamlSubjectStatementAbstract=zend_register_list_destructors_ex(_wrap_destroy_p_LassoSamlSubjectStatementAbstract,NULL,(char *)(SWIGTYPE_p_LassoSamlSubjectStatementAbstract->name),module_number);
 SWIG_TypeClientData(SWIGTYPE_p_LassoSamlSubjectStatementAbstract,&le_swig__p_LassoSamlSubjectStatementAbstract);
-le_swig__p_LassoSamlConditionAbstract=zend_register_list_destructors_ex(_wrap_destroy_p_LassoSamlConditionAbstract,NULL,(char *)(SWIGTYPE_p_LassoSamlConditionAbstract->name),module_number);
-SWIG_TypeClientData(SWIGTYPE_p_LassoSamlConditionAbstract,&le_swig__p_LassoSamlConditionAbstract);
 le_swig__p_LassoSamlStatementAbstract=zend_register_list_destructors_ex(_wrap_destroy_p_LassoSamlStatementAbstract,NULL,(char *)(SWIGTYPE_p_LassoSamlStatementAbstract->name),module_number);
 SWIG_TypeClientData(SWIGTYPE_p_LassoSamlStatementAbstract,&le_swig__p_LassoSamlStatementAbstract);
+le_swig__p_LassoSamlConditionAbstract=zend_register_list_destructors_ex(_wrap_destroy_p_LassoSamlConditionAbstract,NULL,(char *)(SWIGTYPE_p_LassoSamlConditionAbstract->name),module_number);
+SWIG_TypeClientData(SWIGTYPE_p_LassoSamlConditionAbstract,&le_swig__p_LassoSamlConditionAbstract);
+le_swig__p_LassoMiscTextNode=zend_register_list_destructors_ex(_wrap_destroy_p_LassoMiscTextNode,NULL,(char *)(SWIGTYPE_p_LassoMiscTextNode->name),module_number);
+SWIG_TypeClientData(SWIGTYPE_p_LassoMiscTextNode,&le_swig__p_LassoMiscTextNode);
 le_swig__p_LassoSaml2ConditionAbstract=zend_register_list_destructors_ex(_wrap_destroy_p_LassoSaml2ConditionAbstract,NULL,(char *)(SWIGTYPE_p_LassoSaml2ConditionAbstract->name),module_number);
 SWIG_TypeClientData(SWIGTYPE_p_LassoSaml2ConditionAbstract,&le_swig__p_LassoSaml2ConditionAbstract);
 le_swig__p_LassoSaml2BaseIDAbstract=zend_register_list_destructors_ex(_wrap_destroy_p_LassoSaml2BaseIDAbstract,NULL,(char *)(SWIGTYPE_p_LassoSaml2BaseIDAbstract->name),module_number);
@@ -68987,6 +71376,8 @@ le_swig__p_LassoSamlSubject=zend_register_list_destructors_ex(_wrap_destroy_p_La
 SWIG_TypeClientData(SWIGTYPE_p_LassoSamlSubject,&le_swig__p_LassoSamlSubject);
 le_swig__p_LassoNode=zend_register_list_destructors_ex(_wrap_destroy_p_LassoNode,NULL,(char *)(SWIGTYPE_p_LassoNode->name),module_number);
 SWIG_TypeClientData(SWIGTYPE_p_LassoNode,&le_swig__p_LassoNode);
+le_swig__p_LassoStringDict=zend_register_list_destructors_ex(_wrap_destroy_p_LassoStringDict,NULL,(char *)(SWIGTYPE_p_LassoStringDict->name),module_number);
+SWIG_TypeClientData(SWIGTYPE_p_LassoStringDict,&le_swig__p_LassoStringDict);
 le_swig__p_LassoNameRegistration=zend_register_list_destructors_ex(_wrap_destroy_p_LassoNameRegistration,NULL,(char *)(SWIGTYPE_p_LassoNameRegistration->name),module_number);
 SWIG_TypeClientData(SWIGTYPE_p_LassoNameRegistration,&le_swig__p_LassoNameRegistration);
 le_swig__p_LassoProvider=zend_register_list_destructors_ex(_wrap_destroy_p_LassoProvider,NULL,(char *)(SWIGTYPE_p_LassoProvider->name),module_number);
@@ -69019,8 +71410,6 @@ le_swig__p_LassoSamlp2ManageNameIDRequest=zend_register_list_destructors_ex(_wra
 SWIG_TypeClientData(SWIGTYPE_p_LassoSamlp2ManageNameIDRequest,&le_swig__p_LassoSamlp2ManageNameIDRequest);
 le_swig__p_LassoSamlp2AttributeQuery=zend_register_list_destructors_ex(_wrap_destroy_p_LassoSamlp2AttributeQuery,NULL,(char *)(SWIGTYPE_p_LassoSamlp2AttributeQuery->name),module_number);
 SWIG_TypeClientData(SWIGTYPE_p_LassoSamlp2AttributeQuery,&le_swig__p_LassoSamlp2AttributeQuery);
-le_swig__p_LassoSamlp2IDPEntry=zend_register_list_destructors_ex(_wrap_destroy_p_LassoSamlp2IDPEntry,NULL,(char *)(SWIGTYPE_p_LassoSamlp2IDPEntry->name),module_number);
-SWIG_TypeClientData(SWIGTYPE_p_LassoSamlp2IDPEntry,&le_swig__p_LassoSamlp2IDPEntry);
 le_swig__p_LassoLibStatusResponse=zend_register_list_destructors_ex(_wrap_destroy_p_LassoLibStatusResponse,NULL,(char *)(SWIGTYPE_p_LassoLibStatusResponse->name),module_number);
 SWIG_TypeClientData(SWIGTYPE_p_LassoLibStatusResponse,&le_swig__p_LassoLibStatusResponse);
 le_swig__p_LassoLibRegisterNameIdentifierResponse=zend_register_list_destructors_ex(_wrap_destroy_p_LassoLibRegisterNameIdentifierResponse,NULL,(char *)(SWIGTYPE_p_LassoLibRegisterNameIdentifierResponse->name),module_number);
@@ -69031,6 +71420,8 @@ le_swig__p_LassoLibAuthnResponse=zend_register_list_destructors_ex(_wrap_destroy
 SWIG_TypeClientData(SWIGTYPE_p_LassoLibAuthnResponse,&le_swig__p_LassoLibAuthnResponse);
 le_swig__p_LassoSamlpResponse=zend_register_list_destructors_ex(_wrap_destroy_p_LassoSamlpResponse,NULL,(char *)(SWIGTYPE_p_LassoSamlpResponse->name),module_number);
 SWIG_TypeClientData(SWIGTYPE_p_LassoSamlpResponse,&le_swig__p_LassoSamlpResponse);
+le_swig__p_LassoSamlp2IDPEntry=zend_register_list_destructors_ex(_wrap_destroy_p_LassoSamlp2IDPEntry,NULL,(char *)(SWIGTYPE_p_LassoSamlp2IDPEntry->name),module_number);
+SWIG_TypeClientData(SWIGTYPE_p_LassoSamlp2IDPEntry,&le_swig__p_LassoSamlp2IDPEntry);
 le_swig__p_LassoSamlp2StatusResponse=zend_register_list_destructors_ex(_wrap_destroy_p_LassoSamlp2StatusResponse,NULL,(char *)(SWIGTYPE_p_LassoSamlp2StatusResponse->name),module_number);
 SWIG_TypeClientData(SWIGTYPE_p_LassoSamlp2StatusResponse,&le_swig__p_LassoSamlp2StatusResponse);
 le_swig__p_LassoSamlp2Response=zend_register_list_destructors_ex(_wrap_destroy_p_LassoSamlp2Response,NULL,(char *)(SWIGTYPE_p_LassoSamlp2Response->name),module_number);
@@ -69135,6 +71526,9 @@ REGISTER_LONG_CONSTANT("LASSO_REQUEST_TYPE_DST_QUERY", LASSO_REQUEST_TYPE_DST_QU
 REGISTER_LONG_CONSTANT("LASSO_REQUEST_TYPE_DST_MODIFY", LASSO_REQUEST_TYPE_DST_MODIFY, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT("LASSO_REQUEST_TYPE_SASL_REQUEST", LASSO_REQUEST_TYPE_SASL_REQUEST, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT("LASSO_REQUEST_TYPE_NAME_ID_MANAGEMENT", LASSO_REQUEST_TYPE_NAME_ID_MANAGEMENT, CONST_CS | CONST_PERSISTENT);
+REGISTER_LONG_CONSTANT("LASSO_REQUEST_TYPE_IDWSF2_DISCO_SVCMD_REGISTER", LASSO_REQUEST_TYPE_IDWSF2_DISCO_SVCMD_REGISTER, CONST_CS | CONST_PERSISTENT);
+REGISTER_LONG_CONSTANT("LASSO_REQUEST_TYPE_IDWSF2_DISCO_SVCMD_ASSOCIATION_ADD", LASSO_REQUEST_TYPE_IDWSF2_DISCO_SVCMD_ASSOCIATION_ADD, CONST_CS | CONST_PERSISTENT);
+REGISTER_LONG_CONSTANT("LASSO_REQUEST_TYPE_IDWSF2_DISCO_QUERY", LASSO_REQUEST_TYPE_IDWSF2_DISCO_QUERY, CONST_CS | CONST_PERSISTENT);
 REGISTER_STRINGL_CONSTANT("LASSO_LIB_AUTHN_CONTEXT_CLASS_REF_INTERNET_PROTOCOL", "http://www.projectliberty.org/schemas/authctx/classes/InternetProtocol", strlen("http://www.projectliberty.org/schemas/authctx/classes/InternetProtocol"), CONST_CS | CONST_PERSISTENT);
 REGISTER_STRINGL_CONSTANT("LASSO_LIB_AUTHN_CONTEXT_CLASS_REF_INTERNET_PROTOCOL_PASSWORD", "http://www.projectliberty.org/schemas/authctx/classes/InternetProtocolPassword", strlen("http://www.projectliberty.org/schemas/authctx/classes/InternetProtocolPassword"), CONST_CS | CONST_PERSISTENT);
 REGISTER_STRINGL_CONSTANT("LASSO_LIB_AUTHN_CONTEXT_CLASS_REF_MOBILE_ONE_FACTOR_UNREGISTERED", "http://www.projectliberty.org/schemas/authctx/classes/MobileOneFactorUnregistered", strlen("http://www.projectliberty.org/schemas/authctx/classes/MobileOneFactorUnregistered"), CONST_CS | CONST_PERSISTENT);
@@ -69164,6 +71558,9 @@ REGISTER_STRINGL_CONSTANT("LASSO_SAML_AUTHENTICATION_METHOD_XKMS", "urn:oasis:na
 REGISTER_STRINGL_CONSTANT("LASSO_SAML_AUTHENTICATION_METHOD_XMLD_SIG", "urn:ietf:rfc:3075", strlen("urn:ietf:rfc:3075"), CONST_CS | CONST_PERSISTENT);
 REGISTER_STRINGL_CONSTANT("LASSO_SAML_AUTHENTICATION_METHOD_UNSPECIFIED", "urn:oasis:names:tc:SAML:1.0:am:unspecified", strlen("urn:oasis:names:tc:SAML:1.0:am:unspecified"), CONST_CS | CONST_PERSISTENT);
 REGISTER_STRINGL_CONSTANT("LASSO_SAML_AUTHENTICATION_METHOD_LIBERTY", "urn:liberty:ac:2003-08", strlen("urn:liberty:ac:2003-08"), CONST_CS | CONST_PERSISTENT);
+REGISTER_LONG_CONSTANT("LASSO_SIGNATURE_TYPE_NONE", LASSO_SIGNATURE_TYPE_NONE, CONST_CS | CONST_PERSISTENT);
+REGISTER_LONG_CONSTANT("LASSO_SIGNATURE_TYPE_SIMPLE", LASSO_SIGNATURE_TYPE_SIMPLE, CONST_CS | CONST_PERSISTENT);
+REGISTER_LONG_CONSTANT("LASSO_SIGNATURE_TYPE_WITHX509", LASSO_SIGNATURE_TYPE_WITHX509, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT("LASSO_SIGNATURE_METHOD_RSA_SHA1", LASSO_SIGNATURE_METHOD_RSA_SHA1, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT("LASSO_SIGNATURE_METHOD_DSA_SHA1", LASSO_SIGNATURE_METHOD_DSA_SHA1, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT("LASSO_ENCRYPTION_MODE_NONE", LASSO_ENCRYPTION_MODE_NONE, CONST_CS | CONST_PERSISTENT);
@@ -69240,6 +71637,8 @@ REGISTER_LONG_CONSTANT("LASSO_PROFILE_ERROR_MISSING_ENCRYPTION_PRIVATE_KEY", -43
 REGISTER_LONG_CONSTANT("LASSO_PROFILE_ERROR_STATUS_NOT_SUCCESS", -432, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT("LASSO_PROFILE_ERROR_MISSING_ISSUER", -433, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT("LASSO_PROFILE_ERROR_MISSING_SERVICE_INSTANCE", -434, CONST_CS | CONST_PERSISTENT);
+REGISTER_LONG_CONSTANT("LASSO_PROFILE_ERROR_MISSING_ENDPOINT_REFERENCE", -435, CONST_CS | CONST_PERSISTENT);
+REGISTER_LONG_CONSTANT("LASSO_PROFILE_ERROR_MISSING_ENDPOINT_REFERENCE_ADDRESS", -436, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT("LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ", -501, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT("LASSO_PARAM_ERROR_INVALID_VALUE", -502, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT("LASSO_PARAM_ERROR_CHECK_FAILED", -503, CONST_CS | CONST_PERSISTENT);
@@ -69255,14 +71654,26 @@ REGISTER_LONG_CONSTANT("LASSO_LOGIN_ERROR_NO_DEFAULT_ENDPOINT", 609, CONST_CS | 
 REGISTER_LONG_CONSTANT("LASSO_LOGIN_ERROR_ASSERTION_REPLAY", 610, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT("LASSO_DEFEDERATION_ERROR_MISSING_NAME_IDENTIFIER", -700, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT("LASSO_SOAP_FAULT_REDIRECT_REQUEST", 800, CONST_CS | CONST_PERSISTENT);
-REGISTER_LONG_CONSTANT("LASSO_SOAP_ERROR_MISSING_HEADER", -801, CONST_CS | CONST_PERSISTENT);
-REGISTER_LONG_CONSTANT("LASSO_SOAP_ERROR_MISSING_BODY", -802, CONST_CS | CONST_PERSISTENT);
+REGISTER_LONG_CONSTANT("LASSO_SOAP_ERROR_MISSING_ENVELOPE", -801, CONST_CS | CONST_PERSISTENT);
+REGISTER_LONG_CONSTANT("LASSO_SOAP_ERROR_MISSING_HEADER", -802, CONST_CS | CONST_PERSISTENT);
+REGISTER_LONG_CONSTANT("LASSO_SOAP_ERROR_MISSING_BODY", -803, CONST_CS | CONST_PERSISTENT);
+REGISTER_LONG_CONSTANT("LASSO_SOAP_ERROR_MISSING_SOAP_FAULT_DETAIL", -804, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT("LASSO_NAME_IDENTIFIER_MAPPING_ERROR_MISSING_TARGET_NAMESPACE", -900, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT("LASSO_NAME_IDENTIFIER_MAPPING_ERROR_FORBIDDEN_CALL_ON_THIS_SIDE", -901, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT("LASSO_NAME_IDENTIFIER_MAPPING_ERROR_MISSING_TARGET_IDENTIFIER", -902, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT("LASSO_DATA_SERVICE_ERROR_UNREGISTERED_DST", -1000, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT("LASSO_WSF_PROFILE_ERROR_MISSING_CORRELATION", -1100, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT("LASSO_WSF_PROFILE_ERROR_MISSING_SECURITY", -1101, CONST_CS | CONST_PERSISTENT);
+REGISTER_LONG_CONSTANT("LASSO_DISCOVERY_ERROR_SVC_METADATA_REGISTER_FAILED", -1200, CONST_CS | CONST_PERSISTENT);
+REGISTER_LONG_CONSTANT("LASSO_DISCOVERY_ERROR_SVC_METADATA_ASSOCIATION_ADD_FAILED", -1201, CONST_CS | CONST_PERSISTENT);
+REGISTER_LONG_CONSTANT("LASSO_DISCOVERY_ERROR_MISSING_REQUESTED_SERVICE", -1202, CONST_CS | CONST_PERSISTENT);
+REGISTER_LONG_CONSTANT("LASSO_DISCOVERY_ERROR_FAILED_TO_BUILD_ENDPOINT_REFERENCE", -1203, CONST_CS | CONST_PERSISTENT);
+REGISTER_LONG_CONSTANT("LASSO_DST_ERROR_MISSING_SERVICE_DATA", -1300, CONST_CS | CONST_PERSISTENT);
+REGISTER_LONG_CONSTANT("LASSO_DST_ERROR_QUERY_FAILED", -1301, CONST_CS | CONST_PERSISTENT);
+REGISTER_LONG_CONSTANT("LASSO_DST_ERROR_QUERY_PARTIALLY_FAILED", -1302, CONST_CS | CONST_PERSISTENT);
+REGISTER_LONG_CONSTANT("LASSO_DST_ERROR_MODIFY_FAILED", -1303, CONST_CS | CONST_PERSISTENT);
+REGISTER_LONG_CONSTANT("LASSO_DST_ERROR_MODIFY_PARTIALLY_FAILED", -1304, CONST_CS | CONST_PERSISTENT);
+REGISTER_LONG_CONSTANT("LASSO_DST_ERROR_NEW_DATA_MISSING", -1305, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT("LASSO_CHECK_VERSION_EXACT", LASSO_CHECK_VERSION_EXACT, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT("LASSO_CHECK_VERSIONABI_COMPATIBLE", LASSO_CHECK_VERSIONABI_COMPATIBLE, CONST_CS | CONST_PERSISTENT);
 REGISTER_LONG_CONSTANT("LASSO_CHECK_VERSION_NUMERIC", LASSO_CHECK_VERSION_NUMERIC, CONST_CS | CONST_PERSISTENT);

@@ -85,12 +85,39 @@ public class Saml2Assertion extends Node {
     return (cPtr == 0) ? null : new Saml2Advice(cPtr, false);
   }
 
+  public void setStatement(NodeList value) {
+    lassoJNI.Saml2Assertion_statement_set(swigCPtr, this, NodeList.getCPtr(value), value);
+  }
+
+  public NodeList getStatement() {
+    long cPtr = lassoJNI.Saml2Assertion_statement_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new NodeList(cPtr, false);
+  }
+
   public void setAuthnStatement(NodeList value) {
     lassoJNI.Saml2Assertion_authnStatement_set(swigCPtr, this, NodeList.getCPtr(value), value);
   }
 
   public NodeList getAuthnStatement() {
     long cPtr = lassoJNI.Saml2Assertion_authnStatement_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new NodeList(cPtr, false);
+  }
+
+  public void setAuthzDecisionStatement(NodeList value) {
+    lassoJNI.Saml2Assertion_authzDecisionStatement_set(swigCPtr, this, NodeList.getCPtr(value), value);
+  }
+
+  public NodeList getAuthzDecisionStatement() {
+    long cPtr = lassoJNI.Saml2Assertion_authzDecisionStatement_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new NodeList(cPtr, false);
+  }
+
+  public void setAttributeStatement(NodeList value) {
+    lassoJNI.Saml2Assertion_attributeStatement_set(swigCPtr, this, NodeList.getCPtr(value), value);
+  }
+
+  public NodeList getAttributeStatement() {
+    long cPtr = lassoJNI.Saml2Assertion_attributeStatement_get(swigCPtr, this);
     return (cPtr == 0) ? null : new NodeList(cPtr, false);
   }
 

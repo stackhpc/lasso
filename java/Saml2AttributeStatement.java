@@ -25,6 +25,24 @@ public class Saml2AttributeStatement extends Saml2StatementAbstract {
   super.delete();
 }
 
+  public void setAttribute(NodeList value) {
+    lassoJNI.Saml2AttributeStatement_attribute_set(swigCPtr, this, NodeList.getCPtr(value), value);
+  }
+
+  public NodeList getAttribute() {
+    long cPtr = lassoJNI.Saml2AttributeStatement_attribute_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new NodeList(cPtr, false);
+  }
+
+  public void setEncryptedAttribute(NodeList value) {
+    lassoJNI.Saml2AttributeStatement_encryptedAttribute_set(swigCPtr, this, NodeList.getCPtr(value), value);
+  }
+
+  public NodeList getEncryptedAttribute() {
+    long cPtr = lassoJNI.Saml2AttributeStatement_encryptedAttribute_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new NodeList(cPtr, false);
+  }
+
   public Saml2AttributeStatement() {
     this(lassoJNI.new_Saml2AttributeStatement(), true);
   }

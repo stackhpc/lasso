@@ -93,12 +93,12 @@ public class SamlpResponseAbstract extends Node {
     return lassoJNI.SamlpResponseAbstract_signMethod_get(swigCPtr, this);
   }
 
-  public void setSignType(SWIGTYPE_p_LassoSignatureType value) {
-    lassoJNI.SamlpResponseAbstract_signType_set(swigCPtr, this, SWIGTYPE_p_LassoSignatureType.getCPtr(value));
+  public void setSignType(int value) {
+    lassoJNI.SamlpResponseAbstract_signType_set(swigCPtr, this, value);
   }
 
-  public SWIGTYPE_p_LassoSignatureType getSignType() {
-    return new SWIGTYPE_p_LassoSignatureType(lassoJNI.SamlpResponseAbstract_signType_get(swigCPtr, this), true);
+  public int getSignType() {
+    return lassoJNI.SamlpResponseAbstract_signType_get(swigCPtr, this);
   }
 
   public String dump() {

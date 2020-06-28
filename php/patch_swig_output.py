@@ -1,11 +1,11 @@
 #! /usr/bin/env python
 # -*- coding: UTF-8 -*-
 #
-# $Id: patch_swig_output.py,v 1.18 2006/12/28 15:42:17 fpeters Exp $
+# $Id: patch_swig_output.py 3254 2007-06-05 21:23:57Z fpeters $
 #
 # SWIG based PHP binding for Lasso Library
 #
-# Copyright (C) 2004, 2005 Entr'ouvert
+# Copyright (C) 2004-2007 Entr'ouvert
 # http://lasso.entrouvert.org
 #
 # Authors: See AUTHORS file in top-level directory.

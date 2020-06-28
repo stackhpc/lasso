@@ -1,8 +1,8 @@
-/* $Id: defederation.c,v 1.72 2007/01/05 13:40:07 fpeters Exp $ 
+/* $Id: defederation.c 3237 2007-05-30 17:17:45Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004-2007 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -27,6 +27,7 @@
 #include <lasso/id-ff/providerprivate.h>
 #include <lasso/id-ff/sessionprivate.h>
 #include <lasso/id-ff/identityprivate.h>
+#include <lasso/id-ff/profileprivate.h>
 
 /*****************************************************************************/
 /* public methods                                                            */
