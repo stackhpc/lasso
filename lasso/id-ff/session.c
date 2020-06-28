@@ -73,6 +73,7 @@ lasso_release_nid_and_session_index(struct _NidAndSessionIndex *nid_and_session_
 	lasso_release_gobject(nid_and_session_index->name_id);
 	lasso_release_string(nid_and_session_index->session_index);
 	lasso_release_string(nid_and_session_index->assertion_id);
+	lasso_release(nid_and_session_index);
 }
 
 void
@@ -881,6 +882,7 @@ cleanup:
 	lasso_release_xml_string(session_index);
 	lasso_release_xml_string(provider_id);
 	lasso_release_xml_string(assertion_id);
+	lasso_release_gobject(name_id);
 }
 
 static int

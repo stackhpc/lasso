@@ -12,7 +12,7 @@ MAINTAINERCLEANFILES = Makefile.in
 DISTCLEANFILES = __init__.pyc lang.pyc Makefile.perl.old
 CLEANFILES = Lasso.pm Lasso.xs Lasso.so typemap Lasso.o Lasso.bs pm_to_blib Lasso.c
 
-LASSO_XS_CFLAGS = -fno-strict-aliasing $(LASSO_CFLAGS) $(LASSO_CORE_CFLAGS) $(PERL_CFLAGS) $(AM_CFLAGS)
+LASSO_XS_CFLAGS = -fno-strict-aliasing $(LASSO_CFLAGS) $(LASSO_CORE_CFLAGS) $(PERL_CFLAGS) $(AM_CFLAGS) -Wno-unused-but-set-variable
 
 TESTS_ENVIRONMENT=TOP_SRCDIR=$(top_srcdir)
 TESTS = test.sh
@@ -42,7 +42,7 @@ Makefile.perl: $(srcdir)/Makefile.PL Lasso.xs Lasso.pm
 		done; \
 		chmod -R u+rwX $(TOCOPY); \
 	fi;
-	$(AM_V_SUBMAKE) $(PERL) Makefile.PL PREFIX=$(prefix) CCFLAGS="$(LASSO_XS_CFLAGS)" INC="-I. -I$(top_srcdir) -I$(srcdir)" LIBS="`$(top_builddir)/lasso-src-config --libs`" OPTIMIZE="-g" $(AM_V_SUBMAKE_POSTFIX)
+	$(AM_V_SUBMAKE) $(PERL) Makefile.PL INSTALLDIRS=vendor CCFLAGS="$(LASSO_XS_CFLAGS)" INC="-I. -I$(top_srcdir) -I$(srcdir)" LIBS="`$(top_builddir)/lasso-src-config --libs`" OPTIMIZE="-g" $(AM_V_SUBMAKE_POSTFIX)
 
 Lasso.xs Lasso.pm: lang.py typemap-in typemap-out
 	$(AM_V_GEN) $(PYTHON) $(top_srcdir)/bindings/bindings.py -l perl --src-dir=$(top_srcdir)/lasso/ $(EXTRA_ARGS)

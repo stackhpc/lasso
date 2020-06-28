@@ -186,7 +186,7 @@ dnl - interfaces removed -> AGE = 0
 # m = a
 # r = r
 current=`expr $VERSION_MAJOR + $VERSION_MINOR`
-LASSO_VERSION_INFO="13:0:10"
+LASSO_VERSION_INFO="14:1:11"
 AC_SUBST(LASSO_VERSION_INFO)
 
 dnl Compute the minimal supported ABI version for Win32 scripts and resources files.
@@ -220,7 +220,7 @@ if test "x$JAVAC" = "xjavac"; then
     dnl If we have a java compiler
     dnl need to change quotes to allow square brackets
     changequote(<<, >>)dnl
-    JAVA_VERSION=`$JAVA -version 2>&1 | $SED -ne 's/java version "\([^"]*\)".*/\1/p' 2>/dev/null`
+    JAVA_VERSION=`$JAVA -version 2>&1 | $SED -ne 's/\(openjdk\|java\) \(full\)*version "\([^"]*\)".*/\3/p' 2>/dev/null`
     changequote([, ])dnl
     dnl If no java version found, perphas it is a kaffee environment...
     if test "x$JAVA_VERSION" = x; then
@@ -531,12 +531,15 @@ AC_ARG_ENABLE(perl, [  --disable-perl          disable the Perl binding],,
 if test "X$PERL" != "X"; then
   PERLINSTALLSITEARCH=`$PERL -MConfig -e 'print $Config{installsitearch};'`
   PERLMAN3DIR=`$PERL -MConfig -e 'print $Config{man3dir};'`
+  PERL_CFLAGS=$($PERL -V::ccflags:)
 else
   PERLINSTALLSITEARCH=none
   PERLMAN3DIR=none
+  PERL_CFLAGS=
 fi
 AC_SUBST(PERLINSTALLSITEARCH)
 AC_SUBST(PERLMAN3DIR)
+AC_SUBST(PERL_CFLAGS)
 
 AC_MSG_CHECKING(for Perl API)
 if test "X$enable_perl" != "Xno" ; then
