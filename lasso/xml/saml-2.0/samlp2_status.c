@@ -1,4 +1,4 @@
-/* $Id: samlp2_status.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: samlp2_status.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,8 +24,12 @@
 
 #include "samlp2_status.h"
 
-/*
- * Schema fragment (saml-schema-protocol-2.0.xsd):
+/**
+ * SECTION:samlp2_status
+ * @short_description: &lt;samlp2:Status&gt;
+ *
+ * <figure><title>Schema fragment for samlp2:Status</title>
+ * <programlisting><![CDATA[
  *
  * <complexType name="StatusType">
  *   <sequence>
@@ -34,6 +38,8 @@
  *     <element ref="samlp:StatusDetail" minOccurs="0"/>
  *   </sequence>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

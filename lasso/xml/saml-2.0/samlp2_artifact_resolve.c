@@ -1,4 +1,4 @@
-/* $Id: samlp2_artifact_resolve.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: samlp2_artifact_resolve.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,8 +24,12 @@
 
 #include "samlp2_artifact_resolve.h"
 
-/*
- * Schema fragment (saml-schema-protocol-2.0.xsd):
+/**
+ * SECTION:samlp2_artifact_resolve
+ * @short_description: &lt;samlp2:ArtifactResolve&gt;
+ *
+ * <figure><title>Schema fragment for samlp2:ArtifactResolve</title>
+ * <programlisting><![CDATA[
  *
  * <complexType name="ArtifactResolveType">
  *   <complexContent>
@@ -36,6 +40,8 @@
  *     </extension>
  *   </complexContent>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

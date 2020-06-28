@@ -1,4 +1,4 @@
-/* $Id: soap_header.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: soap_header.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,8 +24,9 @@
 
 #include <lasso/xml/soap_header.h>
 
-/*
- * Schema fragments (http://www.w3.org/2001/06/soap-envelope):
+/**
+ * SECTION:soap_header
+ * @short_description: &lt;soap:Header&gt;
  * 
  */ 
 

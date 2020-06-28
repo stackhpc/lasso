@@ -26,8 +26,12 @@
 #include "disco_endpoint_context.h"
 #include "disco_service_context.h"
 
-/*
- * Schema fragment (liberty-idwsf-disco-svc-v2.0.xsd):
+/**
+ * SECTION:disco_svc_metadata
+ * @short_description: &lt;disco:SvcMetadata&gt;
+ *
+ * <figure><title>Schema fragment for disco:SvcMetadata</title>
+ * <programlisting><![CDATA[
  *
  * <xs:complexType name="SvcMetadataType">
  *   <xs:sequence>
@@ -37,6 +41,8 @@
  *   </xs:sequence>
  *   <xs:attribute name="svcMDID" type="xs:string" use="optional" />
  * </xs:complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/
@@ -130,7 +136,7 @@ lasso_idwsf2_disco_svc_metadata_new_full(const gchar *service_type, const gchar 
 	LassoIdWsf2DiscoSvcMetadata *metadata;
 	LassoIdWsf2DiscoEndpointContext *endpoint_context;
 
-	metadata = lasso_idwsf2_disco_svc_metadata_new();
+	metadata = g_object_new(LASSO_TYPE_IDWSF2_DISCO_SVC_METADATA, NULL);
 
 	metadata->Abstract = g_strdup(abstract);
 	metadata->ProviderID = g_strdup(provider_id);
@@ -138,6 +144,7 @@ lasso_idwsf2_disco_svc_metadata_new_full(const gchar *service_type, const gchar 
 	endpoint_context = lasso_idwsf2_disco_endpoint_context_new_full(soap_endpoint);
 	metadata->ServiceContext = g_list_append(NULL,
 		lasso_idwsf2_disco_service_context_new_full(service_type, endpoint_context));
+	g_object_unref(endpoint_context);
 
 	return metadata;
 }

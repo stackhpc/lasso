@@ -1,4 +1,4 @@
-/* $Id: is_text.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: is_text.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/is_text.h>
 
-/*
- * Schema fragments (liberty-idwsf-interaction-svc-v1.0.xsd):
+/**
+ * SECTION:is_text
+ * @short_description: &lt;is:Text&gt;
+ *
+ * <figure><title>Schema fragment for is:Text</title>
+ * <programlisting><![CDATA[
  *
  * <xs:element name="Text" type="TextType"/>
  * <xs:complexType name="TextType">
@@ -38,6 +42,8 @@
  *   </xs:complexContent>
  * </xs:complexType>
  *
+ * ]]></programlisting>
+ * </figure>
  */ 
 
 /*****************************************************************************/

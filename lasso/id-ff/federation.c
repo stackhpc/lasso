@@ -1,4 +1,4 @@
-/* $Id: federation.c 3285 2007-06-11 15:27:03Z dlaniel $
+/* $Id: federation.c 3704 2008-05-15 21:17:44Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -21,6 +21,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
+/**
+ * SECTION:federation
+ * @short_description: Principal federation between two providers
+ *
+ **/
 
 #include <lasso/id-ff/federation.h>
 #include <lasso/id-ff/provider.h>

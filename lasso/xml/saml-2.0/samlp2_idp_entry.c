@@ -1,4 +1,4 @@
-/* $Id: samlp2_idp_entry.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: samlp2_idp_entry.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,14 +24,20 @@
 
 #include "samlp2_idp_entry.h"
 
-/*
- * Schema fragment (saml-schema-protocol-2.0.xsd):
+/**
+ * SECTION:samlp2_idp_entry
+ * @short_description: &lt;samlp2:IDPEntry&gt;
+ *
+ * <figure><title>Schema fragment for samlp2:IDPEntry</title>
+ * <programlisting><![CDATA[
  *
  * <complexType name="IDPEntryType">
  *   <attribute name="ProviderID" type="anyURI" use="required"/>
  *   <attribute name="Name" type="string" use="optional"/>
  *   <attribute name="Loc" type="anyURI" use="optional"/>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

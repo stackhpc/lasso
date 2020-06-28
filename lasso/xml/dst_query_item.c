@@ -1,4 +1,4 @@
-/* $Id: dst_query_item.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: dst_query_item.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/dst_query_item.h>
 
-/*
- * Schema fragment (liberty-idwsf-dst-v1.0.xsd):
+/**
+ * SECTION:dst_query_item
+ * @short_description: &lt;dst:QueryItem&gt;
+ *
+ * <figure><title>Schema fragment for dst:QueryItem</title>
+ * <programlisting><![CDATA[
  *
  * <xs:element name="QueryItem" maxOccurs="unbounded">
  *   <xs:complexType>
@@ -50,6 +54,8 @@
  *     </xs:annotation>
  *     <xs:restriction base="xs:string"/>
  * </xs:simpleType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

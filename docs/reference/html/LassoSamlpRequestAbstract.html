@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>LassoSamlpRequestAbstract</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.71.0">
+<link rel="start" href="index.html" title="Lasso Reference Manual">
+<link rel="up" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
+<link rel="prev" href="LassoSamlpRequest.html" title="LassoSamlpRequest">
+<link rel="next" href="LassoSamlpResponse.html" title="LassoSamlpResponse">
+<meta name="generator" content="GTK-Doc V1.10 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
+<link rel="chapter" href="architecture.html" title="Lasso Architecture">
+<link rel="chapter" href="idff.html" title="Identity Federation Framework">
+<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework">
+<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
+<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
+<link rel="chapter" href="misc.html" title="Misc">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="LassoSamlpRequest.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="xml-idff.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Lasso Reference Manual</th>
+<td><a accesskey="n" href="LassoSamlpResponse.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts"><nobr><a href="#LassoSamlpRequestAbstract.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#LassoSamlpRequestAbstract.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#LassoSamlpRequestAbstract.object-hierarchy" class="shortcut">Object Hierarchy</a></nobr></td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="LassoSamlpRequestAbstract"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="LassoSamlpRequestAbstract.top_of_page"></a>LassoSamlpRequestAbstract</span></h2>
+<p>LassoSamlpRequestAbstract — &lt;samlp:RequestAbstractType&gt;</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="LassoSamlpRequestAbstract.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+
+#include &lt;lasso/lasso.h&gt;
+
+                    <a href="LassoSamlpRequestAbstract.html#LassoSamlpRequestAbstract-struct" title="LassoSamlpRequestAbstract">LassoSamlpRequestAbstract</a>;
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="LassoSamlpRequestAbstract.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <GTKDOCLINK HREF="GObject">GObject</GTKDOCLINK>
+   +----<a href="LassoNode.html" title="LassoNode">LassoNode</a>
+         +----LassoSamlpRequestAbstract
+               +----<a href="LassoLibAuthnRequest.html" title="LassoLibAuthnRequest">LassoLibAuthnRequest</a>
+               +----<a href="LassoLibFederationTerminationNotification.html" title="LassoLibFederationTerminationNotification">LassoLibFederationTerminationNotification</a>
+               +----<a href="LassoLibLogoutRequest.html" title="LassoLibLogoutRequest">LassoLibLogoutRequest</a>
+               +----<a href="LassoLibNameIdentifierMappingRequest.html" title="LassoLibNameIdentifierMappingRequest">LassoLibNameIdentifierMappingRequest</a>
+               +----<a href="LassoLibRegisterNameIdentifierRequest.html" title="LassoLibRegisterNameIdentifierRequest">LassoLibRegisterNameIdentifierRequest</a>
+               +----<a href="LassoSamlpRequest.html" title="LassoSamlpRequest">LassoSamlpRequest</a>
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="LassoSamlpRequestAbstract.description"></a><h2>Description</h2>
+<p>
+</p>
+<div class="figure">
+<a name="id2622414"></a><p class="title"><b>Figure 34. Schema fragment for samlp:RequestAbstractType</b></p>
+<div class="figure-contents"><pre class="programlisting">
+
+&lt;complexType name="RequestAbstractType" abstract="true"&gt;
+  &lt;sequence&gt;
+    &lt;element ref="samlp:RespondWith" minOccurs="0" maxOccurs="unbounded"/&gt;
+    &lt;element ref="ds:Signature" minOccurs="0"/&gt;
+  &lt;/sequence&gt;
+  &lt;attribute name="RequestID" type="saml:IDType" use="required"/&gt;
+  &lt;attribute name="MajorVersion" type="integer" use="required"/&gt;
+  &lt;attribute name="MinorVersion" type="integer" use="required"/&gt;
+  &lt;attribute name="IssueInstant" type="dateTime" use="required"/&gt;
+&lt;/complexType&gt;
+
+&lt;element name="RespondWith" type="QName"/&gt;
+
+From oasis-sstc-saml-schema-assertion-1.0.xsd:
+&lt;simpleType name="IDType"&gt;
+  &lt;restriction base="string"/&gt;
+&lt;/simpleType&gt;
+</pre></div>
+</div>
+<p><br class="figure-break"></p>
+<p>
+
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="LassoSamlpRequestAbstract.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="LassoSamlpRequestAbstract-struct"></a><h3>LassoSamlpRequestAbstract</h3>
+<pre class="programlisting">typedef struct {
+	/* &lt;element ref="samlp:RespondWith" minOccurs="0" maxOccurs="unbounded"/&gt; */
+	GList *RespondWith; /* of strings */
+	/* &lt;attribute name="RequestID" type="saml:IDType" use="required"/&gt; */
+	char *RequestID;
+	/* &lt;attribute name="MajorVersion" type="integer" use="required"/&gt; */
+	int MajorVersion;
+	/* &lt;attribute name="MinorVersion" type="integer" use="required"/&gt; */
+	int MinorVersion;
+	/* &lt;attribute name="IssueInstant" type="dateTime" use="required"/&gt; */
+	char *IssueInstant;
+
+	/* ds:Signature stuffs */
+	LassoSignatureType sign_type;
+	LassoSignatureMethod sign_method;
+	char *private_key_file;
+	char *certificate_file;
+} LassoSamlpRequestAbstract;
+</pre>
+<p>
+
+</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.10</div>
+</body>
+</html>

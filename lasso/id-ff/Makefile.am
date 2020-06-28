@@ -1,9 +1,9 @@
+MAINTAINERCLEANFILES = Makefile.in
 liblassoincludedir = $(includedir)/lasso/id-ff
 
 INCLUDES = \
-	-I$(top_srcdir) \
-	-I$(top_srcdir)/lasso \
 	-I$(top_builddir) \
+	-I$(top_srcdir) \
 	$(LASSO_CORE_CFLAGS) \
 	-DG_LOG_DOMAIN=\"lasso\"
 

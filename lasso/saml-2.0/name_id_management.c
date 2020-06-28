@@ -1,4 +1,4 @@
-/* $Id: name_id_management.c 3498 2008-03-03 17:59:03Z bdauvergne $ 
+/* $Id: name_id_management.c 3725 2008-05-21 17:28:44Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -30,6 +30,12 @@
 #include <lasso/id-ff/identityprivate.h>
 #include <lasso/id-ff/serverprivate.h>
 #include <lasso/xml/xml_enc.h>
+
+/**
+ * SECTION:name_id_management
+ * @short_description: Name Id Management Profile (SAMLv2)
+ *
+ **/
 
 /*****************************************************************************/
 /* public methods                                                            */
@@ -268,8 +274,9 @@ lasso_name_id_management_process_request_msg(LassoNameIdManagement *name_id_mana
 				encrypted_id, encryption_private_key));
 			LASSO_SAMLP2_MANAGE_NAME_ID_REQUEST(profile->request)->NameID = \
 				LASSO_SAML2_NAME_ID(profile->nameIdentifier);
+			g_object_unref(
+				LASSO_SAMLP2_MANAGE_NAME_ID_REQUEST(profile->request)->EncryptedID);
 			LASSO_SAMLP2_MANAGE_NAME_ID_REQUEST(profile->request)->EncryptedID = NULL;
-
 		}
 	} else {
 		profile->nameIdentifier = g_object_ref(name_id);

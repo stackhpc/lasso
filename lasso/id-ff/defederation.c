@@ -1,4 +1,4 @@
-/* $Id: defederation.c 3453 2007-11-27 22:57:27Z fpeters $ 
+/* $Id: defederation.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -21,6 +21,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
+/**
+ * SECTION:defederation
+ * @short_description: Federation Termination Notification Profile (ID-FF)
+ *
+ **/
 
 #include <lasso/id-ff/defederation.h>
 

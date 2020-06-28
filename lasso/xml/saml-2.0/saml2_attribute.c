@@ -1,4 +1,4 @@
-/* $Id: saml2_attribute.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: saml2_attribute.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,8 +24,12 @@
 
 #include "saml2_attribute.h"
 
-/*
- * Schema fragment (saml-schema-assertion-2.0.xsd):
+/**
+ * SECTION:saml2_attribute
+ * @short_description: &lt;saml2:Attribute&gt;
+ *
+ * <figure><title>Schema fragment for saml2:Attribute</title>
+ * <programlisting><![CDATA[
  *
  * <complexType name="AttributeType">
  *   <sequence>
@@ -36,6 +40,8 @@
  *   <attribute name="FriendlyName" type="string" use="optional"/>
  *   <anyAttribute namespace="##other" processContents="lax"/>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

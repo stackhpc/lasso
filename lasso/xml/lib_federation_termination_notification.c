@@ -1,4 +1,4 @@
-/* $Id: lib_federation_termination_notification.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: lib_federation_termination_notification.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -25,9 +25,12 @@
 #include <lasso/xml/lib_federation_termination_notification.h>
 #include <libxml/uri.h>
 
-/*
- * Schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
- * 
+/**
+ * SECTION:lib_federation_termination_notification
+ * @short_description: &lt;lib:FederationTerminationNotification&gt;
+ *
+ * <figure><title>Schema fragment for lib:FederationTerminationNotification</title>
+ * <programlisting><![CDATA[
  * <xs:element name="FederationTerminationNotification" 
  *     type="FederationTerminationNotificationType"/>
  *   <xs:complexType name="FederationTerminationNotificationType">
@@ -44,13 +47,8 @@
  * </xs:complexType>
  * 
  * <xs:element name="ProviderID" type="md:entityIDType"/>
- * 
- * From liberty-metadata-v1.0.xsd:
- * <xs:simpleType name="entityIDType">
- *   <xs:restriction base="xs:anyURI">
- *     <xs:maxLength value="1024" id="maxlengthid"/>
- *   </xs:restriction>
- * </xs:simpleType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

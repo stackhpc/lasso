@@ -1,4 +1,4 @@
-/* $Id: dst_modify.c 3409 2007-09-21 15:12:18Z dlaniel $ 
+/* $Id: dst_modify.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/dst_modify.h>
 
-/*
- * Schema fragment (liberty-idwsf-dst-v1.0.xsd):
+/**
+ * SECTION:dst_modify
+ * @short_description: &lt;dst:Modify&gt;
+ *
+ * <figure><title>Schema fragment for dst:Modify</title>
+ * <programlisting><![CDATA[
  *
  * <xs:element name="Modify" type="ModifyType"/>
  * <xs:complexType name="ModifyType">
@@ -53,6 +57,8 @@
  *     <xs:attribute name="id" type="xs:ID"/>
  *     <xs:attribute name="itemID" type="IDType"/>
  * </xs:complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

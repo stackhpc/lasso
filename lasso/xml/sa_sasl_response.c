@@ -1,4 +1,4 @@
-/* $Id: sa_sasl_response.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: sa_sasl_response.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/sa_sasl_response.h>
 
-/*
- * Schema fragments (lib-arch-authn-svc.xsd):
+/**
+ * SECTION:sa_sasl_response
+ * @short_description: &lt;sa:SASLResponse&gt;
+ *
+ * <figure><title>Schema fragment for sa:SASLResponse</title>
+ * <programlisting><![CDATA[
  * 
  * <xs:element name="SASLResponse">
  * <xs:complexType>
@@ -53,6 +57,8 @@
  * </xs:complexType>
  * </xs:element>
  *
+ * ]]></programlisting>
+ * </figure>
  */ 
 
 /*****************************************************************************/

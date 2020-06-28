@@ -1,4 +1,4 @@
-/* $Id: provider.c 3534 2008-04-24 09:02:34Z bdauvergne $
+/* $Id: provider.c 3704 2008-05-15 21:17:44Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -21,6 +21,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
+/**
+ * SECTION:provider
+ * @short_description: Service or identity provider
+ *
+ * It holds all the data about a provider.
+ **/
 
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>

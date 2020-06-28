@@ -1,4 +1,4 @@
-/* $Id: saml2_subject_confirmation_data.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: saml2_subject_confirmation_data.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,8 +24,12 @@
 
 #include "saml2_subject_confirmation_data.h"
 
-/*
- * Schema fragment (saml-schema-assertion-2.0.xsd):
+/**
+ * SECTION:saml2_subject_confirmation_data
+ * @short_description: &lt;saml2:SubjectConfirmationData&gt;
+ *
+ * <figure><title>Schema fragment for saml2:SubjectConfirmationData</title>
+ * <programlisting><![CDATA[
  *
  * <complexType name="SubjectConfirmationDataType" mixed="true">
  *   <complexContent>
@@ -42,6 +46,8 @@
  *     </restriction>
  *   </complexContent>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

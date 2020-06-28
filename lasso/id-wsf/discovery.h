@@ -1,4 +1,4 @@
-/* $Id: discovery.h 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: discovery.h 3712 2008-05-20 13:14:06Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -119,7 +119,8 @@ LASSO_EXPORT LassoDataService* lasso_discovery_get_service(LassoDiscovery *disco
 LASSO_EXPORT GList* lasso_discovery_get_services(LassoDiscovery *discovery);
 
 LASSO_EXPORT LassoDiscoDescription* lasso_discovery_get_description_auto(
-		LassoDiscoResourceOffering *offering, const gchar *security_mech);
+		LassoDiscoResourceOffering *offering, const gchar *security_mech_id);
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

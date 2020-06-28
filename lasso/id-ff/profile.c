@@ -1,4 +1,4 @@
-/* $Id: profile.c 3447 2007-11-22 12:30:02Z fpeters $
+/* $Id: profile.c 3729 2008-05-22 07:54:46Z dlaniel $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -21,6 +21,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
+/**
+ * SECTION:profile
+ * @short_description: Base class for all identity profiles
+ *
+ **/
 
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
@@ -346,6 +352,9 @@ lasso_profile_set_identity_from_dump(LassoProfile *profile, const gchar *dump)
 {
 	g_return_val_if_fail(dump != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
 
+	if (profile->identity) {
+		g_object_unref(profile->identity);
+	}
 	profile->identity = lasso_identity_new_from_dump(dump);
 	if (profile->identity == NULL)
 		return critical_error(LASSO_PROFILE_ERROR_BAD_IDENTITY_DUMP);
@@ -368,6 +377,9 @@ lasso_profile_set_session_from_dump(LassoProfile *profile, const gchar *dump)
 {
 	g_return_val_if_fail(dump != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
 
+	if (profile->session) {
+		g_object_unref(profile->session);
+	}
 	profile->session = lasso_session_new_from_dump(dump);
 	if (profile->session == NULL)
 		return critical_error(LASSO_PROFILE_ERROR_BAD_SESSION_DUMP);
@@ -499,12 +511,16 @@ dispose(GObject *object)
 
 	lasso_server_destroy(profile->server);
 	profile->server = NULL;
+
 	lasso_identity_destroy(profile->identity);
 	profile->identity = NULL;
+
 	lasso_session_destroy(profile->session);
 	profile->session = NULL;
+
 	g_free(profile->private_data->artifact);
 	profile->private_data->artifact = NULL;
+
 	g_free(profile->private_data->artifact_message);
 	profile->private_data->artifact_message = NULL;
 

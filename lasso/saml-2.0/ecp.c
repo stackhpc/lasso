@@ -1,4 +1,4 @@
-/* $Id: ecp.c 3374 2007-08-12 22:19:32Z fpeters $
+/* $Id: ecp.c 3704 2008-05-15 21:17:44Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -21,6 +21,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
+/**
+ * SECTION:ecp
+ * @short_description: Enhanced Client or Proxy Profile (SAMLv2)
+ *
+ **/
 
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>

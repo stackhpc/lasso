@@ -1,4 +1,4 @@
-/* $Id: is_parameter.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: is_parameter.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,14 +24,20 @@
 
 #include <lasso/xml/is_parameter.h>
 
-/*
- * Schema fragments (liberty-idwsf-interaction-svc-v1.0.xsd):
+/**
+ * SECTION:is_parameter
+ * @short_description: &lt;is:ParameterType&gt;
+ *
+ * <figure><title>Schema fragment for is:ParameterType</title>
+ * <programlisting><![CDATA[
  *
  * <xs:complexType name="ParameterType">
  *   <xs:attribute name="name" type="xs:ID" use="required"/>
  *   <xs:attribute name="value" type="xs:string" use="required"/>
  * </xs:complexType>
  *
+ * ]]></programlisting>
+ * </figure>
  */ 
 
 /*****************************************************************************/

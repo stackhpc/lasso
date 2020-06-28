@@ -1,4 +1,4 @@
-/* $Id: disco_insert_entry.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: disco_insert_entry.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/disco_insert_entry.h>
 
-/*
- * Schema fragment (liberty-idwsf-disco-svc-1.0-errata-v1.0.xsd):
+/**
+ * SECTION:disco_insert_entry
+ * @short_description: &lt;disco:InsertEntryType&gt;
+ *
+ * <figure><title>Schema fragment for disco:InsertEntryType</title>
+ * <programlisting><![CDATA[
  * 
  * <xs:complexType name="InsertEntryType">
  *   <xs:sequence>
@@ -33,6 +37,8 @@
  *     <xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
  *   </xs:sequence>
  * </xs:complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

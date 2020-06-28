@@ -1,4 +1,4 @@
-/* $Id: lib_subject.c 3237 2007-05-30 17:17:45Z dlaniel $
+/* $Id: lib_subject.c 3704 2008-05-15 21:17:44Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,9 +24,12 @@
 
 #include <lasso/xml/lib_subject.h>
 
-/*
- * Schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
- * 
+/**
+ * SECTION:lib_subject
+ * @short_description: &lt;lib:Subject&gt;
+ *
+ * <figure><title>Schema fragment for lib:Subject</title>
+ * <programlisting><![CDATA[
  * <xs:complexType name="SubjectType">
  *   <xs:complexContent>
  *     <xs:extension base="saml:SubjectType">
@@ -37,6 +40,8 @@
  *   </xs:complexContent>
  * </xs:complexType>
  * <xs:element name="Subject" type="SubjectType" substitutionGroup="saml:Subject"/>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

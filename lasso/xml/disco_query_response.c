@@ -1,4 +1,4 @@
-/* $Id: disco_query_response.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: disco_query_response.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/disco_query_response.h>
 
-/*
- * Schema fragment (liberty-idwsf-disco-svc-1.0-errata-v1.0.xsd):
+/**
+ * SECTION:disco_query_response
+ * @short_description: &lt;disco:QueryResponse&gt;
+ *
+ * <figure><title>Schema fragment for disco:QueryResponse</title>
+ * <programlisting><![CDATA[
  *
  * <xs:element name="QueryResponse" type="QueryResponseType"/>
  * <xs:complexType name="QueryResponseType">
@@ -42,6 +46,8 @@
  *   </xs:sequence>
  *   <xs:attribute name="id" type="xs:ID" use="optional"/>
  * </xs:complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

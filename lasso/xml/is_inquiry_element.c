@@ -1,4 +1,4 @@
-/* $Id: is_inquiry_element.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: is_inquiry_element.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/is_inquiry_element.h>
 
-/*
- * Schema fragments (liberty-idwsf-interaction-svc-v1.0.xsd):
+/**
+ * SECTION:is_inquiry_element
+ * @short_description: &lt;is:InquiryElementType&gt;
+ *
+ * <figure><title>Schema fragment for is:InquiryElementType</title>
+ * <programlisting><![CDATA[
  *
  * <xs:complexType name="InquiryElementType" abstract="true">
  *   <xs:sequence>
@@ -36,6 +40,8 @@
  *   </xs:sequence>
  *   <xs:attribute name="name" type="xs:ID" use="required"/>
  * </xs:complexType>
+ * ]]></programlisting>
+ * </figure>
  */ 
 
 /*****************************************************************************/

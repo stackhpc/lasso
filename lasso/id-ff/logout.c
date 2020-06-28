@@ -1,4 +1,4 @@
-/* $Id: logout.c 3520 2008-04-09 10:21:37Z dlaniel $
+/* $Id: logout.c 3704 2008-05-15 21:17:44Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -20,6 +20,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
+/**
+ * SECTION:logout
+ * @short_description: Single Logout Profile
+ *
  */
 
 #include <lasso/xml/lib_authentication_statement.h>

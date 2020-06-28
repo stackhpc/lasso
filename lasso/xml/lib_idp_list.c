@@ -1,4 +1,4 @@
-/* $Id: lib_idp_list.c 3237 2007-05-30 17:17:45Z dlaniel $
+/* $Id: lib_idp_list.c 3704 2008-05-15 21:17:44Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,9 +24,12 @@
 
 #include <lasso/xml/lib_idp_list.h>
 
-/*
- * Schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
- * 
+/**
+ * SECTION:lib_idp_list
+ * @short_description: &lt;lib:IDPList&gt;
+ *
+ * <figure><title>Schema fragment for lib:IDPList</title>
+ * <programlisting><![CDATA[
  * <xs:element name="IDPList" type="IDPListType"/>
  * <xs:complexType name="IDPListType">
  *   <xs:sequence>
@@ -36,6 +39,8 @@
  * </xs:complexType>
  * 
  * <xs:element name="GetComplete" type="xs:anyURI"/>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

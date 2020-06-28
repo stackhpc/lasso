@@ -1,4 +1,4 @@
-/* $Id: saml_conditions.c 3237 2007-05-30 17:17:45Z dlaniel $
+/* $Id: saml_conditions.c 3704 2008-05-15 21:17:44Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/saml_conditions.h>
 
-/*
- * Schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
+/**
+ * SECTION:saml_conditions
+ * @short_description: &lt;saml:Conditions&gt;
+ *
+ * <figure><title>Schema fragment for saml:Conditions</title>
+ * <programlisting><![CDATA[
  * 
  * <element name="Conditions" type="saml:ConditionsType"/>
  * <complexType name="ConditionsType">
@@ -36,6 +40,8 @@
  *   <attribute name="NotBefore" type="dateTime" use="optional"/>
  *   <attribute name="NotOnOrAfter" type="dateTime" use="optional"/>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

@@ -1,10 +1,11 @@
+MAINTAINERCLEANFILES = Makefile.in
 SUBDIRS = saml-2.0 id-wsf-2.0 ws
 
 liblassoincludedir = $(includedir)/lasso/xml
 
 INCLUDES = \
+	-I$(top_builddir) \
 	-I$(top_srcdir) \
-	-I$(top_srcdir)/lasso \
 	$(LASSO_CORE_CFLAGS) \
 	-DG_LOG_DOMAIN=\"lasso\"
 

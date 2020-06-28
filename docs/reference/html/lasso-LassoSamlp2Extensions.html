@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>LassoSamlp2Extensions</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.71.0">
+<link rel="start" href="index.html" title="Lasso Reference Manual">
+<link rel="up" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
+<link rel="prev" href="lasso-LassoSamlp2AuthzDecisionQuery.html" title="LassoSamlp2AuthzDecisionQuery">
+<link rel="next" href="lasso-LassoSamlp2IDPEntry.html" title="LassoSamlp2IDPEntry">
+<meta name="generator" content="GTK-Doc V1.10 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
+<link rel="chapter" href="architecture.html" title="Lasso Architecture">
+<link rel="chapter" href="idff.html" title="Identity Federation Framework">
+<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework">
+<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
+<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
+<link rel="chapter" href="misc.html" title="Misc">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="lasso-LassoSamlp2AuthzDecisionQuery.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="xml-samlv2.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Lasso Reference Manual</th>
+<td><a accesskey="n" href="lasso-LassoSamlp2IDPEntry.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts"><nobr><a href="#lasso-LassoSamlp2Extensions.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#lasso-LassoSamlp2Extensions.description" class="shortcut">Description</a></nobr></td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="lasso-LassoSamlp2Extensions"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="lasso-LassoSamlp2Extensions.top_of_page"></a>LassoSamlp2Extensions</span></h2>
+<p>LassoSamlp2Extensions — &lt;samlp2:Extensions&gt;</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="lasso-LassoSamlp2Extensions.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+
+#include &lt;lasso/lasso.h&gt;
+
+                    <a href="lasso-LassoSamlp2Extensions.html#LassoSamlp2Extensions" title="LassoSamlp2Extensions">LassoSamlp2Extensions</a>;
+<a href="LassoNode.html" title="LassoNode">LassoNode</a>*          <a href="lasso-LassoSamlp2Extensions.html#lasso-samlp2-extensions-new" title="lasso_samlp2_extensions_new ()">lasso_samlp2_extensions_new</a>         (void);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="lasso-LassoSamlp2Extensions.description"></a><h2>Description</h2>
+<p>
+</p>
+<div class="figure">
+<a name="id2640005"></a><p class="title"><b>Figure 69. Schema fragment for samlp2:Extensions</b></p>
+<div class="figure-contents"><pre class="programlisting">
+
+&lt;complexType name="ExtensionsType"&gt;
+  &lt;sequence&gt;
+    &lt;any namespace="##other" processContents="lax" maxOccurs="unbounded"/&gt;
+  &lt;/sequence&gt;
+&lt;/complexType&gt;
+</pre></div>
+</div>
+<p><br class="figure-break"></p>
+<p>
+
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="lasso-LassoSamlp2Extensions.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="LassoSamlp2Extensions"></a><h3>LassoSamlp2Extensions</h3>
+<pre class="programlisting">typedef struct {
+	LassoNode parent;
+} LassoSamlp2Extensions;
+</pre>
+<p>
+
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="lasso-samlp2-extensions-new"></a><h3>lasso_samlp2_extensions_new ()</h3>
+<pre class="programlisting"><a href="LassoNode.html" title="LassoNode">LassoNode</a>*          lasso_samlp2_extensions_new         (void);</pre>
+<p>
+Creates a new <a href="lasso-LassoSamlp2Extensions.html#LassoSamlp2Extensions" title="LassoSamlp2Extensions"><span class="type">LassoSamlp2Extensions</span></a> object.</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td>
+<td> a newly created <a href="lasso-LassoSamlp2Extensions.html#LassoSamlp2Extensions" title="LassoSamlp2Extensions"><span class="type">LassoSamlp2Extensions</span></a> object
+</td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.10</div>
+</body>
+</html>

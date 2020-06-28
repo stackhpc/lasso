@@ -1,4 +1,4 @@
-/* $Id: server.c 3485 2008-02-21 10:21:34Z bdauvergne $
+/* $Id: server.c 3723 2008-05-21 12:35:54Z dlaniel $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -21,6 +21,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
+/**
+ * SECTION:server
+ * @short_description: Representation of the current server
+ *
+ * It holds the data about a provider, other providers it knows, which
+ * certificates to use, etc.
+ **/
 
 #include <xmlsec/base64.h>
 
@@ -121,12 +129,17 @@ gint
 lasso_server_add_service_from_dump(LassoServer *server, const gchar *dump)
 {
 	LassoNode *node;
+	gint return_code;
 
 	g_return_val_if_fail(dump != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
 
 	node = lasso_node_new_from_dump(dump);
 
-	return lasso_server_add_service(server, node);
+	return_code = lasso_server_add_service(server, node);
+
+	g_object_unref(node);
+
+	return return_code;
 }
 
 #ifdef LASSO_WSF_ENABLED
@@ -144,7 +157,7 @@ lasso_server_add_svc_metadata(LassoServer *server, LassoIdWsf2DiscoSvcMetadata *
 	return 0;
 }
 
-GList *
+const GList *
 lasso_server_get_svc_metadatas(LassoServer *server)
 {
 	g_return_val_if_fail(LASSO_IS_SERVER(server), NULL);
@@ -152,6 +165,7 @@ lasso_server_get_svc_metadatas(LassoServer *server)
 	return server->private_data->svc_metadatas;
 }
 
+/* XXX: return value must be freed by caller */
 GList *
 lasso_server_get_svc_metadatas_with_id_and_type(LassoServer *server, GList *svcMDIDs,
 	const gchar *service_type)
@@ -571,6 +585,7 @@ dispose(GObject *object)
 /* 	} */
 
 	if (server->private_data->svc_metadatas != NULL) {
+		g_list_foreach(server->private_data->svc_metadatas, (GFunc)g_object_unref, NULL);
 		g_list_free(server->private_data->svc_metadatas);
 		server->private_data->svc_metadatas = NULL;
 	}

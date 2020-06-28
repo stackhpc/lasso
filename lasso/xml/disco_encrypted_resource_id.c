@@ -1,4 +1,4 @@
-/* $Id: disco_encrypted_resource_id.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: disco_encrypted_resource_id.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/disco_encrypted_resource_id.h>
 
-/*
- * Schema fragment (liberty-idwsf-disco-svc-1.0-errata-v1.0.xsd):
+/**
+ * SECTION:disco_encrypted_resource_id
+ * @short_description: &lt;disco:EncryptedResourceID&gt;
+ *
+ * <figure><title>Schema fragment for disco:EncryptedResourceID</title>
+ * <programlisting><![CDATA[
  *
  * <xs:element name="EncryptedResourceID" type="EncryptedResourceIDType"/>
  * <xs:complexType name="EncryptedResourceIDType">
@@ -34,6 +38,8 @@
  *       <xs:element ref="xenc:EncryptedKey"/>
  *    </xs:sequence>
  * </xs:complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

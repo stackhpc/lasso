@@ -1,6 +1,6 @@
-INCLUDES = -I$(top_srcdir)
+INCLUDES = -I$(top_builddir) -I$(top_srcdir)
 
-AM_CPPFLAGS=@CPPFLAGS@ -I$(top_srcdir) -I$(top_builddir) -I$(top_builddir)/lasso @LASSO_CFLAGS@
+AM_CPPFLAGS=@CPPFLAGS@ -I$(top_builddir) -I$(top_srcdir) @LASSO_CFLAGS@
 AM_CFLAGS=@CFLAGS@ @LASSO_CORE_CFLAGS@
 AM_STANDARD_CFLAGS=@LASSO_CORE_CFLAGS@
 
@@ -16,13 +16,13 @@ fake_DATA=build-perl-stamp
 
 SWIG_I_FILES=$(shell find $(top_srcdir)/swig/ -name '*.[ih]')
 lasso_wrap.c lasso.pm: $(SWIG_I_FILES)
-	$(SWIG) -v -perl5 -module lasso -o lasso_wrap.c $(top_srcdir)/swig/Lasso.i
+	$(SWIG) -I$(top_builddir)/swig -v -perl5 -module lasso -o lasso_wrap.c $(top_srcdir)/swig/Lasso.i
 
-$(PERL_MAKEFILE): lasso.pm
-	test -e Makefile.PL || $(LN_S) $(srcdir)/Makefile.PL .
-	test -e lasso_wrap.c || $(LN_S) $(srcdir)/lasso_wrap.c .
-	test -e lasso.pm || $(LN_S) $(srcdir)/lasso.pm .
-	VERSION=$(VERSION) CC=$(CC) CFLAGS="$(AM_CPPFLAGS) $(AM_CFLAGS) $(SWIG_OPTS) $(CPPFLAGS) $(AM_STANDARD_CFLAGS)" $(PERL) $(srcdir)/Makefile.PL DESTDIR=$(DESTDIR) PREFIX=$(prefix) $(MAKE_PL_OPTS)
+$(PERL_MAKEFILE): lasso.pm lasso_wrap.c
+	test -e Makefile.PL || test ! -e $(srcdir)/Makefile.PL || $(LN_S) $(srcdir)/Makefile.PL .
+	test -e lasso_wrap.c || test ! -e $(srcdir)/lasso_wrap.c || $(LN_S) $(srcdir)/lasso_wrap.c .
+	test -e lasso.pm || test ! -e $(srcdir)/lasso.pm || $(LN_S) $(srcdir)/lasso.pm .
+	VERSION="$(VERSION)" CC="$(CC)" CFLAGS="$(AM_CPPFLAGS) $(AM_CFLAGS) $(SWIG_OPTS) $(CPPFLAGS) $(AM_STANDARD_CFLAGS)" $(PERL) $(srcdir)/Makefile.PL DESTDIR="$(DESTDIR)" PREFIX="$(prefix)" $(MAKE_PL_OPTS) TOP_SRCDIR="$(top_srcdir)" TOP_BUILDDIR="$(top_builddir)"
 
 -perl install-perl: $(PERL_MAKEFILE)
 	target=`echo $@ | sed -e 's/-perl//'`; \
@@ -51,7 +51,7 @@ SWIG_OUTPUTS = lasso_wrap.c lasso.pm
 EXTRA_DIST = $(SWIG_OUTPUTS) Makefile.PL
 
 # Maintainer clean the swig generated files, because he/she maintains them.
-MAINTAINERCLEANFILES = $(SWIG_OUTPUTS)
+MAINTAINERCLEANFILES = Makefile.in $(SWIG_OUTPUTS)
 
 clean-local:
 	rm -rf blib $(PERL_MAKEFILE) $(PERL_MAKEFILE).old build-perl-stamp $(PERL_CRUFT)

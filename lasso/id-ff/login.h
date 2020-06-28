@@ -1,4 +1,4 @@
-/* $Id: login.h 3454 2007-11-27 23:17:21Z fpeters $ 
+/* $Id: login.h 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -59,6 +59,15 @@ typedef struct _LassoLogin LassoLogin;
 typedef struct _LassoLoginClass LassoLoginClass;
 typedef struct _LassoLoginPrivate LassoLoginPrivate;
 
+/**
+ * LassoLoginProtocolProfile:
+ * @LASSO_LOGIN_PROTOCOL_PROFILE_BRWS_ART:
+ * @LASSO_LOGIN_PROTOCOL_PROFILE_BRWS_POST:
+ * @LASSO_LOGIN_PROTOCOL_PROFILE_BRWS_LECP:
+ * @LASSO_LOGIN_PROTOCOL_PROFILE_REDIRECT:
+ *
+ * Identifies the two possible profiles for Single Sign-On and Federation.
+ */
 typedef enum {
 	LASSO_LOGIN_PROTOCOL_PROFILE_BRWS_ART = 1,
 	LASSO_LOGIN_PROTOCOL_PROFILE_BRWS_POST,
@@ -66,6 +75,17 @@ typedef enum {
 	LASSO_LOGIN_PROTOCOL_PROFILE_REDIRECT,
 } LassoLoginProtocolProfile;
 
+/**
+ * LassoLogin:
+ * @protocolProfile:
+ * @assertionArtifact:
+ * @assertion:
+ *
+ * Single sign-on profile for the current transaction; possibly an
+ * assertionArtifact to be used by the service provider in its
+ * "assertionConsumerServiceURL" and the assertion created or received for the
+ * principal.
+ */
 struct _LassoLogin {
 	LassoProfile parent;
 

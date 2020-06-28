@@ -1,4 +1,4 @@
-/* $Id: session.c 3481 2008-02-18 13:03:05Z fpeters $
+/* $Id: session.c 3725 2008-05-21 17:28:44Z dlaniel $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -21,6 +21,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
+/**
+ * SECTION:session
+ * @short_description: Principal Session
+ *
+ **/
 
 #include <lasso/id-ff/session.h>
 #include <lasso/id-ff/sessionprivate.h>
@@ -506,6 +512,7 @@ init_from_xml(LassoNode *node, xmlNode *xmlnode)
 					lasso_wsa_endpoint_reference_new());
 				LASSO_NODE_GET_CLASS(epr)->init_from_xml(LASSO_NODE(epr), t2);
 				lasso_session_add_endpoint_reference(session, epr);
+				g_object_unref(epr);
 				t2 = t2->next;
 			}
 		}

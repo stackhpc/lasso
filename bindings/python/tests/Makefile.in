@@ -97,7 +97,6 @@ DEFS = @DEFS@
 DEPDIR = @DEPDIR@
 DLLTOOL = @DLLTOOL@
 DLL_FILENAME = @DLL_FILENAME@
-DSYMUTIL = @DSYMUTIL@
 ECHO = @ECHO@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
@@ -163,7 +162,6 @@ MAINTAINER_MODE_TRUE = @MAINTAINER_MODE_TRUE@
 MAKEINFO = @MAKEINFO@
 MINGW_FALSE = @MINGW_FALSE@
 MINGW_TRUE = @MINGW_TRUE@
-NMEDIT = @NMEDIT@
 OBJDUMP = @OBJDUMP@
 OBJEXT = @OBJEXT@
 PACKAGE = @PACKAGE@
@@ -223,6 +221,7 @@ SHELL = @SHELL@
 STRIP = @STRIP@
 SWIG = @SWIG@
 SWIG_PYTHON_ARGS = @SWIG_PYTHON_ARGS@
+SWIG_VERSION = @SWIG_VERSION@
 TAR = @TAR@
 TESTS_JUNIT = @TESTS_JUNIT@
 U = @U@
@@ -289,6 +288,7 @@ target_cpu = @target_cpu@
 target_os = @target_os@
 target_vendor = @target_vendor@
 uudecode = @uudecode@
+MAINTAINERCLEANFILES = Makefile.in
 @PYTHON_ENABLED_TRUE@TESTS = profiles_tests.py binding_tests.py
 EXTRA_DIST = profiles_tests.py binding_tests.py
 all: all-am
@@ -469,6 +469,7 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
+	-test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
 clean: clean-am
 
 clean-am: clean-generic clean-libtool mostlyclean-am

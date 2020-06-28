@@ -125,7 +125,6 @@ DEFS = @DEFS@
 DEPDIR = @DEPDIR@
 DLLTOOL = @DLLTOOL@
 DLL_FILENAME = @DLL_FILENAME@
-DSYMUTIL = @DSYMUTIL@
 ECHO = @ECHO@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
@@ -191,7 +190,6 @@ MAINTAINER_MODE_TRUE = @MAINTAINER_MODE_TRUE@
 MAKEINFO = @MAKEINFO@
 MINGW_FALSE = @MINGW_FALSE@
 MINGW_TRUE = @MINGW_TRUE@
-NMEDIT = @NMEDIT@
 OBJDUMP = @OBJDUMP@
 OBJEXT = @OBJEXT@
 PACKAGE = @PACKAGE@
@@ -251,6 +249,7 @@ SHELL = @SHELL@
 STRIP = @STRIP@
 SWIG = @SWIG@
 SWIG_PYTHON_ARGS = @SWIG_PYTHON_ARGS@
+SWIG_VERSION = @SWIG_VERSION@
 TAR = @TAR@
 TESTS_JUNIT = @TESTS_JUNIT@
 U = @U@
@@ -319,13 +318,13 @@ target_vendor = @target_vendor@
 uudecode = @uudecode@
 SWIG_OUTPUTS = lasso_wrap.c php_lasso.h lasso.php
 php_extension_LTLIBRARIES = lasso.la
-lasso_la_CFLAGS = $(LASSO_CORE_CFLAGS) -I$(top_srcdir) -I$(top_builddir) $(PHP4_INCLUDES)
+lasso_la_CFLAGS = $(LASSO_CORE_CFLAGS) -I$(top_builddir) -I$(top_srcdir) $(PHP4_INCLUDES)
 lasso_la_LDFLAGS = -export-dynamic -prefer-pic -module -avoid-version
 lasso_la_LIBADD = $(top_builddir)/lasso/liblasso.la $(LASSO_LIBS) $(PHP4_LDFLAGS)
 lasso_la_SOURCES = lasso_wrap.c
 php_extensiondir = ${prefix}@PHP4_UNPREFIXED_EXTENSION_DIR@
 SWIG_I_FILES = $(shell find $(top_srcdir)/swig/ -name '*.[ih]')
-MAINTAINERCLEANFILES = $(SWIG_OUTPUTS)
+MAINTAINERCLEANFILES = Makefile.in $(SWIG_OUTPUTS)
 EXTRA_DIST = patch_swig_output.py $(SWIG_OUTPUTS)
 all: all-am
 
@@ -608,10 +607,10 @@ uninstall-am: uninstall-info-am uninstall-php_extensionLTLIBRARIES
 	uninstall-info-am uninstall-php_extensionLTLIBRARIES
 
 lasso_wrap.c php_lasso.h lasso.php: $(SWIG_I_FILES)
-	$(SWIG) -v -php4 -module lasso -o lasso_wrap.c $(top_srcdir)/swig/Lasso.i
+	$(SWIG) -I$(top_builddir)/swig -v -php4 -module lasso -o lasso_wrap.c $(top_srcdir)/swig/Lasso.i
 	cp lasso_wrap.c lasso_wrap.c.bak
 	test x"$(SWIG)" = xecho || \
-		$(PYTHON) $(srcdir)/patch_swig_output.py < lasso_wrap.c.bak > lasso_wrap.c
+		$(PYTHON) $(srcdir)/patch_swig_output.py $(SWIG_VERSION) < lasso_wrap.c.bak > lasso_wrap.c
 
 test-php: lasso.la lasso.php
 	$(PHP4) -d extension_dir=.libs $(srcdir)/lasso.php

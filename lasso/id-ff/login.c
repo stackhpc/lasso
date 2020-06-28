@@ -1,4 +1,4 @@
-/* $Id: login.c 3519 2008-04-06 09:42:26Z fpeters $
+/* $Id: login.c 3725 2008-05-21 17:28:44Z dlaniel $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -21,6 +21,127 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
+/**
+ * SECTION:login
+ * @short_description: Single Sign-On and Federation Profile
+ *
+ * The Single Sign On process allows a user to log in once to an identity
+ * provider (IdP), and to be then transparently loged in to the required
+ * service providers (SP) belonging to the IP "circle of trust".  Subordinating
+ * different identities of the same user within a circle of trust to a unique
+ * IP is called "Identity Federation".  The liberty Alliance specifications
+ * allows, thanks to this federation, strong and unique authentication coupled
+ * with control by the user of his personal informations. The explicit user
+ * agreement is necessary before proceeding to Identity Federation.
+ *
+ * <para>
+ * The service provider must implement the following process:
+ * <itemizedlist>
+ *  <listitem><para>creating an authentication request (#LassoLibAuthnRequest) with
+ *  lasso_login_init_authn_request();</para></listitem>
+ *  <listitem><para>sending it to the identity provider with
+ *  lasso_login_build_authn_request_msg();</para></listitem>
+ *  <listitem><para>receiving and processing the answer:
+ *    <itemizedlist>
+ *      <listitem>either an authentication response with
+ *      lasso_login_process_authn_response_msg()</listitem>
+ *      <listitem>or an artifact with lasso_login_init_request() then sending the
+ *      request to the IdP with lasso_login_build_request_msg() and processing the
+ *      new answer with lasso_login_process_response_msg().</listitem>
+ *    </itemizedlist>
+ *    </para></listitem>
+ * </itemizedlist>
+ * </para> 
+ * <example>
+ * <title>Service Provider Login URL</title>
+ * <programlisting>
+ * LassoLogin *login;
+ * 
+ * login = lasso_login_new(server);
+ * lasso_login_init_authn_request(login, "http://identity-provider-id/",
+ *                 LASSO_HTTP_METHOD_REDIRECT);
+ * 
+ * // customize AuthnRequest
+ * request = LASSO_LIB_AUTHN_REQUEST(LASSO_PROFILE(login)->request);
+ * request->NameIDPolicy = strdup(LASSO_LIB_NAMEID_POLICY_TYPE_FEDERATED);
+ * request->ForceAuthn = TRUE;
+ * request->IsPassive = FALSE;
+ * request->ProtocolProfile = strdup(LASSO_LIB_PROTOCOL_PROFILE_BRWS_ART);
+ * 
+ * lasso_login_build_authn_request_msg(login);
+ * 
+ * // redirect user to identity provider
+ * printf("Location: %s\n\nRedirected to IdP\n", LASSO_PROFILE(login)->msg_url);
+ * </programlisting>
+ * </example>
+ * 
+ * <example>
+ * <title>Service Provider Assertion Consumer Service URL</title>
+ * <programlisting>
+ * LassoLogin *login;
+ * char *request_method = getenv("REQUEST_METHOD");
+ * char *artifact_msg = NULL, *lares = NULL, *lareq = NULL;
+ * char *name_identifier;
+ * lassoHttpMethod method;
+ * 
+ * login = lasso_login_new(server);
+ * if (strcmp(request_method, "GET") == 0) {
+ *         artifact_msg = getenv("QUERY_STRING");
+ *         method = LASSO_HTTP_METHOD_REDIRECT;
+ * } else {
+ *         // read submitted form; if it has a LAREQ field, put it in lareq,
+ *         // if it has a LARES field, put it in lares
+ *         if (lareq) {
+ *                 artifact_msg = lareq;
+ *         } else if (lares) {
+ *                 response_msg = lares;
+ *         } else {
+ *                 // bail out
+ *         }
+ *         method = LASSO_HTTP_METHOD_POST;
+ * }
+ * 
+ * if (artifact_msg) {
+ *         lasso_login_init_request(login, artifact_msg, method);
+ *         lasso_login_build_request_msg(login);
+ *         // makes a SOAP call, soap_call is NOT a Lasso function
+ *         soap_answer_msg = soap_call(LASSO_PROFILE(login)->msg_url,
+ *                         LASSO_PROFILE(login)->msg_body);
+ *         lasso_login_process_response_msg(login, soap_answer_msg);
+ * } else if (response_msg) {
+ *         lasso_login_process_authn_response_msg(login, response_msg);
+ * }
+ * 
+ * // looks up name_identifier in local file, database, whatever and gets back
+ * // two things: identity_dump and session_dump
+ * name_identifier = LASSO_PROFILE(login)->nameIdentifier
+ * lasso_profile_set_identity_from_dump(LASSO_PROFILE(login), identity_dump);
+ * lasso_profile_set_session_from_dump(LASSO_PROFILE(login), session_dump);
+ * 
+ * lasso_login_accept_sso(login);
+ * 
+ * if (lasso_profile_is_identity_dirty(LASSO_PROFILE(login))) {
+ *         LassoIdentity *identity;
+ *         char *identity_dump;
+ *         identity = lasso_profile_get_identity(LASSO_PROFILE(login));
+ *         identity_dump = lasso_identity_dump(identity);
+ *         // record identity_dump in file, database...
+ * }
+ * 
+ * if (lasso_profile_is_session_dirty(LASSO_PROFILE(login))) {
+ *         LassoSession *session;
+ *         char *session_dump;
+ *         session = lasso_profile_get_session(LASSO_PROFILE(login));
+ *         session_dump = lasso_session_dump(session);
+ *         // record session_dump in file, database...
+ * }
+ * 
+ * // redirect user anywhere
+ * printf("Location: %s\n\nRedirected to site root\n", login->msg_url);
+ * </programlisting>
+ * </example>
+ */ 
 
 #include <xmlsec/base64.h>
 
@@ -594,10 +715,12 @@ lasso_login_process_response_status_and_assertion(LassoLogin *login)
 			if (sssa != NULL && sssa->Subject != NULL) {
 				sssa->Subject->NameIdentifier = LASSO_SAML_NAME_IDENTIFIER(
 					profile->nameIdentifier);
+				g_object_unref(sssa->Subject->EncryptedNameIdentifier);
 				sssa->Subject->EncryptedNameIdentifier = NULL;
 			} else if (sas != NULL && sas->Subject != NULL) {
 				sas->Subject->NameIdentifier = LASSO_SAML_NAME_IDENTIFIER(
 					profile->nameIdentifier);
+				g_object_unref(sas->Subject->EncryptedNameIdentifier);
 				sas->Subject->EncryptedNameIdentifier = NULL;
 			}
 		}
@@ -1558,6 +1681,11 @@ lasso_login_must_authenticate(LassoLogin *login)
 		 * assertions, a session is enough
 		 */
 		matched = (profile->session != NULL);
+		if (matched) {
+			matched = profile->remote_providerID 
+				&& lasso_session_get_assertion(profile->session, 
+					profile->remote_providerID) != NULL;
+		}
 	}
 	g_list_free(assertions);
 
@@ -1965,17 +2093,19 @@ static void
 dispose(GObject *object)
 {
 	LassoLogin *login = LASSO_LOGIN(object);
+
 	g_free(login->private_data->soap_request_msg);
 	login->private_data->soap_request_msg = NULL;
-	if (login->private_data->saml2_assertion)
-		lasso_node_destroy(LASSO_NODE(login->private_data->saml2_assertion));
+
+
+	lasso_node_destroy(LASSO_NODE(login->private_data->saml2_assertion));
 	login->private_data->saml2_assertion = NULL;
+
 #ifdef LASSO_WSF_ENABLED
-	if (login->private_data->resourceId)
-		lasso_node_destroy(LASSO_NODE(login->private_data->resourceId));
+	lasso_node_destroy(LASSO_NODE(login->private_data->resourceId));
 	login->private_data->resourceId = NULL;
-	if (login->private_data->encryptedResourceId)
-		lasso_node_destroy(LASSO_NODE(login->private_data->encryptedResourceId));
+
+	lasso_node_destroy(LASSO_NODE(login->private_data->encryptedResourceId));
 	login->private_data->encryptedResourceId = NULL;
 #endif
 	G_OBJECT_CLASS(parent_class)->dispose(object);

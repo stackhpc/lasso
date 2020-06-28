@@ -1,4 +1,4 @@
-/* $Id: is_help.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: is_help.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/is_help.h>
 
-/*
- * Schema fragments (liberty-idwsf-interaction-svc-v1.0.xsd):
+/**
+ * SECTION:is_help
+ * @short_description: &lt;is:Help&gt;
+ *
+ * <figure><title>Schema fragment for is:Help</title>
+ * <programlisting><![CDATA[
  *
  * <xs:element name="Help" type="HelpType"/>
  * <xs:complexType name="HelpType">
@@ -33,6 +37,8 @@
  *   <xs:attribute name="link" type="xs:anyURI" use="optional"/>
  *   <xs:attribute name="moreLink" type="xs:anyURI" use="optional"/>
  * </xs:complexType>
+ * ]]></programlisting>
+ * </figure>
  */ 
 
 /*****************************************************************************/

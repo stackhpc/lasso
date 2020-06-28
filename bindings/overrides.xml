@@ -9,6 +9,12 @@
   <func name="lasso_profile_get_request_type_from_soap_msg"
   	rename="lasso_get_request_type_from_soap_msg"/>
   <func name="lasso_session_get_assertions" return_owner="true"/>
+  <func name="lasso_check_version">
+    <param name="major"/>
+    <param name="minor"/>
+    <param name="subminor"/>
+    <param name="mode" optional="true" default="c:LASSO_CHECK_VERSION_NUMERIC"/>
+  </func>
   <!-- LassoProvider -->
   <func name="lasso_provider_get_metadata_list" return_owner="false"/>
   <!-- LassoProfile -->
@@ -46,6 +52,7 @@
     <param name="svcMDIDs" type="GList*" elem_type="char*"/>
     <param name="service_type"/>
   </func>
+  <func name="lasso_server_get_svc_metadatas" return_owner="false" return_type_qualifier="LassoIdWsf2DiscoSvcMetadata*"/>
   <func name="lasso_server_get_service" return_owner="false"/>
   <!-- LassoSession -->
   <func name="lasso_session_get_endpoint_reference" return_owner="false"/>
@@ -199,9 +206,11 @@
     <param name="service_type" optional="true"/>
   </func>
   <!-- LassoIdWsf2DataService -->
+  <func name="lasso_idwsf2_data_service_get_attribute_nodes" return_type_qualifier="xmlNode*"/>
   <func name="lasso_idwsf2_data_service_get_attribute_node">
     <param name="item_id" optional="true"/>
   </func>
+  <func name="lasso_idwsf2_data_service_get_attribute_strings" return_type_qualifier="char*"/>
   <func name="lasso_idwsf2_data_service_get_attribute_string">
     <param name="item_id" optional="true"/>
   </func>

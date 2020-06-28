@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>LassoLibStatusResponse</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.71.0">
+<link rel="start" href="index.html" title="Lasso Reference Manual">
+<link rel="up" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
+<link rel="prev" href="LassoLibScoping.html" title="LassoLibScoping">
+<link rel="next" href="LassoLibSubject.html" title="LassoLibSubject">
+<meta name="generator" content="GTK-Doc V1.10 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
+<link rel="chapter" href="architecture.html" title="Lasso Architecture">
+<link rel="chapter" href="idff.html" title="Identity Federation Framework">
+<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework">
+<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
+<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
+<link rel="chapter" href="misc.html" title="Misc">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="LassoLibScoping.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="xml-idff.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Lasso Reference Manual</th>
+<td><a accesskey="n" href="LassoLibSubject.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts"><nobr><a href="#LassoLibStatusResponse.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#LassoLibStatusResponse.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#LassoLibStatusResponse.object-hierarchy" class="shortcut">Object Hierarchy</a></nobr></td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="LassoLibStatusResponse"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="LassoLibStatusResponse.top_of_page"></a>LassoLibStatusResponse</span></h2>
+<p>LassoLibStatusResponse — &lt;lib:StatusResponse&gt;</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="LassoLibStatusResponse.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+
+#include &lt;lasso/lasso.h&gt;
+
+                    <a href="LassoLibStatusResponse.html#LassoLibStatusResponse-struct" title="LassoLibStatusResponse">LassoLibStatusResponse</a>;
+<a href="LassoNode.html" title="LassoNode">LassoNode</a>*          <a href="LassoLibStatusResponse.html#lasso-lib-status-response-new" title="lasso_lib_status_response_new ()">lasso_lib_status_response_new</a>       (void);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="LassoLibStatusResponse.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <GTKDOCLINK HREF="GObject">GObject</GTKDOCLINK>
+   +----<a href="LassoNode.html" title="LassoNode">LassoNode</a>
+         +----<a href="LassoSamlpResponseAbstract.html" title="LassoSamlpResponseAbstract">LassoSamlpResponseAbstract</a>
+               +----LassoLibStatusResponse
+                     +----<a href="LassoLibLogoutResponse.html" title="LassoLibLogoutResponse">LassoLibLogoutResponse</a>
+                     +----<a href="LassoLibRegisterNameIdentifierResponse.html" title="LassoLibRegisterNameIdentifierResponse">LassoLibRegisterNameIdentifierResponse</a>
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="LassoLibStatusResponse.description"></a><h2>Description</h2>
+<p>
+</p>
+<div class="figure">
+<a name="id2613556"></a><p class="title"><b>Figure 19. Schema fragment for lib:StatusResponse</b></p>
+<div class="figure-contents"><pre class="programlisting">
+&lt;xs:complexType name="StatusResponseType"&gt;
+  &lt;xs:complexContent&gt;
+    &lt;xs:extension base="samlp:ResponseAbstractType"&gt;
+      &lt;xs:sequence&gt;
+        &lt;xs:element ref="Extension" minOccurs="0" maxOccurs="unbounded"/&gt;
+        &lt;xs:element ref="ProviderID"/&gt;
+        &lt;xs:element ref="samlp:Status"/&gt;
+        &lt;xs:element ref="RelayState" minOccurs="0"/&gt;
+      &lt;/xs:sequence&gt;
+    &lt;/xs:extension&gt;
+  &lt;/xs:complexContent&gt;
+&lt;/xs:complexType&gt;
+
+&lt;xs:element name="ProviderID" type="md:entityIDType"/&gt;
+&lt;xs:element name="RelayState" type="xs:string"/&gt;
+</pre></div>
+</div>
+<p><br class="figure-break"></p>
+<p>
+
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="LassoLibStatusResponse.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="LassoLibStatusResponse-struct"></a><h3>LassoLibStatusResponse</h3>
+<pre class="programlisting">typedef struct {
+	/* &lt;xs:element ref="Extension" minOccurs="0" maxOccurs="unbounded"/&gt; */
+	GList *Extension; /* of xmlNode* */
+	/* &lt;xs:element ref="ProviderID"/&gt; */
+	char *ProviderID;
+	/* &lt;xs:element ref="samlp:Status"/&gt; */
+	LassoSamlpStatus *Status;
+	/* &lt;xs:element ref="RelayState" minOccurs="0"/&gt; */
+	char *RelayState;
+} LassoLibStatusResponse;
+</pre>
+<p>
+
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="lasso-lib-status-response-new"></a><h3>lasso_lib_status_response_new ()</h3>
+<pre class="programlisting"><a href="LassoNode.html" title="LassoNode">LassoNode</a>*          lasso_lib_status_response_new       (void);</pre>
+<p>
+Creates a new <a href="LassoLibStatusResponse.html" title="LassoLibStatusResponse"><span class="type">LassoLibStatusResponse</span></a> object.</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td>
+<td> a newly created <a href="LassoLibStatusResponse.html" title="LassoLibStatusResponse"><span class="type">LassoLibStatusResponse</span></a> object
+</td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.10</div>
+</body>
+</html>

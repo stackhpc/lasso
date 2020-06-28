@@ -1,4 +1,4 @@
-/* $Id: saml2_evidence.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: saml2_evidence.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,8 +24,12 @@
 
 #include "saml2_evidence.h"
 
-/*
- * Schema fragment (saml-schema-assertion-2.0.xsd):
+/**
+ * SECTION:saml2_evidence
+ * @short_description: &lt;saml2:Evidence&gt;
+ *
+ * <figure><title>Schema fragment for saml2:Evidence</title>
+ * <programlisting><![CDATA[
  *
  * <complexType name="EvidenceType">
  *   <choice maxOccurs="unbounded">
@@ -35,6 +39,8 @@
  *     <element ref="saml:EncryptedAssertion"/>
  *   </choice>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

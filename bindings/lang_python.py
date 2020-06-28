@@ -32,7 +32,7 @@ class PythonBinding:
 
     def is_pygobject(self, t):
         return t not in ['char*', 'const char*', 'gchar*', 'const gchar*',
-                'GList*', 'GHashTable*',
+                'const GList*', 'GList*', 'GHashTable*',
                 'int', 'gint', 'gboolean', 'const gboolean', 'xmlNode*'] + self.binding_data.enums
 
     def generate(self):
@@ -424,7 +424,7 @@ if WSF_SUPPORT:
                         py_args.append('%s = None' % arg_name)
                 else:
                     py_args.append(arg_name)
-                if arg_type in ('char*', 'const char*', 'gchar*', 'const gchar*') or \
+                if arg_type in ('char*', 'const char*', 'gchar*', 'const gchar*', 'xmlNode*') or \
                         arg_type in ['int', 'gint', 'gboolean', 'const gboolean'] or \
                         arg_type in self.binding_data.enums:
                     c_args.append(arg_name)
@@ -736,7 +736,7 @@ register_constants(PyObject *d)
             print >> fd, '    } else {'
             print >> fd, '        return_pyvalue = noneRef();'
             print >> fd, '    }'
-        elif vtype in ('GList*',):
+        elif vtype in ('const GList*', 'GList*',):
             elem_type = options.get('elem_type')
             if elem_type == 'char*':
                 print >> fd, '    return_pyvalue = get_list_of_strings(return_value);'
@@ -793,14 +793,25 @@ register_constants(PyObject *d)
                 parse_tuple_args.append('&%s' % arg_name)
                 print >> fd, '    %s %s = NULL;' % (arg[0], arg[1])
             elif arg_type in ['int', 'gint', 'gboolean', 'const gboolean'] + self.binding_data.enums:
+                if arg_options.get('optional'):
+                    if not '|' in parse_tuple_format:
+                        parse_tuple_format.append('|')
                 parse_tuple_format.append('i')
                 parse_tuple_args.append('&%s' % arg_name)
-                print >> fd, '    %s %s;' % (arg[0], arg[1])
-            elif arg_type == 'GList*':
-                print >> fd, '    %s %s = NULL;' % (arg[0], arg[1])
-                print >> fd, '    PyObject *cvt_%s = NULL;' % arg_name
+                if arg_options.get('default'):
+                    defval = arg_options.get('default')
+                    if defval.startswith('b:'):
+                        defval = defval[2:].upper()
+                    else:
+                        defval = defval[2:]
+                    print >> fd, '    %s %s = %s;' % (arg[0], arg[1], defval)
+                else:
+                    print >> fd, '    %s %s;' % (arg[0], arg[1])
+            elif arg_type in ('GList*', 'xmlNode*'):
                 parse_tuple_format.append('O')
                 parse_tuple_args.append('&cvt_%s' % arg_name)
+                print >> fd, '    %s %s = NULL;' % (arg[0], arg[1])
+                print >> fd, '    PyObject *cvt_%s = NULL;' % arg_name
             else:
                 parse_tuple_format.append('O')
                 parse_tuple_args.append('&cvt_%s' % arg_name)
@@ -830,6 +841,8 @@ register_constants(PyObject *d)
                     print >> fd, '    set_list_of_pygobject(&%s, cvt_%s);' % (arg[1], arg[1])
                 else:
                     print >> sys.stderr, 'E: unqualified GList argument in', name
+            elif arg[0] == 'xmlNode*':
+                print >> fd, '    %s = get_xml_node_from_pystring(cvt_%s);' % (arg[1], arg[1])
             elif f == 'O':
                 print >> fd, '    %s = (%s)cvt_%s->obj;' % (arg[1], arg[0], arg[1])
 

@@ -1,4 +1,4 @@
-/* $Id: logout.c 3237 2007-05-30 17:17:45Z dlaniel $
+/* $Id: logout.c 3725 2008-05-21 17:28:44Z dlaniel $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -294,6 +294,7 @@ lasso_saml20_logout_process_request_msg(LassoLogout *logout, char *request_msg)
 				encrypted_id, encryption_private_key));
 			LASSO_SAMLP2_LOGOUT_REQUEST(profile->request)->NameID = LASSO_SAML2_NAME_ID(
 				profile->nameIdentifier);
+			g_object_unref(LASSO_SAMLP2_LOGOUT_REQUEST(profile->request)->EncryptedID);
 			LASSO_SAMLP2_LOGOUT_REQUEST(profile->request)->EncryptedID = NULL;
 
 		}

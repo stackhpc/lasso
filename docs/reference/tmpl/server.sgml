@@ -2,12 +2,11 @@
 LassoServer
 
 <!-- ##### SECTION Short_Description ##### -->
-Representation of the current server
+
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-It holds the data about a provider, other providers it knows, which
-certificates to use, etc.
+
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

@@ -1,4 +1,4 @@
-/* $Id: lib_authn_request.h 3437 2007-11-03 21:23:50Z fpeters $ 
+/* $Id: lib_authn_request.h 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -48,6 +48,30 @@ extern "C" {
 typedef struct _LassoLibAuthnRequest LassoLibAuthnRequest;
 typedef struct _LassoLibAuthnRequestClass LassoLibAuthnRequestClass;
 
+/**
+ * LassoLibAuthnRequest:
+ *
+ * @ProviderID isthe service provider identifier, this field will often be
+ * filled with lasso_login_init_authn_request()
+ *
+ * @nameIDPolicy tells the identity provider about the policy to use for
+ * federation; it must be one of #LASSO_LIB_NAMEID_POLICY_TYPE_NONE,
+ * #LASSO_LIB_NAMEID_POLICY_TYPE_ONE_TIME,
+ * #LASSO_LIB_NAMEID_POLICY_TYPE_FEDERATED or
+ * #LASSO_LIB_NAMEID_POLICY_TYPE_ANY.
+ *
+ * @IsPassive; if %TRUE (default) it tells the identity provider not to
+ * interact with the user.
+ *
+ * @ForceAuthn; only used if @IsPassive is %FALSE, it tells the identity
+ * provider to force authentication of the user even when already
+ * authenticated.
+ *
+ * @ProtocolProfile is the Single Sign-On and Federation profile to adopt;
+ * either #LASSO_LIB_PROTOCOL_PROFILE_BRWS_ART (which is the default value)
+ * or #LASSO_LIB_PROTOCOL_PROFILE_BRWS_POST.
+ *
+ */
 struct _LassoLibAuthnRequest {
 	LassoSamlpRequestAbstract parent;
 

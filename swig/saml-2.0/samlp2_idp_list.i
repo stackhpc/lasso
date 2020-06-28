@@ -1,4 +1,4 @@
-/* $Id: samlp2_idp_list.i,v 1.0 2005/10/14 15:17:55 fpeters Exp $ 
+/* $Id: samlp2_idp_list.i 3378 2007-08-13 10:43:37Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *

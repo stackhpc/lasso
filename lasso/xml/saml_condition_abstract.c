@@ -1,4 +1,4 @@
-/* $Id: saml_condition_abstract.c 3237 2007-05-30 17:17:45Z dlaniel $
+/* $Id: saml_condition_abstract.c 3704 2008-05-15 21:17:44Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,12 +24,17 @@
 
 #include <lasso/xml/saml_condition_abstract.h>
 
-/*
-The schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
-
-<element name="Condition" type="saml:ConditionAbstractType"/>
-<complexType name="ConditionAbstractType" abstract="true"/>
-*/
+/**
+ * SECTION:saml_condition_abstract
+ * @short_description: &lt;:saml:ConditionAbstract&gt;
+ *
+ * <figure><title>Schema fragment for saml:ConditionAbstract</title>
+ * <programlisting><![CDATA[
+ * <element name="Condition" type="saml:ConditionAbstractType"/>
+ * <complexType name="ConditionAbstractType" abstract="true"/>
+ * ]]></programlisting>
+ * </figure>
+ */
 
 /*****************************************************************************/
 /* private methods                                                           */

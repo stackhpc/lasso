@@ -1,3 +1,4 @@
+MAINTAINERCLEANFILES = Makefile.in
 if WITH_TESTS
 
 TESTS = tests
@@ -5,8 +6,8 @@ noinst_PROGRAMS = tests perfs
 
 INCLUDES = \
 	-DPACKAGE=\"@PACKAGE@\" \
+	-I$(top_builddir) \
 	-I$(top_srcdir) \
-	-I$(top_srcdir)/lasso \
 	-DTESTSDATADIR=\"$(srcdir)/data/\" \
 	-DTESTSMETADATADIR=\"$(srcdir)/metadata/\" \
 	$(LASSO_CFLAGS) \

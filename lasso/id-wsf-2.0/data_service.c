@@ -51,6 +51,8 @@ extern GHashTable *idwsf2_dst_services_by_prefix; /* cf xml/xml.c */
 
 static void lasso_register_idwsf2_xpath_namespaces(xmlXPathContext *xpathCtx);
 
+static GList* duplicate_glist_of_xmlnodes(GList*);
+
 /*****************************************************************************/
 /* public methods                                                            */
 /*****************************************************************************/
@@ -194,6 +196,7 @@ lasso_idwsf2_data_service_parse_query_items(LassoIdWsf2DataService *service)
 	LassoIdWsf2DstRefItemData *data_item;
 	xmlNode *node;
 	GList *iter;
+	int i;
 	/* Default is Failed, will be OK or Partial when some items are successfully parsed */
 	char *status_code = LASSO_DST_STATUS_CODE_FAILED;
 
@@ -235,12 +238,19 @@ lasso_idwsf2_data_service_parse_query_items(LassoIdWsf2DataService *service)
 		xpathObj = xmlXPathEvalExpression((xmlChar*)item_result_query->Select, xpathCtx);
 		if (xpathObj && xpathObj->nodesetval && xpathObj->nodesetval->nodeNr) {
 			/* XXX: assuming there is only one matching node */
-			node = xpathObj->nodesetval->nodeTab[0];
 			data = lasso_idwsf2_dstref_data_new();
 			data_item = LASSO_IDWSF2_DSTREF_ITEM_DATA(data);
-			LASSO_IDWSF2_DSTREF_APP_DATA(data_item)->any = g_list_append(
-					LASSO_IDWSF2_DSTREF_APP_DATA(data_item)->any,
-					xmlCopyNode(node, 1));
+			for (i = 0; i < xpathObj->nodesetval->nodeNr; i++) {
+				node = xpathObj->nodesetval->nodeTab[i];
+				if (node->type == XML_ATTRIBUTE_NODE) {
+					LASSO_IDWSF2_DSTREF_APP_DATA(data_item)->any = g_list_append(
+						LASSO_IDWSF2_DSTREF_APP_DATA(data_item)->any,
+						xmlNewText(xmlGetProp(node->parent, node->name)));
+				} else {
+					LASSO_IDWSF2_DSTREF_APP_DATA(data_item)->any = g_list_append(
+						LASSO_IDWSF2_DSTREF_APP_DATA(data_item)->any, xmlCopyNode(node, 1));
+				}
+			}
 		} else if (xpathObj && xpathObj->type == XPATH_STRING) {
 			data = lasso_idwsf2_dstref_data_new();
 			data_item = LASSO_IDWSF2_DSTREF_ITEM_DATA(data);
@@ -368,6 +378,52 @@ lasso_idwsf2_data_service_process_query_response_msg(LassoIdWsf2DataService *ser
 	return 0;
 }
 
+
+GList*
+lasso_idwsf2_data_service_get_attribute_nodes(LassoIdWsf2DataService *service, const gchar *item_id)
+{
+	LassoIdWsf2Profile *profile = LASSO_IDWSF2_PROFILE(service);
+	LassoIdWsf2DstRefQueryResponse *response;
+	LassoIdWsf2DstRefAppData *data = NULL;
+	GList *iter;
+
+	g_return_val_if_fail(LASSO_IS_IDWSF2_DATA_SERVICE(service), NULL);
+
+	g_return_val_if_fail(LASSO_IS_IDWSF2_DSTREF_QUERY_RESPONSE(
+				LASSO_PROFILE(profile)->response), NULL);
+
+	response = LASSO_IDWSF2_DSTREF_QUERY_RESPONSE(LASSO_PROFILE(profile)->response);
+
+	/* If no item_id is given, return the first item */
+	if (item_id == NULL && response->Data != NULL && response->Data->data != NULL) {
+		data = LASSO_IDWSF2_DSTREF_APP_DATA(response->Data->data);
+		if (data->any != NULL && data->any->data != NULL) {
+			return duplicate_glist_of_xmlnodes(data->any);
+		}
+	}
+	if (item_id == NULL) {
+		return NULL;
+	}
+
+	/* Find the item which has the given item_id */
+	for (iter = g_list_first(response->Data); iter != NULL; iter = g_list_next(iter)) {
+		if (! LASSO_IS_IDWSF2_DSTREF_ITEM_DATA(iter->data)) {
+			continue;
+		}
+		if (strcmp(LASSO_IDWSF2_DSTREF_ITEM_DATA(iter->data)->itemIDRef, item_id) == 0) {
+			data = LASSO_IDWSF2_DSTREF_APP_DATA(iter->data);
+			break;
+		}
+	}
+
+	if (data == NULL || data->any == NULL || data->any->data == NULL) {
+		/* Item not found */
+		return NULL;
+	}
+
+	return duplicate_glist_of_xmlnodes(data->any);
+}
+
 xmlNode*
 lasso_idwsf2_data_service_get_attribute_node(LassoIdWsf2DataService *service, const gchar *item_id)
 {
@@ -412,6 +468,30 @@ lasso_idwsf2_data_service_get_attribute_node(LassoIdWsf2DataService *service, co
 
 	/* XXX: there may be more than one xmlnode */
 	return xmlCopyNode(data->any->data, 1);
+}
+
+GList*
+lasso_idwsf2_data_service_get_attribute_strings(LassoIdWsf2DataService *service,
+	const gchar *item_id)
+{
+	GList *nodes = NULL;
+	xmlChar *xml_content = NULL;
+	GList *contents = NULL;
+	GList *iter;
+
+	g_return_val_if_fail(LASSO_IS_IDWSF2_DATA_SERVICE(service), NULL);
+
+	nodes = lasso_idwsf2_data_service_get_attribute_nodes(service, item_id);
+	for (iter = nodes; iter; iter = g_list_next(iter)) {
+		xml_content = xmlNodeGetContent(iter->data);
+		contents = g_list_append(contents, g_strdup((gchar*)xml_content));
+		xmlFree(xml_content);
+		xmlFreeNode(iter->data);
+	}
+
+	g_list_free(nodes);
+
+	return contents;
 }
 
 gchar*
@@ -792,6 +872,18 @@ lasso_register_idwsf2_xpath_namespaces(xmlXPathContext *xpathCtx)
 			(GHFunc)register_xpath_namespace, xpathCtx);
 }
 
+static GList*
+duplicate_glist_of_xmlnodes(GList *list)
+{
+	GList *r = NULL;
+	GList *t;
+
+	for (t = list; t; t = g_list_next(t)) {
+		r = g_list_append(r, xmlCopyNode(t->data, 1));
+	}
+
+	return r;
+}
 
 
 /*****************************************************************************/
@@ -807,23 +899,20 @@ dispose(GObject *object)
 		return;
 	service->private_data->dispose_has_run = TRUE;
 
-	if (service->type != NULL) {
-		g_free(service->type);
-		service->type = NULL;
-	}
-	if (service->redirect_url != NULL) {
-		g_free(service->redirect_url);
-		service->redirect_url = NULL;
-	}
+	g_free(service->type);
+	service->type = NULL;
+
+	g_free(service->redirect_url);
+	service->redirect_url = NULL;
+
 	if (service->query_items != NULL) {
+		g_list_foreach(service->query_items, (GFunc)g_free, NULL);
 		g_list_free(service->query_items);
 		service->query_items = NULL;
 	}
 
-	if (service->private_data->epr != NULL) {
-		lasso_node_destroy(LASSO_NODE(service->private_data->epr));
-		service->private_data->epr = NULL;
-	}
+	lasso_node_destroy(LASSO_NODE(service->private_data->epr));
+	service->private_data->epr = NULL;
 
 	G_OBJECT_CLASS(parent_class)->dispose(object);
 }
@@ -851,6 +940,7 @@ instance_init(LassoIdWsf2DataService *service)
 	service->query_items = NULL;
 	service->private_data = g_new0(LassoIdWsf2DataServicePrivate, 1);
 	service->private_data->epr = NULL;
+	service->private_data->credentials = NULL;
 }
 
 static void

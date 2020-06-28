@@ -1,4 +1,4 @@
-/* $Id: name_identifier_mapping.c 3449 2007-11-22 14:46:15Z fpeters $
+/* $Id: name_identifier_mapping.c 3704 2008-05-15 21:17:44Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -21,6 +21,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
+/**
+ * SECTION:name_identifier_mapping
+ * @short_description: Liberty Enabled Client and Proxy Profile (ID-FF)
+ *
+ **/
 
 #include <lasso/id-ff/name_identifier_mapping.h>
 

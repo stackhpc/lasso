@@ -1,4 +1,4 @@
-/* $Id: samlp2_request_abstract.c 3476 2008-01-23 12:37:12Z fpeters $ 
+/* $Id: samlp2_request_abstract.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -28,8 +28,12 @@
 
 #include "samlp2_request_abstract.h"
 
-/*
- * Schema fragment (saml-schema-protocol-2.0.xsd):
+/**
+ * SECTION:samlp2_request_abstract
+ * @short_description: &lt;samlp2:RequestAbstract&gt;
+ *
+ * <figure><title>Schema fragment for samlp2:RequestAbstract</title>
+ * <programlisting><![CDATA[
  *
  * <complexType name="RequestAbstractType" abstract="true">
  *   <sequence>
@@ -43,6 +47,8 @@
  *   <attribute name="Destination" type="anyURI" use="optional"/>
  *   <attribute name="Consent" type="anyURI" use="optional"/>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

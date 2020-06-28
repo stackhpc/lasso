@@ -1,0 +1,515 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>LassoLogout</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.71.0">
+<link rel="start" href="index.html" title="Lasso Reference Manual">
+<link rel="up" href="idff.html" title="Identity Federation Framework">
+<link rel="prev" href="LassoLogin.html" title="LassoLogin">
+<link rel="next" href="LassoDefederation.html" title="LassoDefederation">
+<meta name="generator" content="GTK-Doc V1.10 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
+<link rel="chapter" href="architecture.html" title="Lasso Architecture">
+<link rel="chapter" href="idff.html" title="Identity Federation Framework">
+<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework">
+<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
+<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
+<link rel="chapter" href="misc.html" title="Misc">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="LassoLogin.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="idff.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Lasso Reference Manual</th>
+<td><a accesskey="n" href="LassoDefederation.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts"><nobr><a href="#LassoLogout.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#LassoLogout.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#LassoLogout.object-hierarchy" class="shortcut">Object Hierarchy</a></nobr></td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="LassoLogout"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="LassoLogout.top_of_page"></a>LassoLogout</span></h2>
+<p>LassoLogout — Single Logout Profile</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="LassoLogout.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+
+#include &lt;lasso/lasso.h&gt;
+
+                    <a href="LassoLogout.html#LassoLogout-struct" title="LassoLogout">LassoLogout</a>;
+<a href="LassoLogout.html" title="LassoLogout">LassoLogout</a>*        <a href="LassoLogout.html#lasso-logout-new" title="lasso_logout_new ()">lasso_logout_new</a>                    (<a href="LassoServer.html" title="LassoServer">LassoServer</a> *server);
+<a href="LassoLogout.html" title="LassoLogout">LassoLogout</a>*        <a href="LassoLogout.html#lasso-logout-new-from-dump" title="lasso_logout_new_from_dump ()">lasso_logout_new_from_dump</a>          (<a href="LassoServer.html" title="LassoServer">LassoServer</a> *server,
+                                                         const <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *dump);
+<GTKDOCLINK HREF="gint">gint</GTKDOCLINK>                <a href="LassoLogout.html#lasso-logout-build-request-msg" title="lasso_logout_build_request_msg ()">lasso_logout_build_request_msg</a>      (<a href="LassoLogout.html" title="LassoLogout">LassoLogout</a> *logout);
+<GTKDOCLINK HREF="gint">gint</GTKDOCLINK>                <a href="LassoLogout.html#lasso-logout-build-response-msg" title="lasso_logout_build_response_msg ()">lasso_logout_build_response_msg</a>     (<a href="LassoLogout.html" title="LassoLogout">LassoLogout</a> *logout);
+<GTKDOCLINK HREF="void">void</GTKDOCLINK>                <a href="LassoLogout.html#lasso-logout-destroy" title="lasso_logout_destroy ()">lasso_logout_destroy</a>                (<a href="LassoLogout.html" title="LassoLogout">LassoLogout</a> *logout);
+<GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK>*              <a href="LassoLogout.html#lasso-logout-dump" title="lasso_logout_dump ()">lasso_logout_dump</a>                   (<a href="LassoLogout.html" title="LassoLogout">LassoLogout</a> *logout);
+<GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK>*              <a href="LassoLogout.html#lasso-logout-get-next-providerID" title="lasso_logout_get_next_providerID ()">lasso_logout_get_next_providerID</a>    (<a href="LassoLogout.html" title="LassoLogout">LassoLogout</a> *logout);
+<GTKDOCLINK HREF="gint">gint</GTKDOCLINK>                <a href="LassoLogout.html#lasso-logout-init-request" title="lasso_logout_init_request ()">lasso_logout_init_request</a>           (<a href="LassoLogout.html" title="LassoLogout">LassoLogout</a> *logout,
+                                                         <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *remote_providerID,
+                                                         <a href="LassoProvider.html#LassoHttpMethod" title="enum LassoHttpMethod">LassoHttpMethod</a> request_method);
+<GTKDOCLINK HREF="gint">gint</GTKDOCLINK>                <a href="LassoLogout.html#lasso-logout-process-request-msg" title="lasso_logout_process_request_msg ()">lasso_logout_process_request_msg</a>    (<a href="LassoLogout.html" title="LassoLogout">LassoLogout</a> *logout,
+                                                         <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *request_msg);
+<GTKDOCLINK HREF="gint">gint</GTKDOCLINK>                <a href="LassoLogout.html#lasso-logout-process-response-msg" title="lasso_logout_process_response_msg ()">lasso_logout_process_response_msg</a>   (<a href="LassoLogout.html" title="LassoLogout">LassoLogout</a> *logout,
+                                                         <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *response_msg);
+<GTKDOCLINK HREF="gint">gint</GTKDOCLINK>                <a href="LassoLogout.html#lasso-logout-reset-providerID-index" title="lasso_logout_reset_providerID_index ()">lasso_logout_reset_providerID_index</a> (<a href="LassoLogout.html" title="LassoLogout">LassoLogout</a> *logout);
+<GTKDOCLINK HREF="gint">gint</GTKDOCLINK>                <a href="LassoLogout.html#lasso-logout-validate-request" title="lasso_logout_validate_request ()">lasso_logout_validate_request</a>       (<a href="LassoLogout.html" title="LassoLogout">LassoLogout</a> *logout);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="LassoLogout.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <GTKDOCLINK HREF="GObject">GObject</GTKDOCLINK>
+   +----<a href="LassoNode.html" title="LassoNode">LassoNode</a>
+         +----<a href="LassoProfile.html" title="LassoProfile">LassoProfile</a>
+               +----LassoLogout
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="LassoLogout.description"></a><h2>Description</h2>
+<p>
+</p>
+<p>
+
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="LassoLogout.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="LassoLogout-struct"></a><h3>LassoLogout</h3>
+<pre class="programlisting">typedef struct _LassoLogout LassoLogout;</pre>
+<p>
+
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="lasso-logout-new"></a><h3>lasso_logout_new ()</h3>
+<pre class="programlisting"><a href="LassoLogout.html" title="LassoLogout">LassoLogout</a>*        lasso_logout_new                    (<a href="LassoServer.html" title="LassoServer">LassoServer</a> *server);</pre>
+<p>
+Creates a new <a href="LassoLogout.html" title="LassoLogout"><span class="type">LassoLogout</span></a>.</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><span class="term"><em class="parameter"><code>server</code></em> :</span></td>
+<td> the <a href="LassoServer.html" title="LassoServer"><span class="type">LassoServer</span></a>
+</td>
+</tr>
+<tr>
+<td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td>
+<td> a newly created <a href="LassoLogout.html" title="LassoLogout"><span class="type">LassoLogout</span></a> object; or NULL if an error
+    occured
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="lasso-logout-new-from-dump"></a><h3>lasso_logout_new_from_dump ()</h3>
+<pre class="programlisting"><a href="LassoLogout.html" title="LassoLogout">LassoLogout</a>*        lasso_logout_new_from_dump          (<a href="LassoServer.html" title="LassoServer">LassoServer</a> *server,
+                                                         const <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *dump);</pre>
+<p>
+Restores the <em class="parameter"><code>dump</code></em> to a new <a href="LassoLogout.html" title="LassoLogout"><span class="type">LassoLogout</span></a>.</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><span class="term"><em class="parameter"><code>server</code></em> :</span></td>
+<td> the <a href="LassoServer.html" title="LassoServer"><span class="type">LassoServer</span></a>
+</td>
+</tr>
+<tr>
+<td><span class="term"><em class="parameter"><code>dump</code></em> :</span></td>
+<td> XML logout dump
+</td>
+</tr>
+<tr>
+<td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td>
+<td> a newly created <a href="LassoLogout.html" title="LassoLogout"><span class="type">LassoLogout</span></a>; or NULL if an error occured
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="lasso-logout-build-request-msg"></a><h3>lasso_logout_build_request_msg ()</h3>
+<pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>                lasso_logout_build_request_msg      (<a href="LassoLogout.html" title="LassoLogout">LassoLogout</a> *logout);</pre>
+<p>
+Builds the logout request message.
+</p>
+<p>
+It gets the HTTP method retrieved to send the request and:
+</p>
+<div class="itemizedlist"><ul type="disc">
+<li><p>
+  if it is a SOAP method, then it builds the logout request SOAP message,
+  sets the msg_body attribute, gets the single logout service url and sets
+  <em class="parameter"><code>msg_url</code></em> in the logout object.
+</p></li>
+<li><p>
+  if it is a HTTP-Redirect method, then it builds the logout request QUERY
+  message, builds the logout request url, sets <em class="parameter"><code>msg_url</code></em> in the logout
+  request url, sets <em class="parameter"><code>msg_body</code></em> to NULL.
+</p></li>
+</ul></div>
+<p>
+</p>
+<p>
+If private key and certificate are set in server object it will also signs
+the message (either with X509 if SOAP or with a simple signature for query
+strings).</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><span class="term"><em class="parameter"><code>logout</code></em> :</span></td>
+<td> a <a href="LassoLogout.html" title="LassoLogout"><span class="type">LassoLogout</span></a>
+</td>
+</tr>
+<tr>
+<td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="lasso-logout-build-response-msg"></a><h3>lasso_logout_build_response_msg ()</h3>
+<pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>                lasso_logout_build_response_msg     (<a href="LassoLogout.html" title="LassoLogout">LassoLogout</a> *logout);</pre>
+<p>
+Builds the logout response message.
+</p>
+<p>
+It gets the request message method and:
+</p>
+<div class="itemizedlist"><ul type="disc">
+<li><p>
+   if it is a SOAP method, then it builds the logout response SOAP message,
+   sets the msg_body attribute, gets the single logout service return url
+   and sets <em class="parameter"><code>msg_url</code></em> in the logout object.
+</p></li>
+<li><p>
+   if it is a HTTP-Redirect method, then it builds the logout response QUERY message,
+   builds the logout response url, sets <em class="parameter"><code>msg_url</code></em> with the logout response url,
+   sets <em class="parameter"><code>msg_body</code></em> to NULL
+</p></li>
+</ul></div>
+<p>
+</p>
+<p>
+If private key and certificate are set in server object it will also signs
+the message (either with X509 if SOAP or with a simple signature for query
+strings).</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><span class="term"><em class="parameter"><code>logout</code></em> :</span></td>
+<td> a <a href="LassoLogout.html" title="LassoLogout"><span class="type">LassoLogout</span></a>
+</td>
+</tr>
+<tr>
+<td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="lasso-logout-destroy"></a><h3>lasso_logout_destroy ()</h3>
+<pre class="programlisting"><GTKDOCLINK HREF="void">void</GTKDOCLINK>                lasso_logout_destroy                (<a href="LassoLogout.html" title="LassoLogout">LassoLogout</a> *logout);</pre>
+<p>
+Destroys a logout object.</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><span class="term"><em class="parameter"><code>logout</code></em> :</span></td>
+<td> a <a href="LassoLogout.html" title="LassoLogout"><span class="type">LassoLogout</span></a>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="lasso-logout-dump"></a><h3>lasso_logout_dump ()</h3>
+<pre class="programlisting"><GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK>*              lasso_logout_dump                   (<a href="LassoLogout.html" title="LassoLogout">LassoLogout</a> *logout);</pre>
+<p>
+Dumps <em class="parameter"><code>logout</code></em> content to an XML string.</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><span class="term"><em class="parameter"><code>logout</code></em> :</span></td>
+<td> a <a href="LassoLogout.html" title="LassoLogout"><span class="type">LassoLogout</span></a>
+</td>
+</tr>
+<tr>
+<td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td>
+<td> the dump string.  It must be freed by the caller.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="lasso-logout-get-next-providerID"></a><h3>lasso_logout_get_next_providerID ()</h3>
+<pre class="programlisting"><GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK>*              lasso_logout_get_next_providerID    (<a href="LassoLogout.html" title="LassoLogout">LassoLogout</a> *logout);</pre>
+<p>
+Returns the provider id from providerID_index in list of providerIDs in
+principal session with the exception of initial service provider ID.</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><span class="term"><em class="parameter"><code>logout</code></em> :</span></td>
+<td> a <a href="LassoLogout.html" title="LassoLogout"><span class="type">LassoLogout</span></a>
+</td>
+</tr>
+<tr>
+<td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td>
+<td> a newly allocated string or NULL
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="lasso-logout-init-request"></a><h3>lasso_logout_init_request ()</h3>
+<pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>                lasso_logout_init_request           (<a href="LassoLogout.html" title="LassoLogout">LassoLogout</a> *logout,
+                                                         <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *remote_providerID,
+                                                         <a href="LassoProvider.html#LassoHttpMethod" title="enum LassoHttpMethod">LassoHttpMethod</a> request_method);</pre>
+<p>
+Initializes a new SLO request.</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><span class="term"><em class="parameter"><code>logout</code></em> :</span></td>
+<td> a <a href="LassoLogout.html" title="LassoLogout"><span class="type">LassoLogout</span></a>
+</td>
+</tr>
+<tr>
+<td><span class="term"><em class="parameter"><code>remote_providerID</code></em> :</span></td>
+<td> the providerID of the identity provider.  If NULL the
+    first identity provider is used.
+</td>
+</tr>
+<tr>
+<td><span class="term"><em class="parameter"><code>request_method</code></em> :</span></td>
+<td> if set, then it get the protocol profile in metadata
+    corresponding of this HTTP request method.
+</td>
+</tr>
+<tr>
+<td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="lasso-logout-process-request-msg"></a><h3>lasso_logout_process_request_msg ()</h3>
+<pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>                lasso_logout_process_request_msg    (<a href="LassoLogout.html" title="LassoLogout">LassoLogout</a> *logout,
+                                                         <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *request_msg);</pre>
+<p>
+Processes a SLO LogoutRequest message.  Rebuilds a request object from the
+message and optionally verifies its signature.</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><span class="term"><em class="parameter"><code>logout</code></em> :</span></td>
+<td> a <a href="LassoLogout.html" title="LassoLogout"><span class="type">LassoLogout</span></a>
+</td>
+</tr>
+<tr>
+<td><span class="term"><em class="parameter"><code>request_msg</code></em> :</span></td>
+<td> the logout request message
+</td>
+</tr>
+<tr>
+<td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="lasso-logout-process-response-msg"></a><h3>lasso_logout_process_response_msg ()</h3>
+<pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>                lasso_logout_process_response_msg   (<a href="LassoLogout.html" title="LassoLogout">LassoLogout</a> *logout,
+                                                         <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *response_msg);</pre>
+<p>
+Parses the response message and builds the response object.
+</p>
+<p>
+Checks the status code value and if it is not success, then if the local
+provider is a Service Provider and response method is SOAP, then builds a
+new logout request message for HTTP Redirect / GET method and returns the
+error code LASSO_LOGOUT_ERROR_UNSUPPORTED_PROFILE.
+</p>
+<p>
+If it is a SOAP method or, IDP type and http method is Redirect/GET,
+then removes assertion.
+</p>
+<p>
+If local server is an Identity Provider and if there is no more assertion
+(Identity Provider has logged out every Service Providers), then restores
+the initial response.</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><span class="term"><em class="parameter"><code>logout</code></em> :</span></td>
+<td> a <a href="LassoLogout.html" title="LassoLogout"><span class="type">LassoLogout</span></a>
+</td>
+</tr>
+<tr>
+<td><span class="term"><em class="parameter"><code>response_msg</code></em> :</span></td>
+<td> the response message
+</td>
+</tr>
+<tr>
+<td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="lasso-logout-reset-providerID-index"></a><h3>lasso_logout_reset_providerID_index ()</h3>
+<pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>                lasso_logout_reset_providerID_index (<a href="LassoLogout.html" title="LassoLogout">LassoLogout</a> *logout);</pre>
+<p>
+Reset the providerID_index attribute (set to 0).</p>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><span class="term"><em class="parameter"><code>logout</code></em> :</span></td>
+<td> a <a href="LassoLogout.html" title="LassoLogout"><span class="type">LassoLogout</span></a>
+</td>
+</tr>
+<tr>
+<td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="lasso-logout-validate-request"></a><h3>lasso_logout_validate_request ()</h3>
+<pre class="programlisting"><GTKDOCLINK HREF="gint">gint</GTKDOCLINK>                lasso_logout_validate_request       (<a href="LassoLogout.html" title="LassoLogout">LassoLogout</a> *logout);</pre>
+<p>
+</p>
+<div class="itemizedlist"><ul type="disc">
+<li><p>
+  Sets the remote provider id
+</p></li>
+<li><p>
+  Sets a logout response with status code value to success.
+</p></li>
+<li><p>
+  Verifies federation and authentication.
+</p></li>
+<li><p>
+  If the request http method is a SOAP method, then verifies every other
+  Service Providers supports SOAP method : if not, then sets status code
+  value to UnsupportedProfile and returns a code error with
+  LASSO_LOGOUT_ERROR_UNSUPPORTED_PROFILE.
+</p></li>
+<li><p>
+  Every tests are ok, then removes assertion.
+</p></li>
+<li><p>
+  If local server is an Identity Provider and if there is more than one
+  Service Provider (except the initial Service Provider), then saves the
+  initial request, response and remote provider id.
+</p></li>
+</ul></div>
+<p>
+
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><span class="term"><em class="parameter"><code>logout</code></em> :</span></td>
+<td> a <a href="LassoLogout.html" title="LassoLogout"><span class="type">LassoLogout</span></a>
+</td>
+</tr>
+<tr>
+<td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td>
+<td> 0 on success; or a negative value otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.10</div>
+</body>
+</html>

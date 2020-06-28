@@ -1,4 +1,4 @@
-/* $Id: samlp_request_abstract.c 3444 2007-11-13 19:04:58Z fpeters $ 
+/* $Id: samlp_request_abstract.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -27,8 +27,12 @@
 
 #include <lasso/xml/samlp_request_abstract.h>
 
-/*
- * Schema fragment (oasis-sstc-saml-schema-protocol-1.0.xsd):
+/**
+ * SECTION:samlp_request_abstract
+ * @short_description: &lt;samlp:RequestAbstractType&gt;
+ *
+ * <figure><title>Schema fragment for samlp:RequestAbstractType</title>
+ * <programlisting><![CDATA[
  * 
  * <complexType name="RequestAbstractType" abstract="true">
  *   <sequence>
@@ -47,6 +51,8 @@
  * <simpleType name="IDType">
  *   <restriction base="string"/>
  * </simpleType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

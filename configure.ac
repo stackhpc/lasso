@@ -15,7 +15,7 @@ dnl - Second number is the number of supported API versions where API version >
 dnl   first number.
 dnl - Third number is the current API version implementation version number.
 dnl See libtool explanations about current, age and release, later in this file.
-AC_INIT([Liberty Alliance Single Sign On], 2.1.98, lasso-devel@lists.labs.libre-entreprise.org)
+AC_INIT([Liberty Alliance Single Sign On], 2.2.0, lasso-devel@lists.labs.libre-entreprise.org)
 dnl Check if autoconf ver > 2.53
 AC_PREREQ(2.53)
 dnl Perform only subset commands and variable relevant to the host type.
@@ -24,10 +24,10 @@ AC_CANONICAL_SYSTEM
 dnl Check existence of a relative pathed source file.
 AC_CONFIG_SRCDIR(lasso/lasso.c)
 dnl Copy stamp REVISIO-INFO in the configure script.
-AC_REVISION($Revision: 3531 $)
+AC_REVISION($Revision: 3766 $)
 
 dnl Run many macros mostly needed by configure.ac.
-AM_INIT_AUTOMAKE(lasso, 2.1.98)
+AM_INIT_AUTOMAKE(lasso, 2.2.0)
 dnl Create rules to automaticaly regenerate the config header.
 AM_CONFIG_HEADER(lasso/lasso_config.h)
 dnl Add --enable-maintainer-mode option to configure.
@@ -178,7 +178,7 @@ dnl - interfaces removed -> AGE = 0
 # m = a
 # r = r
 current=`expr $VERSION_MAJOR + $VERSION_MINOR`
-LASSO_VERSION_INFO="9:0:6"
+LASSO_VERSION_INFO="10:0:7"
 AC_SUBST(LASSO_VERSION_INFO)
 
 dnl Compute the minimal supported ABI version for Win32 scripts and resources files.
@@ -427,7 +427,7 @@ else
   fi
   PHP4_INCLUDES="-I/usr/local/include/php4 -I/usr/local/include/php4/main -I/usr/local/include/php4/Zend -I/usr/local/include/php4/TSRM -I/usr/local/include/php4/win32"
   PHP4_LDFLAGS=
-  PHP4_LIBS=-lphp4ts -lxmlparse -lxmltok
+  PHP4_LIBS="-lphp4ts -lxmlparse -lxmltok"
   PHP4_UNPREFIXED_EXTENSION_DIR=
   PHP4_PREFIX=
 fi
@@ -498,7 +498,7 @@ else
   fi
   PHP5_INCLUDES="-I/usr/local/include/php5 -I/usr/local/include/php5/main -I/usr/local/include/php5/Zend -I/usr/local/include/php5/TSRM -I/usr/local/include/php5/win32"
   PHP5_LDFLAGS=
-  PHP5_LIBS=-lphp5ts -lxmlparse -lxmltok
+  PHP5_LIBS="-lphp5ts -lxmlparse -lxmltok"
   PHP5_UNPREFIXED_EXTENSION_DIR=
   PHP5_PREFIX=
 fi
@@ -904,6 +904,7 @@ AC_SUBST(CFLAGS)
 AC_SUBST(CPPFLAGS)
 AC_SUBST(LDFLAGS)
 AC_SUBST(CLASSPATH_JUNIT)
+AC_SUBST(SWIG_VERSION)
 
 dnl Dirty system often means dirty hacks...
 AM_CONDITIONAL(MINGW, test $MINGW == 1)

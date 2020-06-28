@@ -1,4 +1,4 @@
-/* $Id: disco_requested_service_type.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: disco_requested_service_type.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/disco_requested_service_type.h>
 
-/*
- * Schema fragment (liberty-idwsf-disco-svc-1.0-errata-v1.0.xsd):
+/**
+ * SECTION:disco_requested_service_type
+ * @short_description: &lt;disco:RequestedServiceType&gt;
+ *
+ * <figure><title>Schema fragment for disco:RequestedServiceType</title>
+ * <programlisting><![CDATA[
  *
  * <xs:element name="RequestedServiceType" minOccurs="0" maxOccurs="unbounded">
  *   <xs:complexType>
@@ -37,6 +41,8 @@
  * </xs:element>
  *
  * <xs:element name="ServiceType" type="xs:anyURI"/>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

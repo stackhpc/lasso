@@ -1,4 +1,4 @@
-/* $Id: is_interaction_statement.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: is_interaction_statement.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/is_interaction_statement.h>
 
-/*
- * Schema fragments (liberty-idwsf-interaction-svc-v1.0.xsd):
+/**
+ * SECTION:is_interaction_statement
+ * @short_description: &lt;is:InteractionStatementType&gt;
+ *
+ * <figure><title>Schema fragment for is:InteractionStatementType</title>
+ * <programlisting><![CDATA[
  *
  * <xs:complexType name="InteractionStatementType">
  *   <xs:sequence>
@@ -34,6 +38,8 @@
  *   </xs:sequence>
  * </xs:complexType>
  *
+ * ]]></programlisting>
+ * </figure>
  */ 
 
 /*****************************************************************************/

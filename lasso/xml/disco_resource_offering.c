@@ -1,4 +1,4 @@
-/* $Id: disco_resource_offering.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: disco_resource_offering.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/disco_resource_offering.h>
 
-/*
- * Schema fragment (liberty-idwsf-disco-svc-1.0-errata-v1.0.xsd):
+/**
+ * SECTION:disco_resource_offering
+ * @short_description: &lt;disco:ResourceOffering&gt;
+ *
+ * <figure><title>Schema fragment for disco:ResourceOffering</title>
+ * <programlisting><![CDATA[
  * 
  * <xs:element name="ResourceOffering" type="ResourceOfferingType"/>
  * <xs:complexType name="ResourceOfferingType">
@@ -43,6 +47,8 @@
  * <xs:simpleType name="IDType">
  *   <xs:restriction base="xs:string"/>
  * </xs:simpleType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

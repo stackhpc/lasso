@@ -1,4 +1,4 @@
-/* $Id: saml_authentication_statement.c 3237 2007-05-30 17:17:45Z dlaniel $
+/* $Id: saml_authentication_statement.c 3704 2008-05-15 21:17:44Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/saml_authentication_statement.h>
 
-/*
- * Schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
+/**
+ * SECTION:saml_authentication_statement
+ * @short_description: &lt;saml:AuthenticationStatement&gt;
+ *
+ * <figure><title>Schema fragment for saml:AuthenticationStatement</title>
+ * <programlisting><![CDATA[
  * 
  * <element name="AuthenticationStatement" type="saml:AuthenticationStatementType"/>
  * <complexType name="AuthenticationStatementType">
@@ -40,6 +44,8 @@
  *     </extension>
  *   </complexContent>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

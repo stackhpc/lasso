@@ -1,4 +1,4 @@
-/* $Id: saml2_assertion.c 3476 2008-01-23 12:37:12Z fpeters $ 
+/* $Id: saml2_assertion.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -28,8 +28,12 @@
 
 #include "saml2_assertion.h"
 
-/*
- * Schema fragment (saml-schema-assertion-2.0.xsd):
+/**
+ * SECTION:saml2_assertion
+ * @short_description: &lt;saml2:Assertion&gt;
+ *
+ * <figure><title>Schema fragment for saml2:Assertion</title>
+ * <programlisting><![CDATA[
  *
  * <complexType name="AssertionType">
  *   <sequence>
@@ -49,6 +53,8 @@
  *   <attribute name="ID" type="ID" use="required"/>
  *   <attribute name="IssueInstant" type="dateTime" use="required"/>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

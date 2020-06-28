@@ -1,4 +1,4 @@
-/* $Id: soap_binding_ext_service_instance_update.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: soap_binding_ext_service_instance_update.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/soap_binding_ext_service_instance_update.h>
 
-/*
- * Schema fragments (liberty-idwsf-soap-binding-v1.1.xsd - extension avril 2004):
+/**
+ * SECTION:soap_binding_ext_service_instance_update
+ * @short_description: &lt;soapbinding:ServiceInstanceUpdateType&gt;
+ *
+ * <figure><title>Schema fragment for soapbinding:ServiceInstanceUpdateType</title>
+ * <programlisting><![CDATA[
  *
  * <xs:complexType name="ServiceInstanceUpdateType">
  *   <xs:sequence>
@@ -45,6 +49,8 @@
  *   <xs:attribute ref="S:actor" use="optional"/>
  * </xs:complexType>
  * 
+ * ]]></programlisting>
+ * </figure>
  */ 
 
 /*****************************************************************************/

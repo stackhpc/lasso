@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>LassoSamlSubjectStatementAbstract</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.71.0">
+<link rel="start" href="index.html" title="Lasso Reference Manual">
+<link rel="up" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
+<link rel="prev" href="LassoSamlSubjectLocality.html" title="LassoSamlSubjectLocality">
+<link rel="next" href="LassoSamlpRequest.html" title="LassoSamlpRequest">
+<meta name="generator" content="GTK-Doc V1.10 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
+<link rel="chapter" href="architecture.html" title="Lasso Architecture">
+<link rel="chapter" href="idff.html" title="Identity Federation Framework">
+<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework">
+<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
+<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
+<link rel="chapter" href="misc.html" title="Misc">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="LassoSamlSubjectLocality.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="xml-idff.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Lasso Reference Manual</th>
+<td><a accesskey="n" href="LassoSamlpRequest.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts"><nobr><a href="#LassoSamlSubjectStatementAbstract.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#LassoSamlSubjectStatementAbstract.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#LassoSamlSubjectStatementAbstract.object-hierarchy" class="shortcut">Object Hierarchy</a></nobr></td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="LassoSamlSubjectStatementAbstract"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="LassoSamlSubjectStatementAbstract.top_of_page"></a>LassoSamlSubjectStatementAbstract</span></h2>
+<p>LassoSamlSubjectStatementAbstract — &lt;saml:SubjectStatementAbstractType&gt;</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="LassoSamlSubjectStatementAbstract.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+
+#include &lt;lasso/lasso.h&gt;
+
+                    <a href="LassoSamlSubjectStatementAbstract.html#LassoSamlSubjectStatementAbstract-struct" title="LassoSamlSubjectStatementAbstract">LassoSamlSubjectStatementAbstract</a>;
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="LassoSamlSubjectStatementAbstract.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <GTKDOCLINK HREF="GObject">GObject</GTKDOCLINK>
+   +----<a href="LassoNode.html" title="LassoNode">LassoNode</a>
+         +----<a href="LassoSamlStatementAbstract.html" title="LassoSamlStatementAbstract">LassoSamlStatementAbstract</a>
+               +----LassoSamlSubjectStatementAbstract
+                     +----<a href="LassoSamlAuthenticationStatement.html" title="LassoSamlAuthenticationStatement">LassoSamlAuthenticationStatement</a>
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="LassoSamlSubjectStatementAbstract.description"></a><h2>Description</h2>
+<p>
+</p>
+<div class="figure">
+<a name="id2621367"></a><p class="title"><b>Figure 32. Schema fragment for saml:SubjectStatementAbstractType</b></p>
+<div class="figure-contents"><pre class="programlisting">
+
+&lt;complexType name="SubjectStatementAbstractType" abstract="true"&gt;
+  &lt;complexContent&gt;
+    &lt;extension base="saml:StatementAbstractType"&gt;
+      &lt;sequence&gt;
+        &lt;element ref="saml:Subject"/&gt;
+      &lt;/sequence&gt;
+    &lt;/extension&gt;
+  &lt;/complexContent&gt;
+&lt;/complexType&gt;
+</pre></div>
+</div>
+<p><br class="figure-break"></p>
+<p>
+
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="LassoSamlSubjectStatementAbstract.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="LassoSamlSubjectStatementAbstract-struct"></a><h3>LassoSamlSubjectStatementAbstract</h3>
+<pre class="programlisting">typedef struct {
+	/* &lt;element ref="saml:Subject"/&gt; */
+	LassoSamlSubject *Subject;
+} LassoSamlSubjectStatementAbstract;
+</pre>
+<p>
+
+</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.10</div>
+</body>
+</html>

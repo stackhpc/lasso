@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE book PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "">
+<book xmlns="http://www.devhelp.net/book" title="Lasso Reference Manual" link="index.html" author="" name="lasso">
+  <chapters>
+    <sub name="Lasso &amp; Liberty Alliance Overview" link="lasso.html"/>
+    <sub name="Lasso Architecture" link="architecture.html">
+      <sub name="LassoProvider" link="LassoProvider.html"/>
+      <sub name="LassoServer" link="LassoServer.html"/>
+      <sub name="LassoIdentity" link="LassoIdentity.html"/>
+      <sub name="LassoSession" link="LassoSession.html"/>
+      <sub name="LassoFederation" link="LassoFederation.html"/>
+    </sub>
+    <sub name="Identity Federation Framework" link="idff.html">
+      <sub name="LassoProfile" link="LassoProfile.html"/>
+      <sub name="LassoLogin" link="LassoLogin.html"/>
+      <sub name="LassoLogout" link="LassoLogout.html"/>
+      <sub name="LassoDefederation" link="LassoDefederation.html"/>
+      <sub name="LassoNameRegistration" link="LassoNameRegistration.html"/>
+      <sub name="LassoNameIdentifierMapping" link="LassoNameIdentifierMapping.html"/>
+      <sub name="LassoNameIdManagement" link="LassoNameIdManagement.html"/>
+      <sub name="LassoLecp" link="LassoLecp.html"/>
+      <sub name="LassoEcp" link="LassoEcp.html"/>
+    </sub>
+    <sub name="Identity Web Services Framework" link="idwsf.html">
+      <sub name="LassoDiscovery" link="lasso-LassoDiscovery.html"/>
+      <sub name="LassoDataService" link="lasso-LassoDataService.html"/>
+    </sub>
+    <sub name="Objects from ID-FF 1.2 schemas" link="xml-idff.html">
+      <sub name="LassoLibAssertion" link="LassoLibAssertion.html"/>
+      <sub name="LassoLibAuthenticationStatement" link="LassoLibAuthenticationStatement.html"/>
+      <sub name="LassoLibAuthnContext" link="LassoLibAuthnContext.html"/>
+      <sub name="LassoLibAuthnRequest" link="LassoLibAuthnRequest.html"/>
+      <sub name="LassoLibAuthnRequestEnvelope" link="lasso-LassoLibAuthnRequestEnvelope.html"/>
+      <sub name="LassoLibAuthnResponse" link="LassoLibAuthnResponse.html"/>
+      <sub name="LassoLibAuthnResponseEnvelope" link="lasso-LassoLibAuthnResponseEnvelope.html"/>
+      <sub name="LassoLibFederationTerminationNotification" link="LassoLibFederationTerminationNotification.html"/>
+      <sub name="LassoLibIDPEntries" link="LassoLibIDPEntries.html"/>
+      <sub name="LassoLibIDPEntry" link="LassoLibIDPEntry.html"/>
+      <sub name="LassoLibIDPList" link="LassoLibIDPList.html"/>
+      <sub name="LassoLibLogoutRequest" link="LassoLibLogoutRequest.html"/>
+      <sub name="LassoLibLogoutResponse" link="LassoLibLogoutResponse.html"/>
+      <sub name="LassoLibNameIdentifierMappingRequest" link="LassoLibNameIdentifierMappingRequest.html"/>
+      <sub name="LassoLibNameIdentifierMappingResponse" link="LassoLibNameIdentifierMappingResponse.html"/>
+      <sub name="LassoLibRegisterNameIdentifierRequest" link="LassoLibRegisterNameIdentifierRequest.html"/>
+      <sub name="LassoLibRegisterNameIdentifierResponse" link="LassoLibRegisterNameIdentifierResponse.html"/>
+      <sub name="LassoLibRequestAuthnContext" link="LassoLibRequestAuthnContext.html"/>
+      <sub name="LassoLibScoping" link="LassoLibScoping.html"/>
+      <sub name="LassoLibStatusResponse" link="LassoLibStatusResponse.html"/>
+      <sub name="LassoLibSubject" link="LassoLibSubject.html"/>
+      <sub name="LassoSamlAdvice" link="LassoSamlAdvice.html"/>
+      <sub name="LassoSamlAssertion" link="LassoSamlAssertion.html"/>
+      <sub name="LassoSamlAudienceRestrictionCondition" link="LassoSamlAudienceRestrictionCondition.html"/>
+      <sub name="LassoSamlAuthenticationStatement" link="LassoSamlAuthenticationStatement.html"/>
+      <sub name="LassoSamlAuthorityBinding" link="LassoSamlAuthorityBinding.html"/>
+      <sub name="LassoSamlConditionAbstract" link="LassoSamlConditionAbstract.html"/>
+      <sub name="LassoSamlConditions" link="LassoSamlConditions.html"/>
+      <sub name="LassoSamlNameIdentifier" link="LassoSamlNameIdentifier.html"/>
+      <sub name="LassoSamlStatementAbstract" link="LassoSamlStatementAbstract.html"/>
+      <sub name="LassoSamlSubject" link="LassoSamlSubject.html"/>
+      <sub name="LassoSamlSubjectConfirmation" link="LassoSamlSubjectConfirmation.html"/>
+      <sub name="LassoSamlSubjectLocality" link="LassoSamlSubjectLocality.html"/>
+      <sub name="LassoSamlSubjectStatementAbstract" link="LassoSamlSubjectStatementAbstract.html"/>
+      <sub name="LassoSamlpRequest" link="LassoSamlpRequest.html"/>
+      <sub name="LassoSamlpRequestAbstract" link="LassoSamlpRequestAbstract.html"/>
+      <sub name="LassoSamlpResponse" link="LassoSamlpResponse.html"/>
+      <sub name="LassoSamlpResponseAbstract" link="LassoSamlpResponseAbstract.html"/>
+      <sub name="LassoSamlpStatus" link="LassoSamlpStatus.html"/>
+      <sub name="LassoSamlpStatusCode" link="LassoSamlpStatusCode.html"/>
+    </sub>
+    <sub name="Objects from SAML 2.0 schemas" link="xml-samlv2.html">
+      <sub name="LassoSaml2Action" link="lasso-LassoSaml2Action.html"/>
+      <sub name="LassoSaml2Advice" link="lasso-LassoSaml2Advice.html"/>
+      <sub name="LassoSaml2Assertion" link="lasso-LassoSaml2Assertion.html"/>
+      <sub name="LassoSaml2Attribute" link="lasso-LassoSaml2Attribute.html"/>
+      <sub name="LassoSaml2AttributeStatement" link="lasso-LassoSaml2AttributeStatement.html"/>
+      <sub name="LassoSaml2AudienceRestriction" link="lasso-LassoSaml2AudienceRestriction.html"/>
+      <sub name="LassoSaml2AuthnContext" link="lasso-LassoSaml2AuthnContext.html"/>
+      <sub name="LassoSaml2AuthnStatement" link="lasso-LassoSaml2AuthnStatement.html"/>
+      <sub name="LassoSaml2AuthzDecisionStatement" link="lasso-LassoSaml2AuthzDecisionStatement.html"/>
+      <sub name="LassoSaml2BaseIDAbstract" link="lasso-LassoSaml2BaseIDAbstract.html"/>
+      <sub name="LassoSaml2ConditionAbstract" link="lasso-LassoSaml2ConditionAbstract.html"/>
+      <sub name="LassoSaml2Conditions" link="lasso-LassoSaml2Conditions.html"/>
+      <sub name="LassoSaml2EncryptedElement" link="lasso-LassoSaml2EncryptedElement.html"/>
+      <sub name="LassoSaml2Evidence" link="lasso-LassoSaml2Evidence.html"/>
+      <sub name="LassoSaml2KeyInfoConfirmationData" link="lasso-LassoSaml2KeyInfoConfirmationData.html"/>
+      <sub name="LassoSaml2NameID" link="lasso-LassoSaml2NameID.html"/>
+      <sub name="LassoSaml2OneTimeUse" link="lasso-LassoSaml2OneTimeUse.html"/>
+      <sub name="LassoSaml2ProxyRestriction" link="lasso-LassoSaml2ProxyRestriction.html"/>
+      <sub name="LassoSaml2StatementAbstract" link="lasso-LassoSaml2StatementAbstract.html"/>
+      <sub name="LassoSaml2SubjectConfirmationData" link="lasso-LassoSaml2SubjectConfirmationData.html"/>
+      <sub name="LassoSaml2SubjectConfirmation" link="lasso-LassoSaml2SubjectConfirmation.html"/>
+      <sub name="LassoSaml2Subject" link="lasso-LassoSaml2Subject.html"/>
+      <sub name="LassoSaml2SubjectLocality" link="lasso-LassoSaml2SubjectLocality.html"/>
+      <sub name="LassoSamlp2ArtifactResolve" link="lasso-LassoSamlp2ArtifactResolve.html"/>
+      <sub name="LassoSamlp2ArtifactResponse" link="lasso-LassoSamlp2ArtifactResponse.html"/>
+      <sub name="LassoSamlp2AssertionIDRequest" link="lasso-LassoSamlp2AssertionIDRequest.html"/>
+      <sub name="LassoSamlp2AttributeQuery" link="lasso-LassoSamlp2AttributeQuery.html"/>
+      <sub name="LassoSamlp2AuthnQuery" link="lasso-LassoSamlp2AuthnQuery.html"/>
+      <sub name="LassoSamlp2AuthnRequest" link="lasso-LassoSamlp2AuthnRequest.html"/>
+      <sub name="LassoSamlp2AuthzDecisionQuery" link="lasso-LassoSamlp2AuthzDecisionQuery.html"/>
+      <sub name="LassoSamlp2Extensions" link="lasso-LassoSamlp2Extensions.html"/>
+      <sub name="LassoSamlp2IDPEntry" link="lasso-LassoSamlp2IDPEntry.html"/>
+      <sub name="LassoSamlp2IDPList" link="lasso-LassoSamlp2IDPList.html"/>
+      <sub name="LassoSamlp2LogoutRequest" link="lasso-LassoSamlp2LogoutRequest.html"/>
+      <sub name="LassoSamlp2LogoutResponse" link="lasso-LassoSamlp2LogoutResponse.html"/>
+      <sub name="LassoSamlp2ManageNameIDRequest" link="lasso-LassoSamlp2ManageNameIDRequest.html"/>
+      <sub name="LassoSamlp2ManageNameIDResponse" link="lasso-LassoSamlp2ManageNameIDResponse.html"/>
+      <sub name="LassoSamlp2NameIDMappingRequest" link="lasso-LassoSamlp2NameIDMappingRequest.html"/>
+      <sub name="LassoSamlp2NameIDMappingResponse" link="lasso-LassoSamlp2NameIDMappingResponse.html"/>
+      <sub name="LassoSamlp2NameIDPolicy" link="lasso-LassoSamlp2NameIDPolicy.html"/>
+      <sub name="LassoSamlp2RequestAbstract" link="lasso-LassoSamlp2RequestAbstract.html"/>
+      <sub name="LassoSamlp2RequestedAuthnContext" link="lasso-LassoSamlp2RequestedAuthnContext.html"/>
+      <sub name="LassoSamlp2Response" link="lasso-LassoSamlp2Response.html"/>
+      <sub name="LassoSamlp2Scoping" link="lasso-LassoSamlp2Scoping.html"/>
+      <sub name="LassoSamlp2Status" link="lasso-LassoSamlp2Status.html"/>
+      <sub name="LassoSamlp2StatusCode" link="lasso-LassoSamlp2StatusCode.html"/>
+      <sub name="LassoSamlp2StatusDetail" link="lasso-LassoSamlp2StatusDetail.html"/>
+      <sub name="LassoSamlp2StatusResponse" link="lasso-LassoSamlp2StatusResponse.html"/>
+      <sub name="LassoSamlp2SubjectQueryAbstract" link="lasso-LassoSamlp2SubjectQueryAbstract.html"/>
+      <sub name="LassoSamlp2Terminate" link="lasso-LassoSamlp2Terminate.html"/>
+    </sub>
+    <sub name="Misc" link="misc.html">
+      <sub name="LassoNode" link="LassoNode.html"/>
+      <sub name="lasso" link="lasso-lasso.html"/>
+      <sub name="strings" link="lasso-strings.html"/>
+    </sub>
+  </chapters>
+  <functions>
+    <function name="LassoProvider" link="LassoProvider.html#LassoProvider-struct"/>
+    <function name="enum LassoProviderRole" link="LassoProvider.html#LassoProviderRole"/>
+    <function name="enum LassoHttpMethod" link="LassoProvider.html#LassoHttpMethod"/>
+    <function name="enum LassoMdProtocolType" link="LassoProvider.html#LassoMdProtocolType"/>
+    <function name="lasso_provider_new ()" link="LassoProvider.html#lasso-provider-new"/>
+    <function name="lasso_provider_new_from_dump ()" link="LassoProvider.html#lasso-provider-new-from-dump"/>
+    <function name="lasso_provider_accept_http_method ()" link="LassoProvider.html#lasso-provider-accept-http-method"/>
+    <function name="lasso_provider_get_assertion_consumer_service_url ()" link="LassoProvider.html#lasso-provider-get-assertion-consumer-service-url"/>
+    <function name="lasso_provider_get_base64_succinct_id ()" link="LassoProvider.html#lasso-provider-get-base64-succinct-id"/>
+    <function name="lasso_provider_get_first_http_method ()" link="LassoProvider.html#lasso-provider-get-first-http-method"/>
+    <function name="lasso_provider_get_metadata_list ()" link="LassoProvider.html#lasso-provider-get-metadata-list"/>
+    <function name="lasso_provider_get_metadata_one ()" link="LassoProvider.html#lasso-provider-get-metadata-one"/>
+    <function name="lasso_provider_has_protocol_profile ()" link="LassoProvider.html#lasso-provider-has-protocol-profile"/>
+    <function name="lasso_provider_get_organization ()" link="LassoProvider.html#lasso-provider-get-organization"/>
+    <function name="LassoServer" link="LassoServer.html#LassoServer-struct"/>
+    <function name="lasso_server_new ()" link="LassoServer.html#lasso-server-new"/>
+    <function name="lasso_server_new_from_dump ()" link="LassoServer.html#lasso-server-new-from-dump"/>
+    <function name="lasso_server_add_provider ()" link="LassoServer.html#lasso-server-add-provider"/>
+    <function name="lasso_server_add_service ()" link="LassoServer.html#lasso-server-add-service"/>
+    <function name="lasso_server_destroy ()" link="LassoServer.html#lasso-server-destroy"/>
+    <function name="lasso_server_dump ()" link="LassoServer.html#lasso-server-dump"/>
+    <function name="lasso_server_get_provider ()" link="LassoServer.html#lasso-server-get-provider"/>
+    <function name="lasso_server_get_service ()" link="LassoServer.html#lasso-server-get-service"/>
+    <function name="LassoIdentity" link="LassoIdentity.html#LassoIdentity-struct"/>
+    <function name="lasso_identity_new ()" link="LassoIdentity.html#lasso-identity-new"/>
+    <function name="lasso_identity_new_from_dump ()" link="LassoIdentity.html#lasso-identity-new-from-dump"/>
+    <function name="lasso_identity_destroy ()" link="LassoIdentity.html#lasso-identity-destroy"/>
+    <function name="lasso_identity_dump ()" link="LassoIdentity.html#lasso-identity-dump"/>
+    <function name="lasso_identity_get_federation ()" link="LassoIdentity.html#lasso-identity-get-federation"/>
+    <function name="LassoSession" link="LassoSession.html#LassoSession-struct"/>
+    <function name="lasso_session_new ()" link="LassoSession.html#lasso-session-new"/>
+    <function name="lasso_session_new_from_dump ()" link="LassoSession.html#lasso-session-new-from-dump"/>
+    <function name="lasso_session_destroy ()" link="LassoSession.html#lasso-session-destroy"/>
+    <function name="lasso_session_dump ()" link="LassoSession.html#lasso-session-dump"/>
+    <function name="lasso_session_get_assertions ()" link="LassoSession.html#lasso-session-get-assertions"/>
+    <function name="lasso_session_get_provider_index ()" link="LassoSession.html#lasso-session-get-provider-index"/>
+    <function name="lasso_session_is_empty ()" link="LassoSession.html#lasso-session-is-empty"/>
+    <function name="LassoFederation" link="LassoFederation.html#LassoFederation-struct"/>
+    <function name="lasso_federation_new ()" link="LassoFederation.html#lasso-federation-new"/>
+    <function name="lasso_federation_destroy ()" link="LassoFederation.html#lasso-federation-destroy"/>
+    <function name="lasso_federation_build_local_name_identifier ()" link="LassoFederation.html#lasso-federation-build-local-name-identifier"/>
+    <function name="lasso_federation_verify_name_identifier ()" link="LassoFederation.html#lasso-federation-verify-name-identifier"/>
+    <function name="enum LassoRequestType" link="LassoProfile.html#LassoRequestType"/>
+    <function name="LassoProfile" link="LassoProfile.html#LassoProfile-struct"/>
+    <function name="lasso_profile_get_identity ()" link="LassoProfile.html#lasso-profile-get-identity"/>
+    <function name="lasso_profile_get_session ()" link="LassoProfile.html#lasso-profile-get-session"/>
+    <function name="lasso_profile_is_identity_dirty ()" link="LassoProfile.html#lasso-profile-is-identity-dirty"/>
+    <function name="lasso_profile_is_session_dirty ()" link="LassoProfile.html#lasso-profile-is-session-dirty"/>
+    <function name="lasso_profile_set_identity_from_dump ()" link="LassoProfile.html#lasso-profile-set-identity-from-dump"/>
+    <function name="lasso_profile_set_session_from_dump ()" link="LassoProfile.html#lasso-profile-set-session-from-dump"/>
+    <function name="lasso_profile_get_request_type_from_soap_msg ()" link="LassoProfile.html#lasso-profile-get-request-type-from-soap-msg"/>
+    <function name="lasso_profile_is_liberty_query ()" link="LassoProfile.html#lasso-profile-is-liberty-query"/>
+    <function name="lasso_profile_get_nameIdentifier ()" link="LassoProfile.html#lasso-profile-get-nameIdentifier"/>
+    <function name="LassoLogin" link="LassoLogin.html#LassoLogin-struct"/>
+    <function name="enum LassoLoginProtocolProfile" link="LassoLogin.html#LassoLoginProtocolProfile"/>
+    <function name="lasso_login_new ()" link="LassoLogin.html#lasso-login-new"/>
+    <function name="lasso_login_destroy ()" link="LassoLogin.html#lasso-login-destroy"/>
+    <function name="lasso_login_dump ()" link="LassoLogin.html#lasso-login-dump"/>
+    <function name="lasso_login_new_from_dump ()" link="LassoLogin.html#lasso-login-new-from-dump"/>
+    <function name="lasso_login_accept_sso ()" link="LassoLogin.html#lasso-login-accept-sso"/>
+    <function name="lasso_login_build_artifact_msg ()" link="LassoLogin.html#lasso-login-build-artifact-msg"/>
+    <function name="lasso_login_build_assertion ()" link="LassoLogin.html#lasso-login-build-assertion"/>
+    <function name="lasso_login_build_authn_request_msg ()" link="LassoLogin.html#lasso-login-build-authn-request-msg"/>
+    <function name="lasso_login_build_authn_response_msg ()" link="LassoLogin.html#lasso-login-build-authn-response-msg"/>
+    <function name="lasso_login_build_request_msg ()" link="LassoLogin.html#lasso-login-build-request-msg"/>
+    <function name="lasso_login_build_response_msg ()" link="LassoLogin.html#lasso-login-build-response-msg"/>
+    <function name="lasso_login_init_authn_request ()" link="LassoLogin.html#lasso-login-init-authn-request"/>
+    <function name="lasso_login_init_idp_initiated_authn_request ()" link="LassoLogin.html#lasso-login-init-idp-initiated-authn-request"/>
+    <function name="lasso_login_init_request ()" link="LassoLogin.html#lasso-login-init-request"/>
+    <function name="lasso_login_must_ask_for_consent ()" link="LassoLogin.html#lasso-login-must-ask-for-consent"/>
+    <function name="lasso_login_must_authenticate ()" link="LassoLogin.html#lasso-login-must-authenticate"/>
+    <function name="lasso_login_process_authn_request_msg ()" link="LassoLogin.html#lasso-login-process-authn-request-msg"/>
+    <function name="lasso_login_process_authn_response_msg ()" link="LassoLogin.html#lasso-login-process-authn-response-msg"/>
+    <function name="lasso_login_process_request_msg ()" link="LassoLogin.html#lasso-login-process-request-msg"/>
+    <function name="lasso_login_process_response_msg ()" link="LassoLogin.html#lasso-login-process-response-msg"/>
+    <function name="lasso_login_validate_request_msg ()" link="LassoLogin.html#lasso-login-validate-request-msg"/>
+    <function name="lasso_login_set_encryptedResourceId ()" link="LassoLogin.html#lasso-login-set-encryptedResourceId"/>
+    <function name="lasso_login_set_resourceId ()" link="LassoLogin.html#lasso-login-set-resourceId"/>
+    <function name="LassoLogout" link="LassoLogout.html#LassoLogout-struct"/>
+    <function name="lasso_logout_new ()" link="LassoLogout.html#lasso-logout-new"/>
+    <function name="lasso_logout_new_from_dump ()" link="LassoLogout.html#lasso-logout-new-from-dump"/>
+    <function name="lasso_logout_build_request_msg ()" link="LassoLogout.html#lasso-logout-build-request-msg"/>
+    <function name="lasso_logout_build_response_msg ()" link="LassoLogout.html#lasso-logout-build-response-msg"/>
+    <function name="lasso_logout_destroy ()" link="LassoLogout.html#lasso-logout-destroy"/>
+    <function name="lasso_logout_dump ()" link="LassoLogout.html#lasso-logout-dump"/>
+    <function name="lasso_logout_get_next_providerID ()" link="LassoLogout.html#lasso-logout-get-next-providerID"/>
+    <function name="lasso_logout_init_request ()" link="LassoLogout.html#lasso-logout-init-request"/>
+    <function name="lasso_logout_process_request_msg ()" link="LassoLogout.html#lasso-logout-process-request-msg"/>
+    <function name="lasso_logout_process_response_msg ()" link="LassoLogout.html#lasso-logout-process-response-msg"/>
+    <function name="lasso_logout_reset_providerID_index ()" link="LassoLogout.html#lasso-logout-reset-providerID-index"/>
+    <function name="lasso_logout_validate_request ()" link="LassoLogout.html#lasso-logout-validate-request"/>
+    <function name="LassoDefederation" link="LassoDefederation.html#LassoDefederation-struct"/>
+    <function name="lasso_defederation_new ()" link="LassoDefederation.html#lasso-defederation-new"/>
+    <function name="lasso_defederation_destroy ()" link="LassoDefederation.html#lasso-defederation-destroy"/>
+    <function name="lasso_defederation_build_notification_msg ()" link="LassoDefederation.html#lasso-defederation-build-notification-msg"/>
+    <function name="lasso_defederation_init_notification ()" link="LassoDefederation.html#lasso-defederation-init-notification"/>
+    <function name="lasso_defederation_process_notification_msg ()" link="LassoDefederation.html#lasso-defederation-process-notification-msg"/>
+    <function name="lasso_defederation_validate_notification ()" link="LassoDefederation.html#lasso-defederation-validate-notification"/>
+    <function name="LassoNameRegistration" link="LassoNameRegistration.html#LassoNameRegistration-struct"/>
+    <function name="lasso_name_registration_new ()" link="LassoNameRegistration.html#lasso-name-registration-new"/>
+    <function name="lasso_name_registration_destroy ()" link="LassoNameRegistration.html#lasso-name-registration-destroy"/>
+    <function name="lasso_name_registration_new_from_dump ()" link="LassoNameRegistration.html#lasso-name-registration-new-from-dump"/>
+    <function name="lasso_name_registration_build_request_msg ()" link="LassoNameRegistration.html#lasso-name-registration-build-request-msg"/>
+    <function name="lasso_name_registration_build_response_msg ()" link="LassoNameRegistration.html#lasso-name-registration-build-response-msg"/>
+    <function name="lasso_name_registration_init_request ()" link="LassoNameRegistration.html#lasso-name-registration-init-request"/>
+    <function name="lasso_name_registration_process_request_msg ()" link="LassoNameRegistration.html#lasso-name-registration-process-request-msg"/>
+    <function name="lasso_name_registration_process_response_msg ()" link="LassoNameRegistration.html#lasso-name-registration-process-response-msg"/>
+    <function name="lasso_name_registration_validate_request ()" link="LassoNameRegistration.html#lasso-name-registration-validate-request"/>
+    <function name="LassoNameIdentifierMapping" link="LassoNameIdentifierMapping.html#LassoNameIdentifierMapping-struct"/>
+    <function name="lasso_name_identifier_mapping_new ()" link="LassoNameIdentifierMapping.html#lasso-name-identifier-mapping-new"/>
+    <function name="lasso_name_identifier_mapping_destroy ()" link="LassoNameIdentifierMapping.html#lasso-name-identifier-mapping-destroy"/>
+    <function name="lasso_name_identifier_mapping_build_request_msg ()" link="LassoNameIdentifierMapping.html#lasso-name-identifier-mapping-build-request-msg"/>
+    <function name="lasso_name_identifier_mapping_build_response_msg ()" link="LassoNameIdentifierMapping.html#lasso-name-identifier-mapping-build-response-msg"/>
+    <function name="lasso_name_identifier_mapping_init_request ()" link="LassoNameIdentifierMapping.html#lasso-name-identifier-mapping-init-request"/>
+    <function name="lasso_name_identifier_mapping_process_request_msg ()" link="LassoNameIdentifierMapping.html#lasso-name-identifier-mapping-process-request-msg"/>
+    <function name="lasso_name_identifier_mapping_process_response_msg ()" link="LassoNameIdentifierMapping.html#lasso-name-identifier-mapping-process-response-msg"/>
+    <function name="lasso_name_identifier_mapping_validate_request ()" link="LassoNameIdentifierMapping.html#lasso-name-identifier-mapping-validate-request"/>
+    <function name="LassoNameIdManagement" link="LassoNameIdManagement.html#LassoNameIdManagement-struct"/>
+    <function name="lasso_name_id_management_new ()" link="LassoNameIdManagement.html#lasso-name-id-management-new"/>
+    <function name="lasso_name_id_management_destroy ()" link="LassoNameIdManagement.html#lasso-name-id-management-destroy"/>
+    <function name="lasso_name_id_management_new_from_dump ()" link="LassoNameIdManagement.html#lasso-name-id-management-new-from-dump"/>
+    <function name="lasso_name_id_management_build_request_msg ()" link="LassoNameIdManagement.html#lasso-name-id-management-build-request-msg"/>
+    <function name="lasso_name_id_management_build_response_msg ()" link="LassoNameIdManagement.html#lasso-name-id-management-build-response-msg"/>
+    <function name="lasso_name_id_management_init_request ()" link="LassoNameIdManagement.html#lasso-name-id-management-init-request"/>
+    <function name="lasso_name_id_management_process_request_msg ()" link="LassoNameIdManagement.html#lasso-name-id-management-process-request-msg"/>
+    <function name="lasso_name_id_management_process_response_msg ()" link="LassoNameIdManagement.html#lasso-name-id-management-process-response-msg"/>
+    <function name="lasso_name_id_management_validate_request ()" link="LassoNameIdManagement.html#lasso-name-id-management-validate-request"/>
+    <function name="LassoLecp" link="LassoLecp.html#LassoLecp-struct"/>
+    <function name="lasso_lecp_new ()" link="LassoLecp.html#lasso-lecp-new"/>
+    <function name="lasso_lecp_destroy ()" link="LassoLecp.html#lasso-lecp-destroy"/>
+    <function name="lasso_lecp_build_authn_request_envelope_msg ()" link="LassoLecp.html#lasso-lecp-build-authn-request-envelope-msg"/>
+    <function name="lasso_lecp_build_authn_request_msg ()" link="LassoLecp.html#lasso-lecp-build-authn-request-msg"/>
+    <function name="lasso_lecp_build_authn_response_msg ()" link="LassoLecp.html#lasso-lecp-build-authn-response-msg"/>
+    <function name="lasso_lecp_build_authn_response_envelope_msg ()" link="LassoLecp.html#lasso-lecp-build-authn-response-envelope-msg"/>
+    <function name="lasso_lecp_init_authn_request ()" link="LassoLecp.html#lasso-lecp-init-authn-request"/>
+    <function name="lasso_lecp_process_authn_request_msg ()" link="LassoLecp.html#lasso-lecp-process-authn-request-msg"/>
+    <function name="lasso_lecp_process_authn_request_envelope_msg ()" link="LassoLecp.html#lasso-lecp-process-authn-request-envelope-msg"/>
+    <function name="lasso_lecp_process_authn_response_envelope_msg ()" link="LassoLecp.html#lasso-lecp-process-authn-response-envelope-msg"/>
+    <function name="LassoEcp" link="LassoEcp.html#LassoEcp-struct"/>
+    <function name="lasso_ecp_new ()" link="LassoEcp.html#lasso-ecp-new"/>
+    <function name="lasso_ecp_destroy ()" link="LassoEcp.html#lasso-ecp-destroy"/>
+    <function name="lasso_ecp_process_authn_request_msg ()" link="LassoEcp.html#lasso-ecp-process-authn-request-msg"/>
+    <function name="lasso_ecp_process_response_msg ()" link="LassoEcp.html#lasso-ecp-process-response-msg"/>
+    <function name="LassoDiscovery" link="lasso-LassoDiscovery.html#LassoDiscovery"/>
+    <function name="lasso_discovery_new ()" link="lasso-LassoDiscovery.html#lasso-discovery-new"/>
+    <function name="lasso_discovery_destroy ()" link="lasso-LassoDiscovery.html#lasso-discovery-destroy"/>
+    <function name="lasso_discovery_add_requested_service_type ()" link="lasso-LassoDiscovery.html#lasso-discovery-add-requested-service-type"/>
+    <function name="lasso_discovery_build_modify_response_msg ()" link="lasso-LassoDiscovery.html#lasso-discovery-build-modify-response-msg"/>
+    <function name="lasso_discovery_build_response_msg ()" link="lasso-LassoDiscovery.html#lasso-discovery-build-response-msg"/>
+    <function name="lasso_discovery_get_service ()" link="lasso-LassoDiscovery.html#lasso-discovery-get-service"/>
+    <function name="lasso_discovery_get_services ()" link="lasso-LassoDiscovery.html#lasso-discovery-get-services"/>
+    <function name="lasso_discovery_init_insert ()" link="lasso-LassoDiscovery.html#lasso-discovery-init-insert"/>
+    <function name="lasso_discovery_init_query ()" link="lasso-LassoDiscovery.html#lasso-discovery-init-query"/>
+    <function name="lasso_discovery_init_remove ()" link="lasso-LassoDiscovery.html#lasso-discovery-init-remove"/>
+    <function name="lasso_discovery_process_modify_msg ()" link="lasso-LassoDiscovery.html#lasso-discovery-process-modify-msg"/>
+    <function name="lasso_discovery_process_modify_response_msg ()" link="lasso-LassoDiscovery.html#lasso-discovery-process-modify-response-msg"/>
+    <function name="lasso_discovery_process_query_msg ()" link="lasso-LassoDiscovery.html#lasso-discovery-process-query-msg"/>
+    <function name="lasso_discovery_process_query_response_msg ()" link="lasso-LassoDiscovery.html#lasso-discovery-process-query-response-msg"/>
+    <function name="LassoDataService" link="lasso-LassoDataService.html#LassoDataService"/>
+    <function name="lasso_data_service_new ()" link="lasso-LassoDataService.html#lasso-data-service-new"/>
+    <function name="lasso_data_service_init_query ()" link="lasso-LassoDataService.html#lasso-data-service-init-query"/>
+    <function name="lasso_data_service_add_query_item ()" link="lasso-LassoDataService.html#lasso-data-service-add-query-item"/>
+    <function name="lasso_data_service_process_query_msg ()" link="lasso-LassoDataService.html#lasso-data-service-process-query-msg"/>
+    <function name="lasso_data_service_build_response_msg ()" link="lasso-LassoDataService.html#lasso-data-service-build-response-msg"/>
+    <function name="lasso_data_service_process_query_response_msg ()" link="lasso-LassoDataService.html#lasso-data-service-process-query-response-msg"/>
+    <function name="lasso_data_service_get_answer ()" link="lasso-LassoDataService.html#lasso-data-service-get-answer"/>
+    <function name="lasso_data_service_get_answer_for_item_id ()" link="lasso-LassoDataService.html#lasso-data-service-get-answer-for-item-id"/>
+    <function name="LassoLibAssertion" link="LassoLibAssertion.html#LassoLibAssertion-struct"/>
+    <function name="lasso_lib_assertion_new ()" link="LassoLibAssertion.html#lasso-lib-assertion-new"/>
+    <function name="lasso_lib_assertion_new_full ()" link="LassoLibAssertion.html#lasso-lib-assertion-new-full"/>
+    <function name="LassoLibAuthenticationStatement" link="LassoLibAuthenticationStatement.html#LassoLibAuthenticationStatement-struct"/>
+    <function name="lasso_lib_authentication_statement_new ()" link="LassoLibAuthenticationStatement.html#lasso-lib-authentication-statement-new"/>
+    <function name="lasso_lib_authentication_statement_new_full ()" link="LassoLibAuthenticationStatement.html#lasso-lib-authentication-statement-new-full"/>
+    <function name="LassoLibAuthnContext" link="LassoLibAuthnContext.html#LassoLibAuthnContext-struct"/>
+    <function name="lasso_lib_authn_context_new ()" link="LassoLibAuthnContext.html#lasso-lib-authn-context-new"/>
+    <function name="LassoLibAuthnRequest" link="LassoLibAuthnRequest.html#LassoLibAuthnRequest-struct"/>
+    <function name="lasso_lib_authn_request_new ()" link="LassoLibAuthnRequest.html#lasso-lib-authn-request-new"/>
+    <function name="LassoLibAuthnRequestEnvelope" link="lasso-LassoLibAuthnRequestEnvelope.html#LassoLibAuthnRequestEnvelope"/>
+    <function name="lasso_lib_authn_request_envelope_new ()" link="lasso-LassoLibAuthnRequestEnvelope.html#lasso-lib-authn-request-envelope-new"/>
+    <function name="lasso_lib_authn_request_envelope_new_full ()" link="lasso-LassoLibAuthnRequestEnvelope.html#lasso-lib-authn-request-envelope-new-full"/>
+    <function name="LassoLibAuthnResponse" link="LassoLibAuthnResponse.html#LassoLibAuthnResponse-struct"/>
+    <function name="lasso_lib_authn_response_new ()" link="LassoLibAuthnResponse.html#lasso-lib-authn-response-new"/>
+    <function name="LassoLibAuthnResponseEnvelope" link="lasso-LassoLibAuthnResponseEnvelope.html#LassoLibAuthnResponseEnvelope"/>
+    <function name="lasso_lib_authn_response_envelope_new ()" link="lasso-LassoLibAuthnResponseEnvelope.html#lasso-lib-authn-response-envelope-new"/>
+    <function name="struct LassoLibFederationTerminationNotification" link="LassoLibFederationTerminationNotification.html#LassoLibFederationTerminationNotification-struct"/>
+    <function name="lasso_lib_federation_termination_notification_new ()" link="LassoLibFederationTerminationNotification.html#lasso-lib-federation-termination-notification-new"/>
+    <function name="lasso_lib_federation_termination_notification_new_full ()" link="LassoLibFederationTerminationNotification.html#lasso-lib-federation-termination-notification-new-full"/>
+    <function name="LassoLibIDPEntries" link="LassoLibIDPEntries.html#LassoLibIDPEntries-struct"/>
+    <function name="lasso_lib_idp_entries_new ()" link="LassoLibIDPEntries.html#lasso-lib-idp-entries-new"/>
+    <function name="LassoLibIDPEntry" link="LassoLibIDPEntry.html#LassoLibIDPEntry-struct"/>
+    <function name="lasso_lib_idp_entry_new ()" link="LassoLibIDPEntry.html#lasso-lib-idp-entry-new"/>
+    <function name="LassoLibIDPList" link="LassoLibIDPList.html#LassoLibIDPList-struct"/>
+    <function name="lasso_lib_idp_list_new ()" link="LassoLibIDPList.html#lasso-lib-idp-list-new"/>
+    <function name="LassoLibLogoutRequest" link="LassoLibLogoutRequest.html#LassoLibLogoutRequest-struct"/>
+    <function name="lasso_lib_logout_request_new ()" link="LassoLibLogoutRequest.html#lasso-lib-logout-request-new"/>
+    <function name="lasso_lib_logout_request_new_full ()" link="LassoLibLogoutRequest.html#lasso-lib-logout-request-new-full"/>
+    <function name="LassoLibLogoutResponse" link="LassoLibLogoutResponse.html#LassoLibLogoutResponse-struct"/>
+    <function name="lasso_lib_logout_response_new ()" link="LassoLibLogoutResponse.html#lasso-lib-logout-response-new"/>
+    <function name="lasso_lib_logout_response_new_full ()" link="LassoLibLogoutResponse.html#lasso-lib-logout-response-new-full"/>
+    <function name="LassoLibNameIdentifierMappingRequest" link="LassoLibNameIdentifierMappingRequest.html#LassoLibNameIdentifierMappingRequest-struct"/>
+    <function name="lasso_lib_name_identifier_mapping_request_new ()" link="LassoLibNameIdentifierMappingRequest.html#lasso-lib-name-identifier-mapping-request-new"/>
+    <function name="lasso_lib_name_identifier_mapping_request_new_full ()" link="LassoLibNameIdentifierMappingRequest.html#lasso-lib-name-identifier-mapping-request-new-full"/>
+    <function name="LassoLibNameIdentifierMappingResponse" link="LassoLibNameIdentifierMappingResponse.html#LassoLibNameIdentifierMappingResponse-struct"/>
+    <function name="lasso_lib_name_identifier_mapping_response_new ()" link="LassoLibNameIdentifierMappingResponse.html#lasso-lib-name-identifier-mapping-response-new"/>
+    <function name="lasso_lib_name_identifier_mapping_response_new_full ()" link="LassoLibNameIdentifierMappingResponse.html#lasso-lib-name-identifier-mapping-response-new-full"/>
+    <function name="LassoLibRegisterNameIdentifierRequest" link="LassoLibRegisterNameIdentifierRequest.html#LassoLibRegisterNameIdentifierRequest-struct"/>
+    <function name="lasso_lib_register_name_identifier_request_new ()" link="LassoLibRegisterNameIdentifierRequest.html#lasso-lib-register-name-identifier-request-new"/>
+    <function name="lasso_lib_register_name_identifier_request_new_full ()" link="LassoLibRegisterNameIdentifierRequest.html#lasso-lib-register-name-identifier-request-new-full"/>
+    <function name="LassoLibRegisterNameIdentifierResponse" link="LassoLibRegisterNameIdentifierResponse.html#LassoLibRegisterNameIdentifierResponse-struct"/>
+    <function name="lasso_lib_register_name_identifier_response_new ()" link="LassoLibRegisterNameIdentifierResponse.html#lasso-lib-register-name-identifier-response-new"/>
+    <function name="lasso_lib_register_name_identifier_response_new_full ()" link="LassoLibRegisterNameIdentifierResponse.html#lasso-lib-register-name-identifier-response-new-full"/>
+    <function name="LassoLibRequestAuthnContext" link="LassoLibRequestAuthnContext.html#LassoLibRequestAuthnContext-struct"/>
+    <function name="lasso_lib_request_authn_context_new ()" link="LassoLibRequestAuthnContext.html#lasso-lib-request-authn-context-new"/>
+    <function name="LassoLibScoping" link="LassoLibScoping.html#LassoLibScoping-struct"/>
+    <function name="lasso_lib_scoping_new ()" link="LassoLibScoping.html#lasso-lib-scoping-new"/>
+    <function name="LassoLibStatusResponse" link="LassoLibStatusResponse.html#LassoLibStatusResponse-struct"/>
+    <function name="lasso_lib_status_response_new ()" link="LassoLibStatusResponse.html#lasso-lib-status-response-new"/>
+    <function name="LassoLibSubject" link="LassoLibSubject.html#LassoLibSubject-struct"/>
+    <function name="lasso_lib_subject_new ()" link="LassoLibSubject.html#lasso-lib-subject-new"/>
+    <function name="LassoSamlAdvice" link="LassoSamlAdvice.html#LassoSamlAdvice-struct"/>
+    <function name="lasso_saml_advice_new ()" link="LassoSamlAdvice.html#lasso-saml-advice-new"/>
+    <function name="LassoSamlAssertion" link="LassoSamlAssertion.html#LassoSamlAssertion-struct"/>
+    <function name="lasso_saml_assertion_new ()" link="LassoSamlAssertion.html#lasso-saml-assertion-new"/>
+    <function name="LassoSamlAudienceRestrictionCondition" link="LassoSamlAudienceRestrictionCondition.html#LassoSamlAudienceRestrictionCondition-struct"/>
+    <function name="LassoSamlAuthenticationStatement" link="LassoSamlAuthenticationStatement.html#LassoSamlAuthenticationStatement-struct"/>
+    <function name="lasso_saml_authentication_statement_new ()" link="LassoSamlAuthenticationStatement.html#lasso-saml-authentication-statement-new"/>
+    <function name="LassoSamlAuthorityBinding" link="LassoSamlAuthorityBinding.html#LassoSamlAuthorityBinding-struct"/>
+    <function name="lasso_saml_authority_binding_new ()" link="LassoSamlAuthorityBinding.html#lasso-saml-authority-binding-new"/>
+    <function name="LassoSamlConditionAbstract" link="LassoSamlConditionAbstract.html#LassoSamlConditionAbstract-struct"/>
+    <function name="LassoSamlConditions" link="LassoSamlConditions.html#LassoSamlConditions-struct"/>
+    <function name="lasso_saml_conditions_new ()" link="LassoSamlConditions.html#lasso-saml-conditions-new"/>
+    <function name="LassoSamlNameIdentifier" link="LassoSamlNameIdentifier.html#LassoSamlNameIdentifier-struct"/>
+    <function name="lasso_saml_name_identifier_new ()" link="LassoSamlNameIdentifier.html#lasso-saml-name-identifier-new"/>
+    <function name="LassoSamlStatementAbstract" link="LassoSamlStatementAbstract.html#LassoSamlStatementAbstract-struct"/>
+    <function name="LassoSamlSubject" link="LassoSamlSubject.html#LassoSamlSubject-struct"/>
+    <function name="lasso_saml_subject_new ()" link="LassoSamlSubject.html#lasso-saml-subject-new"/>
+    <function name="LassoSamlSubjectConfirmation" link="LassoSamlSubjectConfirmation.html#LassoSamlSubjectConfirmation-struct"/>
+    <function name="lasso_saml_subject_confirmation_new ()" link="LassoSamlSubjectConfirmation.html#lasso-saml-subject-confirmation-new"/>
+    <function name="LassoSamlSubjectLocality" link="LassoSamlSubjectLocality.html#LassoSamlSubjectLocality-struct"/>
+    <function name="lasso_saml_subject_locality_new ()" link="LassoSamlSubjectLocality.html#lasso-saml-subject-locality-new"/>
+    <function name="LassoSamlSubjectStatementAbstract" link="LassoSamlSubjectStatementAbstract.html#LassoSamlSubjectStatementAbstract-struct"/>
+    <function name="LassoSamlpRequest" link="LassoSamlpRequest.html#LassoSamlpRequest-struct"/>
+    <function name="lasso_samlp_request_new ()" link="LassoSamlpRequest.html#lasso-samlp-request-new"/>
+    <function name="LassoSamlpRequestAbstract" link="LassoSamlpRequestAbstract.html#LassoSamlpRequestAbstract-struct"/>
+    <function name="LassoSamlpResponse" link="LassoSamlpResponse.html#LassoSamlpResponse-struct"/>
+    <function name="lasso_samlp_response_new ()" link="LassoSamlpResponse.html#lasso-samlp-response-new"/>
+    <function name="LassoSamlpResponseAbstract" link="LassoSamlpResponseAbstract.html#LassoSamlpResponseAbstract-struct"/>
+    <function name="LassoSamlpStatus" link="LassoSamlpStatus.html#LassoSamlpStatus-struct"/>
+    <function name="lasso_samlp_status_new ()" link="LassoSamlpStatus.html#lasso-samlp-status-new"/>
+    <function name="LassoSamlpStatusCode" link="LassoSamlpStatusCode.html#LassoSamlpStatusCode-struct"/>
+    <function name="lasso_samlp_status_code_new ()" link="LassoSamlpStatusCode.html#lasso-samlp-status-code-new"/>
+    <function name="LassoSaml2Action" link="lasso-LassoSaml2Action.html#LassoSaml2Action"/>
+    <function name="lasso_saml2_action_new ()" link="lasso-LassoSaml2Action.html#lasso-saml2-action-new"/>
+    <function name="LassoSaml2Advice" link="lasso-LassoSaml2Advice.html#LassoSaml2Advice"/>
+    <function name="lasso_saml2_advice_new ()" link="lasso-LassoSaml2Advice.html#lasso-saml2-advice-new"/>
+    <function name="LassoSaml2Assertion" link="lasso-LassoSaml2Assertion.html#LassoSaml2Assertion"/>
+    <function name="lasso_saml2_assertion_new ()" link="lasso-LassoSaml2Assertion.html#lasso-saml2-assertion-new"/>
+    <function name="LassoSaml2Attribute" link="lasso-LassoSaml2Attribute.html#LassoSaml2Attribute"/>
+    <function name="lasso_saml2_attribute_new ()" link="lasso-LassoSaml2Attribute.html#lasso-saml2-attribute-new"/>
+    <function name="LassoSaml2AttributeStatement" link="lasso-LassoSaml2AttributeStatement.html#LassoSaml2AttributeStatement"/>
+    <function name="lasso_saml2_attribute_statement_new ()" link="lasso-LassoSaml2AttributeStatement.html#lasso-saml2-attribute-statement-new"/>
+    <function name="LassoSaml2AudienceRestriction" link="lasso-LassoSaml2AudienceRestriction.html#LassoSaml2AudienceRestriction"/>
+    <function name="lasso_saml2_audience_restriction_new ()" link="lasso-LassoSaml2AudienceRestriction.html#lasso-saml2-audience-restriction-new"/>
+    <function name="LassoSaml2AuthnContext" link="lasso-LassoSaml2AuthnContext.html#LassoSaml2AuthnContext"/>
+    <function name="lasso_saml2_authn_context_new ()" link="lasso-LassoSaml2AuthnContext.html#lasso-saml2-authn-context-new"/>
+    <function name="LassoSaml2AuthnStatement" link="lasso-LassoSaml2AuthnStatement.html#LassoSaml2AuthnStatement"/>
+    <function name="lasso_saml2_authn_statement_new ()" link="lasso-LassoSaml2AuthnStatement.html#lasso-saml2-authn-statement-new"/>
+    <function name="LassoSaml2AuthzDecisionStatement" link="lasso-LassoSaml2AuthzDecisionStatement.html#LassoSaml2AuthzDecisionStatement"/>
+    <function name="lasso_saml2_authz_decision_statement_new ()" link="lasso-LassoSaml2AuthzDecisionStatement.html#lasso-saml2-authz-decision-statement-new"/>
+    <function name="LassoSaml2BaseIDAbstract" link="lasso-LassoSaml2BaseIDAbstract.html#LassoSaml2BaseIDAbstract"/>
+    <function name="lasso_saml2_base_idabstract_new ()" link="lasso-LassoSaml2BaseIDAbstract.html#lasso-saml2-base-idabstract-new"/>
+    <function name="LassoSaml2ConditionAbstract" link="lasso-LassoSaml2ConditionAbstract.html#LassoSaml2ConditionAbstract"/>
+    <function name="lasso_saml2_condition_abstract_new ()" link="lasso-LassoSaml2ConditionAbstract.html#lasso-saml2-condition-abstract-new"/>
+    <function name="LassoSaml2Conditions" link="lasso-LassoSaml2Conditions.html#LassoSaml2Conditions"/>
+    <function name="lasso_saml2_conditions_new ()" link="lasso-LassoSaml2Conditions.html#lasso-saml2-conditions-new"/>
+    <function name="LassoSaml2EncryptedElement" link="lasso-LassoSaml2EncryptedElement.html#LassoSaml2EncryptedElement"/>
+    <function name="lasso_saml2_encrypted_element_new ()" link="lasso-LassoSaml2EncryptedElement.html#lasso-saml2-encrypted-element-new"/>
+    <function name="LassoSaml2Evidence" link="lasso-LassoSaml2Evidence.html#LassoSaml2Evidence"/>
+    <function name="lasso_saml2_evidence_new ()" link="lasso-LassoSaml2Evidence.html#lasso-saml2-evidence-new"/>
+    <function name="LassoSaml2KeyInfoConfirmationData" link="lasso-LassoSaml2KeyInfoConfirmationData.html#LassoSaml2KeyInfoConfirmationData"/>
+    <function name="lasso_saml2_key_info_confirmation_data_new ()" link="lasso-LassoSaml2KeyInfoConfirmationData.html#lasso-saml2-key-info-confirmation-data-new"/>
+    <function name="LassoSaml2NameID" link="lasso-LassoSaml2NameID.html#LassoSaml2NameID"/>
+    <function name="lasso_saml2_name_id_new ()" link="lasso-LassoSaml2NameID.html#lasso-saml2-name-id-new"/>
+    <function name="LassoSaml2OneTimeUse" link="lasso-LassoSaml2OneTimeUse.html#LassoSaml2OneTimeUse"/>
+    <function name="lasso_saml2_one_time_use_new ()" link="lasso-LassoSaml2OneTimeUse.html#lasso-saml2-one-time-use-new"/>
+    <function name="LassoSaml2ProxyRestriction" link="lasso-LassoSaml2ProxyRestriction.html#LassoSaml2ProxyRestriction"/>
+    <function name="lasso_saml2_proxy_restriction_new ()" link="lasso-LassoSaml2ProxyRestriction.html#lasso-saml2-proxy-restriction-new"/>
+    <function name="LassoSaml2StatementAbstract" link="lasso-LassoSaml2StatementAbstract.html#LassoSaml2StatementAbstract"/>
+    <function name="lasso_saml2_statement_abstract_new ()" link="lasso-LassoSaml2StatementAbstract.html#lasso-saml2-statement-abstract-new"/>
+    <function name="LassoSaml2SubjectConfirmationData" link="lasso-LassoSaml2SubjectConfirmationData.html#LassoSaml2SubjectConfirmationData"/>
+    <function name="lasso_saml2_subject_confirmation_data_new ()" link="lasso-LassoSaml2SubjectConfirmationData.html#lasso-saml2-subject-confirmation-data-new"/>
+    <function name="LassoSaml2SubjectConfirmation" link="lasso-LassoSaml2SubjectConfirmation.html#LassoSaml2SubjectConfirmation"/>
+    <function name="lasso_saml2_subject_confirmation_new ()" link="lasso-LassoSaml2SubjectConfirmation.html#lasso-saml2-subject-confirmation-new"/>
+    <function name="LassoSaml2Subject" link="lasso-LassoSaml2Subject.html#LassoSaml2Subject"/>
+    <function name="lasso_saml2_subject_new ()" link="lasso-LassoSaml2Subject.html#lasso-saml2-subject-new"/>
+    <function name="LassoSaml2SubjectLocality" link="lasso-LassoSaml2SubjectLocality.html#LassoSaml2SubjectLocality"/>
+    <function name="lasso_saml2_subject_locality_new ()" link="lasso-LassoSaml2SubjectLocality.html#lasso-saml2-subject-locality-new"/>
+    <function name="LassoSamlp2ArtifactResolve" link="lasso-LassoSamlp2ArtifactResolve.html#LassoSamlp2ArtifactResolve"/>
+    <function name="lasso_samlp2_artifact_resolve_new ()" link="lasso-LassoSamlp2ArtifactResolve.html#lasso-samlp2-artifact-resolve-new"/>
+    <function name="LassoSamlp2ArtifactResponse" link="lasso-LassoSamlp2ArtifactResponse.html#LassoSamlp2ArtifactResponse"/>
+    <function name="lasso_samlp2_artifact_response_new ()" link="lasso-LassoSamlp2ArtifactResponse.html#lasso-samlp2-artifact-response-new"/>
+    <function name="LassoSamlp2AssertionIDRequest" link="lasso-LassoSamlp2AssertionIDRequest.html#LassoSamlp2AssertionIDRequest"/>
+    <function name="LassoSamlp2AttributeQuery" link="lasso-LassoSamlp2AttributeQuery.html#LassoSamlp2AttributeQuery"/>
+    <function name="lasso_samlp2_attribute_query_new ()" link="lasso-LassoSamlp2AttributeQuery.html#lasso-samlp2-attribute-query-new"/>
+    <function name="LassoSamlp2AuthnQuery" link="lasso-LassoSamlp2AuthnQuery.html#LassoSamlp2AuthnQuery"/>
+    <function name="lasso_samlp2_authn_query_new ()" link="lasso-LassoSamlp2AuthnQuery.html#lasso-samlp2-authn-query-new"/>
+    <function name="LassoSamlp2AuthnRequest" link="lasso-LassoSamlp2AuthnRequest.html#LassoSamlp2AuthnRequest"/>
+    <function name="lasso_samlp2_authn_request_new ()" link="lasso-LassoSamlp2AuthnRequest.html#lasso-samlp2-authn-request-new"/>
+    <function name="LassoSamlp2AuthzDecisionQuery" link="lasso-LassoSamlp2AuthzDecisionQuery.html#LassoSamlp2AuthzDecisionQuery"/>
+    <function name="lasso_samlp2_authz_decision_query_new ()" link="lasso-LassoSamlp2AuthzDecisionQuery.html#lasso-samlp2-authz-decision-query-new"/>
+    <function name="LassoSamlp2Extensions" link="lasso-LassoSamlp2Extensions.html#LassoSamlp2Extensions"/>
+    <function name="lasso_samlp2_extensions_new ()" link="lasso-LassoSamlp2Extensions.html#lasso-samlp2-extensions-new"/>
+    <function name="LassoSamlp2IDPEntry" link="lasso-LassoSamlp2IDPEntry.html#LassoSamlp2IDPEntry"/>
+    <function name="lasso_samlp2_idp_entry_new ()" link="lasso-LassoSamlp2IDPEntry.html#lasso-samlp2-idp-entry-new"/>
+    <function name="LassoSamlp2IDPList" link="lasso-LassoSamlp2IDPList.html#LassoSamlp2IDPList"/>
+    <function name="lasso_samlp2_idp_list_new ()" link="lasso-LassoSamlp2IDPList.html#lasso-samlp2-idp-list-new"/>
+    <function name="LassoSamlp2LogoutRequest" link="lasso-LassoSamlp2LogoutRequest.html#LassoSamlp2LogoutRequest"/>
+    <function name="lasso_samlp2_logout_request_new ()" link="lasso-LassoSamlp2LogoutRequest.html#lasso-samlp2-logout-request-new"/>
+    <function name="LassoSamlp2LogoutResponse" link="lasso-LassoSamlp2LogoutResponse.html#LassoSamlp2LogoutResponse"/>
+    <function name="lasso_samlp2_logout_response_new ()" link="lasso-LassoSamlp2LogoutResponse.html#lasso-samlp2-logout-response-new"/>
+    <function name="LassoSamlp2ManageNameIDRequest" link="lasso-LassoSamlp2ManageNameIDRequest.html#LassoSamlp2ManageNameIDRequest"/>
+    <function name="lasso_samlp2_manage_name_id_request_new ()" link="lasso-LassoSamlp2ManageNameIDRequest.html#lasso-samlp2-manage-name-id-request-new"/>
+    <function name="LassoSamlp2ManageNameIDResponse" link="lasso-LassoSamlp2ManageNameIDResponse.html#LassoSamlp2ManageNameIDResponse"/>
+    <function name="lasso_samlp2_manage_name_id_response_new ()" link="lasso-LassoSamlp2ManageNameIDResponse.html#lasso-samlp2-manage-name-id-response-new"/>
+    <function name="LassoSamlp2NameIDMappingRequest" link="lasso-LassoSamlp2NameIDMappingRequest.html#LassoSamlp2NameIDMappingRequest"/>
+    <function name="lasso_samlp2_name_id_mapping_request_new ()" link="lasso-LassoSamlp2NameIDMappingRequest.html#lasso-samlp2-name-id-mapping-request-new"/>
+    <function name="LassoSamlp2NameIDMappingResponse" link="lasso-LassoSamlp2NameIDMappingResponse.html#LassoSamlp2NameIDMappingResponse"/>
+    <function name="lasso_samlp2_name_id_mapping_response_new ()" link="lasso-LassoSamlp2NameIDMappingResponse.html#lasso-samlp2-name-id-mapping-response-new"/>
+    <function name="LassoSamlp2NameIDPolicy" link="lasso-LassoSamlp2NameIDPolicy.html#LassoSamlp2NameIDPolicy"/>
+    <function name="lasso_samlp2_name_id_policy_new ()" link="lasso-LassoSamlp2NameIDPolicy.html#lasso-samlp2-name-id-policy-new"/>
+    <function name="LassoSamlp2RequestAbstract" link="lasso-LassoSamlp2RequestAbstract.html#LassoSamlp2RequestAbstract"/>
+    <function name="lasso_samlp2_request_abstract_new ()" link="lasso-LassoSamlp2RequestAbstract.html#lasso-samlp2-request-abstract-new"/>
+    <function name="LassoSamlp2RequestedAuthnContext" link="lasso-LassoSamlp2RequestedAuthnContext.html#LassoSamlp2RequestedAuthnContext"/>
+    <function name="lasso_samlp2_requested_authn_context_new ()" link="lasso-LassoSamlp2RequestedAuthnContext.html#lasso-samlp2-requested-authn-context-new"/>
+    <function name="LassoSamlp2Response" link="lasso-LassoSamlp2Response.html#LassoSamlp2Response"/>
+    <function name="lasso_samlp2_response_new ()" link="lasso-LassoSamlp2Response.html#lasso-samlp2-response-new"/>
+    <function name="LassoSamlp2Scoping" link="lasso-LassoSamlp2Scoping.html#LassoSamlp2Scoping"/>
+    <function name="lasso_samlp2_scoping_new ()" link="lasso-LassoSamlp2Scoping.html#lasso-samlp2-scoping-new"/>
+    <function name="LassoSamlp2Status" link="lasso-LassoSamlp2Status.html#LassoSamlp2Status"/>
+    <function name="lasso_samlp2_status_new ()" link="lasso-LassoSamlp2Status.html#lasso-samlp2-status-new"/>
+    <function name="LassoSamlp2StatusCode" link="lasso-LassoSamlp2StatusCode.html#LassoSamlp2StatusCode"/>
+    <function name="lasso_samlp2_status_code_new ()" link="lasso-LassoSamlp2StatusCode.html#lasso-samlp2-status-code-new"/>
+    <function name="LassoSamlp2StatusDetail" link="lasso-LassoSamlp2StatusDetail.html#LassoSamlp2StatusDetail"/>
+    <function name="lasso_samlp2_status_detail_new ()" link="lasso-LassoSamlp2StatusDetail.html#lasso-samlp2-status-detail-new"/>
+    <function name="LassoSamlp2StatusResponse" link="lasso-LassoSamlp2StatusResponse.html#LassoSamlp2StatusResponse"/>
+    <function name="lasso_samlp2_status_response_new ()" link="lasso-LassoSamlp2StatusResponse.html#lasso-samlp2-status-response-new"/>
+    <function name="LassoSamlp2SubjectQueryAbstract" link="lasso-LassoSamlp2SubjectQueryAbstract.html#LassoSamlp2SubjectQueryAbstract"/>
+    <function name="lasso_samlp2_subject_query_abstract_new ()" link="lasso-LassoSamlp2SubjectQueryAbstract.html#lasso-samlp2-subject-query-abstract-new"/>
+    <function name="LassoSamlp2Terminate" link="lasso-LassoSamlp2Terminate.html#LassoSamlp2Terminate"/>
+    <function name="lasso_samlp2_terminate_new ()" link="lasso-LassoSamlp2Terminate.html#lasso-samlp2-terminate-new"/>
+    <function name="LassoNode" link="LassoNode.html#LassoNode-struct"/>
+    <function name="enum LassoSignatureType" link="LassoNode.html#LassoSignatureType"/>
+    <function name="enum LassoSignatureMethod" link="LassoNode.html#LassoSignatureMethod"/>
+    <function name="lasso_node_new ()" link="LassoNode.html#lasso-node-new"/>
+    <function name="lasso_node_new_from_dump ()" link="LassoNode.html#lasso-node-new-from-dump"/>
+    <function name="lasso_node_new_from_xmlNode ()" link="LassoNode.html#lasso-node-new-from-xmlNode"/>
+    <function name="lasso_node_new_from_soap ()" link="LassoNode.html#lasso-node-new-from-soap"/>
+    <function name="lasso_node_destroy ()" link="LassoNode.html#lasso-node-destroy"/>
+    <function name="lasso_node_dump ()" link="LassoNode.html#lasso-node-dump"/>
+    <function name="lasso_node_export_to_base64 ()" link="LassoNode.html#lasso-node-export-to-base64"/>
+    <function name="lasso_node_export_to_query ()" link="LassoNode.html#lasso-node-export-to-query"/>
+    <function name="lasso_node_export_to_soap ()" link="LassoNode.html#lasso-node-export-to-soap"/>
+    <function name="lasso_node_get_xmlNode ()" link="LassoNode.html#lasso-node-get-xmlNode"/>
+    <function name="lasso_node_init_from_message ()" link="LassoNode.html#lasso-node-init-from-message"/>
+    <function name="enum LassoMessageFormat" link="LassoNode.html#LassoMessageFormat"/>
+    <function name="lasso_node_init_from_query ()" link="LassoNode.html#lasso-node-init-from-query"/>
+    <function name="lasso_node_init_from_xml ()" link="LassoNode.html#lasso-node-init-from-xml"/>
+    <function name="lasso_init ()" link="lasso-lasso.html#lasso-init"/>
+    <function name="lasso_shutdown ()" link="lasso-lasso.html#lasso-shutdown"/>
+    <function name="lasso_check_version ()" link="lasso-lasso.html#lasso-check-version"/>
+    <function name="enum LassoCheckVersionMode" link="lasso-lasso.html#LassoCheckVersionMode"/>
+    <function name="lasso_register_dst_service ()" link="lasso-lasso.html#lasso-register-dst-service"/>
+    <function name="LASSO_LIB_NAME_IDENTIFIER_FORMAT_FEDERATED" link="lasso-strings.html#LASSO-LIB-NAME-IDENTIFIER-FORMAT-FEDERATED:CAPS"/>
+    <function name="LASSO_LIB_NAME_IDENTIFIER_FORMAT_ONE_TIME" link="lasso-strings.html#LASSO-LIB-NAME-IDENTIFIER-FORMAT-ONE-TIME:CAPS"/>
+    <function name="LASSO_LIB_NAME_IDENTIFIER_FORMAT_ENCRYPTED" link="lasso-strings.html#LASSO-LIB-NAME-IDENTIFIER-FORMAT-ENCRYPTED:CAPS"/>
+    <function name="LASSO_LIB_NAME_IDENTIFIER_FORMAT_ENTITYID" link="lasso-strings.html#LASSO-LIB-NAME-IDENTIFIER-FORMAT-ENTITYID:CAPS"/>
+    <function name="LASSO_LIB_NAMEID_POLICY_TYPE_NONE" link="lasso-strings.html#LASSO-LIB-NAMEID-POLICY-TYPE-NONE:CAPS"/>
+    <function name="LASSO_LIB_NAMEID_POLICY_TYPE_ONE_TIME" link="lasso-strings.html#LASSO-LIB-NAMEID-POLICY-TYPE-ONE-TIME:CAPS"/>
+    <function name="LASSO_LIB_NAMEID_POLICY_TYPE_FEDERATED" link="lasso-strings.html#LASSO-LIB-NAMEID-POLICY-TYPE-FEDERATED:CAPS"/>
+    <function name="LASSO_LIB_NAMEID_POLICY_TYPE_ANY" link="lasso-strings.html#LASSO-LIB-NAMEID-POLICY-TYPE-ANY:CAPS"/>
+    <function name="LASSO_LIB_PROTOCOL_PROFILE_BRWS_ART" link="lasso-strings.html#LASSO-LIB-PROTOCOL-PROFILE-BRWS-ART:CAPS"/>
+    <function name="LASSO_LIB_PROTOCOL_PROFILE_BRWS_POST" link="lasso-strings.html#LASSO-LIB-PROTOCOL-PROFILE-BRWS-POST:CAPS"/>
+  </functions>
+</book>

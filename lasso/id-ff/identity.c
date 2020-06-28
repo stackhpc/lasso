@@ -1,4 +1,4 @@
-/* $Id: identity.c 3273 2007-06-07 15:31:56Z fpeters $
+/* $Id: identity.c 3727 2008-05-21 23:29:14Z dlaniel $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -21,6 +21,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
+/**
+ * SECTION:identity
+ * @short_description: Principal identity
+ *
+ **/
 
 #include <lasso/lasso_config.h>
 #include <lasso/id-ff/identity.h>
@@ -402,7 +408,7 @@ dispose(GObject *object)
 	identity->private_data->dispose_has_run = TRUE;
 
 	if (identity->private_data->svcMDID != NULL) {
-		/* XXX: must fix content */
+		g_list_foreach(identity->private_data->svcMDID, (GFunc)g_free, NULL);
 		g_list_free(identity->private_data->svcMDID);
 		identity->private_data->svcMDID = NULL;
 	}

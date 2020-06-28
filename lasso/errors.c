@@ -1,4 +1,4 @@
-/* $Id: errors.c 3418 2007-09-21 17:02:17Z fpeters $ 
+/* $Id: errors.c 3693 2008-04-30 10:14:06Z bdauvergne $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -186,6 +186,8 @@ lasso_strerror(int error_code)
 			return "No default endpoint";
 		case LASSO_LOGIN_ERROR_ASSERTION_REPLAY:
 			return "Assertion replay";
+                case LASSO_LOGIN_ERROR_STATUS_NOT_SUCCESS:
+			return "Status code is not success";
 
 		case LASSO_SOAP_FAULT_REDIRECT_REQUEST:
 			return "Redirect request from Attribute Provider";

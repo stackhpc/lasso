@@ -1,4 +1,4 @@
-/* $Id: saml2_name_id.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: saml2_name_id.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,8 +24,12 @@
 
 #include "saml2_name_id.h"
 
-/*
- * Schema fragment (saml-schema-assertion-2.0.xsd):
+/**
+ * SECTION:saml2_name_id
+ * @short_description: &lt;saml2:NameID&gt;
+ *
+ * <figure><title>Schema fragment for saml2:NameID</title>
+ * <programlisting><![CDATA[
  *
  * <complexType name="NameIDType">
  *   <simpleContent>
@@ -36,6 +40,8 @@
  *     </extension>
  *   </simpleContent>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

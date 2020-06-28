@@ -1,4 +1,4 @@
-/* $Id: lib_register_name_identifier_response.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: lib_register_name_identifier_response.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,10 +24,15 @@
 
 #include <lasso/xml/lib_register_name_identifier_response.h>
 
-/*
- * Schema fragment (liberty-idff-protocols-schema-v1.2.xsd):
- * 
+/**
+ * SECTION:lib_register_name_identifier_response
+ * @short_description: &lt;lib:RegisterNameIdentifierResponse&gt;
+ *
+ * <figure><title>Schema fragment for lib:RegisterNameIdentifierResponse</title>
+ * <programlisting><![CDATA[
  * <xs:element name="RegisterNameIdentifierResponse" type="StatusResponseType"/>
+ * ]]></programlisting>
+ * </figure>
  */
 
 

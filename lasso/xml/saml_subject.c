@@ -1,4 +1,4 @@
-/* $Id: saml_subject.c 3457 2007-12-05 10:48:49Z dlaniel $
+/* $Id: saml_subject.c 3704 2008-05-15 21:17:44Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/saml_subject.h>
 
-/*
- * Schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
+/**
+ * SECTION:saml_subject
+ * @short_description: &lt;saml:Subject&gt;
+ *
+ * <figure><title>Schema fragment for saml:Subject</title>
+ * <programlisting><![CDATA[
  * 
  * <element name="Subject" type="saml:SubjectType"/>
  * <complexType name="SubjectType">
@@ -37,6 +41,8 @@
  *     <element ref="saml:SubjectConfirmation"/>
  *   </choice>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

@@ -1,4 +1,4 @@
-/* $Id: saml2_statement_abstract.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: saml2_statement_abstract.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,8 +24,12 @@
 
 #include "saml2_statement_abstract.h"
 
-/*
- * Schema fragment (saml-schema-assertion-2.0.xsd):
+/**
+ * SECTION:saml2_statement_abstract
+ * @short_description: &lt;saml2:StatementAbstract&gt;
+ *
+ * <figure><title>Schema fragment for saml2:StatementAbstract</title>
+ * <programlisting><![CDATA[
  *
  * <complexType name="StatementAbstractType" abstract="true"/>
  * <element name="AuthnStatement" type="saml:AuthnStatementType"/>
@@ -42,6 +46,8 @@
  *     </extension>
  *   </complexContent>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

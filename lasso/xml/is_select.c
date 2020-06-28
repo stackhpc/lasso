@@ -1,4 +1,4 @@
-/* $Id: is_select.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: is_select.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/is_select.h>
 
-/*
- * Schema fragments (liberty-idwsf-interaction-svc-v1.0.xsd):
+/**
+ * SECTION:is_select
+ * @short_description: &lt;is:Select&gt;
+ *
+ * <figure><title>Schema fragment for is:Select</title>
+ * <programlisting><![CDATA[
  *
  * <xs:element name="Select" type="SelectType"/>
  * <xs:complexType name="SelectType">
@@ -38,6 +42,8 @@
  *     </xs:extension>
  *   </xs:complexContent>
  * </xs:complexType>
+ * ]]></programlisting>
+ * </figure>
  */ 
 
 /*****************************************************************************/

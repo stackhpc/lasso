@@ -1,4 +1,4 @@
-/* $Id: sa_password_transforms.c 3237 2007-05-30 17:17:45Z dlaniel $
+/* $Id: sa_password_transforms.c 3704 2008-05-15 21:17:44Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/sa_password_transforms.h>
 
-/*
- * Schema fragments (liberty-idwsf-authn-svc-v1.0.xsd):
+/**
+ * SECTION:sa_password_transforms
+ * @short_description: &lt;sa:PasswordTransforms&gt;
+ *
+ * <figure><title>Schema fragment for sa:PasswordTransforms</title>
+ * <programlisting><![CDATA[
  *   <xs:element name="PasswordTransforms">
  *      <xs:annotation>
  *        <xs:documentation>
@@ -54,6 +58,8 @@
  *        </xs:sequence>
  *      </xs:complexType>
  *  </xs:element>
+ * ]]></programlisting>
+ * </figure>
  */ 
 
 /*****************************************************************************/

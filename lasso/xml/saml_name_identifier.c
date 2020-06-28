@@ -1,4 +1,4 @@
-/* $Id: saml_name_identifier.c 3237 2007-05-30 17:17:45Z dlaniel $
+/* $Id: saml_name_identifier.c 3704 2008-05-15 21:17:44Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -25,8 +25,12 @@
 #include <lasso/xml/saml_name_identifier.h>
 #include <libxml/uri.h>
 
-/*
- * Schema fragment (oasis-sstc-saml-schema-assertion-1.0.xsd):
+/**
+ * SECTION:saml_name_identifier
+ * @short_description: &lt;saml:NameIdentifier&gt;
+ *
+ * <figure><title>Schema fragment for saml:NameIdentifier</title>
+ * <programlisting><![CDATA[
  * 
  * <element name="NameIdentifier" type="saml:NameIdentifierType"/>
  * <complexType name="NameIdentifierType">
@@ -37,6 +41,8 @@
  *     </extension>
  *   </simpleContent>
  * </complexType>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/

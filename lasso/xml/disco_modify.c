@@ -1,4 +1,4 @@
-/* $Id: disco_modify.c 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: disco_modify.c 3704 2008-05-15 21:17:44Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -24,8 +24,12 @@
 
 #include <lasso/xml/disco_modify.h>
 
-/*
- * Schema fragment (liberty-idwsf-disco-svc-1.0-errata-v1.0.xsd):
+/**
+ * SECTION:disco_modify
+ * @short_description: &lt;disco:Modify&gt;
+ *
+ * <figure><title>Schema fragment for disco:Modify</title>
+ * <programlisting><![CDATA[
  * 
  * <xs:element name="Modify" type="ModifyType"/>
  * <xs:complexType name="ModifyType">
@@ -45,6 +49,8 @@
  *     </xs:choice>
  *   </xs:sequence>
  * </xs:group>
+ * ]]></programlisting>
+ * </figure>
  */
 
 /*****************************************************************************/
