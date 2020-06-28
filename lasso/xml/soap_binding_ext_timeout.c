@@ -1,4 +1,4 @@
-/* $Id: soap_binding_ext_timeout.c,v 1.1 2005/03/11 16:24:02 nclapies Exp $ 
+/* $Id: soap_binding_ext_timeout.c,v 1.2 2005/08/05 16:01:08 nclapies Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -58,7 +58,7 @@ static struct XmlSnippet schema_snippets[] = {
 static void
 instance_init(LassoSoapBindingExtTimeout *node)
 {
-	node->maxProcessingTime = NULL;
+	node->maxProcessingTime = 0;
 	node->id = NULL;
 	node->mustUnderstand = NULL;
 	node->actor = NULL;

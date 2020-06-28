@@ -286,6 +286,7 @@ _lasso_la_LIBADD = $(top_builddir)/lasso/liblasso.la $(LASSO_LIBS)
 @DARWIN_FALSE@@MINGW_FALSE@_lasso_la_LDFLAGS = -no-undefined -module -avoid-version
 @DARWIN_FALSE@@MINGW_TRUE@_lasso_la_LDFLAGS = -no-undefined -module -avoid-version -Wl,--add-stdcall-alias
 @DARWIN_TRUE@_lasso_la_LDFLAGS = -no-undefined -module -avoid-version -Wl,-F. -Wl,-F. -bundle -framework Python 
+SWIG_I_FILES = $(shell find $(top_srcdir)/swig/ -name '*.[ih]')
 SWIG_OUTPUTS = lasso_wrap.c lasso.py
 
 # In distribution, swig generated files are present.
@@ -612,12 +613,8 @@ uninstall-am: uninstall-info-am uninstall-pythonDATA \
 	tags uninstall uninstall-am uninstall-info-am \
 	uninstall-pythonDATA uninstall-pythonLTLIBRARIES
 
-lasso_wrap.c lasso.py: $(top_srcdir)/swig/Lasso.i $(top_srcdir)/swig/Lasso-wsf.i \
-		$(top_srcdir)/swig/inheritance.h
+lasso_wrap.c lasso.py: $(SWIG_I_FILES)
 	$(SWIG) -v -python -module lasso -o lasso_wrap.c $(top_srcdir)/swig/Lasso.i
-	cp lasso_wrap.c lasso_wrap.c.bak
-	sed -e 's/free(result)/g_free(result)/' \
-			< lasso_wrap.c.bak > lasso_wrap.c
 	cp lasso_wrap.c lasso_wrap.c.bak
 	sed -e 's/^  int res = 0;$$//' \
 			< lasso_wrap.c.bak > lasso_wrap.c

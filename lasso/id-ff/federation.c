@@ -1,4 +1,4 @@
-/* $Id: federation.c,v 1.17 2005/01/22 15:57:54 eraviart Exp $
+/* $Id: federation.c,v 1.18 2005/07/30 22:36:53 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -147,7 +147,7 @@ get_xmlNode(LassoNode *node, gboolean lasso_dump)
 	xmlNode *xmlnode;
 
 	xmlnode = parent_class->get_xmlNode(node, lasso_dump);
-	xmlSetProp(xmlnode, "FederationDumpVersion", "2");
+	xmlSetProp(xmlnode, (xmlChar*)"FederationDumpVersion", (xmlChar*)"2");
 
 	return xmlnode;
 }

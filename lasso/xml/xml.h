@@ -1,4 +1,4 @@
-/* $Id: xml.h,v 1.66 2005/02/21 14:28:52 fpeters Exp $ 
+/* $Id: xml.h,v 1.67 2005/09/11 09:08:31 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -144,6 +144,10 @@ LASSO_EXPORT gboolean lasso_node_init_from_query(LassoNode *node, const char *qu
 LASSO_EXPORT int lasso_node_init_from_xml(LassoNode *node, xmlNode *xmlnode);
 
 LASSO_EXPORT const char* lasso_strerror(int error_code);
+
+LASSO_EXPORT void lasso_register_dst_service(const char *prefix, const char *href);
+LASSO_EXPORT char* lasso_get_prefix_for_dst_service_href(const char *href);
+
 
 #ifdef LASSO_INTERNALS
 #include <lasso/xml/private.h>

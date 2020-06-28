@@ -1,4 +1,4 @@
-/* $Id: name_registration.c,v 1.72 2005/05/12 18:52:43 fpeters Exp $
+/* $Id: name_registration.c,v 1.73 2005/07/30 22:36:53 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -623,7 +623,7 @@ get_xmlNode(LassoNode *node, gboolean lasso_dump)
 	xmlNode *xmlnode;
 
 	xmlnode = parent_class->get_xmlNode(node, lasso_dump);
-	xmlSetProp(xmlnode, "NameRegistrationDumpVersion", "2");
+	xmlSetProp(xmlnode, (xmlChar*)"NameRegistrationDumpVersion", (xmlChar*)"2");
 
 	return xmlnode;
 }

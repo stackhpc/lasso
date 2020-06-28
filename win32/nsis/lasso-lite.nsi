@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "Liberty Alliance Single Sign On"
-!define PRODUCT_VERSION "0.6.2"
+!define PRODUCT_VERSION "0.6.3"
 !define PRODUCT_PUBLISHER "Entr'ouvert"
 !define PRODUCT_WEB_SITE "http://www.entrouvert.org"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
@@ -48,7 +48,7 @@ SetCompressor bzip2
 ; MUI end ------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "Install-lite-0_6_2.exe"
+OutFile "Install-lite-0_6_3.exe"
 InstallDir "$SYSDIR"
 ShowInstDetails show
 ShowUnInstDetails show
@@ -58,7 +58,7 @@ Function .onInit
   !insertmacro MUI_LANGDLL_DISPLAY
 FunctionEnd
 
-Section "Lasso version 0.6.2" SEC01
+Section "Lasso version 0.6.3" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
   File "..\..\lasso\.libs\liblasso-3.dll"

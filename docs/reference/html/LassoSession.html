@@ -1,4 +1,41 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>LassoSession</title><meta name="generator" content="DocBook XSL Stylesheets V1.68.1"><link rel="start" href="index.html" title="Lasso Reference Manual"><link rel="up" href="architecture.html" title="Lasso Architecture"><link rel="prev" href="LassoIdentity.html" title="LassoIdentity"><link rel="next" href="LassoFederation.html" title="LassoFederation"><meta name="generator" content="GTK-Doc V1.3 (XML mode)"><link rel="stylesheet" href="style.css" type="text/css"><link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview"><link rel="chapter" href="architecture.html" title="Lasso Architecture"><link rel="chapter" href="idff.html" title="Identity Federation Framework"><link rel="chapter" href="idwsf.html" title="Identity Web Services Framework"><link rel="chapter" href="xml.html" title="Schemas"><link rel="chapter" href="misc.html" title="Misc"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="LassoIdentity.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="architecture.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">Lasso Reference Manual</th><td><a accesskey="n" href="LassoFederation.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="LassoSession"></a><div class="titlepage"></div><div class="refnamediv"><table width="100%"><tr><td valign="top"><h2><span class="refentrytitle">LassoSession</span></h2><p>LassoSession &#8212; Principal Session</p></td><td valign="top" align="right"></td></tr></table></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>LassoSession</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.68.1">
+<link rel="start" href="index.html" title="Lasso Reference Manual">
+<link rel="up" href="architecture.html" title="Lasso Architecture">
+<link rel="prev" href="LassoIdentity.html" title="LassoIdentity">
+<link rel="next" href="LassoFederation.html" title="LassoFederation">
+<meta name="generator" content="GTK-Doc V1.4 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
+<link rel="chapter" href="architecture.html" title="Lasso Architecture">
+<link rel="chapter" href="idff.html" title="Identity Federation Framework">
+<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework">
+<link rel="chapter" href="xml.html" title="Schemas">
+<link rel="chapter" href="misc.html" title="Misc">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="LassoIdentity.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="architecture.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Lasso Reference Manual</th>
+<td><a accesskey="n" href="LassoFederation.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry" lang="en">
+<a name="LassoSession"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle">LassoSession</span></h2>
+<p>LassoSession &#8212; Principal Session</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<h2>Synopsis</h2>
+<pre class="synopsis">
 
 #include &lt;lasso/lasso.h&gt;
 
@@ -15,57 +52,239 @@
                                              <GTKDOCLINK HREF="gint">gint</GTKDOCLINK> index);
 <GTKDOCLINK HREF="gboolean">gboolean</GTKDOCLINK>    <a href="LassoSession.html#lasso-session-is-empty">lasso_session_is_empty</a>          (<a href="LassoSession.html" title="LassoSession">LassoSession</a> *session);
 
-</pre></div><div class="refsect1" lang="en"><a name="id2538825"></a><h2>Object Hierarchy</h2><pre class="synopsis">
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="id2523528"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
 
   <GTKDOCLINK HREF="GObject">GObject</GTKDOCLINK>
    +----<a href="LassoNode.html" title="LassoNode">LassoNode</a>
          +----LassoSession
-</pre></div><div class="refsect1" lang="en"><a name="id2538852"></a><h2>Description</h2><p>
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="id2523555"></a><h2>Description</h2>
+<p>
 
-</p></div><div class="refsect1" lang="en"><a name="id2538862"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2538867"></a><h3><a name="LassoSession-struct"></a>LassoSession</h3><a class="indexterm" name="id2538878"></a><pre class="programlisting">typedef struct {
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="id2523565"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="id2523570"></a><h3>
+<a name="LassoSession-struct"></a>LassoSession</h3>
+<a class="indexterm" name="id2523580"></a><pre class="programlisting">typedef struct {
 	GHashTable *assertions;
 	gboolean is_dirty;
 } LassoSession;
-</pre><p>
+</pre>
+<p>
 
-</p></div><hr><div class="refsect2" lang="en"><a name="id2538894"></a><h3><a name="lasso-session-new"></a>lasso_session_new ()</h3><a class="indexterm" name="id2538905"></a><pre class="programlisting"><a href="LassoSession.html" title="LassoSession">LassoSession</a>* lasso_session_new             (void);</pre><p>
-Creates a new <a href="LassoSession.html" title="LassoSession"><span class="type">LassoSession</span></a>.</p><p>
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2523597"></a><h3>
+<a name="lasso-session-new"></a>lasso_session_new ()</h3>
+<a class="indexterm" name="id2523607"></a><pre class="programlisting"><a href="LassoSession.html" title="LassoSession">LassoSession</a>* lasso_session_new             (void);</pre>
+<p>
+Creates a new <a href="LassoSession.html" title="LassoSession"><span class="type">LassoSession</span></a>.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a newly created <a href="LassoSession.html" title="LassoSession"><span class="type">LassoSession</span></a>
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2538961"></a><h3><a name="lasso-session-new-from-dump"></a>lasso_session_new_from_dump ()</h3><a class="indexterm" name="id2538973"></a><pre class="programlisting"><a href="LassoSession.html" title="LassoSession">LassoSession</a>* lasso_session_new_from_dump   (const <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *dump);</pre><p>
-Restores the <em class="parameter"><code>dump</code></em> to a new <a href="LassoSession.html" title="LassoSession"><span class="type">LassoSession</span></a>.</p><p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> a newly created <a href="LassoSession.html" title="LassoSession"><span class="type">LassoSession</span></a>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2523663"></a><h3>
+<a name="lasso-session-new-from-dump"></a>lasso_session_new_from_dump ()</h3>
+<a class="indexterm" name="id2523674"></a><pre class="programlisting"><a href="LassoSession.html" title="LassoSession">LassoSession</a>* lasso_session_new_from_dump   (const <GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK> *dump);</pre>
+<p>
+Restores the <em class="parameter"><code>dump</code></em> to a new <a href="LassoSession.html" title="LassoSession"><span class="type">LassoSession</span></a>.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>dump</code></em> :</span></td><td> XML server dump
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a newly created <a href="LassoSession.html" title="LassoSession"><span class="type">LassoSession</span></a>; or NULL if an error occured
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2539056"></a><h3><a name="lasso-session-destroy"></a>lasso_session_destroy ()</h3><a class="indexterm" name="id2539067"></a><pre class="programlisting"><GTKDOCLINK HREF="void">void</GTKDOCLINK>        lasso_session_destroy           (<a href="LassoSession.html" title="LassoSession">LassoSession</a> *session);</pre><p>
-Destroys a session.</p><p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>dump</code></em>&#160;:</span></td>
+<td> XML server dump
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> a newly created <a href="LassoSession.html" title="LassoSession"><span class="type">LassoSession</span></a>; or NULL if an error occured
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2523758"></a><h3>
+<a name="lasso-session-destroy"></a>lasso_session_destroy ()</h3>
+<a class="indexterm" name="id2523768"></a><pre class="programlisting"><GTKDOCLINK HREF="void">void</GTKDOCLINK>        lasso_session_destroy           (<a href="LassoSession.html" title="LassoSession">LassoSession</a> *session);</pre>
+<p>
+Destroys a session.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>session</code></em> :</span></td><td> a <a href="LassoSession.html" title="LassoSession"><span class="type">LassoSession</span></a>
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2539125"></a><h3><a name="lasso-session-dump"></a>lasso_session_dump ()</h3><a class="indexterm" name="id2539136"></a><pre class="programlisting"><GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK>*      lasso_session_dump              (<a href="LassoSession.html" title="LassoSession">LassoSession</a> *session);</pre><p>
-Dumps <em class="parameter"><code>session</code></em> content to an XML string.</p><p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td>
+<span class="term"><em class="parameter"><code>session</code></em>&#160;:</span></td>
+<td> a <a href="LassoSession.html" title="LassoSession"><span class="type">LassoSession</span></a>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2523826"></a><h3>
+<a name="lasso-session-dump"></a>lasso_session_dump ()</h3>
+<a class="indexterm" name="id2523837"></a><pre class="programlisting"><GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK>*      lasso_session_dump              (<a href="LassoSession.html" title="LassoSession">LassoSession</a> *session);</pre>
+<p>
+Dumps <em class="parameter"><code>session</code></em> content to an XML string.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>session</code></em> :</span></td><td> a <a href="LassoSession.html" title="LassoSession"><span class="type">LassoSession</span></a>
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> the dump string.  It must be freed by the caller.
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2539211"></a><h3><a name="lasso-session-get-assertions"></a>lasso_session_get_assertions ()</h3><a class="indexterm" name="id2539223"></a><pre class="programlisting"><GTKDOCLINK HREF="GList">GList</GTKDOCLINK>*      lasso_session_get_assertions    (<a href="LassoSession.html" title="LassoSession">LassoSession</a> *session,
-                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *provider_id);</pre><p>
-Gets the assertions for the given <em class="parameter"><code>provider_id</code></em>.</p><p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>session</code></em>&#160;:</span></td>
+<td> a <a href="LassoSession.html" title="LassoSession"><span class="type">LassoSession</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> the dump string.  It must be freed by the caller.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2523912"></a><h3>
+<a name="lasso-session-get-assertions"></a>lasso_session_get_assertions ()</h3>
+<a class="indexterm" name="id2523923"></a><pre class="programlisting"><GTKDOCLINK HREF="GList">GList</GTKDOCLINK>*      lasso_session_get_assertions    (<a href="LassoSession.html" title="LassoSession">LassoSession</a> *session,
+                                             const <GTKDOCLINK HREF="char">char</GTKDOCLINK> *provider_id);</pre>
+<p>
+Gets the assertions for the given <em class="parameter"><code>provider_id</code></em>.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>session</code></em> :</span></td><td> a <a href="LassoSession.html" title="LassoSession"><span class="type">LassoSession</span></a>
-</td></tr><tr><td><span class="term"><em class="parameter"><code>provider_id</code></em> :</span></td><td> the provider ID
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a GList* of <a href="LassoSamlAssertion.html" title="LassoSamlAssertion"><span class="type">LassoSamlAssertion</span></a>.  Caller must free the GList
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>session</code></em>&#160;:</span></td>
+<td> a <a href="LassoSession.html" title="LassoSession"><span class="type">LassoSession</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>provider_id</code></em>&#160;:</span></td>
+<td> the provider ID
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> a GList* of <a href="LassoSamlAssertion.html" title="LassoSamlAssertion"><span class="type">LassoSamlAssertion</span></a>.  Caller must free the GList
     and the assertions it contains.
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2539330"></a><h3><a name="lasso-session-get-provider-index"></a>lasso_session_get_provider_index ()</h3><a class="indexterm" name="id2539341"></a><pre class="programlisting"><GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK>*      lasso_session_get_provider_index
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2524029"></a><h3>
+<a name="lasso-session-get-provider-index"></a>lasso_session_get_provider_index ()</h3>
+<a class="indexterm" name="id2524040"></a><pre class="programlisting"><GTKDOCLINK HREF="gchar">gchar</GTKDOCLINK>*      lasso_session_get_provider_index
                                             (<a href="LassoSession.html" title="LassoSession">LassoSession</a> *session,
-                                             <GTKDOCLINK HREF="gint">gint</GTKDOCLINK> index);</pre><p>
-Looks up and returns the nth provider id.</p><p>
+                                             <GTKDOCLINK HREF="gint">gint</GTKDOCLINK> index);</pre>
+<p>
+Looks up and returns the nth provider id.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>session</code></em> :</span></td><td> a <a href="LassoSession.html" title="LassoSession"><span class="type">LassoSession</span></a>
-</td></tr><tr><td><span class="term"><em class="parameter"><code>index</code></em> :</span></td><td> index of requested provider
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> the provider id; or NULL if there were no nth provider.  This
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>session</code></em>&#160;:</span></td>
+<td> a <a href="LassoSession.html" title="LassoSession"><span class="type">LassoSession</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>index</code></em>&#160;:</span></td>
+<td> index of requested provider
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> the provider id; or NULL if there were no nth provider.  This
      string must be freed by the caller.
-</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2539435"></a><h3><a name="lasso-session-is-empty"></a>lasso_session_is_empty ()</h3><a class="indexterm" name="id2539446"></a><pre class="programlisting"><GTKDOCLINK HREF="gboolean">gboolean</GTKDOCLINK>    lasso_session_is_empty          (<a href="LassoSession.html" title="LassoSession">LassoSession</a> *session);</pre><p>
-Returns <code class="literal">TRUE</code> if session is empty.</p><p>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="id2524134"></a><h3>
+<a name="lasso-session-is-empty"></a>lasso_session_is_empty ()</h3>
+<a class="indexterm" name="id2524144"></a><pre class="programlisting"><GTKDOCLINK HREF="gboolean">gboolean</GTKDOCLINK>    lasso_session_is_empty          (<a href="LassoSession.html" title="LassoSession">LassoSession</a> *session);</pre>
+<p>
+Returns <code class="literal">TRUE</code> if session is empty.</p>
+<p>
 
-</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><em class="parameter"><code>session</code></em> :</span></td><td> a <a href="LassoSession.html" title="LassoSession"><span class="type">LassoSession</span></a>
-</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <code class="literal">TRUE</code> if empty
-</td></tr></tbody></table></div></div></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="LassoIdentity.html"><b>&lt;&lt; LassoIdentity</b></a></td><td align="right"><a accesskey="n" href="LassoFederation.html"><b>LassoFederation &gt;&gt;</b></a></td></tr></table></body></html>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td>
+<span class="term"><em class="parameter"><code>session</code></em>&#160;:</span></td>
+<td> a <a href="LassoSession.html" title="LassoSession"><span class="type">LassoSession</span></a>
+</td>
+</tr>
+<tr>
+<td>
+<span class="term"><span class="emphasis"><em>Returns</em></span>&#160;:</span></td>
+<td> <code class="literal">TRUE</code> if empty
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle">
+<td align="left"><a accesskey="p" href="LassoIdentity.html"><b>&lt;&lt;&#160;LassoIdentity</b></a></td>
+<td align="right"><a accesskey="n" href="LassoFederation.html"><b>LassoFederation&#160;&gt;&gt;</b></a></td>
+</tr></table>
+</body>
+</html>

@@ -1,4 +1,4 @@
-/* $Id: disco_query_response.c,v 1.7 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: disco_query_response.c,v 1.9 2005/08/12 09:08:44 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -82,7 +82,7 @@ get_xmlNode(LassoNode *node, gboolean lasso_dump)
 	xmlNs *ns;
 
 	xmlnode = parent_class->get_xmlNode(node, lasso_dump);
-	ns = xmlNewNs(NULL, LASSO_DISCO_HREF, LASSO_DISCO_PREFIX);
+	ns = xmlNewNs(NULL, (xmlChar*)LASSO_DISCO_HREF, (xmlChar*)LASSO_DISCO_PREFIX);
 	insure_namespace(xmlnode, ns);
 
 	return xmlnode;
@@ -111,6 +111,7 @@ class_init(LassoDiscoQueryResponseClass *class)
 	nclass->get_xmlNode = get_xmlNode;
 	nclass->node_data = g_new0(LassoNodeClassData, 1);
 	lasso_node_class_set_nodename(nclass, "QueryResponse");
+	lasso_node_class_set_ns(nclass, LASSO_DISCO_HREF, LASSO_DISCO_PREFIX);
 	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
 

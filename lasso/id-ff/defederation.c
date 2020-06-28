@@ -1,4 +1,4 @@
-/* $Id: defederation.c,v 1.63 2005/05/12 16:47:07 fpeters Exp $ 
+/* $Id: defederation.c,v 1.64 2005/06/03 21:38:14 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -170,6 +170,10 @@ lasso_defederation_init_notification(LassoDefederation *defederation, gchar *rem
 	}
 
 	/* get federation */
+	if (profile->identity == NULL) {
+		return critical_error(LASSO_PROFILE_ERROR_IDENTITY_NOT_FOUND);
+	}
+
 	federation = g_hash_table_lookup(profile->identity->federations,
 			profile->remote_providerID);
 	if (federation == NULL) {

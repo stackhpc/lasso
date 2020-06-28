@@ -49,6 +49,7 @@ PHP_MINFO_FUNCTION(lasso);
 ZEND_NAMED_FUNCTION(_wrap_lasso_init);
 ZEND_NAMED_FUNCTION(_wrap_lasso_shutdown);
 ZEND_NAMED_FUNCTION(_wrap_lasso_check_version);
+ZEND_NAMED_FUNCTION(_wrap_lasso_register_dst_service);
 ZEND_NAMED_FUNCTION(_wrap_new_LassoNode);
 ZEND_NAMED_FUNCTION(_wrap_delete_LassoNode);
 ZEND_NAMED_FUNCTION(_wrap_LassoNode_dump);

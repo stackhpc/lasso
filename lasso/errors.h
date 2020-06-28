@@ -1,4 +1,4 @@
-/* $Id: errors.h,v 1.2 2005/01/22 15:57:54 eraviart Exp $ 
+/* $Id: errors.h,v 1.4 2005/08/12 09:10:19 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -27,6 +27,7 @@
 
 /* undefined */
 #define LASSO_ERROR_UNDEFINED                           -1
+#define LASSO_ERROR_UNIMPLEMENTED                       -2
 
 /* generic XML */
 #define LASSO_XML_ERROR_NODE_NOT_FOUND                 -10
@@ -93,6 +94,7 @@
 #define LASSO_LOGIN_ERROR_INVALID_SIGNATURE		 605
 #define LASSO_LOGIN_ERROR_UNSIGNED_AUTHN_REQUEST	 606
 #define LASSO_LOGIN_ERROR_STATUS_NOT_SUCCESS             607
+#define LASSO_LOGIN_ERROR_UNKNOWN_PRINCIPAL              608
 
 /* Federation Termination Notification */
 #define LASSO_DEFEDERATION_ERROR_MISSING_NAME_IDENTIFIER  -700

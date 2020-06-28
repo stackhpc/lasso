@@ -25,6 +25,10 @@ public class lasso implements lassoConstants {
     return lassoJNI.checkVersion(major, minor, subminor, mode);
   }
 
+  public static void registerDstService(String prefix, String href) {
+    lassoJNI.registerDstService(prefix, href);
+  }
+
   public static int getRequestTypeFromSoapMsg(String soap) {
     return lassoJNI.getRequestTypeFromSoapMsg(soap);
   }

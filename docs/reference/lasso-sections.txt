@@ -901,6 +901,7 @@ lasso_init
 lasso_shutdown
 lasso_check_version
 LassoCheckVersionMode
+lasso_register_dst_service
 </SECTION>
 
 <SECTION>
@@ -1000,5 +1001,55 @@ lasso_saml_subject_statement_get_type
 LASSO_SAML_SUBJECT_STATEMENT_CLASS
 LASSO_IS_SAML_SUBJECT_STATEMENT_CLASS
 LASSO_SAML_SUBJECT_STATEMENT_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>discovery</FILE>
+<TITLE>LassoDiscovery</TITLE>
+LassoDiscovery
+lasso_discovery_new
+lasso_discovery_destroy
+lasso_discovery_add_requested_service_type
+lasso_discovery_build_modify_response_msg
+lasso_discovery_build_response_msg
+lasso_discovery_get_service
+lasso_discovery_get_services
+lasso_discovery_init_insert
+lasso_discovery_init_query
+lasso_discovery_init_remove
+lasso_discovery_process_modify_msg
+lasso_discovery_process_modify_response_msg
+lasso_discovery_process_query_msg
+lasso_discovery_process_query_response_msg
+<SUBSECTION Standard>
+LASSO_DISCOVERY
+LASSO_IS_DISCOVERY
+LASSO_TYPE_DISCOVERY
+lasso_discovery_get_type
+LASSO_DISCOVERY_CLASS
+LASSO_IS_DISCOVERY_CLASS
+LASSO_DISCOVERY_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>data_service</FILE>
+<TITLE>LassoDataService</TITLE>
+LassoDataService
+lasso_data_service_new
+lasso_data_service_init_query
+lasso_data_service_add_query_item
+lasso_data_service_process_query_msg
+lasso_data_service_build_response_msg
+lasso_data_service_process_query_response_msg
+lasso_data_service_get_answer
+lasso_data_service_get_answer_for_item_id
+<SUBSECTION Standard>
+LASSO_DATA_SERVICE
+LASSO_IS_DATA_SERVICE
+LASSO_TYPE_DATA_SERVICE
+lasso_data_service_get_type
+LASSO_DATA_SERVICE_CLASS
+LASSO_IS_DATA_SERVICE_CLASS
+LASSO_DATA_SERVICE_GET_CLASS
 </SECTION>
 

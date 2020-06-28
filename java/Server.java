@@ -101,6 +101,14 @@ public class Server {
     return lassoJNI.get_Server_publicKey(swigCPtr);
   }
 
+  public void setRole(int role) {
+    lassoJNI.set_Server_role(swigCPtr, role);
+  }
+
+  public int getRole() {
+    return lassoJNI.get_Server_role(swigCPtr);
+  }
+
   public StringList getProviderIds() {
     long cPtr = lassoJNI.get_Server_providerIds(swigCPtr);
     return (cPtr == 0) ? null : new StringList(cPtr, false);
