@@ -15,7 +15,7 @@ noinst_PROGRAMS = tests perfs tests2
 INCLUDES = \
 	-DPACKAGE=\"@PACKAGE@\" \
 	-DTESTSDATADIR=\"$(srcdir)/data/\" \
-	-DTESTSMETADATADIR=\"$(srcdir)/metadata/\" \
+	-DTESTSMETADATADIR=\"$(srcdir)/data/metadata/\" \
 	$(LASSO_CFLAGS) \
 	$(CHECK_CFLAGS)
 
@@ -64,7 +64,7 @@ massif:
 	$(MASSIF) ./tests
 
 endif
-EXTRA_DIST = metadata valgrind tests.h $(tests_SOURCES)
+EXTRA_DIST = valgrind tests.h $(tests_SOURCES)
 
 SUBDIRS = data
 

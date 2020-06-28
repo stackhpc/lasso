@@ -18,13 +18,12 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "../private.h"
 #include "sb2_credentials_context.h"
-#include "./idwsf2_strings.h"
+#include "idwsf2_strings.h"
 
 /**
  * SECTION:sb2_credentials_context
@@ -52,7 +51,7 @@
 static struct XmlSnippet schema_snippets[] = {
 	{ "RequestedAuthnContext", SNIPPET_NODE,
 		G_STRUCT_OFFSET(LassoIdWsf2Sb2CredentialsContext, RequestedAuthnContext),
-		"LassoSamlp2RequestedAuthnContext", NULL, NULL },
+		"LassoSamlp2RequestedAuthnContext", LASSO_SAML_PROTOCOL_PREFIX, LASSO_SAML_PROTOCOL_HREF},
 	{ "SecurityMechID", SNIPPET_LIST_CONTENT,
 		G_STRUCT_OFFSET(LassoIdWsf2Sb2CredentialsContext, SecurityMechID), NULL, NULL, NULL},
 	{ "attributes", SNIPPET_ATTRIBUTE | SNIPPET_ANY,

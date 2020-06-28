@@ -18,13 +18,12 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "../private.h"
 #include "disco_keys.h"
-#include "./idwsf2_strings.h"
+#include "idwsf2_strings.h"
 
 /**
  * SECTION:disco_keys
@@ -51,7 +50,8 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "KeyDescriptor", SNIPPET_LIST_NODES,
-		G_STRUCT_OFFSET(LassoIdWsf2DiscoKeys, KeyDescriptor), NULL, NULL, NULL},
+		G_STRUCT_OFFSET(LassoIdWsf2DiscoKeys, KeyDescriptor), NULL, LASSO_METADATA_PREFIX,
+		LASSO_METADATA_HREF},
 	{NULL, 0, 0, NULL, NULL, NULL}
 };
 

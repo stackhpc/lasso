@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 /**
@@ -75,13 +74,13 @@
 #include <xmlsec/crypto.h>
 #include <libxslt/xslt.h>
 #include <config.h>
-#include "./lasso.h"
-#include "./lasso_config.h"
-#include "./debug.h"
-#include "./backward_comp.h"
-#include "./registry-private.h"
-#include "./xml/private.h"
-#include "./utils.h"
+#include "lasso.h"
+#include "lasso_config.h"
+#include "debug.h"
+#include "backward_comp.h"
+#include "registry-private.h"
+#include "xml/private.h"
+#include "utils.h"
 
 /* Set to true, it forces lasso_provider_verify_signature and lasso_query_verify_signature to always
  * return TRUE. */
@@ -95,6 +94,8 @@ gboolean lasso_flag_add_signature = TRUE;
 static void lasso_flag_parse_environment_variable();
 /* do not sign messages */
 gboolean lasso_flag_sign_messages = TRUE;
+/* thin sessions */
+gboolean lasso_flag_thin_sessions = FALSE;
 
 #ifndef LASSO_FLAG_ENV_VAR
 #define LASSO_FLAG_ENV_VAR "LASSO_FLAG"
@@ -126,6 +127,16 @@ DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 #endif
 
 #include "types.c"
+
+static void
+lasso_xml_generic_error_func(G_GNUC_UNUSED void *ctx, const char *msg, ...)
+{
+	va_list args;
+
+	va_start(args, msg);
+	g_logv(LASSO_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, msg, args);
+	va_end(args);
+}
 
 /**
  * lasso_init:
@@ -183,6 +194,7 @@ int lasso_init()
 		return LASSO_ERROR_UNDEFINED;
 	}
 	lasso_flag_parse_environment_variable();
+	xmlSetGenericErrorFunc(NULL, lasso_xml_generic_error_func);
 	return 0;
 }
 
@@ -305,6 +317,9 @@ void lasso_set_flag(char *flag) {
 		if (lasso_strisequal(flag,"sign-messages")) {
 			lasso_flag_sign_messages = value;
 			continue;
+		}
+		if (lasso_strisequal(flag,"thin-sessions")) {
+			lasso_flag_thin_sessions = value;
 		}
 	} while (FALSE);
 }

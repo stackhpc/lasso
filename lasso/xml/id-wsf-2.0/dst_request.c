@@ -18,13 +18,12 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "../private.h"
 #include "dst_request.h"
-#include "./idwsf2_strings.h"
+#include "idwsf2_strings.h"
 
 /**
  * SECTION:dst_request
@@ -52,7 +51,7 @@
 static struct XmlSnippet schema_snippets[] = {
 	{ "Extension", SNIPPET_LIST_NODES,
 		G_STRUCT_OFFSET(LassoIdWsf2DstRequest, Extension),
-		"LassoIdWsf2Utilextension", NULL, NULL },
+		"LassoIdWsf2Utilextension", LASSO_IDWSF2_UTIL_PREFIX, LASSO_IDWSF2_UTIL_HREF},
 	{ "itemID", SNIPPET_ATTRIBUTE | SNIPPET_OPTIONAL,
 		G_STRUCT_OFFSET(LassoIdWsf2DstRequest, itemID), NULL, NULL, NULL},
 	{ "attributes", SNIPPET_ATTRIBUTE | SNIPPET_ANY,

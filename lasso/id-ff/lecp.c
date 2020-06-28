@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 /**
@@ -58,8 +57,6 @@ lasso_lecp_build_authn_request_envelope_msg(LassoLecp *lecp)
 	LassoProfile *profile;
 	gchar *assertionConsumerServiceURL;
 	xmlNode *msg;
-	xmlOutputBuffer *buf;
-	xmlCharEncodingHandler *handler;
 
 	g_return_val_if_fail(LASSO_IS_LECP(lecp), LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
 
@@ -89,16 +86,7 @@ lasso_lecp_build_authn_request_envelope_msg(LassoLecp *lecp)
 		LASSO_PROFILE(lecp)->server->certificate;
 	msg = lasso_node_get_xmlNode(LASSO_NODE(lecp->authnRequestEnvelope), FALSE);
 
-	/* msg is not SOAP but straight XML */
-	handler = xmlFindCharEncodingHandler("utf-8");
-	buf = xmlAllocOutputBuffer(handler);
-	xmlNodeDumpOutput(buf, NULL, msg, 0, 0, "utf-8");
-	xmlOutputBufferFlush(buf);
-
-	lasso_assign_string(profile->msg_body,
-			(char*)(buf->conv ? buf->conv->content : buf->buffer->content));
-	xmlOutputBufferClose(buf);
-	xmlFreeNode(msg);
+	lasso_assign_new_string(profile->msg_body, lasso_xmlnode_to_string(msg, 0, 0))
 
 	if (profile->msg_body == NULL) {
 		return LASSO_PROFILE_ERROR_BUILDING_REQUEST_FAILED;
@@ -299,8 +287,6 @@ lasso_lecp_process_authn_request_envelope_msg(LassoLecp *lecp, const char *reque
 	xmlXPathContext *xpathCtx;
 	xmlXPathObject *xpathObj;
 	xmlNode *soap_envelope, *soap_body, *authn_request;
-	xmlOutputBuffer *buf;
-	xmlCharEncodingHandler *handler;
 
 	g_return_val_if_fail(LASSO_IS_LECP(lecp), LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
 	g_return_val_if_fail(request_msg != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
@@ -337,13 +323,8 @@ lasso_lecp_process_authn_request_envelope_msg(LassoLecp *lecp, const char *reque
 	soap_body = xmlNewTextChild(soap_envelope, NULL, (xmlChar*)"Body", NULL);
 	xmlAddChild(soap_body, authn_request);
 
-	handler = xmlFindCharEncodingHandler("utf-8");
-	buf = xmlAllocOutputBuffer(handler);
-	xmlNodeDumpOutput(buf, NULL, soap_envelope, 0, 0, "utf-8");
-	xmlOutputBufferFlush(buf);
-	LASSO_PROFILE(lecp)->msg_body = g_strdup( (char*)(
-			buf->conv ? buf->conv->content : buf->buffer->content));
-	xmlOutputBufferClose(buf);
+	lasso_assign_new_string(LASSO_PROFILE(lecp)->msg_body,
+			lasso_xmlnode_to_string(soap_envelope, 0, 0));
 	xmlFreeNode(soap_envelope);
 
 
@@ -437,9 +418,13 @@ instance_init(LassoLecp *lecp)
 static void
 class_init(LassoLecpClass *klass)
 {
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
 	parent_class = g_type_class_peek_parent(klass);
 
 	G_OBJECT_CLASS(klass)->finalize = finalize;
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "Lecp");
+	lasso_node_class_set_ns(nclass, LASSO_LASSO_HREF, LASSO_LASSO_PREFIX);
 }
 
 GType

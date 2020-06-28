@@ -18,11 +18,10 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <glib/gstrfuncs.h>
+#include <glib.h>
 #include "errors.h"
 #include "xml/xml.h"
 
@@ -173,6 +172,8 @@ lasso_strerror(int error_code)
 			return "An unsigned authn request was received but the metadata specify that they must be signed.";
 		case LASSO_LOGOUT_ERROR_FEDERATION_NOT_FOUND:
 			return "Federation not found on logout";
+		case LASSO_LOGOUT_ERROR_PARTIAL_LOGOUT:
+			return "Logout could not be propagated to every service provider in the current session.";
 		case LASSO_LOGOUT_ERROR_REQUEST_DENIED:
 			return "Request denied by identity provider";
 		case LASSO_LOGOUT_ERROR_UNKNOWN_PRINCIPAL:
@@ -209,6 +210,8 @@ lasso_strerror(int error_code)
 			return "Profile was called without a specific provider and we cannot find one.";
 		case LASSO_PROFILE_ERROR_CANNOT_VERIFY_SIGNATURE:
 			return "The profile cannot verify a signature on the message";
+		case LASSO_PROFILE_ERROR_ENDPOINT_INDEX_NOT_FOUND:
+			return "A received artifact contains an andpoint index which does not exist in the metadata of the corresponding provider.";
 		case LASSO_PROFILE_ERROR_FEDERATION_NOT_FOUND:
 			return "Federation not found";
 		case LASSO_PROFILE_ERROR_IDENTITY_NOT_FOUND:
@@ -275,6 +278,8 @@ lasso_strerror(int error_code)
 			return "Missing subject";
 		case LASSO_PROFILE_ERROR_NAME_IDENTIFIER_NOT_FOUND:
 			return "Name identifier not found";
+		case LASSO_PROFILE_ERROR_REQUEST_DENIED:
+			return "Generic error when an IdP or an SP return the RequestDenied status code in its response.";
 		case LASSO_PROFILE_ERROR_RESPONSE_DOES_NOT_MATCH_REQUEST:
 			return "Received response does not refer to the request sent";
 		case LASSO_PROFILE_ERROR_SESSION_NOT_FOUND:
@@ -301,6 +306,8 @@ lasso_strerror(int error_code)
 			return "Failed to add new provider (protocol mismatch). It means that you tried to add a provider supporting a protocol imcompatible with the protocol declared for your #LassoServer, for example metadata for ID-FF 1.2 with metadata for SAML 2.0.";
 		case LASSO_SERVER_ERROR_INVALID_XML:
 			return "Parsed XML is invalid.";
+		case LASSO_SERVER_ERROR_NO_PROVIDER_LOADED:
+			return "When loading a metadata file it indicates that no provider could be loaded. It could be because the file is not well formed, or because there is no provider for the role sought.";
 		case LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND:
 			return "The identifier of a provider is unknown to #LassoServer. To register a provider in a #LassoServer object, you must use the methods lasso_server_add_provider() or lasso_server_add_provider_from_buffer().";
 		case LASSO_SERVER_ERROR_SET_ENCRYPTION_PRIVATE_KEY_FAILED:
@@ -353,6 +360,8 @@ lasso_strerror(int error_code)
 			return "The known password does not match the UsernameToken";
 		case LASSO_WSSEC_ERROR_MISSING_SECURITY_TOKEN:
 			return "The request miss a WS-Security token.";
+		case LASSO_XMLENC_ERROR_INVALID_ENCRYPTED_DATA:
+			return "The EncryptedData node is invalid, look at the logs.";
 		case LASSO_XML_ERROR_ATTR_NOT_FOUND:
 			return "Unable to get attribute of element.";
 		case LASSO_XML_ERROR_ATTR_VALUE_NOT_FOUND:

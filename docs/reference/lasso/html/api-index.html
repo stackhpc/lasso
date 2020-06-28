@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>API Index</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="pt01.html" title="Part II. Appendix">
 <link rel="prev" href="pt01.html" title="Part II. Appendix">
 <link rel="next" href="annotation-glossary.html" title="Annotation Glossary">
-<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -30,8 +30,6 @@
 <dt>LassoAssertionQueryRequestType, <a class="indexterm" href="lasso-assertion-query.html#LassoAssertionQueryRequestType">enum LassoAssertionQueryRequestType</a>
 </dt>
 <dt>LassoAuthentication, <a class="indexterm" href="lasso-authentication.html#LassoAuthentication">struct LassoAuthentication</a>
-</dt>
-<dt>LassoCheckVersionMode, <a class="indexterm" href="lasso-Initialization-functions.html#LassoCheckVersionMode">enum LassoCheckVersionMode</a>
 </dt>
 <dt>LassoDataService, <a class="indexterm" href="lasso-LassoDataService.html#LassoDataService">struct LassoDataService</a>
 </dt>
@@ -433,9 +431,7 @@
 </dt>
 <dt>LassoLibSubject, <a class="indexterm" href="lasso-LassoLibSubject.html#LassoLibSubject">struct LassoLibSubject</a>
 </dt>
-<dt>LassoLogin, <a class="indexterm" href="lasso-login.html#LassoLogin">struct LassoLogin</a>
-</dt>
-<dt>LassoLoginProtocolProfile, <a class="indexterm" href="lasso-login.html#LassoLoginProtocolProfile">enum LassoLoginProtocolProfile</a>
+<dt>LassoLogin, <a class="indexterm" href="lasso-LassoLogin.html#LassoLogin">struct LassoLogin</a>
 </dt>
 <dt>LassoLogout, <a class="indexterm" href="lasso-LassoLogout.html#LassoLogout">struct LassoLogout</a>
 </dt>
@@ -761,8 +757,6 @@
 </dt>
 <dt>lasso_build_unique_id, <a class="indexterm" href="lasso-Utility-functions-for-SAML-2.0.html#lasso-build-unique-id">lasso_build_unique_id ()</a>
 </dt>
-<dt>lasso_check_version, <a class="indexterm" href="lasso-Initialization-functions.html#lasso-check-version">lasso_check_version ()</a>
-</dt>
 <dt>lasso_data_service_add_modification, <a class="indexterm" href="lasso-LassoDataService.html#lasso-data-service-add-modification">lasso_data_service_add_modification ()</a>
 </dt>
 <dt>lasso_data_service_add_query_item, <a class="indexterm" href="lasso-LassoDataService.html#lasso-data-service-add-query-item">lasso_data_service_add_query_item ()</a>
@@ -1084,10 +1078,6 @@
 <dt>LASSO_ERROR_UNDEFINED, <a class="indexterm" href="lasso-Error-Codes.html#LASSO-ERROR-UNDEFINED:CAPS">LASSO_ERROR_UNDEFINED</a>
 </dt>
 <dt>LASSO_ERROR_UNIMPLEMENTED, <a class="indexterm" href="lasso-Error-Codes.html#LASSO-ERROR-UNIMPLEMENTED:CAPS">LASSO_ERROR_UNIMPLEMENTED</a>
-</dt>
-<dt>LASSO_EXPORT, <a class="indexterm" href="lasso-Initialization-functions.html#LASSO-EXPORT:CAPS">LASSO_EXPORT</a>
-</dt>
-<dt>LASSO_EXPORT_VAR, <a class="indexterm" href="lasso-Initialization-functions.html#LASSO-EXPORT-VAR:CAPS">LASSO_EXPORT_VAR</a>
 </dt>
 <dt>lasso_federation_build_local_name_identifier, <a class="indexterm" href="lasso-LassoFederation.html#lasso-federation-build-local-name-identifier">lasso_federation_build_local_name_identifier ()</a>
 </dt>
@@ -1561,8 +1551,6 @@
 </dt>
 <dt>lasso_idwsf2_util_status_new_with_code, <a class="indexterm" href="lasso-LassoIdWsf2UtilStatus.html#lasso-idwsf2-util-status-new-with-code">lasso_idwsf2_util_status_new_with_code ()</a>
 </dt>
-<dt>lasso_init, <a class="indexterm" href="lasso-Initialization-functions.html#lasso-init">lasso_init ()</a>
-</dt>
 <dt>lasso_interaction_profile_service_init_request, <a class="indexterm" href="lasso-LassoInteractionProfileService.html#lasso-interaction-profile-service-init-request">lasso_interaction_profile_service_init_request ()</a>
 </dt>
 <dt>lasso_interaction_profile_service_new, <a class="indexterm" href="lasso-LassoInteractionProfileService.html#lasso-interaction-profile-service-new">lasso_interaction_profile_service_new ()</a>
@@ -1839,23 +1827,23 @@
 </dt>
 <dt>lasso_lib_subject_new, <a class="indexterm" href="lasso-LassoLibSubject.html#lasso-lib-subject-new">lasso_lib_subject_new ()</a>
 </dt>
-<dt>lasso_login_accept_sso, <a class="indexterm" href="lasso-login.html#lasso-login-accept-sso">lasso_login_accept_sso ()</a>
+<dt>lasso_login_accept_sso, <a class="indexterm" href="lasso-LassoLogin.html#lasso-login-accept-sso">lasso_login_accept_sso ()</a>
 </dt>
-<dt>lasso_login_build_artifact_msg, <a class="indexterm" href="lasso-login.html#lasso-login-build-artifact-msg">lasso_login_build_artifact_msg ()</a>
+<dt>lasso_login_build_artifact_msg, <a class="indexterm" href="lasso-LassoLogin.html#lasso-login-build-artifact-msg">lasso_login_build_artifact_msg ()</a>
 </dt>
-<dt>lasso_login_build_assertion, <a class="indexterm" href="lasso-login.html#lasso-login-build-assertion">lasso_login_build_assertion ()</a>
+<dt>lasso_login_build_assertion, <a class="indexterm" href="lasso-LassoLogin.html#lasso-login-build-assertion">lasso_login_build_assertion ()</a>
 </dt>
-<dt>lasso_login_build_authn_request_msg, <a class="indexterm" href="lasso-login.html#lasso-login-build-authn-request-msg">lasso_login_build_authn_request_msg ()</a>
+<dt>lasso_login_build_authn_request_msg, <a class="indexterm" href="lasso-LassoLogin.html#lasso-login-build-authn-request-msg">lasso_login_build_authn_request_msg ()</a>
 </dt>
-<dt>lasso_login_build_authn_response_msg, <a class="indexterm" href="lasso-login.html#lasso-login-build-authn-response-msg">lasso_login_build_authn_response_msg ()</a>
+<dt>lasso_login_build_authn_response_msg, <a class="indexterm" href="lasso-LassoLogin.html#lasso-login-build-authn-response-msg">lasso_login_build_authn_response_msg ()</a>
 </dt>
-<dt>lasso_login_build_request_msg, <a class="indexterm" href="lasso-login.html#lasso-login-build-request-msg">lasso_login_build_request_msg ()</a>
+<dt>lasso_login_build_request_msg, <a class="indexterm" href="lasso-LassoLogin.html#lasso-login-build-request-msg">lasso_login_build_request_msg ()</a>
 </dt>
-<dt>lasso_login_build_response_msg, <a class="indexterm" href="lasso-login.html#lasso-login-build-response-msg">lasso_login_build_response_msg ()</a>
+<dt>lasso_login_build_response_msg, <a class="indexterm" href="lasso-LassoLogin.html#lasso-login-build-response-msg">lasso_login_build_response_msg ()</a>
 </dt>
-<dt>lasso_login_destroy, <a class="indexterm" href="lasso-login.html#lasso-login-destroy">lasso_login_destroy ()</a>
+<dt>lasso_login_destroy, <a class="indexterm" href="lasso-LassoLogin.html#lasso-login-destroy">lasso_login_destroy ()</a>
 </dt>
-<dt>lasso_login_dump, <a class="indexterm" href="lasso-login.html#lasso-login-dump">lasso_login_dump ()</a>
+<dt>lasso_login_dump, <a class="indexterm" href="lasso-LassoLogin.html#lasso-login-dump">lasso_login_dump ()</a>
 </dt>
 <dt>LASSO_LOGIN_ERROR_ASSERTION_DOES_NOT_MATCH_REQUEST_ID, <a class="indexterm" href="lasso-Error-Codes.html#LASSO-LOGIN-ERROR-ASSERTION-DOES-NOT-MATCH-REQUEST-ID:CAPS">LASSO_LOGIN_ERROR_ASSERTION_DOES_NOT_MATCH_REQUEST_ID</a>
 </dt>
@@ -1879,41 +1867,41 @@
 </dt>
 <dt>LASSO_LOGIN_ERROR_UNSIGNED_AUTHN_REQUEST, <a class="indexterm" href="lasso-Error-Codes.html#LASSO-LOGIN-ERROR-UNSIGNED-AUTHN-REQUEST:CAPS">LASSO_LOGIN_ERROR_UNSIGNED_AUTHN_REQUEST</a>
 </dt>
-<dt>lasso_login_get_assertion, <a class="indexterm" href="lasso-login.html#lasso-login-get-assertion">lasso_login_get_assertion ()</a>
+<dt>lasso_login_get_assertion, <a class="indexterm" href="lasso-LassoLogin.html#lasso-login-get-assertion">lasso_login_get_assertion ()</a>
 </dt>
 <dt>lasso_login_idwsf2_add_discovery_bootstrap_epr, <a class="indexterm" href="lasso-Addon-to-SAML-2.0-profile-for-ID-WSF-2.0-bootsraping.html#lasso-login-idwsf2-add-discovery-bootstrap-epr">lasso_login_idwsf2_add_discovery_bootstrap_epr ()</a>
 </dt>
 <dt>lasso_login_idwsf2_get_discovery_bootstrap_epr, <a class="indexterm" href="lasso-Addon-to-SAML-2.0-profile-for-ID-WSF-2.0-bootsraping.html#lasso-login-idwsf2-get-discovery-bootstrap-epr">lasso_login_idwsf2_get_discovery_bootstrap_epr ()</a>
 </dt>
-<dt>lasso_login_init_authn_request, <a class="indexterm" href="lasso-login.html#lasso-login-init-authn-request">lasso_login_init_authn_request ()</a>
+<dt>lasso_login_init_authn_request, <a class="indexterm" href="lasso-LassoLogin.html#lasso-login-init-authn-request">lasso_login_init_authn_request ()</a>
 </dt>
-<dt>lasso_login_init_idp_initiated_authn_request, <a class="indexterm" href="lasso-login.html#lasso-login-init-idp-initiated-authn-request">lasso_login_init_idp_initiated_authn_request ()</a>
+<dt>lasso_login_init_idp_initiated_authn_request, <a class="indexterm" href="lasso-LassoLogin.html#lasso-login-init-idp-initiated-authn-request">lasso_login_init_idp_initiated_authn_request ()</a>
 </dt>
-<dt>lasso_login_init_request, <a class="indexterm" href="lasso-login.html#lasso-login-init-request">lasso_login_init_request ()</a>
+<dt>lasso_login_init_request, <a class="indexterm" href="lasso-LassoLogin.html#lasso-login-init-request">lasso_login_init_request ()</a>
 </dt>
-<dt>lasso_login_must_ask_for_consent, <a class="indexterm" href="lasso-login.html#lasso-login-must-ask-for-consent">lasso_login_must_ask_for_consent ()</a>
+<dt>lasso_login_must_ask_for_consent, <a class="indexterm" href="lasso-LassoLogin.html#lasso-login-must-ask-for-consent">lasso_login_must_ask_for_consent ()</a>
 </dt>
-<dt>lasso_login_must_authenticate, <a class="indexterm" href="lasso-login.html#lasso-login-must-authenticate">lasso_login_must_authenticate ()</a>
+<dt>lasso_login_must_authenticate, <a class="indexterm" href="lasso-LassoLogin.html#lasso-login-must-authenticate">lasso_login_must_authenticate ()</a>
 </dt>
-<dt>lasso_login_new, <a class="indexterm" href="lasso-login.html#lasso-login-new">lasso_login_new ()</a>
+<dt>lasso_login_new, <a class="indexterm" href="lasso-LassoLogin.html#lasso-login-new">lasso_login_new ()</a>
 </dt>
-<dt>lasso_login_new_from_dump, <a class="indexterm" href="lasso-login.html#lasso-login-new-from-dump">lasso_login_new_from_dump ()</a>
+<dt>lasso_login_new_from_dump, <a class="indexterm" href="lasso-LassoLogin.html#lasso-login-new-from-dump">lasso_login_new_from_dump ()</a>
 </dt>
-<dt>lasso_login_process_authn_request_msg, <a class="indexterm" href="lasso-login.html#lasso-login-process-authn-request-msg">lasso_login_process_authn_request_msg ()</a>
+<dt>lasso_login_process_authn_request_msg, <a class="indexterm" href="lasso-LassoLogin.html#lasso-login-process-authn-request-msg">lasso_login_process_authn_request_msg ()</a>
 </dt>
-<dt>lasso_login_process_authn_response_msg, <a class="indexterm" href="lasso-login.html#lasso-login-process-authn-response-msg">lasso_login_process_authn_response_msg ()</a>
+<dt>lasso_login_process_authn_response_msg, <a class="indexterm" href="lasso-LassoLogin.html#lasso-login-process-authn-response-msg">lasso_login_process_authn_response_msg ()</a>
 </dt>
-<dt>lasso_login_process_paos_response_msg, <a class="indexterm" href="lasso-login.html#lasso-login-process-paos-response-msg">lasso_login_process_paos_response_msg ()</a>
+<dt>lasso_login_process_paos_response_msg, <a class="indexterm" href="lasso-LassoLogin.html#lasso-login-process-paos-response-msg">lasso_login_process_paos_response_msg ()</a>
 </dt>
-<dt>lasso_login_process_request_msg, <a class="indexterm" href="lasso-login.html#lasso-login-process-request-msg">lasso_login_process_request_msg ()</a>
+<dt>lasso_login_process_request_msg, <a class="indexterm" href="lasso-LassoLogin.html#lasso-login-process-request-msg">lasso_login_process_request_msg ()</a>
 </dt>
-<dt>lasso_login_process_response_msg, <a class="indexterm" href="lasso-login.html#lasso-login-process-response-msg">lasso_login_process_response_msg ()</a>
+<dt>lasso_login_process_response_msg, <a class="indexterm" href="lasso-LassoLogin.html#lasso-login-process-response-msg">lasso_login_process_response_msg ()</a>
 </dt>
 <dt>lasso_login_set_encryptedResourceId, <a class="indexterm" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-login-set-encryptedResourceId">lasso_login_set_encryptedResourceId ()</a>
 </dt>
 <dt>lasso_login_set_resourceId, <a class="indexterm" href="lasso-Utility-functions-for-ID-WSF-1.0.html#lasso-login-set-resourceId">lasso_login_set_resourceId ()</a>
 </dt>
-<dt>lasso_login_validate_request_msg, <a class="indexterm" href="lasso-login.html#lasso-login-validate-request-msg">lasso_login_validate_request_msg ()</a>
+<dt>lasso_login_validate_request_msg, <a class="indexterm" href="lasso-LassoLogin.html#lasso-login-validate-request-msg">lasso_login_validate_request_msg ()</a>
 </dt>
 <dt>lasso_logout_build_request_msg, <a class="indexterm" href="lasso-LassoLogout.html#lasso-logout-build-request-msg">lasso_logout_build_request_msg ()</a>
 </dt>
@@ -2903,10 +2891,6 @@
 </dt>
 <dt>lasso_session_remove_assertion, <a class="indexterm" href="lasso-LassoSession.html#lasso-session-remove-assertion">lasso_session_remove_assertion ()</a>
 </dt>
-<dt>lasso_set_flag, <a class="indexterm" href="lasso-Initialization-functions.html#lasso-set-flag">lasso_set_flag ()</a>
-</dt>
-<dt>lasso_shutdown, <a class="indexterm" href="lasso-Initialization-functions.html#lasso-shutdown">lasso_shutdown ()</a>
-</dt>
 <dt>lasso_soap_binding_consent_new, <a class="indexterm" href="lasso-LassoSoapBindingConsent.html#lasso-soap-binding-consent-new">lasso_soap_binding_consent_new ()</a>
 </dt>
 <dt>lasso_soap_binding_correlation_new, <a class="indexterm" href="lasso-LassoSoapBindingCorrelation.html#lasso-soap-binding-correlation-new">lasso_soap_binding_correlation_new ()</a>
@@ -3198,6 +3182,6 @@
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.17</div>
+          Generated by GTK-Doc V1.18</div>
 </body>
 </html>

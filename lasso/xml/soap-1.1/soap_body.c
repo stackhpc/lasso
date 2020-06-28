@@ -18,12 +18,11 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "../private.h"
-#include "./soap_body.h"
+#include "soap_body.h"
 
 /**
  * SECTION:soap_body
@@ -54,16 +53,16 @@
 /*****************************************************************************/
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "", SNIPPET_LIST_NODES, G_STRUCT_OFFSET(LassoSoapBody, any), NULL, NULL, NULL},
+	{ "any", SNIPPET_LIST_NODES | SNIPPET_ANY, G_STRUCT_OFFSET(LassoSoapBody, any), NULL, NULL,
+		NULL},
+	{ "Id", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoSoapBody, Id), NULL, LASSO_WSUTIL1_PREFIX,
+		LASSO_WSUTIL1_HREF },
 	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
 /*****************************************************************************/
-
-static xmlNode* get_xmlNode(LassoNode *node, gboolean lasso_dump);
-
 
 static LassoNodeClass *parent_class = NULL;
 
@@ -74,26 +73,9 @@ class_init(LassoSoapBodyClass *klass)
 
 	parent_class = g_type_class_peek_parent(nclass);
 	nclass->node_data = g_new0(LassoNodeClassData, 1);
-	nclass->get_xmlNode = get_xmlNode;
 	lasso_node_class_set_nodename(nclass, "Body");
 	lasso_node_class_set_ns(nclass, LASSO_SOAP_ENV_HREF, LASSO_SOAP_ENV_PREFIX);
 	lasso_node_class_add_snippets(nclass, schema_snippets);
-}
-
-static xmlNode*
-get_xmlNode(LassoNode *node, gboolean lasso_dump) {
-	xmlNodePtr ret;
-
-	/* Fix namespace of Id */
-	ret = parent_class->get_xmlNode(node, lasso_dump);
-
-	{
-	xmlNsPtr ns;
-	ns = xmlNewNs(ret, (xmlChar*)LASSO_WSUTIL1_HREF, (xmlChar*)LASSO_WSUTIL1_PREFIX);
-	xmlNewNsProp(ret, ns, (xmlChar*)"Id", (xmlChar*)LASSO_SOAP_BODY(node)->Id);
-	}
-
-	return ret;
 }
 
 GType

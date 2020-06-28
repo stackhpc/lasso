@@ -18,13 +18,12 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "../private.h"
 #include "subsref_query_response.h"
-#include "./idwsf2_strings.h"
+#include "idwsf2_strings.h"
 
 /**
  * SECTION:subsref_query_response
@@ -55,7 +54,7 @@
 static struct XmlSnippet schema_snippets[] = {
 	{ "TestResult", SNIPPET_LIST_NODES,
 		G_STRUCT_OFFSET(LassoIdWsf2SubsRefQueryResponse, TestResult),
-		"LassoIdWsf2UtilTestResult", NULL, NULL },
+		"LassoIdWsf2UtilTestResult", LASSO_IDWSF2_UTIL_PREFIX, LASSO_IDWSF2_UTIL_HREF},
 	{ "Data", SNIPPET_LIST_NODES,
 		G_STRUCT_OFFSET(LassoIdWsf2SubsRefQueryResponse, Data), NULL, NULL, NULL},
 	{NULL, 0, 0, NULL, NULL, NULL}

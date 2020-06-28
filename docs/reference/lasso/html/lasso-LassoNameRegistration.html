@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LassoNameRegistration</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
 <link rel="prev" href="lasso-LassoDefederation.html" title="LassoDefederation">
 <link rel="next" href="lasso-LassoNameIdentifierMapping.html" title="LassoNameIdentifierMapping">
-<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -38,8 +38,8 @@
 <div class="refsynopsisdiv">
 <a name="lasso-LassoNameRegistration.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">struct              <a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration">LassoNameRegistration</a>;
-<a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="returnvalue">LassoNameRegistration</span></a> *  <a class="link" href="lasso-LassoNameRegistration.html#lasso-name-registration-new" title="lasso_name_registration_new ()">lasso_name_registration_new</a>    (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);
-<a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="returnvalue">LassoNameRegistration</span></a> *  <a class="link" href="lasso-LassoNameRegistration.html#lasso-name-registration-new-from-dump" title="lasso_name_registration_new_from_dump ()">lasso_name_registration_new_from_dump</a>
+<a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="returnvalue">LassoNameRegistration</span></a> * <a class="link" href="lasso-LassoNameRegistration.html#lasso-name-registration-new" title="lasso_name_registration_new ()">lasso_name_registration_new</a>     (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);
+<a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="returnvalue">LassoNameRegistration</span></a> * <a class="link" href="lasso-LassoNameRegistration.html#lasso-name-registration-new-from-dump" title="lasso_name_registration_new_from_dump ()">lasso_name_registration_new_from_dump</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *dump</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoNameRegistration.html#lasso-name-registration-build-request-msg" title="lasso_name_registration_build_request_msg ()">lasso_name_registration_build_request_msg</a>
@@ -47,17 +47,17 @@
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoNameRegistration.html#lasso-name-registration-build-response-msg" title="lasso_name_registration_build_response_msg ()">lasso_name_registration_build_response_msg</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="type">LassoNameRegistration</span></a> *name_registration</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="lasso-LassoNameRegistration.html#lasso-name-registration-destroy" title="lasso_name_registration_destroy ()">lasso_name_registration_destroy</a>     (<em class="parameter"><code><a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="type">LassoNameRegistration</span></a> *name_registration</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="lasso-LassoNameRegistration.html#lasso-name-registration-dump" title="lasso_name_registration_dump ()">lasso_name_registration_dump</a>        (<em class="parameter"><code><a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="type">LassoNameRegistration</span></a> *name_registration</code></em>);
+<span class="returnvalue">gchar</span> *             <a class="link" href="lasso-LassoNameRegistration.html#lasso-name-registration-dump" title="lasso_name_registration_dump ()">lasso_name_registration_dump</a>        (<em class="parameter"><code><a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="type">LassoNameRegistration</span></a> *name_registration</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoNameRegistration.html#lasso-name-registration-init-request" title="lasso_name_registration_init_request ()">lasso_name_registration_init_request</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="type">LassoNameRegistration</span></a> *name_registration</code></em>,
                                                          <em class="parameter"><code><span class="type">char</span> *remote_providerID</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoHttpMethod" title="enum LassoHttpMethod"><span class="type">LassoHttpMethod</span></a> http_method</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoNameRegistration.html#lasso-name-registration-process-request-msg" title="lasso_name_registration_process_request_msg ()">lasso_name_registration_process_request_msg</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="type">LassoNameRegistration</span></a> *name_registration</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *request_msg</code></em>);
+                                                         <em class="parameter"><code><span class="type">gchar</span> *request_msg</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoNameRegistration.html#lasso-name-registration-process-response-msg" title="lasso_name_registration_process_response_msg ()">lasso_name_registration_process_response_msg</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="type">LassoNameRegistration</span></a> *name_registration</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *response_msg</code></em>);
+                                                         <em class="parameter"><code><span class="type">gchar</span> *response_msg</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoNameRegistration.html#lasso-name-registration-validate-request" title="lasso_name_registration_validate_request ()">lasso_name_registration_validate_request</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="type">LassoNameRegistration</span></a> *name_registration</code></em>);
 </pre>
@@ -79,7 +79,7 @@
 <hr>
 <div class="refsect2">
 <a name="lasso-name-registration-new"></a><h3>lasso_name_registration_new ()</h3>
-<pre class="programlisting"><a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="returnvalue">LassoNameRegistration</span></a> *  lasso_name_registration_new    (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="returnvalue">LassoNameRegistration</span></a> * lasso_name_registration_new     (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);</pre>
 <p>
 Creates a new <a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="type">LassoNameRegistration</span></a>.
 </p>
@@ -102,7 +102,7 @@ an error occured</td>
 <hr>
 <div class="refsect2">
 <a name="lasso-name-registration-new-from-dump"></a><h3>lasso_name_registration_new_from_dump ()</h3>
-<pre class="programlisting"><a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="returnvalue">LassoNameRegistration</span></a> *  lasso_name_registration_new_from_dump
+<pre class="programlisting"><a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="returnvalue">LassoNameRegistration</span></a> * lasso_name_registration_new_from_dump
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *dump</code></em>);</pre>
 <p>
@@ -234,7 +234,7 @@ Destroys a <a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegis
 <hr>
 <div class="refsect2">
 <a name="lasso-name-registration-dump"></a><h3>lasso_name_registration_dump ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             lasso_name_registration_dump        (<em class="parameter"><code><a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="type">LassoNameRegistration</span></a> *name_registration</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">gchar</span> *             lasso_name_registration_dump        (<em class="parameter"><code><a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="type">LassoNameRegistration</span></a> *name_registration</code></em>);</pre>
 <p>
 Dumps <em class="parameter"><code>name_registration</code></em> content to an XML string.
 </p>
@@ -295,7 +295,7 @@ corresponding of this HTTP request method.</td>
 <a name="lasso-name-registration-process-request-msg"></a><h3>lasso_name_registration_process_request_msg ()</h3>
 <pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_name_registration_process_request_msg
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="type">LassoNameRegistration</span></a> *name_registration</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *request_msg</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">gchar</span> *request_msg</code></em>);</pre>
 <p>
 Processes a lib:RegisterNameIdentifierRequest message.  Rebuilds a request
 object from the message and optionally verifies its signature.  Sets
@@ -328,7 +328,7 @@ the old one.
 <a name="lasso-name-registration-process-response-msg"></a><h3>lasso_name_registration_process_response_msg ()</h3>
 <pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_name_registration_process_response_msg
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="type">LassoNameRegistration</span></a> *name_registration</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *response_msg</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">gchar</span> *response_msg</code></em>);</pre>
 <p>
 Processes a lib:RegisterNameIdentifierResponse message.  Rebuilds a response
 object from the message and optionally verifies its signature.
@@ -384,6 +384,6 @@ lib:RegisterNameIdentifierResponse accordingly.
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.17</div>
+          Generated by GTK-Doc V1.18</div>
 </body>
 </html>

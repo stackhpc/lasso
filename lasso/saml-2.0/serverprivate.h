@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef __LASSO_SAML20_SERVER_PRIVATE_H__
@@ -33,6 +32,10 @@ extern "C" {
 #include "../id-ff/server.h"
 
 int lasso_saml20_server_load_affiliation(LassoServer *server, xmlNode *node);
+lasso_error_t lasso_saml20_server_load_metadata(LassoServer *server, LassoProviderRole role,
+		xmlDoc *doc, xmlNode *root_node, GList *blacklisted_entity_ids,
+		GList **loaded_entity_ids, xmlSecKeysMngr *keys_mngr,
+		LassoServerLoadMetadataFlag flags);
 
 #ifdef __cplusplus
 }

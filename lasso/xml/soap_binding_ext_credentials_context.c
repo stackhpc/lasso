@@ -18,13 +18,12 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "private.h"
 #include "soap_binding_ext_credentials_context.h"
-#include "./idwsf_strings.h"
+#include "idwsf_strings.h"
 
 /**
  * SECTION:soap_binding_ext_credentials_context
@@ -54,7 +53,8 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "RequestAuthnContext", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoSoapBindingExtCredentialsContext, RequestAuthnContext), NULL, NULL, NULL},
+		G_STRUCT_OFFSET(LassoSoapBindingExtCredentialsContext, RequestAuthnContext), NULL,
+		LASSO_LIB_PREFIX, LASSO_LIB_HREF},
 	{ "SecurityMechID", SNIPPET_CONTENT,
 		G_STRUCT_OFFSET(LassoSoapBindingExtCredentialsContext, SecurityMechID), NULL, NULL, NULL},
 	{ "id", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoSoapBindingExtCredentialsContext, id), NULL, NULL, NULL},

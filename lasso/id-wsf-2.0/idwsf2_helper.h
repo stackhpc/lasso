@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef __LASSO_IDWSF2_HELPER_H__
@@ -31,7 +30,7 @@ extern "C" {
 
 #include "../xml/ws/wsa_endpoint_reference.h"
 #include "../xml/id-wsf-2.0/disco_security_context.h"
-#include "./profile.h"
+#include "profile.h"
 
 
 const char* lasso_wsa_endpoint_reference_get_idwsf2_service_type(

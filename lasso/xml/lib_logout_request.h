@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef __LASSO_LIB_LOGOUT_REQUEST_H__
@@ -73,6 +72,13 @@ LASSO_EXPORT LassoNode* lasso_lib_logout_request_new(void);
 LASSO_EXPORT LassoNode* lasso_lib_logout_request_new_full(
 		char *providerID, LassoSamlNameIdentifier *nameIdentifier,
 		LassoSignatureType sign_type, LassoSignatureMethod sign_method);
+
+LASSO_EXPORT void lasso_lib_logout_request_set_session_indexes(
+		LassoLibLogoutRequest *lib_logout_request,
+		GList *session_indexes);
+
+LASSO_EXPORT GList* lasso_lib_logout_request_get_session_indexes(
+		LassoLibLogoutRequest *lib_logout_request);
 
 #ifdef __cplusplus
 }

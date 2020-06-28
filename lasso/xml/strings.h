@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -42,7 +41,8 @@
 #ifndef __LASSO_STRINGS_H__
 #define __LASSO_STRINGS_H__
 
-#include "./saml-2.0/saml2_strings.h"
+#include "saml-2.0/saml2_strings.h"
+#include "dsig/strings.h"
 
 /*****************************************************************************/
 /* SOAP 1.1                                                                  */
@@ -132,6 +132,20 @@
  *
  */
 #define LASSO_WSUTIL1_PREFIX "wsutil"
+
+/**
+ * LASSO_XMLENC_HREF
+ *
+ * Namespace for xmlenc-core
+ */
+#define LASSO_XMLENC_HREF "http://www.w3.org/2001/04/xmlenc#"
+
+/**
+ * LASSO_XMLENC_PREFIX
+ *
+ * Preferred prefix for namespace of xmlenc-core
+ */
+#define LASSO_XMLENC_PREFIX "xmlenc"
 
 /*****************************************************************************/
 /* Lasso                                                                     */
@@ -611,7 +625,7 @@
  * LASSO_LIB_NAME_IDENTIFIER_FORMAT_FEDERATED:
  *
  * <emphasis>Federated</emphasis> name identifier constant, used in
- * #LassoNameIdentifier.  It implies the name identifier belongs to
+ * #LassoSamlNameIdentifier.  It implies the name identifier belongs to
  * a federation established between SP and IdP.
  */
 #define LASSO_LIB_NAME_IDENTIFIER_FORMAT_FEDERATED "urn:liberty:iff:nameid:federated"
@@ -619,14 +633,14 @@
 /**
  * LASSO_LIB_NAME_IDENTIFIER_FORMAT_ONE_TIME:
  *
- * "One-time" name identifier constant, used in #LassoNameIdentifier.
+ * "One-time" name identifier constant, used in #LassoSamlNameIdentifier.
  */
 #define LASSO_LIB_NAME_IDENTIFIER_FORMAT_ONE_TIME  "urn:liberty:iff:nameid:one-time"
 
 /**
  * LASSO_LIB_NAME_IDENTIFIER_FORMAT_ENCRYPTED:
  *
- * "Encrypted" name identifier constant, used in #LassoNameIdentifier.
+ * "Encrypted" name identifier constant, used in #LassoSamlNameIdentifier.
  */
 #define LASSO_LIB_NAME_IDENTIFIER_FORMAT_ENCRYPTED "urn:liberty:iff:nameid:encrypted"
 #define LASSO_LIB_NAME_IDENTIFIER_FORMAT_ENTITYID  "urn:liberty:iff:nameid:entityID"
@@ -954,22 +968,6 @@
 /*****************************************************************************/
 /* Others                                                                    */
 /*****************************************************************************/
-
-/* xmldsig prefix & href */
-/**
- * LASSO_DS_HREF:
- *
- * Namespace for FIXME
- *
- */
-#define LASSO_DS_HREF   "http://www.w3.org/2000/09/xmldsig#"
-/**
- * LASSO_DS_PREFIX:
- *
- * Preferred prefix for namespace of FIXME
- *
- */
-#define LASSO_DS_PREFIX "ds"
 
 /* xsi prefix & href */
 /**

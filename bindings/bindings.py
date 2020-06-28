@@ -18,8 +18,7 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 
 import os
@@ -153,7 +152,8 @@ class BindingData:
                 return funcs[0]
         regex = re.compile(r'\/\*\*\s(.*?)\*\/', re.DOTALL)
         for base, dirnames, filenames in os.walk(srcdir):
-            if base.endswith('/.svn'):
+            bname = os.path.basename(base)
+            if bname == '.svn':
                 # ignore svn directories
                 continue
             if not 'Makefile.am' in filenames:
@@ -482,6 +482,9 @@ def parse_header(header_file):
                 pass
             else:
                 # TODO: Add parsing of OFTYPE
+                # Transform struct to typedef
+                # example: "struct _LassoAssertion" -> "LassoAssertion"
+                line = re.sub('\s+struct _', ' ', line)
                 member_match = re.match('\s+(\w+)\s+(\*?\w+)', line)
                 if member_match:
                     member_type, member_name = normalise_var(member_match.group(1), member_match.group(2))
@@ -561,14 +564,15 @@ def parse_headers(srcdir):
     if not binding.options.idwsf:
         exclusion += ( 'idwsf_strings.h', )
     for base, dirnames, filenames in os.walk(srcdir):
-        if base.endswith('/.svn'):
+        bname = os.path.basename(base)
+        if bname == '.svn':
             # ignore svn directories
             continue
         if not 'Makefile.am' in filenames:
             # not a source dir
             continue
-        if not binding.options.idwsf and (base.endswith('/id-wsf') or \
-                base.endswith('/id-wsf-2.0') or base.endswith('/ws')):
+        if not binding.options.idwsf and (bname == 'id-wsf' or \
+                bname == 'id-wsf-2.0' or bname == 'ws'):
             # ignore ID-WSF
             continue
         makefile_am = open(os.path.join(base, 'Makefile.am')).read()

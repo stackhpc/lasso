@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 /**
@@ -115,8 +114,12 @@ instance_init(LassoEcp *ecp)
 static void
 class_init(LassoEcpClass *klass)
 {
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
 	parent_class = g_type_class_peek_parent(klass);
 
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "Ecp");
+	lasso_node_class_set_ns(nclass, LASSO_LASSO_HREF, LASSO_LASSO_PREFIX);
 	G_OBJECT_CLASS(klass)->dispose = dispose;
 	G_OBJECT_CLASS(klass)->finalize = finalize;
 }
@@ -128,8 +131,6 @@ lasso_ecp_process_authn_request_msg(LassoEcp *ecp, const char *authn_request_msg
 	xmlXPathContext *xpathCtx;
 	xmlXPathObject *xpathObj;
 	xmlNode *xmlnode;
-	xmlOutputBuffer *buf;
-	xmlCharEncodingHandler *handler;
 	LassoProfile *profile;
 	LassoProvider *remote_provider;
 
@@ -170,13 +171,8 @@ lasso_ecp_process_authn_request_msg(LassoEcp *ecp, const char *authn_request_msg
 	xpathObj = NULL;
 
 	xmlnode = xmlDocGetRootElement(doc);
-	handler = xmlFindCharEncodingHandler("utf-8");
-	buf = xmlAllocOutputBuffer(handler);
-	xmlNodeDumpOutput(buf, NULL, xmlnode, 0, 0, "utf-8");
-	xmlOutputBufferFlush(buf);
-	LASSO_PROFILE(ecp)->msg_body = g_strdup(
-			(char*)(buf->conv ? buf->conv->content : buf->buffer->content));
-	xmlOutputBufferClose(buf);
+	lasso_assign_new_string(LASSO_PROFILE(ecp)->msg_body,
+			lasso_xmlnode_to_string(xmlnode, 0, 0))
 	lasso_release_doc(doc);
 
 	profile->remote_providerID = lasso_server_get_first_providerID_by_role(profile->server, LASSO_PROVIDER_ROLE_IDP);
@@ -206,8 +202,6 @@ lasso_ecp_process_response_msg(LassoEcp *ecp, const char *response_msg)
 	xmlXPathObject *xpathObj;
 	xmlNode *new_envelope, *header, *paos_response, *ecp_relay_state;
 	xmlNode *body = NULL;
-	xmlOutputBuffer *buf;
-	xmlCharEncodingHandler *handler;
 	xmlNs *soap_env_ns, *ecp_ns;
 
 	g_return_val_if_fail(LASSO_IS_ECP(ecp), LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
@@ -270,17 +264,9 @@ lasso_ecp_process_response_msg(LassoEcp *ecp, const char *response_msg)
 	}
 
 	xmlAddChild(new_envelope, body);
-
-	handler = xmlFindCharEncodingHandler("utf-8");
-	buf = xmlAllocOutputBuffer(handler);
-	xmlNodeDumpOutput(buf, NULL, new_envelope, 0, 0, "utf-8");
-	xmlOutputBufferFlush(buf);
-	LASSO_PROFILE(ecp)->msg_body = g_strdup(
-			(char*)(buf->conv ? buf->conv->content : buf->buffer->content));
-	xmlOutputBufferClose(buf);
-
+	lasso_assign_new_string(LASSO_PROFILE(ecp)->msg_body,
+			lasso_xmlnode_to_string(new_envelope, 0, 0))
 	lasso_release_doc(doc);
-
 	return 0;
 }
 

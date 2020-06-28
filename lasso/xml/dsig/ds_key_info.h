@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef __LASSO_DS_KEY_INFO_H__
@@ -29,7 +28,7 @@
 extern "C" {
 #endif /* __cplusplus */
 
-#include "xml.h"
+#include "../xml.h"
 #include "ds_key_value.h"
 
 #define LASSO_TYPE_DS_KEY_INFO (lasso_ds_key_info_get_type())

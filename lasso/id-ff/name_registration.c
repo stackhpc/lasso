@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 /**
@@ -378,7 +377,6 @@ gint lasso_name_registration_process_request_msg(LassoNameRegistration *name_reg
 	LassoProfile *profile;
 	LassoProvider *remote_provider;
 	LassoMessageFormat format;
-	LassoSamlNameIdentifier *nameIdentifier;
 	LassoLibRegisterNameIdentifierRequest *request;
 
 	g_return_val_if_fail(LASSO_IS_NAME_REGISTRATION(name_registration),
@@ -411,8 +409,6 @@ gint lasso_name_registration_process_request_msg(LassoNameRegistration *name_reg
 
 	request = LASSO_LIB_REGISTER_NAME_IDENTIFIER_REQUEST(profile->request);
 
-	nameIdentifier = LASSO_LIB_REGISTER_NAME_IDENTIFIER_REQUEST(
-			profile->request)->SPProvidedNameIdentifier;
 	name_registration->oldNameIdentifier = NULL;
 	if (remote_provider->role == LASSO_PROVIDER_ROLE_IDP) {
 		/* IdP initiated */
@@ -452,7 +448,6 @@ lasso_name_registration_process_response_msg(LassoNameRegistration *name_registr
 	LassoProvider *remote_provider;
 	LassoFederation *federation;
 	LassoSamlNameIdentifier *nameIdentifier = NULL;
-	LassoHttpMethod response_method;
 	LassoLibStatusResponse *response;
 	LassoMessageFormat format;
 	int rc = 0;
@@ -470,10 +465,6 @@ lasso_name_registration_process_response_msg(LassoNameRegistration *name_registr
 	if (format == LASSO_MESSAGE_FORMAT_UNKNOWN || format == LASSO_MESSAGE_FORMAT_ERROR) {
 		return critical_error(LASSO_PROFILE_ERROR_INVALID_MSG);
 	}
-	if (format == LASSO_MESSAGE_FORMAT_SOAP)
-		response_method = LASSO_HTTP_METHOD_SOAP;
-	if (format == LASSO_MESSAGE_FORMAT_QUERY)
-		response_method = LASSO_HTTP_METHOD_REDIRECT;
 
 	remote_provider = lasso_server_get_provider(profile->server,
 			LASSO_LIB_STATUS_RESPONSE(profile->response)->ProviderID);
@@ -645,6 +636,7 @@ lasso_name_registration_validate_request(LassoNameRegistration *name_registratio
 static struct XmlSnippet schema_snippets[] = {
 	{ "OldNameIdentifier", SNIPPET_NODE_IN_CHILD,
 		G_STRUCT_OFFSET(LassoNameRegistration, oldNameIdentifier), NULL, NULL, NULL},
+	{ "NameRegistrationDumpVersion", SNIPPET_ATTRIBUTE, 0, NULL, NULL, NULL},
 	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
@@ -686,7 +678,8 @@ class_init(LassoNameRegistrationClass *klass)
 	nclass->get_xmlNode = get_xmlNode;
 	nclass->init_from_xml = init_from_xml;
 	nclass->node_data = g_new0(LassoNodeClassData, 1);
-	lasso_node_class_set_nodename(nclass, "Login");
+	lasso_node_class_set_nodename(nclass, "NameRegistration");
+	lasso_node_class_set_ns(nclass, LASSO_LASSO_HREF, LASSO_LASSO_PREFIX);
 	lasso_node_class_add_snippets(nclass, schema_snippets);
 }
 

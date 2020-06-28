@@ -18,13 +18,12 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "private.h"
 #include "disco_encrypted_resource_id.h"
-#include "./idwsf_strings.h"
+#include "idwsf_strings.h"
 
 /**
  * SECTION:disco_encrypted_resource_id
@@ -50,9 +49,11 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "EncryptedData", SNIPPET_XMLNODE,
-		G_STRUCT_OFFSET(LassoDiscoEncryptedResourceID, EncryptedData), NULL, NULL, NULL},
+		G_STRUCT_OFFSET(LassoDiscoEncryptedResourceID, EncryptedData), NULL,
+		LASSO_XMLENC_PREFIX, LASSO_XMLENC_HREF},
 	{ "EncryptedKey", SNIPPET_LIST_XMLNODES,
-		G_STRUCT_OFFSET(LassoDiscoEncryptedResourceID, EncryptedKey), NULL, NULL, NULL},
+		G_STRUCT_OFFSET(LassoDiscoEncryptedResourceID, EncryptedKey), NULL,
+		LASSO_XMLENC_PREFIX, LASSO_XMLENC_HREF},
 	{NULL, 0, 0, NULL, NULL, NULL}
 };
 

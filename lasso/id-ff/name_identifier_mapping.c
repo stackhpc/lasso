@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 /**
@@ -530,6 +529,16 @@ lasso_name_identifier_mapping_validate_request(LassoNameIdentifierMapping *mappi
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
+static void
+class_init(LassoNameIdentifierMappingClass *klass)
+{
+	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
+
+	nclass->node_data = g_new0(LassoNodeClassData, 1);
+	lasso_node_class_set_nodename(nclass, "NameIdentifierMapping");
+	lasso_node_class_set_ns(nclass, LASSO_LASSO_HREF, LASSO_LASSO_PREFIX);
+}
+
 GType
 lasso_name_identifier_mapping_get_type()
 {
@@ -540,7 +549,7 @@ lasso_name_identifier_mapping_get_type()
 			sizeof (LassoNameIdentifierMappingClass),
 			NULL,
 			NULL,
-			NULL,
+			(GClassInitFunc)class_init,
 			NULL,
 			NULL,
 			sizeof(LassoNameIdentifierMapping),

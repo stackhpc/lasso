@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef __LASSO_PROFILE_PRIVATE_H__
@@ -43,6 +42,9 @@ struct _LassoProfilePrivate
 
 void lasso_profile_set_response_status(LassoProfile *profile, const gchar *statusCodeValue);
 void lasso_profile_clean_msg_info(LassoProfile *profile);
+
+#define LASSO_PROFILE_GET_PRIVATE(o) \
+	   (G_TYPE_INSTANCE_GET_PRIVATE ((o), LASSO_TYPE_PROFILE, LassoProfilePrivate))
 
 #ifdef __cplusplus
 }

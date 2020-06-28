@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 #include "../utils.h"
 #include "private.h"
@@ -58,13 +57,17 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "Extension", SNIPPET_EXTENSION,
-		G_STRUCT_OFFSET(LassoLibFederationTerminationNotification, Extension), NULL, NULL, NULL},
+		G_STRUCT_OFFSET(LassoLibFederationTerminationNotification, Extension), NULL, NULL,
+		NULL},
 	{ "ProviderID", SNIPPET_CONTENT,
-		G_STRUCT_OFFSET(LassoLibFederationTerminationNotification, ProviderID), NULL, NULL, NULL},
+		G_STRUCT_OFFSET(LassoLibFederationTerminationNotification, ProviderID), NULL, NULL,
+		NULL},
 	{ "NameIdentifier", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoLibFederationTerminationNotification, NameIdentifier), NULL, NULL, NULL},
+		G_STRUCT_OFFSET(LassoLibFederationTerminationNotification, NameIdentifier), NULL,
+		LASSO_SAML_ASSERTION_PREFIX, LASSO_SAML_ASSERTION_HREF},
 	{ "consent", SNIPPET_ATTRIBUTE,
-		G_STRUCT_OFFSET(LassoLibFederationTerminationNotification, consent), NULL, NULL, NULL},
+		G_STRUCT_OFFSET(LassoLibFederationTerminationNotification, consent), NULL, NULL,
+		NULL},
 	{NULL, 0, 0, NULL, NULL, NULL}
 };
 

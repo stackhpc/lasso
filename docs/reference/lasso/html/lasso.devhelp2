@@ -12,14 +12,13 @@
         <sub name="LassoSession" link="lasso-LassoSession.html"/>
         <sub name="LassoProfile" link="lasso-LassoProfile.html"/>
         <sub name="Error Codes" link="lasso-Error-Codes.html"/>
-        <sub name="Initialization functions" link="lasso-Initialization-functions.html"/>
         <sub name="LassoNode" link="lasso-node.html"/>
         <sub name="Base Strings" link="lasso-Base-Strings.html"/>
         <sub name="registry" link="lasso-registry.html"/>
         <sub name="LassoMiscTextNode" link="lasso-LassoMiscTextNode.html"/>
       </sub>
       <sub name="Identity Federation Framework - ID-FF 1.2 profiles" link="idff.html">
-        <sub name="LassoLogin" link="lasso-login.html"/>
+        <sub name="LassoLogin" link="lasso-LassoLogin.html"/>
         <sub name="LassoLogout" link="lasso-LassoLogout.html"/>
         <sub name="LassoDefederation" link="lasso-LassoDefederation.html"/>
         <sub name="LassoNameRegistration" link="lasso-LassoNameRegistration.html"/>
@@ -600,13 +599,6 @@
     <keyword type="macro" name="LASSO_DST_ERROR_MALFORMED_QUERY" link="lasso-Error-Codes.html#LASSO-DST-ERROR-MALFORMED-QUERY:CAPS"/>
     <keyword type="macro" name="LASSO_REGISTRY_ERROR_KEY_EXISTS" link="lasso-Error-Codes.html#LASSO-REGISTRY-ERROR-KEY-EXISTS:CAPS"/>
     <keyword type="macro" name="LASSO_PROVIDER_ERROR_MISSING_PUBLIC_KEY" link="lasso-Error-Codes.html#LASSO-PROVIDER-ERROR-MISSING-PUBLIC-KEY:CAPS"/>
-    <keyword type="macro" name="LASSO_EXPORT" link="lasso-Initialization-functions.html#LASSO-EXPORT:CAPS"/>
-    <keyword type="macro" name="LASSO_EXPORT_VAR" link="lasso-Initialization-functions.html#LASSO-EXPORT-VAR:CAPS"/>
-    <keyword type="function" name="lasso_init ()" link="lasso-Initialization-functions.html#lasso-init"/>
-    <keyword type="function" name="lasso_shutdown ()" link="lasso-Initialization-functions.html#lasso-shutdown"/>
-    <keyword type="enum" name="enum LassoCheckVersionMode" link="lasso-Initialization-functions.html#LassoCheckVersionMode"/>
-    <keyword type="function" name="lasso_check_version ()" link="lasso-Initialization-functions.html#lasso-check-version"/>
-    <keyword type="function" name="lasso_set_flag ()" link="lasso-Initialization-functions.html#lasso-set-flag"/>
     <keyword type="enum" name="enum LassoMessageFormat" link="lasso-node.html#LassoMessageFormat"/>
     <keyword type="enum" name="enum LassoSignatureType" link="lasso-node.html#LassoSignatureType"/>
     <keyword type="enum" name="enum LassoSignatureMethod" link="lasso-node.html#LassoSignatureMethod"/>
@@ -651,31 +643,30 @@
     <keyword type="function" name="lasso_misc_text_node_new_with_xml_node ()" link="lasso-LassoMiscTextNode.html#lasso-misc-text-node-new-with-xml-node"/>
     <keyword type="function" name="lasso_misc_text_node_get_xml_content ()" link="lasso-LassoMiscTextNode.html#lasso-misc-text-node-get-xml-content"/>
     <keyword type="function" name="lasso_misc_text_node_set_xml_content ()" link="lasso-LassoMiscTextNode.html#lasso-misc-text-node-set-xml-content"/>
-    <keyword type="enum" name="enum LassoLoginProtocolProfile" link="lasso-login.html#LassoLoginProtocolProfile"/>
-    <keyword type="struct" name="struct LassoLogin" link="lasso-login.html#LassoLogin"/>
-    <keyword type="function" name="lasso_login_new ()" link="lasso-login.html#lasso-login-new"/>
-    <keyword type="function" name="lasso_login_new_from_dump ()" link="lasso-login.html#lasso-login-new-from-dump"/>
-    <keyword type="function" name="lasso_login_accept_sso ()" link="lasso-login.html#lasso-login-accept-sso"/>
-    <keyword type="function" name="lasso_login_build_artifact_msg ()" link="lasso-login.html#lasso-login-build-artifact-msg"/>
-    <keyword type="function" name="lasso_login_build_assertion ()" link="lasso-login.html#lasso-login-build-assertion"/>
-    <keyword type="function" name="lasso_login_build_authn_request_msg ()" link="lasso-login.html#lasso-login-build-authn-request-msg"/>
-    <keyword type="function" name="lasso_login_build_authn_response_msg ()" link="lasso-login.html#lasso-login-build-authn-response-msg"/>
-    <keyword type="function" name="lasso_login_build_request_msg ()" link="lasso-login.html#lasso-login-build-request-msg"/>
-    <keyword type="function" name="lasso_login_build_response_msg ()" link="lasso-login.html#lasso-login-build-response-msg"/>
-    <keyword type="function" name="lasso_login_destroy ()" link="lasso-login.html#lasso-login-destroy"/>
-    <keyword type="function" name="lasso_login_dump ()" link="lasso-login.html#lasso-login-dump"/>
-    <keyword type="function" name="lasso_login_get_assertion ()" link="lasso-login.html#lasso-login-get-assertion"/>
-    <keyword type="function" name="lasso_login_init_authn_request ()" link="lasso-login.html#lasso-login-init-authn-request"/>
-    <keyword type="function" name="lasso_login_init_idp_initiated_authn_request ()" link="lasso-login.html#lasso-login-init-idp-initiated-authn-request"/>
-    <keyword type="function" name="lasso_login_init_request ()" link="lasso-login.html#lasso-login-init-request"/>
-    <keyword type="function" name="lasso_login_must_ask_for_consent ()" link="lasso-login.html#lasso-login-must-ask-for-consent"/>
-    <keyword type="function" name="lasso_login_must_authenticate ()" link="lasso-login.html#lasso-login-must-authenticate"/>
-    <keyword type="function" name="lasso_login_process_authn_request_msg ()" link="lasso-login.html#lasso-login-process-authn-request-msg"/>
-    <keyword type="function" name="lasso_login_process_authn_response_msg ()" link="lasso-login.html#lasso-login-process-authn-response-msg"/>
-    <keyword type="function" name="lasso_login_process_paos_response_msg ()" link="lasso-login.html#lasso-login-process-paos-response-msg"/>
-    <keyword type="function" name="lasso_login_process_request_msg ()" link="lasso-login.html#lasso-login-process-request-msg"/>
-    <keyword type="function" name="lasso_login_process_response_msg ()" link="lasso-login.html#lasso-login-process-response-msg"/>
-    <keyword type="function" name="lasso_login_validate_request_msg ()" link="lasso-login.html#lasso-login-validate-request-msg"/>
+    <keyword type="struct" name="struct LassoLogin" link="lasso-LassoLogin.html#LassoLogin"/>
+    <keyword type="function" name="lasso_login_new ()" link="lasso-LassoLogin.html#lasso-login-new"/>
+    <keyword type="function" name="lasso_login_new_from_dump ()" link="lasso-LassoLogin.html#lasso-login-new-from-dump"/>
+    <keyword type="function" name="lasso_login_accept_sso ()" link="lasso-LassoLogin.html#lasso-login-accept-sso"/>
+    <keyword type="function" name="lasso_login_build_artifact_msg ()" link="lasso-LassoLogin.html#lasso-login-build-artifact-msg"/>
+    <keyword type="function" name="lasso_login_build_assertion ()" link="lasso-LassoLogin.html#lasso-login-build-assertion"/>
+    <keyword type="function" name="lasso_login_build_authn_request_msg ()" link="lasso-LassoLogin.html#lasso-login-build-authn-request-msg"/>
+    <keyword type="function" name="lasso_login_build_authn_response_msg ()" link="lasso-LassoLogin.html#lasso-login-build-authn-response-msg"/>
+    <keyword type="function" name="lasso_login_build_request_msg ()" link="lasso-LassoLogin.html#lasso-login-build-request-msg"/>
+    <keyword type="function" name="lasso_login_build_response_msg ()" link="lasso-LassoLogin.html#lasso-login-build-response-msg"/>
+    <keyword type="function" name="lasso_login_destroy ()" link="lasso-LassoLogin.html#lasso-login-destroy"/>
+    <keyword type="function" name="lasso_login_dump ()" link="lasso-LassoLogin.html#lasso-login-dump"/>
+    <keyword type="function" name="lasso_login_get_assertion ()" link="lasso-LassoLogin.html#lasso-login-get-assertion"/>
+    <keyword type="function" name="lasso_login_init_authn_request ()" link="lasso-LassoLogin.html#lasso-login-init-authn-request"/>
+    <keyword type="function" name="lasso_login_init_idp_initiated_authn_request ()" link="lasso-LassoLogin.html#lasso-login-init-idp-initiated-authn-request"/>
+    <keyword type="function" name="lasso_login_init_request ()" link="lasso-LassoLogin.html#lasso-login-init-request"/>
+    <keyword type="function" name="lasso_login_must_ask_for_consent ()" link="lasso-LassoLogin.html#lasso-login-must-ask-for-consent"/>
+    <keyword type="function" name="lasso_login_must_authenticate ()" link="lasso-LassoLogin.html#lasso-login-must-authenticate"/>
+    <keyword type="function" name="lasso_login_process_authn_request_msg ()" link="lasso-LassoLogin.html#lasso-login-process-authn-request-msg"/>
+    <keyword type="function" name="lasso_login_process_authn_response_msg ()" link="lasso-LassoLogin.html#lasso-login-process-authn-response-msg"/>
+    <keyword type="function" name="lasso_login_process_paos_response_msg ()" link="lasso-LassoLogin.html#lasso-login-process-paos-response-msg"/>
+    <keyword type="function" name="lasso_login_process_request_msg ()" link="lasso-LassoLogin.html#lasso-login-process-request-msg"/>
+    <keyword type="function" name="lasso_login_process_response_msg ()" link="lasso-LassoLogin.html#lasso-login-process-response-msg"/>
+    <keyword type="function" name="lasso_login_validate_request_msg ()" link="lasso-LassoLogin.html#lasso-login-validate-request-msg"/>
     <keyword type="struct" name="struct LassoLogout" link="lasso-LassoLogout.html#LassoLogout"/>
     <keyword type="function" name="lasso_logout_new ()" link="lasso-LassoLogout.html#lasso-logout-new"/>
     <keyword type="function" name="lasso_logout_new_from_dump ()" link="lasso-LassoLogout.html#lasso-logout-new-from-dump"/>
@@ -1971,6 +1962,7 @@
     <keyword type="constant" name="LASSO_PROVIDER_ROLE_AUTHZ_AUTHORITY" link="lasso-LassoProvider.html#LASSO-PROVIDER-ROLE-AUTHZ-AUTHORITY:CAPS"/>
     <keyword type="constant" name="LASSO_PROVIDER_ROLE_ATTRIBUTE_AUTHORITY" link="lasso-LassoProvider.html#LASSO-PROVIDER-ROLE-ATTRIBUTE-AUTHORITY:CAPS"/>
     <keyword type="constant" name="LASSO_PROVIDER_ROLE_LAST" link="lasso-LassoProvider.html#LASSO-PROVIDER-ROLE-LAST:CAPS"/>
+    <keyword type="constant" name="LASSO_PROVIDER_ROLE_ALL" link="lasso-LassoProvider.html#LASSO-PROVIDER-ROLE-ALL:CAPS"/>
     <keyword type="constant" name="LASSO_HTTP_METHOD_NONE" link="lasso-LassoProvider.html#LASSO-HTTP-METHOD-NONE:CAPS"/>
     <keyword type="constant" name="LASSO_HTTP_METHOD_ANY" link="lasso-LassoProvider.html#LASSO-HTTP-METHOD-ANY:CAPS"/>
     <keyword type="constant" name="LASSO_HTTP_METHOD_IDP_INITIATED" link="lasso-LassoProvider.html#LASSO-HTTP-METHOD-IDP-INITIATED:CAPS"/>
@@ -2030,9 +2022,6 @@
     <keyword type="constant" name="LASSO_PROFILE_SIGNATURE_VERIFY_HINT_FORCE" link="lasso-LassoProfile.html#LASSO-PROFILE-SIGNATURE-VERIFY-HINT-FORCE:CAPS"/>
     <keyword type="constant" name="LASSO_PROFILE_SIGNATURE_VERIFY_HINT_IGNORE" link="lasso-LassoProfile.html#LASSO-PROFILE-SIGNATURE-VERIFY-HINT-IGNORE:CAPS"/>
     <keyword type="constant" name="LASSO_PROFILE_SIGNATURE_VERIFY_HINT_LAST" link="lasso-LassoProfile.html#LASSO-PROFILE-SIGNATURE-VERIFY-HINT-LAST:CAPS"/>
-    <keyword type="constant" name="LASSO_CHECK_VERSION_EXACT" link="lasso-Initialization-functions.html#LASSO-CHECK-VERSION-EXACT:CAPS"/>
-    <keyword type="constant" name="LASSO_CHECK_VERSIONABI_COMPATIBLE" link="lasso-Initialization-functions.html#LASSO-CHECK-VERSIONABI-COMPATIBLE:CAPS"/>
-    <keyword type="constant" name="LASSO_CHECK_VERSION_NUMERIC" link="lasso-Initialization-functions.html#LASSO-CHECK-VERSION-NUMERIC:CAPS"/>
     <keyword type="constant" name="LASSO_MESSAGE_FORMAT_XSCHEMA_ERROR" link="lasso-node.html#LASSO-MESSAGE-FORMAT-XSCHEMA-ERROR:CAPS"/>
     <keyword type="constant" name="LASSO_MESSAGE_FORMAT_ERROR" link="lasso-node.html#LASSO-MESSAGE-FORMAT-ERROR:CAPS"/>
     <keyword type="constant" name="LASSO_MESSAGE_FORMAT_UNKNOWN" link="lasso-node.html#LASSO-MESSAGE-FORMAT-UNKNOWN:CAPS"/>
@@ -2044,13 +2033,11 @@
     <keyword type="constant" name="LASSO_SIGNATURE_TYPE_SIMPLE" link="lasso-node.html#LASSO-SIGNATURE-TYPE-SIMPLE:CAPS"/>
     <keyword type="constant" name="LASSO_SIGNATURE_TYPE_WITHX509" link="lasso-node.html#LASSO-SIGNATURE-TYPE-WITHX509:CAPS"/>
     <keyword type="constant" name="LASSO_SIGNATURE_TYPE_LAST" link="lasso-node.html#LASSO-SIGNATURE-TYPE-LAST:CAPS"/>
+    <keyword type="constant" name="LASSO_SIGNATURE_METHOD_NONE" link="lasso-node.html#LASSO-SIGNATURE-METHOD-NONE:CAPS"/>
     <keyword type="constant" name="LASSO_SIGNATURE_METHOD_RSA_SHA1" link="lasso-node.html#LASSO-SIGNATURE-METHOD-RSA-SHA1:CAPS"/>
     <keyword type="constant" name="LASSO_SIGNATURE_METHOD_DSA_SHA1" link="lasso-node.html#LASSO-SIGNATURE-METHOD-DSA-SHA1:CAPS"/>
+    <keyword type="constant" name="LASSO_SIGNATURE_METHOD_HMAC_SHA1" link="lasso-node.html#LASSO-SIGNATURE-METHOD-HMAC-SHA1:CAPS"/>
     <keyword type="constant" name="LASSO_SIGNATURE_METHOD_LAST" link="lasso-node.html#LASSO-SIGNATURE-METHOD-LAST:CAPS"/>
-    <keyword type="constant" name="LASSO_LOGIN_PROTOCOL_PROFILE_BRWS_ART" link="lasso-login.html#LASSO-LOGIN-PROTOCOL-PROFILE-BRWS-ART:CAPS"/>
-    <keyword type="constant" name="LASSO_LOGIN_PROTOCOL_PROFILE_BRWS_POST" link="lasso-login.html#LASSO-LOGIN-PROTOCOL-PROFILE-BRWS-POST:CAPS"/>
-    <keyword type="constant" name="LASSO_LOGIN_PROTOCOL_PROFILE_BRWS_LECP" link="lasso-login.html#LASSO-LOGIN-PROTOCOL-PROFILE-BRWS-LECP:CAPS"/>
-    <keyword type="constant" name="LASSO_LOGIN_PROTOCOL_PROFILE_REDIRECT" link="lasso-login.html#LASSO-LOGIN-PROTOCOL-PROFILE-REDIRECT:CAPS"/>
     <keyword type="constant" name="LASSO_ASSERTION_QUERY_REQUEST_TYPE_UNSET" link="lasso-assertion-query.html#LASSO-ASSERTION-QUERY-REQUEST-TYPE-UNSET:CAPS"/>
     <keyword type="constant" name="LASSO_ASSERTION_QUERY_REQUEST_TYPE_ASSERTION_ID" link="lasso-assertion-query.html#LASSO-ASSERTION-QUERY-REQUEST-TYPE-ASSERTION-ID:CAPS"/>
     <keyword type="constant" name="LASSO_ASSERTION_QUERY_REQUEST_TYPE_AUTHN" link="lasso-assertion-query.html#LASSO-ASSERTION-QUERY-REQUEST-TYPE-AUTHN:CAPS"/>

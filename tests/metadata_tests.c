@@ -17,8 +17,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include <stdlib.h>
@@ -26,10 +25,10 @@
 
 #include <check.h>
 
-#include <../lasso/lasso.h>
-#include <../lasso/id-ff/provider.h>
+#include "../lasso/lasso.h"
+#include "../lasso/id-ff/provider.h"
 #include "../lasso/utils.h"
-#include "./tests.h"
+#include "tests.h"
 #include "../lasso/xml/saml-2.0/saml2_xsd.h"
 
 START_TEST(test01_metadata_load_der_certificate_from_x509_cert)

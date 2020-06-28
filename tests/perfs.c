@@ -17,23 +17,21 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include <sys/time.h>
 #include <time.h>
+#include <getopt.h>
 
-#include <../lasso/lasso.h>
-#include <../lasso/xml/saml-2.0/samlp2_response.h>
-#include <../lasso/xml/saml-2.0/samlp2_authn_request.h>
+#include "../lasso/lasso.h"
+#include "../lasso/xml/saml-2.0/samlp2_response.h"
+#include "../lasso/xml/saml-2.0/samlp2_authn_request.h"
 
-#define INDEX "5"
-#define PROTO "saml2"
-#define IDP_METADATA TESTSDATADIR "/idp" INDEX "-" PROTO "/metadata.xml"
-#define IDP_PKEY TESTSDATADIR "/idp" INDEX "-" PROTO "/private-key.pem"
-#define SP_METADATA TESTSDATADIR "/sp" INDEX "-" PROTO "/metadata.xml"
-#define SP_PKEY TESTSDATADIR "/sp" INDEX "-" PROTO "/private-key.pem"
+#define IDP_METADATA TESTSDATADIR "/idp%s/metadata.xml"
+#define IDP_PKEY TESTSDATADIR "/idp%s/private-key.pem"
+#define SP_METADATA TESTSDATADIR "/sp%s/metadata.xml"
+#define SP_PKEY TESTSDATADIR "/sp%s/private-key.pem"
 
 char* create_authn_response_msg(char *query);
 
@@ -122,36 +120,78 @@ main(int argc, char *argv[])
 {
 	LassoServer *sp_server, *idp_server;
 	LassoLogin *sp_login, *idp_login;
-	int n;
+	int n = 100;
+	char sp_metadata[100], sp_pkey[100],
+	     idp_metadata[100], idp_pkey[100];
+	char *index = "5-saml2";
+	GList *providers;
+	LassoKey *key;
+	LassoProvider *provider;
+	gboolean use_shared_secret = FALSE;
+	int opt = 0;
+
+	while ((opt = getopt(argc, argv, "hn:s:")) != -1) {
+		switch (opt) {
+			case 'h':
+				use_shared_secret = TRUE;
+				break;
+			case 'n':
+				n = atoi(optarg);
+				break;
+			case 's':
+				index = optarg;
+				break;
+		}
+	}
+
+	printf("Looping %d times, %susing metadata %s\n", n,
+			use_shared_secret ? "with shared secret key, " : "", index);
+
+	sprintf(sp_metadata, SP_METADATA, index);
+	sprintf(sp_pkey, SP_PKEY, index);
+	sprintf(idp_metadata, IDP_METADATA, index);
+	sprintf(idp_pkey, IDP_PKEY, index);
 
 	lasso_init();
 
 	sp_server = lasso_server_new(
-			SP_METADATA,
-			SP_PKEY,
+			sp_metadata,
+			sp_pkey,
 			NULL, /* Secret key to unlock private key */
 			NULL);
 	lasso_server_add_provider(
 			sp_server,
 			LASSO_PROVIDER_ROLE_IDP,
-			IDP_METADATA,
-			IDP_PKEY,
+			idp_metadata,
+			idp_pkey,
 			NULL);
+	if (use_shared_secret) {
+		key = lasso_key_new_for_signature_from_memory("xxxxxxxxxxxxxxxx", 16,
+				NULL, LASSO_SIGNATURE_METHOD_HMAC_SHA1, NULL);
+		providers = g_hash_table_get_values(sp_server->providers);
+		provider = LASSO_PROVIDER(providers->data);
+		lasso_provider_set_server_signing_key(provider, key);
+		lasso_provider_add_key(provider, key, FALSE);
+		g_list_free(providers);
+	}
+
 	idp_server = lasso_server_new(
-			IDP_METADATA,
-			IDP_PKEY,
+			idp_metadata,
+			idp_pkey,
 			NULL, /* Secret key to unlock private key */
 			NULL);
 	lasso_server_add_provider(
 			idp_server,
 			LASSO_PROVIDER_ROLE_SP,
-			SP_METADATA,
-			SP_PKEY,
+			sp_metadata,
+			sp_pkey,
 			NULL);
-
-	n = 100;
-	if (argc == 2) {
-		n = atoi(argv[1]);
+	if (use_shared_secret) {
+		providers = g_hash_table_get_values(idp_server->providers);
+		provider = LASSO_PROVIDER(providers->data);
+		lasso_provider_set_server_signing_key(provider, key);
+		lasso_provider_add_key(provider, key, FALSE);
+		g_list_free(providers);
 	}
 
 	sp_login = lasso_login_new(sp_server);

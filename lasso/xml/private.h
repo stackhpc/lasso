@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef __LASSO_XML_PRIVATE_H__
@@ -34,12 +33,13 @@ extern "C" {
 #include <xmlsec/crypto.h>
 #include <xmlsec/xmlenc.h>
 #include "saml-2.0/saml2_encrypted_element.h"
+#include "../utils.h"
 
 typedef enum {
 	SNIPPET_NODE,
 	SNIPPET_CONTENT,
 	SNIPPET_TEXT_CHILD,
-	SNIPPET_NAME_IDENTIFIER,
+	SNIPPET_UNUSED1,
 	SNIPPET_ATTRIBUTE,
 	SNIPPET_NODE_IN_CHILD,
 	SNIPPET_LIST_NODES,
@@ -60,22 +60,87 @@ typedef enum {
 	SNIPPET_ANY = 1 << 25, /* ##any node */
 	SNIPPET_ALLOW_TEXT = 1 << 26, /* allow text childs in list of nodes */
 	SNIPPET_KEEP_XMLNODE = 1 << 27, /* force keep xmlNode */
+	SNIPPET_PRIVATE = 1 << 28, /* means that the offset is relative to a private extension */
+	SNIPPET_MANDATORY = 1 << 29, /* means that the element cardinality is at least 1 */
 } SnippetType;
 
 typedef enum {
 	NO_OPTION = 0,
 	NO_SINGLE_REFERENCE = 1 /* SAML signature should contain a single reference,
-				  * but WS-Security signatures can contain many */
+				  * but WS-Security signatures can contain many */,
+	EMPTY_URI = 2,
 } SignatureVerificationOption;
 
 struct XmlSnippet {
-	char *name;
-	SnippetType type;
-	guint offset;
-	char *class_name;
-	char *ns_name;
+	char *name; /* name of the node or attribute to match */
+	SnippetType type; /* type of node to deserialize */
+	guint offset; /* offset of the storage field relative to the public or private object (if
+			 using SNIPPET_PRIVATE). If 0, means that no storage must be done, it will
+			 be handled by the init_from_xml virtual method. */
+	char *class_name; /* Force a certain LassoNode class for deserializing a node, usually
+			     useless. */
+	char *ns_name; /* if the namespace is different from the one of the parent node, specify it
+			  there */
 	char *ns_uri;
 };
+
+/**
+ * LassoSignatureContext:
+ * @signature_method: the method for signing (RSA, DSA, HMAC)
+ * @signature_key: a key for the signature
+ *
+ * Information needed to make a signature
+ */
+typedef struct _LassoSignatureContext {
+	LassoSignatureMethod signature_method;
+	xmlSecKey *signature_key;
+} LassoSignatureContext;
+
+#define LASSO_SIGNATURE_CONTEXT_NONE ((LassoSignatureContext){LASSO_SIGNATURE_TYPE_NONE, NULL})
+
+#define lasso_assign_signature_context(to, from) \
+	do { \
+		LassoSignatureContext *__to = &(to); \
+		LassoSignatureContext __from = (from); \
+		__to->signature_method = __from.signature_method; \
+		lasso_assign_sec_key(__to->signature_key, __from.signature_key); \
+	} while(0)
+
+#define lasso_assign_new_signature_context(to, from) \
+	do { \
+		LassoSignatureContext *__to = &(to); \
+		LassoSignatureContext __from = (from); \
+		__to->signature_method = __from.signature_method; \
+		lasso_assign_new_sec_key(__to->signature_key, __from.signature_key); \
+	} while(0)
+
+static inline gboolean
+lasso_validate_signature_context(LassoSignatureContext context) {
+	return lasso_validate_signature_method(context.signature_method)
+		&& context.signature_key != NULL;
+}
+
+/**
+ * This inline method replace normal use of G_STRUCT_MEMBER_P/G_STRUCT_MEMBER, in order to add an
+ * indirection through the private structure attached to a GObject instance if needed */
+inline static void *
+snippet_struct_member(void *base, GType type, struct XmlSnippet *snippet)
+{
+	if (snippet->type & SNIPPET_PRIVATE) {
+		if (! G_IS_OBJECT(base))
+			return NULL;
+		GObject *object = (GObject*)base;
+		base = g_type_instance_get_private((GTypeInstance*)object,
+				type);
+	}
+	return G_STRUCT_MEMBER_P(base, snippet->offset);
+}
+
+#define SNIPPET_STRUCT_MEMBER(type, base, gtype, snippet) \
+	(*(type*)snippet_struct_member(base, gtype, snippet))
+
+#define SNIPPET_STRUCT_MEMBER_P(base, gtype, snippet) \
+	snippet_struct_member(base, gtype, snippet)
 
 struct QuerySnippet {
 	char *path;
@@ -95,6 +160,7 @@ struct _LassoNodeClassData
 	int private_key_file_offset;
 	int certificate_file_offset;
 	gboolean keep_xmlnode;
+	gboolean xsi_sub_type;
 };
 
 void lasso_node_class_set_nodename(LassoNodeClass *klass, char *name);
@@ -126,8 +192,7 @@ xmlSecKeyPtr lasso_get_public_key_from_pem_file(const char *file);
 xmlSecKeyPtr lasso_get_public_key_from_pem_cert_file(const char *file);
 xmlSecKeysMngr* lasso_load_certs_from_pem_certs_chain_file (const char *file);
 
-char* lasso_query_sign(char *query, LassoSignatureMethod sign_method,
-	const char *private_key_file, const char *private_key_file_password);
+char* lasso_query_sign(char *query, LassoSignatureContext signature_context);
 
 int lasso_query_verify_signature(const char *query, const xmlSecKey *public_key);
 
@@ -137,9 +202,7 @@ char* lasso_sha1(const char *str);
 
 char** urlencoded_to_strings(const char *str);
 
-int lasso_sign_node(xmlNode *xmlnode, const char *id_attr_name, const char *id_value,
-		const char *private_key_file, const char *private_key_password,
-		const char *certificate_file);
+int lasso_sign_node(xmlNode *xmlnode, LassoSignatureContext context, const char *id_attr_name, const char *id_value);
 
 int lasso_verify_signature(xmlNode *signed_node, xmlDoc *doc, const char *id_attr_name,
 		xmlSecKeysMngr *keys_manager, xmlSecKey *public_key,
@@ -183,8 +246,9 @@ gboolean lasso_eval_xpath_expression(xmlXPathContextPtr xpath_ctx, const char *e
 
 char * lasso_get_relaystate_from_query(const char *query);
 char * lasso_url_add_parameters(char *url, gboolean free, ...);
-xmlSecKey* lasso_xmlsec_load_private_key_from_buffer(const char *buffer, size_t length, const char *password);
-xmlSecKey* lasso_xmlsec_load_private_key(const char *filename_or_buffer, const char *password);
+xmlSecKey* lasso_xmlsec_load_private_key_from_buffer(const char *buffer, size_t length, const char *password, LassoSignatureMethod signature_method, const char *certificate);
+xmlSecKey* lasso_xmlsec_load_private_key(const char *filename_or_buffer, const char *password,
+		LassoSignatureMethod signature_method, const char *certificate);
 xmlDocPtr lasso_xml_parse_file(const char *filepath);
 xmlDocPtr lasso_xml_parse_memory_with_error(const char *buffer, int size, xmlError *error);
 xmlSecKeyPtr lasso_xmlsec_load_key_info(xmlNode *key_descriptor);
@@ -194,22 +258,52 @@ void lasso_set_string_from_prop(char **str, xmlNode *node, xmlChar *name, xmlCha
 
 void lasso_node_add_custom_namespace(LassoNode *node, const char *prefix, const char *href);
 
-void lasso_apply_signature(LassoNode *node, gboolean lasso_dump,
-		xmlNode **xmlnode, char *id_attribute, char *id_value, LassoSignatureType sign_type,
-		char *private_key_file, char *certificate_file);
+int lasso_node_set_signature(LassoNode *node, LassoSignatureContext context);
 
-int lasso_node_set_signature(LassoNode *node, LassoSignatureType type, LassoSignatureMethod method,
-		const char *private_key, const char *private_key_password, const char *certificate);
-
-void lasso_node_get_signature(LassoNode *node, LassoSignatureType *type, LassoSignatureMethod *method,
-		char **private_key, char **private_key_password,
-		char **certificate);
+LassoSignatureContext lasso_node_get_signature(LassoNode *node);
 
 void lasso_node_set_encryption(LassoNode *node, xmlSecKey *encryption_public_key,
 		LassoEncryptionSymKeyType encryption_sym_key_type);
 
 void lasso_node_get_encryption(LassoNode *node, xmlSecKey **encryption_public_key,
 		LassoEncryptionSymKeyType *encryption_sym_key_type);
+gboolean lasso_base64_decode(const char *from, char **buffer, int *buffer_len);
+
+xmlSecKeyPtr
+lasso_create_hmac_key(const xmlSecByte * buf, xmlSecSize size);
+
+lasso_error_t
+lasso_get_hmac_key(const xmlSecKey *key, void **buffer, size_t *size);
+
+LassoSignatureContext lasso_make_signature_context_from_buffer(const void *buffer, size_t length,
+		const char *password, LassoSignatureMethod signature_method,
+		const char *certificate);
+
+LassoSignatureContext lasso_make_signature_context_from_path_or_string(char *filename_or_buffer,
+		const char *password, LassoSignatureMethod signature_method,
+		const char *certificate);
+
+xmlNs * get_or_define_ns(xmlNode *xmlnode, const xmlChar *ns_uri, const xmlChar
+		*advised_prefix);
+
+void set_qname_attribute(xmlNode *node,
+		const xmlChar *attribute_ns_prefix,
+		const xmlChar *attribute_ns_href,
+		const xmlChar *attribute_name,
+		const xmlChar *prefix,
+		const xmlChar *href,
+		const xmlChar *name);
+
+
+void set_xsi_type(xmlNode *node,
+		const xmlChar *type_ns_prefix,
+		const xmlChar *type_ns_href,
+		const xmlChar *type_name);
+
+void lasso_xmlnode_add_saml2_signature_template(xmlNode *node, LassoSignatureContext context,
+		const char *id);
+
+gchar* lasso_xmlnode_build_deflated_query(xmlNode *xmlnode);
 
 #ifdef __cplusplus
 }

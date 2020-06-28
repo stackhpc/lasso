@@ -18,13 +18,12 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "../private.h"
 #include "disco_query_response.h"
-#include "./idwsf2_strings.h"
+#include "idwsf2_strings.h"
 
 /**
  * SECTION:disco_query_response
@@ -55,10 +54,10 @@
 static struct XmlSnippet schema_snippets[] = {
 	{ "Status", SNIPPET_NODE,
 		G_STRUCT_OFFSET(LassoIdWsf2DiscoQueryResponse, Status),
-		"LassoIdWsf2UtilStatus", NULL, NULL },
+		"LassoIdWsf2UtilStatus", LASSO_IDWSF2_UTIL_PREFIX, LASSO_IDWSF2_DISCOVERY_HREF},
 	{ "EndpointReference", SNIPPET_LIST_NODES,
 		G_STRUCT_OFFSET(LassoIdWsf2DiscoQueryResponse, EndpointReference),
-		"LassoWsAddrEndpointReference", NULL, NULL },
+		"LassoWsAddrEndpointReference", LASSO_WSA_PREFIX, LASSO_WSA_HREF},
 	{ "attributes", SNIPPET_ATTRIBUTE | SNIPPET_ANY,
 		G_STRUCT_OFFSET(LassoIdWsf2DiscoQueryResponse, attributes), NULL, NULL, NULL},
 	{NULL, 0, 0, NULL, NULL, NULL}

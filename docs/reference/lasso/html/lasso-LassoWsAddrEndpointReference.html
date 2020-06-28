@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LassoWsAddrEndpointReference</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="ws-addr.html" title="Object from the WS-* schemas">
 <link rel="prev" href="lasso-LassoWsAddrAttributedURI.html" title="LassoWsAddrAttributedURI">
 <link rel="next" href="lasso-LassoWsAddrMetadata.html" title="LassoWsAddrMetadata">
-<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -38,13 +38,13 @@
 <div class="refsynopsisdiv">
 <a name="lasso-LassoWsAddrEndpointReference.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">struct              <a class="link" href="lasso-LassoWsAddrEndpointReference.html#LassoWsAddrEndpointReference" title="struct LassoWsAddrEndpointReference">LassoWsAddrEndpointReference</a>;
-<a class="link" href="lasso-LassoWsAddrEndpointReference.html#LassoWsAddrEndpointReference" title="struct LassoWsAddrEndpointReference"><span class="returnvalue">LassoWsAddrEndpointReference</span></a> *  <a class="link" href="lasso-LassoWsAddrEndpointReference.html#lasso-wsa-endpoint-reference-new" title="lasso_wsa_endpoint_reference_new ()">lasso_wsa_endpoint_reference_new</a>
+<a class="link" href="lasso-LassoWsAddrEndpointReference.html#LassoWsAddrEndpointReference" title="struct LassoWsAddrEndpointReference"><span class="returnvalue">LassoWsAddrEndpointReference</span></a> * <a class="link" href="lasso-LassoWsAddrEndpointReference.html#lasso-wsa-endpoint-reference-new" title="lasso_wsa_endpoint_reference_new ()">lasso_wsa_endpoint_reference_new</a>
                                                         (<em class="parameter"><code><span class="type">void</span></code></em>);
 <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="returnvalue">LassoNode</span></a> *         <a class="link" href="lasso-LassoWsAddrEndpointReference.html#lasso-wsa-endpoint-reference-get-target-identity-token" title="lasso_wsa_endpoint_reference_get_target_identity_token ()">lasso_wsa_endpoint_reference_get_target_identity_token</a>
                                                         (<em class="parameter"><code>const <a class="link" href="lasso-LassoWsAddrEndpointReference.html#LassoWsAddrEndpointReference" title="struct LassoWsAddrEndpointReference"><span class="type">LassoWsAddrEndpointReference</span></a> *epr</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> (*sech_mech_predicate) (const char *)</code></em>,
+                                                         <em class="parameter"><code><span class="type">gboolean</span> (*sech_mech_predicate) (const char *)</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *security_mech_id</code></em>);
-<a class="link" href="lasso-LassoWsAddrEndpointReference.html#LassoWsAddrEndpointReference" title="struct LassoWsAddrEndpointReference"><span class="returnvalue">LassoWsAddrEndpointReference</span></a> *  <a class="link" href="lasso-LassoWsAddrEndpointReference.html#lasso-wsa-endpoint-reference-new-for-idwsf2-service" title="lasso_wsa_endpoint_reference_new_for_idwsf2_service ()">lasso_wsa_endpoint_reference_new_for_idwsf2_service</a>
+<a class="link" href="lasso-LassoWsAddrEndpointReference.html#LassoWsAddrEndpointReference" title="struct LassoWsAddrEndpointReference"><span class="returnvalue">LassoWsAddrEndpointReference</span></a> * <a class="link" href="lasso-LassoWsAddrEndpointReference.html#lasso-wsa-endpoint-reference-new-for-idwsf2-service" title="lasso_wsa_endpoint_reference_new_for_idwsf2_service ()">lasso_wsa_endpoint_reference_new_for_idwsf2_service</a>
                                                         (<em class="parameter"><code>const <span class="type">char</span> *address</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *service_ype</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *provider_id</code></em>,
@@ -52,10 +52,10 @@
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoWsAddrEndpointReference.html#lasso-wsa-endpoint-reference-add-security-token" title="lasso_wsa_endpoint_reference_add_security_token ()">lasso_wsa_endpoint_reference_add_security_token</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoWsAddrEndpointReference.html#LassoWsAddrEndpointReference" title="struct LassoWsAddrEndpointReference"><span class="type">LassoWsAddrEndpointReference</span></a> *epr</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *security_token</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *security_mechanisms</code></em>);
+                                                         <em class="parameter"><code><span class="type">GList</span> *security_mechanisms</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoWsAddrEndpointReference.html#lasso-wsa-endpoint-reference-associate-service-to-type" title="lasso_wsa_endpoint_reference_associate_service_to_type ()">lasso_wsa_endpoint_reference_associate_service_to_type</a>
                                                         (<em class="parameter"><code>const <span class="type">char</span> *service_type_uri</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#GType"><span class="type">GType</span></a> g_type</code></em>);
+                                                         <em class="parameter"><code><span class="type">GType</span> g_type</code></em>);
 <a class="link" href="lasso-LassoIdWsf2Profile.html#LassoIdWsf2Profile" title="struct LassoIdWsf2Profile"><span class="returnvalue">LassoIdWsf2Profile</span></a> * <a class="link" href="lasso-LassoWsAddrEndpointReference.html#lasso-wsa-endpoint-reference-get-service" title="lasso_wsa_endpoint_reference_get_service ()">lasso_wsa_endpoint_reference_get_service</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoWsAddrEndpointReference.html#LassoWsAddrEndpointReference" title="struct LassoWsAddrEndpointReference"><span class="type">LassoWsAddrEndpointReference</span></a> *epr</code></em>);
 </pre>
@@ -83,7 +83,7 @@
 <hr>
 <div class="refsect2">
 <a name="lasso-wsa-endpoint-reference-new"></a><h3>lasso_wsa_endpoint_reference_new ()</h3>
-<pre class="programlisting"><a class="link" href="lasso-LassoWsAddrEndpointReference.html#LassoWsAddrEndpointReference" title="struct LassoWsAddrEndpointReference"><span class="returnvalue">LassoWsAddrEndpointReference</span></a> *  lasso_wsa_endpoint_reference_new
+<pre class="programlisting"><a class="link" href="lasso-LassoWsAddrEndpointReference.html#LassoWsAddrEndpointReference" title="struct LassoWsAddrEndpointReference"><span class="returnvalue">LassoWsAddrEndpointReference</span></a> * lasso_wsa_endpoint_reference_new
                                                         (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
 <p>
 Creates a new <a class="link" href="lasso-LassoWsAddrEndpointReference.html#LassoWsAddrEndpointReference" title="struct LassoWsAddrEndpointReference"><span class="type">LassoWsAddrEndpointReference</span></a> object.
@@ -101,7 +101,7 @@ Creates a new <a class="link" href="lasso-LassoWsAddrEndpointReference.html#Lass
 <a name="lasso-wsa-endpoint-reference-get-target-identity-token"></a><h3>lasso_wsa_endpoint_reference_get_target_identity_token ()</h3>
 <pre class="programlisting"><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="returnvalue">LassoNode</span></a> *         lasso_wsa_endpoint_reference_get_target_identity_token
                                                         (<em class="parameter"><code>const <a class="link" href="lasso-LassoWsAddrEndpointReference.html#LassoWsAddrEndpointReference" title="struct LassoWsAddrEndpointReference"><span class="type">LassoWsAddrEndpointReference</span></a> *epr</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> (*sech_mech_predicate) (const char *)</code></em>,
+                                                         <em class="parameter"><code><span class="type">gboolean</span> (*sech_mech_predicate) (const char *)</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *security_mech_id</code></em>);</pre>
 <p>
 Return the first target identity token found in the metadata of the <em class="parameter"><code>epr</code></em> object which qualify
@@ -136,7 +136,7 @@ security token.</td>
 <hr>
 <div class="refsect2">
 <a name="lasso-wsa-endpoint-reference-new-for-idwsf2-service"></a><h3>lasso_wsa_endpoint_reference_new_for_idwsf2_service ()</h3>
-<pre class="programlisting"><a class="link" href="lasso-LassoWsAddrEndpointReference.html#LassoWsAddrEndpointReference" title="struct LassoWsAddrEndpointReference"><span class="returnvalue">LassoWsAddrEndpointReference</span></a> *  lasso_wsa_endpoint_reference_new_for_idwsf2_service
+<pre class="programlisting"><a class="link" href="lasso-LassoWsAddrEndpointReference.html#LassoWsAddrEndpointReference" title="struct LassoWsAddrEndpointReference"><span class="returnvalue">LassoWsAddrEndpointReference</span></a> * lasso_wsa_endpoint_reference_new_for_idwsf2_service
                                                         (<em class="parameter"><code>const <span class="type">char</span> *address</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *service_ype</code></em>,
                                                          <em class="parameter"><code>const <span class="type">char</span> *provider_id</code></em>,
@@ -177,7 +177,7 @@ help in finding key material for security mechanisms.</td>
 <pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_wsa_endpoint_reference_add_security_token
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoWsAddrEndpointReference.html#LassoWsAddrEndpointReference" title="struct LassoWsAddrEndpointReference"><span class="type">LassoWsAddrEndpointReference</span></a> *epr</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *security_token</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *security_mechanisms</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">GList</span> *security_mechanisms</code></em>);</pre>
 <p>
 Add a new security context declaration for the given security mechanisms identifiers and populate
 it with a security token.
@@ -211,7 +211,7 @@ for whom the token is made. <span class="annotation">[<acronym title="Generics a
 <a name="lasso-wsa-endpoint-reference-associate-service-to-type"></a><h3>lasso_wsa_endpoint_reference_associate_service_to_type ()</h3>
 <pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_wsa_endpoint_reference_associate_service_to_type
                                                         (<em class="parameter"><code>const <span class="type">char</span> *service_type_uri</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#GType"><span class="type">GType</span></a> g_type</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">GType</span> g_type</code></em>);</pre>
 <p>
 Associate a profile type to a service type.
 </p>
@@ -256,6 +256,6 @@ Return object: a newly created <a class="link" href="lasso-LassoIdWsf2Profile.ht
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.17</div>
+          Generated by GTK-Doc V1.18</div>
 </body>
 </html>

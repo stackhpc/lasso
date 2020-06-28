@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 /**
@@ -34,7 +33,7 @@
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
 
-#include "./data_service.h"
+#include "data_service.h"
 #include "../xml/id-wsf-2.0/idwsf2_strings.h"
 
 #include "../xml/id-wsf-2.0/disco_service_type.h"
@@ -54,9 +53,9 @@
 #include "../xml/soap-1.1/soap_fault.h"
 #include "../xml/private.h"
 #include "../utils.h"
-#include "./private.h"
-#include "./idwsf2_helper.h"
-#include "./soap_binding.h"
+#include "private.h"
+#include "idwsf2_helper.h"
+#include "soap_binding.h"
 
 struct _LassoIdWsf2DataServicePrivate
 {

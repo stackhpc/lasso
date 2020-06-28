@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LassoWsfProfile</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="idwsf.html" title="Identity Web Services Framework 1.0">
 <link rel="prev" href="lasso-authentication.html" title="LassoAuthentication">
 <link rel="next" href="lasso-LassoInteractionProfileService.html" title="LassoInteractionProfileService">
-<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -44,14 +44,14 @@ Unstable, unless otherwise indicated
 <pre class="synopsis">struct              <a class="link" href="lasso-LassoWsfProfile.html#LassoWsfProfile" title="struct LassoWsfProfile">LassoWsfProfile</a>;
 <a class="link" href="lasso-LassoIdentity.html#LassoIdentity" title="struct LassoIdentity"><span class="returnvalue">LassoIdentity</span></a> *     <a class="link" href="lasso-LassoWsfProfile.html#lasso-wsf-profile-get-identity" title="lasso_wsf_profile_get_identity ()">lasso_wsf_profile_get_identity</a>      (<em class="parameter"><code>const <a class="link" href="lasso-LassoWsfProfile.html#LassoWsfProfile" title="struct LassoWsfProfile"><span class="type">LassoWsfProfile</span></a> *profile</code></em>);
 <a class="link" href="lasso-LassoSession.html#LassoSession" title="struct LassoSession"><span class="returnvalue">LassoSession</span></a> *      <a class="link" href="lasso-LassoWsfProfile.html#lasso-wsf-profile-get-session" title="lasso_wsf_profile_get_session ()">lasso_wsf_profile_get_session</a>       (<em class="parameter"><code>const <a class="link" href="lasso-LassoWsfProfile.html#LassoWsfProfile" title="struct LassoWsfProfile"><span class="type">LassoWsfProfile</span></a> *profile</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="lasso-LassoWsfProfile.html#lasso-wsf-profile-is-identity-dirty" title="lasso_wsf_profile_is_identity_dirty ()">lasso_wsf_profile_is_identity_dirty</a> (<em class="parameter"><code>const <a class="link" href="lasso-LassoWsfProfile.html#LassoWsfProfile" title="struct LassoWsfProfile"><span class="type">LassoWsfProfile</span></a> *profile</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="lasso-LassoWsfProfile.html#lasso-wsf-profile-is-session-dirty" title="lasso_wsf_profile_is_session_dirty ()">lasso_wsf_profile_is_session_dirty</a>  (<em class="parameter"><code>const <a class="link" href="lasso-LassoWsfProfile.html#LassoWsfProfile" title="struct LassoWsfProfile"><span class="type">LassoWsfProfile</span></a> *profile</code></em>);
+<span class="returnvalue">gboolean</span>            <a class="link" href="lasso-LassoWsfProfile.html#lasso-wsf-profile-is-identity-dirty" title="lasso_wsf_profile_is_identity_dirty ()">lasso_wsf_profile_is_identity_dirty</a> (<em class="parameter"><code>const <a class="link" href="lasso-LassoWsfProfile.html#LassoWsfProfile" title="struct LassoWsfProfile"><span class="type">LassoWsfProfile</span></a> *profile</code></em>);
+<span class="returnvalue">gboolean</span>            <a class="link" href="lasso-LassoWsfProfile.html#lasso-wsf-profile-is-session-dirty" title="lasso_wsf_profile_is_session_dirty ()">lasso_wsf_profile_is_session_dirty</a>  (<em class="parameter"><code>const <a class="link" href="lasso-LassoWsfProfile.html#LassoWsfProfile" title="struct LassoWsfProfile"><span class="type">LassoWsfProfile</span></a> *profile</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoWsfProfile.html#lasso-wsf-profile-set-identity-from-dump" title="lasso_wsf_profile_set_identity_from_dump ()">lasso_wsf_profile_set_identity_from_dump</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoWsfProfile.html#LassoWsfProfile" title="struct LassoWsfProfile"><span class="type">LassoWsfProfile</span></a> *profile</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *dump</code></em>);
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *dump</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoWsfProfile.html#lasso-wsf-profile-set-session-from-dump" title="lasso_wsf_profile_set_session_from_dump ()">lasso_wsf_profile_set_session_from_dump</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoWsfProfile.html#LassoWsfProfile" title="struct LassoWsfProfile"><span class="type">LassoWsfProfile</span></a> *profile</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *dump</code></em>);
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *dump</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoWsfProfile.html#lasso-wsf-profile-build-soap-request-msg" title="lasso_wsf_profile_build_soap_request_msg ()">lasso_wsf_profile_build_soap_request_msg</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoWsfProfile.html#LassoWsfProfile" title="struct LassoWsfProfile"><span class="type">LassoWsfProfile</span></a> *profile</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoWsfProfile.html#lasso-wsf-profile-build-soap-response-msg" title="lasso_wsf_profile_build_soap_response_msg ()">lasso_wsf_profile_build_soap_response_msg</a>
@@ -63,11 +63,11 @@ Unstable, unless otherwise indicated
                                                          <em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *response</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoWsfProfile.html#lasso-wsf-profile-process-soap-request-msg" title="lasso_wsf_profile_process_soap_request_msg ()">lasso_wsf_profile_process_soap_request_msg</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoWsfProfile.html#LassoWsfProfile" title="struct LassoWsfProfile"><span class="type">LassoWsfProfile</span></a> *profile</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *message</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *security_mech_id</code></em>);
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *message</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *security_mech_id</code></em>);
 <span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoWsfProfile.html#lasso-wsf-profile-process-soap-response-msg" title="lasso_wsf_profile_process_soap_response_msg ()">lasso_wsf_profile_process_soap_response_msg</a>
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoWsfProfile.html#LassoWsfProfile" title="struct LassoWsfProfile"><span class="type">LassoWsfProfile</span></a> *profile</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *message</code></em>);
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *message</code></em>);
 <a class="link" href="lasso-LassoWsfProfile.html#LassoWsfProfile" title="struct LassoWsfProfile"><span class="returnvalue">LassoWsfProfile</span></a> *   <a class="link" href="lasso-LassoWsfProfile.html#lasso-wsf-profile-new" title="lasso_wsf_profile_new ()">lasso_wsf_profile_new</a>               (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);
 <a class="link" href="lasso-LassoWsfProfile.html#LassoWsfProfile" title="struct LassoWsfProfile"><span class="returnvalue">LassoWsfProfile</span></a> *   <a class="link" href="lasso-LassoWsfProfile.html#lasso-wsf-profile-new-full" title="lasso_wsf_profile_new_full ()">lasso_wsf_profile_new_full</a>          (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>,
                                                          <em class="parameter"><code><a class="link" href="lasso-LassoDiscoResourceOffering.html#LassoDiscoResourceOffering" title="struct LassoDiscoResourceOffering"><span class="type">LassoDiscoResourceOffering</span></a> *offering</code></em>);
@@ -187,7 +187,7 @@ Gets the session bound to <em class="parameter"><code>profile</code></em>.
 <hr>
 <div class="refsect2">
 <a name="lasso-wsf-profile-is-identity-dirty"></a><h3>lasso_wsf_profile_is_identity_dirty ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            lasso_wsf_profile_is_identity_dirty (<em class="parameter"><code>const <a class="link" href="lasso-LassoWsfProfile.html#LassoWsfProfile" title="struct LassoWsfProfile"><span class="type">LassoWsfProfile</span></a> *profile</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            lasso_wsf_profile_is_identity_dirty (<em class="parameter"><code>const <a class="link" href="lasso-LassoWsfProfile.html#LassoWsfProfile" title="struct LassoWsfProfile"><span class="type">LassoWsfProfile</span></a> *profile</code></em>);</pre>
 <p>
 Checks whether identity has been modified (and should therefore be saved).
 </p>
@@ -202,7 +202,7 @@ Checks whether identity has been modified (and should therefore be saved).
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if identity has changed</td>
+<code class="literal">TRUE</code> if identity has changed</td>
 </tr>
 </tbody>
 </table></div>
@@ -210,7 +210,7 @@ Checks whether identity has been modified (and should therefore be saved).
 <hr>
 <div class="refsect2">
 <a name="lasso-wsf-profile-is-session-dirty"></a><h3>lasso_wsf_profile_is_session_dirty ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            lasso_wsf_profile_is_session_dirty  (<em class="parameter"><code>const <a class="link" href="lasso-LassoWsfProfile.html#LassoWsfProfile" title="struct LassoWsfProfile"><span class="type">LassoWsfProfile</span></a> *profile</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            lasso_wsf_profile_is_session_dirty  (<em class="parameter"><code>const <a class="link" href="lasso-LassoWsfProfile.html#LassoWsfProfile" title="struct LassoWsfProfile"><span class="type">LassoWsfProfile</span></a> *profile</code></em>);</pre>
 <p>
 Checks whether session has been modified (and should therefore be saved).
 </p>
@@ -225,7 +225,7 @@ Checks whether session has been modified (and should therefore be saved).
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if session has changed</td>
+<code class="literal">TRUE</code> if session has changed</td>
 </tr>
 </tbody>
 </table></div>
@@ -235,7 +235,7 @@ Checks whether session has been modified (and should therefore be saved).
 <a name="lasso-wsf-profile-set-identity-from-dump"></a><h3>lasso_wsf_profile_set_identity_from_dump ()</h3>
 <pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_wsf_profile_set_identity_from_dump
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoWsfProfile.html#LassoWsfProfile" title="struct LassoWsfProfile"><span class="type">LassoWsfProfile</span></a> *profile</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *dump</code></em>);</pre>
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *dump</code></em>);</pre>
 <p>
 Builds a new <a class="link" href="lasso-LassoIdentity.html#LassoIdentity" title="struct LassoIdentity"><span class="type">LassoIdentity</span></a> object from XML dump and binds it to <em class="parameter"><code>profile</code></em>.
 </p>
@@ -263,7 +263,7 @@ Builds a new <a class="link" href="lasso-LassoIdentity.html#LassoIdentity" title
 <a name="lasso-wsf-profile-set-session-from-dump"></a><h3>lasso_wsf_profile_set_session_from_dump ()</h3>
 <pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_wsf_profile_set_session_from_dump
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoWsfProfile.html#LassoWsfProfile" title="struct LassoWsfProfile"><span class="type">LassoWsfProfile</span></a> *profile</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *dump</code></em>);</pre>
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *dump</code></em>);</pre>
 <p>
 Builds a new <a class="link" href="lasso-LassoSession.html#LassoSession" title="struct LassoSession"><span class="type">LassoSession</span></a> object from XML dump and binds it to <em class="parameter"><code>profile</code></em>.
 </p>
@@ -389,8 +389,8 @@ Build a new SOAP envelope containing response to current SOAP request
 <a name="lasso-wsf-profile-process-soap-request-msg"></a><h3>lasso_wsf_profile_process_soap_request_msg ()</h3>
 <pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_wsf_profile_process_soap_request_msg
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoWsfProfile.html#LassoWsfProfile" title="struct LassoWsfProfile"><span class="type">LassoWsfProfile</span></a> *profile</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *message</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *security_mech_id</code></em>);</pre>
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *message</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *security_mech_id</code></em>);</pre>
 <p>
 Process an ID-WSF SOAP request, extract headers information, and check compliance with the
 security mechanism.
@@ -422,7 +422,7 @@ security mechanism.
 <a name="lasso-wsf-profile-process-soap-response-msg"></a><h3>lasso_wsf_profile_process_soap_response_msg ()</h3>
 <pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_wsf_profile_process_soap_response_msg
                                                         (<em class="parameter"><code><a class="link" href="lasso-LassoWsfProfile.html#LassoWsfProfile" title="struct LassoWsfProfile"><span class="type">LassoWsfProfile</span></a> *profile</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *message</code></em>);</pre>
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *message</code></em>);</pre>
 <p>
 Parse a SOAP response from an ID-WSF 1.0 service,
 eventually signal a SOAP fault.
@@ -869,6 +869,6 @@ Set the Resssource Offering to setup this ID-WSF profile.
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.17</div>
+          Generated by GTK-Doc V1.18</div>
 </body>
 </html>

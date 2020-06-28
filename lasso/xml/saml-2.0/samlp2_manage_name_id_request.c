@@ -18,8 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "../private.h"
@@ -59,11 +58,11 @@
 
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "NameID", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoSamlp2ManageNameIDRequest, NameID), NULL, NULL, NULL},
-	{ "EncryptedID", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoSamlp2ManageNameIDRequest, EncryptedID),
-		"LassoSaml2EncryptedElement", NULL, NULL},
+	{ "NameID", SNIPPET_NODE, G_STRUCT_OFFSET(LassoSamlp2ManageNameIDRequest, NameID), NULL,
+		LASSO_SAML2_ASSERTION_PREFIX, LASSO_SAML2_ASSERTION_HREF},
+	{ "EncryptedID", SNIPPET_NODE, G_STRUCT_OFFSET(LassoSamlp2ManageNameIDRequest, EncryptedID),
+		"LassoSaml2EncryptedElement", LASSO_SAML2_ASSERTION_PREFIX,
+		LASSO_SAML2_ASSERTION_HREF},
 	{ "NewID", SNIPPET_CONTENT,
 		G_STRUCT_OFFSET(LassoSamlp2ManageNameIDRequest, NewID), NULL, NULL, NULL},
 	{ "NewEncryptedID", SNIPPET_NODE,
@@ -78,12 +77,30 @@ static struct XmlSnippet schema_snippets[] = {
 /* instance and class init functions                                         */
 /*****************************************************************************/
 
+static LassoNodeClass *parent_class = NULL;
+
+static int
+init_from_xml(LassoNode *node, xmlNode *xmlnode)
+{
+	int rc = 0;
+	LassoSamlp2ManageNameIDRequest *nid_request = (LassoSamlp2ManageNameIDRequest*)node;
+
+	rc = parent_class->init_from_xml(node, xmlnode);
+	if ((nid_request->NameID != 0) +
+	    (nid_request->EncryptedID != 0) != 1) {
+		error("samlp2:LogoutRequest needs one of BaseID, NameID or EncryptedID");
+		rc = 1;
+	}
+	return rc;
+}
 
 static void
 class_init(LassoSamlp2ManageNameIDRequestClass *klass)
 {
 	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
 
+	parent_class = g_type_class_peek_parent(klass);
+	klass->parent.parent.init_from_xml = init_from_xml;
 	nclass->node_data = g_new0(LassoNodeClassData, 1);
 	lasso_node_class_set_nodename(nclass, "ManageNameIDRequest");
 	lasso_node_class_set_ns(nclass, LASSO_SAML2_PROTOCOL_HREF, LASSO_SAML2_PROTOCOL_PREFIX);

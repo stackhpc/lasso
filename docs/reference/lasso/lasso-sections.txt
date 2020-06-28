@@ -1,4 +1,9 @@
 <SECTION>
+<FILE>utilities</FILE>
+<TITLE>Utilities</TITLE>
+</SECTION>
+
+<SECTION>
 <FILE>server</FILE>
 <TITLE>LassoServer</TITLE>
 LassoServer
@@ -220,7 +225,6 @@ LASSO_LECP_GET_CLASS
 
 <SECTION>
 <FILE>login</FILE>
-LassoLoginProtocolProfile
 <TITLE>LassoLogin</TITLE>
 LassoLogin
 lasso_login_new
@@ -6060,7 +6064,7 @@ LASSO_PROVIDER_ERROR_MISSING_PUBLIC_KEY
 </SECTION>
 
 <SECTION>
-<FILE>init</FILE>
+<FILE>lasso</FILE>
 <TITLE>Initialization functions</TITLE>
 LASSO_EXPORT
 LASSO_EXPORT_VAR

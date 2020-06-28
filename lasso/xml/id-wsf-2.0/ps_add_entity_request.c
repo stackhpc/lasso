@@ -18,13 +18,12 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "../private.h"
 #include "ps_add_entity_request.h"
-#include "./idwsf2_strings.h"
+#include "idwsf2_strings.h"
 
 /**
  * SECTION:ps_add_entity_request
@@ -65,7 +64,8 @@ static struct XmlSnippet schema_snippets[] = {
 	{ "Subscription", SNIPPET_NODE,
 		G_STRUCT_OFFSET(LassoIdWsf2PsAddEntityRequest, Subscription), NULL, NULL, NULL},
 	{ "TokenPolicy", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoIdWsf2PsAddEntityRequest, TokenPolicy), NULL, NULL, NULL},
+		G_STRUCT_OFFSET(LassoIdWsf2PsAddEntityRequest, TokenPolicy), NULL,
+		LASSO_IDWSF2_UTIL_PREFIX, LASSO_IDWSF2_UTIL_HREF},
 	{NULL, 0, 0, NULL, NULL, NULL}
 };
 

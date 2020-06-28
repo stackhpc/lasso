@@ -18,15 +18,14 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef __LASSO_LOGGING_H__
 #define __LASSO_LOGGING_H__ 1
 
 #include <glib.h>
-#include "./errors.h"
+#include "errors.h"
 
 #ifndef lasso_log
 void lasso_log(GLogLevelFlags level, const char *filename, int line,
@@ -122,6 +121,23 @@ static inline void critical(const char *format, ...)
 	g_vsnprintf(s, 1024, format, ap);
 	va_end(ap);
 	message(G_LOG_LEVEL_CRITICAL, "%s", s);
+}
+#endif
+
+#if defined(__GNUC__)
+#  define error(format, args...) \
+	message(G_LOG_LEVEL_DEBUG, format, ##args)
+#elif defined(HAVE_VARIADIC_MACROS)
+#  define error(...)     message(G_LOG_LEVEL_DEBUG, __VA_ARGS__)
+#else
+static inline void error(const char *format, ...)
+{
+	va_list ap;
+	char s[1024];
+	va_start(ap, format);
+	g_vsnprintf(s, 1024, format, ap);
+	va_end(ap);
+	message(G_LOG_LEVEL_ERROR, "%s", s);
 }
 #endif
 

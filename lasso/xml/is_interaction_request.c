@@ -18,13 +18,12 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "private.h"
 #include "is_interaction_request.h"
-#include "./idwsf_strings.h"
+#include "idwsf_strings.h"
 
 /**
  * SECTION:is_interaction_request
@@ -55,19 +54,23 @@
 
 static struct XmlSnippet schema_snippets[] = {
 	{ "ResourceID", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoIsInteractionRequest, ResourceID), NULL, NULL, NULL},
+		G_STRUCT_OFFSET(LassoIsInteractionRequest, ResourceID), NULL,
+		LASSO_DISCO_PREFIX, LASSO_DISCO_HREF},
 	{ "EncryptedResourceID", SNIPPET_NODE,
-		G_STRUCT_OFFSET(LassoIsInteractionRequest, EncryptedResourceID), NULL, NULL, NULL},
+		G_STRUCT_OFFSET(LassoIsInteractionRequest, EncryptedResourceID), NULL,
+		LASSO_DISCO_PREFIX, LASSO_DISCO_HREF},
 	{ "Inquiry", SNIPPET_LIST_NODES,
 		G_STRUCT_OFFSET(LassoIsInteractionRequest, Inquiry), NULL, NULL, NULL},
-	/* TODO : KeyInfo */
-	{ "id", SNIPPET_ATTRIBUTE,
+	{ "KeyInfo", SNIPPET_NODE, G_STRUCT_OFFSET(LassoIsInteractionRequest, KeyInfo), NULL,
+		LASSO_DS_PREFIX, LASSO_DS_HREF},
+	{ "id", SNIPPET_ATTRIBUTE | SNIPPET_OPTIONAL,
 		G_STRUCT_OFFSET(LassoIsInteractionRequest, id), NULL, NULL, NULL},
-	{ "language", SNIPPET_ATTRIBUTE,
+	{ "language", SNIPPET_ATTRIBUTE | SNIPPET_OPTIONAL,
 		G_STRUCT_OFFSET(LassoIsInteractionRequest, language), NULL, NULL, NULL},
 	{ "maxInteractTime", SNIPPET_ATTRIBUTE | SNIPPET_OPTIONAL,
 		G_STRUCT_OFFSET(LassoIsInteractionRequest, maxInteractTime), NULL, NULL, NULL},
-	/* TODO : signed */
+	{ "signed", SNIPPET_ATTRIBUTE | SNIPPET_OPTIONAL,
+		G_STRUCT_OFFSET(LassoIsInteractionRequest, signed_attribute), NULL, NULL, NULL},
 	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
