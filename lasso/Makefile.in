@@ -353,14 +353,14 @@ LTRCCOMPILE = $(LIBTOOL) --tag=RC --mode=compile $(RC) \
 
 lib_LTLIBRARIES = liblasso.la
 liblassoinclude_HEADERS = export.h lasso.h lasso_config.h errors.h
-BUILT_SOURCES = types.c symbols.sym
+BUILT_SOURCES = types.c errors.c symbols.sym
 liblasso_la_SOURCES = lasso.c errors.c
 @WSF_ENABLED_TRUE@SYMBOLS_ARGS = -wsf
 MAINTAINERCLEANFILES = \
 	Makefile.in \
 	lasso_config.h.in
 
-EXTRA_DIST = utils.h extract_types.py extract_symbols.py
+EXTRA_DIST = utils.h extract_types.py extract_symbols.py build_strerror.py
 @WSF_ENABLED_TRUE@WSF_LIB_FILE = $(top_builddir)/lasso/id-wsf/liblasso-id-wsf.la
 @WSF_ENABLED_TRUE@WSF2_LIB_FILES = $(top_builddir)/lasso/id-wsf-2.0/liblasso-id-wsf2.la \
 @WSF_ENABLED_TRUE@	$(top_builddir)/lasso/xml/id-wsf-2.0/liblasso-xml-id-wsf-2.la \
@@ -827,7 +827,13 @@ symbols.sym:
 	$(PYTHON) $(srcdir)/extract_symbols.py $(srcdir) $(SYMBOLS_ARGS) > symbols.sym
 
 clean-local:
-	-rm types.c symbols.sym
+	-rm types.c symbols.sym errors.c
+
+errors.c: errors.h
+	python build_strerror.py >$(srcdir)/.errors.c.new 
+	if ! cmp -s $(srcdir)/errors.c $(srcdir)/.errors.c.new; then \
+	mv -f $(srcdir)/.errors.c.new $(srcdir)/errors.c; else \
+	rm $(srcdir)/.errors.c.new; fi
 
 .PHONY: types.c symbols.sym
 # Tell versions [3.59,3.63) of GNU make to not export all variables.

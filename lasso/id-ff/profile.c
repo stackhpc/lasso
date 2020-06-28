@@ -1,4 +1,4 @@
-/* $Id: profile.c 3729 2008-05-22 07:54:46Z dlaniel $
+/* $Id: profile.c 3793 2008-07-22 12:09:06Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -164,9 +164,9 @@ lasso_profile_get_request_type_from_soap_msg(const gchar *soap)
 		message(G_LOG_LEVEL_WARNING, "Unknown node name : %s", name);
 	}
 
-	xmlFreeDoc(doc);
-	xmlXPathFreeContext(xpathCtx);
 	xmlXPathFreeObject(xpathObj);
+	xmlXPathFreeContext(xpathCtx);
+	xmlFreeDoc(doc);
 
 	return type;
 }

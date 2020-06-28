@@ -1,4 +1,4 @@
-/* $Id: logout.c 3704 2008-05-15 21:17:44Z fpeters $
+/* $Id: logout.c 3784 2008-05-30 12:27:01Z dlaniel $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -381,7 +381,8 @@ lasso_logout_init_request(LassoLogout *logout, char *remote_providerID,
 				assertion->AuthenticationStatement);
 		if (subject_statement && subject_statement->Subject) {
 			nameIdentifier = subject_statement->Subject->NameIdentifier;
-			encryptedNameIdentifier = subject_statement->Subject->EncryptedNameIdentifier;
+			encryptedNameIdentifier =
+				subject_statement->Subject->EncryptedNameIdentifier;
 		}
 	}
 
