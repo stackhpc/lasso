@@ -115,8 +115,8 @@ static gboolean want_authn_request_signed(LassoProvider *provider) {
 
 	s = lasso_provider_get_metadata_one_for_role(provider, LASSO_PROVIDER_ROLE_IDP,
 			LASSO_SAML2_METADATA_ATTRIBUTE_WANT_AUTHN_REQUEST_SIGNED);
-	if (lasso_strisequal(s,"false")) {
-		rc = FALSE;
+	if (lasso_strisequal(s, "true")) {
+		rc = TRUE;
 	}
 	lasso_release_string(s);
 	return rc;
@@ -222,7 +222,7 @@ _lasso_login_must_verify_signature(LassoProfile *profile) {
 gint
 lasso_saml20_login_build_authn_request_msg(LassoLogin *login)
 {
-	char *url = NULL;
+	char *assertionConsumerServiceURL = NULL;
 	gboolean must_sign = TRUE;
 	LassoProfile *profile;
 	LassoSamlp2AuthnRequest *authn_request;
@@ -247,29 +247,29 @@ lasso_saml20_login_build_authn_request_msg(LassoLogin *login)
 	}
 
 	if (login->http_method == LASSO_HTTP_METHOD_PAOS) {
-
 		/*
 		 * PAOS is special, the url passed to build_request is the
 		 * AssertionConsumerServiceURL of this SP, not the
-		 * destination.
+		 * destination IdP URL. This is done to fill paos:responseConsumerURL
+		 * appropriately down the line in build_request_msg.
+		 * See https://dev.entrouvert.org/issues/34409 for more information.
 		 */
 		if (authn_request->AssertionConsumerServiceURL) {
-			url = authn_request->AssertionConsumerServiceURL;
+			assertionConsumerServiceURL = authn_request->AssertionConsumerServiceURL;
 			if (!lasso_saml20_provider_check_assertion_consumer_service_url(
-					LASSO_PROVIDER(profile->server), url, LASSO_SAML2_METADATA_BINDING_PAOS)) {
+					LASSO_PROVIDER(profile->server), assertionConsumerServiceURL, LASSO_SAML2_METADATA_BINDING_PAOS)) {
 				rc = LASSO_PROFILE_ERROR_INVALID_REQUEST;
 				goto cleanup;
 			}
 		} else {
-			url = lasso_saml20_provider_get_assertion_consumer_service_url_by_binding(
+			assertionConsumerServiceURL = lasso_saml20_provider_get_assertion_consumer_service_url_by_binding(
 					LASSO_PROVIDER(profile->server), LASSO_SAML2_METADATA_BINDING_PAOS);
-			lasso_assign_new_string(authn_request->AssertionConsumerServiceURL, url);
+			lasso_assign_new_string(authn_request->AssertionConsumerServiceURL, assertionConsumerServiceURL);
 		}
 	}
 
-
 	lasso_check_good_rc(lasso_saml20_profile_build_request_msg(profile, "SingleSignOnService",
-				login->http_method, url));
+				login->http_method, assertionConsumerServiceURL));
 
 cleanup:
 	return rc;
@@ -1107,18 +1107,31 @@ lasso_saml20_login_process_paos_response_msg(LassoLogin *login, gchar *msg)
 {
 	LassoSoapHeader *header = NULL;
 	LassoProfile *profile;
-	int rc1, rc2;
+	int rc;
 
 	lasso_null_param(msg);
 
 	profile = LASSO_PROFILE(login);
 
-	rc1 = lasso_saml20_profile_process_soap_response_with_headers(profile, msg, &header);
+        /*
+         * lasso_saml20_profile_process_soap_response_with_headers()
+         * performs a signature check on the SAML message. A signature
+         * can also appear on the assertion which is checked by
+         * lasso_saml20_login_process_response_status_and_assertion()
+         * (below). Therefore if the error is SIGNATURE_NOT_FOUND we
+         * proceed because
+         * lasso_saml20_login_process_response_status_and_assertion()
+         * will test the signature on the assertion.
+         */
+	rc = lasso_saml20_profile_process_soap_response_with_headers(profile, msg, &header);
+        if (rc != 0 && rc != LASSO_DS_ERROR_SIGNATURE_NOT_FOUND) {
+            return rc;
+        }
 
 	/*
 	 * If the SOAP message contained a header check for the optional
-     * paos:Response and ecp:RelayState elements, if they exist extract their
-     * values into the profile.
+	 * paos:Response and ecp:RelayState elements, if they exist extract their
+	 * values into the profile.
 	 */
 	if (header) {
 		GList *i = NULL;
@@ -1142,12 +1155,8 @@ lasso_saml20_login_process_paos_response_msg(LassoLogin *login, gchar *msg)
 		lasso_release_gobject(header);
 	}
 
-	rc2 = lasso_saml20_login_process_response_status_and_assertion(login);
-	if (rc1) {
-		return rc1;
-	}
-	return rc2;
-
+	rc = lasso_saml20_login_process_response_status_and_assertion(login);
+	return rc;
 }
 
 /**

@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 #
 # $Id: binding_tests.py 3283 2007-06-11 09:10:18Z dlaniel $
 #
@@ -311,8 +311,8 @@ class BindingTestCase(unittest.TestCase):
                    </samlp:Extensions>'''
         node = lasso.Node.newFromXmlNode(content)
         assert 'next_url' in node.any[1]
-        assert 'huhu' in node.attributes.keys()[0]
-        assert node.attributes.values()[0] == 'xxx'
+        assert '{https://www.entrouvert.com/}huhu' in node.attributes.keys()
+        assert 'xxx' in node.attributes.values()
         node.any = ('<zob>coin</zob>',)
         node.attributes = {'michou': 'zozo'}
         assert '<zob>coin</zob>' in node.dump()
@@ -321,6 +321,15 @@ class BindingTestCase(unittest.TestCase):
         assert node.any == ('<zob>coin</zob>',)
         # on reparse non namespaces attributes are ignore, they should not exist
         assert node.attributes == {}
+
+    def test13(self):
+        node = lasso.Samlp2LogoutRequest()
+        node.sessionIndexes = ('1', '2')
+        assert node.sessionIndexes == ('1', '2'), node.sessionIndexes
+        node.sessionIndexes = ()
+        assert node.sessionIndexes == (), node.sessionIndexes
+
+
 
 
 bindingSuite = unittest.makeSuite(BindingTestCase, 'test')

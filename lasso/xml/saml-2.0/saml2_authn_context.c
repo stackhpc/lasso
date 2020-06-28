@@ -61,7 +61,7 @@
 static struct XmlSnippet schema_snippets[] = {
 	{ "AuthnContextClassRef", SNIPPET_CONTENT | SNIPPET_OPTIONAL | SNIPPET_JUMP_ON_MISS | SNIPPET_JUMP_3,
 		G_STRUCT_OFFSET(LassoSaml2AuthnContext, AuthnContextClassRef), NULL, NULL, NULL},
-	{ "AuthnContextDecl", SNIPPET_NODE | SNIPPET_OPTIONAL | SNIPPET_JUMP_ON_MISS | SNIPPET_JUMP_4,
+	{ "AuthnContextDecl", SNIPPET_NODE | SNIPPET_OPTIONAL | SNIPPET_JUMP_ON_MATCH | SNIPPET_JUMP_4,
 		G_STRUCT_OFFSET(LassoSaml2AuthnContext, AuthnContextDecl), NULL, NULL, NULL},
 	{ "AuthnContextDeclRef", SNIPPET_CONTENT | SNIPPET_OPTIONAL | SNIPPET_JUMP | SNIPPET_JUMP_3,
 		G_STRUCT_OFFSET(LassoSaml2AuthnContext, AuthnContextDeclRef), NULL, NULL, NULL},
@@ -71,6 +71,10 @@ static struct XmlSnippet schema_snippets[] = {
 		G_STRUCT_OFFSET(LassoSaml2AuthnContext, AuthnContextDeclRef), NULL, NULL, NULL},
 	{ "AuthenticatingAuthority", SNIPPET_CONTENT | SNIPPET_OPTIONAL,
 		G_STRUCT_OFFSET(LassoSaml2AuthnContext, AuthenticatingAuthority), NULL, NULL, NULL},
+	/* Other AuthenticatingAuthority are just ignored, it's a work-around to at least accept correct SAML message.
+	 * See https://dev.entrouvert.org/issues/29340  */
+	{ "AuthenticatingAuthority", SNIPPET_LIST_CONTENT | SNIPPET_OPTIONAL,
+		NULL, NULL, NULL, NULL},
 	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
@@ -83,7 +87,7 @@ static LassoNodeClass *parent_class = NULL;
 
 
 static void
-class_init(LassoSaml2AuthnContextClass *klass)
+class_init(LassoSaml2AuthnContextClass *klass, void *unused G_GNUC_UNUSED)
 {
 	LassoNodeClass *nclass = LASSO_NODE_CLASS(klass);
 
