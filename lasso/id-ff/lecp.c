@@ -1,4 +1,4 @@
-/* $Id: lecp.c,v 1.53 2006/01/23 15:30:00 fpeters Exp $
+/* $Id: lecp.c,v 1.58 2007/01/05 13:40:07 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -50,7 +50,7 @@ lasso_lecp_build_authn_request_envelope_msg(LassoLecp *lecp)
 	xmlOutputBuffer *buf;
 	xmlCharEncodingHandler *handler;
 
-	g_return_val_if_fail(LASSO_IS_LECP(lecp), -1);
+	g_return_val_if_fail(LASSO_IS_LECP(lecp), LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
 
 	profile = LASSO_PROFILE(lecp);
 
@@ -61,8 +61,7 @@ lasso_lecp_build_authn_request_envelope_msg(LassoLecp *lecp)
 	}
 
 	if (profile->request == NULL) {
-		message(G_LOG_LEVEL_CRITICAL, "AuthnRequest not found");
-		return LASSO_ERROR_UNDEFINED;
+		return LASSO_PROFILE_ERROR_MISSING_REQUEST;
 	}
 
 	lecp->authnRequestEnvelope = lasso_lib_authn_request_envelope_new_full(
@@ -91,9 +90,7 @@ lasso_lecp_build_authn_request_envelope_msg(LassoLecp *lecp)
 	xmlFreeNode(msg);
 
 	if (profile->msg_body == NULL) {
-		message(G_LOG_LEVEL_CRITICAL,
-				"Error while exporting the AuthnRequestEnvelope to POST msg");
-		return LASSO_ERROR_UNDEFINED;
+		return LASSO_PROFILE_ERROR_BUILDING_REQUEST_FAILED;
 	}
 
 	return 0;
@@ -114,7 +111,7 @@ lasso_lecp_build_authn_request_msg(LassoLecp *lecp)
 	LassoProfile *profile;
 	LassoProvider *remote_provider;
 
-	g_return_val_if_fail(LASSO_IS_LECP(lecp), -1);
+	g_return_val_if_fail(LASSO_IS_LECP(lecp), LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
 
 	profile = LASSO_PROFILE(lecp);
 
@@ -151,9 +148,11 @@ lasso_lecp_build_authn_response_msg(LassoLecp *lecp)
 {
 	LassoProfile *profile;
 
-	g_return_val_if_fail(LASSO_IS_LECP(lecp), -1);
+	g_return_val_if_fail(LASSO_IS_LECP(lecp), LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
 
 	profile = LASSO_PROFILE(lecp);
+	lasso_profile_clean_msg_info(profile);
+
 	profile->msg_url = g_strdup(lecp->assertionConsumerServiceURL);
 	if (profile->msg_url == NULL) {
 		return critical_error(LASSO_PROFILE_ERROR_UNKNOWN_PROFILE_URL);
@@ -183,13 +182,12 @@ lasso_lecp_build_authn_response_envelope_msg(LassoLecp *lecp)
 	LassoProvider *provider;
 	gchar *assertionConsumerServiceURL;
 
-	g_return_val_if_fail(LASSO_IS_LECP(lecp), -1);
+	g_return_val_if_fail(LASSO_IS_LECP(lecp), LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
 
 	profile = LASSO_PROFILE(lecp);
 
 	if (LASSO_IS_LIB_AUTHN_RESPONSE(profile->response) == FALSE) {
-		message(G_LOG_LEVEL_CRITICAL, "AuthnResponse not found");
-		return LASSO_ERROR_UNDEFINED;
+		return LASSO_PROFILE_ERROR_MISSING_RESPONSE;
 	}
 
 	provider = g_hash_table_lookup(profile->server->providers, profile->remote_providerID);
@@ -244,7 +242,7 @@ lasso_lecp_init_authn_request(LassoLecp *lecp, const char *remote_providerID)
 {
 	gint res;
 
-	g_return_val_if_fail(LASSO_IS_LECP(lecp), -1);
+	g_return_val_if_fail(LASSO_IS_LECP(lecp), LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
 
 	/* FIXME : BAD usage of http_method
 	   using POST method so that the lib:AuthnRequest is initialize with
@@ -269,8 +267,8 @@ lasso_lecp_init_authn_request(LassoLecp *lecp, const char *remote_providerID)
 int
 lasso_lecp_process_authn_request_msg(LassoLecp *lecp, const char *authn_request_msg)
 {
-	g_return_val_if_fail(LASSO_IS_LECP(lecp), -1);
-	g_return_val_if_fail(authn_request_msg != NULL, -1);
+	g_return_val_if_fail(LASSO_IS_LECP(lecp), LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
+	g_return_val_if_fail(authn_request_msg != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
 
 	return lasso_login_process_authn_request_msg(LASSO_LOGIN(lecp), authn_request_msg);
 }
@@ -297,7 +295,7 @@ lasso_lecp_process_authn_request_envelope_msg(LassoLecp *lecp, const char *reque
 	xmlCharEncodingHandler *handler;
 
 	g_return_val_if_fail(LASSO_IS_LECP(lecp), LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
-	g_return_val_if_fail(request_msg != NULL, LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
+	g_return_val_if_fail(request_msg != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
 
 	doc = xmlParseMemory(request_msg, strlen(request_msg));
 	xpathCtx = xmlXPathNewContext(doc);
@@ -305,16 +303,24 @@ lasso_lecp_process_authn_request_envelope_msg(LassoLecp *lecp, const char *reque
 	/* TODO: will need to use another href for id-ff 1.1 support */
 	xpathObj = xmlXPathEvalExpression((xmlChar*)"//lib:AuthnRequest", xpathCtx);
 
-	if (xpathObj == NULL)
+	if (xpathObj == NULL) {
+		xmlXPathFreeContext(xpathCtx);
 		return critical_error(LASSO_PROFILE_ERROR_INVALID_MSG);
+	}
 
 	if (xpathObj->nodesetval == NULL || xpathObj->nodesetval->nodeNr == 0) {
+		xmlXPathFreeContext(xpathCtx);
 		xmlXPathFreeObject(xpathObj);
 		return critical_error(LASSO_PROFILE_ERROR_INVALID_MSG);
 	}
 
 	authn_request = xmlCopyNode(xpathObj->nodesetval->nodeTab[0], 1);
+	xmlXPathFreeContext(xpathCtx);
+	xmlXPathFreeObject(xpathObj);
 	xmlFreeDoc(doc);
+	xpathCtx = NULL;
+	xpathObj = NULL;
+	doc = NULL;
 
 	soap_envelope = xmlNewNode(NULL, (xmlChar*)"Envelope");
 	xmlSetNs(soap_envelope, xmlNewNs(soap_envelope,
@@ -353,8 +359,8 @@ lasso_lecp_process_authn_response_envelope_msg(LassoLecp *lecp, const char *resp
 	LassoProfile *profile;
 	LassoMessageFormat format;
 
-	g_return_val_if_fail(LASSO_IS_LECP(lecp), -1);
-	g_return_val_if_fail(response_msg!=NULL, -2);
+	g_return_val_if_fail(LASSO_IS_LECP(lecp), LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
+	g_return_val_if_fail(response_msg != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
 
 	profile = LASSO_PROFILE(lecp);
 
@@ -367,8 +373,7 @@ lasso_lecp_process_authn_response_envelope_msg(LassoLecp *lecp, const char *resp
 
 	profile->response = g_object_ref(lecp->authnResponseEnvelope->AuthnResponse);
 	if (profile->response == NULL) {
-		message(G_LOG_LEVEL_CRITICAL, "AuthnResponse not found");
-		return LASSO_ERROR_UNDEFINED;
+		return LASSO_PROFILE_ERROR_MISSING_RESPONSE;
 	}
 
 	lecp->assertionConsumerServiceURL = g_strdup(
@@ -390,7 +395,7 @@ lasso_lecp_process_authn_response_envelope_msg(LassoLecp *lecp, const char *resp
 void
 lasso_lecp_destroy(LassoLecp *lecp)
 {
-	g_object_unref(G_OBJECT(lecp));
+	lasso_node_destroy(LASSO_NODE(lecp));
 }
 
 /*****************************************************************************/

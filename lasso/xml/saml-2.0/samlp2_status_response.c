@@ -1,4 +1,4 @@
-/* $Id: samlp2_status_response.c,v 1.2 2005/11/21 18:51:52 fpeters Exp $ 
+/* $Id: samlp2_status_response.c,v 1.6 2006/12/28 14:44:56 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -56,6 +56,8 @@ static struct XmlSnippet schema_snippets[] = {
 	{ "Issuer", SNIPPET_NODE,
 		G_STRUCT_OFFSET(LassoSamlp2StatusResponse, Issuer),
 		"LassoSaml2NameID" },
+	{ "Signature", SNIPPET_SIGNATURE,
+		G_STRUCT_OFFSET(LassoSamlp2StatusResponse, ID) },
 	{ "Extensions", SNIPPET_NODE,
 		G_STRUCT_OFFSET(LassoSamlp2StatusResponse, Extensions) },
 	{ "Status", SNIPPET_NODE,
@@ -72,8 +74,6 @@ static struct XmlSnippet schema_snippets[] = {
 		G_STRUCT_OFFSET(LassoSamlp2StatusResponse, Destination) },
 	{ "Consent", SNIPPET_ATTRIBUTE,
 		G_STRUCT_OFFSET(LassoSamlp2StatusResponse, Consent) },
-	{ "Signature", SNIPPET_SIGNATURE,
-		G_STRUCT_OFFSET(LassoSamlp2StatusResponse, ID) },
 
 	/* hidden fields; used in lasso dumps */
 	{ "SignType", SNIPPET_ATTRIBUTE | SNIPPET_INTEGER | SNIPPET_LASSO_DUMP,
@@ -97,6 +97,9 @@ build_query(LassoNode *node)
 	char *ret, *deflated_message;
 
 	deflated_message = lasso_node_build_deflated_query(node);
+	if (deflated_message == NULL) {
+		return NULL;
+	}
 	ret = g_strdup_printf("SAMLResponse=%s", deflated_message);
 	/* XXX: must support RelayState (which profiles?) */
 	g_free(deflated_message);
@@ -124,7 +127,7 @@ get_xmlNode(LassoNode *node, gboolean lasso_dump)
 	LassoSamlp2StatusResponse *request = LASSO_SAMLP2_STATUS_RESPONSE(node);
 	xmlNode *xmlnode;
 	int rc;
-	
+
 	xmlnode = parent_class->get_xmlNode(node, lasso_dump);
 
 	if (lasso_dump == FALSE && request->sign_type) {
@@ -154,6 +157,8 @@ instance_init(LassoSamlp2StatusResponse *node)
 	node->Destination = NULL;
 	node->Consent = NULL;
 	node->sign_type = LASSO_SIGNATURE_TYPE_NONE;
+	node->private_key_file = NULL;
+	node->certificate_file = NULL;
 }
 
 static void

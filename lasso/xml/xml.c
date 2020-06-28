@@ -1,4 +1,4 @@
-/* $Id: xml.c,v 1.198 2006/02/21 09:51:49 fpeters Exp $ 
+/* $Id: xml.c,v 1.245 2007/01/07 12:17:12 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -32,8 +32,10 @@
 #include <xmlsec/xmldsig.h>
 #include <xmlsec/templates.h>
 #include <xmlsec/crypto.h>
+#include <xmlsec/xmlenc.h>
 
 #include <lasso/xml/xml.h>
+#include <lasso/xml/xml_enc.h>
 #include <lasso/xml/saml_name_identifier.h>
 
 
@@ -41,9 +43,9 @@ static char* lasso_node_build_query(LassoNode *node);
 static void lasso_node_build_xmlNode_from_snippets(LassoNode *node, xmlNode *xmlnode,
 		struct XmlSnippet *snippets, gboolean lasso_dump);
 static struct XmlSnippet* find_xml_snippet_by_name(LassoNode *node, char *name);
-static int set_value_at_path(LassoNode *node, char *path, char *query_value);
+static gboolean set_value_at_path(LassoNode *node, char *path, char *query_value);
 static char* get_value_by_path(LassoNode *node, char *path, struct XmlSnippet *xml_snippet);
-static int find_path(LassoNode *node, char *path, LassoNode **value_node,
+static gboolean find_path(LassoNode *node, char *path, LassoNode **value_node,
 		struct XmlSnippet **snippet);
 
 static void lasso_node_add_signature_template(LassoNode *node, xmlNode *xmlnode,
@@ -183,6 +185,149 @@ lasso_node_export_to_base64(LassoNode *node)
 	ret = (char*)xmlSecBase64Encode(buffer, strlen((char*)buffer), 0);
 	xmlOutputBufferClose(buf);
 
+	xmlFreeNode(message);
+
+	return ret;
+}
+
+/**
+ * lasso_node_export_to_ecp_soap_response:
+ * @node: a #LassoNode
+ * 
+ * Exports @node to a ECP SOAP message.
+ * 
+ * Return value: a ECP SOAP export of @node.  The string must be freed by the
+ *      caller.
+ **/
+char*
+lasso_node_export_to_ecp_soap_response(LassoNode *node, const char *assertionConsumerURL)
+{
+	xmlNode *envelope, *body, *message, *header, *ecp_response;
+	xmlNs *soap_env_ns, *ecp_ns;
+	xmlOutputBuffer *buf;
+	xmlCharEncodingHandler *handler;
+	char *ret;
+
+	g_return_val_if_fail (LASSO_IS_NODE(node), NULL);
+
+	message = lasso_node_get_xmlNode(node, FALSE);
+
+	envelope = xmlNewNode(NULL, (xmlChar*)"Envelope");
+	soap_env_ns = xmlNewNs(envelope,
+				(xmlChar*)LASSO_SOAP_ENV_HREF, (xmlChar*)LASSO_SOAP_ENV_PREFIX);
+	xmlSetNs(envelope, soap_env_ns);
+
+	header = xmlNewTextChild(envelope, NULL, (xmlChar*)"Header", NULL);
+
+	/* ECP response header block */
+	ecp_response = xmlNewNode(NULL, (xmlChar*)"Response");
+	ecp_ns = xmlNewNs(ecp_response, (xmlChar*)LASSO_ECP_HREF, (xmlChar*)LASSO_ECP_PREFIX);
+	xmlSetNs(ecp_response, ecp_ns);
+	xmlSetNsProp(ecp_response, soap_env_ns, (xmlChar*)"mustUnderstand", (xmlChar*)"1");
+	xmlSetNsProp(ecp_response, soap_env_ns,
+			(xmlChar*)"actor", (xmlChar*)LASSO_SOAP_ENV_ACTOR);
+	xmlSetProp(ecp_response, (xmlChar*)"AssertionConsumerServiceURL",
+			(const xmlChar*)assertionConsumerURL);
+	xmlAddChild(header, ecp_response);
+
+	/* Body block */
+	body = xmlNewTextChild(envelope, NULL, (xmlChar*)"Body", NULL);
+	xmlAddChild(body, message);
+
+	handler = xmlFindCharEncodingHandler("utf-8");
+	buf = xmlAllocOutputBuffer(handler);
+	xmlNodeDumpOutput(buf, NULL, envelope, 0, 0, "utf-8");
+	xmlOutputBufferFlush(buf);
+	ret = g_strdup( (char*)(buf->conv ? buf->conv->content : buf->buffer->content) );
+	xmlOutputBufferClose(buf);
+
+	xmlFreeNode(envelope);
+
+	return ret;
+}
+
+/**
+ * lasso_node_export_to_paos_request:
+ * @node: a #LassoNode
+ * 
+ * Exports @node to a PAOS message.
+ * 
+ * Return value: a PAOS export of @node.  The string must be freed by the
+ *      caller.
+ **/
+char*
+lasso_node_export_to_paos_request(LassoNode *node, const char *issuer,
+				  const char *responseConsumerURL, const char *relay_state)
+{
+	xmlNode *envelope, *body, *header, *paos_request, *ecp_request, *ecp_relay_state, *message;
+	xmlNs *soap_env_ns, *saml_ns, *ecp_ns;
+	xmlOutputBuffer *buf;
+	xmlCharEncodingHandler *handler;
+	char *ret;
+
+	g_return_val_if_fail (LASSO_IS_NODE(node), NULL);
+
+	message = lasso_node_get_xmlNode(node, FALSE);
+
+	envelope = xmlNewNode(NULL, (xmlChar*)"Envelope");
+	soap_env_ns = xmlNewNs(envelope,
+				(xmlChar*)LASSO_SOAP_ENV_HREF, (xmlChar*)LASSO_SOAP_ENV_PREFIX);
+	xmlSetNs(envelope, soap_env_ns);
+
+	header = xmlNewTextChild(envelope, NULL, (xmlChar*)"Header", NULL);
+
+	/* PAOS request header block */
+	paos_request = xmlNewNode(NULL, (xmlChar*)"Request");
+	xmlSetNs(paos_request, xmlNewNs(paos_request,
+					(xmlChar*)LASSO_PAOS_HREF, (xmlChar*)LASSO_PAOS_PREFIX));
+	xmlSetProp(paos_request, (xmlChar*)"service", (xmlChar*)LASSO_ECP_HREF);
+	xmlSetProp(paos_request, (xmlChar*)"responseConsumerURL",
+			(const xmlChar*)responseConsumerURL);
+	xmlSetNsProp(paos_request, soap_env_ns, (xmlChar*)"mustUnderstand", (xmlChar*)"1");
+	xmlSetNsProp(paos_request, soap_env_ns, (xmlChar*)"actor", (xmlChar*)LASSO_SOAP_ENV_ACTOR);
+	xmlAddChild(header, paos_request);
+
+	/* ECP request header block */
+	ecp_request = xmlNewNode(NULL, (xmlChar*)"Request");
+	ecp_ns = xmlNewNs(ecp_request, (xmlChar*)LASSO_ECP_HREF, (xmlChar*)LASSO_ECP_PREFIX);
+	xmlSetNs(ecp_request, ecp_ns);
+	xmlSetProp(ecp_request, (xmlChar*)"responseConsumerURL",
+			(const xmlChar*)responseConsumerURL);
+	xmlSetNsProp(ecp_request, soap_env_ns, (xmlChar*)"mustUnderstand", (xmlChar*)"1");
+	xmlSetNsProp(ecp_request, soap_env_ns, (xmlChar*)"actor", (xmlChar*)LASSO_SOAP_ENV_ACTOR);
+	saml_ns = xmlNewNs(ecp_request,
+			(xmlChar*)LASSO_SAML2_ASSERTION_HREF,
+			(xmlChar*)LASSO_SAML2_ASSERTION_PREFIX);
+	xmlNewTextChild(ecp_request, saml_ns, (xmlChar*)"Issuer", (const xmlChar*)issuer);
+	xmlAddChild(header, ecp_request);
+
+	/* ECP relay state block */
+	if (relay_state) {
+		ecp_relay_state = xmlNewNode(NULL, (xmlChar*)"RelayState");
+		xmlNodeSetContent(ecp_relay_state, (const xmlChar*)relay_state);
+		ecp_ns = xmlNewNs(ecp_relay_state, (xmlChar*)LASSO_ECP_HREF,
+					(xmlChar*)LASSO_ECP_PREFIX);
+		xmlSetNs(ecp_relay_state, ecp_ns);
+		xmlSetNsProp(ecp_relay_state, soap_env_ns,
+				(xmlChar*)"mustUnderstand", (xmlChar*)"1");
+		xmlSetNsProp(ecp_relay_state, soap_env_ns,
+				(xmlChar*)"actor", (xmlChar*)LASSO_SOAP_ENV_ACTOR);
+		xmlAddChild(header, ecp_relay_state);
+	}
+
+	/* Body block */
+	body = xmlNewTextChild(envelope, NULL, (xmlChar*)"Body", NULL);
+	xmlAddChild(body, message);
+
+	handler = xmlFindCharEncodingHandler("utf-8");
+	buf = xmlAllocOutputBuffer(handler);
+	xmlNodeDumpOutput(buf, NULL, envelope, 0, 0, "utf-8");
+	xmlOutputBufferFlush(buf);
+	ret = g_strdup( (char*)(buf->conv ? buf->conv->content : buf->buffer->content) );
+	xmlOutputBufferClose(buf);
+
+	xmlFreeNode(envelope);
+
 	return ret;
 }
 
@@ -207,10 +352,11 @@ lasso_node_export_to_query(LassoNode *node,
 	g_return_val_if_fail (LASSO_IS_NODE(node), NULL);
 
 	unsigned_query = lasso_node_build_query(node);
-	if (private_key_file)
+	if (private_key_file) {
 		query = lasso_query_sign(unsigned_query, sign_method, private_key_file);
-	else
+	} else {
 		query = g_strdup(unsigned_query);
+	}
 	g_free(unsigned_query);
 
 	return query;
@@ -256,6 +402,316 @@ lasso_node_export_to_soap(LassoNode *node)
 	return ret;
 }
 
+/**
+ * lasso_node_encrypt:
+ * @lasso_node: a #LassoNode to encrypt
+ * @encryption_public_key : RSA public key the node will be encrypted with
+ *
+ * Generate a DES key and encrypt it with the RSA key.
+ * Then encrypt @lasso_node with the DES key.
+ * 
+ * Return value: an xmlNode which is the @node in an encrypted fashion.
+ * It must be freed by the caller.
+ **/
+LassoSaml2EncryptedElement*
+lasso_node_encrypt(LassoNode *lasso_node, xmlSecKey *encryption_public_key,
+		LassoEncryptionSymKeyType encryption_sym_key_type)
+{
+	xmlDocPtr doc = NULL;
+	xmlNodePtr orig_node = NULL;
+	LassoSaml2EncryptedElement *encrypted_element = NULL;
+	xmlSecKeysMngrPtr key_manager = NULL;
+	xmlNodePtr key_info_node = NULL;
+	xmlNodePtr encrypted_key_node = NULL;
+	xmlNodePtr key_info_node2 = NULL;
+	xmlSecEncCtxPtr enc_ctx = NULL;
+	xmlSecTransformId xmlsec_encryption_sym_key_type;
+
+	if (encryption_public_key == NULL || !xmlSecKeyIsValid(encryption_public_key)) {
+		message(G_LOG_LEVEL_WARNING, "Invalid encryption key");
+		return NULL;
+	}
+
+	/* Create a new EncryptedElement */
+	encrypted_element = LASSO_SAML2_ENCRYPTED_ELEMENT(lasso_saml2_encrypted_element_new());
+
+	/* Save the original data for dumps */
+	encrypted_element->original_data = g_object_ref(lasso_node);
+
+	/* Create a document to contain the node to encrypt */
+	doc = xmlNewDoc((xmlChar*)"1.0");
+	orig_node = lasso_node_get_xmlNode(lasso_node, FALSE);
+	xmlDocSetRootElement(doc, orig_node);
+
+	/* Get the symetric key type */
+	switch (encryption_sym_key_type) {
+		case LASSO_ENCRYPTION_SYM_KEY_TYPE_AES_256:
+			xmlsec_encryption_sym_key_type = xmlSecTransformAes256CbcId;
+			break;
+		case LASSO_ENCRYPTION_SYM_KEY_TYPE_3DES:
+			xmlsec_encryption_sym_key_type = xmlSecTransformDes3CbcId;
+			break;
+		case LASSO_ENCRYPTION_SYM_KEY_TYPE_AES_128:
+		default:
+			xmlsec_encryption_sym_key_type = xmlSecTransformAes128CbcId;
+			break;
+	}
+
+	/* Create encryption template for a specific symetric key type */
+	encrypted_element->EncryptedData = xmlSecTmplEncDataCreate(doc,
+		xmlsec_encryption_sym_key_type,	NULL, xmlSecTypeEncElement, NULL, NULL);
+	if (encrypted_element->EncryptedData == NULL) {
+		message(G_LOG_LEVEL_WARNING, "Failed to create encryption template");
+		return NULL;
+	}
+
+	if (xmlSecTmplEncDataEnsureCipherValue(encrypted_element->EncryptedData) == NULL) {
+		message(G_LOG_LEVEL_WARNING, "Failed to add CipherValue node");
+		return NULL;
+	}
+
+	/* create and initialize keys manager, we use a simple list based
+	 * keys manager, implement your own xmlSecKeysStore klass if you need
+	 * something more sophisticated 
+	 */
+	key_manager = xmlSecKeysMngrCreate();
+	if (key_manager == NULL) {
+		message(G_LOG_LEVEL_WARNING, "Failed to create keys manager");
+		return NULL;
+	}
+
+	if (xmlSecCryptoAppDefaultKeysMngrInit(key_manager) < 0) {
+		message(G_LOG_LEVEL_WARNING, "Failed to initialize keys manager");
+		xmlSecKeysMngrDestroy(key_manager);
+		return NULL;
+	}
+
+	/* add key to keys manager, from now on keys manager is responsible
+	 * for destroying key 
+	 */
+	if (xmlSecCryptoAppDefaultKeysMngrAdoptKey(key_manager, encryption_public_key) < 0) {
+		xmlSecKeysMngrDestroy(key_manager);
+		return NULL;
+	}
+
+	/* add <dsig:KeyInfo/> */
+	key_info_node = xmlSecTmplEncDataEnsureKeyInfo(encrypted_element->EncryptedData, NULL);
+	if (key_info_node == NULL) {
+		message(G_LOG_LEVEL_WARNING, "Failed to add key info");
+		return NULL;
+	}
+
+	/* add <enc:EncryptedKey/> to store the encrypted session key */
+	encrypted_key_node = xmlSecTmplKeyInfoAddEncryptedKey(key_info_node,
+		xmlSecTransformRsaPkcs1Id, NULL, NULL, NULL);
+	if (encrypted_key_node == NULL) {
+		message(G_LOG_LEVEL_WARNING, "Failed to add encrypted key");
+		return NULL;
+	}
+
+	/* we want to put encrypted key in the <enc:CipherValue/> node */
+	if (xmlSecTmplEncDataEnsureCipherValue(encrypted_key_node) == NULL) {
+		message(G_LOG_LEVEL_WARNING, "Failed to add CipherValue node");
+		return NULL;
+	}
+
+	/* add <dsig:KeyInfo/> and <dsig:KeyName/> nodes to <enc:EncryptedKey/> */
+	key_info_node2 = xmlSecTmplEncDataEnsureKeyInfo(encrypted_key_node, NULL);
+	if (key_info_node2 == NULL) {
+		message(G_LOG_LEVEL_WARNING, "Failed to add key info");
+		return NULL;
+	}
+
+	/* set key name so we can lookup key when needed */
+/* 	if (xmlSecTmplKeyInfoAddKeyName(key_info_node2, "this is the key name") == NULL) { */
+/* 		message(G_LOG_LEVEL_WARNING, "Failed to add key name"); */
+/* 		return NULL; */
+/* 	} */
+
+	/* create encryption context */
+	enc_ctx = (xmlSecEncCtxPtr)xmlSecEncCtxCreate(key_manager);
+	if (enc_ctx == NULL) {
+		message(G_LOG_LEVEL_WARNING, "Failed to create encryption context");
+		return NULL;
+	}
+
+	/* generate a symetric key */
+	switch (encryption_sym_key_type) {
+		case LASSO_ENCRYPTION_SYM_KEY_TYPE_AES_256:
+			enc_ctx->encKey = xmlSecKeyGenerate(xmlSecKeyDataAesId, 256,
+				xmlSecKeyDataTypeSession);
+			break;
+		case LASSO_ENCRYPTION_SYM_KEY_TYPE_3DES:
+			enc_ctx->encKey = xmlSecKeyGenerate(xmlSecKeyDataDesId, 192,
+				xmlSecKeyDataTypeSession);
+			break;
+		case LASSO_ENCRYPTION_SYM_KEY_TYPE_AES_128:
+		default:
+			enc_ctx->encKey = xmlSecKeyGenerate(xmlSecKeyDataAesId, 128,
+				xmlSecKeyDataTypeSession);
+			break;
+	}
+
+	if (enc_ctx->encKey == NULL) {
+		message(G_LOG_LEVEL_WARNING, "Failed to generate session des key");
+		return NULL;
+	}
+
+	/* encrypt the data */
+	if (xmlSecEncCtxXmlEncrypt(enc_ctx, encrypted_element->EncryptedData, orig_node) < 0) {
+		message(G_LOG_LEVEL_WARNING, "Encryption failed");
+		return NULL;
+	}
+
+	encrypted_element->EncryptedKey = g_list_append(encrypted_element->EncryptedKey,
+			xmlCopyNode(encrypted_key_node, 1));
+	
+	/* cleanup */
+	xmlSecEncCtxDestroy(enc_ctx);
+
+/* 	if (doc != NULL) { */
+/* 		xmlFreeDoc(doc); */
+/* 	} */
+
+	return encrypted_element;
+}
+
+
+/**
+ * lasso_node_decrypt:
+ * @xml_node: an EncryptedData #xmlNode to decrypt
+ * @encryption_private_key : RSA private key to decrypt the node
+ *
+ * Decrypt a DES EncryptedKey with the RSA key.
+ * Then decrypt @xml_node with the DES key.
+ * 
+ * Return value: a LassoNode which is the decrypted @xml_node.
+ * It must be freed by the caller.
+ **/
+LassoNode*
+lasso_node_decrypt(LassoSaml2EncryptedElement* encrypted_element,
+			xmlSecKey *encryption_private_key)
+{
+	xmlDocPtr doc = NULL;
+	xmlDocPtr doc2 = NULL;
+	xmlSecEncCtxPtr encCtx = NULL;
+	xmlSecKeyPtr sym_key = NULL;
+	xmlSecBufferPtr key_buffer;
+	LassoNode *decrypted_node;
+	xmlNodePtr encrypted_data_node = NULL;
+	xmlNodePtr encrypted_key_node = NULL;
+	xmlNodePtr encryption_method_node = NULL;
+	char *algorithm;
+	xmlSecKeyDataId key_type;
+	GList *i = NULL;
+
+	if (encryption_private_key == NULL || !xmlSecKeyIsValid(encryption_private_key)) {
+		message(G_LOG_LEVEL_WARNING, "Invalid decryption key");
+		return NULL;
+	}
+
+	/* Need to duplicate it because xmlSecEncCtxDestroy(encCtx); will destroy it */
+	encryption_private_key = xmlSecKeyDuplicate(encryption_private_key);
+
+	encrypted_data_node = encrypted_element->EncryptedData;
+
+	/* Get the encryption algorithm for EncryptedData in its EncryptionMethod node */
+	encryption_method_node = xmlSecTmplEncDataGetEncMethodNode(encrypted_data_node);
+	if (encryption_method_node == NULL) {
+		message(G_LOG_LEVEL_WARNING, "No EncryptionMethod node in EncryptedData");
+		return NULL;
+	}
+	algorithm = (char*)xmlGetProp(encryption_method_node, (xmlChar *)"Algorithm");
+	if (algorithm == NULL) {
+		message(G_LOG_LEVEL_WARNING, "No EncryptionMethod");
+		return NULL;
+	}
+	if (strstr(algorithm , "#aes")) {
+		key_type = xmlSecKeyDataAesId;
+	} else if (strstr(algorithm , "des")) {
+		key_type = xmlSecKeyDataDesId;
+	} else {
+		message(G_LOG_LEVEL_WARNING, "Unknown EncryptionMethod");
+		return NULL;
+	}
+
+	/* Get the EncryptedKey */
+	if (encrypted_element->EncryptedKey != NULL) {
+		for (i = encrypted_element->EncryptedKey; i; i = g_list_next(i)) {
+			if (i->data == NULL)
+				continue;
+			if (strcmp((char*)((xmlNode*)i->data)->name, "EncryptedKey") == 0) {
+				encrypted_key_node = (xmlNode*)(i->data);
+				break;
+			}
+		}
+	} else {
+		/* Look an EncryptedKey inside the EncryptedData */
+		encrypted_key_node = encrypted_data_node;
+		while (encrypted_key_node &&
+				strcmp((char*)encrypted_key_node->name, "EncryptedKey") != 0 ) {
+			if (strcmp((char*)encrypted_key_node->name, "EncryptedData") == 0 ||
+					strcmp((char*)encrypted_key_node->name, "KeyInfo") == 0)
+				encrypted_key_node = encrypted_key_node->children;
+			encrypted_key_node = encrypted_key_node->next;
+		}
+	}
+
+	if (encrypted_key_node == NULL) {
+		message(G_LOG_LEVEL_WARNING, "No EncryptedKey node");
+		return NULL;
+	}
+
+	/* Create a document to contain the node to decrypt */
+	doc = xmlNewDoc((xmlChar*)"1.0");
+	xmlDocSetRootElement(doc, encrypted_data_node);
+
+	doc2 = xmlNewDoc((xmlChar*)"1.0");
+	xmlDocSetRootElement(doc2, encrypted_key_node);
+
+	/* create encryption context to decrypt EncryptedKey */
+	encCtx = xmlSecEncCtxCreate(NULL);
+	if (encCtx == NULL) {
+		message(G_LOG_LEVEL_WARNING, "Failed to create encryption context");
+		return NULL;
+	}
+	encCtx->encKey = encryption_private_key;
+	encCtx->mode = xmlEncCtxModeEncryptedKey;
+
+	/* decrypt the EncryptedKey */
+	key_buffer = xmlSecEncCtxDecryptToBuffer(encCtx, encrypted_key_node);
+	if (key_buffer != NULL) {
+		sym_key = xmlSecKeyReadBuffer(key_type, key_buffer);
+	}
+	if (sym_key == NULL) {
+		message(G_LOG_LEVEL_WARNING, "EncryptedKey decryption failed");
+		return NULL;
+	}
+
+	/* create encryption context to decrypt EncryptedData */
+	xmlSecEncCtxDestroy(encCtx);
+	encCtx = xmlSecEncCtxCreate(NULL);
+	if (encCtx == NULL) {
+		message(G_LOG_LEVEL_WARNING, "Failed to create encryption context");
+		return NULL;
+	}
+	encCtx->encKey = sym_key;
+	encCtx->mode = xmlEncCtxModeEncryptedData;
+
+	/* decrypt the EncryptedData */
+	if ((xmlSecEncCtxDecrypt(encCtx, encrypted_data_node) < 0) || (encCtx->result == NULL)) {
+		message(G_LOG_LEVEL_WARNING, "EncryptedData decryption failed");
+		return NULL;
+	}
+
+	decrypted_node = lasso_node_new_from_xmlNode(doc->children);
+
+	/* cleanup */
+	xmlSecEncCtxDestroy(encCtx);
+	xmlFreeDoc(doc);
+
+	return decrypted_node;
+}
 
 /**
  * lasso_node_init_from_query:
@@ -302,7 +758,7 @@ lasso_node_init_from_xml(LassoNode *node, xmlNode *xmlnode)
 {
 	LassoNodeClass *class;
 
-	g_return_val_if_fail(LASSO_IS_NODE(node), -1);
+	g_return_val_if_fail(LASSO_IS_NODE(node), LASSO_XML_ERROR_OBJECT_CONSTRUCTION_FAILED);
 	class = LASSO_NODE_GET_CLASS(node);
 
 	return class->init_from_xml(node, xmlnode);
@@ -370,6 +826,23 @@ lasso_node_impl_init_from_xml(LassoNode *node, xmlNode *xmlnode)
 	while (class && LASSO_IS_NODE_CLASS(class) && class->node_data) {
 		
 		for (t = xmlnode->children; t; t = t->next) {
+			if (t->type == XML_TEXT_NODE) {
+				for (snippet = class->node_data->snippets;
+						snippet && snippet->name; snippet++) {
+					GList **location = NULL;
+
+					type = snippet->type & 0xff;
+					value = G_STRUCT_MEMBER_P(node, snippet->offset);
+
+					if (type != SNIPPET_LIST_XMLNODES)
+						continue;
+
+					location = value;
+					*location = g_list_append(*location, xmlCopyNode(t, 1));
+				}
+				continue;
+			}
+
 			if (t->type != XML_ELEMENT_NODE)
 				continue;
 			
@@ -396,11 +869,11 @@ lasso_node_impl_init_from_xml(LassoNode *node, xmlNode *xmlnode)
 					if (t2)
 						tmp = lasso_node_new_from_xmlNode_with_type(t2,
 								snippet->class_name);
-				} else if (type == SNIPPET_CONTENT)
+				} else if (type == SNIPPET_CONTENT) {
 					tmp = xmlNodeGetContent(t);
-				else if (type == SNIPPET_NAME_IDENTIFIER)
+				} else if (type == SNIPPET_NAME_IDENTIFIER) {
 					tmp = lasso_saml_name_identifier_new_from_xmlNode(t);
-				else if (type == SNIPPET_LIST_NODES) {
+				} else if (type == SNIPPET_LIST_NODES) {
 					GList **location = value;
 					LassoNode *n = lasso_node_new_from_xmlNode_with_type(t,
 							snippet->class_name);
@@ -413,7 +886,8 @@ lasso_node_impl_init_from_xml(LassoNode *node, xmlNode *xmlnode)
 						type == SNIPPET_LIST_XMLNODES) {
 					GList **location = value;
 					*location = g_list_append(*location, xmlCopyNode(t, 1));
-				}
+				} else if (type == SNIPPET_XMLNODE)
+					tmp = xmlCopyNode(t, 1);
 
 				if (tmp == NULL)
 					break;
@@ -423,7 +897,12 @@ lasso_node_impl_init_from_xml(LassoNode *node, xmlNode *xmlnode)
 					(*(int*)value) = val;
 					xmlFree(tmp);
 				} else if (snippet->type & SNIPPET_BOOLEAN) {
-					int val = (strcmp((char*)tmp, "true") == 0);
+					int val = 0;
+					if (strcmp((char*)tmp, "true") == 0) {
+						val = 1;
+					} else if (strcmp((char*)tmp, "1") == 0) {
+						val = 1;
+					}
 					(*(int*)value) = val;
 					xmlFree(tmp);
 				} else {
@@ -454,14 +933,18 @@ lasso_node_impl_init_from_xml(LassoNode *node, xmlNode *xmlnode)
 			if (snippet->type & SNIPPET_INTEGER) {
 				int val = atoi(tmp);
 				(*(int*)value) = val;
-				xmlFree(tmp);
 			} else if (snippet->type & SNIPPET_BOOLEAN) {
-				int val = (strcmp((char*)tmp, "true") == 0);
+				int val = 0;
+				if (strcmp((char*)tmp, "true") == 0) {
+					val = 1;
+				} else if (strcmp((char*)tmp, "1") == 0) {
+					val = 1;
+				}
 				(*(int*)value) = val;
-				xmlFree(tmp);
 			} else {
-				(*(char**)value) = tmp;
+				(*(char**)value) = g_strdup(tmp);
 			}
+			xmlFree(tmp);
 
 		}
 
@@ -529,7 +1012,7 @@ lasso_node_impl_get_xmlNode(LassoNode *node, gboolean lasso_dump)
 	xmlCleanNs(xmlnode);
 
 	/* backward compatibility with Liberty ID-FF 1.1; */
-	if (find_path(node, "MajorVersion", &value_node, &version_snippet) == 0) {
+	if (find_path(node, "MajorVersion", &value_node, &version_snippet) == TRUE) {
 		int *value;
 		int major_version, minor_version;
 
@@ -595,6 +1078,9 @@ lasso_node_dispose(GObject *object)
 				case SNIPPET_NODE_IN_CHILD:
 					lasso_node_destroy(*value);
 					break;
+				case SNIPPET_XMLNODE:
+					xmlFreeNode(*value);
+					break;
 				case SNIPPET_EXTENSION:
 				case SNIPPET_LIST_NODES:
 				case SNIPPET_LIST_CONTENT:
@@ -625,7 +1111,11 @@ lasso_node_dispose(GObject *object)
 					g_assert_not_reached();
 			}
 
-			*value = NULL;
+			if (type != SNIPPET_SIGNATURE) {
+				/* Signature snippet is not something to free,
+				 * so don't set the value to NULL */
+				*value = NULL;
+			}
 		}
 		class = g_type_class_peek_parent(class);
 	}
@@ -728,6 +1218,7 @@ lasso_node_new_from_dump(const char *dump)
 		return NULL;
 
 	node = lasso_node_new_from_xmlNode(xmlDocGetRootElement(doc));
+
 	xmlFreeDoc(doc);
 	return node;
 }
@@ -781,6 +1272,7 @@ lasso_node_new_from_xmlNode(xmlNode *xmlnode)
 	char *prefix = NULL;
 	char *typename;
 	char *tmp;
+	char *node_name;
 	xmlChar *xsitype;
 	LassoNode *node;
 
@@ -843,13 +1335,19 @@ lasso_node_new_from_xmlNode(xmlNode *xmlnode)
 		if (strncmp((char*)xsitype, "lib:", 4) == 0)
 			prefix = "Lib";
 		xmlFree(xsitype);
+		xsitype = NULL;
 	}
 
 	if (prefix == NULL)
 		return NULL;
 
-	typename = g_strdup_printf("Lasso%s%s", prefix, xmlnode->name);
-
+	node_name = (char*)xmlnode->name;
+	if (strcmp(node_name, "EncryptedAssertion") == 0) {
+		typename = g_strdup("LassoSaml2EncryptedElement");
+	} else {
+		typename = g_strdup_printf("Lasso%s%s", prefix, node_name);
+	}
+	
 	node = lasso_node_new_from_xmlNode_with_type(xmlnode, typename);
 	g_free(typename);
 
@@ -933,7 +1431,7 @@ lasso_node_init_from_message(LassoNode *node, const char *message)
 		xmlDoc *doc;
 		xmlNode *root;
 		xmlXPathContext *xpathCtx = NULL;
-		xmlXPathObject *xpathObj;
+		xmlXPathObject *xpathObj = NULL;
 
 		doc = xmlParseMemory(msg, strlen(msg));
 		if (doc == NULL)
@@ -946,13 +1444,16 @@ lasso_node_init_from_message(LassoNode *node, const char *message)
 			if (xpathObj->nodesetval && xpathObj->nodesetval->nodeNr ) {
 				root = xpathObj->nodesetval->nodeTab[0];
 			}
-			xmlXPathFreeObject(xpathObj);
-			xmlXPathFreeContext(xpathCtx);
 		}
 		lasso_node_init_from_xml(node, root);
+		xmlXPathFreeObject(xpathObj);
+		xmlXPathFreeContext(xpathCtx);
 		xmlFreeDoc(doc);
-		if (xpathCtx)
+		if (xpathCtx) {
+			/* this tests a pointer which has been freed, it works
+			 * but is not really elegant */
 			return LASSO_MESSAGE_FORMAT_SOAP;
+		}
 		if (b64) {
 			g_free(msg);
 			return LASSO_MESSAGE_FORMAT_BASE64;
@@ -960,7 +1461,7 @@ lasso_node_init_from_message(LassoNode *node, const char *message)
 		return LASSO_MESSAGE_FORMAT_XML;
 	}
 
-	if (strchr(msg, '&')) {
+	if (strchr(msg, '&') || strchr(msg, '=')) {
 		/* looks like a query string */
 		/* XXX: detect SAML artifact messages to return a different status code ? */
 		if (lasso_node_init_from_query(node, msg) == FALSE) {
@@ -1090,9 +1591,15 @@ lasso_node_build_xmlNode_from_snippets(LassoNode *node, xmlNode *xmlnode,
 			case SNIPPET_LIST_NODES:
 				elem = (GList *)value;
 				while (elem) {
-					xmlAddChild(xmlnode, lasso_node_get_xmlNode(
-								LASSO_NODE(elem->data),
-								lasso_dump));
+					xmlNode *subnode = lasso_node_get_xmlNode(
+							LASSO_NODE(elem->data), lasso_dump);
+					if (subnode) {
+						if (snippet->name && snippet->name[0]) {
+							xmlNodeSetName(subnode,
+									(xmlChar*)snippet->name);
+						}
+						xmlAddChild(xmlnode, subnode);
+					}
 					elem = g_list_next(elem);
 				}
 				break;
@@ -1101,7 +1608,14 @@ lasso_node_build_xmlNode_from_snippets(LassoNode *node, xmlNode *xmlnode,
 				 * no attrs, just content) */
 				elem = (GList *)value;
 				while (elem) {
-					xmlNewTextChild(xmlnode, NULL, (xmlChar*)snippet->name,
+					xmlNs *content_ns = NULL;
+					if (snippet->ns_name) {
+						content_ns = xmlNewNs(xmlnode,
+								(const xmlChar*)snippet->ns_uri,
+								(const xmlChar*)snippet->ns_name);
+					}
+					xmlNewTextChild(xmlnode, content_ns,
+							(xmlChar*)snippet->name,
 							(xmlChar*)(elem->data));
 					elem = g_list_next(elem);
 				}
@@ -1113,6 +1627,9 @@ lasso_node_build_xmlNode_from_snippets(LassoNode *node, xmlNode *xmlnode,
 					xmlAddChild(xmlnode, xmlCopyNode(elem->data, 1));
 					elem = g_list_next(elem);
 				}
+				break;
+			case SNIPPET_XMLNODE:
+				xmlAddChild(xmlnode, xmlCopyNode((xmlNode *)value, 1));
 				break;
 			case SNIPPET_SIGNATURE:
 				lasso_node_add_signature_template(node, xmlnode, snippet);
@@ -1209,7 +1726,7 @@ find_xml_snippet_by_name(LassoNode *node, char *name)
 	return NULL;
 }
 
-static int
+static gboolean
 find_path(LassoNode *node, char *path, LassoNode **value_node, struct XmlSnippet **snippet)
 {
 	char *s, *t;
@@ -1224,17 +1741,17 @@ find_path(LassoNode *node, char *path, LassoNode **value_node, struct XmlSnippet
 		if (t) {
 			tnode = G_STRUCT_MEMBER(LassoNode*, tnode, tsnippet->offset);
 			if (tnode == NULL)
-				return -1;
+				return FALSE;
 		}
 		s = t+1;
 	}
 
 	if (tsnippet == NULL)
-		return -1;
+		return FALSE;
 
 	*snippet = tsnippet;
 	*value_node = tnode;
-	return 0;
+	return TRUE;
 }
 
 
@@ -1244,7 +1761,7 @@ get_value_by_path(LassoNode *node, char *path, struct XmlSnippet *xml_snippet)
 	struct XmlSnippet *snippet;
 	LassoNode *value_node;
 	
-	if (find_path(node, path, &value_node, &snippet) != 0)
+	if (find_path(node, path, &value_node, &snippet) != TRUE)
 		return NULL;
 
 	*xml_snippet = *snippet;
@@ -1333,15 +1850,15 @@ get_value_by_path(LassoNode *node, char *path, struct XmlSnippet *xml_snippet)
 	return NULL;
 }
 
-static int
+static gboolean
 set_value_at_path(LassoNode *node, char *path, char *query_value)
 {
 	struct XmlSnippet *snippet;
 	LassoNode *value_node;
 	void *value;
 	
-	if (find_path(node, path, &value_node, &snippet) != 0)
-		return -1;
+	if (find_path(node, path, &value_node, &snippet) != TRUE)
+		return FALSE;
 
 	value = G_STRUCT_MEMBER_P(value_node, snippet->offset);
 
@@ -1371,7 +1888,7 @@ set_value_at_path(LassoNode *node, char *path, char *query_value)
 		(*(char**)value) = g_strdup(query_value);
 	}
 
-	return 0;
+	return TRUE;
 }
 
 
@@ -1406,6 +1923,7 @@ lasso_node_build_query_from_snippets(LassoNode *node)
 			if (s->len)
 				g_string_append(s, "&");
 			g_string_append(s, v);
+			g_free(v);
 			continue;
 		}
 		if (v) {
@@ -1478,7 +1996,7 @@ lasso_node_init_from_query_fields(LassoNode *node, char **query_fields)
 			LassoNode *value_node;
 			GList **value;
 			xmlNode *xmlnode, *xmlchild;
-			if (find_path(node, "Extension", &value_node, &extension_snippet) == 0) {
+			if (find_path(node, "Extension", &value_node, &extension_snippet) == TRUE) {
 				value = G_STRUCT_MEMBER_P(value_node, extension_snippet->offset);
 				if (*value) {
 					xmlnode = (*value)->data;
@@ -1506,7 +2024,7 @@ lasso_node_init_from_saml2_query_fields(LassoNode *node, char **query_fields, ch
 {
 	int i;
 	char *field, *t;
-	char *req;
+	char *req = NULL;
 	char *enc = NULL;
 	gboolean rc;
 
@@ -1532,6 +2050,10 @@ lasso_node_init_from_saml2_query_fields(LassoNode *node, char **query_fields, ch
 	if (enc && strcmp(enc, LASSO_SAML2_DEFLATE_ENCODING) != 0) {
 		/* unknown encoding */
 		message(G_LOG_LEVEL_CRITICAL, "Unknown URL encoding: %s", enc);
+		return FALSE;
+	}
+
+	if (req == NULL) {
 		return FALSE;
 	}
 

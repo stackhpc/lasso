@@ -1,4 +1,4 @@
-/* $Id: login.h,v 1.55 2005/05/10 16:47:15 nclapies Exp $ 
+/* $Id: login.h,v 1.56 2006/12/05 17:16:54 nclapies Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -133,6 +133,7 @@ LASSO_EXPORT int lasso_login_set_resourceId(LassoLogin *login, const char *conte
 LASSO_EXPORT int lasso_login_validate_request_msg(LassoLogin *login,
 		gboolean authentication_result, gboolean is_consent_obtained);
 
+LASSO_EXPORT int lasso_login_process_paos_response_msg(LassoLogin *login, gchar *msg);
 
 #ifdef __cplusplus
 }

@@ -10,17 +10,27 @@ INCLUDES = \
 noinst_LTLIBRARIES = liblasso-saml-20.la
 
 liblasso_saml_20_la_SOURCES = \
+	ecp.c \
 	federation.c \
 	profile.c \
 	provider.c \
 	login.c \
-	logout.c
+	logout.c \
+	name_id_management.c \
+	server.c
+
+liblassoinclude_HEADERS = \
+	ecp.h \
+	profile.h \
+	name_id_management.h
 
 lasso_private_h_sources = \
 	federationprivate.h \
 	profileprivate.h \
 	providerprivate.h \
 	loginprivate.h \
-	logoutprivate.h
+	logoutprivate.h \
+	serverprivate.h \
+	ecpprivate.h
 
 EXTRA_DIST = $(lasso_private_h_sources)

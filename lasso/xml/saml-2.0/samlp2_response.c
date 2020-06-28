@@ -1,4 +1,4 @@
-/* $Id: samlp2_response.c,v 1.2 2005/11/21 18:51:52 fpeters Exp $ 
+/* $Id: samlp2_response.c,v 1.13 2006/12/28 14:44:56 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -23,6 +23,8 @@
  */
 
 #include "samlp2_response.h"
+#include "saml2_assertion.h"
+#include "saml2_encrypted_element.h"
 
 /*
  * Schema fragment (saml-schema-protocol-2.0.xsd):
@@ -38,6 +40,8 @@
  *   </complexContent>
  * </complexType>
  */
+
+extern LassoNode* lasso_assertion_encrypt(LassoSaml2Assertion *assertion);
 
 /*****************************************************************************/
 /* private methods                                                           */
@@ -61,6 +65,9 @@ build_query(LassoNode *node)
 	char *ret, *deflated_message;
 
 	deflated_message = lasso_node_build_deflated_query(node);
+	if (deflated_message == NULL) {
+		return NULL;
+	}
 	ret = g_strdup_printf("SAMLResponse=%s", deflated_message);
 	/* XXX: must support RelayState (which profiles?) */
 	g_free(deflated_message);
@@ -80,6 +87,47 @@ init_from_query(LassoNode *node, char **query_fields)
 	return rc;
 }
 
+static xmlNode*
+get_xmlNode(LassoNode *node, gboolean lasso_dump)
+{
+	LassoSamlp2Response *response = LASSO_SAMLP2_RESPONSE(node);
+	GList *assertions, *assertions_copy;
+	LassoNode *encrypted_element = NULL;
+	xmlNode *result;
+
+
+	/* Encrypt Assertions for messages but not for dumps */
+	if (lasso_dump == FALSE) {
+		assertions_copy = g_list_copy(response->Assertion);
+		for (assertions = response->Assertion;
+				assertions != NULL; assertions = g_list_next(assertions)) {
+			encrypted_element = lasso_assertion_encrypt(assertions->data);
+			if (encrypted_element != NULL) {
+				/* use EncryptedAssertion */
+				response->EncryptedAssertion = g_list_append(
+					response->EncryptedAssertion, encrypted_element);
+				/* and remove original unencrypted from Assertion */
+				response->Assertion = g_list_remove(response->Assertion,
+					assertions->data);
+			}
+		}
+	}
+
+	result = parent_class->get_xmlNode(node, lasso_dump);
+
+	if (lasso_dump == FALSE) {
+		g_list_free(response->Assertion);
+		response->Assertion = assertions_copy;
+		for (assertions = response->EncryptedAssertion; assertions != NULL;
+				assertions = g_list_next(assertions)) {
+			lasso_node_destroy(assertions->data);
+		}
+		g_list_free(response->EncryptedAssertion);
+		response->EncryptedAssertion = NULL;
+	}
+
+	return result;
+}
 
 /*****************************************************************************/
 /* instance and class init functions                                         */
@@ -100,6 +148,7 @@ class_init(LassoSamlp2ResponseClass *klass)
 	parent_class = g_type_class_peek_parent(klass);
 	nclass->build_query = build_query;
 	nclass->init_from_query = init_from_query;
+	nclass->get_xmlNode = get_xmlNode;
 	nclass->node_data = g_new0(LassoNodeClassData, 1);
 	lasso_node_class_set_nodename(nclass, "Response"); 
 	lasso_node_class_set_ns(nclass, LASSO_SAML2_PROTOCOL_HREF, LASSO_SAML2_PROTOCOL_PREFIX);

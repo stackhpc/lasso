@@ -1,4 +1,4 @@
-/* $Id: samlp2_requested_authn_context.c,v 1.2 2005/11/21 18:51:52 fpeters Exp $ 
+/* $Id: samlp2_requested_authn_context.c,v 1.4 2006/12/16 09:47:16 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -42,10 +42,12 @@
 
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "AuthnContextClassRef", SNIPPET_CONTENT,
-		G_STRUCT_OFFSET(LassoSamlp2RequestedAuthnContext, AuthnContextClassRef) },
-	{ "AuthnContextDeclRef", SNIPPET_CONTENT,
-		G_STRUCT_OFFSET(LassoSamlp2RequestedAuthnContext, AuthnContextDeclRef) },
+	{ "AuthnContextClassRef", SNIPPET_LIST_CONTENT,
+		G_STRUCT_OFFSET(LassoSamlp2RequestedAuthnContext, AuthnContextClassRef),
+		NULL, LASSO_SAML2_ASSERTION_PREFIX, LASSO_SAML2_ASSERTION_HREF },
+	{ "AuthnContextDeclRef", SNIPPET_LIST_CONTENT,
+		G_STRUCT_OFFSET(LassoSamlp2RequestedAuthnContext, AuthnContextDeclRef),
+		NULL, LASSO_SAML2_ASSERTION_PREFIX, LASSO_SAML2_ASSERTION_HREF },
 	{ "Comparison", SNIPPET_CONTENT,
 		G_STRUCT_OFFSET(LassoSamlp2RequestedAuthnContext, Comparison) },
 	{NULL, 0, 0}

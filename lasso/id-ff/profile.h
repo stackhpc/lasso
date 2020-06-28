@@ -1,4 +1,4 @@
-/* $Id: profile.h,v 1.35 2005/11/21 18:51:52 fpeters Exp $ 
+/* $Id: profile.h,v 1.36 2006/11/05 12:23:18 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -64,6 +64,7 @@ typedef struct _LassoProfilePrivate LassoProfilePrivate;
  * @LASSO_REQUEST_TYPE_DST_QUERY:
  * @LASSO_REQUEST_TYPE_DST_MODIFY:
  * @LASSO_REQUEST_TYPE_SASL_REQUEST:
+ * @LASSO_REQUEST_TYPE_NAME_ID_MANAGEMENT:
  *
  * Request types (known for SOAP endpoints)
  **/
@@ -80,6 +81,7 @@ typedef enum {
 	LASSO_REQUEST_TYPE_DST_QUERY = 9,
 	LASSO_REQUEST_TYPE_DST_MODIFY = 10,
 	LASSO_REQUEST_TYPE_SASL_REQUEST = 11,
+	LASSO_REQUEST_TYPE_NAME_ID_MANAGEMENT = 12,
 } LassoRequestType;
 
 

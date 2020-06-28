@@ -1,8 +1,8 @@
-/* $Id: saml2_encrypted_element.h,v 1.2 2005/11/21 18:51:52 fpeters Exp $ 
+/* $Id: saml2_encrypted_element.h,v 1.6 2006/11/23 17:44:26 dlaniel Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
- * Copyright (C) 2004, 2005 Entr'ouvert
+ * Copyright (C) 2004, 2005, 2006 Entr'ouvert
  * http://lasso.entrouvert.org
  * 
  * Authors: See AUTHORS file in top-level directory.
@@ -28,6 +28,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
+
+#include <glib/glist.h>
 
 #include <lasso/xml/xml.h>
 
@@ -55,8 +57,9 @@ struct _LassoSaml2EncryptedElement {
 
 	/*< public >*/
 	/* elements */
-	/* XXX */ void *EncryptedData;
-	/* XXX */ void *EncryptedKey;
+	xmlNode *EncryptedData;
+	GList *EncryptedKey;
+	LassoNode *original_data;
 };
 
 

@@ -1,4 +1,4 @@
-/* $Id: serverprivate.h,v 1.2 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: serverprivate.h,v 1.3 2006/11/15 18:56:34 dlaniel Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -28,6 +28,12 @@
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */ 
+
+struct _LassoServerPrivate
+{
+	gboolean dispose_has_run;
+	xmlSecKey *encryption_private_key;
+};
 
 gchar* lasso_server_get_first_providerID(LassoServer *server);
 gchar* lasso_server_get_providerID_from_hash(LassoServer *server, gchar *b64_hash);

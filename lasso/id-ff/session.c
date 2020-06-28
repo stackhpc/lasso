@@ -1,4 +1,4 @@
-/* $Id: session.c,v 1.59 2005/11/21 18:51:52 fpeters Exp $
+/* $Id: session.c,v 1.63 2006/12/27 23:50:15 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -49,9 +49,9 @@ struct _LassoSessionPrivate
 gint
 lasso_session_add_assertion(LassoSession *session, char *providerID, LassoNode *assertion)
 {
-	g_return_val_if_fail(session != NULL, -1);
-	g_return_val_if_fail(providerID != NULL, -2);
-	g_return_val_if_fail(assertion != NULL, -3);
+	g_return_val_if_fail(session != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
+	g_return_val_if_fail(providerID != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
+	g_return_val_if_fail(assertion != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
 
 	g_hash_table_insert(session->assertions, g_strdup(providerID), assertion);
 
@@ -71,11 +71,11 @@ lasso_session_add_assertion(LassoSession *session, char *providerID, LassoNode *
  * Return value: 0 on success; or a negative value otherwise.
  **/
 gint
-lasso_session_add_status(LassoSession *session, char *providerID, LassoSamlpStatus *status)
+lasso_session_add_status(LassoSession *session, char *providerID, LassoNode *status)
 {
-	g_return_val_if_fail(session != NULL, -1);
-	g_return_val_if_fail(providerID != NULL, -2);
-	g_return_val_if_fail(status != NULL, -3);
+	g_return_val_if_fail(session != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
+	g_return_val_if_fail(providerID != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
+	g_return_val_if_fail(status != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
 
 	g_hash_table_insert(session->private_data->status, g_strdup(providerID), status);
 
@@ -117,7 +117,7 @@ add_assertion_to_list(gchar *key, LassoLibAssertion *value, GList **list)
  * Gets the assertions for the given @provider_id.
  *
  * Return value: a GList* of #LassoSamlAssertion.  Caller must free the GList
- *     and the assertions it contains.
+ *     but NOT the assertions it contains.
  **/
 GList*
 lasso_session_get_assertions(LassoSession *session, const char *provider_id)
@@ -125,12 +125,16 @@ lasso_session_get_assertions(LassoSession *session, const char *provider_id)
 	GList *r = NULL;
 	LassoSamlAssertion *assertion;
 
+	if (session == NULL) {
+		return NULL;
+	}
+
 	if (provider_id == NULL) {
 		g_hash_table_foreach(session->assertions, (GHFunc)add_assertion_to_list, &r);
 	} else {
 		assertion = g_hash_table_lookup(session->assertions, provider_id);
 		if (assertion)
-			r = g_list_append(r, g_object_ref(assertion));
+			r = g_list_append(r, assertion);
 	}
 	return r;
 }
@@ -146,9 +150,12 @@ lasso_session_get_assertions(LassoSession *session, const char *provider_id)
  * Return value: the status or NULL if it didn't exist.  This #LassoSamlpStatus
  *      is internally allocated and must not be freed by the caller.
  **/
-LassoSamlpStatus*
+LassoNode*
 lasso_session_get_status(LassoSession *session, gchar *providerID)
 {
+	if (session == NULL) {
+		return NULL;
+	}
 	return g_hash_table_lookup(session->private_data->status, providerID);
 }
 
@@ -174,6 +181,10 @@ lasso_session_get_provider_index(LassoSession *session, gint index)
 {
 	GList *element;
 	int length;
+
+	if (session == NULL) {
+		return NULL;
+	}
 
 	length = g_hash_table_size(session->assertions);
 
@@ -202,6 +213,10 @@ lasso_session_get_provider_index(LassoSession *session, gint index)
 void
 lasso_session_init_provider_ids(LassoSession *session)
 {
+	if (session == NULL) {
+		return;
+	}
+
 	if (session->private_data->providerIDs) {
 		g_list_free(session->private_data->providerIDs);
 		session->private_data->providerIDs = NULL;
@@ -243,12 +258,15 @@ lasso_session_is_empty(LassoSession *session)
 gint
 lasso_session_remove_assertion(LassoSession *session, gchar *providerID)
 {
+	g_return_val_if_fail(session != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
+	g_return_val_if_fail(providerID != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
+
 	if (g_hash_table_remove(session->assertions, providerID)) {
 		session->is_dirty = TRUE;
 		return 0;
 	}
 
-	return LASSO_ERROR_UNDEFINED; /* assertion not found */
+	return LASSO_PROFILE_ERROR_MISSING_ASSERTION;
 }
 
 /**
@@ -263,12 +281,15 @@ lasso_session_remove_assertion(LassoSession *session, gchar *providerID)
 gint
 lasso_session_remove_status(LassoSession *session, gchar *providerID)
 {
+	g_return_val_if_fail(session != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
+	g_return_val_if_fail(providerID != NULL, LASSO_PARAM_ERROR_INVALID_VALUE);
+
 	if (g_hash_table_remove(session->private_data->status, providerID)) {
 		session->is_dirty = TRUE;
 		return 0;
 	}
 
-	return LASSO_ERROR_UNDEFINED; /* status not found */
+	return LASSO_PROFILE_ERROR_MISSING_STATUS_CODE;
 }
 
 /*****************************************************************************/
@@ -346,8 +367,8 @@ init_from_xml(LassoNode *node, xmlNode *xmlnode)
 			while (n && n->type != XML_ELEMENT_NODE) n = n->next;
 			
 			if (n) {
-				LassoSamlpStatus *status;
-				status = LASSO_SAMLP_STATUS(lasso_node_new_from_xmlNode(n));
+				LassoNode *status;
+				status = lasso_node_new_from_xmlNode(n);
 				g_hash_table_insert(session->private_data->status,
 						xmlGetProp(t, (xmlChar*)"RemoteProviderID"),
 						status);

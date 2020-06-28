@@ -1,4 +1,4 @@
-/* $Id: wsf_profile.h,v 1.12 2005/12/06 13:15:31 nclapies Exp $ 
+/* $Id: wsf_profile.h,v 1.13 2006/11/14 17:07:30 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -115,6 +115,10 @@ LASSO_EXPORT LassoWsfProfile* lasso_wsf_profile_new(LassoServer *server);
 
 LASSO_EXPORT gboolean lasso_wsf_profile_principal_is_online(LassoWsfProfile *profile);
 
+LASSO_EXPORT gint lasso_wsf_profile_add_credential(LassoWsfProfile *profile, xmlNode *credential);
+
+LASSO_EXPORT void lasso_wsf_profile_set_description(LassoWsfProfile *profile,
+		LassoDiscoDescription *description);
 LASSO_EXPORT void lasso_wsf_profile_set_principal_status(LassoWsfProfile *profile,
 							 const char *status);
 

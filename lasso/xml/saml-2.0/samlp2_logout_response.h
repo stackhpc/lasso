@@ -1,4 +1,4 @@
-/* $Id: samlp2_logout_response.h,v 1.1 2005/11/22 21:24:12 fpeters Exp $ 
+/* $Id: samlp2_logout_response.h,v 1.2 2006/12/06 09:26:45 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -54,6 +54,7 @@ struct _LassoSamlp2LogoutResponse {
 	LassoSamlp2StatusResponse parent;
 
 	/*< public >*/
+	char *relayState;
 };
 
 
