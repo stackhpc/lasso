@@ -61,6 +61,10 @@
  * <entry><literal>no-sign-messages</literal></entry>
  * <entry><para>Disable signatures on messages.</para></entry>
  * </rows>
+ * <rows>
+ * <entry><literal>pem-public-key</literal></entry>
+ * <entry><para>Allow PEM key in ds:KeyValue nodes, it's outside the XMLSig specification.</para></entry>
+ * </rows>
  * </tbody>
  * </tgroup>
  * </informaltable>
@@ -72,6 +76,7 @@
 #include <string.h> /* strcmp */
 #include <xmlsec/xmlsec.h>
 #include <xmlsec/crypto.h>
+#include <xmlsec/errors.h>
 #include <libxslt/xslt.h>
 #include <config.h>
 #include "lasso.h"
@@ -96,6 +101,8 @@ static void lasso_flag_parse_environment_variable();
 gboolean lasso_flag_sign_messages = TRUE;
 /* thin sessions */
 gboolean lasso_flag_thin_sessions = FALSE;
+/* PEM public key */
+gboolean lasso_flag_pem_public_key = FALSE;
 
 #ifndef LASSO_FLAG_ENV_VAR
 #define LASSO_FLAG_ENV_VAR "LASSO_FLAG"
@@ -129,13 +136,17 @@ DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 #include "types.c"
 
 static void
-lasso_xml_generic_error_func(G_GNUC_UNUSED void *ctx, const char *msg, ...)
+lasso_xml_structured_error_func(G_GNUC_UNUSED void *user_data, xmlErrorPtr error)
 {
-	va_list args;
+	g_log("libxml2", G_LOG_LEVEL_DEBUG, "libxml2: %s", error->message);
+}
 
-	va_start(args, msg);
-	g_logv(LASSO_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, msg, args);
-	va_end(args);
+void
+lasso_xmlsec_errors_callback(const char *file G_GNUC_UNUSED, int line G_GNUC_UNUSED, const char *func G_GNUC_UNUSED,
+		const char *errorObject G_GNUC_UNUSED, const char *errorSubject G_GNUC_UNUSED, int reason G_GNUC_UNUSED,
+		const char *msg)
+{
+	g_log("libxmlsec", G_LOG_LEVEL_DEBUG, "libxmlsec: %s:%d:%s:%s:%s:%s:%s", file, line, func, errorObject, errorSubject, xmlSecErrorsGetMsg(reason), msg);
 }
 
 /**
@@ -196,7 +207,8 @@ int lasso_init()
 		return LASSO_ERROR_UNDEFINED;
 	}
 	lasso_flag_parse_environment_variable();
-	xmlSetGenericErrorFunc(NULL, lasso_xml_generic_error_func);
+	xmlSetStructuredErrorFunc(NULL, lasso_xml_structured_error_func);
+	xmlSecErrorsSetCallback(lasso_xmlsec_errors_callback);
 	return 0;
 }
 
@@ -322,6 +334,9 @@ void lasso_set_flag(char *flag) {
 		}
 		if (lasso_strisequal(flag,"thin-sessions")) {
 			lasso_flag_thin_sessions = value;
+		}
+		if (lasso_strisequal(flag,"pem-public-key")) {
+			lasso_flag_pem_public_key = value;
 		}
 	} while (FALSE);
 }

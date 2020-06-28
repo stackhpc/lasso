@@ -925,8 +925,10 @@ END_TEST
 	lasso_provider_add_key(LASSO_PROVIDER(providers->data), key, FALSE); \
 	g_list_free(providers);
 
+typedef void (*SsoCallback)(LassoLogin *idp_login_context, LassoLogin *sp_login_context);
+
 static void
-sso_initiated_by_sp(LassoServer *idp_context, LassoServer *sp_context)
+sso_initiated_by_sp(LassoServer *idp_context, LassoServer *sp_context, SsoCallback sso_callback)
 {
 	LassoLogin *idp_login_context;
 	LassoLogin *sp_login_context;
@@ -970,6 +972,10 @@ sso_initiated_by_sp(LassoServer *idp_context, LassoServer *sp_context)
 				idp_login_context->parent.msg_body));
 	check_good_rc(lasso_login_accept_sso(sp_login_context));
 
+	if (sso_callback) {
+		sso_callback(idp_login_context, sp_login_context);
+	}
+
 	/* Cleanup */
 	lasso_release_gobject(idp_login_context);
 	lasso_release_gobject(sp_login_context);
@@ -991,8 +997,9 @@ START_TEST(test07_sso_sp_with_hmac_sha1_signatures)
 	test07_make_context(idp_context, "idp6-saml2", LASSO_PROVIDER_ROLE_SP, "sp6-saml2", key)
 	test07_make_context(sp_context, "sp6-saml2", LASSO_PROVIDER_ROLE_IDP, "idp6-saml2", key)
 
+
 	block_lasso_logs;
-	sso_initiated_by_sp(idp_context, sp_context);
+	sso_initiated_by_sp(idp_context, sp_context, NULL);
 	unblock_lasso_logs;
 
 	/* Cleanup */
@@ -1238,18 +1245,29 @@ static void validate_idp_list(LassoEcp *ecp, EcpIdpListVariant ecpIDPListVariant
 
 		if (ecpIDPListVariant == ECP_IDP_LIST_ECP) {
 			check_not_null(ecp->known_sp_provided_idp_entries_supporting_ecp);
+			check_equals(g_list_length(ecp->known_sp_provided_idp_entries_supporting_ecp),
+						 g_list_length(idp_list->IDPEntry));
+
 			for (ecp_iter = g_list_first(ecp->known_sp_provided_idp_entries_supporting_ecp),
 				 src_iter = g_list_first(idp_list->IDPEntry);
 				 ecp_iter && src_iter;
 				 ecp_iter = g_list_next(ecp_iter), src_iter = g_list_next(src_iter)) {
-				gchar *ecp_item, *src_item;
+				LassoSamlp2IDPEntry *ecp_item, *src_item;
 
-				ecp_item = ecp_iter->data;
-				src_item = src_iter->data;
+				ecp_item = LASSO_SAMLP2_IDP_ENTRY(ecp_iter->data);
+				src_item = LASSO_SAMLP2_IDP_ENTRY(src_iter->data);
 
-				check_not_null(ecp_item);
-				check_not_null(src_item);
-				check_str_equals(ecp_item, src_item);
+				check_not_null(ecp_item->ProviderID);
+				check_not_null(src_item->ProviderID);
+				check_str_equals(ecp_item->ProviderID, src_item->ProviderID);
+
+				check_not_null(ecp_item->Name);
+				check_not_null(src_item->Name);
+				check_str_equals(ecp_item->Name, src_item->Name);
+
+				check_not_null(ecp_item->Loc);
+				check_not_null(src_item->Loc);
+				check_str_equals(ecp_item->Loc, src_item->Loc);
 			}
 		} else {
 			check_null(ecp->known_sp_provided_idp_entries_supporting_ecp);
@@ -1349,7 +1367,6 @@ void test_ecp(EcpIdpListVariant ecpIDPListVariant)
 	check_null(LASSO_PROFILE(spLoginContext)->msg_url);
 	check_not_null(strstr(spPaosRequestMsg, "RelayState"));
 
-
 	/* Finished with SP Login Context, will create new one later */
 	lasso_server_destroy(spContext);
 	spContext = NULL;
@@ -1381,7 +1398,7 @@ void test_ecp(EcpIdpListVariant ecpIDPListVariant)
 	check_str_equals(ecp->relaystate, relayState);
 	check_str_equals(ecp->issuer->content, "http://sp5/metadata");
 	check_str_equals(ecp->provider_name, provider_name);
-    check_equals(ecp->is_passive, is_passive);
+	check_equals(ecp->is_passive, is_passive);
 
 	/* Validate ECP IdP list info & default IdP URL */
 	validate_idp_list(ecp, ecpIDPListVariant, idp_list);
@@ -1514,6 +1531,39 @@ START_TEST(test11_ecp)
 }
 END_TEST
 
+void check_digest_method(G_GNUC_UNUSED LassoLogin *idp_login_context, LassoLogin *sp_login_context)
+{
+	char *dump = lasso_node_debug((LassoNode*)sp_login_context->parent.response, 10);
+	check_true(strstr(dump, "<DigestMethod Algorithm=\"http://www.w3.org/2001/04/xmlenc#sha256\"/>") != NULL);
+	lasso_release_string(dump)
+}
+
+START_TEST(test12_sso_sp_with_rsa_sha256_signatures)
+{
+	LassoServer *idp_context = NULL;
+	LassoServer *sp_context = NULL;
+	GList *providers;
+	LassoKey *key = NULL;
+
+	/* Create a key for signature algorithm RSA_SHA256 */
+	key = lasso_key_new_for_signature_from_file(TESTSDATADIR "idp6-saml2/private-key.pem", NULL,
+			LASSO_SIGNATURE_METHOD_RSA_SHA256, NULL);
+	check_true(LASSO_IS_KEY(key));
+
+	test07_make_context(idp_context, "idp6-saml2", LASSO_PROVIDER_ROLE_SP, "sp6-saml2", key)
+	test07_make_context(sp_context, "sp6-saml2", LASSO_PROVIDER_ROLE_IDP, "idp6-saml2", key)
+
+	block_lasso_logs;
+	sso_initiated_by_sp(idp_context, sp_context, check_digest_method);
+	unblock_lasso_logs;
+
+	/* Cleanup */
+	lasso_release_gobject(idp_context);
+	lasso_release_gobject(sp_context);
+	lasso_release_gobject(key);
+}
+END_TEST
+
 Suite*
 login_saml2_suite()
 {
@@ -1545,6 +1595,7 @@ login_saml2_suite()
 	tcase_add_test(tc_ecp, test09_ecp);
 	tcase_add_test(tc_ecp, test10_ecp);
 	tcase_add_test(tc_ecp, test11_ecp);
+	tcase_add_test(tc_spLogin, test12_sso_sp_with_rsa_sha256_signatures);
 	return s;
 }
 

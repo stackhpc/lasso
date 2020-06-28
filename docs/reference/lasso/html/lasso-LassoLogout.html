@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Lasso Reference Manual: LassoLogout</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<title>LassoLogout: Lasso Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
 <link rel="prev" href="lasso-LassoLogin.html" title="LassoLogin">
 <link rel="next" href="lasso-LassoDefederation.html" title="LassoDefederation">
-<meta name="generator" content="GTK-Doc V1.21 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.28 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -33,7 +33,7 @@
 </tr></table></div>
 <div class="refsect1">
 <a name="lasso-LassoLogout.functions"></a><h2>Functions</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="functions_return">
 <col class="functions_name">
@@ -140,7 +140,7 @@
 </div>
 <div class="refsect1">
 <a name="lasso-LassoLogout.other"></a><h2>Types and Values</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="name">
 <col class="description">
@@ -547,8 +547,8 @@ rc <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-Lasso
 lasso_logout_new (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);</pre>
 <p>Creates a new <a class="link" href="lasso-LassoLogout.html#LassoLogout" title="struct LassoLogout"><span class="type">LassoLogout</span></a>.</p>
 <div class="refsect3">
-<a name="id-1.3.3.3.6.2.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-logout-new.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -562,10 +562,9 @@ lasso_logout_new (<em class="parameter"><code><a class="link" href="lasso-LassoS
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.3.3.6.2.6"></a><h4>Returns</h4>
+<a name="lasso-logout-new.returns"></a><h4>Returns</h4>
 <p> a newly created <a class="link" href="lasso-LassoLogout.html#LassoLogout" title="struct LassoLogout"><span class="type">LassoLogout</span></a> object; or NULL if an error
 occured</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -577,8 +576,8 @@ lasso_logout_new_from_dump (<em class="parameter"><code><a class="link" href="la
 <p>Restores the <em class="parameter"><code>dump</code></em>
  to a new <a class="link" href="lasso-LassoLogout.html#LassoLogout" title="struct LassoLogout"><span class="type">LassoLogout</span></a>.</p>
 <div class="refsect3">
-<a name="id-1.3.3.3.6.3.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-logout-new-from-dump.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -599,9 +598,8 @@ lasso_logout_new_from_dump (<em class="parameter"><code><a class="link" href="la
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.3.3.6.3.6"></a><h4>Returns</h4>
+<a name="lasso-logout-new-from-dump.returns"></a><h4>Returns</h4>
 <p> a newly created <a class="link" href="lasso-LassoLogout.html#LassoLogout" title="struct LassoLogout"><span class="type">LassoLogout</span></a>; or NULL if an error occured</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -627,8 +625,8 @@ lasso_logout_build_request_msg (<em class="parameter"><code><a class="link" href
 the message (either with X509 if SOAP or with a simple signature for query
 strings).</p>
 <div class="refsect3">
-<a name="id-1.3.3.3.6.4.8"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-logout-build-request-msg.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -642,9 +640,8 @@ strings).</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.3.3.6.4.9"></a><h4>Returns</h4>
+<a name="lasso-logout-build-request-msg.returns"></a><h4>Returns</h4>
 <p> 0 on success; or a negative value otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -670,8 +667,8 @@ lasso_logout_build_response_msg (<em class="parameter"><code><a class="link" hre
 the message (either with X509 if SOAP or with a simple signature for query
 strings).</p>
 <div class="refsect3">
-<a name="id-1.3.3.3.6.5.8"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-logout-build-response-msg.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -685,9 +682,8 @@ strings).</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.3.3.6.5.9"></a><h4>Returns</h4>
+<a name="lasso-logout-build-response-msg.returns"></a><h4>Returns</h4>
 <p> 0 on success; or a negative value otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -697,8 +693,8 @@ strings).</p>
 lasso_logout_destroy (<em class="parameter"><code><a class="link" href="lasso-LassoLogout.html#LassoLogout" title="struct LassoLogout"><span class="type">LassoLogout</span></a> *logout</code></em>);</pre>
 <p>Destroys a logout object.</p>
 <div class="refsect3">
-<a name="id-1.3.3.3.6.6.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-logout-destroy.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -720,8 +716,8 @@ lasso_logout_dump (<em class="parameter"><code><a class="link" href="lasso-Lasso
 <p>Dumps <em class="parameter"><code>logout</code></em>
  content to an XML string.</p>
 <div class="refsect3">
-<a name="id-1.3.3.3.6.7.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-logout-dump.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -735,8 +731,8 @@ lasso_logout_dump (<em class="parameter"><code><a class="link" href="lasso-Lasso
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.3.3.6.7.6"></a><h4>Returns</h4>
-<p> the dump string.  It must be freed by the caller. </p>
+<a name="lasso-logout-dump.returns"></a><h4>Returns</h4>
+<p>the dump string.  It must be freed by the caller. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
 </div>
@@ -748,8 +744,8 @@ lasso_logout_get_next_providerID (<em class="parameter"><code><a class="link" hr
 <p>Returns the provider id from providerID_index in list of providerIDs in
 principal session with the exception of initial service provider ID.</p>
 <div class="refsect3">
-<a name="id-1.3.3.3.6.8.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-logout-get-next-providerID.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -763,8 +759,8 @@ principal session with the exception of initial service provider ID.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.3.3.6.8.6"></a><h4>Returns</h4>
-<p> a newly allocated string or NULL. </p>
+<a name="lasso-logout-get-next-providerID.returns"></a><h4>Returns</h4>
+<p>a newly allocated string or NULL. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
 </div>
@@ -777,8 +773,8 @@ lasso_logout_init_request (<em class="parameter"><code><a class="link" href="las
                            <em class="parameter"><code><a class="link" href="lasso-LassoProvider.html#LassoHttpMethod" title="enum LassoHttpMethod"><span class="type">LassoHttpMethod</span></a> request_method</code></em>);</pre>
 <p>Initializes a new SLO request.</p>
 <div class="refsect3">
-<a name="id-1.3.3.3.6.9.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-logout-init-request.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -806,9 +802,8 @@ corresponding of this HTTP request method.</p></td>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.3.3.6.9.6"></a><h4>Returns</h4>
+<a name="lasso-logout-init-request.returns"></a><h4>Returns</h4>
 <p> 0 on success; or a negative value otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -820,8 +815,8 @@ lasso_logout_process_request_msg (<em class="parameter"><code><a class="link" hr
 <p>Processes a SLO LogoutRequest message.  Rebuilds a request object from the
 message and optionally verifies its signature.</p>
 <div class="refsect3">
-<a name="id-1.3.3.3.6.10.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-logout-process-request-msg.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -842,9 +837,8 @@ message and optionally verifies its signature.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.3.3.6.10.6"></a><h4>Returns</h4>
+<a name="lasso-logout-process-request-msg.returns"></a><h4>Returns</h4>
 <p> 0 on success; or a negative value otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -864,8 +858,8 @@ then removes assertion.</p>
 (Identity Provider has logged out every Service Providers), then restores
 the initial response.</p>
 <div class="refsect3">
-<a name="id-1.3.3.3.6.11.8"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-logout-process-response-msg.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -886,9 +880,8 @@ the initial response.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.3.3.6.11.9"></a><h4>Returns</h4>
+<a name="lasso-logout-process-response-msg.returns"></a><h4>Returns</h4>
 <p> 0 on success; or a negative value otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -898,8 +891,8 @@ the initial response.</p>
 lasso_logout_reset_providerID_index (<em class="parameter"><code><a class="link" href="lasso-LassoLogout.html#LassoLogout" title="struct LassoLogout"><span class="type">LassoLogout</span></a> *logout</code></em>);</pre>
 <p>Reset the providerID_index attribute (set to 0).</p>
 <div class="refsect3">
-<a name="id-1.3.3.3.6.12.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-logout-reset-providerID-index.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -913,9 +906,8 @@ lasso_logout_reset_providerID_index (<em class="parameter"><code><a class="link"
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.3.3.6.12.6"></a><h4>Returns</h4>
+<a name="lasso-logout-reset-providerID-index.returns"></a><h4>Returns</h4>
 <p> 0 on success; or a negative value otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -953,8 +945,8 @@ lasso_logout_validate_request (<em class="parameter"><code><a class="link" href=
 </p></li>
 </ul></div>
 <div class="refsect3">
-<a name="id-1.3.3.3.6.13.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-logout-validate-request.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -968,7 +960,7 @@ lasso_logout_validate_request (<em class="parameter"><code><a class="link" href=
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.3.3.6.13.6"></a><h4>Returns</h4>
+<a name="lasso-logout-validate-request.returns"></a><h4>Returns</h4>
 <p> 0 on success; or
 LASSO_PROFILE_ERROR_MISSING_REQUEST if no request has been found -- usually means that
 lasso_logout_process_request_msg was not called,
@@ -983,7 +975,6 @@ object,
 LASSO_PROFILE_ERROR_FEDERATION_NOT_FOUND if no federation for the requesting provider was found,
 LASSO_LOGOUT_ERROR_UNSUPPORTED_PROFILE if the requested HTTP method is not supported by all the
 remote provider of the current session.</p>
-<p></p>
 </div>
 </div>
 </div>
@@ -999,7 +990,6 @@ remote provider of the current session.</p>
 </div>
 </div>
 <div class="footer">
-<hr>
-          Generated by GTK-Doc V1.21</div>
+<hr>Generated by GTK-Doc V1.28</div>
 </body>
 </html>

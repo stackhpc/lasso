@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Lasso Reference Manual: LassoNode</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<title>LassoNode: Lasso Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="architecture.html" title="Lasso Architecture">
 <link rel="prev" href="lasso-Error-Codes.html" title="Error Codes">
 <link rel="next" href="lasso-Base-Strings.html" title="Base Strings">
-<meta name="generator" content="GTK-Doc V1.21 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.28 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -33,7 +33,7 @@
 </tr></table></div>
 <div class="refsect1">
 <a name="lasso-node.functions"></a><h2>Functions</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="functions_return">
 <col class="functions_name">
@@ -265,7 +265,7 @@
 </div>
 <div class="refsect1">
 <a name="lasso-node.other"></a><h2>Types and Values</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="name">
 <col class="description">
@@ -307,9 +307,8 @@ defined in glib.</p>
 lasso_node_new (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
 <p>Creates a new <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a>.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.2.5"></a><h4>Returns</h4>
+<a name="lasso-node-new.returns"></a><h4>Returns</h4>
 <p> a newly created <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> object</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -320,8 +319,8 @@ lasso_node_new_from_dump (<em class="parameter"><code>const <span class="type">c
 <p>Restores the <em class="parameter"><code>dump</code></em>
  to a new <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> subclass.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.3.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-node-new-from-dump.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -335,9 +334,8 @@ lasso_node_new_from_dump (<em class="parameter"><code>const <span class="type">c
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.3.6"></a><h4>Returns</h4>
+<a name="lasso-node-new-from-dump.returns"></a><h4>Returns</h4>
 <p> a newly created object; or NULL if an error occured.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -347,8 +345,8 @@ lasso_node_new_from_dump (<em class="parameter"><code>const <span class="type">c
 lasso_node_new_from_soap (<em class="parameter"><code>const <span class="type">char</span> *soap</code></em>);</pre>
 <p>Parses SOAP message and creates a new Lasso object with the right class.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.4.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-node-new-from-soap.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -362,9 +360,8 @@ lasso_node_new_from_soap (<em class="parameter"><code>const <span class="type">c
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.4.6"></a><h4>Returns</h4>
+<a name="lasso-node-new-from-soap.returns"></a><h4>Returns</h4>
 <p> node if success; NULL otherwise</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -374,8 +371,8 @@ lasso_node_new_from_soap (<em class="parameter"><code>const <span class="type">c
 lasso_node_new_from_xmlNode (<em class="parameter"><code><span class="type">xmlNode</span> *node</code></em>);</pre>
 <p>Builds a new <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> from an xmlNode.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.5.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-node-new-from-xmlNode.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -389,9 +386,8 @@ lasso_node_new_from_xmlNode (<em class="parameter"><code><span class="type">xmlN
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.5.6"></a><h4>Returns</h4>
+<a name="lasso-node-new-from-xmlNode.returns"></a><h4>Returns</h4>
 <p> a new node</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -403,9 +399,8 @@ lasso_node_cleanup_original_xmlnodes (<em class="parameter"><code><a class="link
 : a <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a></p>
 <p>Traverse the <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> tree starting at Node and remove keeped xmlNode if one is found.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.6.6"></a><h4>Returns</h4>
+<a name="lasso-node-cleanup-original-xmlnodes.returns"></a><h4>Returns</h4>
 <p> None</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -415,8 +410,8 @@ lasso_node_cleanup_original_xmlnodes (<em class="parameter"><code><a class="link
 lasso_node_destroy (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>);</pre>
 <p>Destroys the <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a>.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.7.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-node-destroy.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -438,8 +433,8 @@ lasso_node_dump (<em class="parameter"><code><a class="link" href="lasso-node.ht
 <p>Dumps <em class="parameter"><code>node</code></em>
 .  All datas in object are dumped in an XML format.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.8.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-node-dump.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -453,8 +448,8 @@ lasso_node_dump (<em class="parameter"><code><a class="link" href="lasso-node.ht
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.8.6"></a><h4>Returns</h4>
-<p> a full XML dump of <em class="parameter"><code>node</code></em>
+<a name="lasso-node-dump.returns"></a><h4>Returns</h4>
+<p>a full XML dump of <em class="parameter"><code>node</code></em>
 .  The string must be freed by the
 caller. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
@@ -470,8 +465,8 @@ lasso_node_debug (<em class="parameter"><code><a class="link" href="lasso-node.h
 , it is pretty printed so any contained signature will be
 uncheckable.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.9.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-node-debug.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -485,15 +480,15 @@ uncheckable.</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>level</p></td>
-<td class="parameter_description"><p> the indentation depth, i.e. the depth of the last nodes to be indented. </p></td>
+<td class="parameter_description"><p>the indentation depth, i.e. the depth of the last nodes to be indented. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="Default parameter value (for in case the shadows-to function has less parameters)."><span class="acronym">default</span></acronym> 10]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.9.6"></a><h4>Returns</h4>
-<p> a full indented and so human readable dump of <em class="parameter"><code>node</code></em>
+<a name="lasso-node-debug.returns"></a><h4>Returns</h4>
+<p>a full indented and so human readable dump of <em class="parameter"><code>node</code></em>
 . The string must be freed by
 the caller. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
@@ -507,8 +502,8 @@ lasso_node_export_to_base64 (<em class="parameter"><code><a class="link" href="l
 <p>Exports <em class="parameter"><code>node</code></em>
  to a base64-encoded message.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.10.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-node-export-to-base64.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -522,11 +517,10 @@ lasso_node_export_to_base64 (<em class="parameter"><code><a class="link" href="l
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.10.6"></a><h4>Returns</h4>
+<a name="lasso-node-export-to-base64.returns"></a><h4>Returns</h4>
 <p> a base64-encoded export of <em class="parameter"><code>node</code></em>
 .  The string must be freed by
 the caller.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -541,8 +535,8 @@ lasso_node_export_to_query (<em class="parameter"><code><a class="link" href="la
  is NULL,
 query won't be signed.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.11.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-node-export-to-query.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -556,23 +550,22 @@ query won't be signed.</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>sign_method</p></td>
-<td class="parameter_description"><p> the Signature transform method. </p></td>
+<td class="parameter_description"><p>the Signature transform method. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="Default parameter value (for in case the shadows-to function has less parameters)."><span class="acronym">default</span></acronym> 1]</span></td>
 </tr>
 <tr>
-<td class="parameter_name"><p>private_key_file:(allow-none)</p></td>
-<td class="parameter_description"><p>the path to the private key (may be NULL)</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_name"><p>private_key_file</p></td>
+<td class="parameter_description"><p>the path to the private key (may be NULL). </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.11.6"></a><h4>Returns</h4>
+<a name="lasso-node-export-to-query.returns"></a><h4>Returns</h4>
 <p> a HTTP query export of <em class="parameter"><code>node</code></em>
 .  The string must be freed by the
 caller.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -589,8 +582,8 @@ lasso_node_export_to_query_with_password
  is NULL,
 query won't be signed.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.12.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-node-export-to-query-with-password.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -604,28 +597,27 @@ query won't be signed.</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>sign_method</p></td>
-<td class="parameter_description"><p> the Signature transform method. </p></td>
+<td class="parameter_description"><p>the Signature transform method. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="Default parameter value (for in case the shadows-to function has less parameters)."><span class="acronym">default</span></acronym> 1]</span></td>
 </tr>
 <tr>
-<td class="parameter_name"><p>private_key_file:(allow-none)</p></td>
-<td class="parameter_description"><p>the path to the private key (may be NULL)</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_name"><p>private_key_file</p></td>
+<td class="parameter_description"><p>the path to the private key (may be NULL). </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
-<td class="parameter_name"><p>private_key_file_password:(allow-none)</p></td>
-<td class="parameter_description"><p>the password needed to decrypt the private key</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_name"><p>private_key_file_password</p></td>
+<td class="parameter_description"><p>the password needed to decrypt the private key. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.12.6"></a><h4>Returns</h4>
+<a name="lasso-node-export-to-query-with-password.returns"></a><h4>Returns</h4>
 <p> a HTTP query export of <em class="parameter"><code>node</code></em>
 .  The string must be freed by the
 caller.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -636,8 +628,8 @@ lasso_node_export_to_soap (<em class="parameter"><code><a class="link" href="las
 <p>Exports <em class="parameter"><code>node</code></em>
  to a SOAP message.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.13.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-node-export-to-soap.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -651,11 +643,10 @@ lasso_node_export_to_soap (<em class="parameter"><code><a class="link" href="las
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.13.6"></a><h4>Returns</h4>
+<a name="lasso-node-export-to-soap.returns"></a><h4>Returns</h4>
 <p> a SOAP export of <em class="parameter"><code>node</code></em>
 .  The string must be freed by the
 caller.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -698,8 +689,8 @@ lasso_release_list_of_gobjects(headers);
 </div>
 </div>
 <br class="example-break"><div class="refsect3">
-<a name="id-1.3.2.12.6.14.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-node-export-to-soap-with-headers.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -713,18 +704,17 @@ lasso_release_list_of_gobjects(headers);
 </tr>
 <tr>
 <td class="parameter_name"><p>headers</p></td>
-<td class="parameter_description"><p> <span class="type">GList</span> of <span class="type">LassNode</span>. </p></td>
+<td class="parameter_description"><p><span class="type">GList</span> of <span class="type">LassNode</span>. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.14.7"></a><h4>Returns</h4>
+<a name="lasso-node-export-to-soap-with-headers.returns"></a><h4>Returns</h4>
 <p> a SOAP export of <em class="parameter"><code>node</code></em>
 .  The string must be freed by the
 caller.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -735,8 +725,8 @@ lasso_node_export_to_xml (<em class="parameter"><code><a class="link" href="lass
 <p>Exports <em class="parameter"><code>node</code></em>
  to an xml message.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.15.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-node-export-to-xml.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -750,11 +740,10 @@ lasso_node_export_to_xml (<em class="parameter"><code><a class="link" href="lass
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.15.6"></a><h4>Returns</h4>
+<a name="lasso-node-export-to-xml.returns"></a><h4>Returns</h4>
 <p> an xml export of <em class="parameter"><code>node</code></em>
 .  The string must be freed by the
 caller.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -769,8 +758,8 @@ lasso_node_export_to_paos_request (<em class="parameter"><code><a class="link" h
  to a PAOS message.</p>
 <p>Deprecated, use <a class="link" href="lasso-node.html#lasso-node-export-to-paos-request-full" title="lasso_node_export_to_paos_request_full ()"><code class="function">lasso_node_export_to_paos_request_full()</code></a> instead</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.16.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-node-export-to-paos-request.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -784,11 +773,10 @@ lasso_node_export_to_paos_request (<em class="parameter"><code><a class="link" h
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.16.7"></a><h4>Returns</h4>
+<a name="lasso-node-export-to-paos-request.returns"></a><h4>Returns</h4>
 <p> a PAOS export of <em class="parameter"><code>node</code></em>
 .  The string must be freed by the
 caller.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -809,8 +797,8 @@ a EcpRequest and optionally a EcpRelayState. The SOAP body contains
 the <em class="parameter"><code>node</code></em>
  parameters.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.17.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-node-export-to-paos-request-full.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -841,10 +829,9 @@ the <em class="parameter"><code>node</code></em>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.17.6"></a><h4>Returns</h4>
+<a name="lasso-node-export-to-paos-request-full.returns"></a><h4>Returns</h4>
 <p> string containing a PAOS request. The string must be freed
 by the caller.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -857,8 +844,8 @@ lasso_node_export_to_ecp_soap_response
 <p>Exports <em class="parameter"><code>node</code></em>
  to a ECP SOAP message.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.18.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-node-export-to-ecp-soap-response.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -872,11 +859,10 @@ lasso_node_export_to_ecp_soap_response
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.18.6"></a><h4>Returns</h4>
+<a name="lasso-node-export-to-ecp-soap-response.returns"></a><h4>Returns</h4>
 <p> a ECP SOAP export of <em class="parameter"><code>node</code></em>
 .  The string must be freed by the
 caller.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -888,8 +874,8 @@ lasso_node_get_xmlNode (<em class="parameter"><code><a class="link" href="lasso-
 <p>Builds an XML representation of <em class="parameter"><code>node</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.19.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-node-get-xmlNode.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -910,9 +896,8 @@ lasso_node_get_xmlNode (<em class="parameter"><code><a class="link" href="lasso-
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.19.6"></a><h4>Returns</h4>
+<a name="lasso-node-get-xmlNode.returns"></a><h4>Returns</h4>
 <p> a new xmlNode.  It must be freed by the caller.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -923,8 +908,8 @@ lasso_node_get_name (<em class="parameter"><code><a class="link" href="lasso-nod
 <p>Return the XML element name for this object, the one that would be used in the XML dump of this
 object.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.20.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-node-get-name.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -938,9 +923,8 @@ object.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.20.6"></a><h4>Returns</h4>
+<a name="lasso-node-get-name.returns"></a><h4>Returns</h4>
 <p> the name of the object, the value must not be stored.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -950,8 +934,8 @@ object.</p>
 lasso_node_get_original_xmlnode (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>);</pre>
 <p>Retrieve the original xmlNode eventually associated to this <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a>.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.21.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-node-get-original-xmlnode.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -965,8 +949,8 @@ lasso_node_get_original_xmlnode (<em class="parameter"><code><a class="link" hre
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.21.6"></a><h4>Returns</h4>
-<p> an <span class="type">xmlNodePtr</span> or NULL. </p>
+<a name="lasso-node-get-original-xmlnode.returns"></a><h4>Returns</h4>
+<p>an <span class="type">xmlNodePtr</span> or NULL. </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
 </div>
 </div>
@@ -978,8 +962,8 @@ lasso_node_set_original_xmlnode (<em class="parameter"><code><a class="link" hre
                                  <em class="parameter"><code><span class="type">xmlNode</span> *xmlnode</code></em>);</pre>
 <p>Set the underlying XML representation of the object.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.22.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-node-set-original-xmlnode.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1010,8 +994,8 @@ lasso_node_set_custom_namespace (<em class="parameter"><code><a class="link" hre
 <p>Set a custom namespace for an object instance, use it with object existing a lot of revision of
 the nearly same namespace.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.23.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-node-set-custom-namespace.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1046,8 +1030,8 @@ lasso_node_set_custom_nodename (<em class="parameter"><code><a class="link" href
 <p>Set a custom nodename for an object instance, use it with object implement a schema type and not
 a real element.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.24.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-node-set-custom-nodename.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1086,8 +1070,8 @@ lasso_node_init_from_message (<em class="parameter"><code><a class="link" href="
 type may be base64, SOAP, XML or query string, correct type is found
 automatically.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.26.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-node-init-from-message.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1108,9 +1092,8 @@ automatically.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.26.6"></a><h4>Returns</h4>
+<a name="lasso-node-init-from-message.returns"></a><h4>Returns</h4>
 <p> a <a class="link" href="lasso-node.html#LassoMessageFormat" title="enum LassoMessageFormat"><span class="type">LassoMessageFormat</span></a> value.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -1123,8 +1106,8 @@ lasso_node_init_from_query (<em class="parameter"><code><a class="link" href="la
  fields with data from <em class="parameter"><code>query</code></em>
  string.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.27.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-node-init-from-query.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1145,9 +1128,8 @@ lasso_node_init_from_query (<em class="parameter"><code><a class="link" href="la
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.27.6"></a><h4>Returns</h4>
+<a name="lasso-node-init-from-query.returns"></a><h4>Returns</h4>
 <p> <code class="literal">TRUE</code> if success</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -1160,8 +1142,8 @@ lasso_node_init_from_xml (<em class="parameter"><code><a class="link" href="lass
  fields with data from <em class="parameter"><code>xmlnode</code></em>
  XML node.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.28.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-node-init-from-xml.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1182,9 +1164,8 @@ lasso_node_init_from_xml (<em class="parameter"><code><a class="link" href="lass
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.28.6"></a><h4>Returns</h4>
+<a name="lasso-node-init-from-xml.returns"></a><h4>Returns</h4>
 <p> 0 on success; or a negative value otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -1194,8 +1175,8 @@ lasso_node_init_from_xml (<em class="parameter"><code><a class="link" href="lass
 lasso_strerror (<em class="parameter"><code><span class="type">int</span> error_code</code></em>);</pre>
 <p>Convert an error code from a lasso fuction to a human readable string.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.29.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-strerror.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1209,9 +1190,8 @@ lasso_strerror (<em class="parameter"><code><span class="type">int</span> error_
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.29.6"></a><h4>Returns</h4>
+<a name="lasso-strerror.returns"></a><h4>Returns</h4>
 <p> a static string.</p>
-<p></p>
 </div>
 </div>
 </div>
@@ -1222,8 +1202,8 @@ lasso_strerror (<em class="parameter"><code><span class="type">int</span> error_
 <p>Return code for lasso_node_init_from_message; it describes the type of the
 message that was passed to that function.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.7.2.4"></a><h4>Members</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="LassoMessageFormat.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="300px" class="enum_members_name">
 <col class="enum_members_description">
@@ -1286,8 +1266,8 @@ message that was passed to that function.</p>
 <a name="LassoSignatureType"></a><h3>enum LassoSignatureType</h3>
 <p>Signature type.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.7.3.4"></a><h4>Members</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="LassoSignatureType.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="300px" class="enum_members_name">
 <col class="enum_members_description">
@@ -1330,8 +1310,8 @@ signature.</p>
 <a name="LassoSignatureMethod"></a><h3>enum LassoSignatureMethod</h3>
 <p>Signature method.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.7.4.4"></a><h4>Members</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="LassoSignatureMethod.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="300px" class="enum_members_name">
 <col class="enum_members_description">
@@ -1360,39 +1340,51 @@ signature.</p>
 <tr>
 <td class="enum_member_name"><p><a name="LASSO-SIGNATURE-METHOD-HMAC-SHA1:CAPS"></a>LASSO_SIGNATURE_METHOD_HMAC_SHA1</p></td>
 <td class="enum_member_description">
-<p>sign using a an HMAC-SHA1 secret key</p>
+<p>sign using a HMAC-SHA1 secret key</p>
 </td>
 <td class="enum_member_annotations"> </td>
 </tr>
 <tr>
 <td class="enum_member_name"><p><a name="LASSO-SIGNATURE-METHOD-RSA-SHA256:CAPS"></a>LASSO_SIGNATURE_METHOD_RSA_SHA256</p></td>
-<td> </td>
-<td> </td>
+<td class="enum_member_description">
+<p>sign using a RSA private key and use SHA256 digest</p>
+</td>
+<td class="enum_member_annotations"> </td>
 </tr>
 <tr>
 <td class="enum_member_name"><p><a name="LASSO-SIGNATURE-METHOD-HMAC-SHA256:CAPS"></a>LASSO_SIGNATURE_METHOD_HMAC_SHA256</p></td>
-<td> </td>
-<td> </td>
+<td class="enum_member_description">
+<p>sign using a HMAC-SHA256 secret key</p>
+</td>
+<td class="enum_member_annotations"> </td>
 </tr>
 <tr>
 <td class="enum_member_name"><p><a name="LASSO-SIGNATURE-METHOD-RSA-SHA384:CAPS"></a>LASSO_SIGNATURE_METHOD_RSA_SHA384</p></td>
-<td> </td>
-<td> </td>
+<td class="enum_member_description">
+<p>sign using a RSA private key and use SHA384 digest</p>
+</td>
+<td class="enum_member_annotations"> </td>
 </tr>
 <tr>
 <td class="enum_member_name"><p><a name="LASSO-SIGNATURE-METHOD-HMAC-SHA384:CAPS"></a>LASSO_SIGNATURE_METHOD_HMAC_SHA384</p></td>
-<td> </td>
-<td> </td>
+<td class="enum_member_description">
+<p>sign using a HMAC-SHA384 secret key</p>
+</td>
+<td class="enum_member_annotations"> </td>
 </tr>
 <tr>
 <td class="enum_member_name"><p><a name="LASSO-SIGNATURE-METHOD-RSA-SHA512:CAPS"></a>LASSO_SIGNATURE_METHOD_RSA_SHA512</p></td>
-<td> </td>
-<td> </td>
+<td class="enum_member_description">
+<p>sign using a RSA private key and use SHA521 digest</p>
+</td>
+<td class="enum_member_annotations"> </td>
 </tr>
 <tr>
 <td class="enum_member_name"><p><a name="LASSO-SIGNATURE-METHOD-HMAC-SHA512:CAPS"></a>LASSO_SIGNATURE_METHOD_HMAC_SHA512</p></td>
-<td> </td>
-<td> </td>
+<td class="enum_member_description">
+<p>sign using a HMAC-SHA512 secret key</p>
+</td>
+<td class="enum_member_annotations"> </td>
 </tr>
 <tr>
 <td class="enum_member_name"><p><a name="LASSO-SIGNATURE-METHOD-LAST:CAPS"></a>LASSO_SIGNATURE_METHOD_LAST</p></td>
@@ -1420,7 +1412,6 @@ signature.</p>
 </div>
 </div>
 <div class="footer">
-<hr>
-          Generated by GTK-Doc V1.21</div>
+<hr>Generated by GTK-Doc V1.28</div>
 </body>
 </html>

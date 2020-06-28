@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Lasso Reference Manual: LassoNameRegistration</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<title>LassoNameRegistration: Lasso Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
 <link rel="prev" href="lasso-LassoDefederation.html" title="LassoDefederation">
 <link rel="next" href="lasso-LassoNameIdentifierMapping.html" title="LassoNameIdentifierMapping">
-<meta name="generator" content="GTK-Doc V1.21 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.28 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -33,7 +33,7 @@
 </tr></table></div>
 <div class="refsect1">
 <a name="lasso-LassoNameRegistration.functions"></a><h2>Functions</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="functions_return">
 <col class="functions_name">
@@ -124,7 +124,7 @@
 </div>
 <div class="refsect1">
 <a name="lasso-LassoNameRegistration.other"></a><h2>Types and Values</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="name">
 <col class="description">
@@ -146,8 +146,8 @@
 lasso_name_registration_new (<em class="parameter"><code><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *server</code></em>);</pre>
 <p>Creates a new <a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="type">LassoNameRegistration</span></a>.</p>
 <div class="refsect3">
-<a name="id-1.3.3.5.6.2.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-name-registration-new.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -161,10 +161,9 @@ lasso_name_registration_new (<em class="parameter"><code><a class="link" href="l
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.3.5.6.2.6"></a><h4>Returns</h4>
+<a name="lasso-name-registration-new.returns"></a><h4>Returns</h4>
 <p> a newly created <a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="type">LassoNameRegistration</span></a> object; or NULL if
 an error occured</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -176,8 +175,8 @@ lasso_name_registration_new_from_dump (<em class="parameter"><code><a class="lin
 <p>Restores the <em class="parameter"><code>dump</code></em>
  to a new <a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="type">LassoNameRegistration</span></a>.</p>
 <div class="refsect3">
-<a name="id-1.3.3.5.6.3.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-name-registration-new-from-dump.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -198,10 +197,9 @@ lasso_name_registration_new_from_dump (<em class="parameter"><code><a class="lin
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.3.5.6.3.6"></a><h4>Returns</h4>
+<a name="lasso-name-registration-new-from-dump.returns"></a><h4>Returns</h4>
 <p> a newly created <a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="type">LassoNameRegistration</span></a>; or NULL if an error
 occured</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -227,8 +225,8 @@ lasso_name_registration_build_request_msg
 </p></li>
 </ul></div>
 <div class="refsect3">
-<a name="id-1.3.3.5.6.4.7"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-name-registration-build-request-msg.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -242,9 +240,8 @@ lasso_name_registration_build_request_msg
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.3.5.6.4.8"></a><h4>Returns</h4>
+<a name="lasso-name-registration-build-request-msg.returns"></a><h4>Returns</h4>
 <p> 0 on success; or a negative value otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -271,8 +268,8 @@ lasso_name_registration_build_response_msg
 the message (either with X509 if SOAP or with a simple signature for query
 strings).</p>
 <div class="refsect3">
-<a name="id-1.3.3.5.6.5.8"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-name-registration-build-response-msg.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -286,9 +283,8 @@ strings).</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.3.5.6.5.9"></a><h4>Returns</h4>
+<a name="lasso-name-registration-build-response-msg.returns"></a><h4>Returns</h4>
 <p> 0 on success; or a negative value otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -298,8 +294,8 @@ strings).</p>
 lasso_name_registration_destroy (<em class="parameter"><code><a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="type">LassoNameRegistration</span></a> *name_registration</code></em>);</pre>
 <p>Destroys a <a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="type">LassoNameRegistration</span></a> object.</p>
 <div class="refsect3">
-<a name="id-1.3.3.5.6.6.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-name-registration-destroy.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -321,8 +317,8 @@ lasso_name_registration_dump (<em class="parameter"><code><a class="link" href="
 <p>Dumps <em class="parameter"><code>name_registration</code></em>
  content to an XML string.</p>
 <div class="refsect3">
-<a name="id-1.3.3.5.6.7.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-name-registration-dump.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -336,8 +332,8 @@ lasso_name_registration_dump (<em class="parameter"><code><a class="link" href="
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.3.5.6.7.6"></a><h4>Returns</h4>
-<p> the dump string.  It must be freed by the caller. </p>
+<a name="lasso-name-registration-dump.returns"></a><h4>Returns</h4>
+<p>the dump string.  It must be freed by the caller. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
 </div>
@@ -354,8 +350,8 @@ lasso_name_registration_init_request (<em class="parameter"><code><a class="link
 <em class="parameter"><code>name_registration-&gt;oldNameIdentifier</code></em>
  to the old one.</p>
 <div class="refsect3">
-<a name="id-1.3.3.5.6.8.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-name-registration-init-request.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -382,9 +378,8 @@ corresponding of this HTTP request method.</p></td>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.3.5.6.8.6"></a><h4>Returns</h4>
+<a name="lasso-name-registration-init-request.returns"></a><h4>Returns</h4>
 <p> 0 on success; or a negative value otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -401,8 +396,8 @@ is IdP-initiated and there was no previously defined local name identifier)
 profile-&gt;nameIdentifier will be the new one and profile-&gt;oldNameIdentiifer
 the old one.</p>
 <div class="refsect3">
-<a name="id-1.3.3.5.6.9.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-name-registration-process-request-msg.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -423,9 +418,8 @@ the old one.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.3.5.6.9.6"></a><h4>Returns</h4>
+<a name="lasso-name-registration-process-request-msg.returns"></a><h4>Returns</h4>
 <p> 0 on success; or a negative value otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -439,8 +433,8 @@ lasso_name_registration_process_response_msg
 object from the message and optionally verifies its signature.</p>
 <p>If the response depicts Success it will also update Principal federation.</p>
 <div class="refsect3">
-<a name="id-1.3.3.5.6.10.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-name-registration-process-response-msg.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -461,9 +455,8 @@ object from the message and optionally verifies its signature.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.3.5.6.10.7"></a><h4>Returns</h4>
+<a name="lasso-name-registration-process-response-msg.returns"></a><h4>Returns</h4>
 <p> 0 on success; or a negative value otherwise.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -476,8 +469,8 @@ lasso_name_registration_validate_request
 federations, update them accordingly and prepares a
 lib:RegisterNameIdentifierResponse accordingly.</p>
 <div class="refsect3">
-<a name="id-1.3.3.5.6.11.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="lasso-name-registration-validate-request.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -491,9 +484,8 @@ lib:RegisterNameIdentifierResponse accordingly.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.3.5.6.11.6"></a><h4>Returns</h4>
+<a name="lasso-name-registration-validate-request.returns"></a><h4>Returns</h4>
 <p> 0 on success; or a negative value otherwise.</p>
-<p></p>
 </div>
 </div>
 </div>
@@ -511,7 +503,6 @@ lib:RegisterNameIdentifierResponse accordingly.</p>
 </div>
 </div>
 <div class="footer">
-<hr>
-          Generated by GTK-Doc V1.21</div>
+<hr>Generated by GTK-Doc V1.28</div>
 </body>
 </html>

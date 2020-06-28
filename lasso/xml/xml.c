@@ -724,20 +724,20 @@ gboolean
 lasso_node_init_from_query(LassoNode *node, const char *query)
 {
 	LassoNodeClass *class;
-	char **query_fields;
+	xmlChar **query_fields;
 	int i;
 	gboolean rc;
 
 	g_return_val_if_fail(LASSO_IS_NODE(node), FALSE);
 	class = LASSO_NODE_GET_CLASS(node);
 
-	query_fields = urlencoded_to_strings(query);
-	rc = class->init_from_query(node, query_fields);
+	query_fields = lasso_urlencoded_to_strings(query);
+	rc = class->init_from_query(node, (char**)query_fields);
 	for (i = 0; query_fields[i]; i++) {
 		xmlFree(query_fields[i]);
 		query_fields[i] = NULL;
 	}
-	lasso_release(query_fields);
+	lasso_release_array_of_xml_strings(query_fields);
 	return rc;
 }
 
@@ -1492,6 +1492,34 @@ lasso_node_impl_init_from_xml(LassoNode *node, xmlNode *xmlnode)
 		goto cleanup;
 	}
 
+	/* check node href and name match the node_data */
+	{
+		gboolean name_mismatch = FALSE;
+		LassoNodeClass *check_class = class;
+
+		/* if node is an xsi subtype of a real element, find the real element class */
+		while (check_class->node_data->xsi_sub_type) {
+			check_class = g_type_class_peek_parent(check_class);
+		}
+
+		name_mismatch = name_mismatch || lasso_strisnotequal((char*)check_class->node_data->node_name, (char*)xmlnode->name);
+		name_mismatch = name_mismatch || ! lasso_equal_namespace(check_class->node_data->ns, xmlnode->ns);
+		if (xmlnode->ns) {
+			name_mismatch = name_mismatch && lasso_strisnotequal(
+					G_OBJECT_CLASS_NAME(class),
+					lasso_registry_default_get_mapping((char*)xmlnode->ns->href,
+									   (char*)xmlnode->name,
+									   LASSO_LASSO_HREF));
+		}
+		if (name_mismatch) {
+			warning("lasso_node_impl_init_from_xml: expected name an href do not match node, expected %s:%s received %s:%s",
+					class->node_data->ns ? class->node_data->ns->href : NULL, class->node_data->node_name,
+					xmlnode->ns ? xmlnode->ns->href : NULL, xmlnode->name);
+			rc = 1;
+			goto cleanup;
+		}
+	}
+
 	/* Collect special snippets like SNIPPET_COLLECT_NAMESPACES, SNIPPET_ANY, SNIPPET_ATTRIBUTE
 	 * or SNIPPET_SIGNATURE, and initialize class_list in reverse. */
 	while (class && LASSO_IS_NODE_CLASS(class)) {
@@ -1608,8 +1636,11 @@ lasso_node_impl_init_from_xml(LassoNode *node, xmlNode *xmlnode)
 			g_hash_table_insert(*any_attribute, key, g_strdup((char*)content));
 			lasso_release_xml_string(content);
 		} else if (! ok) {
-			warning("lasso_node_impl_init_from_xml: Unexpected attribute: {%s}%s = %s",
-					attr->ns ? attr->ns->href : NULL, attr->name, content);
+			if (! attr->ns || (lasso_strisnotequal((char*)attr->ns->href, LASSO_XSI_HREF) &&
+					   lasso_strisnotequal((char*)attr->ns->href, LASSO_XML_HREF))) {
+				warning("lasso_node_impl_init_from_xml: Unexpected attribute: {%s}%s = %s",
+						attr->ns ? attr->ns->href : NULL, attr->name, content);
+			}
 		}
 		lasso_release_xml_string(content);
 	}
@@ -2342,11 +2373,6 @@ prefix_from_href_and_nodename(const xmlChar *href, G_GNUC_UNUSED const xmlChar *
 		prefix = "IdWsf2SubsRef";
 	else if (strcmp((char*)href, LASSO_WSA_HREF) == 0)
 		prefix = "WsAddr";
-#if 0 /* Desactivate DGME lib special casing */
-	else if (strcmp((char*)href, "urn:dgme:msp:ed:2007-01") == 0)
-		/* FIXME: new namespaces should be possible to add from another library than lasso */
-		prefix = "DgmeMspEd";
-#endif
 	else if ((tmp = lasso_get_prefix_for_idwsf2_dst_service_href((char*)href))
 			!= NULL) {
 		/* ID-WSF 2 Profile */
