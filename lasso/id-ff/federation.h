@@ -1,4 +1,4 @@
-/* $Id: federation.h,v 1.7 2005/01/22 15:57:54 eraviart Exp $
+/* $Id: federation.h,v 1.9 2005/11/21 18:51:52 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -52,8 +52,8 @@ struct _LassoFederation {
 
 	/*< public >*/
 	gchar *remote_providerID;
-	LassoSamlNameIdentifier *local_nameIdentifier;
-	LassoSamlNameIdentifier *remote_nameIdentifier;
+	LassoNode *local_nameIdentifier;
+	LassoNode *remote_nameIdentifier;
 
 	/*< private >*/
 	LassoFederationPrivate *private_data;
@@ -73,7 +73,7 @@ LASSO_EXPORT void lasso_federation_build_local_name_identifier(LassoFederation *
 LASSO_EXPORT void lasso_federation_destroy(LassoFederation *federation);
 
 LASSO_EXPORT gboolean lasso_federation_verify_name_identifier(
-		LassoFederation *federation, LassoSamlNameIdentifier *name_identifier);
+		LassoFederation *federation, LassoNode *name_identifier);
 
 #ifdef __cplusplus
 }

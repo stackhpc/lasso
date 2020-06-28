@@ -1,6 +1,6 @@
 /* -*- Mode: c; c-basic-offset: 8 -*-
  *
- * $Id: Lasso-wsf-disco.i,v 1.1 2005/08/29 12:54:28 nclapies Exp $
+ * $Id: Lasso-wsf-disco.i,v 1.4 2006/01/21 09:31:13 fpeters Exp $
  *
  * SWIG bindings for Lasso Library
  *
@@ -463,6 +463,9 @@ typedef struct {
 
 	%newobject dump;
 	char *dump();
+
+	/* Methods */
+	void addSecurityMechId(const char *security_mech_id);
 }
 
 %{
@@ -482,22 +485,19 @@ typedef struct {
 #define LassoDiscoDescription_SecurityMechID_set(self, value) set_string_list(&(self)->SecurityMechID, (value))
 
 /* Constructors, destructors & static methods implementations */
-#ifdef PHP_VERSION
 #define LassoDiscoDescription_newWithWsdlRef lasso_disco_description_new_with_WsdlRef
-#else
-#define DiscoDescription_newWithWsdlRef lasso_disco_description_new_with_WsdlRef
-#endif
 
-#ifdef PHP_VERSION
 #define LassoDiscoDescription_newWithBriefSoapHttpDescription lasso_disco_description_new_with_BriefSoapHttpDescription
-#else
-#define DiscoDescription_newWithBriefSoapHttpDescription lasso_disco_description_new_with_BriefSoapHttpDescription
-#endif
 
 #define new_LassoDiscoDescription lasso_disco_description_new
 #define delete_LassoDiscoDescription(self) lasso_node_destroy(LASSO_NODE(self))
 
+/* Implementations of methods */
+
 /* Implementations of methods inherited from LassoNode */
+LassoDiscoDescription_addSecurityMechId(LassoDiscoDescription *self, const char *security_mech_id) {
+	self->SecurityMechID = g_list_append(self->SecurityMechID, g_strdup(security_mech_id));
+}
 
 #define LassoDiscoDescription_dump(self) lasso_node_dump(LASSO_NODE(self))
 
@@ -697,11 +697,7 @@ typedef struct {
 #define delete_LassoDiscoModify(self) lasso_node_destroy(LASSO_NODE(self))
 
 /* Implementations of methods inherited from LassoNode */
-#ifdef PHP_VERSION
 #define LassoDiscoModify_newFromMessage lasso_disco_modify_new_from_message
-#else
-#define DiscoModify_newFromMessage lasso_disco_modify_new_from_message
-#endif
 
 #define LassoDiscoModify_dump(self) lasso_node_dump(LASSO_NODE(self))
 

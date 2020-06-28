@@ -1,4 +1,4 @@
-/* $Id: wsf_profile.h,v 1.9 2005/09/27 07:57:35 nclapies Exp $ 
+/* $Id: wsf_profile.h,v 1.12 2005/12/06 13:15:31 nclapies Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -79,24 +79,19 @@ struct _LassoWsfProfileClass {
 
 LASSO_EXPORT GType lasso_wsf_profile_get_type(void);
 
-/* FIXME: Should not be here */
-LASSO_EXPORT gboolean lasso_security_mech_id_is_saml_authentication(
-	const gchar *security_mech_id);
+LASSO_EXPORT gboolean lasso_security_mech_id_is_saml_authentication(const gchar *security_mech_id);
 
-LASSO_EXPORT gint lasso_wsf_profile_add_saml_authentication(LassoWsfProfile *profile,
-	LassoSamlAssertion *credential);
+LASSO_EXPORT gint lasso_wsf_profile_move_credentials(LassoWsfProfile *src, LassoWsfProfile *dest);
 
 LASSO_EXPORT LassoIdentity* lasso_wsf_profile_get_identity(LassoWsfProfile *profile);
 LASSO_EXPORT LassoSession* lasso_wsf_profile_get_session(LassoWsfProfile *profile);
 LASSO_EXPORT gboolean lasso_wsf_profile_is_identity_dirty(LassoWsfProfile *profile);
 LASSO_EXPORT gboolean lasso_wsf_profile_is_session_dirty(LassoWsfProfile *profile);
-
 LASSO_EXPORT gint lasso_wsf_profile_set_identity_from_dump(LassoWsfProfile *profile,
 	const gchar *dump);
 LASSO_EXPORT gint lasso_wsf_profile_set_session_from_dump(LassoWsfProfile *profile,
 	const gchar *dump);
 
-/* FIXME: must be private method */
 LASSO_EXPORT LassoSoapEnvelope* lasso_wsf_profile_build_soap_envelope(const char *refToMessageId,
 	const char *providerId);
 
@@ -108,7 +103,7 @@ LASSO_EXPORT gint lasso_wsf_profile_init_soap_request(LassoWsfProfile *profile,
 	LassoNode *request);
 
 LASSO_EXPORT gint lasso_wsf_profile_process_soap_request_msg(LassoWsfProfile *profile,
-	const gchar *message, const gchar *security_mech_id);
+	const gchar *message, const gchar *service_type, const gchar *security_mech_id);
 
 LASSO_EXPORT gint lasso_wsf_profile_process_soap_response_msg(LassoWsfProfile *profile,
 	const gchar *message);
@@ -117,6 +112,15 @@ LASSO_EXPORT LassoSoapBindingProvider* lasso_wsf_profile_set_provider_soap_reque
 	LassoWsfProfile *profile, const char *providerId);
 
 LASSO_EXPORT LassoWsfProfile* lasso_wsf_profile_new(LassoServer *server);
+
+LASSO_EXPORT gboolean lasso_wsf_profile_principal_is_online(LassoWsfProfile *profile);
+
+LASSO_EXPORT void lasso_wsf_profile_set_principal_status(LassoWsfProfile *profile,
+							 const char *status);
+
+LASSO_EXPORT void lasso_wsf_profile_set_principal_online(LassoWsfProfile *profile);
+
+LASSO_EXPORT void lasso_wsf_profile_set_principal_offline(LassoWsfProfile *profile);
 
 #ifdef __cplusplus
 }

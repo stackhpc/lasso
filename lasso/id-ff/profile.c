@@ -1,4 +1,4 @@
-/* $Id: profile.c,v 1.61 2005/07/30 22:36:53 fpeters Exp $
+/* $Id: profile.c,v 1.63 2005/11/21 18:51:52 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -33,28 +33,22 @@
 #include <lasso/id-ff/profile.h>
 #include <lasso/id-ff/profileprivate.h>
 
-struct _LassoProfilePrivate
-{
-	gboolean dispose_has_run;
-};
-
 /*****************************************************************************/
 /* public functions                                                          */
 /*****************************************************************************/
 
-
 /**
  * lasso_profile_get_nameIdentifier:
- * @profile: a #LassoProifle
+ * @profile: a #LassoProfile
  *
  * Looks up appropriate federation in object and gets the service provider name
- * identifier.
+ * identifier (which is actually a #LassoSamlNameIdentifier in ID-FF 1.2 and
+ * #LassoSaml2NameID in SAML 2.0).
  *
- * Return value: the name identifier or NULL if none was found.  The
- *     #LassoSamlNameIdentifier object is internally allocated and must not be
- *     freed by the caller.
+ * Return value: the name identifier or NULL if none was found.  The #LassoNode
+ *     object is internally allocated and must not be *     freed by the caller.
  **/
-LassoSamlNameIdentifier*
+LassoNode*
 lasso_profile_get_nameIdentifier(LassoProfile *profile)
 {
 	LassoProvider *remote_provider;
@@ -350,6 +344,27 @@ lasso_profile_set_session_from_dump(LassoProfile *profile, const gchar  *dump)
 	return 0;
 }
 
+char*
+lasso_profile_get_artifact(LassoProfile *profile)
+{
+	return g_strdup(profile->private_data->artifact);
+}
+
+char*
+lasso_profile_get_artifact_message(LassoProfile *profile)
+{
+	return g_strdup(profile->private_data->artifact_message);
+}
+
+void
+lasso_profile_set_artifact_message(LassoProfile *profile, char *message)
+{
+	if (profile->private_data->artifact_message) {
+		g_free(profile->private_data->artifact_message);
+	}
+	profile->private_data->artifact_message = g_strdup(message);
+}
+
 
 /*****************************************************************************/
 /* private methods                                                           */
@@ -389,6 +404,10 @@ dispose(GObject *object)
 	profile->identity = NULL;
 	lasso_session_destroy(profile->session);
 	profile->session = NULL;
+	g_free(profile->private_data->artifact);
+	profile->private_data->artifact = NULL;
+	g_free(profile->private_data->artifact_message);
+	profile->private_data->artifact_message = NULL;
 
 	G_OBJECT_CLASS(parent_class)->dispose(G_OBJECT(profile));
 }
@@ -410,6 +429,8 @@ instance_init(LassoProfile *profile)
 {
 	profile->private_data = g_new(LassoProfilePrivate, 1);
 	profile->private_data->dispose_has_run = FALSE;
+	profile->private_data->artifact = NULL;
+	profile->private_data->artifact_message = NULL;
 
 	profile->server = NULL;
 	profile->request = NULL;

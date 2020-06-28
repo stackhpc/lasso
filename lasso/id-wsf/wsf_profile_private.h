@@ -1,4 +1,4 @@
-/* $Id: wsf_profile_private.h,v 1.2 2005/09/28 06:57:04 nclapies Exp $ 
+/* $Id: wsf_profile_private.h,v 1.4 2005/10/06 15:03:56 nclapies Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -32,9 +32,13 @@ extern "C" {
 
 #include <lasso/xml/soap_fault.h>
 
+void lasso_wsf_profile_set_description(LassoWsfProfile *profile,
+				       LassoDiscoDescription *description);
 void lasso_wsf_profile_set_security_mech_id(LassoWsfProfile *profile,
-	const gchar *security_mech_id);
+					    const gchar *security_mech_id);
 LassoSoapFault* lasso_wsf_profile_get_fault(LassoWsfProfile *profile);
+
+void lasso_wsf_profile_set_public_key(LassoWsfProfile *profile, const char *public_key); 
 
 #ifdef __cplusplus
 }

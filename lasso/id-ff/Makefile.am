@@ -3,6 +3,7 @@ liblassoincludedir = $(includedir)/lasso/id-ff
 INCLUDES = \
 	-I$(top_srcdir) \
 	-I$(top_srcdir)/lasso \
+	-I$(top_builddir) \
 	$(LASSO_CORE_CFLAGS) \
 	-DG_LOG_DOMAIN=\"lasso\"
 
@@ -27,7 +28,8 @@ lasso_private_h_sources = \
 	profileprivate.h \
 	providerprivate.h \
 	serverprivate.h \
-	sessionprivate.h
+	sessionprivate.h \
+	logoutprivate.h
 
 liblassoinclude_HEADERS = \
 	defederation.h \

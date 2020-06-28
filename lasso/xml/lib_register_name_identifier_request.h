@@ -1,4 +1,4 @@
-/* $Id: lib_register_name_identifier_request.h,v 1.17 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: lib_register_name_identifier_request.h,v 1.18 2005/11/20 15:38:19 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -76,8 +76,8 @@ struct _LassoLibRegisterNameIdentifierRequestClass {
 };
 
 LASSO_EXPORT GType lasso_lib_register_name_identifier_request_get_type(void);
-LASSO_EXPORT LassoSamlpRequestAbstract* lasso_lib_register_name_identifier_request_new(void);
-LASSO_EXPORT LassoSamlpRequestAbstract* lasso_lib_register_name_identifier_request_new_full(
+LASSO_EXPORT LassoNode* lasso_lib_register_name_identifier_request_new(void);
+LASSO_EXPORT LassoNode* lasso_lib_register_name_identifier_request_new_full(
 		const char *providerID,
 		LassoSamlNameIdentifier *idpNameIdentifier,
 		LassoSamlNameIdentifier *spNameIdentifier,

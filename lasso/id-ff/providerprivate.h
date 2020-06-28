@@ -1,4 +1,4 @@
-/* $Id: providerprivate.h,v 1.6 2005/09/26 15:02:52 nclapies Exp $ 
+/* $Id: providerprivate.h,v 1.7 2005/11/20 15:38:19 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -29,16 +29,22 @@
 extern "C" {
 #endif /* __cplusplus */ 
 
-typedef enum {
-	LIBERTY_1_0,
-	LIBERTY_1_1,
-	LIBERTY_1_2,
-} LibertyConformanceLevel;
+struct _LassoProviderPrivate
+{
+	gboolean dispose_has_run;
+	LassoProtocolConformance conformance;
+	GHashTable *SPDescriptor;
+	char *default_assertion_consumer;
+	GHashTable *IDPDescriptor;
+	xmlNode *organization;
+	xmlSecKey *public_key;
+	xmlNode *signing_key_descriptor;
+};
+
 
 gboolean lasso_provider_load_metadata(LassoProvider *provider, const gchar *metadata);
 int lasso_provider_verify_signature(LassoProvider *provider,
 		const char *message, const char *id_attr_name, LassoMessageFormat format);
-LibertyConformanceLevel lasso_provider_compatibility_level(LassoProvider *provider);
 gboolean lasso_provider_load_public_key(LassoProvider *provider);
 xmlSecKey* lasso_provider_get_public_key(LassoProvider *provider);
 

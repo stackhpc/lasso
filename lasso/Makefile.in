@@ -55,11 +55,15 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 am__DEPENDENCIES_2 =
 @MINGW_FALSE@liblasso_la_DEPENDENCIES =  \
 @MINGW_FALSE@	$(top_builddir)/lasso/xml/liblasso-xml.la \
+@MINGW_FALSE@	$(top_builddir)/lasso/xml/saml-2.0/liblasso-xml-saml2.la \
 @MINGW_FALSE@	$(top_builddir)/lasso/id-ff/liblasso-id-ff.la \
+@MINGW_FALSE@	$(top_builddir)/lasso/saml-2.0/liblasso-saml-20.la \
 @MINGW_FALSE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_2)
 @MINGW_TRUE@liblasso_la_DEPENDENCIES =  \
 @MINGW_TRUE@	$(top_builddir)/lasso/xml/liblasso-xml.la \
+@MINGW_TRUE@	$(top_builddir)/lasso/xml/saml-2.0/liblasso-xml-saml2.la \
 @MINGW_TRUE@	$(top_builddir)/lasso/id-ff/liblasso-id-ff.la \
+@MINGW_TRUE@	$(top_builddir)/lasso/saml-2.0/liblasso-saml-20.la \
 @MINGW_TRUE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_2) \
 @MINGW_TRUE@	lasso.rc.lo
 am_liblasso_la_OBJECTS = lasso.lo errors.lo
@@ -242,6 +246,8 @@ WITH_TESTS_TRUE = @WITH_TESTS_TRUE@
 WSF_ENABLED_FALSE = @WSF_ENABLED_FALSE@
 WSF_ENABLED_TRUE = @WSF_ENABLED_TRUE@
 XSLTPROC = @XSLTPROC@
+Z_CFLAGS = @Z_CFLAGS@
+Z_LIBS = @Z_LIBS@
 ac_ct_AR = @ac_ct_AR@
 ac_ct_AS = @ac_ct_AS@
 ac_ct_CC = @ac_ct_CC@
@@ -290,9 +296,9 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-SUBDIRS = xml id-ff id-wsf
+SUBDIRS = xml id-ff id-wsf saml-2.0
 liblassoincludedir = $(includedir)/lasso
-INCLUDES = -I$(top_srcdir) $(LASSO_CORE_CFLAGS)
+INCLUDES = -I$(top_srcdir) -I$(top_builddir) $(LASSO_CORE_CFLAGS)
 LTRCCOMPILE = $(LIBTOOL) --tag=RC --mode=compile $(RC) \
      `echo $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) |\
          sed -e 's/-I/--include-dir /g;s/-D/--define /g'`
@@ -306,13 +312,17 @@ EXTRA_DIST = extract_types.py extract_symbols.py
 @WSF_ENABLED_TRUE@WSF_LIB_FILE = $(top_builddir)/lasso/id-wsf/liblasso-id-wsf.la
 @MINGW_FALSE@liblasso_la_LIBADD = \
 @MINGW_FALSE@	$(top_builddir)/lasso/xml/liblasso-xml.la \
+@MINGW_FALSE@	$(top_builddir)/lasso/xml/saml-2.0/liblasso-xml-saml2.la \
 @MINGW_FALSE@	$(top_builddir)/lasso/id-ff/liblasso-id-ff.la \
+@MINGW_FALSE@	$(top_builddir)/lasso/saml-2.0/liblasso-saml-20.la \
 @MINGW_FALSE@	$(WSF_LIB_FILE) \
 @MINGW_FALSE@	$(LASSO_LIBS)
 
 @MINGW_TRUE@liblasso_la_LIBADD = \
 @MINGW_TRUE@	$(top_builddir)/lasso/xml/liblasso-xml.la \
+@MINGW_TRUE@	$(top_builddir)/lasso/xml/saml-2.0/liblasso-xml-saml2.la \
 @MINGW_TRUE@	$(top_builddir)/lasso/id-ff/liblasso-id-ff.la \
+@MINGW_TRUE@	$(top_builddir)/lasso/saml-2.0/liblasso-saml-20.la \
 @MINGW_TRUE@	$(WSF_LIB_FILE) \
 @MINGW_TRUE@	$(LASSO_LIBS) \
 @MINGW_TRUE@	lasso.rc.lo

@@ -1,4 +1,4 @@
-/* $Id: authentication.c,v 1.9 2005/09/19 14:40:51 nclapies Exp $ 
+/* $Id: authentication.c,v 1.10 2006/03/04 15:50:31 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -592,8 +592,8 @@ get_xmlNode(LassoNode *node, gboolean lasso_dump)
 	xmlNode *xmlnode;
 
 	xmlnode = parent_class->get_xmlNode(node, lasso_dump);
-	xmlNodeSetName(xmlnode, "Authentication");
-	xmlSetProp(xmlnode, "AuthenticationDumpVersion", "2");
+	xmlNodeSetName(xmlnode, (xmlChar*)"Authentication");
+	xmlSetProp(xmlnode, (xmlChar*)"AuthenticationDumpVersion", (xmlChar*)"2");
 
 	return xmlnode;
 }

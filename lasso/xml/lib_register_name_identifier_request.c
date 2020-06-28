@@ -1,4 +1,4 @@
-/* $Id: lib_register_name_identifier_request.c,v 1.25 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: lib_register_name_identifier_request.c,v 1.26 2005/11/20 15:38:19 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -202,7 +202,7 @@ lasso_lib_register_name_identifier_request_get_type()
  *
  * Return value: a newly created #LassoLibRegisterNameIdentifierRequest object
  **/
-LassoSamlpRequestAbstract*
+LassoNode*
 lasso_lib_register_name_identifier_request_new()
 {
 	return g_object_new(LASSO_TYPE_LIB_REGISTER_NAME_IDENTIFIER_REQUEST, NULL);
@@ -223,7 +223,7 @@ lasso_lib_register_name_identifier_request_new()
  *
  * Return value: a newly created #LassoLibRegisterNameIdentifierRequest object
  **/
-LassoSamlpRequestAbstract*
+LassoNode*
 lasso_lib_register_name_identifier_request_new_full(const char *providerID,
 		LassoSamlNameIdentifier *idpNameIdentifier,
 		LassoSamlNameIdentifier *spNameIdentifier,
@@ -248,5 +248,5 @@ lasso_lib_register_name_identifier_request_new_full(const char *providerID,
 	request->SPProvidedNameIdentifier = spNameIdentifier;
 	request->OldProvidedNameIdentifier = oldNameIdentifier;
 
-	return request_base;
+	return LASSO_NODE(request_base);
 }

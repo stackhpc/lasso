@@ -1,4 +1,4 @@
-/* $Id: discovery.h,v 1.26 2005/09/27 08:07:10 nclapies Exp $ 
+/* $Id: discovery.h,v 1.30 2006/02/21 09:51:49 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -55,12 +55,6 @@ typedef struct _LassoDiscovery LassoDiscovery;
 typedef struct _LassoDiscoveryClass LassoDiscoveryClass;
 typedef struct _LassoDiscoveryPrivate LassoDiscoveryPrivate;
 
-/* typedef enum { */
-/* 	LASSO_DISCO_REQUEST_TYPE_MODIFY = 1, */
-/* 	LASSO_DISCO_REQUEST_TYPE_QUERY, */
-/* } LassoDiscoRequestType; */
-/* LASSO_EXPORT LassoRequestType
-      lasso_discovery_get_request_type_from_soap_msg(const gchar *soap); */
 
 struct _LassoDiscovery {
 	LassoWsfProfile parent;
@@ -93,7 +87,7 @@ LASSO_EXPORT LassoDiscoRequestedServiceType* lasso_discovery_add_requested_servi
 LASSO_EXPORT void lasso_discovery_destroy(LassoDiscovery *discovery);
 
 LASSO_EXPORT gint lasso_discovery_init_insert(LassoDiscovery *discovery,
-	LassoDiscoResourceOffering *resourceOffering, const char *security_mech_id);
+	LassoDiscoResourceOffering *new_offering, const char *security_mech_id);
 
 LASSO_EXPORT gint lasso_discovery_init_remove(LassoDiscovery *discovery, const char *entry_id);
 
@@ -121,9 +115,6 @@ LASSO_EXPORT gint lasso_discovery_process_query_response_msg(LassoDiscovery *dis
 
 LASSO_EXPORT LassoDataService* lasso_discovery_get_service(LassoDiscovery *discovery,
 	const char *service_type);
-
-LASSO_EXPORT LassoDataService* lasso_discovery_get_service_with_providerId(
-	LassoDiscovery *discovery, const char *providerId);
 
 LASSO_EXPORT GList* lasso_discovery_get_services(LassoDiscovery *discovery);
 

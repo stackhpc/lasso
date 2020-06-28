@@ -1,4 +1,4 @@
-/* $Id: personal_profile_service.c,v 1.22 2005/08/25 07:19:27 fpeters Exp $
+/* $Id: personal_profile_service.c,v 1.23 2005/10/06 15:01:01 nclapies Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -123,6 +123,7 @@ lasso_personal_profile_service_new(LassoServer *server, LassoDiscoResourceOfferi
 	g_return_val_if_fail(LASSO_IS_SERVER(server) == TRUE, NULL);
 
 	service = g_object_new(LASSO_TYPE_PERSONAL_PROFILE_SERVICE, NULL);
+	LASSO_WSF_PROFILE(service)->server = g_object_ref(server);
 	lasso_data_service_set_offering(LASSO_DATA_SERVICE(service), offering);
 
 	return service;

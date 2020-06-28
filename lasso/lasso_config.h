@@ -50,7 +50,7 @@
 #define LASSO_VERSION_MINOR 6
 
 /* Release version number */
-#define LASSO_VERSION_SUBMINOR 3
+#define LASSO_VERSION_SUBMINOR 5
 
 /* Define if ID-WSF support is enabled */
 /* #undef LASSO_WSF_ENABLED */
@@ -68,13 +68,13 @@
 #define PACKAGE_NAME "Liberty Alliance Single Sign On"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "Liberty Alliance Single Sign On 0.6.3"
+#define PACKAGE_STRING "Liberty Alliance Single Sign On 0.6.5"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "liberty-alliance-single-sign-on"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "0.6.3"
+#define PACKAGE_VERSION "0.6.5"
 
 /* Define to 1 if the C compiler supports function prototypes. */
 #define PROTOTYPES 1
@@ -83,7 +83,7 @@
 #define STDC_HEADERS 1
 
 /* Version number of package */
-#define VERSION "0.6.3"
+#define VERSION "0.6.5"
 
 /* Define like PROTOTYPES; this can be used by system headers. */
 #define __PROTOTYPES 1

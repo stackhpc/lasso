@@ -1,4 +1,4 @@
-/* $Id: profileprivate.h,v 1.2 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: profileprivate.h,v 1.3 2005/11/20 15:38:19 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -31,6 +31,13 @@ extern "C" {
 #endif /* __cplusplus */ 
 
 #include <lasso/id-ff/profile.h>
+
+struct _LassoProfilePrivate
+{
+	char *artifact;
+	char *artifact_message;
+	gboolean dispose_has_run;
+};
 
 void lasso_profile_set_response_status(LassoProfile *profile, const gchar *statusCodeValue);
 

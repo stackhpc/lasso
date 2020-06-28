@@ -1,4 +1,4 @@
-/* $Id: lib_federation_termination_notification.c,v 1.25 2005/07/30 22:36:54 fpeters Exp $ 
+/* $Id: lib_federation_termination_notification.c,v 1.26 2005/11/20 15:38:19 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -202,7 +202,7 @@ lasso_lib_federation_termination_notification_get_type()
  * Return value: a newly created #LassoLibFederationTerminationNotification
  *     object
  **/
-LassoSamlpRequestAbstract*
+LassoNode*
 lasso_lib_federation_termination_notification_new()
 {
 	return g_object_new(LASSO_TYPE_LIB_FEDERATION_TERMINATION_NOTIFICATION, NULL);
@@ -222,7 +222,7 @@ lasso_lib_federation_termination_notification_new()
  * Return value: a newly created #LassoLibFederationTerminationNotification
  *     object
  **/
-LassoSamlpRequestAbstract*
+LassoNode*
 lasso_lib_federation_termination_notification_new_full(char *providerID,
 		LassoSamlNameIdentifier *nameIdentifier,
 		LassoSignatureType sign_type, LassoSignatureMethod sign_method)
@@ -242,5 +242,5 @@ lasso_lib_federation_termination_notification_new_full(char *providerID,
 	LASSO_LIB_FEDERATION_TERMINATION_NOTIFICATION(request)->NameIdentifier =
 		g_object_ref(nameIdentifier);
 
-	return request;
+	return LASSO_NODE(request);
 }

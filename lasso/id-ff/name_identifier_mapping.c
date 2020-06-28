@@ -1,4 +1,4 @@
-/* $Id: name_identifier_mapping.c,v 1.57 2005/03/07 14:16:16 fpeters Exp $
+/* $Id: name_identifier_mapping.c,v 1.59 2006/01/23 15:30:00 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -61,6 +61,11 @@ lasso_name_identifier_mapping_build_request_msg(LassoNameIdentifierMapping *mapp
 
 	profile = LASSO_PROFILE(mapping);
 
+	if (profile->remote_providerID == NULL) {
+		/* this means lasso_logout_init_request was not called before */
+		return critical_error(LASSO_PROFILE_ERROR_MISSING_REMOTE_PROVIDERID);
+	}
+
 	/* get provider object */
 	remote_provider = g_hash_table_lookup(profile->server->providers,
 			profile->remote_providerID);
@@ -78,9 +83,11 @@ lasso_name_identifier_mapping_build_request_msg(LassoNameIdentifierMapping *mapp
 		return critical_error(LASSO_PROFILE_ERROR_UNKNOWN_PROFILE_URL);
 	}
 
-	profile->request->private_key_file = profile->server->private_key;
-	profile->request->certificate_file = profile->server->certificate;
-	profile->msg_body = lasso_node_export_to_soap(LASSO_NODE(profile->request));
+	LASSO_SAMLP_REQUEST_ABSTRACT(profile->request)->private_key_file = 
+		profile->server->private_key;
+	LASSO_SAMLP_REQUEST_ABSTRACT(profile->request)->certificate_file = 
+		profile->server->certificate;
+	profile->msg_body = lasso_node_export_to_soap(profile->request);
 	if (profile->msg_body == NULL) {
 		return critical_error(LASSO_PROFILE_ERROR_BUILDING_MESSAGE_FAILED);
 	}
@@ -123,6 +130,11 @@ lasso_name_identifier_mapping_build_response_msg(LassoNameIdentifierMapping *map
 
 	profile = LASSO_PROFILE(mapping);
 
+	if (profile->remote_providerID == NULL) {
+		/* this means lasso_logout_init_request was not called before */
+		return critical_error(LASSO_PROFILE_ERROR_MISSING_REMOTE_PROVIDERID);
+	}
+
 	remote_provider = g_hash_table_lookup(profile->server->providers,
 			profile->remote_providerID);
 	if (LASSO_IS_PROVIDER(remote_provider) == FALSE) {
@@ -141,9 +153,11 @@ lasso_name_identifier_mapping_build_response_msg(LassoNameIdentifierMapping *map
 	}
 
 	profile->msg_url = NULL;
-	profile->response->private_key_file = profile->server->private_key;
-	profile->response->certificate_file = profile->server->certificate;
-	profile->msg_body = lasso_node_export_to_soap(LASSO_NODE(profile->response));
+	LASSO_SAMLP_RESPONSE_ABSTRACT(profile->response)->private_key_file =
+		profile->server->private_key;
+	LASSO_SAMLP_RESPONSE_ABSTRACT(profile->response)->certificate_file =
+		profile->server->certificate;
+	profile->msg_body = lasso_node_export_to_soap(profile->response);
 
 	return 0;
 }
@@ -215,9 +229,9 @@ lasso_name_identifier_mapping_init_request(LassoNameIdentifierMapping *mapping,
 	}
 
 	/* name identifier */
-	nameIdentifier = federation->local_nameIdentifier;
+	nameIdentifier = LASSO_SAML_NAME_IDENTIFIER(federation->local_nameIdentifier);
 	if (nameIdentifier == NULL)
-		nameIdentifier = federation->remote_nameIdentifier;
+		nameIdentifier = LASSO_SAML_NAME_IDENTIFIER(federation->remote_nameIdentifier);
 	if (nameIdentifier == NULL) {
 		return critical_error(LASSO_PROFILE_ERROR_NAME_IDENTIFIER_NOT_FOUND);
 	}
@@ -242,9 +256,9 @@ lasso_name_identifier_mapping_init_request(LassoNameIdentifierMapping *mapping,
 		return critical_error(LASSO_PROFILE_ERROR_BUILDING_REQUEST_FAILED);
 	}
 
-	if (lasso_provider_compatibility_level(remote_provider) < LIBERTY_1_2) {
-		profile->request->MajorVersion = 1;
-		profile->request->MinorVersion = 1;
+	if (lasso_provider_get_protocol_conformance(remote_provider) < LASSO_PROTOCOL_LIBERTY_1_2) {
+		LASSO_SAMLP_REQUEST_ABSTRACT(profile->request)->MajorVersion = 1;
+		LASSO_SAMLP_REQUEST_ABSTRACT(profile->request)->MinorVersion = 1;
 	}
 
 	profile->http_request_method = LASSO_HTTP_METHOD_SOAP;
@@ -452,9 +466,9 @@ lasso_name_identifier_mapping_validate_request(LassoNameIdentifierMapping *mappi
 				LASSO_LIB_STATUS_CODE_UNKNOWN_PRINCIPAL);
 		return critical_error(LASSO_PROFILE_ERROR_FEDERATION_NOT_FOUND);
 	}
-	nameIdentifier = federation->remote_nameIdentifier;
+	nameIdentifier = LASSO_SAML_NAME_IDENTIFIER(federation->remote_nameIdentifier);
 	if (nameIdentifier == NULL)
-		nameIdentifier = federation->local_nameIdentifier;
+		nameIdentifier = LASSO_SAML_NAME_IDENTIFIER(federation->local_nameIdentifier);
 
 	if (nameIdentifier == NULL) {
 		lasso_profile_set_response_status(profile,
@@ -476,9 +490,9 @@ lasso_name_identifier_mapping_validate_request(LassoNameIdentifierMapping *mappi
 		return LASSO_ERROR_UNDEFINED;
 	}
 
-	targetNameIdentifier = federation->remote_nameIdentifier;
+	targetNameIdentifier = LASSO_SAML_NAME_IDENTIFIER(federation->remote_nameIdentifier);
 	if (targetNameIdentifier == NULL) {
-		targetNameIdentifier = federation->local_nameIdentifier;
+		targetNameIdentifier = LASSO_SAML_NAME_IDENTIFIER(federation->local_nameIdentifier);
 	}
 
 	if (targetNameIdentifier == NULL) {

@@ -1,4 +1,4 @@
-/* $Id: name_registration.c,v 1.73 2005/07/30 22:36:53 fpeters Exp $
+/* $Id: name_registration.c,v 1.76 2006/01/23 15:30:00 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -65,6 +65,11 @@ lasso_name_registration_build_request_msg(LassoNameRegistration *name_registrati
 
 	profile = LASSO_PROFILE(name_registration);
 
+	if (profile->remote_providerID == NULL) {
+		/* this means lasso_logout_init_request was not called before */
+		return critical_error(LASSO_PROFILE_ERROR_MISSING_REMOTE_PROVIDERID);
+	}
+
 	remote_provider = g_hash_table_lookup(profile->server->providers,
 			profile->remote_providerID);
 	if (LASSO_IS_PROVIDER(remote_provider) == FALSE) {
@@ -74,9 +79,11 @@ lasso_name_registration_build_request_msg(LassoNameRegistration *name_registrati
 	if (profile->http_request_method == LASSO_HTTP_METHOD_SOAP) {
 		profile->msg_url = lasso_provider_get_metadata_one(
 				remote_provider, "SoapEndpoint");
-		profile->request->private_key_file = profile->server->private_key;
-		profile->request->certificate_file = profile->server->certificate;
-		profile->msg_body = lasso_node_export_to_soap(LASSO_NODE(profile->request));
+		LASSO_SAMLP_REQUEST_ABSTRACT(profile->request)->private_key_file = 
+			profile->server->private_key;
+		LASSO_SAMLP_REQUEST_ABSTRACT(profile->request)->certificate_file = 
+			profile->server->certificate;
+		profile->msg_body = lasso_node_export_to_soap(profile->request);
 		return 0;
 	}
 
@@ -144,6 +151,11 @@ lasso_name_registration_build_response_msg(LassoNameRegistration *name_registrat
 
 	profile = LASSO_PROFILE(name_registration);
 
+	if (profile->remote_providerID == NULL) {
+		/* this means lasso_logout_init_request was not called before */
+		return critical_error(LASSO_PROFILE_ERROR_MISSING_REMOTE_PROVIDERID);
+	}
+
 	remote_provider = g_hash_table_lookup(profile->server->providers,
 			profile->remote_providerID);
 	if (LASSO_IS_PROVIDER(remote_provider) == FALSE) {
@@ -152,9 +164,11 @@ lasso_name_registration_build_response_msg(LassoNameRegistration *name_registrat
 
 	if (profile->http_request_method == LASSO_HTTP_METHOD_SOAP) {
 		profile->msg_url = NULL;
-		profile->response->private_key_file = profile->server->private_key;
-		profile->response->certificate_file = profile->server->certificate;
-		profile->msg_body = lasso_node_export_to_soap(LASSO_NODE(profile->response));
+		LASSO_SAMLP_RESPONSE_ABSTRACT(profile->response)->private_key_file = 
+			profile->server->private_key;
+		LASSO_SAMLP_RESPONSE_ABSTRACT(profile->response)->certificate_file = 
+			profile->server->certificate;
+		profile->msg_body = lasso_node_export_to_soap(profile->response);
 		return 0;
 	}
 
@@ -322,9 +336,9 @@ lasso_name_registration_init_request(LassoNameRegistration *name_registration,
 	LASSO_LIB_REGISTER_NAME_IDENTIFIER_REQUEST(profile->request)->RelayState = 
 			g_strdup(profile->msg_relayState);
 
-	if (lasso_provider_compatibility_level(remote_provider) < LIBERTY_1_2) {
-		profile->request->MajorVersion = 1;
-		profile->request->MinorVersion = 1;
+	if (lasso_provider_get_protocol_conformance(remote_provider) < LASSO_PROTOCOL_LIBERTY_1_2) {
+		LASSO_SAMLP_REQUEST_ABSTRACT(profile->request)->MajorVersion = 1;
+		LASSO_SAMLP_REQUEST_ABSTRACT(profile->request)->MinorVersion = 1;
 	}
 
 	profile->http_request_method = http_method;
@@ -571,8 +585,8 @@ lasso_name_registration_validate_request(LassoNameRegistration *name_registratio
 		return LASSO_ERROR_UNDEFINED;
 	}
 
-	if (lasso_federation_verify_name_identifier(federation,
-				request->OldProvidedNameIdentifier) == FALSE) {
+	if (lasso_federation_verify_name_identifier(federation, LASSO_NODE(
+					request->OldProvidedNameIdentifier)) == FALSE) {
 		message(G_LOG_LEVEL_CRITICAL, "No name identifier");
 		return LASSO_ERROR_UNDEFINED;
 	}

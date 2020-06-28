@@ -1,4 +1,4 @@
-/* $Id: data_service.h,v 1.11 2005/09/27 08:07:10 nclapies Exp $ 
+/* $Id: data_service.h,v 1.13 2005/11/15 17:59:38 nclapies Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -116,6 +116,12 @@ LASSO_EXPORT gint lasso_data_service_process_modify_msg(LassoDataService *servic
 
 LASSO_EXPORT gint lasso_data_service_process_modify_response_msg(LassoDataService *service,
 		const gchar *soap_msg);
+
+LASSO_EXPORT gboolean lasso_data_service_need_redirect_user(LassoDataService *service,
+							    const char *redirectUrl);
+
+LASSO_EXPORT  gchar* lasso_data_service_get_redirect_request_url(LassoDataService *service);
+
 
 #ifdef __cplusplus
 }

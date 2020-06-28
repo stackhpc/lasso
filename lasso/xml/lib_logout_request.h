@@ -1,4 +1,4 @@
-/* $Id: lib_logout_request.h,v 1.16 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: lib_logout_request.h,v 1.17 2005/11/20 15:38:19 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -68,9 +68,9 @@ struct _LassoLibLogoutRequestClass {
 };
 
 LASSO_EXPORT GType lasso_lib_logout_request_get_type(void);
-LASSO_EXPORT LassoSamlpRequestAbstract* lasso_lib_logout_request_new(void);
+LASSO_EXPORT LassoNode* lasso_lib_logout_request_new(void);
 
-LASSO_EXPORT LassoSamlpRequestAbstract* lasso_lib_logout_request_new_full(
+LASSO_EXPORT LassoNode* lasso_lib_logout_request_new_full(
 		char *providerID, LassoSamlNameIdentifier *nameIdentifier,
 		LassoSignatureType sign_type, LassoSignatureMethod sign_method);
 

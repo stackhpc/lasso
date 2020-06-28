@@ -1,6 +1,6 @@
 /* -*- Mode: c; c-basic-offset: 8 -*-
  *
- * $Id: Lasso.i,v 1.208 2005/09/16 13:30:34 fpeters Exp $
+ * $Id: Lasso.i,v 1.216 2006/03/06 16:58:46 fpeters Exp $
  *
  * SWIG bindings for Lasso Library
  *
@@ -39,6 +39,11 @@
 #if LASSO_WSF_SUPPORT == 1
 #define LASSO_WSF_ENABLED
 #endif
+
+#ifndef SWIGPHP4
+%rename(SAML2_SUPPORT) LASSO_SAML2_SUPPORT;
+#endif
+%include Lasso-saml2.i
 
 %{
 
@@ -107,7 +112,7 @@
 
 %}
 
-#define %nonewobject %feature("new","")
+/*#define %nonewobject %feature("new","")*/
 
 /*
  * In Windows, function free() segfaults when used for strings allocated 
@@ -153,12 +158,12 @@
 /* Override default typemap, to accept NULL pointer. Because SWIG_ConvertPtr doesn't accept NULL */
 /* values. */
 %typemap(in) SWIGTYPE * %{
-	if (SWIG_ConvertPtr(*$input, (void **) &$1, $1_descriptor) < 0) {
-		if ((*$input)->type == IS_NULL)
+	if (SWIG_ConvertPtr(*$input, (void **) &$1, $1_descriptor, 0) < 0) {
+		if ((*$input)->type == IS_NULL) {
 			$1 = 0;
-		else
-			zend_error(E_ERROR, "Type error in argument %d of $symname. Expected %s",
-				   $argnum-argbase, $1_descriptor->name);
+		} else {
+			zend_error(E_ERROR, "Type error in argument of $symname.");
+		}
 	}
 %}
 
@@ -194,21 +199,18 @@
 
 static void throw_exception_msg(int errorCode) {
 	char errorMsg[256];
-	if (errorCode > 0)
-        {
-	    sprintf(errorMsg, "%d / Lasso Warning: %s", errorCode, lasso_strerror(errorCode));
-            zend_error(E_WARNING, errorMsg);
-        }
-	else
-        {
-	    sprintf(errorMsg, "%d / Lasso Error: %s", errorCode, lasso_strerror(errorCode));
-            zend_error(E_ERROR, errorMsg);
+	if (errorCode > 0) {
+		sprintf(errorMsg, "%d / Lasso Warning: %s", errorCode, lasso_strerror(errorCode));
+		zend_error(E_WARNING, errorMsg);
+        } else {
+		sprintf(errorMsg, "%d / Lasso Error: %s", errorCode, lasso_strerror(errorCode));
+		zend_error(E_ERROR, errorMsg);
         }
 }
 
 %}
 
-%define THROW_ERROR
+%define THROW_ERROR()
 %exception {
 	int errorCode;
 	errorCode = $action
@@ -236,8 +238,7 @@ static void lasso_exception(int errorCode) {
 		errorTuple = Py_BuildValue("(is)", errorCode, errorMsg);
 		PyErr_SetObject(lassoWarning, errorTuple);
 		Py_DECREF(errorTuple);
-	}
-	else {
+	} else {
 		sprintf(errorMsg, "Lasso Error: %s", lasso_strerror(errorCode));
 		errorTuple = Py_BuildValue("(is)", errorCode, errorMsg);
 		PyErr_SetObject(lassoError, errorTuple);
@@ -262,7 +263,7 @@ Error = _lasso.Error
 Warning = _lasso.Warning
 %}
 
-%define THROW_ERROR
+%define THROW_ERROR()
 %exception {
 	int errorCode;
 	errorCode = $action
@@ -278,15 +279,16 @@ Warning = _lasso.Warning
 %{
 
 static void build_exception_msg(int errorCode, char *errorMsg) {
-	if (errorCode > 0)
+	if (errorCode > 0) {
 		sprintf(errorMsg, "%d / Lasso Warning: %s", errorCode, lasso_strerror(errorCode));
-	else
+	} else {
 		sprintf(errorMsg, "%d / Lasso Error: %s", errorCode, lasso_strerror(errorCode));
+	}
 }
 
 %}
 
-%define THROW_ERROR
+%define THROW_ERROR()
 %exception {
 	int errorCode;
 	errorCode = $action
@@ -306,7 +308,7 @@ static void build_exception_msg(int errorCode, char *errorMsg) {
 #endif /* ifdef SWIGPYTHON.*/
 #endif /* ifdef SWIGPHP4 */
 
-%define END_THROW_ERROR
+%define END_THROW_ERROR()
 %exception;
 %enddef
 
@@ -518,7 +520,7 @@ typedef struct node_info {
 #endif
 } node_info;
 
-static node_info node_infos[100]; /* FIXME: Size should be computed */
+static node_info node_infos[250]; /* FIXME: Size should be computed */
 
 /* Cast a LassoNode into the appropriate derivated class. */
 static swig_type_info *dynamic_cast_node(void **nodePointer) {
@@ -563,8 +565,9 @@ static void set_node_info(node_info *info, char *name, char *superName, swig_typ
 			       superName, name);
 			super = NULL;
 		}
-	} else
+	} else {
 		super = NULL;
+	}
 	info->super = super;
 	info->swig = swig;
 #ifdef PHP_VERSION
@@ -585,23 +588,24 @@ static void set_node_info(node_info *info, char *name, char *superName, swig_typ
 		if (super && SWIG_ConvertPtr($input, (void **) &$1, info->swig, 0) >= 0)
 			break;
 	}
-	if (! info->swig)
+	if (! info->swig) {
 		SWIG_croak("Type error in argument $argnum of $symname. Expected $1_mangle");
+	}
 #else
 #ifdef SWIGPHP4
-	if ((*$input)->type == IS_NULL)
+	if ((*$input)->type == IS_NULL) {
 		$1=0;
-	else {
+	} else {
 		for (info = node_infos; info->swig; info++) {
 			for (super = info; super; super = super->super)
 				if (super->swig == $1_descriptor)
 					break;
-			if (super && SWIG_ConvertPtr(*$input, (void **) &$1, info->swig) >= 0)
+			if (super && SWIG_ConvertPtr(*$input, (void **) &$1, info->swig, 0) >= 0)
 				break;
 		}
-		if (! info->swig)
-			zend_error(E_ERROR, "Type error in argument %d of $symname. Expected %s",
-				   $argnum-argbase, $1_descriptor->name);
+		if (! info->swig) {
+			zend_error(E_ERROR, "Type error in argument of $symname.");
+		}
 	}
 #else /* SWIGPYTHON */
 	for (info = node_infos; info->swig; info++) {
@@ -649,6 +653,7 @@ DYNAMIC_CAST(SWIGTYPE_p_LassoSamlpResponseAbstract, dynamic_cast_node);
 
 SET_NODE_INFO(Node, DowncastableNode)
 %include inheritance.h
+%include saml-2.0/inheritance.h
 
 #else /* ifdef SWIGCSHARP */
 
@@ -663,6 +668,7 @@ SET_NODE_INFO(Node, DowncastableNode)
 
 SET_NODE_INFO(Node, DowncastableNode)
 %include inheritance.h
+%include saml-2.0/inheritance.h
 
 #else /* ifdef SWIGJAVA */
 
@@ -684,6 +690,7 @@ SET_NODE_INFO(Node, DowncastableNode)
 #endif
 
 #include <swig/inheritance.h>
+#include <swig/saml-2.0/inheritance.h>
 
 	info->name = NULL;
 	info->swig = NULL;
@@ -700,7 +707,6 @@ SET_NODE_INFO(Node, DowncastableNode)
  ***********************************************************************
  ***********************************************************************/
 
-
 #ifdef SWIGJAVA
 #if SWIG_VERSION >= 0x010322
 %include "enumsimple.swg"
@@ -716,6 +722,8 @@ SET_NODE_INFO(Node, DowncastableNode)
 %rename(HTTP_METHOD_POST) LASSO_HTTP_METHOD_POST;
 %rename(HTTP_METHOD_REDIRECT) LASSO_HTTP_METHOD_REDIRECT;
 %rename(HTTP_METHOD_SOAP) LASSO_HTTP_METHOD_SOAP;
+%rename(HTTP_METHOD_ARTIFACT_GET) LASSO_HTTP_METHOD_ARTIFACT_GET;
+%rename(HTTP_METHOD_ARTIFACT_POST) LASSO_HTTP_METHOD_ARTIFACT_POST;
 %rename(HttpMethod) LassoHttpMethod;
 #endif
 typedef enum {
@@ -725,8 +733,32 @@ typedef enum {
 	LASSO_HTTP_METHOD_GET,
 	LASSO_HTTP_METHOD_POST,
 	LASSO_HTTP_METHOD_REDIRECT,
-	LASSO_HTTP_METHOD_SOAP
+	LASSO_HTTP_METHOD_SOAP,
+	LASSO_HTTP_METHOD_ARTIFACT_GET,
+	LASSO_HTTP_METHOD_ARTIFACT_POST
 } LassoHttpMethod;
+
+/* MdProtocolType */
+#ifndef SWIGPHP4
+%rename(MD_PROTOCOL_TYPE_FEDERATION_TERMINATION) LASSO_MD_PROTOCOL_TYPE_FEDERATION_TERMINATION;
+%rename(MD_PROTOCOL_TYPE_NAME_IDENTIFIER_MAPPING) LASSO_MD_PROTOCOL_TYPE_NAME_IDENTIFIER_MAPPING;
+%rename(MD_PROTOCOL_TYPE_REGISTER_NAME_IDENTIFIER) LASSO_MD_PROTOCOL_TYPE_REGISTER_NAME_IDENTIFIER;
+%rename(MD_PROTOCOL_TYPE_SINGLE_LOGOUT) LASSO_MD_PROTOCOL_TYPE_SINGLE_LOGOUT;
+%rename(MD_PROTOCOL_TYPE_SINGLE_SIGN_ON) LASSO_MD_PROTOCOL_TYPE_SINGLE_SIGN_ON;
+%rename(MD_PROTOCOL_TYPE_ARTIFACT_RESOLUTION) LASSO_MD_PROTOCOL_TYPE_ARTIFACT_RESOLUTION;
+%rename(MD_PROTOCOL_TYPE_MANAGE_NAME_ID) LASSO_MD_PROTOCOL_TYPE_MANAGE_NAME_ID;
+%rename(MdProtocolType) LassoMdProtocolType;
+#endif
+typedef enum {
+	LASSO_MD_PROTOCOL_TYPE_FEDERATION_TERMINATION,
+	LASSO_MD_PROTOCOL_TYPE_NAME_IDENTIFIER_MAPPING,
+	LASSO_MD_PROTOCOL_TYPE_REGISTER_NAME_IDENTIFIER,
+	LASSO_MD_PROTOCOL_TYPE_SINGLE_LOGOUT,
+	LASSO_MD_PROTOCOL_TYPE_SINGLE_SIGN_ON,
+	LASSO_MD_PROTOCOL_TYPE_ARTIFACT_RESOLUTION,
+	LASSO_MD_PROTOCOL_TYPE_MANAGE_NAME_ID,
+	LASSO_MD_PROTOCOL_TYPE_ASSERTION_ID_REQUEST
+} LassoMdProtocolType;
 
 /* Consent */
 #ifndef SWIGPHP4
@@ -815,6 +847,21 @@ typedef enum {
 	LASSO_PROVIDER_ROLE_SP,
 	LASSO_PROVIDER_ROLE_IDP
 } LassoProviderRole;
+
+/* ProtocolConformance */
+#ifndef SWIGPHP4
+%rename(PROTOCOL_LIBERTY_1_0) LASSO_PROTOCOL_LIBERTY_1_0;
+%rename(PROTOCOL_LIBERTY_1_1) LASSO_PROTOCOL_LIBERTY_1_1;
+%rename(PROTOCOL_LIBERTY_1_2) LASSO_PROTOCOL_LIBERTY_1_2;
+%rename(PROTOCOL_SAML_2_0) LASSO_PROTOCOL_SAML_2_0;
+%rename(ProtocolConformance) LassoProtocolConformance;
+#endif
+typedef enum {
+	LASSO_PROTOCOL_LIBERTY_1_0,
+	LASSO_PROTOCOL_LIBERTY_1_1,
+	LASSO_PROTOCOL_LIBERTY_1_2,
+	LASSO_PROTOCOL_SAML_2_0
+} LassoProtocolConformance;
 
 /* RequestType */
 #ifndef SWIGPHP4
@@ -1001,6 +1048,7 @@ typedef enum {
 /* Single Logout */
 #ifndef SWIGPHP4
 %rename(LOGOUT_ERROR_UNSUPPORTED_PROFILE) LASSO_LOGOUT_ERROR_UNSUPPORTED_PROFILE;
+%rename(LOGOUT_ERROR_REQUEST_DENIED) LASSO_LOGOUT_ERROR_REQUEST_DENIED;
 #endif
 
 /* Profile */
@@ -1123,15 +1171,17 @@ static void add_key_to_array(char *key, gpointer pointer, GPtrArray *array)
 
 static void add_node_to_array(gpointer node, GPtrArray *array)
 {
-	if (node != NULL)
+	if (node != NULL) {
 		g_object_ref(node);
+	}
         g_ptr_array_add(array, node);
 }
 
 static void add_string_to_array(char *string, GPtrArray *array)
 {
-	if (string != NULL)
+	if (string != NULL) {
 		string = g_strdup(string);
+	}
         g_ptr_array_add(array, string);
 }
 
@@ -1141,15 +1191,16 @@ static void add_xml_to_array(xmlNode *xmlnode, GPtrArray *array)
 	gchar *xmlString;
 
 	buf = xmlAllocOutputBuffer(NULL);
-	if (buf == NULL)
+	if (buf == NULL) {
 		xmlString = NULL;
-	else {
+	} else {
 		xmlNodeDumpOutput(buf, NULL, xmlnode, 0, 1, NULL);
 		xmlOutputBufferFlush(buf);
-		if (buf->conv == NULL)
+		if (buf->conv == NULL) {
 			xmlString = g_strdup(buf->buffer->content);
-		else
+		} else {
 			xmlString = g_strdup(buf->conv->content);
+		}
 		xmlOutputBufferClose(buf);
 	}
 	g_ptr_array_add(array, xmlString);
@@ -1157,34 +1208,40 @@ static void add_xml_to_array(xmlNode *xmlnode, GPtrArray *array)
 
 static void free_node_array_item(gpointer node, gpointer unused)
 {
-	if (node != NULL)
+	if (node != NULL) {
 		/* Test added to help debugging. */
-		if (LASSO_IS_NODE(node))
+		if (LASSO_IS_NODE(node)) {
 			lasso_node_destroy(LASSO_NODE(node));
-		else
+		} else {
 			g_object_unref(node);
+		}
+	}
 }
 
 static void free_node_list_item(gpointer node, gpointer unused)
 {
-	if (node != NULL)
+	if (node != NULL) {
 		/* Test added to help debugging. */
-		if (LASSO_IS_NODE(node))
+		if (LASSO_IS_NODE(node)) {
 			lasso_node_destroy(LASSO_NODE(node));
-		else
+		} else {
 			g_object_unref(node);
+		}
+	}
 }
 
 static void free_string_list_item(char *string, gpointer unused)
 {
-	if (string != NULL)
+	if (string != NULL) {
 		g_free(string);
+	}
 }
 
 static void free_xml_list_item(xmlNode *xmlnode, gpointer unused)
 {
-	if (xmlnode != NULL)
+	if (xmlnode != NULL) {
 		xmlFreeNode(xmlnode);
+	}
 }
 
 static gpointer get_node(gpointer node)
@@ -1195,8 +1252,9 @@ static gpointer get_node(gpointer node)
 static GPtrArray *get_node_list(GList *nodeList) {
 	GPtrArray *nodeArray;
 
-	if (nodeList == NULL)
+	if (nodeList == NULL) {
 		return NULL;
+	}
 	nodeArray = g_ptr_array_sized_new(g_list_length(nodeList));
 	g_list_foreach(nodeList, (GFunc) add_node_to_array, nodeArray);
 	return nodeArray;
@@ -1205,8 +1263,9 @@ static GPtrArray *get_node_list(GList *nodeList) {
 static GPtrArray *get_string_list(GList *stringList) {
 	GPtrArray *stringArray;
 
-	if (stringList == NULL)
+	if (stringList == NULL) {
 		return NULL;
+	}
 	stringArray = g_ptr_array_sized_new(g_list_length(stringList));
 	g_list_foreach(stringList, (GFunc) add_string_to_array, stringArray);
 	return stringArray;
@@ -1215,8 +1274,9 @@ static GPtrArray *get_string_list(GList *stringList) {
 static GPtrArray *get_xml_list(GList *xmlList) {
 	GPtrArray *xmlArray;
 
-	if (xmlList == NULL)
+	if (xmlList == NULL) {
 		return NULL;
+	}
 	xmlArray = g_ptr_array_sized_new(g_list_length(xmlList));
 	g_list_foreach(xmlList, (GFunc) add_xml_to_array, xmlArray);
 	return xmlArray;
@@ -1232,15 +1292,16 @@ static char* get_xml_string(xmlNode *xmlnode)
 	}
 
 	buf = xmlAllocOutputBuffer(NULL);
-	if (buf == NULL)
+	if (buf == NULL) {
 		xmlString = NULL;
-	else {
+	} else {
 		xmlNodeDumpOutput(buf, NULL, xmlnode, 0, 1, NULL);
 		xmlOutputBufferFlush(buf);
-		if (buf->conv == NULL)
+		if (buf->conv == NULL) {
 			xmlString = g_strdup(buf->buffer->content);
-		else
+		} else {
 			xmlString = g_strdup(buf->conv->content);
+		}
 		xmlOutputBufferClose(buf);
 	}
 	xmlFreeNode(xmlnode);
@@ -1253,8 +1314,9 @@ static xmlNode *get_string_xml(const char *string) {
 
 	doc = xmlReadDoc(string, NULL, NULL, XML_PARSE_NONET);
 	node = xmlDocGetRootElement(doc);
-	if (node != NULL)
+	if (node != NULL) {
 		node = xmlCopyNode(node, 1);
+	}
 	xmlFreeDoc(doc);
 
 	return node;
@@ -1262,12 +1324,18 @@ static xmlNode *get_string_xml(const char *string) {
 
 static void set_node(gpointer *nodePointer, gpointer value)
 {
-	if (*nodePointer != NULL)
+	if (*nodePointer == value) {
+		return;
+	}
+	
+	if (*nodePointer != NULL) {
 		/* Test added to help debugging. */
-		if (LASSO_IS_NODE(*nodePointer))
+		if (LASSO_IS_NODE(*nodePointer)) {
 			lasso_node_destroy(LASSO_NODE(*nodePointer));
-		else
+		} else {
 			g_object_unref(*nodePointer);
+		}
+	}
 	*nodePointer = value == NULL ? NULL : g_object_ref(value);
 }
 
@@ -1276,16 +1344,18 @@ static void set_node_list(GList **nodeListPointer, GPtrArray *nodeArray) {
 		g_list_foreach(*nodeListPointer, (GFunc) free_node_list_item, NULL);
 		g_list_free(*nodeListPointer);
 	}
-	if (nodeArray == NULL)
+
+	if (nodeArray == NULL) {
 		*nodeListPointer = NULL;
-	else {
+	} else {
 		gpointer node;
 		int index;
 
 		for (index = 0; index < nodeArray->len; index ++) {
 			node = g_ptr_array_index(nodeArray, index);
-			if (node != NULL)
+			if (node != NULL) {
 				g_object_ref(node);
+			}
 			*nodeListPointer = g_list_append(*nodeListPointer, node);
 		}
 	}
@@ -1293,8 +1363,9 @@ static void set_node_list(GList **nodeListPointer, GPtrArray *nodeArray) {
 
 static void set_string(char **pointer, char *value)
 {
-	if (*pointer != NULL)
+	if (*pointer != NULL) {
 		g_free(*pointer);
+	}
 	*pointer = value == NULL ? NULL : strdup(value);
 }
 
@@ -1303,16 +1374,17 @@ static void set_string_list(GList **stringListPointer, GPtrArray *stringArray) {
 		g_list_foreach(*stringListPointer, (GFunc) free_string_list_item, NULL);
 		g_list_free(*stringListPointer);
 	}
-	if (stringArray == NULL)
+	if (stringArray == NULL) {
 		*stringListPointer = NULL;
-	else {
+	} else {
 		char *string;
 		int index;
 
 		for (index = 0; index < stringArray->len; index ++) {
 			string = g_ptr_array_index(stringArray, index);
-			if (string != NULL)
+			if (string != NULL) {
 				string = g_strdup(string);
+			}
 			*stringListPointer = g_list_append(*stringListPointer, string);
 		}
 	}
@@ -1323,9 +1395,9 @@ static void set_xml_list(GList **xmlListPointer, GPtrArray *xmlArray) {
 		g_list_foreach(*xmlListPointer, (GFunc) free_xml_list_item, NULL);
 		g_list_free(*xmlListPointer);
 	}
-	if (xmlArray == NULL)
+	if (xmlArray == NULL) {
 		*xmlListPointer = NULL;
-	else {
+	} else {
 		xmlDoc *doc;
 		int index;
 		xmlNode *node;
@@ -1333,16 +1405,18 @@ static void set_xml_list(GList **xmlListPointer, GPtrArray *xmlArray) {
 
 		for (index = 0; index < xmlArray->len; index ++) {
 			xmlString = g_ptr_array_index(xmlArray, index);
-			if (xmlString == NULL)
+			if (xmlString == NULL) {
 				node = NULL;
-			else {
+			} else {
 				doc = xmlReadDoc(g_ptr_array_index(xmlArray, index), NULL, NULL,
 						 XML_PARSE_NONET);
-				if (doc == NULL)
+				if (doc == NULL) {
 					continue;
+				}
 				node = xmlDocGetRootElement(doc);
-				if (node != NULL)
+				if (node != NULL) {
 					node = xmlCopyNode(node, 1);
+				}
 				xmlFreeDoc(doc);
 			}
 			*xmlListPointer = g_list_append(*xmlListPointer, node);
@@ -1357,12 +1431,14 @@ static void set_xml_string(xmlNode **xmlnode, const char* string)
 
 	doc = xmlReadDoc(string, NULL, NULL, XML_PARSE_NONET);
 	node = xmlDocGetRootElement(doc);
-	if (node != NULL)
+	if (node != NULL) {
 		node = xmlCopyNode(node, 1);
+	}
 	xmlFreeDoc(doc);
 
-	if (*xmlnode)
+	if (*xmlnode) {
 		xmlFreeNode(*xmlnode);
+	}
 
 	*xmlnode = node;
 }
@@ -1542,16 +1618,22 @@ typedef struct {
 		}
 		void setItem(int index, LassoNode *item) {
 			LassoNode **itemPointer = (LassoNode **) &g_ptr_array_index(self, index);
-			if (*itemPointer != NULL)
+			if (*itemPointer == item)
+				return;
+
+			if (*itemPointer != NULL) {
 				/* Test added to help debugging. */
-				if (LASSO_IS_NODE(*itemPointer))
+				if (LASSO_IS_NODE(*itemPointer)) {
 					lasso_node_destroy(LASSO_NODE(*itemPointer));
-				else
+				} else {
 					g_object_unref(*itemPointer);
-			if (item == NULL)
+				}
+			}
+			if (item == NULL) {
 				*itemPointer = NULL;
-			else
+			} else {
 				*itemPointer = g_object_ref(item);
+			}
 		}
 		%exception setItem;
 	}
@@ -1642,12 +1724,14 @@ typedef struct {
 		}
 		void setItem(int index, char *item) {
 			char **itemPointer = (char **) &g_ptr_array_index(self, index);
-			if (*itemPointer != NULL)
+			if (*itemPointer != NULL) {
 				g_free(*itemPointer);
-			if (item == NULL)
+			}
+			if (item == NULL) {
 				*itemPointer = NULL;
-			else
+			} else {
 				*itemPointer = g_strdup(item);
+			}
 		}
 		%exception setItem;
 	}
@@ -3578,11 +3662,7 @@ typedef struct {
 
 #define new_LassoLibAssertion lasso_lib_assertion_new
 #define delete_LassoLibAssertion(self) lasso_node_destroy(LASSO_NODE(self))
-#ifdef PHP_VERSION
 #define LassoLibAssertion_newFull lasso_lib_assertion_new_full
-#else
-#define LibAssertion_newFull lasso_lib_assertion_new_full
-#endif
 
 /* Implementations of methods inherited from LassoNode */
 
@@ -4065,11 +4145,7 @@ typedef struct {
 
 #define new_LassoLibFederationTerminationNotification lasso_lib_federation_termination_notification_new
 #define delete_LassoLibFederationTerminationNotification(self) lasso_node_destroy(LASSO_NODE(self))
-#ifdef PHP_VERSION
 #define LassoLibFederationTerminationNotification_newFull lasso_lib_federation_termination_notification_new_full
-#else
-#define LibFederationTerminationNotification_newFull lasso_lib_federation_termination_notification_new_full
-#endif
 
 /* Implementations of methods inherited from LassoNode */
 
@@ -4267,11 +4343,7 @@ typedef struct {
 
 #define new_LassoLibLogoutRequest lasso_lib_logout_request_new
 #define delete_LassoLibLogoutRequest(self) lasso_node_destroy(LASSO_NODE(self))
-#ifdef PHP_VERSION
 #define LassoLibLogoutRequest_newFull lasso_lib_logout_request_new_full
-#else
-#define LibLogoutRequest_newFull lasso_lib_logout_request_new_full
-#endif
 
 /* Implementations of methods inherited from LassoNode */
 
@@ -4365,11 +4437,7 @@ typedef struct {
 
 #define new_LassoLibLogoutResponse lasso_lib_logout_response_new
 #define delete_LassoLibLogoutResponse(self) lasso_node_destroy(LASSO_NODE(self))
-#ifdef PHP_VERSION
 #define LassoLibLogoutResponse_newFull lasso_lib_logout_response_new_full
-#else
-#define LibLogoutResponse_newFull lasso_lib_logout_response_new_full
-#endif
 
 /* Implementations of methods inherited from LassoNode */
 
@@ -4582,11 +4650,7 @@ typedef struct {
 
 #define new_LassoLibRegisterNameIdentifierRequest lasso_lib_register_name_identifier_request_new
 #define delete_LassoLibRegisterNameIdentifierRequest(self) lasso_node_destroy(LASSO_NODE(self))
-#ifdef PHP_VERSION
 #define LassoLibRegisterNameIdentifierRequest_newFull lasso_lib_register_name_identifier_request_new_full
-#else
-#define LibRegisterNameIdentifierRequest_newFull lasso_lib_register_name_identifier_request_new_full
-#endif
 
 /* Implementations of methods inherited from LassoNode */
 
@@ -4680,11 +4744,7 @@ typedef struct {
 
 #define new_LassoLibRegisterNameIdentifierResponse lasso_lib_register_name_identifier_response_new
 #define delete_LassoLibRegisterNameIdentifierResponse(self) lasso_node_destroy(LASSO_NODE(self))
-#ifdef PHP_VERSION
 #define LassoLibRegisterNameIdentifierResponse_newFull lasso_lib_register_name_identifier_response_new_full
-#else
-#define LibRegisterNameIdentifierResponse_newFull lasso_lib_register_name_identifier_response_new_full
-#endif
 
 /* Implementations of methods inherited from LassoNode */
 
@@ -4902,7 +4962,7 @@ typedef struct {
 	char* getOrganization();
 
 	LassoHttpMethod getFirstHttpMethod(
-			LassoProvider *remote_provider, LassoMdProtocolType protocol_type);
+			LassoProvider *remote_provider, int protocol_type);
 
 	// FIXME: GList* lasso_provider_get_metadata_list(char *name);
 
@@ -4910,6 +4970,8 @@ typedef struct {
 	char* getMetadataOne(char *name);
 
 	gboolean hasProtocolProfile(LassoMdProtocolType protocol_type, char *protocol_profile);
+
+	LassoProtocolConformance getProtocolConformance();
 }
 
 %{
@@ -4918,11 +4980,7 @@ typedef struct {
 
 #define new_LassoProvider lasso_provider_new
 #define delete_LassoProvider(self) lasso_node_destroy(LASSO_NODE(self))
-#ifdef PHP_VERSION
 #define LassoProvider_newFromDump lasso_provider_new_from_dump
-#else
-#define Provider_newFromDump lasso_provider_new_from_dump
-#endif
 
 /* Implementations of methods inherited from LassoNode */
 
@@ -4935,8 +4993,10 @@ typedef struct {
 #define LassoProvider_getBase64SuccinctId lasso_provider_get_base64_succinct_id
 #define LassoProvider_getFirstHttpMethod lasso_provider_get_first_http_method
 #define LassoProvider_getMetadataOne lasso_provider_get_metadata_one
+#define LassoProvider_getProtocolConformance lasso_provider_get_protocol_conformance
 #define LassoProvider_hasProtocolProfile lasso_provider_has_protocol_profile
 #define LassoProvider_getOrganization(self) get_xml_string(lasso_provider_get_organization(self))
+
 
 %}
 
@@ -5026,7 +5086,7 @@ typedef struct {
 	char* getOrganization();
 
 	LassoHttpMethod getFirstHttpMethod(
-			LassoProvider *remote_provider, LassoMdProtocolType protocol_type);
+			LassoProvider *remote_provider, int protocol_type);
 
 	// FIXME: GList* lasso_provider_get_metadata_list(char *name);
 
@@ -5035,17 +5095,19 @@ typedef struct {
 
 	gboolean hasProtocolProfile(LassoMdProtocolType protocol_type, char *protocol_profile);
 
+	LassoProtocolConformance getProtocolConformance();
+
 	/* Methods */
 
-	THROW_ERROR
+	THROW_ERROR()
 	int addProvider(LassoProviderRole role, char *metadata, char *publicKey = NULL,
 			char *caCertChain = NULL);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 #ifdef LASSO_WSF_ENABLED
-	THROW_ERROR
+	THROW_ERROR()
 	int addService(LassoDiscoServiceInstance *service);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 #endif
 
 	%newobject dump;
@@ -5106,11 +5168,7 @@ LassoStringList *LassoServer_providerIds_get(LassoServer *self) {
 
 #define new_LassoServer lasso_server_new
 #define delete_LassoServer(self) lasso_node_destroy(LASSO_NODE(self))
-#ifdef PHP_VERSION
 #define LassoServer_newFromDump lasso_server_new_from_dump
-#else
-#define Server_newFromDump lasso_server_new_from_dump
-#endif
 
 /* Implementations of methods inherited from Provider */
 
@@ -5119,6 +5177,7 @@ LassoStringList *LassoServer_providerIds_get(LassoServer *self) {
 #define LassoServer_getBase64SuccinctId(server) lasso_provider_get_base64_succinct_id(LASSO_PROVIDER(server))
 #define LassoServer_getFirstHttpMethod(server, remote_provider, protocol_type) lasso_provider_get_first_http_method(LASSO_PROVIDER(server), remote_provider, protocol_type)
 #define LassoServer_getMetadataOne(server, name) lasso_provider_get_metadata_one(LASSO_PROVIDER(server), name)
+#define LassoServer_getProtocolConformance(server) lasso_provider_get_protocol_conformance(LASSO_PROVIDER(server))
 #define LassoServer_hasProtocolProfile(server, protocol_type, protocol_profile) lasso_provider_has_protocol_profile(LASSO_PROVIDER(server), protocol_type, protocol_profile)
 #define LassoServer_getOrganization(server) get_xml_string(lasso_provider_get_organization(LASSO_PROVIDER(server)))
 
@@ -5156,13 +5215,13 @@ typedef struct {
 	%rename(localNameIdentifier) local_nameIdentifier;
 #endif
 	%newobject local_nameIdentifier_get;
-	LassoSamlNameIdentifier *local_nameIdentifier;
+	LassoNode *local_nameIdentifier;
 
 #ifndef SWIGPHP4
 	%rename(remoteNameIdentifier) remote_nameIdentifier;
 #endif
 	%newobject remote_nameIdentifier_get;
-	LassoSamlNameIdentifier *remote_nameIdentifier;
+	LassoNode *remote_nameIdentifier;
 
 	/* Constructor, Destructor & Static Methods */
 
@@ -5179,7 +5238,7 @@ typedef struct {
 
 	void buildLocalNameIdentifier(char *nameQualifier, char *format, char *content);
 
-	gboolean verifyNameIdentifier(LassoSamlNameIdentifier *nameIdentifier);
+	gboolean verifyNameIdentifier(LassoNode *nameIdentifier);
 }
 
 %{
@@ -5256,9 +5315,9 @@ typedef struct {
 	LassoFederation *getFederation(char *providerId);
 
 #ifdef LASSO_WSF_ENABLED
-	THROW_ERROR
+	THROW_ERROR()
 	int addResourceOffering(LassoDiscoResourceOffering *offering);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 	gboolean removeResourceOffering(const char *entry_id);
 
@@ -5283,11 +5342,7 @@ LassoStringList *LassoIdentity_providerIds_get(LassoIdentity *self) {
 
 #define new_LassoIdentity lasso_identity_new
 #define delete_LassoIdentity(self) lasso_node_destroy(LASSO_NODE(self))
-#ifdef PHP_VERSION
 #define LassoIdentity_newFromDump lasso_identity_new_from_dump
-#else
-#define Identity_newFromDump lasso_identity_new_from_dump
-#endif
 
 /* Methods implementations */
 
@@ -5373,11 +5428,7 @@ LassoStringList *LassoSession_providerIds_get(LassoSession *self) {
 
 #define new_LassoSession lasso_session_new
 #define delete_LassoSession(self) lasso_node_destroy(LASSO_NODE(self))
-#ifdef PHP_VERSION
 #define LassoSession_newFromDump lasso_session_new_from_dump
-#else
-#define Session_newFromDump lasso_session_new_from_dump
-#endif
 
 /* Methods implementations */
 
@@ -5392,8 +5443,9 @@ LassoNodeList *LassoSession_getAssertions(LassoSession *self, char *providerId) 
 		assertionsArray = get_node_list(assertionsList);
 		g_list_foreach(assertionsList, (GFunc) free_node_list_item, NULL);
 		g_list_free(assertionsList);
-	} else
+	} else {
 		assertionsArray = NULL;
+	}
 	return assertionsArray;
 }
 
@@ -5434,6 +5486,10 @@ typedef struct {
 } LassoDefederation;
 %extend LassoDefederation {
 	/* Attributes inherited from Profile */
+	%immutable artifact;
+	char *artifact;
+
+	char *artifactMessage;
 
 	%newobject identity_get;
 	LassoIdentity *identity;
@@ -5454,15 +5510,15 @@ typedef struct {
 	char *msgUrl;
 
 	%newobject nameIdentifier_get;
-	LassoSamlNameIdentifier *nameIdentifier;
+	LassoNode *nameIdentifier;
 
 	char *remoteProviderId;
 
 	%newobject request_get;
-	LassoSamlpRequestAbstract *request;
+	LassoNode *request;
 
 	%newobject response_get;
-	LassoSamlpResponseAbstract *response;
+	LassoNode *response;
 
 	%newobject server_get;
 	LassoServer *server;
@@ -5478,32 +5534,32 @@ typedef struct {
 
 	/* Methods inherited from Profile */
 
-        THROW_ERROR
+        THROW_ERROR()
 	int setIdentityFromDump(char *dump);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int setSessionFromDump(char *dump);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 	/* Methods */
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildNotificationMsg();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int initNotification(char *remoteProviderId = NULL,
 			      LassoHttpMethod httpMethod = LASSO_HTTP_METHOD_ANY);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int processNotificationMsg(char *notificationMsg);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int validateNotification();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 }
 
 %{
@@ -5515,6 +5571,16 @@ typedef struct {
 #define LassoDefederation_identity_get(self) lasso_profile_get_identity(LASSO_PROFILE(self))
 #define LassoDefederation_set_identity(self, value) set_node((gpointer *) &LASSO_PROFILE(self)->identity, (value))
 #define LassoDefederation_identity_set(self, value) set_node((gpointer *) &LASSO_PROFILE(self)->identity, (value))
+
+/* artifact */
+#define LassoDefederation_get_artifact(self) lasso_profile_get_artifact(LASSO_PROFILE(self))
+#define LassoDefederation_artifact_get(self) lasso_profile_get_artifact(LASSO_PROFILE(self))
+
+/* artifactMessage */
+#define LassoDefederation_get_artifactMessage(self) lasso_profile_get_artifact_message(LASSO_PROFILE(self))
+#define LassoDefederation_artifactMessage_get(self) lasso_profile_get_artifact_message(LASSO_PROFILE(self))
+#define LassoDefederation_set_artifactMessage(self, value) lasso_profile_set_artifact_message(LASSO_PROFILE(self), value)
+#define LassoDefederation_artifactMessage_set(self, value) lasso_profile_set_artifact_message(LASSO_PROFILE(self), value)
 
 /* isIdentityDirty */
 #define LassoDefederation_get_isIdentityDirty(self) lasso_profile_is_identity_dirty(LASSO_PROFILE(self))
@@ -5616,6 +5682,10 @@ typedef struct {
 } LassoLogin;
 %extend LassoLogin {
 	/* Attributes inherited from Profile */
+	%immutable artifact;
+	char *artifact;
+
+	char *artifactMessage;
 
 	%newobject identity_get;
 	LassoIdentity *identity;
@@ -5636,15 +5706,15 @@ typedef struct {
 	char *msgUrl;
 
 	%newobject nameIdentifier_get;
-	LassoSamlNameIdentifier *nameIdentifier;
+	LassoNode *nameIdentifier;
 
 	char *remoteProviderId;
 
 	%newobject request_get;
-	LassoSamlpRequestAbstract *request;
+	LassoNode *request;
 
 	%newobject response_get;
-	LassoSamlpResponseAbstract *response;
+	LassoNode *response;
 
 	%newobject server_get;
 	LassoServer *server;
@@ -5663,96 +5733,96 @@ typedef struct {
 
 	/* Methods inherited from Profile */
 
-        THROW_ERROR
+        THROW_ERROR()
 	int setIdentityFromDump(char *dump);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int setSessionFromDump(char *dump);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 	/* Methods */
 
-	THROW_ERROR
+	THROW_ERROR()
 	int acceptSso();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildArtifactMsg(LassoHttpMethod httpMethod);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildAssertion(char *authenticationMethod, char *authenticationInstant,
 			char *reauthenticateOnOrAfter,
 			char *notBefore, char *notOnOrAfter);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildAuthnRequestMsg();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildAuthnResponseMsg();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildRequestMsg();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildResponseMsg(char *remoteProviderId);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 	%newobject dump;
 	char *dump();
 
-	THROW_ERROR
+	THROW_ERROR()
 	int initAuthnRequest(char *remoteProviderId = NULL,
 			     LassoHttpMethod httpMethod = LASSO_HTTP_METHOD_REDIRECT);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int initRequest(char *responseMsg,
 			 LassoHttpMethod httpMethod = LASSO_HTTP_METHOD_REDIRECT);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int initIdpInitiatedAuthnRequest(char *remoteProviderID = NULL);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 	gboolean mustAskForConsent();
 
 	gboolean mustAuthenticate();
 
-	THROW_ERROR
+	THROW_ERROR()
 	int processAuthnRequestMsg(char *authnrequestMsg);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int processAuthnResponseMsg(char *authnResponseMsg);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int processRequestMsg(char *requestMsg);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int processResponseMsg(char *responseMsg);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 #ifdef LASSO_WSF_ENABLED
-	THROW_ERROR
+	THROW_ERROR()
 	int setEncryptedResourceId(LassoDiscoEncryptedResourceID *encryptedResourceId);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 #endif
 
-	THROW_ERROR
+	THROW_ERROR()
 	int setResourceId(char *content);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int validateRequestMsg(gboolean authenticationResult, gboolean isConsentObtained);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 }
 
 %{
@@ -5764,6 +5834,16 @@ typedef struct {
 #define LassoLogin_identity_get(self) lasso_profile_get_identity(LASSO_PROFILE(self))
 #define LassoLogin_set_identity(self, value) set_node((gpointer *) &LASSO_PROFILE(self)->identity, (value))
 #define LassoLogin_identity_set(self, value) set_node((gpointer *) &LASSO_PROFILE(self)->identity, (value))
+
+/* artifact */
+#define LassoLogin_get_artifact(self) lasso_profile_get_artifact(LASSO_PROFILE(self))
+#define LassoLogin_artifact_get(self) lasso_profile_get_artifact(LASSO_PROFILE(self))
+
+/* artifactMessage */
+#define LassoLogin_get_artifactMessage(self) lasso_profile_get_artifact_message(LASSO_PROFILE(self))
+#define LassoLogin_artifactMessage_get(self) lasso_profile_get_artifact_message(LASSO_PROFILE(self))
+#define LassoLogin_set_artifactMessage(self, value) lasso_profile_set_artifact_message(LASSO_PROFILE(self), value)
+#define LassoLogin_artifactMessage_set(self, value) lasso_profile_set_artifact_message(LASSO_PROFILE(self), value)
 
 /* isIdentityDirty */
 #define LassoLogin_get_isIdentityDirty(self) lasso_profile_is_identity_dirty(LASSO_PROFILE(self))
@@ -5825,11 +5905,7 @@ typedef struct {
 
 #define new_LassoLogin lasso_login_new
 #define delete_LassoLogin(self) lasso_node_destroy(LASSO_NODE(self))
-#ifdef PHP_VERSION
 #define LassoLogin_newFromDump lasso_login_new_from_dump
-#else
-#define Login_newFromDump lasso_login_new_from_dump
-#endif
 
 /* Implementations of methods inherited from Profile */
 
@@ -5879,6 +5955,10 @@ typedef struct {
 } LassoLogout;
 %extend LassoLogout {
 	/* Attributes inherited from Profile */
+	%immutable artifact;
+	char *artifact;
+
+	char *artifactMessage;
 
 	%newobject identity_get;
 	LassoIdentity *identity;
@@ -5899,15 +5979,15 @@ typedef struct {
 	char *msgUrl;
 
 	%newobject nameIdentifier_get;
-	LassoSamlNameIdentifier *nameIdentifier;
+	LassoNode *nameIdentifier;
 
 	char *remoteProviderId;
 
 	%newobject request_get;
-	LassoSamlpRequestAbstract *request;
+	LassoNode *request;
 
 	%newobject response_get;
-	LassoSamlpResponseAbstract *response;
+	LassoNode *response;
 
 	%newobject server_get;
 	LassoServer *server;
@@ -5926,23 +6006,23 @@ typedef struct {
 
 	/* Methods inherited from Profile */
 
-        THROW_ERROR
+        THROW_ERROR()
 	int setIdentityFromDump(char *dump);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int setSessionFromDump(char *dump);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 	/* Methods */
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildRequestMsg();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildResponseMsg();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 	%newobject dump;
 	char *dump();
@@ -5950,26 +6030,26 @@ typedef struct {
 	%newobject getNextProviderId;
 	char *getNextProviderId();
 
-	THROW_ERROR
+	THROW_ERROR()
 	int initRequest(char *remoteProviderId = NULL,
 			 LassoHttpMethod httpMethod = LASSO_HTTP_METHOD_ANY);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int processRequestMsg(char *requestMsg);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int processResponseMsg(char *responseMsg);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int resetProviderIdIndex();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int validateRequest();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 }
 
 %{
@@ -5981,6 +6061,16 @@ typedef struct {
 #define LassoLogout_identity_get(self) lasso_profile_get_identity(LASSO_PROFILE(self))
 #define LassoLogout_set_identity(self, value) set_node((gpointer *) &LASSO_PROFILE(self)->identity, (value))
 #define LassoLogout_identity_set(self, value) set_node((gpointer *) &LASSO_PROFILE(self)->identity, (value))
+
+/* artifact */
+#define LassoLogout_get_artifact(self) lasso_profile_get_artifact(LASSO_PROFILE(self))
+#define LassoLogout_artifact_get(self) lasso_profile_get_artifact(LASSO_PROFILE(self))
+
+/* artifactMessage */
+#define LassoLogout_get_artifactMessage(self) lasso_profile_get_artifact_message(LASSO_PROFILE(self))
+#define LassoLogout_artifactMessage_get(self) lasso_profile_get_artifact_message(LASSO_PROFILE(self))
+#define LassoLogout_set_artifactMessage(self, value) lasso_profile_set_artifact_message(LASSO_PROFILE(self), value)
+#define LassoLogout_artifactMessage_set(self, value) lasso_profile_set_artifact_message(LASSO_PROFILE(self), value)
 
 /* isIdentityDirty */
 #define LassoLogout_get_isIdentityDirty(self) lasso_profile_is_identity_dirty(LASSO_PROFILE(self))
@@ -6042,11 +6132,7 @@ typedef struct {
 
 #define new_LassoLogout lasso_logout_new
 #define delete_LassoLogout(self) lasso_node_destroy(LASSO_NODE(self))
-#ifdef PHP_VERSION
 #define LassoLogout_newFromDump lasso_logout_new_from_dump
-#else
-#define Logout_newFromDump lasso_logout_new_from_dump
-#endif
 
 /* Implementations of methods inherited from Profile */
 
@@ -6088,6 +6174,10 @@ typedef struct {
 } LassoLecp;
 %extend LassoLecp {
 	/* Attributes inherited from Profile */
+	%immutable artifact;
+	char *artifact;
+
+	char *artifactMessage;
 
 	%newobject identity_get;
 	LassoIdentity *identity;
@@ -6108,15 +6198,15 @@ typedef struct {
 	char *msgUrl;
 
 	%newobject nameIdentifier_get;
-	LassoSamlNameIdentifier *nameIdentifier;
+	LassoNode *nameIdentifier;
 
 	char *remoteProviderId;
 
 	%newobject request_get;
-	LassoSamlpRequestAbstract *request;
+	LassoNode *request;
 
 	%newobject response_get;
-	LassoSamlpResponseAbstract *response;
+	LassoNode *response;
 
 	%newobject server_get;
 	LassoServer *server;
@@ -6132,69 +6222,69 @@ typedef struct {
 
 	/* Methods inherited from Profile */
 
-        THROW_ERROR
+        THROW_ERROR()
 	int setIdentityFromDump(char *dump);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int setSessionFromDump(char *dump);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 	/* Methods inherited from Login */
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildAssertion(char *authenticationMethod, char *authenticationInstant,
 			char *reauthenticateOnOrAfter,
 			char *notBefore, char *notOnOrAfter);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 #ifdef LASSO_WSF_ENABLED
-	THROW_ERROR
+	THROW_ERROR()
 	int setEncryptedResourceId(LassoDiscoEncryptedResourceID *encryptedResourceId);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 #endif
 
-	THROW_ERROR
+	THROW_ERROR()
 	int setResourceId(char *content);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int validateRequestMsg(gboolean authenticationResult, gboolean isConsentObtained);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 	/* Methods */
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildAuthnRequestEnvelopeMsg();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildAuthnRequestMsg();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildAuthnResponseEnvelopeMsg();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildAuthnResponseMsg();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int initAuthnRequest(char *remoteProviderId = NULL);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int processAuthnRequestEnvelopeMsg(char *requestMsg);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int processAuthnRequestMsg(char *authnRequestMsg);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int processAuthnResponseEnvelopeMsg(char *responseMsg);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 }
 
 %{
@@ -6206,6 +6296,16 @@ typedef struct {
 #define LassoLecp_identity_get(self) lasso_profile_get_identity(LASSO_PROFILE(self))
 #define LassoLecp_set_identity(self, value) set_node((gpointer *) &LASSO_PROFILE(self)->identity, (value))
 #define LassoLecp_identity_set(self, value) set_node((gpointer *) &LASSO_PROFILE(self)->identity, (value))
+
+/* artifact */
+#define LassoLecp_get_artifact(self) lasso_profile_get_artifact(LASSO_PROFILE(self))
+#define LassoLecp_artifact_get(self) lasso_profile_get_artifact(LASSO_PROFILE(self))
+
+/* artifactMessage */
+#define LassoLecp_get_artifactMessage(self) lasso_profile_get_artifact_message(LASSO_PROFILE(self))
+#define LassoLecp_artifactMessage_get(self) lasso_profile_get_artifact_message(LASSO_PROFILE(self))
+#define LassoLecp_set_artifactMessage(self, value) lasso_profile_set_artifact_message(LASSO_PROFILE(self), value)
+#define LassoLecp_artifactMessage_set(self, value) lasso_profile_set_artifact_message(LASSO_PROFILE(self), value)
 
 /* isIdentityDirty */
 #define LassoLecp_get_isIdentityDirty(self) lasso_profile_is_identity_dirty(LASSO_PROFILE(self))
@@ -6332,6 +6432,10 @@ typedef struct {
 } LassoNameIdentifierMapping;
 %extend LassoNameIdentifierMapping {
 	/* Attributes inherited from Profile */
+	%immutable artifact;
+	char *artifact;
+
+	char *artifactMessage;
 
 	%newobject identity_get;
 	LassoIdentity *identity;
@@ -6349,15 +6453,15 @@ typedef struct {
 	char *msgUrl;
 
 	%newobject nameIdentifier_get;
-	LassoSamlNameIdentifier *nameIdentifier;
+	LassoNode *nameIdentifier;
 
 	char *remoteProviderId;
 
 	%newobject request_get;
-	LassoSamlpRequestAbstract *request;
+	LassoNode *request;
 
 	%newobject response_get;
-	LassoSamlpResponseAbstract *response;
+	LassoNode *response;
 
 	%newobject server_get;
 	LassoServer *server;
@@ -6373,39 +6477,39 @@ typedef struct {
 
 	/* Methods inherited from Profile */
 
-        THROW_ERROR
+        THROW_ERROR()
 	int setIdentityFromDump(char *dump);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int setSessionFromDump(char *dump);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 	/* Methods */
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildRequestMsg();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildResponseMsg();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int initRequest(char *targetNamespace, char *remoteProviderId = NULL);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int processRequestMsg(char *requestMsg);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int processResponseMsg(char *responseMsg);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int validateRequest();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 }
 
 %{
@@ -6417,6 +6521,16 @@ typedef struct {
 #define LassoNameIdentifierMapping_identity_get(self) lasso_profile_get_identity(LASSO_PROFILE(self))
 #define LassoNameIdentifierMapping_set_identity(self, value) set_node((gpointer *) &LASSO_PROFILE(self)->identity, (value))
 #define LassoNameIdentifierMapping_identity_set(self, value) set_node((gpointer *) &LASSO_PROFILE(self)->identity, (value))
+
+/* artifact */
+#define LassoNameIdentifierMapping_get_artifact(self) lasso_profile_get_artifact(LASSO_PROFILE(self))
+#define LassoNameIdentifierMapping_artifact_get(self) lasso_profile_get_artifact(LASSO_PROFILE(self))
+
+/* artifactMessage */
+#define LassoNameIdentifierMapping_get_artifactMessage(self) lasso_profile_get_artifact_message(LASSO_PROFILE(self))
+#define LassoNameIdentifierMapping_artifactMessage_get(self) lasso_profile_get_artifact_message(LASSO_PROFILE(self))
+#define LassoNameIdentifierMapping_set_artifactMessage(self, value) lasso_profile_set_artifact_message(LASSO_PROFILE(self), value)
+#define LassoNameIdentifierMapping_artifactMessage_set(self, value) lasso_profile_set_artifact_message(LASSO_PROFILE(self), value)
 
 /* isIdentityDirty */
 #define LassoNameIdentifierMapping_get_isIdentityDirty(self) lasso_profile_is_identity_dirty(LASSO_PROFILE(self))
@@ -6513,6 +6627,10 @@ typedef struct {
 } LassoNameRegistration;
 %extend LassoNameRegistration {
 	/* Attributes inherited from Profile */
+	%immutable artifact;
+	char *artifact;
+
+	char *artifactMessage;
 
 	%newobject identity_get;
 	LassoIdentity *identity;
@@ -6533,15 +6651,15 @@ typedef struct {
 	char *msgUrl;
 
 	%newobject nameIdentifier_get;
-	LassoSamlNameIdentifier *nameIdentifier;
+	LassoNode *nameIdentifier;
 
 	char *remoteProviderId;
 
 	%newobject request_get;
-	LassoSamlpRequestAbstract *request;
+	LassoNode *request;
 
 	%newobject response_get;
-	LassoSamlpResponseAbstract *response;
+	LassoNode *response;
 
 	%newobject server_get;
 	LassoServer *server;
@@ -6565,43 +6683,43 @@ typedef struct {
 
 	/* Methods inherited from Profile */
 
-        THROW_ERROR
+        THROW_ERROR()
 	int setIdentityFromDump(char *dump);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int setSessionFromDump(char *dump);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 	/* Methods */
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildRequestMsg();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildResponseMsg();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 	%newobject dump;
 	char *dump();
 
-	THROW_ERROR
+	THROW_ERROR()
 	int initRequest(char *remoteProviderId,
 			LassoHttpMethod httpMethod = LASSO_HTTP_METHOD_ANY);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int processRequestMsg(char *requestMsg);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int processResponseMsg(char *responseMsg);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int validateRequest();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 }
 
 %{
@@ -6613,6 +6731,16 @@ typedef struct {
 #define LassoNameRegistration_identity_get(self) lasso_profile_get_identity(LASSO_PROFILE(self))
 #define LassoNameRegistration_set_identity(self, value) set_node((gpointer *) &LASSO_PROFILE(self)->identity, (value))
 #define LassoNameRegistration_identity_set(self, value) set_node((gpointer *) &LASSO_PROFILE(self)->identity, (value))
+
+/* artifact */
+#define LassoNameRegistration_get_artifact(self) lasso_profile_get_artifact(LASSO_PROFILE(self))
+#define LassoNameRegistration_artifact_get(self) lasso_profile_get_artifact(LASSO_PROFILE(self))
+
+/* artifactMessage */
+#define LassoNameRegistration_get_artifactMessage(self) lasso_profile_get_artifact_message(LASSO_PROFILE(self))
+#define LassoNameRegistration_artifactMessage_get(self) lasso_profile_get_artifact_message(LASSO_PROFILE(self))
+#define LassoNameRegistration_set_artifactMessage(self, value) lasso_profile_set_artifact_message(LASSO_PROFILE(self), value)
+#define LassoNameRegistration_artifactMessage_set(self, value) lasso_profile_set_artifact_message(LASSO_PROFILE(self), value)
 
 /* isIdentityDirty */
 #define LassoNameRegistration_get_isIdentityDirty(self) lasso_profile_is_identity_dirty(LASSO_PROFILE(self))
@@ -6682,11 +6810,7 @@ typedef struct {
 
 #define new_LassoNameRegistration lasso_name_registration_new
 #define delete_LassoNameRegistration(self) lasso_node_destroy(LASSO_NODE(self))
-#ifdef PHP_VERSION
 #define LassoNameRegistration_newFromDump lasso_name_registration_new_from_dump
-#else
-#define NameRegistration_newFromDump lasso_name_registration_new_from_dump
-#endif
 
 /* Implementations of methods inherited from Profile */
 
@@ -6713,4 +6837,6 @@ int LassoNameRegistration_setSessionFromDump(LassoNameRegistration *self, char *
 #ifdef LASSO_WSF_ENABLED
 %include Lasso-wsf.i
 #endif
+
+%include saml-2.0/main.h
 

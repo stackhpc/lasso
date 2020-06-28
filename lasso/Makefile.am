@@ -1,8 +1,8 @@
-SUBDIRS = xml id-ff id-wsf
+SUBDIRS = xml id-ff id-wsf saml-2.0
 
 liblassoincludedir = $(includedir)/lasso
 
-INCLUDES = -I$(top_srcdir) $(LASSO_CORE_CFLAGS)
+INCLUDES = -I$(top_srcdir) -I$(top_builddir) $(LASSO_CORE_CFLAGS)
 
 ## Added to activate libtool 1.5.6 windows resources partial support
 LTRCCOMPILE = $(LIBTOOL) --tag=RC --mode=compile $(RC) \
@@ -43,7 +43,9 @@ endif
 if MINGW
 liblasso_la_LIBADD = \
 	$(top_builddir)/lasso/xml/liblasso-xml.la \
+	$(top_builddir)/lasso/xml/saml-2.0/liblasso-xml-saml2.la \
 	$(top_builddir)/lasso/id-ff/liblasso-id-ff.la \
+	$(top_builddir)/lasso/saml-2.0/liblasso-saml-20.la \
 	$(WSF_LIB_FILE) \
 	$(LASSO_LIBS) \
 	lasso.rc.lo
@@ -55,7 +57,9 @@ liblasso_la_LDFLAGS = -no-undefined -version-info @LASSO_VERSION_INFO@ \
 else
 liblasso_la_LIBADD = \
 	$(top_builddir)/lasso/xml/liblasso-xml.la \
+	$(top_builddir)/lasso/xml/saml-2.0/liblasso-xml-saml2.la \
 	$(top_builddir)/lasso/id-ff/liblasso-id-ff.la \
+	$(top_builddir)/lasso/saml-2.0/liblasso-saml-20.la \
 	$(WSF_LIB_FILE) \
 	$(LASSO_LIBS)
 # Just make damn sure the ABI stays the same between

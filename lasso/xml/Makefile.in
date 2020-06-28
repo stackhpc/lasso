@@ -82,7 +82,8 @@ am__liblasso_xml_la_SOURCES_DIST = tools.c xml.c lib_assertion.c \
 	disco_options.c disco_query.c disco_query_response.c \
 	disco_remove_entry.c disco_requested_service_type.c \
 	disco_resource_id.c disco_resource_offering.c \
-	disco_send_single_logout.c disco_service_instance.c dst_data.c \
+	disco_send_single_logout.c disco_service_instance.c \
+	ds_key_info.c ds_key_value.c ds_rsa_key_value.c dst_data.c \
 	dst_modification.c dst_modify.c dst_modify_response.c \
 	dst_new_data.c dst_query.c dst_query_item.c \
 	dst_query_response.c is_help.c is_inquiry.c \
@@ -97,8 +98,9 @@ am__liblasso_xml_la_SOURCES_DIST = tools.c xml.c lib_assertion.c \
 	soap_binding_usage_directive.c soap_binding_ext_credential.c \
 	soap_binding_ext_credentials_context.c \
 	soap_binding_ext_service_instance_update.c \
-	soap_binding_ext_timeout.c soap_body.c soap_fault.c \
-	soap_envelope.c soap_header.c utility_status.c wsse_security.c
+	soap_binding_ext_timeout.c soap_body.c soap_detail.c \
+	soap_fault.c soap_envelope.c soap_header.c utility_status.c \
+	wsse_security.c
 @WSF_ENABLED_TRUE@am__objects_1 = disco_authenticate_requester.lo \
 @WSF_ENABLED_TRUE@	disco_authenticate_session_context.lo \
 @WSF_ENABLED_TRUE@	disco_authorize_requester.lo \
@@ -114,12 +116,14 @@ am__liblasso_xml_la_SOURCES_DIST = tools.c xml.c lib_assertion.c \
 @WSF_ENABLED_TRUE@	disco_resource_id.lo \
 @WSF_ENABLED_TRUE@	disco_resource_offering.lo \
 @WSF_ENABLED_TRUE@	disco_send_single_logout.lo \
-@WSF_ENABLED_TRUE@	disco_service_instance.lo dst_data.lo \
-@WSF_ENABLED_TRUE@	dst_modification.lo dst_modify.lo \
-@WSF_ENABLED_TRUE@	dst_modify_response.lo dst_new_data.lo \
-@WSF_ENABLED_TRUE@	dst_query.lo dst_query_item.lo \
-@WSF_ENABLED_TRUE@	dst_query_response.lo is_help.lo \
-@WSF_ENABLED_TRUE@	is_inquiry.lo is_inquiry_element.lo \
+@WSF_ENABLED_TRUE@	disco_service_instance.lo ds_key_info.lo \
+@WSF_ENABLED_TRUE@	ds_key_value.lo ds_rsa_key_value.lo \
+@WSF_ENABLED_TRUE@	dst_data.lo dst_modification.lo \
+@WSF_ENABLED_TRUE@	dst_modify.lo dst_modify_response.lo \
+@WSF_ENABLED_TRUE@	dst_new_data.lo dst_query.lo \
+@WSF_ENABLED_TRUE@	dst_query_item.lo dst_query_response.lo \
+@WSF_ENABLED_TRUE@	is_help.lo is_inquiry.lo \
+@WSF_ENABLED_TRUE@	is_inquiry_element.lo \
 @WSF_ENABLED_TRUE@	is_interaction_request.lo \
 @WSF_ENABLED_TRUE@	is_interaction_response.lo \
 @WSF_ENABLED_TRUE@	is_interaction_statement.lo is_item.lo \
@@ -139,9 +143,9 @@ am__liblasso_xml_la_SOURCES_DIST = tools.c xml.c lib_assertion.c \
 @WSF_ENABLED_TRUE@	soap_binding_ext_credentials_context.lo \
 @WSF_ENABLED_TRUE@	soap_binding_ext_service_instance_update.lo \
 @WSF_ENABLED_TRUE@	soap_binding_ext_timeout.lo soap_body.lo \
-@WSF_ENABLED_TRUE@	soap_fault.lo soap_envelope.lo \
-@WSF_ENABLED_TRUE@	soap_header.lo utility_status.lo \
-@WSF_ENABLED_TRUE@	wsse_security.lo
+@WSF_ENABLED_TRUE@	soap_detail.lo soap_fault.lo \
+@WSF_ENABLED_TRUE@	soap_envelope.lo soap_header.lo \
+@WSF_ENABLED_TRUE@	utility_status.lo wsse_security.lo
 am_liblasso_xml_la_OBJECTS = tools.lo xml.lo lib_assertion.lo \
 	lib_authentication_statement.lo lib_authn_context.lo \
 	lib_authn_request.lo lib_authn_request_envelope.lo \
@@ -190,6 +194,9 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	./$(DEPDIR)/disco_resource_offering.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/disco_send_single_logout.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/disco_service_instance.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/ds_key_info.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/ds_key_value.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/ds_rsa_key_value.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/dst_data.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/dst_modification.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/dst_modify.Plo \
@@ -270,6 +277,7 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	./$(DEPDIR)/soap_binding_provider.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/soap_binding_usage_directive.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/soap_body.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/soap_detail.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/soap_envelope.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/soap_fault.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/soap_header.Plo ./$(DEPDIR)/tools.Plo \
@@ -285,6 +293,12 @@ LINK = $(LIBTOOL) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(liblasso_xml_la_SOURCES)
 DIST_SOURCES = $(am__liblasso_xml_la_SOURCES_DIST)
+RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
+	html-recursive info-recursive install-data-recursive \
+	install-exec-recursive install-info-recursive \
+	install-recursive installcheck-recursive installdirs-recursive \
+	pdf-recursive ps-recursive uninstall-info-recursive \
+	uninstall-recursive
 am__liblassoinclude_HEADERS_DIST = strings.h xml.h lib_assertion.h \
 	lib_authentication_statement.h lib_authn_context.h \
 	lib_authn_request.h lib_authn_request_envelope.h \
@@ -317,7 +331,8 @@ am__liblassoinclude_HEADERS_DIST = strings.h xml.h lib_assertion.h \
 	disco_options.h disco_query.h disco_query_response.h \
 	disco_remove_entry.h disco_requested_service_type.h \
 	disco_resource_id.h disco_resource_offering.h \
-	disco_send_single_logout.h disco_service_instance.h dst_data.h \
+	disco_send_single_logout.h disco_service_instance.h \
+	ds_key_info.h ds_key_value.h ds_rsa_key_value.h dst_data.h \
 	dst_modification.h dst_modify.h dst_modify_response.h \
 	dst_new_data.h dst_query.h dst_query_item.h \
 	dst_query_response.h is_help.h is_inquiry.h \
@@ -332,13 +347,15 @@ am__liblassoinclude_HEADERS_DIST = strings.h xml.h lib_assertion.h \
 	soap_binding_usage_directive.h soap_binding_ext_credential.h \
 	soap_binding_ext_credentials_context.h \
 	soap_binding_ext_service_instance_update.h \
-	soap_binding_ext_timeout.h soap_body.h soap_fault.h \
-	soap_envelope.h soap_header.h utility_status.h wsse_security.h
+	soap_binding_ext_timeout.h soap_body.h soap_detail.h \
+	soap_fault.h soap_envelope.h soap_header.h utility_status.h \
+	wsse_security.h
 am__installdirs = "$(DESTDIR)$(liblassoincludedir)"
 liblassoincludeHEADERS_INSTALL = $(INSTALL_HEADER)
 HEADERS = $(liblassoinclude_HEADERS)
 ETAGS = etags
 CTAGS = ctags
+DIST_SUBDIRS = $(SUBDIRS)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMDEP_FALSE = @AMDEP_FALSE@
@@ -492,6 +509,8 @@ WITH_TESTS_TRUE = @WITH_TESTS_TRUE@
 WSF_ENABLED_FALSE = @WSF_ENABLED_FALSE@
 WSF_ENABLED_TRUE = @WSF_ENABLED_TRUE@
 XSLTPROC = @XSLTPROC@
+Z_CFLAGS = @Z_CFLAGS@
+Z_LIBS = @Z_LIBS@
 ac_ct_AR = @ac_ct_AR@
 ac_ct_AS = @ac_ct_AS@
 ac_ct_CC = @ac_ct_CC@
@@ -540,6 +559,7 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
+SUBDIRS = saml-2.0
 liblassoincludedir = $(includedir)/lasso/xml
 INCLUDES = \
 	-I$(top_srcdir) \
@@ -569,6 +589,9 @@ noinst_LTLIBRARIES = liblasso-xml.la
 @WSF_ENABLED_TRUE@	disco_resource_offering.c \
 @WSF_ENABLED_TRUE@	disco_send_single_logout.c \
 @WSF_ENABLED_TRUE@	disco_service_instance.c \
+@WSF_ENABLED_TRUE@	ds_key_info.c \
+@WSF_ENABLED_TRUE@	ds_key_value.c \
+@WSF_ENABLED_TRUE@	ds_rsa_key_value.c \
 @WSF_ENABLED_TRUE@	dst_data.c \
 @WSF_ENABLED_TRUE@	dst_modification.c \
 @WSF_ENABLED_TRUE@	dst_modify.c \
@@ -606,6 +629,7 @@ noinst_LTLIBRARIES = liblasso-xml.la
 @WSF_ENABLED_TRUE@	soap_binding_ext_service_instance_update.c \
 @WSF_ENABLED_TRUE@	soap_binding_ext_timeout.c \
 @WSF_ENABLED_TRUE@	soap_body.c \
+@WSF_ENABLED_TRUE@	soap_detail.c \
 @WSF_ENABLED_TRUE@	soap_fault.c \
 @WSF_ENABLED_TRUE@	soap_envelope.c \
 @WSF_ENABLED_TRUE@	soap_header.c \
@@ -633,6 +657,9 @@ noinst_LTLIBRARIES = liblasso-xml.la
 @WSF_ENABLED_TRUE@	disco_resource_offering.h \
 @WSF_ENABLED_TRUE@	disco_send_single_logout.h \
 @WSF_ENABLED_TRUE@	disco_service_instance.h \
+@WSF_ENABLED_TRUE@	ds_key_info.h \
+@WSF_ENABLED_TRUE@	ds_key_value.h \
+@WSF_ENABLED_TRUE@	ds_rsa_key_value.h \
 @WSF_ENABLED_TRUE@	dst_data.h \
 @WSF_ENABLED_TRUE@	dst_modification.h \
 @WSF_ENABLED_TRUE@	dst_modify.h \
@@ -670,6 +697,7 @@ noinst_LTLIBRARIES = liblasso-xml.la
 @WSF_ENABLED_TRUE@	soap_binding_ext_service_instance_update.h \
 @WSF_ENABLED_TRUE@	soap_binding_ext_timeout.h \
 @WSF_ENABLED_TRUE@	soap_body.h \
+@WSF_ENABLED_TRUE@	soap_detail.h \
 @WSF_ENABLED_TRUE@	soap_fault.h \
 @WSF_ENABLED_TRUE@	soap_envelope.h \
 @WSF_ENABLED_TRUE@	soap_header.h \
@@ -780,7 +808,7 @@ lasso_private_h_sources = \
 	private.h
 
 EXTRA_DIST = $(lasso_private_h_sources)
-all: all-am
+all: all-recursive
 
 .SUFFIXES:
 .SUFFIXES: .c .lo .o .obj
@@ -851,6 +879,9 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/disco_resource_offering.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/disco_send_single_logout.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/disco_service_instance.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ds_key_info.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ds_key_value.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ds_rsa_key_value.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dst_data.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dst_modification.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dst_modify.Plo@am__quote@
@@ -933,6 +964,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/soap_binding_provider.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/soap_binding_usage_directive.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/soap_body.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/soap_detail.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/soap_envelope.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/soap_fault.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/soap_header.Plo@am__quote@
@@ -992,6 +1024,65 @@ uninstall-liblassoincludeHEADERS:
 	  rm -f "$(DESTDIR)$(liblassoincludedir)/$$f"; \
 	done
 
+# This directory's subdirectories are mostly independent; you can cd
+# into them and run `make' without going through this Makefile.
+# To change the values of `make' variables: instead of editing Makefiles,
+# (1) if the variable is set in `config.status', edit `config.status'
+#     (which will cause the Makefiles to be regenerated when you run `make');
+# (2) otherwise, pass the desired values on the `make' command line.
+$(RECURSIVE_TARGETS):
+	@set fnord $$MAKEFLAGS; amf=$$2; \
+	dot_seen=no; \
+	target=`echo $@ | sed s/-recursive//`; \
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  echo "Making $$target in $$subdir"; \
+	  if test "$$subdir" = "."; then \
+	    dot_seen=yes; \
+	    local_target="$$target-am"; \
+	  else \
+	    local_target="$$target"; \
+	  fi; \
+	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
+	   || case "$$amf" in *=*) exit 1;; *k*) fail=yes;; *) exit 1;; esac; \
+	done; \
+	if test "$$dot_seen" = "no"; then \
+	  $(MAKE) $(AM_MAKEFLAGS) "$$target-am" || exit 1; \
+	fi; test -z "$$fail"
+
+mostlyclean-recursive clean-recursive distclean-recursive \
+maintainer-clean-recursive:
+	@set fnord $$MAKEFLAGS; amf=$$2; \
+	dot_seen=no; \
+	case "$@" in \
+	  distclean-* | maintainer-clean-*) list='$(DIST_SUBDIRS)' ;; \
+	  *) list='$(SUBDIRS)' ;; \
+	esac; \
+	rev=''; for subdir in $$list; do \
+	  if test "$$subdir" = "."; then :; else \
+	    rev="$$subdir $$rev"; \
+	  fi; \
+	done; \
+	rev="$$rev ."; \
+	target=`echo $@ | sed s/-recursive//`; \
+	for subdir in $$rev; do \
+	  echo "Making $$target in $$subdir"; \
+	  if test "$$subdir" = "."; then \
+	    local_target="$$target-am"; \
+	  else \
+	    local_target="$$target"; \
+	  fi; \
+	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
+	   || case "$$amf" in *=*) exit 1;; *k*) fail=yes;; *) exit 1;; esac; \
+	done && test -z "$$fail"
+tags-recursive:
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  test "$$subdir" = . || (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) tags); \
+	done
+ctags-recursive:
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  test "$$subdir" = . || (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) ctags); \
+	done
+
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
 	unique=`for i in $$list; do \
@@ -1002,10 +1093,23 @@ ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	mkid -fID $$unique
 tags: TAGS
 
-TAGS:  $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
+TAGS: tags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
 		$(TAGS_FILES) $(LISP)
 	tags=; \
 	here=`pwd`; \
+	if ($(ETAGS) --etags-include --version) >/dev/null 2>&1; then \
+	  include_option=--etags-include; \
+	  empty_fix=.; \
+	else \
+	  include_option=--include; \
+	  empty_fix=; \
+	fi; \
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  if test "$$subdir" = .; then :; else \
+	    test ! -f $$subdir/TAGS || \
+	      tags="$$tags $$include_option=$$here/$$subdir/TAGS"; \
+	  fi; \
+	done; \
 	list='$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \
 	unique=`for i in $$list; do \
 	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
@@ -1018,7 +1122,7 @@ TAGS:  $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
 	    $$tags $$unique; \
 	fi
 ctags: CTAGS
-CTAGS:  $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
+CTAGS: ctags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
 		$(TAGS_FILES) $(LISP)
 	tags=; \
 	here=`pwd`; \
@@ -1067,22 +1171,36 @@ distdir: $(DISTFILES)
 	    || exit 1; \
 	  fi; \
 	done
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  if test "$$subdir" = .; then :; else \
+	    test -d "$(distdir)/$$subdir" \
+	    || mkdir "$(distdir)/$$subdir" \
+	    || exit 1; \
+	    (cd $$subdir && \
+	      $(MAKE) $(AM_MAKEFLAGS) \
+	        top_distdir="../$(top_distdir)" \
+	        distdir="../$(distdir)/$$subdir" \
+	        distdir) \
+	      || exit 1; \
+	  fi; \
+	done
 check-am: all-am
-check: check-am
+check: check-recursive
 all-am: Makefile $(LTLIBRARIES) $(HEADERS)
-installdirs:
+installdirs: installdirs-recursive
+installdirs-am:
 	for dir in "$(DESTDIR)$(liblassoincludedir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
-install: install-am
-install-exec: install-exec-am
-install-data: install-data-am
-uninstall: uninstall-am
+install: install-recursive
+install-exec: install-exec-recursive
+install-data: install-data-recursive
+uninstall: uninstall-recursive
 
 install-am: all-am
 	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
 
-installcheck: installcheck-am
+installcheck: installcheck-recursive
 install-strip:
 	$(MAKE) $(AM_MAKEFLAGS) INSTALL_PROGRAM="$(INSTALL_STRIP_PROGRAM)" \
 	  install_sh_PROGRAM="$(INSTALL_STRIP_PROGRAM)" INSTALL_STRIP_FLAG=-s \
@@ -1098,24 +1216,24 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
-clean: clean-am
+clean: clean-recursive
 
 clean-am: clean-generic clean-libtool clean-noinstLTLIBRARIES \
 	mostlyclean-am
 
-distclean: distclean-am
+distclean: distclean-recursive
 	-rm -rf ./$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-libtool distclean-tags
 
-dvi: dvi-am
+dvi: dvi-recursive
 
 dvi-am:
 
-html: html-am
+html: html-recursive
 
-info: info-am
+info: info-recursive
 
 info-am:
 
@@ -1123,44 +1241,48 @@ install-data-am: install-liblassoincludeHEADERS
 
 install-exec-am:
 
-install-info: install-info-am
+install-info: install-info-recursive
 
 install-man:
 
 installcheck-am:
 
-maintainer-clean: maintainer-clean-am
+maintainer-clean: maintainer-clean-recursive
 	-rm -rf ./$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
-mostlyclean: mostlyclean-am
+mostlyclean: mostlyclean-recursive
 
 mostlyclean-am: mostlyclean-compile mostlyclean-generic \
 	mostlyclean-libtool
 
-pdf: pdf-am
+pdf: pdf-recursive
 
 pdf-am:
 
-ps: ps-am
+ps: ps-recursive
 
 ps-am:
 
 uninstall-am: uninstall-info-am uninstall-liblassoincludeHEADERS
 
-.PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
-	clean-libtool clean-noinstLTLIBRARIES ctags distclean \
+uninstall-info: uninstall-info-recursive
+
+.PHONY: $(RECURSIVE_TARGETS) CTAGS GTAGS all all-am check check-am \
+	clean clean-generic clean-libtool clean-noinstLTLIBRARIES \
+	clean-recursive ctags ctags-recursive distclean \
 	distclean-compile distclean-generic distclean-libtool \
-	distclean-tags distdir dvi dvi-am html html-am info info-am \
-	install install-am install-data install-data-am install-exec \
-	install-exec-am install-info install-info-am \
-	install-liblassoincludeHEADERS install-man install-strip \
-	installcheck installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	tags uninstall uninstall-am uninstall-info-am \
-	uninstall-liblassoincludeHEADERS
+	distclean-recursive distclean-tags distdir dvi dvi-am html \
+	html-am info info-am install install-am install-data \
+	install-data-am install-exec install-exec-am install-info \
+	install-info-am install-liblassoincludeHEADERS install-man \
+	install-strip installcheck installcheck-am installdirs \
+	installdirs-am maintainer-clean maintainer-clean-generic \
+	maintainer-clean-recursive mostlyclean mostlyclean-compile \
+	mostlyclean-generic mostlyclean-libtool mostlyclean-recursive \
+	pdf pdf-am ps ps-am tags tags-recursive uninstall uninstall-am \
+	uninstall-info-am uninstall-liblassoincludeHEADERS
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

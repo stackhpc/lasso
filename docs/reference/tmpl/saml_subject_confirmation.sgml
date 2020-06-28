@@ -24,6 +24,7 @@ LassoSamlSubjectConfirmation
 
 @ConfirmationMethod: 
 @SubjectConfirmationData: 
+@KeyInfo: 
 
 <!-- ##### FUNCTION lasso_saml_subject_confirmation_new ##### -->
 <para>

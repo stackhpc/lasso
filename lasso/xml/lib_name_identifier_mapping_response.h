@@ -1,4 +1,4 @@
-/* $Id: lib_name_identifier_mapping_response.h,v 1.13 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: lib_name_identifier_mapping_response.h,v 1.14 2005/11/20 15:38:19 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -73,9 +73,9 @@ struct _LassoLibNameIdentifierMappingResponseClass {
 };
 
 LASSO_EXPORT GType lasso_lib_name_identifier_mapping_response_get_type(void);
-LASSO_EXPORT LassoSamlpResponseAbstract* lasso_lib_name_identifier_mapping_response_new(void);
+LASSO_EXPORT LassoNode* lasso_lib_name_identifier_mapping_response_new(void);
 
-LASSO_EXPORT LassoSamlpResponseAbstract* lasso_lib_name_identifier_mapping_response_new_full(
+LASSO_EXPORT LassoNode* lasso_lib_name_identifier_mapping_response_new_full(
 		char *provideRID, const char *statusCodeValue,
 		LassoLibNameIdentifierMappingRequest *request,
 		LassoSignatureType sign_type, LassoSignatureMethod sign_method);

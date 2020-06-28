@@ -15,16 +15,16 @@ dnl - Second number is the number of supported API versions where API version >
 dnl   first number.
 dnl - Third number is the current API version implementation version number.
 dnl See libtool explanations about current, age and release, later in this file.
-AC_INIT([Liberty Alliance Single Sign On], 0.6.3, lasso-devel@lists.labs.libre-entreprise.org)
+AC_INIT([Liberty Alliance Single Sign On], 0.6.5, lasso-devel@lists.labs.libre-entreprise.org)
 dnl Check if autoconf ver > 2.53
 AC_PREREQ(2.53)
 dnl Check existence of a relative pathed source file.
 AC_CONFIG_SRCDIR(lasso/lasso.c)
 dnl Copy stamp REVISIO-INFO in the configure script.
-AC_REVISION($Revision: 1.141 $)
+AC_REVISION($Revision: 1.146 $)
 
 dnl Run many macros mostly needed by configure.ac.
-AM_INIT_AUTOMAKE(lasso, 0.6.3)
+AM_INIT_AUTOMAKE(lasso, 0.6.5)
 dnl Create rules to automaticaly regenerate the config header.
 AM_CONFIG_HEADER(lasso/lasso_config.h)
 dnl Add --enable-maintainer-mode option to configure.
@@ -36,45 +36,12 @@ dnl ==========================================================================
 dnl Perform host specific configuration
 dnl ==========================================================================
 NULL=
-MINGW=0
-DARWIN=0
-dnl For java sun environment automagic include subdir guessing. (dirty ? No...)
+
+### Sun Java environment needs to be told about platform...
 SUN_EXTRA_INCLUDE=
 case "${host}" in
-    *aix* )
-	CFLAGS="${CFLAGS} -D_ALL_SOURCE"
-	;;
     *-pc-mingw32)
-        case "${build}" in
-            *-pc-cygwin)
-                CC="gcc -mno-cygwin"
-                CFLAGS="${CFLAGS} -D_MSC_VER -DIN_LASSO -DMINGW -DWIN32 -D_WIN32 -I/usr/local/include"
-                LDFLAGS="${LDFLAGS} -L/usr/local/lib"
-                MINGW=1
-                SUN_EXTRA_INCLUDE="win32" 
-                ;;
-            dnl ==========================================================================
-            dnl Workaround for non libtool standard library name specs.
-            dnl ==========================================================================
-            *)
-            SUN_EXTRA_INCLUDE="win32" 
-            ;;
-        esac
-
-dnl         if test -f "/cygdrive/c/windows/system/user32.dll"; then
-dnl             dnl make symbolic link.
-dnl             if test ! -f "/usr/local/lib/libuser32.dll"; then
-dnl                 AC_MSG_WARN([Create workaround symbolic links: user32.dll])
-dnl                 ln -s   /cygdrive/c/windows/system/user32.dll \
-dnl                         /usr/local/lib/libuser32.dll
-dnl             fi
-dnl             if test ! -f "/usr/local/lib/libkernel32.dll"; then
-dnl                 AC_MSG_WARN([Create workaround symbolic links: kernel32.dll])
-dnl                 ln -s   /cygdrive/c/windows/system/kernel32.dll \
-dnl                         /usr/local/lib/libkernel32.dll
-dnl             fi
-dnl         fi
-        dnl FIXME: This is a guessing, no test yet under windows with sun JDK
+        SUN_EXTRA_INCLUDE="win32" 
         ;;
     *-pc-cygwin)
         SUN_EXTRA_INCLUDE="win32" 
@@ -82,12 +49,29 @@ dnl         fi
     *linux*)
         SUN_EXTRA_INCLUDE="linux"
         ;;
-    *darwin*)
+esac
+
+### adapting build environment for different platforms...
+MINGW=0
+DARWIN=0
+case "${host}" in
+    *aix*)
+        CFLAGS="${CFLAGS} -D_ALL_SOURCE"
+        ;;
+    *-pc-mingw32)
+        case "${build}" in
+            *-pc-cygwin)
+                CC="gcc -mno-cygwin"
+                CFLAGS="${CFLAGS} -D_MSC_VER -DIN_LASSO -DMINGW -DWIN32 -D_WIN32 -I/usr/local/include"
+                LDFLAGS="${LDFLAGS} -L/usr/local/lib"
+                MINGW=1
+                ;;
+        esac
+        ;;
+    *-darwin*)
         DARWIN=1
         ;;
 esac
-
-
 
 # OSX Fink
 if test -d /sw/bin ; then
@@ -176,7 +160,7 @@ dnl - interfaces removed -> AGE = 0
 # m = a
 # r = r
 current=`expr $VERSION_MAJOR + $VERSION_MINOR`
-LASSO_VERSION_INFO="5:0:2"
+LASSO_VERSION_INFO="6:0:3"
 AC_SUBST(LASSO_VERSION_INFO)
 
 dnl Compute the minimal supported ABI version for Win32 scripts and resources files.
@@ -189,7 +173,7 @@ AC_SUBST(DLL_FILENAME)
 dnl ==========================================================================
 dnl Swig
 dnl ==========================================================================
-SWIG_MIN_VERSION=1.3
+SWIG_MIN_VERSION=1.3.27
 AC_MSG_CHECKING(SWIG support)
 if test "X$SWIG" != "X"; then
   SWIG_VERSION=`$SWIG -version 2>&1 | $SED -ne 's/^SWIG Version //p'`
@@ -440,62 +424,62 @@ AC_SUBST(PHP_VERSION)
 
 
 
-# ----------
-# C# binding
-# ----------
-
-#AC_ARG_ENABLE(csharp, [  --disable-csharp        disable the C Sharp binding],,
-#              enable_csharp="yes")
-
-#AC_ARG_WITH(cil-interpreter, [  --with-cil-interpreter=path     set location of CIL interpreter for CSharp],[CSHARPBIN="$withval"], [CSHARPBIN=])
-#AC_ARG_WITH(csharp-compiler, [  --with-csharp-compiler=path     set location of CSharp compiler],[CSHARPCOMPILERBIN="$withval"], [CSHARPCOMPILERBIN=])
-
-if test -z "$CSHARPCOMPILERBIN" ; then
-  case $host in
-  *-*-cygwin* | *-*-mingw*)
-    AC_CHECK_PROGS(CSHARPCOMPILER, mcs.bat cscc csc);;
-  *)AC_CHECK_PROGS(CSHARPCOMPILER, mcs cscc);;
-  esac
-else
-  CSHARPCOMPILER="$CSHARPCOMPILERBIN"
-fi
-
-CSHARPPATHSEPARATOR="/"
-CSHARPCYGPATH_W=echo
-if false and test -z "$CSHARPBIN" ; then
-  #languages_available="$languages_available C#($CSHARPCOMPILER)"
-  CSHARPCILINTERPRETER=""
-  if test "cscc" = "$CSHARPCOMPILER" ; then
-    AC_CHECK_PROGS(CSHARPCILINTERPRETER, ilrun)
-  else
-    if test "mcs" = "$CSHARPCOMPILER"; then
-      # Check that mcs is the C# compiler and not the Unix mcs utility by examining the output of 'mcs --version'
-      # The Mono compiler should emit: Mono C# compiler version a.b.c.d
-      csharp_version_raw=`(mcs --version) 2>/dev/null`
-      csharp_version_searched=`(mcs --version | sed -n "/C#\|Mono/p") 2>/dev/null`
-      CSHARPCOMPILER="";
-      if test -n "$csharp_version_raw" ; then
-        if test "$csharp_version_raw" = "$csharp_version_searched" ; then
-          CSHARPCOMPILER="mcs"
-        fi
-      fi
-
-      # mono interpreter (ver 0.26 doesn't seem to work on Windows platforms)
-      case $host in
-      *-*-cygwin* | *-*-mingw*)
-        ;;
-      *)AC_CHECK_PROGS(CSHARPCILINTERPRETER, mint);;
-      esac
-    else 
-      if test "csc" = "$CSHARPCOMPILER"; then
-          CSHARPPATHSEPARATOR="\\\\"
-          CSHARPCYGPATH_W='cygpath -w'
-      fi
-    fi
-  fi
-else
-  CSHARPCILINTERPRETER="$CSHARPBIN"
-fi
+### # ----------
+### # C# binding (disabled for the moment)
+### # ----------
+### 
+### AC_ARG_ENABLE(csharp, [  --disable-csharp        disable the C Sharp binding],,
+###               enable_csharp="yes")
+### 
+### AC_ARG_WITH(cil-interpreter, [  --with-cil-interpreter=path     set location of CIL interpreter for CSharp],[CSHARPBIN="$withval"], [CSHARPBIN=])
+### AC_ARG_WITH(csharp-compiler, [  --with-csharp-compiler=path     set location of CSharp compiler],[CSHARPCOMPILERBIN="$withval"], [CSHARPCOMPILERBIN=])
+### 
+### if test -z "$CSHARPCOMPILERBIN" ; then
+###   case $host in
+###   *-*-cygwin* | *-*-mingw*)
+###     AC_CHECK_PROGS(CSHARPCOMPILER, mcs.bat cscc csc);;
+###   *)AC_CHECK_PROGS(CSHARPCOMPILER, mcs cscc);;
+###   esac
+### else
+###   CSHARPCOMPILER="$CSHARPCOMPILERBIN"
+### fi
+### 
+### CSHARPPATHSEPARATOR="/"
+### CSHARPCYGPATH_W=echo
+### if test -z "$CSHARPBIN" ; then
+###   #languages_available="$languages_available C#($CSHARPCOMPILER)"
+###   CSHARPCILINTERPRETER=""
+###   if test "cscc" = "$CSHARPCOMPILER" ; then
+###     AC_CHECK_PROGS(CSHARPCILINTERPRETER, ilrun)
+###   else
+###     if test "mcs" = "$CSHARPCOMPILER"; then
+###       # Check that mcs is the C# compiler and not the Unix mcs utility by examining the output of 'mcs --version'
+###       # The Mono compiler should emit: Mono C# compiler version a.b.c.d
+###       csharp_version_raw=`(mcs --version) 2>/dev/null`
+###       csharp_version_searched=`(mcs --version | sed -n "/C#\|Mono/p") 2>/dev/null`
+###       CSHARPCOMPILER="";
+###       if test -n "$csharp_version_raw" ; then
+###         if test "$csharp_version_raw" = "$csharp_version_searched" ; then
+###           CSHARPCOMPILER="mcs"
+###         fi
+###       fi
+### 
+###       # mono interpreter (ver 0.26 doesn't seem to work on Windows platforms)
+###       case $host in
+###       *-*-cygwin* | *-*-mingw*)
+###         ;;
+###       *)AC_CHECK_PROGS(CSHARPCILINTERPRETER, mint);;
+###       esac
+###     else 
+###       if test "csc" = "$CSHARPCOMPILER"; then
+###           CSHARPPATHSEPARATOR="\\\\"
+###           CSHARPCYGPATH_W='cygpath -w'
+###       fi
+###     fi
+###   fi
+### else
+###   CSHARPCILINTERPRETER="$CSHARPBIN"
+### fi
 
 # Cygwin requires the Windows standard (Pascal) calling convention as it is a Windows executable and not a Cygwin built executable
 case $host in
@@ -562,6 +546,41 @@ AM_CONDITIONAL([PERL_ENABLED],[test "x$enable_perl" = "xyes"])
 AC_MSG_RESULT($enable_perl)
 AC_SUBST(PERL_VERSION)
 
+
+dnl Checks for zlib library (code adapted from libxml2 configure.in)
+_cppflags="${CPPFLAGS}" 
+_ldflags="${LDFLAGS}"
+
+AC_ARG_WITH(zlib,
+[  --with-zlib[[=DIR]]       use libz in DIR],[
+  if test "$withval" != "no" -a "$withval" != "yes"; then
+    Z_DIR=$withval
+    CPPFLAGS="${CPPFLAGS} -I$withval/include"
+    LDFLAGS="${LDFLAGS} -L$withval/lib"
+  fi
+]) 
+AC_CHECK_HEADERS(zlib.h,
+    AC_CHECK_LIB(z, gzread,[
+        AC_DEFINE([HAVE_LIBZ], [], [Have compression library])
+        if test "x${Z_DIR}" != "x"; then
+            Z_CFLAGS="-I${Z_DIR}/include"
+            Z_LIBS="-L${Z_DIR}/lib -lz"
+            [case ${host} in
+                *-*-solaris*)
+                    Z_LIBS="-L${Z_DIR}/lib -R${Z_DIR}/lib -lz"
+                    ;;
+            esac]
+        else
+            Z_LIBS="-lz"
+        fi]))
+
+test "z$Z_LIBS" != "z" || AC_MSG_ERROR(missing zlib)
+
+AC_SUBST(Z_CFLAGS)
+AC_SUBST(Z_LIBS)
+
+CPPFLAGS=${_cppflags}
+LDFLAGS=${_ldflags}
 
 dnl ==========================================================================
 dnl Test suite (requires check)
@@ -740,7 +759,7 @@ dnl ==========================================================================
 dnl Final steps: lasso config
 dnl ==========================================================================
 LASSO_PUB_CFLAGS="$LASSO_DEFINES"
-LASSO_CORE_CFLAGS="$LASSO_CFLAGS $LASSO_DEFINES -DLASSO_INTERNALS" 
+LASSO_CORE_CFLAGS="$LASSO_CFLAGS $LASSO_DEFINES $Z_CFLAGS -DLASSO_INTERNALS" 
 if test $MINGW -eq 1; then 
   LASSO_CORE_LIBS="-llasso-0"
 else
@@ -749,7 +768,8 @@ fi
 AC_SUBST(LASSO_CORE_CFLAGS)
 AC_SUBST(LASSO_CORE_LIBS)
 
-LASSO_LIBS="-L${libdir} $LASSO_LIBS"
+LASSO_CFLAGS="$LASSO_CFLAGS"
+LASSO_LIBS="-L${libdir} $Z_LIBS $LASSO_LIBS"
 AC_SUBST(LASSO_CFLAGS)
 AC_SUBST(LASSO_LIBS)
 
@@ -780,12 +800,15 @@ java/Makefile
 lasso/Makefile
 lasso/id-ff/Makefile
 lasso/id-wsf/Makefile
+lasso/saml-2.0/Makefile
 lasso/xml/Makefile
+lasso/xml/saml-2.0/Makefile
 perl/Makefile
 php/Makefile
 python/Makefile
 swig/Makefile
 swig/wsf-support.i
+swig/saml-2.0/Makefile
 tests/Makefile
 tests/data/Makefile
 tests/data/ca1-la/Makefile

@@ -1,6 +1,6 @@
 /* -*- Mode: c; c-basic-offset: 8 -*-
  *
- * $Id: inheritance.h,v 1.14 2005/09/05 15:00:59 nclapies Exp $
+ * $Id: inheritance.h,v 1.15 2005/10/10 09:17:14 nclapies Exp $
  *
  * SWIG bindings for Lasso Library
  *
@@ -151,8 +151,7 @@ SET_NODE_INFO(UtilityStatus, Node)
 SET_NODE_INFO(WsseSecurity, Node)
 
 /* Profiles */
-SET_NODE_INFO(WsfProfile, Node)
-SET_NODE_INFO(DataService, WsfProfile)
+SET_NODE_INFO(DataService, Node)
 SET_NODE_INFO(PersonalProfileService, DataService)
 
 #endif /* LASSO_WSF_ENABLED */

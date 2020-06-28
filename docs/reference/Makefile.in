@@ -199,6 +199,8 @@ WITH_TESTS_TRUE = @WITH_TESTS_TRUE@
 WSF_ENABLED_FALSE = @WSF_ENABLED_FALSE@
 WSF_ENABLED_TRUE = @WSF_ENABLED_TRUE@
 XSLTPROC = @XSLTPROC@
+Z_CFLAGS = @Z_CFLAGS@
+Z_LIBS = @Z_LIBS@
 ac_ct_AR = @ac_ct_AR@
 ac_ct_AS = @ac_ct_AS@
 ac_ct_CC = @ac_ct_CC@
@@ -251,7 +253,8 @@ EXTRA_DIST = \
 	lasso-sections.txt \
 	lasso.sgml \
 	lasso.types.in \
-	version.xml.in
+	version.xml.in \
+	style.css
 
 
 # We need to pre-process original source files
@@ -456,6 +459,7 @@ html: sgml lasso.sgml lasso-index
 	@echo '*** Building HTML ***'
 	test -d html || mkdir html
 	cd html && gtkdoc-mkhtml lasso ../build/lasso.sgml
+	cp $(srcdir)/style.css html/
 
 #
 # Prepeare sgml files from sources for each library. We are also

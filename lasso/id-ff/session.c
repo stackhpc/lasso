@@ -1,4 +1,4 @@
-/* $Id: session.c,v 1.57 2005/08/14 12:00:16 fpeters Exp $
+/* $Id: session.c,v 1.59 2005/11/21 18:51:52 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -47,7 +47,7 @@ struct _LassoSessionPrivate
  * Return value: 0 on success; or a negative value otherwise.
  **/
 gint
-lasso_session_add_assertion(LassoSession *session, char *providerID, LassoSamlAssertion *assertion)
+lasso_session_add_assertion(LassoSession *session, char *providerID, LassoNode *assertion)
 {
 	g_return_val_if_fail(session != NULL, -1);
 	g_return_val_if_fail(providerID != NULL, -2);
@@ -96,7 +96,7 @@ lasso_session_add_status(LassoSession *session, char *providerID, LassoSamlpStat
  *      #LassoSamlAssertion is internally allocated and must not be freed by
  *      the caller.
  **/
-LassoSamlAssertion*
+LassoNode*
 lasso_session_get_assertion(LassoSession *session, gchar *providerID)
 {
 	return g_hash_table_lookup(session->assertions, providerID);
@@ -333,8 +333,9 @@ init_from_xml(LassoNode *node, xmlNode *xmlnode)
 			while (n && n->type != XML_ELEMENT_NODE) n = n->next;
 			
 			if (n) {
-				LassoLibAssertion *assertion;
-				assertion = LASSO_LIB_ASSERTION(lasso_node_new_from_xmlNode(n));
+				LassoNode *assertion;
+
+				assertion = lasso_node_new_from_xmlNode(n);
 				g_hash_table_insert(session->assertions,
 						xmlGetProp(t, (xmlChar*)"RemoteProviderID"),
 						assertion);

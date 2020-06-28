@@ -1,4 +1,4 @@
-/* $Id: soap_binding_processing_context.h,v 1.1 2005/03/11 17:15:15 nclapies Exp $ 
+/* $Id: soap_binding_processing_context.h,v 1.2 2005/10/06 13:42:54 nclapies Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -54,6 +54,7 @@ struct _LassoSoapBindingProcessingContext {
 	gchar *id;
 	gchar *mustUnderstand;
 	gchar *actor;
+	gchar *content;
 };
 
 struct _LassoSoapBindingProcessingContextClass {

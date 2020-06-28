@@ -1,4 +1,4 @@
-/* $Id: soap_binding_processing_context.c,v 1.1 2005/03/11 17:15:15 nclapies Exp $ 
+/* $Id: soap_binding_processing_context.c,v 1.2 2005/10/06 13:42:54 nclapies Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -49,6 +49,7 @@ static struct XmlSnippet schema_snippets[] = {
 	{ "mustUnderstand", SNIPPET_ATTRIBUTE,
 	  G_STRUCT_OFFSET(LassoSoapBindingProcessingContext, mustUnderstand) },
 	{ "actor", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoSoapBindingProcessingContext, actor) },
+	{ "", SNIPPET_TEXT_CHILD, G_STRUCT_OFFSET(LassoSoapBindingProcessingContext, content) },
 	{ NULL, 0, 0}
 };
 
@@ -62,6 +63,7 @@ instance_init(LassoSoapBindingProcessingContext *node)
 	node->id = NULL;
 	node->mustUnderstand = NULL;
 	node->actor = NULL;
+	node->content = NULL;
 }
 
 static void

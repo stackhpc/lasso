@@ -1,4 +1,4 @@
-/* $Id: lecp.c,v 1.52 2005/07/30 22:36:53 fpeters Exp $
+/* $Id: lecp.c,v 1.53 2006/01/23 15:30:00 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -117,6 +117,11 @@ lasso_lecp_build_authn_request_msg(LassoLecp *lecp)
 	g_return_val_if_fail(LASSO_IS_LECP(lecp), -1);
 
 	profile = LASSO_PROFILE(lecp);
+
+	if (profile->remote_providerID == NULL) {
+		/* this means lasso_logout_init_request was not called before */
+		return critical_error(LASSO_PROFILE_ERROR_MISSING_REMOTE_PROVIDERID);
+	}
 
 	remote_provider = g_hash_table_lookup(profile->server->providers,
 			profile->remote_providerID);

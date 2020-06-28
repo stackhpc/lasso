@@ -2,7 +2,7 @@
 LassoLibAuthnResponseEnvelope
 
 <!-- ##### SECTION Short_Description ##### -->
-
+&lt;lib:AuthnResponseEnvelope&gt;
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>

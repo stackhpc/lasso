@@ -1,4 +1,4 @@
-/* $Id: federation.c,v 1.18 2005/07/30 22:36:53 fpeters Exp $
+/* $Id: federation.c,v 1.20 2005/11/21 18:51:52 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -23,6 +23,9 @@
  */
 
 #include <lasso/id-ff/federation.h>
+#include <lasso/id-ff/provider.h>
+
+#include <lasso/xml/saml-2.0/saml2_name_id.h>
 
 struct _LassoFederationPrivate
 {
@@ -33,7 +36,7 @@ struct _LassoFederationPrivate
 /* static methods/functions                                                  */
 /*****************************************************************************/
 
-static LassoSamlNameIdentifier*
+static LassoNode*
 lasso_federation_build_name_identifier(const gchar *nameQualifier,
 		const gchar *format, const gchar *content)
 {
@@ -49,7 +52,7 @@ lasso_federation_build_name_identifier(const gchar *nameQualifier,
 	nameIdentifier->NameQualifier = g_strdup(nameQualifier);
 	nameIdentifier->Format = g_strdup(format);
 
-	return nameIdentifier;
+	return LASSO_NODE(nameIdentifier);
 }
 
 /*****************************************************************************/
@@ -98,25 +101,44 @@ lasso_federation_destroy(LassoFederation *federation)
  **/
 gboolean
 lasso_federation_verify_name_identifier(LassoFederation *federation,
-		LassoSamlNameIdentifier *name_identifier)
+		LassoNode *name_identifier)
 {
-	char *s;
+	LassoProtocolConformance conformance;
+	char *s, *content;
 
 	g_return_val_if_fail(LASSO_IS_FEDERATION(federation), FALSE);
 	g_return_val_if_fail(LASSO_IS_NODE(name_identifier), FALSE);
 
+	if (LASSO_IS_SAML_NAME_IDENTIFIER(name_identifier)) {
+		conformance = LASSO_PROTOCOL_LIBERTY_1_2;
+		content = LASSO_SAML_NAME_IDENTIFIER(name_identifier)->content;
+	} else if (LASSO_IS_SAML2_NAME_ID(name_identifier)) {
+		conformance = LASSO_PROTOCOL_SAML_2_0;
+		content = LASSO_SAML2_NAME_ID(name_identifier)->content;
+	} else {
+		return FALSE;
+	}
+
 	/* verify local name identifier */
 	if (federation->local_nameIdentifier != NULL) {
-		s = federation->local_nameIdentifier->content;
-		if (strcmp(s, name_identifier->content) == 0) {
+		if (conformance == LASSO_PROTOCOL_LIBERTY_1_2) {
+			s = LASSO_SAML_NAME_IDENTIFIER(federation->local_nameIdentifier)->content;
+		} else {
+			s = LASSO_SAML2_NAME_ID(federation->local_nameIdentifier)->content;
+		}
+		if (strcmp(s, content) == 0) {
 			return TRUE;
 		}
 	}
 
 	/* verify remote name identifier */
 	if (federation->remote_nameIdentifier != NULL) {
-		s = federation->remote_nameIdentifier->content;
-		if (strcmp(s, name_identifier->content) == 0) {
+		if (conformance == LASSO_PROTOCOL_LIBERTY_1_2) {
+			s = LASSO_SAML_NAME_IDENTIFIER(federation->remote_nameIdentifier)->content;
+		} else {
+			s = LASSO_SAML2_NAME_ID(federation->remote_nameIdentifier)->content;
+		}
+		if (strcmp(s, content) == 0) {
 			return TRUE;
 		}
 	}

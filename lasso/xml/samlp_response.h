@@ -1,4 +1,4 @@
-/* $Id: samlp_response.h,v 1.10 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: samlp_response.h,v 1.11 2005/11/20 15:38:19 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -63,7 +63,7 @@ struct _LassoSamlpResponseClass {
 };
 
 LASSO_EXPORT GType lasso_samlp_response_get_type(void);
-LASSO_EXPORT LassoSamlpResponseAbstract* lasso_samlp_response_new(void);
+LASSO_EXPORT LassoNode* lasso_samlp_response_new(void);
 
 
 #ifdef __cplusplus

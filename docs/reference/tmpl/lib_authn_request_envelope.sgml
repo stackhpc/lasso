@@ -2,7 +2,7 @@
 LassoLibAuthnRequestEnvelope
 
 <!-- ##### SECTION Short_Description ##### -->
-
+&lt;lib:AuthnRequestEnvelope&gt;
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>

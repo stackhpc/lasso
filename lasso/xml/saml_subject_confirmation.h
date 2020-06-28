@@ -1,4 +1,4 @@
-/* $Id: saml_subject_confirmation.h,v 1.7 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: saml_subject_confirmation.h,v 1.8 2005/10/05 15:59:59 nclapies Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -30,6 +30,7 @@ extern "C" {
 #endif /* __cplusplus */ 
 
 #include <lasso/xml/xml.h>
+#include <lasso/xml/ds_key_info.h>
 
 #define LASSO_TYPE_SAML_SUBJECT_CONFIRMATION (lasso_saml_subject_confirmation_get_type())
 #define LASSO_SAML_SUBJECT_CONFIRMATION(obj) \
@@ -57,6 +58,7 @@ struct _LassoSamlSubjectConfirmation {
 	GList *ConfirmationMethod;
 	/* <element ref="saml:SubjectConfirmationData" minOccurs="0"/> */
 	char *SubjectConfirmationData;
+	LassoDsKeyInfo *KeyInfo;
 };
 
 struct _LassoSamlSubjectConfirmationClass {

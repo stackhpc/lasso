@@ -1,6 +1,6 @@
 /* -*- Mode: c; c-basic-offset: 8 -*-
  *
- * $Id: Lasso-wsf.i,v 1.71 2005/09/28 10:06:24 fpeters Exp $
+ * $Id: Lasso-wsf.i,v 1.79 2006/03/06 14:01:29 fpeters Exp $
  *
  * SWIG bindings for Lasso Library
  *
@@ -227,76 +227,73 @@ typedef struct {
 
 	/* Methods inherited from WsfProfile */
 
-	THROW_ERROR
+	THROW_ERROR()
 	int setIdentityFromDump(char *dump);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int setSessionFromDump(char *dump);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildRequestMsg();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildResponseMsg();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 	/* Methods */
 
-	THROW_ERROR
+	THROW_ERROR()
 	int initInsert(LassoDiscoResourceOffering *newOffering, const char *security_mech_id = NULL);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int initRemove(const char *entryId);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildModifyResponseMsg();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 	LassoDiscoInsertEntry* addInsertEntry(LassoDiscoServiceInstance *serviceInstance,
 					      LassoDiscoResourceID *resourceID);
 
-	THROW_ERROR
+	THROW_ERROR()
 	int addRemoveEntry(char *entryID);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 	LassoDiscoRequestedServiceType *addRequestedServiceType(char *serviceType,
 								char *option = NULL);
 
-	THROW_ERROR
+	THROW_ERROR()
 	int initModify(LassoDiscoResourceOffering *resourceOffering,
 			LassoDiscoDescription *description);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int initQuery(const char *security_mech_id = NULL);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
-	int processModifyMsg(const char *modify_msg, const gchar *security_mech_id);
-	END_THROW_ERROR
+	THROW_ERROR()
+	int processModifyMsg(const char *modify_msg, const gchar *security_mech_id = NULL);
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int processModifyResponseMsg(const char *modify_response_msg);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int processQueryMsg(char *query_msg, const char *security_mech_id = NULL);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int processQueryResponseMsg(char *query_response_msg);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 	%newobject getService;
 	LassoDataService* getService(const char *service_type = NULL);
-	
-	%newobject getServiceWithProviderId;
-	LassoDataService* getServiceWithProviderId(const char *service_type = NULL);
 	
 	%newobject getServices;
 	LassoNodeList* getServices();
@@ -414,7 +411,6 @@ int LassoDiscovery_setSessionFromDump(LassoDiscovery *self, char *dump) {
 #define LassoDiscovery_processQueryMsg lasso_discovery_process_query_msg
 #define LassoDiscovery_processQueryResponseMsg lasso_discovery_process_query_response_msg
 #define LassoDiscovery_getService(self, type) get_node(lasso_discovery_get_service(self, type))
-#define LassoDiscovery_getServiceWithProviderId(self, providerId) get_node(lasso_discovery_get_service_with_providerId(self, providerId))
 #define LassoDiscovery_getServices(self) get_node_list(lasso_discovery_get_services(self));
 
 %}
@@ -461,27 +457,27 @@ typedef struct {
 
 	/* Methods inherited from WsfProfile */
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildRequestMsg();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildResponseMsg();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 	/* Methods */
 
-	THROW_ERROR
+	THROW_ERROR()
 	int initRequest();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int processRequestMsg(char *msg);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int processResponseMsg(char *msg);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 }
 
@@ -584,29 +580,29 @@ typedef struct {
 
 	/* Methods inherited from WsfProfile */
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildRequestMsg();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 	/* Methods inherited from ProfileService */
 
-	THROW_ERROR
+	THROW_ERROR()
 	gint initQuery(const char *select = NULL, const char *item_id = NULL, const char *security_mech_id = NULL);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 	LassoDstQueryItem *addQueryItem(const char *select, const char *item_id);
 		
-	THROW_ERROR
+	THROW_ERROR()
 	int processQueryMsg(const char *message, const char *security_mech_id = NULL);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildResponseMsg();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int processQueryResponseMsg(const char *message);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 	%newobject getAnswer;
 	char* getAnswer(const char *select = NULL);
@@ -618,13 +614,13 @@ typedef struct {
 
 	LassoDstModification *addModification(char *select);
 
-	THROW_ERROR
+	THROW_ERROR()
 	int processModifyMsg(char *soap_msg, const char *security_mech_id = NULL);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int processModifyResponseMsg(char *soap_msg);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 	/* Methods */
 
@@ -690,7 +686,6 @@ typedef struct {
 
 /* Implementations of methods inherited from WsfProfile */
 #define LassoPersonalProfileService_buildRequestMsg(self) lasso_wsf_profile_build_soap_request_msg(LASSO_WSF_PROFILE(self))
-#define LassoPersonalProfileService_buildResponseMsg(self) lasso_wsf_profile_build_soap_response_msg(LASSO_WSF_PROFILE(self))
 
 /* Implementations of methods inherited from DataService */
 #define LassoPersonalProfileService_buildResponseMsg lasso_data_service_build_response_msg
@@ -769,33 +764,34 @@ typedef struct {
 
 	/* Methods inherited from WsfProfile */
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildRequestMsg();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 	/* Methods */
 
-	THROW_ERROR
-	gint initQuery(const char *select = NULL, const char *item_id = NULL, const char *security_mech_id = NULL);
-	END_THROW_ERROR
+	THROW_ERROR()
+	gint initQuery(const char *select = NULL, const char *item_id = NULL,
+		       const char *security_mech_id = NULL);
+	END_THROW_ERROR()
 
 	LassoDstQueryItem *addQueryItem(const char *select, const char *item_id);
 		
-	THROW_ERROR
+	THROW_ERROR()
 	int processQueryMsg(const char *message, const char *security_mech_id = NULL);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildModifyResponseMsg();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildResponseMsg();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int processQueryResponseMsg(const char *message);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 	%newobject getAnswer;
 	char* getAnswer(const char *select = NULL);
@@ -807,13 +803,23 @@ typedef struct {
 
 	LassoDstModification *addModification(char *select);
 
-	THROW_ERROR
+	THROW_ERROR()
 	int processModifyMsg(char *soap_msg, const char *security_mech_id = NULL);
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int processModifyResponseMsg(const char *soap_msg);
-	END_THROW_ERROR
+	END_THROW_ERROR()
+
+	gboolean isPrincipalOnline();
+	void setPrincipalStatus(const char *status);
+	void setPrincipalOnline();
+	void setPrincipalOffline();
+
+	%newobject getRedirectRequestUrl;
+	char* getRedirectRequestUrl();
+
+	int needRedirectUser(const char *redirectUrl);
 }
 
 %{
@@ -888,6 +894,11 @@ typedef struct {
 /* Implementations of methods inherited from WsfProfile */
 #define LassoDataService_buildRequestMsg(self) lasso_wsf_profile_build_soap_request_msg(LASSO_WSF_PROFILE(self))
 
+#define LassoDataService_isPrincipalOnline(self) lasso_wsf_profile_principal_is_online(LASSO_WSF_PROFILE(self))
+#define LassoDataService_setPrincipalStatus(self, status) lasso_wsf_profile_set_principal_status(LASSO_WSF_PROFILE(self), status)
+#define LassoDataService_setPrincipalOnline(self) lasso_wsf_profile_set_principal_online(LASSO_WSF_PROFILE(self))
+#define LassoDataService_setPrincipalOffline(self) lasso_wsf_profile_set_principal_offline(LASSO_WSF_PROFILE(self))
+
 /* Methods implementations */
 #define LassoDataService_buildModifyResponseMsg lasso_data_service_build_modify_response_msg
 #define LassoDataService_buildResponseMsg lasso_data_service_build_response_msg
@@ -903,6 +914,9 @@ typedef struct {
 #define LassoDataService_validateQuery lasso_data_service_validate_query
 #define LassoDataService_getAnswer(self,select) get_xml_string(lasso_data_service_get_answer(self, select))
 #define LassoDataService_getAnswerForItemId(self,itemId) get_xml_string(lasso_data_service_get_answer_for_item_id(self, itemId))
+
+#define LassoDataService_getRedirectRequestUrl lasso_data_service_get_redirect_request_url
+#define LassoDataService_needRedirectUser lasso_data_service_need_redirect_user
 
 %}
 
@@ -969,22 +983,22 @@ typedef struct {
 
 	/* Methods inherited from WsfProfile */
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildRequestMsg();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
-	THROW_ERROR
+	THROW_ERROR()
 	int buildResponseMsg();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 	/* Methods */
 	int clientStart();
 
 	int clientStep();
 
-	THROW_ERROR
+	THROW_ERROR()
 	int getMechanismList();
-	END_THROW_ERROR
+	END_THROW_ERROR()
 
 	int initRequest(LassoDiscoDescription *description, char *mechanisms, LassoUserAccount *account = NULL);
 
@@ -1056,88 +1070,5 @@ typedef struct {
 #define LassoAuthentication_processResponseMsg lasso_authentication_process_response_msg
 #define LassoAuthentication_serverStart lasso_authentication_server_start
 #define LassoAuthentication_serverStep lasso_authentication_server_step
-
-%}
-
-
-/***********************************************************************
- ***********************************************************************
- * XML Elements in Web Service Security Namespace
- ***********************************************************************
- ***********************************************************************/
-
-/***********************************************************************
- * lasso:WsfProfile
- ***********************************************************************/
-
-#ifndef SWIGPHP4
-%rename(WsfProfile) LassoWsfProfile;
-#endif
-typedef struct {
-	/* Attributes */
-#ifndef SWIGPHP4
-	%rename(soapEnvelopeRequest) soap_envelope_request;
-#endif
-	%newobject soap_envelope_request_get;
-	LassoSoapEnvelope *soap_envelope_request;
-
-#ifndef SWIGPHP4
-	%rename(soapEnvelopeResponse) soap_envelope_response;
-#endif
-	%newobject soap_envelope_response_get;
-	LassoSoapEnvelope *soap_envelope_response;
-
-
-} LassoWsfProfile;
-%extend LassoWsfProfile {
-
-	/* Attributes */
-	%immutable msgBody;
-	char *msgBody;
-
-	%immutable msgUrl;
-	char *msgUrl;
-
-	/* Constructor, Destructor & Static Methods */
-
-	LassoWsfProfile(LassoServer *server);
-
-	~LassoWsfProfile();
-
-	/* Methods */
-
-	void buildSoapRequestMsg();
-	void buildSoapResponseMsg();
-	void initSoapRequest(LassoNode *request);
-	void processSoapRequestMsg(char *soapRequestMsg, char *security_mech_id = NULL);
-	void processSoapResponseMsg(char *soapResponseMsg);
-	LassoSoapBindingProvider *setProviderSoapRequest(const char *providerId);
-}
-
-%{
-
-/* msgBody */
-#define LassoWsfProfile_get_msgBody(self) LASSO_WSF_PROFILE(self)->msg_body
-#define LassoWsfProfile_msgBody_get(self) LASSO_WSF_PROFILE(self)->msg_body
-
-/* msgUrl */
-#define LassoWsfProfile_get_msgUrl(self) LASSO_WSF_PROFILE(self)->msg_url
-#define LassoWsfProfile_msgUrl_get(self) LASSO_WSF_PROFILE(self)->msg_url
-
-/* Constructors, destructors & static methods implementations */
-#define new_LassoWsfProfile lasso_wsf_profile_new
-#define delete_LassoWsfProfile(self) lasso_node_destroy(LASSO_NODE(self))
-
-/* Implementations of methods inherited from LassoNode */
-
-/* Attributes Implementations */
-
-/* Methods implementations */
-#define LassoWsfProfile_buildSoapRequestMsg lasso_wsf_profile_build_soap_request_msg
-#define LassoWsfProfile_buildSoapResponseMsg lasso_wsf_profile_build_soap_response_msg
-#define LassoWsfProfile_initSoapRequest lasso_wsf_profile_init_soap_request
-#define LassoWsfProfile_processSoapRequestMsg lasso_wsf_profile_process_soap_request_msg
-#define LassoWsfProfile_processSoapResponseMsg lasso_wsf_profile_process_soap_response_msg
-#define LassoWsfProfile_setProviderSoapRequest lasso_wsf_profile_set_provider_soap_request
 
 %}

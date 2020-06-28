@@ -1,3 +1,5 @@
+SUBDIRS = saml-2.0
+
 liblassoincludedir = $(includedir)/lasso/xml
 
 INCLUDES = \
@@ -30,6 +32,9 @@ WSF_C_FILES = \
 	disco_resource_offering.c \
 	disco_send_single_logout.c \
 	disco_service_instance.c \
+	ds_key_info.c \
+	ds_key_value.c \
+	ds_rsa_key_value.c \
 	dst_data.c \
 	dst_modification.c \
 	dst_modify.c \
@@ -67,6 +72,7 @@ WSF_C_FILES = \
 	soap_binding_ext_service_instance_update.c \
 	soap_binding_ext_timeout.c \
 	soap_body.c \
+	soap_detail.c \
 	soap_fault.c \
 	soap_envelope.c \
 	soap_header.c \
@@ -94,6 +100,9 @@ WSF_H_FILES = \
 	disco_resource_offering.h \
 	disco_send_single_logout.h \
 	disco_service_instance.h \
+	ds_key_info.h \
+	ds_key_value.h \
+	ds_rsa_key_value.h \
 	dst_data.h \
 	dst_modification.h \
 	dst_modify.h \
@@ -131,6 +140,7 @@ WSF_H_FILES = \
 	soap_binding_ext_service_instance_update.h \
 	soap_binding_ext_timeout.h \
 	soap_body.h \
+	soap_detail.h \
 	soap_fault.h \
 	soap_envelope.h \
 	soap_header.h \

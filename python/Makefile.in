@@ -226,6 +226,8 @@ WITH_TESTS_TRUE = @WITH_TESTS_TRUE@
 WSF_ENABLED_FALSE = @WSF_ENABLED_FALSE@
 WSF_ENABLED_TRUE = @WSF_ENABLED_TRUE@
 XSLTPROC = @XSLTPROC@
+Z_CFLAGS = @Z_CFLAGS@
+Z_LIBS = @Z_LIBS@
 ac_ct_AR = @ac_ct_AR@
 ac_ct_AS = @ac_ct_AS@
 ac_ct_CC = @ac_ct_CC@
@@ -275,6 +277,7 @@ sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 INCLUDES = -I$(top_srcdir) \
+	-I$(top_builddir) \
 	$(SASL_CFLAGS)
 
 pythondir = $(PY_SITE_PACKAGES)

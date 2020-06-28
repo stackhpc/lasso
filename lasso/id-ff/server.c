@@ -1,4 +1,4 @@
-/* $Id: server.c,v 1.106 2005/08/24 16:28:46 fpeters Exp $
+/* $Id: server.c,v 1.108 2006/03/04 12:35:37 fpeters Exp $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -63,6 +63,18 @@ lasso_server_add_provider(LassoServer *server, LassoProviderRole role,
 	provider = lasso_provider_new(role, metadata, public_key, ca_cert_chain);
 	if (provider == NULL) {
 		return critical_error(LASSO_SERVER_ERROR_ADD_PROVIDER_FAILED);
+	}
+
+	if (LASSO_PROVIDER(server)->private_data->conformance == LASSO_PROTOCOL_SAML_2_0 &&
+			provider->private_data->conformance != LASSO_PROTOCOL_SAML_2_0) {
+		lasso_node_destroy(LASSO_NODE(provider));
+		return LASSO_SERVER_ERROR_ADD_PROVIDER_PROTOCOL_MISMATCH;
+	}
+
+	if (LASSO_PROVIDER(server)->private_data->conformance == LASSO_PROTOCOL_LIBERTY_1_2 &&
+			provider->private_data->conformance > LASSO_PROTOCOL_LIBERTY_1_2) {
+		lasso_node_destroy(LASSO_NODE(provider));
+		return LASSO_SERVER_ERROR_ADD_PROVIDER_PROTOCOL_MISMATCH;
 	}
 
 	g_hash_table_insert(server->providers, g_strdup(provider->ProviderID), provider);
@@ -374,10 +386,12 @@ finalize(GObject *object)
 
 	g_free(server->private_key);
 	if (server->private_key_password) {
+		/* don't use memset() because it may be optimised away by
+		 * compiler (since the string is freeed just after */
 		while (server->private_key_password[i])
 			server->private_key_password[i++] = 0;
+		g_free(server->private_key_password);
 	}
-	g_free(server->private_key_password);
 	g_free(server->certificate);
 	g_free(server->private_data);
 

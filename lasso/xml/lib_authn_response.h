@@ -1,4 +1,4 @@
-/* $Id: lib_authn_response.h,v 1.13 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: lib_authn_response.h,v 1.14 2005/11/20 15:38:19 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -68,7 +68,7 @@ struct _LassoLibAuthnResponseClass {
 };
 
 LASSO_EXPORT GType lasso_lib_authn_response_get_type(void);
-LASSO_EXPORT LassoSamlpResponseAbstract* lasso_lib_authn_response_new(
+LASSO_EXPORT LassoNode* lasso_lib_authn_response_new(
 		char *providerID, LassoLibAuthnRequest *request);
 
 #ifdef __cplusplus

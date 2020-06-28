@@ -1,4 +1,4 @@
-/* $Id: profile.h,v 1.33 2005/03/21 16:51:33 nclapies Exp $ 
+/* $Id: profile.h,v 1.35 2005/11/21 18:51:52 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -89,10 +89,10 @@ struct _LassoProfile {
 	/*< public >*/
 	LassoServer *server;
 
-	LassoSamlpRequestAbstract *request;
-	LassoSamlpResponseAbstract *response;
+	LassoNode *request;
+	LassoNode *response;
 
-	LassoSamlNameIdentifier *nameIdentifier;
+	LassoNode *nameIdentifier;
 
 	gchar *remote_providerID;
 
@@ -131,7 +131,11 @@ LASSO_EXPORT gboolean lasso_profile_is_session_dirty(LassoProfile *profile);
 
 LASSO_EXPORT gint lasso_profile_set_identity_from_dump(LassoProfile *profile, const gchar *dump);
 LASSO_EXPORT gint lasso_profile_set_session_from_dump(LassoProfile *profile, const gchar *dump);
-LASSO_EXPORT LassoSamlNameIdentifier* lasso_profile_get_nameIdentifier(LassoProfile *profile);
+LASSO_EXPORT LassoNode* lasso_profile_get_nameIdentifier(LassoProfile *profile);
+
+LASSO_EXPORT char* lasso_profile_get_artifact(LassoProfile *profile);
+LASSO_EXPORT char* lasso_profile_get_artifact_message(LassoProfile *profile);
+LASSO_EXPORT void  lasso_profile_set_artifact_message(LassoProfile *profile, char *message);
 
 #ifdef __cplusplus
 }

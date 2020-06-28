@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: UTF-8 -*-
 #
-# $Id: patch_swig_output.py,v 1.13 2005/02/08 11:35:14 fpeters Exp $
+# $Id: patch_swig_output.py,v 1.15 2006/03/20 19:26:21 fpeters Exp $
 #
 # SWIG based PHP binding for Lasso Library
 #
@@ -142,24 +142,24 @@ wrap = sys.stdin.read()
 
 # (1)
 begin = """
-    }
-    
-    /* Wrap this return value */
+  }
+  
+  /* Wrap this return value */
 """
 end = """
-        *return_value=*obj;
-    }
+    *return_value=*obj;
+  }
 """
 i = wrap.find(begin)
 while i >= 0:
     j = wrap.find(end, i) + len(end)
     segment = wrap[i:j]
     segment = segment.replace(begin, """
-    /* Wrap this return value */
+  /* Wrap this return value */
 """)
     segment = segment.replace(end, """
-        *return_value=*obj;
-    }}
+    *return_value=*obj;
+  }}
 """)
     wrap = '%s%s%s' % (wrap[:i], segment, wrap[j:])
     i = wrap.find(begin, i + len(segment))
@@ -167,12 +167,13 @@ while i >= 0:
 # (2)
 begin = 'swig_type_info *ty = SWIG_TypeDynamicCast('
 end = """
-        *return_value=*obj;
-    }}
+    *return_value=*obj;
+  }}
 """
 i = wrap.find(begin)
 while i >= 0:
     j = wrap.find(end, i) + len(end)
+    print >> sys.stderr, "END:", j, len(end)
     if j < len(end): # bails out if not found
         break
     segment = wrap[i:j]
@@ -185,8 +186,6 @@ while i >= 0:
 # (3)
 wrap = wrap.replace('if(zend_get_parameters_array_ex(arg_count-argbase,args)!=SUCCESS)',
                     'if(zend_get_parameters_array_ex(arg_count,args)!=SUCCESS)')
-for i in range(10):
-    wrap = wrap.replace('if(arg_count > %d) {' % i, 'if(arg_count > %d - argbase) {' % i)
 
 
 wrap = re.sub(r'zend_register_internal_class_ex(.*)NULL,NULL\)',
@@ -195,11 +194,8 @@ wrap = re.sub(r'zend_register_internal_class_ex(.*)NULL,NULL\)',
 wrap = re.sub('zend_rsrc_list_get_rsrc_type(.*)lval',
     r'zend_rsrc_list_get_rsrc_type\1lval TSRMLS_CC', wrap)
 
-wrap = wrap.replace('int argbase=0 ;\n    \n    \n', 'int argbase=0 ;\n    TSRMLS_FETCH();\n\n')
 wrap = wrap.replace('zval *return_value=&_return_value;',
     'zval *return_value=&_return_value;\n    TSRMLS_FETCH();\n')
 
-wrap = wrap.replace('int argbase=0 ;\n    \n    {\n        node_info *info, *super;\n%s' % ('        \n'*8),
-    'int argbase=0 ;\n\n    TSRMLS_FETCH();\n    {\n        node_info *info, *super;\n')
 
 print wrap

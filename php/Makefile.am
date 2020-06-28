@@ -1,7 +1,7 @@
 SWIG_OUTPUTS = lasso_wrap.c php_lasso.h lasso.php
 
 php_extension_LTLIBRARIES = lasso.la
-lasso_la_CFLAGS = $(LASSO_CORE_CFLAGS) -I$(top_srcdir) $(PHP_INCLUDES)
+lasso_la_CFLAGS = $(LASSO_CORE_CFLAGS) -I$(top_srcdir) -I$(top_builddir) $(PHP_INCLUDES)
 lasso_la_LDFLAGS = -export-dynamic -prefer-pic -module -avoid-version
 lasso_la_LIBADD = $(top_builddir)/lasso/liblasso.la $(LASSO_LIBS) $(PHP_LDFLAGS)
 lasso_la_SOURCES = lasso_wrap.c
@@ -12,7 +12,8 @@ SWIG_I_FILES=$(shell find $(top_srcdir)/swig/ -name '*.[ih]')
 lasso_wrap.c php_lasso.h lasso.php: $(SWIG_I_FILES)
 	$(SWIG) -v -php4 -module lasso -o lasso_wrap.c -dlname lasso $(top_srcdir)/swig/Lasso.i
 	cp lasso_wrap.c lasso_wrap.c.bak
-	$(PYTHON) $(srcdir)/patch_swig_output.py < lasso_wrap.c.bak > lasso_wrap.c
+	test x"$(SWIG)" = xecho || \
+		$(PYTHON) $(srcdir)/patch_swig_output.py < lasso_wrap.c.bak > lasso_wrap.c
 
 test-php: lasso.la lasso.php
 	$(PHP) -d extension_dir=.libs $(srcdir)/lasso.php

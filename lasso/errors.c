@@ -1,4 +1,4 @@
-/* $Id: errors.c,v 1.6 2005/08/12 09:10:19 fpeters Exp $ 
+/* $Id: errors.c,v 1.9 2005/11/20 15:38:18 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -67,12 +67,16 @@ lasso_strerror(int error_code)
 			return "Signature template has not been found.";
 
 		case LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND:
-			return "ProviderID unknown to LassoServer";
+			return "ProviderID unknown to LassoServer.";
 		case LASSO_SERVER_ERROR_ADD_PROVIDER_FAILED:
 			return "Failed to add new provider.";
+		case LASSO_SERVER_ERROR_ADD_PROVIDER_PROTOCOL_MISMATCH:
+			return "Failed to add new provider (protocol mismatch).";
 
 		case LASSO_LOGOUT_ERROR_UNSUPPORTED_PROFILE:
 			return "Unsupported protocol profile";
+		case LASSO_LOGOUT_ERROR_REQUEST_DENIED:
+			return "Request denied by identity provider";
 		case LASSO_PROFILE_ERROR_INVALID_QUERY:
 			return "Invalid URL query";
 		case LASSO_PROFILE_ERROR_INVALID_POST_MSG:
@@ -130,6 +134,9 @@ lasso_strerror(int error_code)
 			return "Name identifier not found in request";
 		case LASSO_LOGIN_ERROR_UNKNOWN_PRINCIPAL:
 			return "Unknown principal";
+
+	        case LASSO_SOAP_FAULT_REDIRECT_REQUEST:
+		        return "Redirect request from Attribute Provider";
 
 		default:
 			return "Undefined error code.";

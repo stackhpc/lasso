@@ -1,4 +1,4 @@
-/* $Id: sessionprivate.h,v 1.3 2005/08/14 12:00:16 fpeters Exp $ 
+/* $Id: sessionprivate.h,v 1.4 2005/11/20 15:38:19 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -34,11 +34,11 @@ extern "C" {
 #include <lasso/id-ff/session.h>
 
 gint lasso_session_add_assertion(LassoSession *session,
-		char *providerID, LassoSamlAssertion *assertion);
+		char *providerID, LassoNode *assertion);
 gint lasso_session_add_status(LassoSession *session,
 		char *providerID, LassoSamlpStatus *authn_response);
 
-LassoSamlAssertion* lasso_session_get_assertion(
+LassoNode* lasso_session_get_assertion(
 		LassoSession *session, gchar *providerID);
 LassoSamlpStatus* lasso_session_get_status(
 		LassoSession *session, gchar *providerID);

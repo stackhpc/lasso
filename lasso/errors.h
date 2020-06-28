@@ -1,4 +1,4 @@
-/* $Id: errors.h,v 1.4 2005/08/12 09:10:19 fpeters Exp $ 
+/* $Id: errors.h,v 1.7 2005/11/20 15:38:18 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -55,9 +55,11 @@
 /* Server */
 #define LASSO_SERVER_ERROR_PROVIDER_NOT_FOUND         -201
 #define LASSO_SERVER_ERROR_ADD_PROVIDER_FAILED        -202
+#define LASSO_SERVER_ERROR_ADD_PROVIDER_PROTOCOL_MISMATCH -203
 
 /* Single Logout */
 #define LASSO_LOGOUT_ERROR_UNSUPPORTED_PROFILE        -301
+#define LASSO_LOGOUT_ERROR_REQUEST_DENIED              302
 
 /* Profile */
 #define LASSO_PROFILE_ERROR_INVALID_QUERY             -401
@@ -99,3 +101,5 @@
 /* Federation Termination Notification */
 #define LASSO_DEFEDERATION_ERROR_MISSING_NAME_IDENTIFIER  -700
 
+/* Soap */
+#define LASSO_SOAP_FAULT_REDIRECT_REQUEST                800

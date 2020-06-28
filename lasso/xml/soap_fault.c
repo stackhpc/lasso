@@ -1,4 +1,4 @@
-/* $Id: soap_fault.c,v 1.1 2005/09/27 21:36:26 nclapies Exp $ 
+/* $Id: soap_fault.c,v 1.2 2005/11/15 11:10:26 nclapies Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -57,7 +57,7 @@
 static struct XmlSnippet schema_snippets[] = {
 	{ "faultcode", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoSoapFault, faultcode) },
 	{ "faultstring", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoSoapFault, faultstring) },
-	{ "detail", SNIPPET_LIST_NODES, G_STRUCT_OFFSET(LassoSoapFault, detail) },
+	{ "Detail", SNIPPET_NODE, G_STRUCT_OFFSET(LassoSoapFault, Detail) },
 	{ NULL, 0, 0}
 };
 
@@ -71,7 +71,7 @@ instance_init(LassoSoapFault *node)
 	node->faultcode = NULL;
 	node->faultstring = NULL;
 	node->faultactor = NULL;
-	node->detail = NULL;
+	node->Detail = NULL;
 }
 
 static void

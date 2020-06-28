@@ -1,4 +1,4 @@
-/* $Id: is_redirect_request.c,v 1.2 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: is_redirect_request.c,v 1.3 2005/11/15 11:08:44 nclapies Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -39,7 +39,7 @@
 /*****************************************************************************/
 
 static struct XmlSnippet schema_snippets[] = {
-	{ "redirectURL", SNIPPET_CONTENT, G_STRUCT_OFFSET(LassoIsRedirectRequest, redirectURL) },
+	{ "redirectURL", SNIPPET_ATTRIBUTE, G_STRUCT_OFFSET(LassoIsRedirectRequest, redirectURL) },
 	{ NULL, 0, 0}
 };
 

@@ -1,4 +1,4 @@
-/* $Id: lib_logout_response.c,v 1.14 2005/01/22 15:57:55 eraviart Exp $ 
+/* $Id: lib_logout_response.c,v 1.15 2005/11/20 15:38:19 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -84,7 +84,7 @@ lasso_lib_logout_response_get_type()
  *
  * Return value: a newly created #LassoLibLogoutResponse object
  **/
-LassoSamlpResponseAbstract*
+LassoNode*
 lasso_lib_logout_response_new()
 {
 	return g_object_new(LASSO_TYPE_LIB_LOGOUT_RESPONSE, NULL);
@@ -104,7 +104,7 @@ lasso_lib_logout_response_new()
  *
  * Return value: a newly created #LassoLibLogoutResponse object
  **/
-LassoSamlpResponseAbstract*
+LassoNode*
 lasso_lib_logout_response_new_full(char *providerID, const char *statusCodeValue,
 		LassoLibLogoutRequest *request,
 		LassoSignatureType sign_type, LassoSignatureMethod sign_method)
@@ -125,5 +125,5 @@ lasso_lib_logout_response_new_full(char *providerID, const char *statusCodeValue
 	response->Status->StatusCode = lasso_samlp_status_code_new();
 	response->Status->StatusCode->Value = g_strdup(statusCodeValue);
 
-	return LASSO_SAMLP_RESPONSE_ABSTRACT(response);
+	return LASSO_NODE(response);
 }

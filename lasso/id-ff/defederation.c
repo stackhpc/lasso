@@ -1,4 +1,4 @@
-/* $Id: defederation.c,v 1.64 2005/06/03 21:38:14 fpeters Exp $ 
+/* $Id: defederation.c,v 1.67 2006/01/23 15:30:00 fpeters Exp $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -69,6 +69,11 @@ lasso_defederation_build_notification_msg(LassoDefederation *defederation)
 
 	profile = LASSO_PROFILE(defederation);
 
+	if (profile->remote_providerID == NULL) {
+		/* this means lasso_logout_init_request was not called before */
+		return critical_error(LASSO_PROFILE_ERROR_MISSING_REMOTE_PROVIDERID);
+	}
+
 	/* get the remote provider object */
 	remote_provider = g_hash_table_lookup(profile->server->providers,
 			profile->remote_providerID);
@@ -83,8 +88,10 @@ lasso_defederation_build_notification_msg(LassoDefederation *defederation)
 		/* build the logout request message */
 		profile->msg_url = lasso_provider_get_metadata_one(
 				remote_provider, "SoapEndpoint");
-		profile->request->private_key_file = profile->server->private_key;
-		profile->request->certificate_file = profile->server->certificate;
+		LASSO_SAMLP_REQUEST_ABSTRACT(profile->request)->private_key_file = 
+			profile->server->private_key;
+		LASSO_SAMLP_REQUEST_ABSTRACT(profile->request)->certificate_file = 
+			profile->server->certificate;
 		profile->msg_body = lasso_node_export_to_soap(LASSO_NODE(profile->request));
 		return 0;
 	}
@@ -150,6 +157,7 @@ lasso_defederation_init_notification(LassoDefederation *defederation, gchar *rem
 	LassoProvider *remote_provider;
 	LassoFederation *federation;
 	LassoSamlNameIdentifier *nameIdentifier;
+	LassoNode *nameIdentifier_n;
 
 	g_return_val_if_fail(LASSO_IS_DEFEDERATION(defederation),
 			LASSO_PARAM_ERROR_BAD_TYPE_OR_NULL_OBJ);
@@ -181,10 +189,11 @@ lasso_defederation_init_notification(LassoDefederation *defederation, gchar *rem
 	}
 
 	/* get the nameIdentifier to send the federation termination notification */
-	nameIdentifier = lasso_profile_get_nameIdentifier(profile);
+	nameIdentifier_n = lasso_profile_get_nameIdentifier(profile);
 	if (nameIdentifier == NULL) {
 		return critical_error(LASSO_PROFILE_ERROR_NAME_IDENTIFIER_NOT_FOUND);
 	}
+	nameIdentifier = LASSO_SAML_NAME_IDENTIFIER(nameIdentifier_n);
 
 	if (federation->local_nameIdentifier) {
 		profile->nameIdentifier = g_object_ref(federation->local_nameIdentifier);
@@ -232,9 +241,9 @@ lasso_defederation_init_notification(LassoDefederation *defederation, gchar *rem
 			g_strdup(profile->msg_relayState);
 	}
 
-	if (lasso_provider_compatibility_level(remote_provider) < LIBERTY_1_2) {
-		profile->request->MajorVersion = 1;
-		profile->request->MinorVersion = 1;
+	if (lasso_provider_get_protocol_conformance(remote_provider) < LASSO_PROTOCOL_LIBERTY_1_2) {
+		LASSO_SAMLP_REQUEST_ABSTRACT(profile->request)->MajorVersion = 1;
+		LASSO_SAMLP_REQUEST_ABSTRACT(profile->request)->MinorVersion = 1;
 	}
 
 	/* remove federation with remote provider id */
@@ -391,7 +400,8 @@ lasso_defederation_validate_notification(LassoDefederation *defederation)
 		return critical_error(LASSO_PROFILE_ERROR_FEDERATION_NOT_FOUND);
 	}
 
-	if (lasso_federation_verify_name_identifier(federation, nameIdentifier) == FALSE) {
+	if (lasso_federation_verify_name_identifier(federation,
+				LASSO_NODE(nameIdentifier)) == FALSE) {
 		return critical_error(LASSO_PROFILE_ERROR_NAME_IDENTIFIER_NOT_FOUND);
 	}
 
