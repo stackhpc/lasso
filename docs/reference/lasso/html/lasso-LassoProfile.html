@@ -3,30 +3,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LassoProfile</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="architecture.html" title="Lasso Architecture">
 <link rel="prev" href="lasso-LassoSession.html" title="LassoSession">
 <link rel="next" href="lasso-Error-Codes.html" title="Error Codes">
-<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
-<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
-<link rel="reference" href="rn01.html" title="Application Programming Interface">
-<link rel="chapter" href="architecture.html" title="Lasso Architecture">
-<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
-<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
-<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
-<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
-<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
-<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
-<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
-<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
-<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
-<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
-<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
-<link rel="part" href="pt01.html" title="Part II. Appendix">
-<link rel="index" href="api-index.html" title="API Index">
-<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
@@ -39,11 +22,11 @@
 </tr>
 <tr><td colspan="5" class="shortcuts">
 <a href="#lasso-LassoProfile.synopsis" class="shortcut">Top</a>
-                 | 
-                <a href="#lasso-LassoProfile.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#lasso-LassoProfile.description" class="shortcut">Description</a>
 </td></tr>
 </table>
-<div class="refentry" title="LassoProfile">
+<div class="refentry">
 <a name="lasso-LassoProfile"></a><div class="titlepage"></div>
 <div class="refnamediv"><table width="100%"><tr>
 <td valign="top">
@@ -52,76 +35,57 @@
 </td>
 <td valign="top" align="right"></td>
 </tr></table></div>
-<div class="refsynopsisdiv" title="Synopsis">
+<div class="refsynopsisdiv">
 <a name="lasso-LassoProfile.synopsis"></a><h2>Synopsis</h2>
-<pre class="synopsis">
-                    LassoProfile;
-enum                LassoRequestType;
-enum                LassoProfileSignatureHint;
-enum                LassoProfileSignatureVerifyHint;
-LassoRequestType    lasso_profile_get_request_type_from_soap_msg
-                                                        (const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *soap);
-lasso_error_t       lasso_profile_set_soap_fault_response
-                                                        (LassoProfile *profile,
-                                                         const char *faultcode,
-                                                         const char *faultstring,
-                                                         <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"
->GList</a> *details);
-<a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
->gboolean</a>            lasso_profile_is_liberty_query      (const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *query);
-LassoIdentity*      lasso_profile_get_identity          (LassoProfile *profile);
-LassoSession*       lasso_profile_get_session           (LassoProfile *profile);
-<a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
->gboolean</a>            lasso_profile_is_identity_dirty     (LassoProfile *profile);
-<a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
->gboolean</a>            lasso_profile_is_session_dirty      (LassoProfile *profile);
-lasso_error_t       lasso_profile_set_identity_from_dump
-                                                        (LassoProfile *profile,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *dump);
-lasso_error_t       lasso_profile_set_session_from_dump (LassoProfile *profile,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *dump);
-LassoNode*          lasso_profile_get_nameIdentifier    (LassoProfile *profile);
-char*               lasso_profile_get_artifact          (LassoProfile *profile);
-char*               lasso_profile_get_artifact_message  (LassoProfile *profile);
-void                lasso_profile_set_artifact_message  (LassoProfile *profile,
-                                                         const char *message);
-LassoServer*        lasso_profile_get_server            (LassoProfile *profile);
-void                lasso_profile_set_signature_hint    (LassoProfile *profile,
-                                                         LassoProfileSignatureHint signature_hint);
-LassoProfileSignatureHint  lasso_profile_get_signature_hint
-                                                        (LassoProfile *profile);
-void                lasso_profile_set_signature_verify_hint
-                                                        (LassoProfile *profile,
-                                                         LassoProfileSignatureVerifyHint signature_verify_hint);
-LassoProfileSignatureVerifyHint  lasso_profile_get_signature_verify_hint
-                                                        (LassoProfile *profile);
-LassoProviderRole   lasso_profile_sso_role_with         (LassoProfile *profile,
-                                                         const char *remote_provider_id);
-lasso_error_t       lasso_profile_get_signature_status  (LassoProfile *profile);
+<pre class="synopsis">struct              <a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile">LassoProfile</a>;
+enum                <a class="link" href="lasso-LassoProfile.html#LassoRequestType" title="enum LassoRequestType">LassoRequestType</a>;
+enum                <a class="link" href="lasso-LassoProfile.html#LassoProfileSignatureHint" title="enum LassoProfileSignatureHint">LassoProfileSignatureHint</a>;
+enum                <a class="link" href="lasso-LassoProfile.html#LassoProfileSignatureVerifyHint" title="enum LassoProfileSignatureVerifyHint">LassoProfileSignatureVerifyHint</a>;
+<a class="link" href="lasso-LassoProfile.html#LassoRequestType" title="enum LassoRequestType"><span class="returnvalue">LassoRequestType</span></a>    <a class="link" href="lasso-LassoProfile.html#lasso-profile-get-request-type-from-soap-msg" title="lasso_profile_get_request_type_from_soap_msg ()">lasso_profile_get_request_type_from_soap_msg</a>
+                                                        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *soap</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoProfile.html#lasso-profile-set-soap-fault-response" title="lasso_profile_set_soap_fault_response ()">lasso_profile_set_soap_fault_response</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *faultcode</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *faultstring</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *details</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="lasso-LassoProfile.html#lasso-profile-is-liberty-query" title="lasso_profile_is_liberty_query ()">lasso_profile_is_liberty_query</a>      (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *query</code></em>);
+<a class="link" href="lasso-LassoIdentity.html#LassoIdentity" title="struct LassoIdentity"><span class="returnvalue">LassoIdentity</span></a> *     <a class="link" href="lasso-LassoProfile.html#lasso-profile-get-identity" title="lasso_profile_get_identity ()">lasso_profile_get_identity</a>          (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);
+<a class="link" href="lasso-LassoSession.html#LassoSession" title="struct LassoSession"><span class="returnvalue">LassoSession</span></a> *      <a class="link" href="lasso-LassoProfile.html#lasso-profile-get-session" title="lasso_profile_get_session ()">lasso_profile_get_session</a>           (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="lasso-LassoProfile.html#lasso-profile-is-identity-dirty" title="lasso_profile_is_identity_dirty ()">lasso_profile_is_identity_dirty</a>     (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="lasso-LassoProfile.html#lasso-profile-is-session-dirty" title="lasso_profile_is_session_dirty ()">lasso_profile_is_session_dirty</a>      (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoProfile.html#lasso-profile-set-identity-from-dump" title="lasso_profile_set_identity_from_dump ()">lasso_profile_set_identity_from_dump</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *dump</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoProfile.html#lasso-profile-set-session-from-dump" title="lasso_profile_set_session_from_dump ()">lasso_profile_set_session_from_dump</a> (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *dump</code></em>);
+<a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="returnvalue">LassoNode</span></a> *         <a class="link" href="lasso-LassoProfile.html#lasso-profile-get-nameIdentifier" title="lasso_profile_get_nameIdentifier ()">lasso_profile_get_nameIdentifier</a>    (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);
+<span class="returnvalue">char</span> *              <a class="link" href="lasso-LassoProfile.html#lasso-profile-get-artifact" title="lasso_profile_get_artifact ()">lasso_profile_get_artifact</a>          (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);
+<span class="returnvalue">char</span> *              <a class="link" href="lasso-LassoProfile.html#lasso-profile-get-artifact-message" title="lasso_profile_get_artifact_message ()">lasso_profile_get_artifact_message</a>  (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="lasso-LassoProfile.html#lasso-profile-set-artifact-message" title="lasso_profile_set_artifact_message ()">lasso_profile_set_artifact_message</a>  (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *message</code></em>);
+<a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="returnvalue">LassoServer</span></a> *       <a class="link" href="lasso-LassoProfile.html#lasso-profile-get-server" title="lasso_profile_get_server ()">lasso_profile_get_server</a>            (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="lasso-LassoProfile.html#lasso-profile-set-signature-hint" title="lasso_profile_set_signature_hint ()">lasso_profile_set_signature_hint</a>    (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfileSignatureHint" title="enum LassoProfileSignatureHint"><span class="type">LassoProfileSignatureHint</span></a> signature_hint</code></em>);
+<a class="link" href="lasso-LassoProfile.html#LassoProfileSignatureHint" title="enum LassoProfileSignatureHint"><span class="returnvalue">LassoProfileSignatureHint</span></a>  <a class="link" href="lasso-LassoProfile.html#lasso-profile-get-signature-hint" title="lasso_profile_get_signature_hint ()">lasso_profile_get_signature_hint</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="lasso-LassoProfile.html#lasso-profile-set-signature-verify-hint" title="lasso_profile_set_signature_verify_hint ()">lasso_profile_set_signature_verify_hint</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfileSignatureVerifyHint" title="enum LassoProfileSignatureVerifyHint"><span class="type">LassoProfileSignatureVerifyHint</span></a> signature_verify_hint</code></em>);
+<a class="link" href="lasso-LassoProfile.html#LassoProfileSignatureVerifyHint" title="enum LassoProfileSignatureVerifyHint"><span class="returnvalue">LassoProfileSignatureVerifyHint</span></a>  <a class="link" href="lasso-LassoProfile.html#lasso-profile-get-signature-verify-hint" title="lasso_profile_get_signature_verify_hint ()">lasso_profile_get_signature_verify_hint</a>
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);
+<a class="link" href="lasso-LassoProvider.html#LassoProviderRole" title="enum LassoProviderRole"><span class="returnvalue">LassoProviderRole</span></a>   <a class="link" href="lasso-LassoProfile.html#lasso-profile-sso-role-with" title="lasso_profile_sso_role_with ()">lasso_profile_sso_role_with</a>         (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *remote_provider_id</code></em>);
+<span class="returnvalue">lasso_error_t</span>       <a class="link" href="lasso-LassoProfile.html#lasso-profile-get-signature-status" title="lasso_profile_get_signature_status ()">lasso_profile_get_signature_status</a>  (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);
 </pre>
 </div>
-<div class="refsect1" title="Description">
+<div class="refsect1">
 <a name="lasso-LassoProfile.description"></a><h2>Description</h2>
-<p>
-</p>
 </div>
-<div class="refsect1" title="Details">
+<div class="refsect1">
 <a name="lasso-LassoProfile.details"></a><h2>Details</h2>
-<div class="refsect2" title="LassoProfile">
-<a name="LassoProfile"></a><h3>LassoProfile</h3>
-<pre class="programlisting">typedef struct {
+<div class="refsect2">
+<a name="LassoProfile"></a><h3>struct LassoProfile</h3>
+<pre class="programlisting">struct LassoProfile {
 	LassoNode parent;
 
 	LassoServer *server;
@@ -136,76 +100,62 @@ lasso_error_t       lasso_profile_get_signature_status  (LassoProfile *profile);
 	gchar *msg_url;
 	gchar *msg_body;
 	gchar *msg_relayState;
-} LassoProfile;
+};
 </pre>
 <p>
-<span class="type">LassoProfile</span>, child class of <span class="type">LassoNode</span> is the basis object of profiles object like <span class="type">LassoLogin</span>, <span class="type">LassoLogout</span>,
-<span class="type">LassoDefederation</span>, <span class="type">LassoNameIdentifierMapping</span>, <span class="type">LassoNameRegistration</span>, <span class="type">LassoNameIdManagement</span>
-or <span class="type">LassoAssertionQuery</span>. It handles the minimal state used by all theses profiles.</p>
+<a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a>, child class of <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> is the basis object of profiles object like <a class="link" href="lasso-login.html#LassoLogin" title="struct LassoLogin"><span class="type">LassoLogin</span></a>, <a class="link" href="lasso-LassoLogout.html#LassoLogout" title="struct LassoLogout"><span class="type">LassoLogout</span></a>,
+<a class="link" href="lasso-LassoDefederation.html#LassoDefederation" title="struct LassoDefederation"><span class="type">LassoDefederation</span></a>, <a class="link" href="lasso-LassoNameIdentifierMapping.html#LassoNameIdentifierMapping" title="struct LassoNameIdentifierMapping"><span class="type">LassoNameIdentifierMapping</span></a>, <a class="link" href="lasso-LassoNameRegistration.html#LassoNameRegistration" title="struct LassoNameRegistration"><span class="type">LassoNameRegistration</span></a>, <a class="link" href="lasso-LassoNameIdManagement.html#LassoNameIdManagement" title="struct LassoNameIdManagement"><span class="type">LassoNameIdManagement</span></a>
+or <a class="link" href="lasso-assertion-query.html#LassoAssertionQuery" title="struct LassoAssertionQuery"><span class="type">LassoAssertionQuery</span></a>. It handles the minimal state used by all theses profiles.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
-<td><p><span class="term">LassoNode <em class="structfield"><code>parent</code></em>;</span></p></td>
+<td><p><span class="term"><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> <em class="structfield"><code><a name="LassoProfile.parent"></a>parent</code></em>;</span></p></td>
 <td></td>
 </tr>
 <tr>
-<td><p><span class="term">LassoServer *<em class="structfield"><code>server</code></em>;</span></p></td>
-<td> <span class="type">LassoServer</span> object representing the provider intiating this profile,
-</td>
+<td><p><span class="term"><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> *<em class="structfield"><code><a name="LassoProfile.server"></a>server</code></em>;</span></p></td>
+<td>
+<a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> object representing the provider intiating this profile,</td>
 </tr>
 <tr>
-<td><p><span class="term">LassoNode *<em class="structfield"><code>request</code></em>;</span></p></td>
-<td> the currently initialized request, or the last request parsed,
-</td>
+<td><p><span class="term"><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *<em class="structfield"><code><a name="LassoProfile.request"></a>request</code></em>;</span></p></td>
+<td>the currently initialized request, or the last request parsed,</td>
 </tr>
 <tr>
-<td><p><span class="term">LassoNode *<em class="structfield"><code>response</code></em>;</span></p></td>
-<td> the currently intialized request, or the last response parsed,
-</td>
+<td><p><span class="term"><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *<em class="structfield"><code><a name="LassoProfile.response"></a>response</code></em>;</span></p></td>
+<td>the currently intialized request, or the last response parsed,</td>
 </tr>
 <tr>
-<td><p><span class="term">LassoNode *<em class="structfield"><code>nameIdentifier</code></em>;</span></p></td>
-<td> for profiles which transmit a name identifier (that is, most of them), the
-parsed name identifier, can be a <span class="type">LassoSamlNameIdentifier</span> or a <span class="type">LassoSaml2NameID</span>,
-</td>
+<td><p><span class="term"><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *<em class="structfield"><code><a name="LassoProfile.nameIdentifier"></a>nameIdentifier</code></em>;</span></p></td>
+<td>for profiles which transmit a name identifier (that is, most of them), the
+parsed name identifier, can be a <a class="link" href="lasso-LassoSamlNameIdentifier.html#LassoSamlNameIdentifier" title="struct LassoSamlNameIdentifier"><span class="type">LassoSamlNameIdentifier</span></a> or a <a class="link" href="lasso-LassoSaml2NameID.html#LassoSaml2NameID" title="struct LassoSaml2NameID"><span class="type">LassoSaml2NameID</span></a>,</td>
 </tr>
 <tr>
-<td><p><span class="term"><a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *<em class="structfield"><code>remote_providerID</code></em>;</span></p></td>
-<td> the provider ID of the issuer of the last parsed message, whatever it is (a
-request or a response),
-</td>
+<td><p><span class="term"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *<em class="structfield"><code><a name="LassoProfile.remote-providerID"></a>remote_providerID</code></em>;</span></p></td>
+<td>the provider ID of the issuer of the last parsed message, whatever it is (a
+request or a response),</td>
 </tr>
 <tr>
-<td><p><span class="term"><a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *<em class="structfield"><code>msg_url</code></em>;</span></p></td>
-<td> when generating a request or a response, it give the URL to contact
-</td>
+<td><p><span class="term"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *<em class="structfield"><code><a name="LassoProfile.msg-url"></a>msg_url</code></em>;</span></p></td>
+<td>when generating a request or a response, it give the URL to contact</td>
 </tr>
 <tr>
-<td><p><span class="term"><a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *<em class="structfield"><code>msg_body</code></em>;</span></p></td>
-<td> when generating a request or a response using HTTP POST binding (can be HTTP-SOAP or
-HTTP-Post binding), the body of the POST will be in this field,
-</td>
+<td><p><span class="term"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *<em class="structfield"><code><a name="LassoProfile.msg-body"></a>msg_body</code></em>;</span></p></td>
+<td>when generating a request or a response using HTTP POST binding (can be HTTP-SOAP or
+HTTP-Post binding), the body of the POST will be in this field,</td>
 </tr>
 <tr>
-<td><p><span class="term"><a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *<em class="structfield"><code>msg_relayState</code></em>;</span></p></td>
-<td> put there the relaystate to put in the genereated URL for HTTP-Redirect or
-HTTP-Get binding.
-</td>
+<td><p><span class="term"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *<em class="structfield"><code><a name="LassoProfile.msg-relayState"></a>msg_relayState</code></em>;</span></p></td>
+<td>put there the relaystate to put in the genereated URL for HTTP-Redirect or
+HTTP-Get binding.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="enum LassoRequestType">
+<div class="refsect2">
 <a name="LassoRequestType"></a><h3>enum LassoRequestType</h3>
 <pre class="programlisting">typedef enum {
 	LASSO_REQUEST_TYPE_INVALID = 0,
@@ -227,97 +177,98 @@ HTTP-Get binding.
 } LassoRequestType;
 </pre>
 <p>
-Request types (known for SOAP endpoints)</p>
+Request types (known for SOAP endpoints)
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
-<td><p><a name="LASSO-REQUEST-TYPE-INVALID--CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_INVALID</code></span></p></td>
-<td> invalid
+<td><p><a name="LASSO-REQUEST-TYPE-INVALID:CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_INVALID</code></span></p></td>
+<td>invalid
 </td>
 </tr>
 <tr>
-<td><p><a name="LASSO-REQUEST-TYPE-LOGIN--CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_LOGIN</code></span></p></td>
-<td> Single Sign On and Federation
+<td><p><a name="LASSO-REQUEST-TYPE-LOGIN:CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_LOGIN</code></span></p></td>
+<td>Single Sign On and Federation
 </td>
 </tr>
 <tr>
-<td><p><a name="LASSO-REQUEST-TYPE-LOGOUT--CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_LOGOUT</code></span></p></td>
-<td> Single Logout
+<td><p><a name="LASSO-REQUEST-TYPE-LOGOUT:CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_LOGOUT</code></span></p></td>
+<td>Single Logout
 </td>
 </tr>
 <tr>
-<td><p><a name="LASSO-REQUEST-TYPE-DEFEDERATION--CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_DEFEDERATION</code></span></p></td>
-<td> Federation Termination
+<td><p><a name="LASSO-REQUEST-TYPE-DEFEDERATION:CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_DEFEDERATION</code></span></p></td>
+<td>Federation Termination
 </td>
 </tr>
 <tr>
-<td><p><a name="LASSO-REQUEST-TYPE-NAME-REGISTRATION--CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_NAME_REGISTRATION</code></span></p></td>
-<td> Name Registration
+<td><p><a name="LASSO-REQUEST-TYPE-NAME-REGISTRATION:CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_NAME_REGISTRATION</code></span></p></td>
+<td>Name Registration
 </td>
 </tr>
 <tr>
-<td><p><a name="LASSO-REQUEST-TYPE-NAME-IDENTIFIER-MAPPING--CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_NAME_IDENTIFIER_MAPPING</code></span></p></td>
-<td> Name Identifier Mapping
+<td><p><a name="LASSO-REQUEST-TYPE-NAME-IDENTIFIER-MAPPING:CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_NAME_IDENTIFIER_MAPPING</code></span></p></td>
+<td>Name Identifier Mapping
 </td>
 </tr>
 <tr>
-<td><p><a name="LASSO-REQUEST-TYPE-LECP--CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_LECP</code></span></p></td>
-<td> Liberty-Enabled Client / Proxy
+<td><p><a name="LASSO-REQUEST-TYPE-LECP:CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_LECP</code></span></p></td>
+<td>Liberty-Enabled Client / Proxy
 </td>
 </tr>
 <tr>
-<td><p><a name="LASSO-REQUEST-TYPE-DISCO-QUERY--CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_DISCO_QUERY</code></span></p></td>
-<td> ID-WSF 1.0 Discovery Query request
+<td><p><a name="LASSO-REQUEST-TYPE-DISCO-QUERY:CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_DISCO_QUERY</code></span></p></td>
+<td>ID-WSF 1.0 Discovery Query request
 </td>
 </tr>
 <tr>
-<td><p><a name="LASSO-REQUEST-TYPE-DISCO-MODIFY--CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_DISCO_MODIFY</code></span></p></td>
-<td> ID-WSF 1.0 Discovery Modify Request
+<td><p><a name="LASSO-REQUEST-TYPE-DISCO-MODIFY:CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_DISCO_MODIFY</code></span></p></td>
+<td>ID-WSF 1.0 Discovery Modify Request
 </td>
 </tr>
 <tr>
-<td><p><a name="LASSO-REQUEST-TYPE-DST-QUERY--CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_DST_QUERY</code></span></p></td>
-<td> ID-WSF 1.0 Data Service Template Query request
+<td><p><a name="LASSO-REQUEST-TYPE-DST-QUERY:CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_DST_QUERY</code></span></p></td>
+<td>ID-WSF 1.0 Data Service Template Query request
 </td>
 </tr>
 <tr>
-<td><p><a name="LASSO-REQUEST-TYPE-DST-MODIFY--CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_DST_MODIFY</code></span></p></td>
-<td> ID-WSF 1.0 Data Service Temaplte Modify request
+<td><p><a name="LASSO-REQUEST-TYPE-DST-MODIFY:CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_DST_MODIFY</code></span></p></td>
+<td>ID-WSF 1.0 Data Service Temaplte Modify request
 </td>
 </tr>
 <tr>
-<td><p><a name="LASSO-REQUEST-TYPE-SASL-REQUEST--CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_SASL_REQUEST</code></span></p></td>
-<td> ID-WSF 1.0 Authentication request
+<td><p><a name="LASSO-REQUEST-TYPE-SASL-REQUEST:CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_SASL_REQUEST</code></span></p></td>
+<td>ID-WSF 1.0 Authentication request
 </td>
 </tr>
 <tr>
-<td><p><a name="LASSO-REQUEST-TYPE-NAME-ID-MANAGEMENT--CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_NAME_ID_MANAGEMENT</code></span></p></td>
-<td> SAML 2.0 NameID Management request
+<td><p><a name="LASSO-REQUEST-TYPE-NAME-ID-MANAGEMENT:CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_NAME_ID_MANAGEMENT</code></span></p></td>
+<td>SAML 2.0 NameID Management request
 </td>
 </tr>
 <tr>
-<td><p><a name="LASSO-REQUEST-TYPE-IDWSF2-DISCO-SVCMD-REGISTER--CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_IDWSF2_DISCO_SVCMD_REGISTER</code></span></p></td>
-<td> ID-WSF 2.0 Discovery Service Metadata Register
+<td><p><a name="LASSO-REQUEST-TYPE-IDWSF2-DISCO-SVCMD-REGISTER:CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_IDWSF2_DISCO_SVCMD_REGISTER</code></span></p></td>
+<td>ID-WSF 2.0 Discovery Service Metadata Register
 request
 </td>
 </tr>
 <tr>
-<td><p><a name="LASSO-REQUEST-TYPE-IDWSF2-DISCO-SVCMD-ASSOCIATION-ADD--CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_IDWSF2_DISCO_SVCMD_ASSOCIATION_ADD</code></span></p></td>
-<td> ID-WSF 2.0 Discovery Service Metadata
+<td><p><a name="LASSO-REQUEST-TYPE-IDWSF2-DISCO-SVCMD-ASSOCIATION-ADD:CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_IDWSF2_DISCO_SVCMD_ASSOCIATION_ADD</code></span></p></td>
+<td>ID-WSF 2.0 Discovery Service Metadata
 Add Association request
 </td>
 </tr>
 <tr>
-<td><p><a name="LASSO-REQUEST-TYPE-IDWSF2-DISCO-QUERY--CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_IDWSF2_DISCO_QUERY</code></span></p></td>
-<td> ID-WSF 2.0 Discovery Query request
+<td><p><a name="LASSO-REQUEST-TYPE-IDWSF2-DISCO-QUERY:CAPS"></a><span class="term"><code class="literal">LASSO_REQUEST_TYPE_IDWSF2_DISCO_QUERY</code></span></p></td>
+<td>ID-WSF 2.0 Discovery Query request
 </td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="enum LassoProfileSignatureHint">
+<div class="refsect2">
 <a name="LassoProfileSignatureHint"></a><h3>enum LassoProfileSignatureHint</h3>
 <pre class="programlisting">typedef enum {
 	LASSO_PROFILE_SIGNATURE_HINT_MAYBE  = 0,
@@ -326,31 +277,32 @@ Add Association request
 } LassoProfileSignatureHint;
 </pre>
 <p>
-Advice a <span class="type">LassoProfile</span> object about the policy for generating request and response
-signatures.</p>
+Advice a <a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> object about the policy for generating request and response
+signatures.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
-<td><p><a name="LASSO-PROFILE-SIGNATURE-HINT-MAYBE--CAPS"></a><span class="term"><code class="literal">LASSO_PROFILE_SIGNATURE_HINT_MAYBE</code></span></p></td>
-<td> let Lasso decide what to do.
+<td><p><a name="LASSO-PROFILE-SIGNATURE-HINT-MAYBE:CAPS"></a><span class="term"><code class="literal">LASSO_PROFILE_SIGNATURE_HINT_MAYBE</code></span></p></td>
+<td>let Lasso decide what to do.
 </td>
 </tr>
 <tr>
-<td><p><a name="LASSO-PROFILE-SIGNATURE-HINT-FORCE--CAPS"></a><span class="term"><code class="literal">LASSO_PROFILE_SIGNATURE_HINT_FORCE</code></span></p></td>
-<td> generate and validate all signatures.
+<td><p><a name="LASSO-PROFILE-SIGNATURE-HINT-FORCE:CAPS"></a><span class="term"><code class="literal">LASSO_PROFILE_SIGNATURE_HINT_FORCE</code></span></p></td>
+<td>generate and validate all signatures.
 </td>
 </tr>
 <tr>
-<td><p><a name="LASSO-PROFILE-SIGNATURE-HINT-FORBID--CAPS"></a><span class="term"><code class="literal">LASSO_PROFILE_SIGNATURE_HINT_FORBID</code></span></p></td>
-<td> do not generate or validate any signature.
+<td><p><a name="LASSO-PROFILE-SIGNATURE-HINT-FORBID:CAPS"></a><span class="term"><code class="literal">LASSO_PROFILE_SIGNATURE_HINT_FORBID</code></span></p></td>
+<td>do not generate or validate any signature.
 </td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="enum LassoProfileSignatureVerifyHint">
+<div class="refsect2">
 <a name="LassoProfileSignatureVerifyHint"></a><h3>enum LassoProfileSignatureVerifyHint</h3>
 <pre class="programlisting">typedef enum {
 	LASSO_PROFILE_SIGNATURE_VERIFY_HINT_MAYBE = 0,
@@ -360,538 +312,525 @@ signatures.</p>
 } LassoProfileSignatureVerifyHint;
 </pre>
 <p>
-Advice a <span class="type">LassoProfile</span> object about the policy checking request and response
-signatures.</p>
+Advice a <a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> object about the policy checking request and response
+signatures.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
-<td><p><a name="LASSO-PROFILE-SIGNATURE-VERIFY-HINT-MAYBE--CAPS"></a><span class="term"><code class="literal">LASSO_PROFILE_SIGNATURE_VERIFY_HINT_MAYBE</code></span></p></td>
-<td> let Lasso decide what to do.
+<td><p><a name="LASSO-PROFILE-SIGNATURE-VERIFY-HINT-MAYBE:CAPS"></a><span class="term"><code class="literal">LASSO_PROFILE_SIGNATURE_VERIFY_HINT_MAYBE</code></span></p></td>
+<td>let Lasso decide what to do.
 </td>
 </tr>
 <tr>
-<td><p><a name="LASSO-PROFILE-SIGNATURE-VERIFY-HINT-FORCE--CAPS"></a><span class="term"><code class="literal">LASSO_PROFILE_SIGNATURE_VERIFY_HINT_FORCE</code></span></p></td>
-<td> always check signatures.
+<td><p><a name="LASSO-PROFILE-SIGNATURE-VERIFY-HINT-FORCE:CAPS"></a><span class="term"><code class="literal">LASSO_PROFILE_SIGNATURE_VERIFY_HINT_FORCE</code></span></p></td>
+<td>always check signatures.
 </td>
 </tr>
 <tr>
-<td><p><a name="LASSO-PROFILE-SIGNATURE-VERIFY-HINT-IGNORE--CAPS"></a><span class="term"><code class="literal">LASSO_PROFILE_SIGNATURE_VERIFY_HINT_IGNORE</code></span></p></td>
-<td> check signatures but do not stop protocol handling
+<td><p><a name="LASSO-PROFILE-SIGNATURE-VERIFY-HINT-IGNORE:CAPS"></a><span class="term"><code class="literal">LASSO_PROFILE_SIGNATURE_VERIFY_HINT_IGNORE</code></span></p></td>
+<td>check signatures but do not stop protocol handling
 on failures. The result of signature checking is still available in
-<span class="type">LassoProfile</span>.signature_status
+<span class="type">LassoProfile.signature_status</span>
 </td>
 </tr>
 <tr>
-<td><p><a name="LASSO-PROFILE-SIGNATURE-VERIFY-HINT-LAST--CAPS"></a><span class="term"><code class="literal">LASSO_PROFILE_SIGNATURE_VERIFY_HINT_LAST</code></span></p></td>
+<td><p><a name="LASSO-PROFILE-SIGNATURE-VERIFY-HINT-LAST:CAPS"></a><span class="term"><code class="literal">LASSO_PROFILE_SIGNATURE_VERIFY_HINT_LAST</code></span></p></td>
 <td></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_profile_get_request_type_from_soap_msg ()">
+<div class="refsect2">
 <a name="lasso-profile-get-request-type-from-soap-msg"></a><h3>lasso_profile_get_request_type_from_soap_msg ()</h3>
-<pre class="programlisting">LassoRequestType    lasso_profile_get_request_type_from_soap_msg
-                                                        (const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *soap);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoProfile.html#LassoRequestType" title="enum LassoRequestType"><span class="returnvalue">LassoRequestType</span></a>    lasso_profile_get_request_type_from_soap_msg
+                                                        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *soap</code></em>);</pre>
 <p>
-Looks up and return the type of the request in a SOAP message.</p>
+Looks up and return the type of the request in a SOAP message.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>soap</code></em> :</span></p></td>
-<td> the SOAP message
-</td>
+<td>the SOAP message</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> the type of request
-</td>
+<td>the type of request</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_profile_set_soap_fault_response ()">
+<div class="refsect2">
 <a name="lasso-profile-set-soap-fault-response"></a><h3>lasso_profile_set_soap_fault_response ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_profile_set_soap_fault_response
-                                                        (LassoProfile *profile,
-                                                         const char *faultcode,
-                                                         const char *faultstring,
-                                                         <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"
->GList</a> *details);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_profile_set_soap_fault_response
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *faultcode</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *faultstring</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *details</code></em>);</pre>
 <p>
-Set the response to a SOAP fault, using <em class="parameter"><code>faultcode</code></em>, <em class="parameter"><code>faultstring</code></em>, and <em class="parameter"><code>details</code></em> to initialize it.</p>
+Set the response to a SOAP fault, using <em class="parameter"><code>faultcode</code></em>, <em class="parameter"><code>faultstring</code></em>, and <em class="parameter"><code>details</code></em> to initialize it.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>profile</code></em> :</span></p></td>
-<td> a <span class="type">LassoProfile</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>faultcode</code></em> :</span></p></td>
-<td> the code for the SOAP fault
-</td>
+<td>the code for the SOAP fault</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>faultstring:(allow-none)</code></em> :</span></p></td>
-<td> the description for the SOAP fault
-</td>
+<td>the description for the SOAP fault</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>details</code></em> :</span></p></td>
-<td> a list of nodes to add as details. <acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> LassoNode. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=allow-none"><span class="acronym">allow-none</span></a> LassoNode. </td>
+<td>a list of nodes to add as details. <span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> LassoNode][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> 0 if successful, an error code otherwise.
-</td>
+<td>0 if successful, an error code otherwise.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_profile_is_liberty_query ()">
+<div class="refsect2">
 <a name="lasso-profile-is-liberty-query"></a><h3>lasso_profile_is_liberty_query ()</h3>
-<pre class="programlisting"><a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
->gboolean</a>            lasso_profile_is_liberty_query      (const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *query);</pre>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            lasso_profile_is_liberty_query      (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *query</code></em>);</pre>
 <p>
 Tests the query string to know if the URL is called as the result of a
-Liberty redirect (action initiated elsewhere) or not.</p>
+Liberty redirect (action initiated elsewhere) or not.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>query</code></em> :</span></p></td>
-<td> HTTP query string
-</td>
+<td>HTTP query string</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> TRUE if Liberty query, FALSE otherwise
-</td>
+<td>TRUE if Liberty query, FALSE otherwise</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_profile_get_identity ()">
+<div class="refsect2">
 <a name="lasso-profile-get-identity"></a><h3>lasso_profile_get_identity ()</h3>
-<pre class="programlisting">LassoIdentity*      lasso_profile_get_identity          (LassoProfile *profile);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoIdentity.html#LassoIdentity" title="struct LassoIdentity"><span class="returnvalue">LassoIdentity</span></a> *     lasso_profile_get_identity          (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);</pre>
 <p>
-Gets the identity bound to <em class="parameter"><code>profile</code></em>.</p>
+Gets the identity bound to <em class="parameter"><code>profile</code></em>.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>profile</code></em> :</span></p></td>
-<td> a <span class="type">LassoProfile</span>
+<td>a <a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>transfer none. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> none. </td>
+<td>the identity or NULL if it none was found.  The <a class="link" href="lasso-LassoIdentity.html#LassoIdentity" title="struct LassoIdentity"><span class="type">LassoIdentity</span></a>
+object is internally allocated and must not be freed by the caller. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_profile_get_session ()">
+<div class="refsect2">
 <a name="lasso-profile-get-session"></a><h3>lasso_profile_get_session ()</h3>
-<pre class="programlisting">LassoSession*       lasso_profile_get_session           (LassoProfile *profile);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoSession.html#LassoSession" title="struct LassoSession"><span class="returnvalue">LassoSession</span></a> *      lasso_profile_get_session           (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);</pre>
 <p>
-Gets the session bound to <em class="parameter"><code>profile</code></em>.</p>
+Gets the session bound to <em class="parameter"><code>profile</code></em>.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>profile</code></em> :</span></p></td>
-<td> a <span class="type">LassoProfile</span>
+<td>a <a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>transfer none. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> none. </td>
+<td>the session or NULL if it none was found.  The <a class="link" href="lasso-LassoSession.html#LassoSession" title="struct LassoSession"><span class="type">LassoSession</span></a>
+object is internally allocated and must not be freed by the caller. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_profile_is_identity_dirty ()">
+<div class="refsect2">
 <a name="lasso-profile-is-identity-dirty"></a><h3>lasso_profile_is_identity_dirty ()</h3>
-<pre class="programlisting"><a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
->gboolean</a>            lasso_profile_is_identity_dirty     (LassoProfile *profile);</pre>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            lasso_profile_is_identity_dirty     (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);</pre>
 <p>
-Checks whether identity has been modified (and should therefore be saved).</p>
+Checks whether identity has been modified (and should therefore be saved).
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>profile</code></em> :</span></p></td>
-<td> a <span class="type">LassoProfile</span>
+<td>a <a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> <code class="literal">TRUE</code> if identity has changed
-</td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if identity has changed</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_profile_is_session_dirty ()">
+<div class="refsect2">
 <a name="lasso-profile-is-session-dirty"></a><h3>lasso_profile_is_session_dirty ()</h3>
-<pre class="programlisting"><a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
->gboolean</a>            lasso_profile_is_session_dirty      (LassoProfile *profile);</pre>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            lasso_profile_is_session_dirty      (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);</pre>
 <p>
-Checks whether session has been modified (and should therefore be saved).</p>
+Checks whether session has been modified (and should therefore be saved).
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>profile</code></em> :</span></p></td>
-<td> a <span class="type">LassoProfile</span>
+<td>a <a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> <code class="literal">TRUE</code> if session has changed
-</td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if session has changed</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_profile_set_identity_from_dump ()">
+<div class="refsect2">
 <a name="lasso-profile-set-identity-from-dump"></a><h3>lasso_profile_set_identity_from_dump ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_profile_set_identity_from_dump
-                                                        (LassoProfile *profile,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *dump);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_profile_set_identity_from_dump
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *dump</code></em>);</pre>
 <p>
-Builds a new <span class="type">LassoIdentity</span> object from XML dump and binds it to <em class="parameter"><code>profile</code></em>.</p>
+Builds a new <a class="link" href="lasso-LassoIdentity.html#LassoIdentity" title="struct LassoIdentity"><span class="type">LassoIdentity</span></a> object from XML dump and binds it to <em class="parameter"><code>profile</code></em>.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>profile</code></em> :</span></p></td>
-<td> a <span class="type">LassoProfile</span>
+<td>a <a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>dump</code></em> :</span></p></td>
-<td> XML identity dump
-</td>
+<td>XML identity dump</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> 0 on success; or a negative value otherwise.
-</td>
+<td>0 on success; or a negative value otherwise.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_profile_set_session_from_dump ()">
+<div class="refsect2">
 <a name="lasso-profile-set-session-from-dump"></a><h3>lasso_profile_set_session_from_dump ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_profile_set_session_from_dump (LassoProfile *profile,
-                                                         const <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a> *dump);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_profile_set_session_from_dump (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *dump</code></em>);</pre>
 <p>
-Builds a new <span class="type">LassoSession</span> object from XML dump and binds it to <em class="parameter"><code>profile</code></em>.</p>
+Builds a new <a class="link" href="lasso-LassoSession.html#LassoSession" title="struct LassoSession"><span class="type">LassoSession</span></a> object from XML dump and binds it to <em class="parameter"><code>profile</code></em>.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>profile</code></em> :</span></p></td>
-<td> a <span class="type">LassoProfile</span>
+<td>a <a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>dump</code></em> :</span></p></td>
-<td> XML session dump
-</td>
+<td>XML session dump</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> 0 on success; or a negative value otherwise.
-</td>
+<td>0 on success; or a negative value otherwise.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_profile_get_nameIdentifier ()">
+<div class="refsect2">
 <a name="lasso-profile-get-nameIdentifier"></a><h3>lasso_profile_get_nameIdentifier ()</h3>
-<pre class="programlisting">LassoNode*          lasso_profile_get_nameIdentifier    (LassoProfile *profile);</pre>
+<pre class="programlisting"><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="returnvalue">LassoNode</span></a> *         lasso_profile_get_nameIdentifier    (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);</pre>
 <p>
 Looks up appropriate federation in object and gets the service provider name
-identifier (which is actually a <span class="type">LassoSamlNameIdentifier</span> in ID-FF 1.2 and
-<span class="type">LassoSaml2NameID</span> in SAML 2.0).</p>
+identifier (which is actually a <a class="link" href="lasso-LassoSamlNameIdentifier.html#LassoSamlNameIdentifier" title="struct LassoSamlNameIdentifier"><span class="type">LassoSamlNameIdentifier</span></a> in ID-FF 1.2 and
+<a class="link" href="lasso-LassoSaml2NameID.html#LassoSaml2NameID" title="struct LassoSaml2NameID"><span class="type">LassoSaml2NameID</span></a> in SAML 2.0).
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>profile</code></em> :</span></p></td>
-<td> a <span class="type">LassoProfile</span>
+<td>a <a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>transfer none. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> none. </td>
+<td>the name identifier or NULL if none was found.  The <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a>
+object is internally allocated and must not be freed by the caller. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_profile_get_artifact ()">
+<div class="refsect2">
 <a name="lasso-profile-get-artifact"></a><h3>lasso_profile_get_artifact ()</h3>
-<pre class="programlisting">char*               lasso_profile_get_artifact          (LassoProfile *profile);</pre>
+<pre class="programlisting"><span class="returnvalue">char</span> *              lasso_profile_get_artifact          (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);</pre>
 <p>
-Return the artifact token</p>
+Return the artifact token
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>profile</code></em> :</span></p></td>
-<td> a <span class="type">LassoProfile</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a newly allocated string or NULL.. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> full. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=allow-none"><span class="acronym">allow-none</span></a> full. </td>
+<td>a newly allocated string or NULL. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_profile_get_artifact_message ()">
+<div class="refsect2">
 <a name="lasso-profile-get-artifact-message"></a><h3>lasso_profile_get_artifact_message ()</h3>
-<pre class="programlisting">char*               lasso_profile_get_artifact_message  (LassoProfile *profile);</pre>
+<pre class="programlisting"><span class="returnvalue">char</span> *              lasso_profile_get_artifact_message  (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);</pre>
 <p>
-Return the artifact message.</p>
+Return the artifact message.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>profile</code></em> :</span></p></td>
-<td> a <span class="type">LassoProfile</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a newly allocated string or NULL. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> full. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=allow-none"><span class="acronym">allow-none</span></a> full. </td>
+<td>a newly allocated string or NULL. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_profile_set_artifact_message ()">
+<div class="refsect2">
 <a name="lasso-profile-set-artifact-message"></a><h3>lasso_profile_set_artifact_message ()</h3>
-<pre class="programlisting">void                lasso_profile_set_artifact_message  (LassoProfile *profile,
-                                                         const char *message);</pre>
+<pre class="programlisting"><span class="returnvalue">void</span>                lasso_profile_set_artifact_message  (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *message</code></em>);</pre>
 <p>
-Set <em class="parameter"><code>message</code></em> as the content for the ArtifactResolve response.</p>
+Set <em class="parameter"><code>message</code></em> as the content for the ArtifactResolve response.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>profile</code></em> :</span></p></td>
-<td> a <span class="type">LassoProfile</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>message</code></em> :</span></p></td>
-<td> the artifact message content
-</td>
+<td>the artifact message content</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_profile_get_server ()">
+<div class="refsect2">
 <a name="lasso-profile-get-server"></a><h3>lasso_profile_get_server ()</h3>
-<pre class="programlisting">LassoServer*        lasso_profile_get_server            (LassoProfile *profile);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="returnvalue">LassoServer</span></a> *       lasso_profile_get_server            (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);</pre>
 <p>
-Return the <span class="type">LassoServer</span> linked to this profile object. A profile object should always contains
-one. It allows to find metadatas of other providers and to know our own metadatas.</p>
+Return the <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> linked to this profile object. A profile object should always contains
+one. It allows to find metadatas of other providers and to know our own metadatas.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>profile</code></em> :</span></p></td>
-<td> a <span class="type">LassoProfile</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>transfer none. <a href="http://foldoc.doc.ic.ac.uk/foldoc/foldoc.cgi?query=transfer"><span class="acronym">transfer</span></a> none. </td>
+<td>a <a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> or NULL if profile is not a <a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> or no
+<a class="link" href="lasso-LassoServer.html#LassoServer" title="struct LassoServer"><span class="type">LassoServer</span></a> object was setup at the creation of this profile. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_profile_set_signature_hint ()">
+<div class="refsect2">
 <a name="lasso-profile-set-signature-hint"></a><h3>lasso_profile_set_signature_hint ()</h3>
-<pre class="programlisting">void                lasso_profile_set_signature_hint    (LassoProfile *profile,
-                                                         LassoProfileSignatureHint signature_hint);</pre>
+<pre class="programlisting"><span class="returnvalue">void</span>                lasso_profile_set_signature_hint    (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfileSignatureHint" title="enum LassoProfileSignatureHint"><span class="type">LassoProfileSignatureHint</span></a> signature_hint</code></em>);</pre>
 <p>
 By default each profile will choose to sign or not its messages, this method allow to force or
-forbid the signature of messages, on a per transaction basis.</p>
+forbid the signature of messages, on a per transaction basis.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>profile</code></em> :</span></p></td>
-<td> a <span class="type">LassoProfile</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>signature_hint</code></em> :</span></p></td>
-<td> wheter next produced messages should be signed or not (or let Lasso choose from
-implicit information).
-</td>
+<td>wheter next produced messages should be signed or not (or let Lasso choose from
+implicit information).</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_profile_get_signature_hint ()">
+<div class="refsect2">
 <a name="lasso-profile-get-signature-hint"></a><h3>lasso_profile_get_signature_hint ()</h3>
-<pre class="programlisting">LassoProfileSignatureHint  lasso_profile_get_signature_hint
-                                                        (LassoProfile *profile);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoProfile.html#LassoProfileSignatureHint" title="enum LassoProfileSignatureHint"><span class="returnvalue">LassoProfileSignatureHint</span></a>  lasso_profile_get_signature_hint
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);</pre>
 <p>
-Return the value of the signature hint attribute (see <code class="function">lasso_profile_set_signature_hint()</code>).</p>
+Return the value of the signature hint attribute (see <a class="link" href="lasso-LassoProfile.html#lasso-profile-set-signature-hint" title="lasso_profile_set_signature_hint ()"><code class="function">lasso_profile_set_signature_hint()</code></a>).
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>profile</code></em> :</span></p></td>
-<td> a <span class="type">LassoProfile</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a value in the enum type <span class="type">LassoProfileSignatureHint</span>.
-</td>
+<td>a value in the enum type <a class="link" href="lasso-LassoProfile.html#LassoProfileSignatureHint" title="enum LassoProfileSignatureHint"><span class="type">LassoProfileSignatureHint</span></a>.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_profile_set_signature_verify_hint ()">
+<div class="refsect2">
 <a name="lasso-profile-set-signature-verify-hint"></a><h3>lasso_profile_set_signature_verify_hint ()</h3>
-<pre class="programlisting">void                lasso_profile_set_signature_verify_hint
-                                                        (LassoProfile *profile,
-                                                         LassoProfileSignatureVerifyHint signature_verify_hint);</pre>
+<pre class="programlisting"><span class="returnvalue">void</span>                lasso_profile_set_signature_verify_hint
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfileSignatureVerifyHint" title="enum LassoProfileSignatureVerifyHint"><span class="type">LassoProfileSignatureVerifyHint</span></a> signature_verify_hint</code></em>);</pre>
 <p>
 By default each profile will choose to verify or not its messages, this method allow to force or
-forbid the signature of messages, on a per transaction basis.</p>
+forbid the signature of messages, on a per transaction basis.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>profile</code></em> :</span></p></td>
-<td> a <span class="type">LassoProfile</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>signature_verify_hint</code></em> :</span></p></td>
-<td> whether next received message signatures should be checked or not (or let
-Lasso choose from implicit information).
-</td>
+<td>whether next received message signatures should be checked or not (or let
+Lasso choose from implicit information).</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_profile_get_signature_verify_hint ()">
+<div class="refsect2">
 <a name="lasso-profile-get-signature-verify-hint"></a><h3>lasso_profile_get_signature_verify_hint ()</h3>
-<pre class="programlisting">LassoProfileSignatureVerifyHint  lasso_profile_get_signature_verify_hint
-                                                        (LassoProfile *profile);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoProfile.html#LassoProfileSignatureVerifyHint" title="enum LassoProfileSignatureVerifyHint"><span class="returnvalue">LassoProfileSignatureVerifyHint</span></a>  lasso_profile_get_signature_verify_hint
+                                                        (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);</pre>
 <p>
 Return the value of the signature verify hint attribute (see
-<code class="function">lasso_profile_set_signature_verify_hint()</code>).</p>
+<a class="link" href="lasso-LassoProfile.html#lasso-profile-set-signature-verify-hint" title="lasso_profile_set_signature_verify_hint ()"><code class="function">lasso_profile_set_signature_verify_hint()</code></a>).
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>profile</code></em> :</span></p></td>
-<td> a <span class="type">LassoProfile</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a value in the enum type <span class="type">LassoProfileSignatureVerifyHint</span>.
-</td>
+<td>a value in the enum type <a class="link" href="lasso-LassoProfile.html#LassoProfileSignatureVerifyHint" title="enum LassoProfileSignatureVerifyHint"><span class="type">LassoProfileSignatureVerifyHint</span></a>.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_profile_sso_role_with ()">
+<div class="refsect2">
 <a name="lasso-profile-sso-role-with"></a><h3>lasso_profile_sso_role_with ()</h3>
-<pre class="programlisting">LassoProviderRole   lasso_profile_sso_role_with         (LassoProfile *profile,
-                                                         const char *remote_provider_id);</pre>
+<pre class="programlisting"><a class="link" href="lasso-LassoProvider.html#LassoProviderRole" title="enum LassoProviderRole"><span class="returnvalue">LassoProviderRole</span></a>   lasso_profile_sso_role_with         (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *remote_provider_id</code></em>);</pre>
 <p>
 Returns whether the current provider is a service provider relatively to another provider. It
-uses the <span class="type">LassoProfile</span>.identity to find if a federation qualifier by the given provider exists or
-the reverse.</p>
+uses the <span class="type">LassoProfile.identity</span> to find if a federation qualifier by the given provider exists or
+the reverse.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>profile</code></em> :</span></p></td>
-<td> a <span class="type">LassoProfile</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>remote_provider_id</code></em> :</span></p></td>
-<td> the identifier of a provider
-</td>
+<td>the identifier of a provider</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> <span class="type">LASSO_PROVIDER_ROLE_NONE</span> if nothing can be said, <span class="type">LASSO_PROVIDER_ROLE_SP</span> if a
-federation qualifier by <em class="parameter"><code>remote_provider_id</code></em> exists or <span class="type">LASSO_PROVIDER_ROLE_IDP</span> if a federation
-qualifier by our own <span class="type">LassoProvider</span>.providerID exists.
-</td>
+<td>
+<a class="link" href="lasso-LassoProvider.html#LASSO-PROVIDER-ROLE-NONE:CAPS"><span class="type">LASSO_PROVIDER_ROLE_NONE</span></a> if nothing can be said, <a class="link" href="lasso-LassoProvider.html#LASSO-PROVIDER-ROLE-SP:CAPS"><span class="type">LASSO_PROVIDER_ROLE_SP</span></a> if a
+federation qualifier by <em class="parameter"><code>remote_provider_id</code></em> exists or <a class="link" href="lasso-LassoProvider.html#LASSO-PROVIDER-ROLE-IDP:CAPS"><span class="type">LASSO_PROVIDER_ROLE_IDP</span></a> if a federation
+qualifier by our own <span class="type">LassoProvider.providerID</span> exists.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="lasso_profile_get_signature_status ()">
+<div class="refsect2">
 <a name="lasso-profile-get-signature-status"></a><h3>lasso_profile_get_signature_status ()</h3>
-<pre class="programlisting">lasso_error_t       lasso_profile_get_signature_status  (LassoProfile *profile);</pre>
+<pre class="programlisting"><span class="returnvalue">lasso_error_t</span>       lasso_profile_get_signature_status  (<em class="parameter"><code><a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> *profile</code></em>);</pre>
 <p>
-Returns the signature status from the last parsed message.</p>
+Returns the signature status from the last parsed message.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>profile</code></em> :</span></p></td>
-<td> a <span class="type">LassoProfile</span> object
-</td>
+<td>a <a class="link" href="lasso-LassoProfile.html#LassoProfile" title="struct LassoProfile"><span class="type">LassoProfile</span></a> object</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> 0 if no error from signature checking occurred, an error code otherwise.
-</td>
+<td>0 if no error from signature checking occurred, an error code otherwise.</td>
 </tr>
 </tbody>
 </table></div>
@@ -900,6 +839,6 @@ Returns the signature status from the last parsed message.</p>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.11</div>
+          Generated by GTK-Doc V1.17</div>
 </body>
 </html>

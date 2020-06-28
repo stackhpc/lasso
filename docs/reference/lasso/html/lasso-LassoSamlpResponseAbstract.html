@@ -3,30 +3,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LassoSamlpResponseAbstract</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="index.html" title="Lasso Reference Manual">
 <link rel="up" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
 <link rel="prev" href="lasso-LassoSamlpRequest.html" title="LassoSamlpRequest">
 <link rel="next" href="lasso-LassoSamlpResponse.html" title="LassoSamlpResponse">
-<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
-<link rel="chapter" href="lasso.html" title="Lasso &amp; Liberty Alliance Overview">
-<link rel="reference" href="rn01.html" title="Application Programming Interface">
-<link rel="chapter" href="architecture.html" title="Lasso Architecture">
-<link rel="chapter" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
-<link rel="chapter" href="xml-idff.html" title="Objects from ID-FF 1.2 schemas">
-<link rel="chapter" href="saml2.html" title="SAML 2.0 Single Sign On profiles">
-<link rel="chapter" href="xml-samlv2.html" title="Objects from SAML 2.0 schemas">
-<link rel="chapter" href="idwsf.html" title="Identity Web Services Framework 1.0">
-<link rel="chapter" href="xml-idwsf.html" title="Objects from ID-WSF 1.0 schemas">
-<link rel="chapter" href="idwsf2.html" title="ID-WSF 2.0">
-<link rel="chapter" href="xml-idwsf2.html" title="Objects from ID-WSF 2.0 schemas">
-<link rel="chapter" href="soap.html" title="Object from the SOAP 1.1 schemas">
-<link rel="chapter" href="xml-dsig.html" title="Object from the XML-DSIG schemas">
-<link rel="chapter" href="ws-addr.html" title="Object from the WS-* schemas">
-<link rel="part" href="pt01.html" title="Part II. Appendix">
-<link rel="index" href="api-index.html" title="API Index">
-<link rel="glossary" href="annotation-glossary.html" title="Annotation Glossary">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
@@ -39,11 +22,11 @@
 </tr>
 <tr><td colspan="5" class="shortcuts">
 <a href="#lasso-LassoSamlpResponseAbstract.synopsis" class="shortcut">Top</a>
-                 | 
-                <a href="#lasso-LassoSamlpResponseAbstract.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#lasso-LassoSamlpResponseAbstract.description" class="shortcut">Description</a>
 </td></tr>
 </table>
-<div class="refentry" title="LassoSamlpResponseAbstract">
+<div class="refentry">
 <a name="lasso-LassoSamlpResponseAbstract"></a><div class="titlepage"></div>
 <div class="refnamediv"><table width="100%"><tr>
 <td valign="top">
@@ -52,21 +35,20 @@
 </td>
 <td valign="top" align="right"></td>
 </tr></table></div>
-<div class="refsynopsisdiv" title="Synopsis">
+<div class="refsynopsisdiv">
 <a name="lasso-LassoSamlpResponseAbstract.synopsis"></a><h2>Synopsis</h2>
-<pre class="synopsis">
-                    LassoSamlpResponseAbstract;
-void                lasso_samlp_response_abstract_fill  (LassoSamlpResponseAbstract *response,
-                                                         const char *InResponseTo,
-                                                         const char *Recipient);
+<pre class="synopsis">struct              <a class="link" href="lasso-LassoSamlpResponseAbstract.html#LassoSamlpResponseAbstract" title="struct LassoSamlpResponseAbstract">LassoSamlpResponseAbstract</a>;
+<span class="returnvalue">void</span>                <a class="link" href="lasso-LassoSamlpResponseAbstract.html#lasso-samlp-response-abstract-fill" title="lasso_samlp_response_abstract_fill ()">lasso_samlp_response_abstract_fill</a>  (<em class="parameter"><code><a class="link" href="lasso-LassoSamlpResponseAbstract.html#LassoSamlpResponseAbstract" title="struct LassoSamlpResponseAbstract"><span class="type">LassoSamlpResponseAbstract</span></a> *response</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *InResponseTo</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *Recipient</code></em>);
 </pre>
 </div>
-<div class="refsect1" title="Description">
+<div class="refsect1">
 <a name="lasso-LassoSamlpResponseAbstract.description"></a><h2>Description</h2>
 <p>
 </p>
 <div class="figure">
-<a name="id2713275"></a><p class="title"><b>Figure 33. Schema fragment for samlp:ResponseAbstractType</b></p>
+<a name="id3117282"></a><p class="title"><b>Figure 33. Schema fragment for samlp:ResponseAbstractType</b></p>
 <div class="figure-contents"><pre class="programlisting">
 
 &lt;complexType name="ResponseAbstractType" abstract="true"&gt;
@@ -90,13 +72,14 @@ From oasis-sstc-saml-schema-assertion-1.0.xsd:
 &lt;/simpleType&gt;
 </pre></div>
 </div>
-<p><br class="figure-break"></p>
+<p><br class="figure-break">
+</p>
 </div>
-<div class="refsect1" title="Details">
+<div class="refsect1">
 <a name="lasso-LassoSamlpResponseAbstract.details"></a><h2>Details</h2>
-<div class="refsect2" title="LassoSamlpResponseAbstract">
-<a name="LassoSamlpResponseAbstract"></a><h3>LassoSamlpResponseAbstract</h3>
-<pre class="programlisting">typedef struct {
+<div class="refsect2">
+<a name="LassoSamlpResponseAbstract"></a><h3>struct LassoSamlpResponseAbstract</h3>
+<pre class="programlisting">struct LassoSamlpResponseAbstract {
 	LassoNode parent;
 
 	/* &lt;attribute name="ResponseID" type="saml:IDType" use="required"/&gt; */
@@ -117,20 +100,20 @@ From oasis-sstc-saml-schema-assertion-1.0.xsd:
 	LassoSignatureMethod sign_method;
 	char *private_key_file;
 	char *certificate_file;
-} LassoSamlpResponseAbstract;
+};
 </pre>
 </div>
 <hr>
-<div class="refsect2" title="lasso_samlp_response_abstract_fill ()">
+<div class="refsect2">
 <a name="lasso-samlp-response-abstract-fill"></a><h3>lasso_samlp_response_abstract_fill ()</h3>
-<pre class="programlisting">void                lasso_samlp_response_abstract_fill  (LassoSamlpResponseAbstract *response,
-                                                         const char *InResponseTo,
-                                                         const char *Recipient);</pre>
+<pre class="programlisting"><span class="returnvalue">void</span>                lasso_samlp_response_abstract_fill  (<em class="parameter"><code><a class="link" href="lasso-LassoSamlpResponseAbstract.html#LassoSamlpResponseAbstract" title="struct LassoSamlpResponseAbstract"><span class="type">LassoSamlpResponseAbstract</span></a> *response</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *InResponseTo</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *Recipient</code></em>);</pre>
 </div>
 </div>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.11</div>
+          Generated by GTK-Doc V1.17</div>
 </body>
 </html>
