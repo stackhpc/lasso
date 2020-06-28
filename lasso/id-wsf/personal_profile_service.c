@@ -1,4 +1,4 @@
-/* $Id: personal_profile_service.c 3237 2007-05-30 17:17:45Z dlaniel $
+/* $Id: personal_profile_service.c 3514 2008-03-21 17:32:24Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -108,22 +108,38 @@ lasso_personal_profile_service_get_type()
 			(GInstanceInitFunc) instance_init,
 		};
 
-		this_type = g_type_register_static(LASSO_TYPE_PROFILE_SERVICE,
+		this_type = g_type_register_static(LASSO_TYPE_DATA_SERVICE,
 				"LassoPersonalProfileService", &this_info, 0);
 	}
 	return this_type;
 }
 
 LassoPersonalProfileService*
-lasso_personal_profile_service_new(LassoServer *server, LassoDiscoResourceOffering *offering)
+lasso_personal_profile_service_new(LassoServer *server)
 {
 	LassoPersonalProfileService *service;
 
-	g_return_val_if_fail(LASSO_IS_SERVER(server) == TRUE, NULL);
+	g_return_val_if_fail(LASSO_IS_SERVER(server), NULL);
 
 	service = g_object_new(LASSO_TYPE_PERSONAL_PROFILE_SERVICE, NULL);
 	LASSO_WSF_PROFILE(service)->server = g_object_ref(server);
+
+	return service;
+}
+
+LassoPersonalProfileService*
+lasso_personal_profile_service_new_full(LassoServer *server, LassoDiscoResourceOffering *offering)
+{
+	LassoPersonalProfileService *service = lasso_personal_profile_service_new(server);
+
+	g_return_val_if_fail(LASSO_IS_DISCO_RESOURCE_OFFERING(offering), NULL);
+	
+	if (service == NULL) {
+		return NULL;
+	}
+
 	lasso_data_service_set_offering(LASSO_DATA_SERVICE(service), offering);
 
 	return service;
 }
+

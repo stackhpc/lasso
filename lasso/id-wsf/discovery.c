@@ -1,4 +1,4 @@
-/* $Id: discovery.c 3301 2007-06-13 12:01:54Z dlaniel $
+/* $Id: discovery.c 3448 2007-11-22 12:42:47Z fpeters $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -353,7 +353,7 @@ lasso_discovery_add_requested_service_type(LassoDiscovery *discovery,
 void
 lasso_discovery_destroy(LassoDiscovery *discovery)
 {
-	g_object_unref(G_OBJECT(discovery));
+	lasso_node_destroy(LASSO_NODE(discovery));
 }
 
 gint
@@ -969,7 +969,7 @@ lasso_discovery_get_service(LassoDiscovery *discovery, const char *service_type)
 	}
 
 	if (strcmp(offering->ServiceInstance->ServiceType, LASSO_PP_HREF) == 0) {
-		service = LASSO_DATA_SERVICE(lasso_personal_profile_service_new(
+		service = LASSO_DATA_SERVICE(lasso_personal_profile_service_new_full(
 					LASSO_WSF_PROFILE(discovery)->server, offering));
 	} else {
 		service = lasso_data_service_new_full(LASSO_WSF_PROFILE(discovery)->server,
@@ -1011,18 +1011,15 @@ lasso_discovery_get_services(LassoDiscovery *discovery)
 	while (iter) {
 		offering = iter->data;
 		iter = g_list_next(iter);
-		if (offering->ServiceInstance == NULL)
+		if (offering->ServiceInstance == NULL) {
 			continue;
+		}
 		if (strcmp(offering->ServiceInstance->ServiceType, LASSO_PP_HREF) == 0) {
-			service = LASSO_DATA_SERVICE(lasso_personal_profile_service_new(
-						LASSO_WSF_PROFILE(discovery)->server, offering));
-			service->provider_id = g_strdup(offering->ServiceInstance->ProviderID);
-			service->abstract_description = g_strdup(offering->Abstract);
+			service = LASSO_DATA_SERVICE(lasso_personal_profile_service_new_full(
+				LASSO_WSF_PROFILE(discovery)->server, offering));
 		} else {
-			service = lasso_data_service_new_full(LASSO_WSF_PROFILE(discovery)->server,
-					offering);
-			service->provider_id = g_strdup(offering->ServiceInstance->ProviderID);
-			service->abstract_description = g_strdup(offering->Abstract);
+			service = lasso_data_service_new_full(
+				LASSO_WSF_PROFILE(discovery)->server, offering);
 		}
 		services = g_list_append(services, service);
 	}

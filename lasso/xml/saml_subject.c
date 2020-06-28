@@ -1,4 +1,4 @@
-/* $Id: saml_subject.c 3237 2007-05-30 17:17:45Z dlaniel $
+/* $Id: saml_subject.c 3457 2007-12-05 10:48:49Z dlaniel $
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -46,6 +46,9 @@
 static struct XmlSnippet schema_snippets[] = {
 	{ "NameIdentifier", SNIPPET_NODE,
 		G_STRUCT_OFFSET(LassoSamlSubject, NameIdentifier) },
+	{ "EncryptedNameIdentifier", SNIPPET_NODE,
+		G_STRUCT_OFFSET(LassoSamlSubject, EncryptedNameIdentifier),
+		"LassoSaml2EncryptedElement" },
 	{ "SubjectConfirmation", SNIPPET_NODE,
 		G_STRUCT_OFFSET(LassoSamlSubject, SubjectConfirmation) },
 	{ NULL, 0, 0}
@@ -59,6 +62,7 @@ static void
 instance_init(LassoSamlSubject *node)
 {
 	node->NameIdentifier = NULL;
+	node->EncryptedNameIdentifier = NULL;
 	node->SubjectConfirmation = NULL;
 }
 

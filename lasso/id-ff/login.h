@@ -1,4 +1,4 @@
-/* $Id: login.h 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: login.h 3454 2007-11-27 23:17:21Z fpeters $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -63,6 +63,7 @@ typedef enum {
 	LASSO_LOGIN_PROTOCOL_PROFILE_BRWS_ART = 1,
 	LASSO_LOGIN_PROTOCOL_PROFILE_BRWS_POST,
 	LASSO_LOGIN_PROTOCOL_PROFILE_BRWS_LECP,
+	LASSO_LOGIN_PROTOCOL_PROFILE_REDIRECT,
 } LassoLoginProtocolProfile;
 
 struct _LassoLogin {

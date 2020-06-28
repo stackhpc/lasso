@@ -1,4 +1,4 @@
-/* $Id: server.h 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: server.h 3442 2007-11-13 16:12:25Z dlaniel $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -57,8 +57,9 @@ struct _LassoServer {
 	LassoProvider parent;
 
 	/*< public >*/
-	GHashTable *providers;
-	GHashTable *services;
+	GHashTable *providers; /* of LassoProvider */
+	/* Can actually contain LassoDataService or LassoIdWsf2DataService or any subclass */
+	GHashTable *services; /* of LassoDataService */
 
 	gchar *private_key;
 	gchar *private_key_password;

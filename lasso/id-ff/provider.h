@@ -1,4 +1,4 @@
-/* $Id: provider.h 3237 2007-05-30 17:17:45Z dlaniel $ 
+/* $Id: provider.h 3533 2008-04-23 17:10:05Z bdauvergne $ 
  *
  * Lasso - A free implementation of the Liberty Alliance specifications.
  *
@@ -124,6 +124,7 @@ typedef enum {
  * Provider protocol conformance.
  **/
 typedef enum {
+        LASSO_PROTOCOL_NONE = -1,
 	LASSO_PROTOCOL_LIBERTY_1_0,
 	LASSO_PROTOCOL_LIBERTY_1_1,
 	LASSO_PROTOCOL_LIBERTY_1_2,
