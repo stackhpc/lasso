@@ -1,3 +1,9 @@
+lasso (2.6.1-1build1) hirsute; urgency=medium
+
+  * No-change rebuild for the perl update.
+
+ -- Matthias Klose <doko@ubuntu.com>  Mon, 09 Nov 2020 12:16:19 +0100
+
 lasso (2.6.1-1) unstable; urgency=medium
 
   * New upstream release.
