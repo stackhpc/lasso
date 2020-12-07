@@ -1,3 +1,9 @@
+lasso (2.6.1-1build2) hirsute; urgency=medium
+
+  * No-change rebuild to drop python3.8 extensions.
+
+ -- Matthias Klose <doko@ubuntu.com>  Mon, 07 Dec 2020 18:21:39 +0100
+
 lasso (2.6.1-1build1) hirsute; urgency=medium
 
   * No-change rebuild for the perl update.
