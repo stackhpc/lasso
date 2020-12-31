@@ -5,6 +5,7 @@ Maintainer: Frederic Peters <fpeters@debian.org>
 Build-Depends: debhelper (>= 9),
         dh-python,
         dh-autoreconf,
+        gtk-doc-tools,
         libxml2-dev,
         libxslt1-dev,
         libxmlsec1-dev,
