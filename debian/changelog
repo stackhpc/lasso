@@ -1,3 +1,10 @@
+lasso (2.6.1-2) unstable; urgency=medium
+
+  * debian/control: add gtk-doc-tools to build-depends, required when running
+    autoreconf against autoconf 2.70. (closes: 978846)
+
+ -- Frederic Peters <fpeters@debian.org>  Thu, 31 Dec 2020 15:41:40 +0100
+
 lasso (2.6.1-1) unstable; urgency=medium
 
   * New upstream release.
