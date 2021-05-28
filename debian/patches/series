@@ -1,2 +1,3 @@
 PAOS-Do-not-populate-Destination-attribute.patch
 Use-INSTALLDIRS-vendor-for-the-Perl-bindings-as-per-.patch
+CVE-2021-28091.patch
