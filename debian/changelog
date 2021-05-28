@@ -1,3 +1,13 @@
+lasso (2.6.0-7ubuntu2.1) groovy-security; urgency=medium
+
+  * SECURITY UPDATE: unsigned assertions after signed valid assertions
+    are honored.
+    - d/p/CVE-2021-28091.patch: Fix signature checking on unsigned
+      response with multiple assertions
+    - CVE-2021-28091
+
+ -- Steve Beattie <sbeattie@ubuntu.com>  Fri, 28 May 2021 14:38:03 -0700
+
 lasso (2.6.0-7ubuntu2) groovy; urgency=medium
 
   * d/p/Fix-ECP-signature-not-found-error-when-only-assertion.patch:
