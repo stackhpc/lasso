@@ -1,3 +1,11 @@
+lasso (2.6.0-2+deb10u1) buster-security; urgency=high
+
+  * Non-maintainer upload by the Security Team.
+  * Fix signature checking on unsigned response with multiple assertions
+    (CVE-2021-28091)
+
+ -- Salvatore Bonaccorso <carnil@debian.org>  Wed, 02 Jun 2021 20:54:32 +0200
+
 lasso (2.6.0-2) unstable; urgency=medium
 
   * d/compat: bump do debhelper level 9.
