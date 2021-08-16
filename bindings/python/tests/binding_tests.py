@@ -329,8 +329,29 @@ class BindingTestCase(unittest.TestCase):
         node.sessionIndexes = ()
         assert node.sessionIndexes == (), node.sessionIndexes
 
+    def test14(self):
+        # verify Error implementation
+        with self.assertRaises(lasso.Error) as cm:
+            lasso.Server('', '', '')
+        assert isinstance(str(cm.exception), str)
+        with self.assertRaises(lasso.Error) as cm:
+            lasso.Error.raise_on_rc(lasso._lasso.XML_ERROR_SCHEMA_INVALID_FRAGMENT)
+        self.assertEqual(str(cm.exception),
+                         '<lasso.XmlSchemaInvalidFragmentError(17): An XML tree does not respect at least an XML schema of its namespaces.>')
 
+    def test_set_list_of_strings(self):
+        node = lasso.Samlp2RequestedAuthnContext()
+        with self.assertRaises(TypeError, msg='value should be a tuple of strings'):
+            node.authnContextClassRef = [None]
 
+    def test_set_list_of_pygobject(self):
+        node = lasso.Saml2Attribute()
+
+        class A:
+            _cptr = None
+        value = [A()]
+        with self.assertRaises(TypeError, msg='value should be a tuple of PyGobject'):
+            node.attributeValue = value
 
 bindingSuite = unittest.makeSuite(BindingTestCase, 'test')
 

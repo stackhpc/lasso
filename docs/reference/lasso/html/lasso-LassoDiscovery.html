@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>LassoDiscovery: Lasso Reference Manual</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
-<link rel="home" href="index.html" title="Lasso Reference Manual">
+<title>LassoDiscovery: lasso Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="lasso Reference Manual">
 <link rel="up" href="idwsf.html" title="Identity Web Services Framework 1.0">
 <link rel="prev" href="idwsf.html" title="Identity Web Services Framework 1.0">
 <link rel="next" href="lasso-LassoDataService.html" title="LassoDataService">
-<meta name="generator" content="GTK-Doc V1.28 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.33.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -35,8 +35,8 @@
 <a name="lasso-LassoDiscovery.functions"></a><h2>Functions</h2>
 <div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
-<col width="150px" class="functions_return">
-<col class="functions_name">
+<col width="150px" class="functions_proto_type">
+<col class="functions_proto_name">
 </colgroup>
 <tbody>
 <tr>
@@ -174,8 +174,8 @@
 <a name="lasso-LassoDiscovery.other"></a><h2>Types and Values</h2>
 <div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
-<col width="150px" class="name">
-<col class="description">
+<col width="150px" class="other_proto_type">
+<col class="other_proto_name">
 </colgroup>
 <tbody><tr>
 <td class="datatype_keyword">struct</td>
@@ -216,27 +216,27 @@ attribute provider for the "Personal Profile"):</p>
 19
 20
 21</pre></td>
-        <td class="listing_code"><pre class="programlisting">LassoServer <span class="gtkdoc opt">*</span>server<span class="gtkdoc opt">;</span>  <span class="gtkdoc slc">// initialized before</span>
-<span class="gtkdoc kwb">char</span><span class="gtkdoc opt">*</span> session_dump<span class="gtkdoc opt">;</span>   <span class="gtkdoc slc">// initialized before</span>
+        <td class="listing_code"><pre class="programlisting"><span class="n">LassoServer</span> <span class="o">*</span><span class="n">server</span><span class="p">;</span>  <span class="c1">// initialized before</span>
+<span class="kt">char</span><span class="o">*</span> <span class="n">session_dump</span><span class="p">;</span>   <span class="c1">// initialized before</span>
 
-LassoDiscovery <span class="gtkdoc opt">*</span>discovery<span class="gtkdoc opt">;</span>    <span class="gtkdoc slc">// discovery service</span>
-<span class="gtkdoc kwb">char</span> <span class="gtkdoc opt">*</span>soap_answer<span class="gtkdoc opt">;</span>            <span class="gtkdoc slc">// SOAP answer from disco service</span>
-LassoProfileService <span class="gtkdoc opt">*</span>service<span class="gtkdoc opt">;</span> <span class="gtkdoc slc">// instance to perform on requested service</span>
+<span class="n">LassoDiscovery</span> <span class="o">*</span><span class="n">discovery</span><span class="p">;</span>    <span class="c1">// discovery service</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">soap_answer</span><span class="p">;</span>            <span class="c1">// SOAP answer from disco service</span>
+<span class="n">LassoProfileService</span> <span class="o">*</span><span class="n">service</span><span class="p">;</span> <span class="c1">// instance to perform on requested service</span>
 
-discovery <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoDiscovery.html#lasso-discovery-new">lasso_discovery_new</a></span><span class="gtkdoc opt">(</span>server<span class="gtkdoc opt">);</span>
-<span class="function"><a href="lasso-LassoWsfProfile.html#lasso-wsf-profile-set-session-from-dump">lasso_wsf_profile_set_session_from_dump</a></span><span class="gtkdoc opt">(</span><span class="function">LASSO_WSF_PROFILE</span><span class="gtkdoc opt">(</span>discovery<span class="gtkdoc opt">),</span> session_dump<span class="gtkdoc opt">);</span>
-<span class="function"><a href="lasso-LassoDiscovery.html#lasso-discovery-init-query">lasso_discovery_init_query</a></span><span class="gtkdoc opt">(</span>discovery<span class="gtkdoc opt">);</span>
-<span class="function">lasso_discovery_add_requested_service</span><span class="gtkdoc opt">(</span>discovery<span class="gtkdoc opt">,</span> LASSO_PP10_HREF<span class="gtkdoc opt">);</span>
-<span class="function">lasso_discovery_build_request_msg</span><span class="gtkdoc opt">(</span>discovery<span class="gtkdoc opt">);</span>
+<span class="n">discovery</span> <span class="o">=</span> <span class="n">lasso_discovery_new</span><span class="p">(</span><span class="n">server</span><span class="p">);</span>
+<span class="n">lasso_wsf_profile_set_session_from_dump</span><span class="p">(</span><span class="n">LASSO_WSF_PROFILE</span><span class="p">(</span><span class="n">discovery</span><span class="p">),</span> <span class="n">session_dump</span><span class="p">);</span>
+<span class="n">lasso_discovery_init_query</span><span class="p">(</span><span class="n">discovery</span><span class="p">);</span>
+<span class="n">lasso_discovery_add_requested_service</span><span class="p">(</span><span class="n">discovery</span><span class="p">,</span> <span class="n">LASSO_PP10_HREF</span><span class="p">);</span>
+<span class="n">lasso_discovery_build_request_msg</span><span class="p">(</span><span class="n">discovery</span><span class="p">);</span>
 
-<span class="gtkdoc slc">// service must perform SOAP call to LASSO_WSF_PROFILE(discovery)-&gt;msg_url</span>
-<span class="gtkdoc slc">// the SOAP message is LASSO_WSF_PROFILE(discovery)-&gt;msg_body.  The answer</span>
-<span class="gtkdoc slc">// is stored in char* soap_answer;</span>
+<span class="c1">// service must perform SOAP call to LASSO_WSF_PROFILE(discovery)-&gt;msg_url</span>
+<span class="c1">// the SOAP message is LASSO_WSF_PROFILE(discovery)-&gt;msg_body.  The answer</span>
+<span class="c1">// is stored in char* soap_answer;</span>
 
-<span class="function"><a href="lasso-LassoDiscovery.html#lasso-discovery-process-query-response-msg">lasso_discovery_process_query_response_msg</a></span><span class="gtkdoc opt">(</span>discovery<span class="gtkdoc opt">,</span> soap_answer<span class="gtkdoc opt">);</span>
+<span class="n">lasso_discovery_process_query_response_msg</span><span class="p">(</span><span class="n">discovery</span><span class="p">,</span> <span class="n">soap_answer</span><span class="p">);</span>
 
-<span class="gtkdoc slc">// get an object to access the first service returned, or NULL if an error happened</span>
-service <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoDiscovery.html#lasso-discovery-get-service">lasso_discovery_get_service</a></span><span class="gtkdoc opt">(</span>discovery<span class="gtkdoc opt">);</span></pre></td>
+<span class="c1">// get an object to access the first service returned, or NULL if an error happened</span>
+<span class="n">service</span> <span class="o">=</span> <span class="n">lasso_discovery_get_service</span><span class="p">(</span><span class="n">discovery</span><span class="p">);</span></pre></td>
       </tr>
     </tbody>
   </table>
@@ -667,7 +667,7 @@ matching the service type.</p>
 <a name="lasso-discovery-get-service.returns"></a><h4>Returns</h4>
 <p>a newly created <a class="link" href="lasso-LassoDataService.html#LassoDataService" title="struct LassoDataService"><span class="type">LassoDataService</span></a> object; or NULL if an
 error occured. </p>
-<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
+<p><span class="annotation">[<acronym title="The caller owns the data, and is responsible for free it."><span class="acronym">transfer full</span></acronym>][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
 </div>
 </div>
 <hr>
@@ -695,7 +695,7 @@ lasso_discovery_get_services (<em class="parameter"><code><a class="link" href="
 <a name="lasso-discovery-get-services.returns"></a><h4>Returns</h4>
 <p>a newly created GList object of <a class="link" href="lasso-LassoDataService.html#LassoDataService" title="struct LassoDataService"><span class="type">LassoDataService</span></a>;
 or NULL if an error occured. </p>
-<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> LassoNode]</span></p>
+<p><span class="annotation">[<acronym title="The caller owns the data, and is responsible for free it."><span class="acronym">transfer full</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> LassoNode]</span></p>
 </div>
 </div>
 <hr>
@@ -786,6 +786,6 @@ constructor for the service type they previously registered using
 </div>
 </div>
 <div class="footer">
-<hr>Generated by GTK-Doc V1.28</div>
+<hr>Generated by GTK-Doc V1.33.1</div>
 </body>
 </html>

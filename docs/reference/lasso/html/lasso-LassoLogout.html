@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>LassoLogout: Lasso Reference Manual</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
-<link rel="home" href="index.html" title="Lasso Reference Manual">
+<title>LassoLogout: lasso Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="lasso Reference Manual">
 <link rel="up" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
 <link rel="prev" href="lasso-LassoLogin.html" title="LassoLogin">
 <link rel="next" href="lasso-LassoDefederation.html" title="LassoDefederation">
-<meta name="generator" content="GTK-Doc V1.28 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.33.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -35,8 +35,8 @@
 <a name="lasso-LassoLogout.functions"></a><h2>Functions</h2>
 <div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
-<col width="150px" class="functions_return">
-<col class="functions_name">
+<col width="150px" class="functions_proto_type">
+<col class="functions_proto_name">
 </colgroup>
 <tbody>
 <tr>
@@ -142,8 +142,8 @@
 <a name="lasso-LassoLogout.other"></a><h2>Types and Values</h2>
 <div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
-<col width="150px" class="name">
-<col class="description">
+<col width="150px" class="other_proto_type">
+<col class="other_proto_name">
 </colgroup>
 <tbody><tr>
 <td class="datatype_keyword">struct</td>
@@ -245,74 +245,74 @@ API</p>
 66
 67
 68</pre></td>
-        <td class="listing_code"><pre class="programlisting">LassoLogout <span class="gtkdoc opt">*</span>logout<span class="gtkdoc opt">;</span>
-<span class="gtkdoc kwb">char</span> <span class="gtkdoc opt">*</span>session_dump<span class="gtkdoc opt">;</span> <span class="gtkdoc slc">// must contain the session dump</span>
-                    <span class="gtkdoc slc">// for the current user</span>
-<span class="gtkdoc kwb">int</span> rc<span class="gtkdoc opt">;</span> <span class="gtkdoc slc">// hold return codes</span>
-<span class="gtkdoc kwb">char</span> <span class="gtkdoc opt">*</span>soap_response<span class="gtkdoc opt">;</span>
+        <td class="listing_code"><pre class="programlisting"><span class="n">LassoLogout</span> <span class="o">*</span><span class="n">logout</span><span class="p">;</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">session_dump</span><span class="p">;</span> <span class="c1">// must contain the session dump</span>
+                    <span class="c1">// for the current user</span>
+<span class="kt">int</span> <span class="n">rc</span><span class="p">;</span> <span class="c1">// hold return codes</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">soap_response</span><span class="p">;</span>
 
-LassoHttpMethod method<span class="gtkdoc opt">;</span> <span class="gtkdoc slc">// method to use, LASSO_HTTP_METHOD_REDIRECT, </span>
-                        <span class="gtkdoc slc">// LASSO_HTTP_METHOD_POST or LASSO_HTTP_METHOD_SOAP,</span>
-                        <span class="gtkdoc slc">// other methods are rarely supported</span>
+<span class="n">LassoHttpMethod</span> <span class="n">method</span><span class="p">;</span> <span class="c1">// method to use, LASSO_HTTP_METHOD_REDIRECT, </span>
+                        <span class="c1">// LASSO_HTTP_METHOD_POST or LASSO_HTTP_METHOD_SOAP,</span>
+                        <span class="c1">// other methods are rarely supported</span>
 
-logout <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoLogout.html#lasso-logout-new">lasso_logout_new</a></span><span class="gtkdoc opt">(</span>server<span class="gtkdoc opt">);</span>
-<span class="function"><a href="lasso-LassoProfile.html#lasso-profile-set-session-from-dump">lasso_profile_set_session_from_dump</a></span><span class="gtkdoc opt">(&amp;</span>logout<span class="gtkdoc opt">-&gt;</span>parent<span class="gtkdoc opt">,</span> session_dump<span class="gtkdoc opt">);</span>
-<span class="gtkdoc slc">// the second argument can be NULL, lasso_logout_init_request() will automatically choose the</span>
-<span class="gtkdoc slc">// identity provider from the first assertion int the session</span>
-rc <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoLogout.html#lasso-logout-init-request">lasso_logout_init_request</a></span><span class="gtkdoc opt">(</span>logout<span class="gtkdoc opt">,</span> <span class="string">&quot;http://identity-provider-id/&quot;</span><span class="gtkdoc opt">,</span>
-                method<span class="gtkdoc opt">);</span>
-<span class="keyword">if</span> <span class="gtkdoc opt">(</span>rc <span class="gtkdoc opt">!=</span> <span class="number">0</span><span class="gtkdoc opt">) {</span>
-  <span class="gtkdoc opt">...</span> <span class="gtkdoc slc">// handle errors, most of them are related to bad initialization</span>
-      <span class="gtkdoc slc">// or unsupported binding</span>
-<span class="gtkdoc opt">}</span>
-rc <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoLogout.html#lasso-logout-build-request-msg">lasso_logout_build_request_msg</a></span><span class="gtkdoc opt">(</span>logout<span class="gtkdoc opt">);</span>
-<span class="keyword">if</span> <span class="gtkdoc opt">(</span>rc <span class="gtkdoc opt">!=</span> <span class="number">0</span><span class="gtkdoc opt">) {</span>
-  <span class="gtkdoc opt">...</span> <span class="gtkdoc slc">// handle errors, most of them are related to bad initialization</span>
-      <span class="gtkdoc slc">// or impossibility to build the query string (missing private keys for signing)</span>
-<span class="gtkdoc opt">}</span>
+<span class="n">logout</span> <span class="o">=</span> <span class="n">lasso_logout_new</span><span class="p">(</span><span class="n">server</span><span class="p">);</span>
+<span class="n">lasso_profile_set_session_from_dump</span><span class="p">(</span><span class="o">&amp;</span><span class="n">logout</span><span class="o">-&gt;</span><span class="n">parent</span><span class="p">,</span> <span class="n">session_dump</span><span class="p">);</span>
+<span class="c1">// the second argument can be NULL, lasso_logout_init_request() will automatically choose the</span>
+<span class="c1">// identity provider from the first assertion int the session</span>
+<span class="n">rc</span> <span class="o">=</span> <span class="n">lasso_logout_init_request</span><span class="p">(</span><span class="n">logout</span><span class="p">,</span> <span class="s">&quot;http://identity-provider-id/&quot;</span><span class="p">,</span>
+                <span class="n">method</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">...</span> <span class="c1">// handle errors, most of them are related to bad initialization</span>
+      <span class="c1">// or unsupported binding</span>
+<span class="p">}</span>
+<span class="n">rc</span> <span class="o">=</span> <span class="n">lasso_logout_build_request_msg</span><span class="p">(</span><span class="n">logout</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">...</span> <span class="c1">// handle errors, most of them are related to bad initialization</span>
+      <span class="c1">// or impossibility to build the query string (missing private keys for signing)</span>
+<span class="p">}</span>
 
-<span class="gtkdoc slc">// now send the request</span>
-<span class="keyword">switch</span> <span class="gtkdoc opt">(</span>method<span class="gtkdoc opt">) {</span>
-    <span class="keyword">case</span> LASSO_HTTP_METHOD_REDIRECT<span class="gtkdoc opt">:</span>
-        <span class="gtkdoc slc">// LASSO_PROFILE(logout)-&gt;msg_url contains the URL where the </span>
-        <span class="gtkdoc slc">// User Agent must be redirected</span>
-        <span class="gtkdoc opt">...</span>
-        <span class="gtkdoc slc">// save the session and logout object, and store them attached to the RequestID of the</span>
-        <span class="gtkdoc slc">// request, you will need them for handling the response</span>
-        session_dump <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-node.html#lasso-node-dump">lasso_node_dump</a></span><span class="gtkdoc opt">((</span>LassoNode<span class="gtkdoc opt">*)</span>logout<span class="gtkdoc opt">-&gt;</span>parent<span class="gtkdoc opt">.</span>session<span class="gtkdoc opt">);</span>
-        logout_dump <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-node.html#lasso-node-dump">lasso_node_dump</a></span><span class="gtkdoc opt">((</span>LassoNode<span class="gtkdoc opt">*)</span>logout<span class="gtkdoc opt">);</span>
-        <span class="keyword">break</span><span class="gtkdoc opt">;</span>
-    <span class="keyword">case</span> LASSO_HTTP_METHOD_POST<span class="gtkdoc opt">:</span>
-        <span class="gtkdoc slc">// you must build a form with a field name SAMLRequest (SAML 2.0) or LAREQ (ID-FF 1.2)</span>
-        <span class="gtkdoc slc">// with the content of LASSO_PROFILE(logout)-&gt;msg_body</span>
-        <span class="gtkdoc slc">// posting to the address LASSO_PROFILE(logout)-&gt;msg_url</span>
-        <span class="gtkdoc opt">...</span>
-        <span class="gtkdoc slc">// save the session and logout object, and store them attached to the RequestID of the</span>
-        <span class="gtkdoc slc">// request, you will need them for handling the response</span>
-        session_dump <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-node.html#lasso-node-dump">lasso_node_dump</a></span><span class="gtkdoc opt">((</span>LassoNode<span class="gtkdoc opt">*)</span>logout<span class="gtkdoc opt">-&gt;</span>parent<span class="gtkdoc opt">.</span>session<span class="gtkdoc opt">);</span>
-        logout_dump <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-node.html#lasso-node-dump">lasso_node_dump</a></span><span class="gtkdoc opt">((</span>LassoNode<span class="gtkdoc opt">*)</span>logout<span class="gtkdoc opt">);</span>
-        <span class="keyword">break</span><span class="gtkdoc opt">;</span>
-    <span class="keyword">case</span> LASSO_HTTP_SOAP<span class="gtkdoc opt">:</span>
-        <span class="gtkdoc slc">// makes a SOAP call, soap_call is NOT a Lasso function</span>
-        soap_response <span class="gtkdoc opt">=</span> <span class="function">soap_call</span><span class="gtkdoc opt">(</span>login<span class="gtkdoc opt">-&gt;</span>parent<span class="gtkdoc opt">.</span>msg_url<span class="gtkdoc opt">,</span> login<span class="gtkdoc opt">-&gt;</span>parent<span class="gtkdoc opt">.</span>msg_body<span class="gtkdoc opt">);</span>
-        rc <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoLogout.html#lasso-logout-process-response-msg">lasso_logout_process_response_msg</a></span><span class="gtkdoc opt">(</span>logout<span class="gtkdoc opt">,</span> soap_response<span class="gtkdoc opt">);</span>
-        <span class="keyword">if</span> <span class="gtkdoc opt">(</span>rc <span class="gtkdoc opt">!=</span> <span class="number">0</span><span class="gtkdoc opt">) {</span>
-            <span class="gtkdoc slc">// handle errors, important ones are LASSO_LOGOUT_ERROR_UNSUPPORTED_PROFILE meaning</span>
-            <span class="gtkdoc slc">// that one other service provider of the current session cannot be contacted by the</span>
-            <span class="gtkdoc slc">// identity provider with the current binding, for example it only accept REDIRECT</span>
-            <span class="gtkdoc opt">(</span>asynchronous<span class="gtkdoc opt">-</span>binding<span class="gtkdoc opt">)</span> <span class="keyword">or</span>
-            <span class="gtkdoc slc">// POST an we are using SOAP (synchronous-binding).</span>
-            <span class="gtkdoc opt">...</span>
-        <span class="gtkdoc opt">}</span>
-        <span class="gtkdoc slc">// everything is ok save the session</span>
-        session_dump <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-node.html#lasso-node-dump">lasso_node_dump</a></span><span class="gtkdoc opt">(</span>logout<span class="gtkdoc opt">-&gt;</span>parent<span class="gtkdoc opt">.</span>session<span class="gtkdoc opt">);</span>
-        <span class="gtkdoc slc">// nothing to save because you killed the local session already</span>
-        <span class="keyword">break</span><span class="gtkdoc opt">;</span>
-    <span class="keyword">default</span><span class="gtkdoc opt">:</span>
-        <span class="gtkdoc slc">// other binding neither are frequent or largely supported</span>
-        <span class="gtkdoc slc">// so report an error</span>
-        <span class="keyword">break</span><span class="gtkdoc opt">;</span>
-    <span class="gtkdoc opt">}</span></pre></td>
+<span class="c1">// now send the request</span>
+<span class="k">switch</span> <span class="p">(</span><span class="n">method</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="nl">LASSO_HTTP_METHOD_REDIRECT</span><span class="p">:</span>
+        <span class="c1">// LASSO_PROFILE(logout)-&gt;msg_url contains the URL where the </span>
+        <span class="c1">// User Agent must be redirected</span>
+        <span class="p">...</span>
+        <span class="c1">// save the session and logout object, and store them attached to the RequestID of the</span>
+        <span class="c1">// request, you will need them for handling the response</span>
+        <span class="n">session_dump</span> <span class="o">=</span> <span class="n">lasso_node_dump</span><span class="p">((</span><span class="n">LassoNode</span><span class="o">*</span><span class="p">)</span><span class="n">logout</span><span class="o">-&gt;</span><span class="n">parent</span><span class="p">.</span><span class="n">session</span><span class="p">);</span>
+        <span class="n">logout_dump</span> <span class="o">=</span> <span class="n">lasso_node_dump</span><span class="p">((</span><span class="n">LassoNode</span><span class="o">*</span><span class="p">)</span><span class="n">logout</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="nl">LASSO_HTTP_METHOD_POST</span><span class="p">:</span>
+        <span class="c1">// you must build a form with a field name SAMLRequest (SAML 2.0) or LAREQ (ID-FF 1.2)</span>
+        <span class="c1">// with the content of LASSO_PROFILE(logout)-&gt;msg_body</span>
+        <span class="c1">// posting to the address LASSO_PROFILE(logout)-&gt;msg_url</span>
+        <span class="p">...</span>
+        <span class="c1">// save the session and logout object, and store them attached to the RequestID of the</span>
+        <span class="c1">// request, you will need them for handling the response</span>
+        <span class="n">session_dump</span> <span class="o">=</span> <span class="n">lasso_node_dump</span><span class="p">((</span><span class="n">LassoNode</span><span class="o">*</span><span class="p">)</span><span class="n">logout</span><span class="o">-&gt;</span><span class="n">parent</span><span class="p">.</span><span class="n">session</span><span class="p">);</span>
+        <span class="n">logout_dump</span> <span class="o">=</span> <span class="n">lasso_node_dump</span><span class="p">((</span><span class="n">LassoNode</span><span class="o">*</span><span class="p">)</span><span class="n">logout</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="nl">LASSO_HTTP_SOAP</span><span class="p">:</span>
+        <span class="c1">// makes a SOAP call, soap_call is NOT a Lasso function</span>
+        <span class="n">soap_response</span> <span class="o">=</span> <span class="n">soap_call</span><span class="p">(</span><span class="n">login</span><span class="o">-&gt;</span><span class="n">parent</span><span class="p">.</span><span class="n">msg_url</span><span class="p">,</span> <span class="n">login</span><span class="o">-&gt;</span><span class="n">parent</span><span class="p">.</span><span class="n">msg_body</span><span class="p">);</span>
+        <span class="n">rc</span> <span class="o">=</span> <span class="n">lasso_logout_process_response_msg</span><span class="p">(</span><span class="n">logout</span><span class="p">,</span> <span class="n">soap_response</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// handle errors, important ones are LASSO_LOGOUT_ERROR_UNSUPPORTED_PROFILE meaning</span>
+            <span class="c1">// that one other service provider of the current session cannot be contacted by the</span>
+            <span class="c1">// identity provider with the current binding, for example it only accept REDIRECT</span>
+            <span class="p">(</span><span class="n">asynchronous</span><span class="o">-</span><span class="n">binding</span><span class="p">)</span> <span class="n">or</span>
+            <span class="c1">// POST an we are using SOAP (synchronous-binding).</span>
+            <span class="p">...</span>
+        <span class="p">}</span>
+        <span class="c1">// everything is ok save the session</span>
+        <span class="n">session_dump</span> <span class="o">=</span> <span class="n">lasso_node_dump</span><span class="p">(</span><span class="n">logout</span><span class="o">-&gt;</span><span class="n">parent</span><span class="p">.</span><span class="n">session</span><span class="p">);</span>
+        <span class="c1">// nothing to save because you killed the local session already</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">default</span><span class="o">:</span>
+        <span class="c1">// other binding neither are frequent or largely supported</span>
+        <span class="c1">// so report an error</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span></pre></td>
       </tr>
     </tbody>
   </table>
@@ -347,26 +347,26 @@ binding (POST and Redirect).</p>
 18
 19
 20</pre></td>
-        <td class="listing_code"><pre class="programlisting">LassoLogout <span class="gtkdoc opt">*</span>logout<span class="gtkdoc opt">;</span>
-<span class="gtkdoc kwb">char</span> <span class="gtkdoc opt">*</span>request_method <span class="gtkdoc opt">=</span> <span class="function">getenv</span><span class="gtkdoc opt">(</span><span class="string">&quot;REQUEST_METHOD&quot;</span><span class="gtkdoc opt">);</span>
+        <td class="listing_code"><pre class="programlisting"><span class="n">LassoLogout</span> <span class="o">*</span><span class="n">logout</span><span class="p">;</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">request_method</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s">&quot;REQUEST_METHOD&quot;</span><span class="p">);</span>
 
-logout <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoLogout.html#lasso-logout-new">lasso_logout_new</a></span><span class="gtkdoc opt">(</span>server<span class="gtkdoc opt">);</span>
+<span class="n">logout</span> <span class="o">=</span> <span class="n">lasso_logout_new</span><span class="p">(</span><span class="n">server</span><span class="p">);</span>
 
-<span class="keyword">if</span> <span class="gtkdoc opt">(</span><span class="function">strcmp</span><span class="gtkdoc opt">(</span>request_method<span class="gtkdoc opt">,</span> <span class="string">&quot;GET&quot;</span><span class="gtkdoc opt">) ==</span> <span class="number">0</span><span class="gtkdoc opt">) {</span>
-    <span class="gtkdoc kwb">char</span> query_string <span class="gtkdoc opt">=</span> <span class="function">getenv</span><span class="gtkdoc opt">(</span><span class="string">&quot;QUERY_STRING&quot;</span><span class="gtkdoc opt">);</span>
-    rc <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoLogout.html#lasso-logout-process-response-msg">lasso_logout_process_response_msg</a></span><span class="gtkdoc opt">(</span>logout<span class="gtkdoc opt">,</span> query_string<span class="gtkdoc opt">);</span>
-<span class="gtkdoc opt">}</span> <span class="function">elif</span> <span class="gtkdoc opt">(</span><span class="function">strcmp</span><span class="gtkdoc opt">(</span>request_method<span class="gtkdoc opt">,</span> <span class="string">&quot;POST&quot;</span><span class="gtkdoc opt">) ==</span> <span class="number">0</span><span class="gtkdoc opt">) {</span>
-    <span class="gtkdoc kwb">char</span> <span class="gtkdoc opt">*</span>message<span class="gtkdoc opt">;</span>
-    <span class="gtkdoc slc">// message should contain the content of LARES or SAMLResponse fied, depending if this is an</span>
-    <span class="gtkdoc slc">// ID-FF 1.2 or SAML 2.0 service.</span>
-    rc <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoLogout.html#lasso-logout-process-response-msg">lasso_logout_process_response_msg</a></span><span class="gtkdoc opt">(</span>logout<span class="gtkdoc opt">,</span> message<span class="gtkdoc opt">);</span>
-<span class="gtkdoc opt">}</span>
-<span class="keyword">if</span> <span class="gtkdoc opt">(</span>rc <span class="gtkdoc opt">!=</span> <span class="number">0</span><span class="gtkdoc opt">) {</span>
-    <span class="gtkdoc slc">// handle errors, as we are already unlogged, those must go to a log file or audit trail,</span>
-    <span class="gtkdoc slc">// because at this time the user do not care anymore. A report about a failure to logout to</span>
-    <span class="gtkdoc slc">// the IdP can be eventually shown.</span>
-    <span class="gtkdoc opt">...</span>
-<span class="gtkdoc opt">}</span></pre></td>
+<span class="k">if</span> <span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">request_method</span><span class="p">,</span> <span class="s">&quot;GET&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="n">query_string</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s">&quot;QUERY_STRING&quot;</span><span class="p">);</span>
+    <span class="n">rc</span> <span class="o">=</span> <span class="n">lasso_logout_process_response_msg</span><span class="p">(</span><span class="n">logout</span><span class="p">,</span> <span class="n">query_string</span><span class="p">);</span>
+<span class="p">}</span> <span class="n">elif</span> <span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">request_method</span><span class="p">,</span> <span class="s">&quot;POST&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">message</span><span class="p">;</span>
+    <span class="c1">// message should contain the content of LARES or SAMLResponse fied, depending if this is an</span>
+    <span class="c1">// ID-FF 1.2 or SAML 2.0 service.</span>
+    <span class="n">rc</span> <span class="o">=</span> <span class="n">lasso_logout_process_response_msg</span><span class="p">(</span><span class="n">logout</span><span class="p">,</span> <span class="n">message</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// handle errors, as we are already unlogged, those must go to a log file or audit trail,</span>
+    <span class="c1">// because at this time the user do not care anymore. A report about a failure to logout to</span>
+    <span class="c1">// the IdP can be eventually shown.</span>
+    <span class="p">...</span>
+<span class="p">}</span></pre></td>
       </tr>
     </tbody>
   </table>
@@ -456,81 +456,81 @@ respond.</p>
 73
 74
 75</pre></td>
-        <td class="listing_code"><pre class="programlisting">LassoLogout <span class="gtkdoc opt">*</span>logout<span class="gtkdoc opt">;</span>
-<span class="gtkdoc kwb">char</span> <span class="gtkdoc opt">*</span>session_dump<span class="gtkdoc opt">;</span>
-<span class="gtkdoc kwb">char</span> <span class="gtkdoc opt">*</span>request_method <span class="gtkdoc opt">=</span> <span class="function">getenv</span><span class="gtkdoc opt">(</span><span class="string">&quot;REQUEST_METHOD&quot;</span><span class="gtkdoc opt">);</span>
-<span class="gtkdoc kwb">int</span> rc<span class="gtkdoc opt">;</span>
-<span class="gtkdoc kwb">int</span> method<span class="gtkdoc opt">;</span>
+        <td class="listing_code"><pre class="programlisting"><span class="n">LassoLogout</span> <span class="o">*</span><span class="n">logout</span><span class="p">;</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">session_dump</span><span class="p">;</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">request_method</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s">&quot;REQUEST_METHOD&quot;</span><span class="p">);</span>
+<span class="kt">int</span> <span class="n">rc</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">method</span><span class="p">;</span>
 
-logout <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoLogout.html#lasso-logout-new">lasso_logout_new</a></span><span class="gtkdoc opt">(</span>server<span class="gtkdoc opt">);</span>
-<span class="gtkdoc slc">// server must be previously initialized, it can be kept around</span>
-<span class="gtkdoc slc">// and used for many transaction, it is never modified by any profile</span>
-<span class="keyword">if</span> <span class="gtkdoc opt">(</span><span class="function">strcmp</span><span class="gtkdoc opt">(</span>request_method<span class="gtkdoc opt">.</span> <span class="string">&quot;GET&quot;</span><span class="gtkdoc opt">) ==</span> <span class="number">0</span><span class="gtkdoc opt">) {</span>
-    method <span class="gtkdoc opt">=</span> LASSO_HTTP_METHOD_REDIRECT<span class="gtkdoc opt">;</span>
-    <span class="gtkdoc kwb">char</span> query_string <span class="gtkdoc opt">=</span> <span class="function">getenv</span><span class="gtkdoc opt">(</span><span class="string">&quot;QUERY_STRING&quot;</span><span class="gtkdoc opt">);</span>
-    rc <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoLogout.html#lasso-logout-process-request-msg">lasso_logout_process_request_msg</a></span><span class="gtkdoc opt">(</span>logout<span class="gtkdoc opt">,</span> query_string<span class="gtkdoc opt">);</span>
-    <span class="keyword">if</span> <span class="gtkdoc opt">(</span>rc <span class="gtkdoc opt">!=</span> <span class="number">0</span><span class="gtkdoc opt">) {</span>
-        <span class="gtkdoc slc">// handle errors</span>
-        <span class="gtkdoc opt">...</span>
-    <span class="gtkdoc opt">}</span>
-<span class="gtkdoc opt">}</span> <span class="keyword">else if</span> <span class="gtkdoc opt">(</span><span class="function">strcmp</span><span class="gtkdoc opt">(</span>request_method<span class="gtkdoc opt">,</span> <span class="string">&quot;POST&quot;</span><span class="gtkdoc opt">) ==</span> <span class="number">0</span><span class="gtkdoc opt">) {</span>
-    <span class="gtkdoc kwb">char</span> <span class="gtkdoc opt">*</span>message<span class="gtkdoc opt">;</span>
-    <span class="gtkdoc slc">// read submitted content if this is a form, put LAREQ or SAMLRequest field into message and</span>
-    set method to LASSO_HTTP_METHOD_POST
-    <span class="gtkdoc slc">// if content type is application/xml then put the full body of the POST inside message and</span>
-    <span class="gtkdoc slc">// set method to LASSO_HTTP_METHOD_SOAP</span>
-    rc <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoLogout.html#lasso-logout-process-request-msg">lasso_logout_process_request_msg</a></span><span class="gtkdoc opt">(</span>logout<span class="gtkdoc opt">,</span> message<span class="gtkdoc opt">);</span>
-    <span class="keyword">if</span> <span class="gtkdoc opt">(</span>rc <span class="gtkdoc opt">!=</span> <span class="number">0</span><span class="gtkdoc opt">) {</span>
-        <span class="gtkdoc slc">// handle errors</span>
-        <span class="gtkdoc opt">...</span>
-    <span class="gtkdoc opt">}</span>
-<span class="gtkdoc opt">}</span>
-protocolProfile <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoProvider.html#lasso-provider-get-protocol-conformance">lasso_provider_get_protocol_conformance</a></span><span class="gtkdoc opt">(</span><span class="function">LASSO_PROVIDER</span><span class="gtkdoc opt">(</span>server<span class="gtkdoc opt">));</span>
-<span class="keyword">if</span> <span class="gtkdoc opt">(</span>protocolProfile <span class="gtkdoc opt">==</span> LASSO_LIBERTY_1_2<span class="gtkdoc opt">) {</span>
-    <span class="gtkdoc kwb">char</span> <span class="gtkdoc opt">*</span>session_index<span class="gtkdoc opt">;</span>
-    LassoSamlNameIdentifier <span class="gtkdoc opt">*</span>name_id<span class="gtkdoc opt">;</span>
-    LibLogoutRequest <span class="gtkdoc opt">*</span>logout_request<span class="gtkdoc opt">;</span>
+<span class="n">logout</span> <span class="o">=</span> <span class="n">lasso_logout_new</span><span class="p">(</span><span class="n">server</span><span class="p">);</span>
+<span class="c1">// server must be previously initialized, it can be kept around</span>
+<span class="c1">// and used for many transaction, it is never modified by any profile</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">request_method</span><span class="p">.</span> <span class="s">&quot;GET&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">method</span> <span class="o">=</span> <span class="n">LASSO_HTTP_METHOD_REDIRECT</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">query_string</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s">&quot;QUERY_STRING&quot;</span><span class="p">);</span>
+    <span class="n">rc</span> <span class="o">=</span> <span class="n">lasso_logout_process_request_msg</span><span class="p">(</span><span class="n">logout</span><span class="p">,</span> <span class="n">query_string</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// handle errors</span>
+        <span class="p">...</span>
+    <span class="p">}</span>
+<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">request_method</span><span class="p">,</span> <span class="s">&quot;POST&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">message</span><span class="p">;</span>
+    <span class="c1">// read submitted content if this is a form, put LAREQ or SAMLRequest field into message and</span>
+    <span class="n">set</span> <span class="n">method</span> <span class="n">to</span> <span class="n">LASSO_HTTP_METHOD_POST</span>
+    <span class="c1">// if content type is application/xml then put the full body of the POST inside message and</span>
+    <span class="c1">// set method to LASSO_HTTP_METHOD_SOAP</span>
+    <span class="n">rc</span> <span class="o">=</span> <span class="n">lasso_logout_process_request_msg</span><span class="p">(</span><span class="n">logout</span><span class="p">,</span> <span class="n">message</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// handle errors</span>
+        <span class="p">...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">protocolProfile</span> <span class="o">=</span> <span class="n">lasso_provider_get_protocol_conformance</span><span class="p">(</span><span class="n">LASSO_PROVIDER</span><span class="p">(</span><span class="n">server</span><span class="p">));</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">protocolProfile</span> <span class="o">==</span> <span class="n">LASSO_LIBERTY_1_2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">session_index</span><span class="p">;</span>
+    <span class="n">LassoSamlNameIdentifier</span> <span class="o">*</span><span class="n">name_id</span><span class="p">;</span>
+    <span class="n">LibLogoutRequest</span> <span class="o">*</span><span class="n">logout_request</span><span class="p">;</span>
 
-    logout_request <span class="gtkdoc opt">=</span> <span class="function">LIB_LOGOUT_REQUEST</span><span class="gtkdoc opt">(</span><span class="function">LASSO_PROFILE</span><span class="gtkdoc opt">(</span>logout<span class="gtkdoc opt">)-&gt;</span>request<span class="gtkdoc opt">);</span>
-    session_index <span class="gtkdoc opt">=</span> logout_request<span class="gtkdoc opt">-&gt;</span>SessionIndex<span class="gtkdoc opt">;</span>
-    name_id <span class="gtkdoc opt">=</span> logout_request<span class="gtkdoc opt">-&gt;</span>NameIdentifier<span class="gtkdoc opt">;</span>
-    <span class="gtkdoc slc">// lookup the session dump using session_index and name_id</span>
-<span class="gtkdoc opt">}</span> <span class="keyword">else if</span> <span class="gtkdoc opt">(</span>protocolProfile <span class="gtkdoc opt">==</span> LASSO_SAML_2_0<span class="gtkdoc opt">) {</span>
-    <span class="gtkdoc kwb">char</span> <span class="gtkdoc opt">*</span>session_index<span class="gtkdoc opt">;</span>
-    LassoSaml2NameID <span class="gtkdoc opt">*</span>name_id<span class="gtkdoc opt">;</span>
-    LassoSamlp2LogoutRequest <span class="gtkdoc opt">*</span>logout_request<span class="gtkdoc opt">;</span>
+    <span class="n">logout_request</span> <span class="o">=</span> <span class="n">LIB_LOGOUT_REQUEST</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">logout</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">request</span><span class="p">);</span>
+    <span class="n">session_index</span> <span class="o">=</span> <span class="n">logout_request</span><span class="o">-&gt;</span><span class="n">SessionIndex</span><span class="p">;</span>
+    <span class="n">name_id</span> <span class="o">=</span> <span class="n">logout_request</span><span class="o">-&gt;</span><span class="n">NameIdentifier</span><span class="p">;</span>
+    <span class="c1">// lookup the session dump using session_index and name_id</span>
+<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">protocolProfile</span> <span class="o">==</span> <span class="n">LASSO_SAML_2_0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">session_index</span><span class="p">;</span>
+    <span class="n">LassoSaml2NameID</span> <span class="o">*</span><span class="n">name_id</span><span class="p">;</span>
+    <span class="n">LassoSamlp2LogoutRequest</span> <span class="o">*</span><span class="n">logout_request</span><span class="p">;</span>
 
-    logout_request <span class="gtkdoc opt">=</span> <span class="function">LASSO_SAMLP2_LOGOUT_REQUEST</span><span class="gtkdoc opt">(</span><span class="function">LASSO_PROFILE</span><span class="gtkdoc opt">(</span>logout<span class="gtkdoc opt">)-&gt;</span>request<span class="gtkdoc opt">);</span>
-    session_index <span class="gtkdoc opt">=</span> logout_request<span class="gtkdoc opt">-&gt;</span>SessionIndex<span class="gtkdoc opt">;</span>
-    name_id <span class="gtkdoc opt">=</span> logout_request<span class="gtkdoc opt">-&gt;</span>NameID<span class="gtkdoc opt">;</span>
-    <span class="gtkdoc slc">// lookup the session dump using session_index and name_id</span>
-<span class="gtkdoc opt">}</span>
-<span class="function"><a href="lasso-LassoProfile.html#lasso-profile-set-session-from-dump">lasso_profile_set_session_from_dump</a></span><span class="gtkdoc opt">(</span><span class="function">LASSO_PROFILE</span><span class="gtkdoc opt">(</span>logout<span class="gtkdoc opt">),</span> session_dump<span class="gtkdoc opt">);</span>
-<span class="gtkdoc slc">// you can check other property of the request here if you want</span>
-<span class="gtkdoc slc">// </span>
-<span class="keyword">if</span> <span class="gtkdoc opt">(</span>request is accepted<span class="gtkdoc opt">) {</span>
-    rc <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoLogout.html#lasso-logout-validate-request">lasso_logout_validate_request</a></span><span class="gtkdoc opt">(</span>logout<span class="gtkdoc opt">);</span>
-    <span class="keyword">if</span> <span class="gtkdoc opt">(</span>rc <span class="gtkdoc opt">!=</span> <span class="number">0</span><span class="gtkdoc opt">) {</span>
-        <span class="gtkdoc slc">// handle errors..</span>
-        <span class="gtkdoc opt">...</span>
-    <span class="gtkdoc opt">}</span> <span class="keyword">else</span> <span class="gtkdoc opt">{</span>
-    <span class="gtkdoc opt">....</span> <span class="gtkdoc slc">// kill the local session</span>
-         <span class="gtkdoc slc">// if local server is an identity provider, then traverse the session using</span>
-         <span class="gtkdoc slc">// lasso_logout_get_next_providerID() and send logout request to all logged </span>
-         <span class="gtkdoc slc">// service providers.</span>
-    <span class="gtkdoc opt">}</span>
-<span class="gtkdoc opt">}</span>
-<span class="gtkdoc slc">// if lasso_logout_validate_request() was not called this will automatically create a Failure</span>
-<span class="gtkdoc slc">// response.</span>
-rc <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoLogout.html#lasso-logout-build-response-msg">lasso_logout_build_response_msg</a></span><span class="gtkdoc opt">(</span>logout<span class="gtkdoc opt">);</span>
-<span class="keyword">if</span> <span class="gtkdoc opt">(</span>rc <span class="gtkdoc opt">!=</span> <span class="number">0</span><span class="gtkdoc opt">) {</span>
-    <span class="gtkdoc slc">// handle errors..</span>
-    <span class="gtkdoc opt">...</span>
-<span class="gtkdoc opt">}</span>
-<span class="gtkdoc slc">// the response is produced with the same binding as the request</span>
-<span class="gtkdoc slc">// see the previous request example for how to send the response</span>
-<span class="gtkdoc slc">// the only change is for SOAP, you just need to print the msg_body as page content with a</span>
-<span class="gtkdoc slc">// Content-type of application/xml.</span></pre></td>
+    <span class="n">logout_request</span> <span class="o">=</span> <span class="n">LASSO_SAMLP2_LOGOUT_REQUEST</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">logout</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">request</span><span class="p">);</span>
+    <span class="n">session_index</span> <span class="o">=</span> <span class="n">logout_request</span><span class="o">-&gt;</span><span class="n">SessionIndex</span><span class="p">;</span>
+    <span class="n">name_id</span> <span class="o">=</span> <span class="n">logout_request</span><span class="o">-&gt;</span><span class="n">NameID</span><span class="p">;</span>
+    <span class="c1">// lookup the session dump using session_index and name_id</span>
+<span class="p">}</span>
+<span class="n">lasso_profile_set_session_from_dump</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">logout</span><span class="p">),</span> <span class="n">session_dump</span><span class="p">);</span>
+<span class="c1">// you can check other property of the request here if you want</span>
+<span class="c1">// </span>
+<span class="k">if</span> <span class="p">(</span><span class="n">request</span> <span class="n">is</span> <span class="n">accepted</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">rc</span> <span class="o">=</span> <span class="n">lasso_logout_validate_request</span><span class="p">(</span><span class="n">logout</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// handle errors..</span>
+        <span class="p">...</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="p">....</span> <span class="c1">// kill the local session</span>
+         <span class="c1">// if local server is an identity provider, then traverse the session using</span>
+         <span class="c1">// lasso_logout_get_next_providerID() and send logout request to all logged </span>
+         <span class="c1">// service providers.</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="c1">// if lasso_logout_validate_request() was not called this will automatically create a Failure</span>
+<span class="c1">// response.</span>
+<span class="n">rc</span> <span class="o">=</span> <span class="n">lasso_logout_build_response_msg</span><span class="p">(</span><span class="n">logout</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// handle errors..</span>
+    <span class="p">...</span>
+<span class="p">}</span>
+<span class="c1">// the response is produced with the same binding as the request</span>
+<span class="c1">// see the previous request example for how to send the response</span>
+<span class="c1">// the only change is for SOAP, you just need to print the msg_body as page content with a</span>
+<span class="c1">// Content-type of application/xml.</span></pre></td>
       </tr>
     </tbody>
   </table>
@@ -733,7 +733,7 @@ lasso_logout_dump (<em class="parameter"><code><a class="link" href="lasso-Lasso
 <div class="refsect3">
 <a name="lasso-logout-dump.returns"></a><h4>Returns</h4>
 <p>the dump string.  It must be freed by the caller. </p>
-<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+<p><span class="annotation">[<acronym title="The caller owns the data, and is responsible for free it."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
 </div>
 <hr>
@@ -761,7 +761,7 @@ principal session with the exception of initial service provider ID.</p>
 <div class="refsect3">
 <a name="lasso-logout-get-next-providerID.returns"></a><h4>Returns</h4>
 <p>a newly allocated string or NULL. </p>
-<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+<p><span class="annotation">[<acronym title="The caller owns the data, and is responsible for free it."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
 </div>
 <hr>
@@ -990,6 +990,6 @@ remote provider of the current session.</p>
 </div>
 </div>
 <div class="footer">
-<hr>Generated by GTK-Doc V1.28</div>
+<hr>Generated by GTK-Doc V1.33.1</div>
 </body>
 </html>

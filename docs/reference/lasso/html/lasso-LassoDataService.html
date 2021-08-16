@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>LassoDataService: Lasso Reference Manual</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
-<link rel="home" href="index.html" title="Lasso Reference Manual">
+<title>LassoDataService: lasso Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="lasso Reference Manual">
 <link rel="up" href="idwsf.html" title="Identity Web Services Framework 1.0">
 <link rel="prev" href="lasso-LassoDiscovery.html" title="LassoDiscovery">
 <link rel="next" href="lasso-LassoPersonalProfileService.html" title="LassoPersonalProfileService">
-<meta name="generator" content="GTK-Doc V1.28 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.33.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -35,8 +35,8 @@
 <a name="lasso-LassoDataService.functions"></a><h2>Functions</h2>
 <div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
-<col width="150px" class="functions_return">
-<col class="functions_name">
+<col width="150px" class="functions_proto_type">
+<col class="functions_proto_name">
 </colgroup>
 <tbody>
 <tr>
@@ -206,8 +206,8 @@
 <a name="lasso-LassoDataService.other"></a><h2>Types and Values</h2>
 <div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
-<col width="150px" class="name">
-<col class="description">
+<col width="150px" class="other_proto_type">
+<col class="other_proto_name">
 </colgroup>
 <tbody><tr>
 <td class="datatype_keyword">struct</td>
@@ -243,22 +243,22 @@ and retrieves the name of the principal:</p>
 14
 15
 16</pre></td>
-        <td class="listing_code"><pre class="programlisting"><span class="gtkdoc kwb">char</span> <span class="gtkdoc opt">*</span>soap_answer<span class="gtkdoc opt">;</span>            <span class="gtkdoc slc">// SOAP answer from data service</span>
-xmlNode <span class="gtkdoc opt">*</span>principal_name<span class="gtkdoc opt">;</span>      <span class="gtkdoc slc">// libxml2 xmlNode with the principal name</span>
+        <td class="listing_code"><pre class="programlisting"><span class="kt">char</span> <span class="o">*</span><span class="n">soap_answer</span><span class="p">;</span>            <span class="c1">// SOAP answer from data service</span>
+<span class="n">xmlNode</span> <span class="o">*</span><span class="n">principal_name</span><span class="p">;</span>      <span class="c1">// libxml2 xmlNode with the principal name</span>
 
-service <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoDiscovery.html#lasso-discovery-get-service">lasso_discovery_get_service</a></span><span class="gtkdoc opt">(</span>discovery<span class="gtkdoc opt">);</span>
-<span class="function"><a href="lasso-LassoDataService.html#lasso-data-service-init-query">lasso_data_service_init_query</a></span><span class="gtkdoc opt">(</span>service<span class="gtkdoc opt">,</span> <span class="string">&quot;/pp:PP/pp:InformalName&quot;</span><span class="gtkdoc opt">,</span> NULL<span class="gtkdoc opt">);</span>
-<span class="function">lasso_data_service_build_request_msg</span><span class="gtkdoc opt">(</span>service<span class="gtkdoc opt">);</span>
+<span class="n">service</span> <span class="o">=</span> <span class="n">lasso_discovery_get_service</span><span class="p">(</span><span class="n">discovery</span><span class="p">);</span>
+<span class="n">lasso_data_service_init_query</span><span class="p">(</span><span class="n">service</span><span class="p">,</span> <span class="s">&quot;/pp:PP/pp:InformalName&quot;</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+<span class="n">lasso_data_service_build_request_msg</span><span class="p">(</span><span class="n">service</span><span class="p">);</span>
 
-<span class="gtkdoc slc">// service must perform SOAP call to LASSO_WSF_PROFILE(service)-&gt;msg_url</span>
-<span class="gtkdoc slc">// the SOAP message is LASSO_WSF_PROFILE(service)-&gt;msg_body.  The answer</span>
-<span class="gtkdoc slc">// is stored in char* soap_answer;</span>
+<span class="c1">// service must perform SOAP call to LASSO_WSF_PROFILE(service)-&gt;msg_url</span>
+<span class="c1">// the SOAP message is LASSO_WSF_PROFILE(service)-&gt;msg_body.  The answer</span>
+<span class="c1">// is stored in char* soap_answer;</span>
 
-<span class="function"><a href="lasso-LassoDataService.html#lasso-data-service-process-query-response-msg">lasso_data_service_process_query_response_msg</a></span><span class="gtkdoc opt">(</span>service<span class="gtkdoc opt">,</span> soap_answer<span class="gtkdoc opt">);</span>
-principal_name <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoDataService.html#lasso-data-service-get-answer">lasso_data_service_get_answer</a></span><span class="gtkdoc opt">(</span>service<span class="gtkdoc opt">,</span> <span class="string">&quot;/pp:PP/pp:InformalName&quot;</span><span class="gtkdoc opt">);</span>
+<span class="n">lasso_data_service_process_query_response_msg</span><span class="p">(</span><span class="n">service</span><span class="p">,</span> <span class="n">soap_answer</span><span class="p">);</span>
+<span class="n">principal_name</span> <span class="o">=</span> <span class="n">lasso_data_service_get_answer</span><span class="p">(</span><span class="n">service</span><span class="p">,</span> <span class="s">&quot;/pp:PP/pp:InformalName&quot;</span><span class="p">);</span>
 
-<span class="gtkdoc slc">// app should probably then use xmlNodeGetContent libxml2 function to get</span>
-<span class="gtkdoc slc">// access to node content.</span></pre></td>
+<span class="c1">// app should probably then use xmlNodeGetContent libxml2 function to get</span>
+<span class="c1">// access to node content.</span></pre></td>
       </tr>
     </tbody>
   </table>
@@ -551,7 +551,7 @@ lasso_data_service_get_answers (<em class="parameter"><code><a class="link" href
 <tr>
 <td class="parameter_name"><p>output</p></td>
 <td class="parameter_description"><p>an xmlNode** pointer where to put the xmlNode* of the result. </p></td>
-<td class="parameter_annotations"><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> xmlNode]</span></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="The caller owns the data, and is responsible for free it."><span class="acronym">transfer full</span></acronym>][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> xmlNode]</span></td>
 </tr>
 </tbody>
 </table></div>
@@ -720,7 +720,7 @@ message.</p>
 <tr>
 <td class="parameter_name"><p>overrideAllowed</p></td>
 <td class="parameter_description"><p>whether to permit delete or replace of existings. </p></td>
-<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Default parameter value (for in case the shadows-to function has less parameters)."><span class="acronym">default</span></acronym> FALSE]</span></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Default parameter value (in case a function which shadows this one via rename-to has fewer parameters)."><span class="acronym">default</span></acronym> FALSE]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>notChangedSince</p></td>
@@ -870,7 +870,7 @@ lasso_data_service_get_query_item (<em class="parameter"><code><a class="link" h
 <td class="parameter_name"><p>output</p></td>
 <td class="parameter_description"><p>a <a class="link" href="lasso-LassoDstQueryItem.html#LassoDstQueryItem" title="struct LassoDstQueryItem"><span class="type">LassoDstQueryItem</span></a> handle to store the result object, its reference count is not
 incremented. </p></td>
-<td class="parameter_annotations"><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="The data is owned by the callee, which is responsible of freeing it."><span class="acronym">transfer none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
@@ -934,7 +934,7 @@ lasso_data_service_get_resource_data (<em class="parameter"><code><a class="link
 <div class="refsect3">
 <a name="lasso-data-service-get-resource-data.returns"></a><h4>Returns</h4>
 <p>a newly allocated <span class="type">xmlNode</span> or NULL. </p>
-<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
+<p><span class="annotation">[<acronym title="The caller owns the data, and is responsible for free it."><span class="acronym">transfer full</span></acronym>][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
 </div>
 </div>
 </div>
@@ -950,6 +950,6 @@ lasso_data_service_get_resource_data (<em class="parameter"><code><a class="link
 </div>
 </div>
 <div class="footer">
-<hr>Generated by GTK-Doc V1.28</div>
+<hr>Generated by GTK-Doc V1.33.1</div>
 </body>
 </html>

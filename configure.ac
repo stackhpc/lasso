@@ -131,8 +131,8 @@ dnl AC_CHECK_PROGS(JAR, fastjar jar)
 AC_CHECK_PROGS(PERL, perl)
 AC_CHECK_PROGS(PHP5, php5 php)
 AC_CHECK_PROGS(PHP5_CONFIG, php-config5 php-config)
-AC_CHECK_PROGS(PHP7, php7.4 php7.3 php7.2 php7.1 php7.0 php7)
-AC_CHECK_PROGS(PHP7_CONFIG, php-config7.4 php-config7.3 php-config7.2 php-config7.1 php-config7.0 php-config7)
+AC_CHECK_PROGS(PHP7, php7.4 php7.3 php7.2 php7.1 php7.0 php7 php)
+AC_CHECK_PROGS(PHP7_CONFIG, php-config7.4 php-config7.3 php-config7.2 php-config7.1 php-config7.0 php-config7 php-config)
 AC_CHECK_PROGS(PYTHON, python3 python python2)
 AC_CHECK_PROGS(SWIG, swig)
 
@@ -206,8 +206,8 @@ languages_available=
 # ------------
 
 dnl Check if java is explicitly disabled.
-AC_ARG_ENABLE(java, [  --disable-java          disable the Java binding],,
-              enable_java="yes")
+AC_ARG_ENABLE(java, [  --enable-java          enable the Java binding],,
+              enable_java="no")
 AC_ARG_WITH(java-home,
             [  --with-java-home=(JAVA_HOME)  set the full path to the java home directory.])
 SUN=no
@@ -696,7 +696,7 @@ dnl API Reference documentation support
 # gtkdocize greps for ^GTK_DOC_CHECK and parses it, so you need to have
 # it on it's own line.
 m4_ifdef([GTK_DOC_CHECK], [
-GTK_DOC_CHECK(1.9)
+GTK_DOC_CHECK([1.14],[--flavour no-tmpl])
 ],[
 AM_CONDITIONAL([ENABLE_GTK_DOC],[false])
 ])
