@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>LassoIdWsf2Discovery: Lasso Reference Manual</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
-<link rel="home" href="index.html" title="Lasso Reference Manual">
+<title>LassoIdWsf2Discovery: lasso Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="lasso Reference Manual">
 <link rel="up" href="idwsf2.html" title="ID-WSF 2.0">
 <link rel="prev" href="lasso-SOAP-Binding-utility-function-for-ID-WSF-2.0.html" title="SOAP Binding utility function for ID-WSF 2.0">
 <link rel="next" href="lasso-LassoIdWsf2DataService.html" title="LassoIdWsf2DataService">
-<meta name="generator" content="GTK-Doc V1.28 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.33.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -35,8 +35,8 @@
 <a name="lasso-LassoIdWsf2Discovery.functions"></a><h2>Functions</h2>
 <div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
-<col width="150px" class="functions_return">
-<col class="functions_name">
+<col width="150px" class="functions_proto_type">
+<col class="functions_proto_name">
 </colgroup>
 <tbody>
 <tr>
@@ -222,8 +222,8 @@
 <a name="lasso-LassoIdWsf2Discovery.other"></a><h2>Types and Values</h2>
 <div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
-<col width="150px" class="name">
-<col class="description">
+<col width="150px" class="other_proto_type">
+<col class="other_proto_name">
 </colgroup>
 <tbody><tr>
 <td class="datatype_keyword">struct</td>
@@ -574,7 +574,7 @@ received through a <span class="type">LASSO_IDWSF2_DISCOVERY_REQUEST_TYPE_MD_REG
 <div class="refsect3">
 <a name="lasso-idwsf2-discovery-get-metadatas.returns"></a><h4>Returns</h4>
 <p>the list of metadatas. </p>
-<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> LassoIdWsf2DiscoSvcMetadata]</span></p>
+<p><span class="annotation">[<acronym title="The data is owned by the callee, which is responsible of freeing it."><span class="acronym">transfer none</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> LassoIdWsf2DiscoSvcMetadata]</span></p>
 </div>
 </div>
 <hr>
@@ -641,7 +641,7 @@ discovery service.</p>
 <td class="parameter_name"><p>result_type</p></td>
 <td class="parameter_description"><p>how to filter
 the generated EPRs. </p></td>
-<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Default parameter value (for in case the shadows-to function has less parameters)."><span class="acronym">default</span></acronym> LASSO_IDWSF2_DISCOVERY_QUERY_RESULT_TYPE_NONE]</span></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Default parameter value (in case a function which shadows this one via rename-to has fewer parameters)."><span class="acronym">default</span></acronym> LASSO_IDWSF2_DISCOVERY_QUERY_RESULT_TYPE_NONE]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>req_id</p></td>
@@ -890,7 +890,7 @@ lasso_idwsf2_discovery_get_endpoint_references
 <a name="lasso-idwsf2-discovery-get-endpoint-references.returns"></a><h4>Returns</h4>
 <p>a <span class="type">GList</span> of
 LassoWsAddrEndpointReference objects, or NULL if none is found. </p>
-<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> LassoWsAddrEndpointReference]</span></p>
+<p><span class="annotation">[<acronym title="The data is owned by the callee, which is responsible of freeing it."><span class="acronym">transfer none</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> LassoWsAddrEndpointReference]</span></p>
 </div>
 </div>
 <hr>
@@ -917,7 +917,7 @@ lasso_idwsf2_discovery_get_svcmdids (<em class="parameter"><code><a class="link"
 <div class="refsect3">
 <a name="lasso-idwsf2-discovery-get-svcmdids.returns"></a><h4>Returns</h4>
 <p>a list of SvcMDID's. </p>
-<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
+<p><span class="annotation">[<acronym title="The data is owned by the callee, which is responsible of freeing it."><span class="acronym">transfer none</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
 </div>
 </div>
 <hr>
@@ -963,6 +963,6 @@ lasso_idwsf2_discovery_set_svcmdids (<em class="parameter"><code><a class="link"
 </div>
 </div>
 <div class="footer">
-<hr>Generated by GTK-Doc V1.28</div>
+<hr>Generated by GTK-Doc V1.33.1</div>
 </body>
 </html>

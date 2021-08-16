@@ -34,7 +34,7 @@ def remove_bad_optional(args):
         if not '=' in x:
             non_opt = True
         elif non_opt:
-            print_('W: changed', x, file=sys.stderr)
+            print_('W: changed', x, file=sys.stderr, end=' ')
             x = re.sub(' *=.*', '', x)
             print_('to', x, file=sys.stderr)
         new_args.append(x)
@@ -91,7 +91,7 @@ class Binding:
             k_type = key_type(type)
             v_type = value_type(type)
             if is_cstring(el_type) or (is_cstring(k_type) and is_cstring(v_type)):
-                print_('    g_hash_table_destroy(%s);' % name, file=fd)
+                print_('    if (%s) { g_hash_table_destroy(%s); }' % (name, name), file=fd)
             else:
                 raise Exception('Unsupported free value of type GHashTable: %s' % type)
         elif is_object(type):
@@ -188,7 +188,10 @@ class Error(Exception):
         if self.code:
             return '<lasso.%s(%s): %s>' % (self.__class__.__name__, self.code, _lasso.strError(self.code))
         else:
-            return '<lasso.%s: %s>' % (self.__class__.__name__, self.message)
+            if sys.version_info >= (3,):
+                return '<lasso.%s: %s>' % (self.__class__.__name__, super().__str__())
+            else:
+                return '<lasso.%s: %s>' % (self.__class__.__name__, self.message)
 
     def __getitem__(self, i):
         # compatibility with SWIG bindings
@@ -818,19 +821,19 @@ register_constants(PyObject *d)
             elif is_glist(m):
                 el_type = element_type(m)
                 if is_cstring(el_type):
-                    print_('    set_list_of_strings(&this->%s, cvt_value);' % name, file=fd)
+                    print_('    RETURN_IF_FAIL(set_list_of_strings(&this->%s, cvt_value));' % name, file=fd)
                 elif is_xml_node(el_type):
-                    print_('    set_list_of_xml_nodes(&this->%s, cvt_value);' % name, file=fd)
+                    print_('    RETURN_IF_FAIL(set_list_of_xml_nodes(&this->%s, cvt_value));' % name, file=fd)
                 elif is_object(el_type):
-                    print_('    set_list_of_pygobject(&this->%s, cvt_value);' % name, file=fd)
+                    print_('    RETURN_IF_FAIL(set_list_of_pygobject(&this->%s, cvt_value));' % name, file=fd)
                 else:
                     raise Exception('Unsupported setter for %s' % (m,))
             elif is_hashtable(m):
                 el_type = element_type(m)
                 if is_object(el_type):
-                    print_('    set_hashtable_of_pygobject(this->%s, cvt_value);' % name, file=fd)
+                    print_('    RETURN_IF_FAIL(set_hashtable_of_pygobject(this->%s, cvt_value));' % name, file=fd)
                 else:
-                    print_('    set_hashtable_of_strings(this->%s, cvt_value);' % name, file=fd)
+                    print_('    RETURN_IF_FAIL(set_hashtable_of_strings(this->%s, cvt_value));' % name, file=fd)
             elif is_object(m):
                 print_('    set_object_field((GObject**)&this->%s, cvt_value);' % name, file=fd)
             else:
@@ -908,7 +911,8 @@ register_constants(PyObject *d)
         self.wrapper_list.append(name)
         print_('''static PyObject*
 %s(G_GNUC_UNUSED PyObject *self, PyObject *args)
-{''' % name, file=fd)
+{
+    int ok = 1;''' % name, file=fd)
         parse_tuple_format = []
         parse_tuple_args = []
         for arg in m.args:
@@ -980,11 +984,11 @@ register_constants(PyObject *d)
             if is_list(arg):
                 qualifier = element_type(arg)
                 if is_cstring(qualifier):
-                    print_('    set_list_of_strings(&%s, cvt_%s);' % (arg[1], arg[1]), file=fd)
+                    print_('    EXIT_IF_FAIL(set_list_of_strings(&%s, cvt_%s));' % (arg[1], arg[1]), file=fd)
                 elif is_xml_node(qualifier):
-                    print_('    set_list_of_xml_nodes(&%s, cvt_%s);' % (arg[1], arg[1]), file=fd)
+                    print_('    EXIT_IF_FAIL(set_list_of_xml_nodes(&%s, cvt_%s));' % (arg[1], arg[1]), file=fd)
                 elif isinstance(qualifier, str) and qualifier.startswith('Lasso'):
-                    print_('    set_list_of_pygobject(&%s, cvt_%s);' % (arg[1], arg[1]), file=fd)
+                    print_('    EXIT_IF_FAIL(set_list_of_pygobject(&%s, cvt_%s));' % (arg[1], arg[1]), file=fd)
                 else:
                     print_('E: unqualified GList argument in', name, qualifier, arg, file=sys.stderr)
             elif is_xml_node(arg):
@@ -998,7 +1002,7 @@ register_constants(PyObject *d)
                 if is_cstring(el_type) or (is_cstring(k_type) and is_cstring(v_type)):
 
                     print_('    %s = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, g_free);' % arg[1], file=fd)
-                    print_('    set_hashtable_of_strings(%s, cvt_%s);' % (arg[1], arg[1]), file=fd)
+                    print_('    EXIT_IF_FAIL(set_hashtable_of_strings(%s, cvt_%s));' % (arg[1], arg[1]), file=fd)
             elif f == 'O':
                 if is_optional(arg):
                     print_('    if (PyObject_TypeCheck((PyObject*)cvt_%s, &PyGObjectPtrType)) {' % arg[1], file=fd)
@@ -1016,11 +1020,11 @@ register_constants(PyObject *d)
 
 
         if m.return_type:
-            print_('    return_value =', file=fd)
+            print_('    return_value = ', file=fd, end='')
             if 'new' in m.name:
                 print_('(%s)' % m.return_type, file=fd)
         else:
-            print_('   ', file=fd)
+            print_('    ', file=fd, end='')
         print_('%s(%s);' % (m.name, ', '.join([ref_name(x) for x in m.args])), file=fd)
 
         if m.return_type:
@@ -1034,10 +1038,16 @@ register_constants(PyObject *d)
 
             if is_transfer_full(m.return_arg, default=True):
                 self.free_value(fd, m.return_arg, name = 'return_value')
+
         for f, arg in zip(parse_tuple_format, m.args):
             if is_out(arg):
                 self.return_value(fd, arg, return_var_name = arg[1], return_pyvar_name = 'out_pyvalue')
-                print_('    PyList_SetItem(cvt_%s_out, 0, out_pyvalue);' % arg[1], file=fd)
+
+                print_('    EXIT_IF_FAIL(%s);' % arg[1], file=fd)
+                print_('    if (PyList_SetItem(cvt_%s_out, 0, out_pyvalue) == -1) {' % arg[1], file=fd)
+                print_('        ok = 0;', file=fd)
+                print_('        Py_XDECREF(out_pyvalue);', file=fd)
+                print_('    }', file=fd)
             elif arg[0] == 'GList*':
                 qualifier = arg[2].get('element-type')
                 if is_cstring(qualifier):
@@ -1053,10 +1063,19 @@ register_constants(PyObject *d)
             elif not is_transfer_full(arg) and is_xml_node(arg):
                 self.free_value(fd, arg)
 
+        print_('failure:', file=fd)
+
         if not m.return_type:
-            print_('    return noneRef();', file=fd)
+            print_('    if (ok) {', file=fd)
+            print_('        return noneRef();', file=fd)
         else:
-            print_('    return return_pyvalue;', file=fd)
+            print_('    if (ok && return_pyvalue) {', file=fd)
+            print_('        return return_pyvalue;', file=fd)
+        print_('    } else {', file=fd)
+        if m.return_type:
+            print_('        Py_XDECREF(return_pyvalue);', file=fd)
+        print_('        return NULL;', file=fd)
+        print_('    }', file=fd)
         print_('}', file=fd)
         print_('', file=fd)
 

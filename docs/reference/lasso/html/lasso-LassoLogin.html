@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>LassoLogin: Lasso Reference Manual</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
-<link rel="home" href="index.html" title="Lasso Reference Manual">
+<title>LassoLogin: lasso Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="lasso Reference Manual">
 <link rel="up" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
 <link rel="prev" href="idff.html" title="Identity Federation Framework - ID-FF 1.2 profiles">
 <link rel="next" href="lasso-LassoLogout.html" title="LassoLogout">
-<meta name="generator" content="GTK-Doc V1.28 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.33.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -35,8 +35,8 @@
 <a name="lasso-LassoLogin.functions"></a><h2>Functions</h2>
 <div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
-<col width="150px" class="functions_return">
-<col class="functions_name">
+<col width="150px" class="functions_proto_type">
+<col class="functions_proto_name">
 </colgroup>
 <tbody>
 <tr>
@@ -230,8 +230,8 @@
 <a name="lasso-LassoLogin.other"></a><h2>Types and Values</h2>
 <div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
-<col width="150px" class="name">
-<col class="description">
+<col width="150px" class="other_proto_type">
+<col class="other_proto_name">
 </colgroup>
 <tbody><tr>
 <td class="datatype_keyword">struct</td>
@@ -336,58 +336,58 @@ the targetted IdP with the method <a class="link" href="lasso-LassoServer.html#l
 50
 51
 52</pre></td>
-        <td class="listing_code"><pre class="programlisting">LassoLogin <span class="gtkdoc opt">*</span>login<span class="gtkdoc opt">;</span>
-<span class="gtkdoc kwb">int</span> rc<span class="gtkdoc opt">;</span> <span class="gtkdoc slc">// hold return codes</span>
+        <td class="listing_code"><pre class="programlisting"><span class="n">LassoLogin</span> <span class="o">*</span><span class="n">login</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">rc</span><span class="p">;</span> <span class="c1">// hold return codes</span>
 
-login <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoLogin.html#lasso-login-new">lasso_login_new</a></span><span class="gtkdoc opt">(</span>server<span class="gtkdoc opt">);</span>
-rc <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoLogin.html#lasso-login-init-authn-request">lasso_login_init_authn_request</a></span><span class="gtkdoc opt">(</span>login<span class="gtkdoc opt">,</span> <span class="string">&quot;http://identity-provider-id/&quot;</span><span class="gtkdoc opt">,</span>
-                LASSO_HTTP_METHOD_REDIRECT<span class="gtkdoc opt">);</span>
-<span class="keyword">if</span> <span class="gtkdoc opt">(</span>rc <span class="gtkdoc opt">!=</span> <span class="number">0</span><span class="gtkdoc opt">) {</span>
-  <span class="gtkdoc opt">...</span> <span class="gtkdoc slc">// handle errors, most of them are related to bad initialization</span>
-<span class="gtkdoc opt">}</span>
+<span class="n">login</span> <span class="o">=</span> <span class="n">lasso_login_new</span><span class="p">(</span><span class="n">server</span><span class="p">);</span>
+<span class="n">rc</span> <span class="o">=</span> <span class="n">lasso_login_init_authn_request</span><span class="p">(</span><span class="n">login</span><span class="p">,</span> <span class="s">&quot;http://identity-provider-id/&quot;</span><span class="p">,</span>
+                <span class="n">LASSO_HTTP_METHOD_REDIRECT</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">...</span> <span class="c1">// handle errors, most of them are related to bad initialization</span>
+<span class="p">}</span>
 
-<span class="gtkdoc slc">// customize AuthnRequest</span>
-<span class="gtkdoc slc">// protocolProfile is the protocolProfile of the provider http://identity-provider-id/</span>
-<span class="keyword">if</span> <span class="gtkdoc opt">(</span>protocolProfile <span class="gtkdoc opt">==</span> LASSO_LIBERTY_1_2<span class="gtkdoc opt">) {</span>
-        LassoLibAuthnRequest <span class="gtkdoc opt">*</span>request <span class="gtkdoc opt">=</span> <span class="function">LASSO_LIB_AUTHN_REQUEST</span><span class="gtkdoc opt">(</span><span class="function">LASSO_PROFILE</span><span class="gtkdoc opt">(</span>login<span class="gtkdoc opt">)-&gt;</span>request<span class="gtkdoc opt">);</span>
-        request<span class="gtkdoc opt">-&gt;</span>NameIDPolicy <span class="gtkdoc opt">=</span> <span class="function">strdup</span><span class="gtkdoc opt">(</span>LASSO_LIB_NAMEID_POLICY_TYPE_FEDERATED<span class="gtkdoc opt">);</span>
-        request<span class="gtkdoc opt">-&gt;</span>ForceAuthn <span class="gtkdoc opt">=</span> TRUE<span class="gtkdoc opt">;</span>
-        request<span class="gtkdoc opt">-&gt;</span>IsPassive <span class="gtkdoc opt">=</span> FALSE<span class="gtkdoc opt">;</span>
-        <span class="gtkdoc slc">// tell the IdP how to return the response</span>
-        request<span class="gtkdoc opt">-&gt;</span>ProtocolProfile <span class="gtkdoc opt">=</span> <span class="function">strdup</span><span class="gtkdoc opt">(</span>LASSO_LIB_PROTOCOL_PROFILE_BRWS_ART<span class="gtkdoc opt">);</span>
-<span class="gtkdoc opt">}</span> <span class="keyword">else if</span> <span class="gtkdoc opt">(</span>protocolProfile <span class="gtkdoc opt">==</span> LASSO_SAML_2_0<span class="gtkdoc opt">) {</span>
-        LassoSamlp2AuthnRequest <span class="gtkdoc opt">*</span>request <span class="gtkdoc opt">=</span> <span class="function">LASSO_SAMLP2_AUTHN_REQUEST</span><span class="gtkdoc opt">(</span><span class="function">LASSO_PROFILE</span><span class="gtkdoc opt">(</span>login<span class="gtkdoc opt">)-&gt;</span>request<span class="gtkdoc opt">);</span>
-        <span class="keyword">if</span> <span class="gtkdoc opt">(</span>request<span class="gtkdoc opt">-&gt;</span>NameIDPolicy<span class="gtkdoc opt">-&gt;</span>Format<span class="gtkdoc opt">) {</span>
-                <span class="function">g_free</span><span class="gtkdoc opt">(</span>request<span class="gtkdoc opt">-&gt;</span>NameIDPolicy<span class="gtkdoc opt">-&gt;</span>Format<span class="gtkdoc opt">);</span>
-        <span class="gtkdoc opt">}</span>
-        request<span class="gtkdoc opt">-&gt;</span>NameIDPolicy<span class="gtkdoc opt">-&gt;</span>Format <span class="gtkdoc opt">=</span> <span class="function">g_strdup</span><span class="gtkdoc opt">(</span>LASSO_NAME_IDENTIFIER_FORMAT_PERSISTENT<span class="gtkdoc opt">);</span>
-        <span class="gtkdoc slc">// Allow creation of new federation</span>
-        <span class="gtkdoc slc">// </span>
-        request<span class="gtkdoc opt">-&gt;</span>NameIDPolicy<span class="gtkdoc opt">-&gt;</span>AllowCreate <span class="gtkdoc opt">=</span> <span class="number">1</span><span class="gtkdoc opt">;</span>
-        request<span class="gtkdoc opt">-&gt;</span>ForceAuthn <span class="gtkdoc opt">=</span> TRUE<span class="gtkdoc opt">;</span>
-        request<span class="gtkdoc opt">-&gt;</span>IsPassive <span class="gtkdoc opt">=</span> FALSE<span class="gtkdoc opt">;</span>
-        <span class="gtkdoc slc">// tell the IdP how to return the response</span>
-        <span class="keyword">if</span> <span class="gtkdoc opt">(</span>request<span class="gtkdoc opt">-&gt;</span>ProtocolBinding<span class="gtkdoc opt">) {</span>
-                 <span class="function">g_free</span><span class="gtkdoc opt">(</span>request<span class="gtkdoc opt">-&gt;</span>ProtocolBinding<span class="gtkdoc opt">);</span>
-        <span class="gtkdoc opt">}</span>
-        <span class="gtkdoc slc">// here we expect an artifact response, it could be post, redirect or PAOS.</span>
-        request<span class="gtkdoc opt">-&gt;</span>ProtocolBinding <span class="gtkdoc opt">=</span> <span class="function">g_strdup</span><span class="gtkdoc opt">(</span>LASSO_SAML2_METADATA_BINDING_ARTIFACT<span class="gtkdoc opt">);</span>
-   <span class="gtkdoc opt">}</span>
-<span class="gtkdoc slc">// Lasso will choose whether to sign the request by looking at the IdP</span>
-<span class="gtkdoc slc">// metadatas and at our metadatas, but you can always force him to sign or to</span>
-<span class="gtkdoc slc">// not sign using the method lasso_profile_set_signature_hint() on the</span>
-<span class="gtkdoc slc">// LassoLogin object.</span>
+<span class="c1">// customize AuthnRequest</span>
+<span class="c1">// protocolProfile is the protocolProfile of the provider http://identity-provider-id/</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">protocolProfile</span> <span class="o">==</span> <span class="n">LASSO_LIBERTY_1_2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">LassoLibAuthnRequest</span> <span class="o">*</span><span class="n">request</span> <span class="o">=</span> <span class="n">LASSO_LIB_AUTHN_REQUEST</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">request</span><span class="p">);</span>
+        <span class="n">request</span><span class="o">-&gt;</span><span class="n">NameIDPolicy</span> <span class="o">=</span> <span class="n">strdup</span><span class="p">(</span><span class="n">LASSO_LIB_NAMEID_POLICY_TYPE_FEDERATED</span><span class="p">);</span>
+        <span class="n">request</span><span class="o">-&gt;</span><span class="n">ForceAuthn</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">;</span>
+        <span class="n">request</span><span class="o">-&gt;</span><span class="n">IsPassive</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">;</span>
+        <span class="c1">// tell the IdP how to return the response</span>
+        <span class="n">request</span><span class="o">-&gt;</span><span class="n">ProtocolProfile</span> <span class="o">=</span> <span class="n">strdup</span><span class="p">(</span><span class="n">LASSO_LIB_PROTOCOL_PROFILE_BRWS_ART</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">protocolProfile</span> <span class="o">==</span> <span class="n">LASSO_SAML_2_0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">LassoSamlp2AuthnRequest</span> <span class="o">*</span><span class="n">request</span> <span class="o">=</span> <span class="n">LASSO_SAMLP2_AUTHN_REQUEST</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">request</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">request</span><span class="o">-&gt;</span><span class="n">NameIDPolicy</span><span class="o">-&gt;</span><span class="n">Format</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">g_free</span><span class="p">(</span><span class="n">request</span><span class="o">-&gt;</span><span class="n">NameIDPolicy</span><span class="o">-&gt;</span><span class="n">Format</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">request</span><span class="o">-&gt;</span><span class="n">NameIDPolicy</span><span class="o">-&gt;</span><span class="n">Format</span> <span class="o">=</span> <span class="n">g_strdup</span><span class="p">(</span><span class="n">LASSO_NAME_IDENTIFIER_FORMAT_PERSISTENT</span><span class="p">);</span>
+        <span class="c1">// Allow creation of new federation</span>
+        <span class="c1">// </span>
+        <span class="n">request</span><span class="o">-&gt;</span><span class="n">NameIDPolicy</span><span class="o">-&gt;</span><span class="n">AllowCreate</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">request</span><span class="o">-&gt;</span><span class="n">ForceAuthn</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">;</span>
+        <span class="n">request</span><span class="o">-&gt;</span><span class="n">IsPassive</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">;</span>
+        <span class="c1">// tell the IdP how to return the response</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">request</span><span class="o">-&gt;</span><span class="n">ProtocolBinding</span><span class="p">)</span> <span class="p">{</span>
+                 <span class="n">g_free</span><span class="p">(</span><span class="n">request</span><span class="o">-&gt;</span><span class="n">ProtocolBinding</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="c1">// here we expect an artifact response, it could be post, redirect or PAOS.</span>
+        <span class="n">request</span><span class="o">-&gt;</span><span class="n">ProtocolBinding</span> <span class="o">=</span> <span class="n">g_strdup</span><span class="p">(</span><span class="n">LASSO_SAML2_METADATA_BINDING_ARTIFACT</span><span class="p">);</span>
+   <span class="p">}</span>
+<span class="c1">// Lasso will choose whether to sign the request by looking at the IdP</span>
+<span class="c1">// metadatas and at our metadatas, but you can always force him to sign or to</span>
+<span class="c1">// not sign using the method lasso_profile_set_signature_hint() on the</span>
+<span class="c1">// LassoLogin object.</span>
 
-rc <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoLogin.html#lasso-login-build-authn-request-msg">lasso_login_build_authn_request_msg</a></span><span class="gtkdoc opt">(</span>login<span class="gtkdoc opt">);</span>
-<span class="keyword">if</span> <span class="gtkdoc opt">(</span>rc <span class="gtkdoc opt">!=</span> <span class="number">0</span><span class="gtkdoc opt">) {</span>
-      <span class="gtkdoc opt">....</span> <span class="gtkdoc slc">// handle errors</span>
-      <span class="gtkdoc slc">// could be that the requested binding (POST, Redirect, etc..) is not supported (LASSO_PROFILE_ERROR_UNSUPPORTED_PROFILE)</span>
-      <span class="gtkdoc slc">// or that we could not sign the request (LASSO_PROFILE_ERROR_BUILDING_QUERY_FAILED).</span>
-<span class="gtkdoc opt">}</span>
+<span class="n">rc</span> <span class="o">=</span> <span class="n">lasso_login_build_authn_request_msg</span><span class="p">(</span><span class="n">login</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="p">....</span> <span class="c1">// handle errors</span>
+      <span class="c1">// could be that the requested binding (POST, Redirect, etc..) is not supported (LASSO_PROFILE_ERROR_UNSUPPORTED_PROFILE)</span>
+      <span class="c1">// or that we could not sign the request (LASSO_PROFILE_ERROR_BUILDING_QUERY_FAILED).</span>
+<span class="p">}</span>
 
-<span class="gtkdoc slc">// redirect user to identity provider</span>
-   <span class="gtkdoc slc">// we chose the Redirect binding, so we have to generate a redirect HTTP response to the URL returned by Lasso</span>
-<span class="function">printf</span><span class="gtkdoc opt">(</span><span class="string">&quot;Location: %s</span><span class="gtkdoc esc">\n\n</span><span class="string">Redirected to IdP</span><span class="gtkdoc esc">\n</span><span class="string">&quot;</span><span class="gtkdoc opt">,</span> <span class="function">LASSO_PROFILE</span><span class="gtkdoc opt">(</span>login<span class="gtkdoc opt">)-&gt;</span>msg_url<span class="gtkdoc opt">);</span></pre></td>
+<span class="c1">// redirect user to identity provider</span>
+   <span class="c1">// we chose the Redirect binding, so we have to generate a redirect HTTP response to the URL returned by Lasso</span>
+<span class="n">printf</span><span class="p">(</span><span class="s">&quot;Location: %s</span><span class="se">\n\n</span><span class="s">Redirected to IdP</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">msg_url</span><span class="p">);</span></pre></td>
       </tr>
     </tbody>
   </table>
@@ -482,86 +482,86 @@ provider for ID-FF 1.2.</p>
 78
 79
 80</pre></td>
-        <td class="listing_code"><pre class="programlisting">LassoLogin <span class="gtkdoc opt">*</span>login<span class="gtkdoc opt">;</span>
-<span class="gtkdoc kwb">char</span> <span class="gtkdoc opt">*</span>request_method <span class="gtkdoc opt">=</span> <span class="function">getenv</span><span class="gtkdoc opt">(</span><span class="string">&quot;REQUEST_METHOD&quot;</span><span class="gtkdoc opt">);</span>
-<span class="gtkdoc kwb">char</span> <span class="gtkdoc opt">*</span>artifact_msg <span class="gtkdoc opt">=</span> NULL<span class="gtkdoc opt">, *</span>lares <span class="gtkdoc opt">=</span> NULL<span class="gtkdoc opt">, *</span>lareq <span class="gtkdoc opt">=</span> NULL<span class="gtkdoc opt">;</span>
-<span class="gtkdoc kwb">char</span> <span class="gtkdoc opt">*</span>name_identifier<span class="gtkdoc opt">;</span>
-lassoHttpMethod method<span class="gtkdoc opt">;</span>
-<span class="gtkdoc kwb">int</span> rc <span class="gtkdoc opt">=</span> <span class="number">0</span><span class="gtkdoc opt">;</span>
+        <td class="listing_code"><pre class="programlisting"><span class="n">LassoLogin</span> <span class="o">*</span><span class="n">login</span><span class="p">;</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">request_method</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s">&quot;REQUEST_METHOD&quot;</span><span class="p">);</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">artifact_msg</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">*</span><span class="n">lares</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">*</span><span class="n">lareq</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">name_identifier</span><span class="p">;</span>
+<span class="n">lassoHttpMethod</span> <span class="n">method</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">rc</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
-login <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoLogin.html#lasso-login-new">lasso_login_new</a></span><span class="gtkdoc opt">(</span>server<span class="gtkdoc opt">);</span>
-<span class="keyword">if</span> <span class="gtkdoc opt">(</span><span class="function">strcmp</span><span class="gtkdoc opt">(</span>request_method<span class="gtkdoc opt">,</span> <span class="string">&quot;GET&quot;</span><span class="gtkdoc opt">) ==</span> <span class="number">0</span><span class="gtkdoc opt">) {</span>
-        artifact_msg <span class="gtkdoc opt">=</span> <span class="function">getenv</span><span class="gtkdoc opt">(</span><span class="string">&quot;QUERY_STRING&quot;</span><span class="gtkdoc opt">);</span>
-        method <span class="gtkdoc opt">=</span> LASSO_HTTP_METHOD_REDIRECT<span class="gtkdoc opt">;</span>
-<span class="gtkdoc opt">}</span> <span class="keyword">else</span> <span class="gtkdoc opt">{</span>
-        <span class="gtkdoc slc">// read submitted form; if it has a LAREQ field, put it in lareq,</span>
-        <span class="gtkdoc slc">// if it has a LARES field, put it in lares</span>
-        <span class="keyword">if</span> <span class="gtkdoc opt">(</span>lareq<span class="gtkdoc opt">) {</span>
-                artifact_msg <span class="gtkdoc opt">=</span> lareq<span class="gtkdoc opt">;</span>
-        <span class="gtkdoc opt">}</span> <span class="keyword">else if</span> <span class="gtkdoc opt">(</span>lares<span class="gtkdoc opt">) {</span>
-                response_msg <span class="gtkdoc opt">=</span> lares<span class="gtkdoc opt">;</span>
-        <span class="gtkdoc opt">}</span> <span class="keyword">else</span> <span class="gtkdoc opt">{</span>
-                <span class="gtkdoc slc">// bail out</span>
-        <span class="gtkdoc opt">}</span>
-        method <span class="gtkdoc opt">=</span> LASSO_HTTP_METHOD_POST<span class="gtkdoc opt">;</span>
-<span class="gtkdoc opt">}</span>
+<span class="n">login</span> <span class="o">=</span> <span class="n">lasso_login_new</span><span class="p">(</span><span class="n">server</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">request_method</span><span class="p">,</span> <span class="s">&quot;GET&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">artifact_msg</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s">&quot;QUERY_STRING&quot;</span><span class="p">);</span>
+        <span class="n">method</span> <span class="o">=</span> <span class="n">LASSO_HTTP_METHOD_REDIRECT</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// read submitted form; if it has a LAREQ field, put it in lareq,</span>
+        <span class="c1">// if it has a LARES field, put it in lares</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">lareq</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">artifact_msg</span> <span class="o">=</span> <span class="n">lareq</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">lares</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">response_msg</span> <span class="o">=</span> <span class="n">lares</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="c1">// bail out</span>
+        <span class="p">}</span>
+        <span class="n">method</span> <span class="o">=</span> <span class="n">LASSO_HTTP_METHOD_POST</span><span class="p">;</span>
+<span class="p">}</span>
 
-<span class="keyword">if</span> <span class="gtkdoc opt">(</span>artifact_msg<span class="gtkdoc opt">) {</span>
-        <span class="gtkdoc slc">// we received an artifact response,</span>
-        <span class="gtkdoc slc">// it means we did not really receive the response,</span>
-        <span class="gtkdoc slc">// only a token to redeem the real response from the identity</span>
-        <span class="gtkdoc slc">// provider through a SOAP resolution call</span>
-        rc <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoLogin.html#lasso-login-init-request">lasso_login_init_request</a></span><span class="gtkdoc opt">(</span>login<span class="gtkdoc opt">,</span> artifact_msg<span class="gtkdoc opt">,</span> method<span class="gtkdoc opt">);</span>
-        <span class="keyword">if</span> <span class="gtkdoc opt">(</span>rc <span class="gtkdoc opt">!=</span> <span class="number">0</span><span class="gtkdoc opt">) {</span>
-                  <span class="gtkdoc opt">...</span> <span class="gtkdoc slc">// handle errors</span>
-                  <span class="gtkdoc slc">// there is usually no error at this step, only</span>
-                  <span class="gtkdoc slc">// if the IdP response is malformed</span>
-        <span class="gtkdoc opt">}</span>
-        rc <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoLogin.html#lasso-login-build-request-msg">lasso_login_build_request_msg</a></span><span class="gtkdoc opt">(</span>login<span class="gtkdoc opt">);</span>
-        <span class="keyword">if</span> <span class="gtkdoc opt">(</span>rc <span class="gtkdoc opt">!=</span> <span class="number">0</span><span class="gtkdoc opt">) {</span>
-                  <span class="gtkdoc opt">...</span> <span class="gtkdoc slc">// handle errors</span>
-                  <span class="gtkdoc slc">// as for AuthnRequest generation, it generally is caused</span>
-                  <span class="gtkdoc slc">// by a bad initialization like an impossibility to load</span>
-                  <span class="gtkdoc slc">// the private key.</span>
-        <span class="gtkdoc opt">}</span>
-        <span class="gtkdoc slc">// makes a SOAP call, soap_call is NOT a Lasso function</span>
-        soap_answer_msg <span class="gtkdoc opt">=</span> <span class="function">soap_call</span><span class="gtkdoc opt">(</span><span class="function">LASSO_PROFILE</span><span class="gtkdoc opt">(</span>login<span class="gtkdoc opt">)-&gt;</span>msg_url<span class="gtkdoc opt">,</span>
-                        <span class="function">LASSO_PROFILE</span><span class="gtkdoc opt">(</span>login<span class="gtkdoc opt">)-&gt;</span>msg_body<span class="gtkdoc opt">);</span>
-        rc <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoLogin.html#lasso-login-process-response-msg">lasso_login_process_response_msg</a></span><span class="gtkdoc opt">(</span>login<span class="gtkdoc opt">,</span> soap_answer_msg<span class="gtkdoc opt">);</span>
-        <span class="keyword">if</span> <span class="gtkdoc opt">(</span>rc <span class="gtkdoc opt">!=</span> <span class="number">0</span><span class="gtkdoc opt">) {</span>
-                  <span class="gtkdoc opt">...</span> <span class="gtkdoc slc">// handle errors</span>
-                  <span class="gtkdoc slc">// here you can know if the IdP refused the request, </span>
-        <span class="gtkdoc opt">}</span>
-<span class="gtkdoc opt">}</span> <span class="keyword">else if</span> <span class="gtkdoc opt">(</span>response_msg<span class="gtkdoc opt">) {</span>
-        <span class="function"><a href="lasso-LassoLogin.html#lasso-login-process-authn-response-msg">lasso_login_process_authn_response_msg</a></span><span class="gtkdoc opt">(</span>login<span class="gtkdoc opt">,</span> response_msg<span class="gtkdoc opt">);</span>
-<span class="gtkdoc opt">}</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">artifact_msg</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// we received an artifact response,</span>
+        <span class="c1">// it means we did not really receive the response,</span>
+        <span class="c1">// only a token to redeem the real response from the identity</span>
+        <span class="c1">// provider through a SOAP resolution call</span>
+        <span class="n">rc</span> <span class="o">=</span> <span class="n">lasso_login_init_request</span><span class="p">(</span><span class="n">login</span><span class="p">,</span> <span class="n">artifact_msg</span><span class="p">,</span> <span class="n">method</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                  <span class="p">...</span> <span class="c1">// handle errors</span>
+                  <span class="c1">// there is usually no error at this step, only</span>
+                  <span class="c1">// if the IdP response is malformed</span>
+        <span class="p">}</span>
+        <span class="n">rc</span> <span class="o">=</span> <span class="n">lasso_login_build_request_msg</span><span class="p">(</span><span class="n">login</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                  <span class="p">...</span> <span class="c1">// handle errors</span>
+                  <span class="c1">// as for AuthnRequest generation, it generally is caused</span>
+                  <span class="c1">// by a bad initialization like an impossibility to load</span>
+                  <span class="c1">// the private key.</span>
+        <span class="p">}</span>
+        <span class="c1">// makes a SOAP call, soap_call is NOT a Lasso function</span>
+        <span class="n">soap_answer_msg</span> <span class="o">=</span> <span class="n">soap_call</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">msg_url</span><span class="p">,</span>
+                        <span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">msg_body</span><span class="p">);</span>
+        <span class="n">rc</span> <span class="o">=</span> <span class="n">lasso_login_process_response_msg</span><span class="p">(</span><span class="n">login</span><span class="p">,</span> <span class="n">soap_answer_msg</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                  <span class="p">...</span> <span class="c1">// handle errors</span>
+                  <span class="c1">// here you can know if the IdP refused the request, </span>
+        <span class="p">}</span>
+<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">response_msg</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">lasso_login_process_authn_response_msg</span><span class="p">(</span><span class="n">login</span><span class="p">,</span> <span class="n">response_msg</span><span class="p">);</span>
+<span class="p">}</span>
 
-<span class="gtkdoc slc">// looks up name_identifier in local file, database, whatever and gets back</span>
-<span class="gtkdoc slc">// two things: identity_dump and session_dump</span>
-name_identifier <span class="gtkdoc opt">=</span> <span class="function">LASSO_PROFILE</span><span class="gtkdoc opt">(</span>login<span class="gtkdoc opt">)-&gt;</span>nameIdentifier
-<span class="function"><a href="lasso-LassoProfile.html#lasso-profile-set-identity-from-dump">lasso_profile_set_identity_from_dump</a></span><span class="gtkdoc opt">(</span><span class="function">LASSO_PROFILE</span><span class="gtkdoc opt">(</span>login<span class="gtkdoc opt">),</span> identity_dump<span class="gtkdoc opt">);</span>
-<span class="function"><a href="lasso-LassoProfile.html#lasso-profile-set-session-from-dump">lasso_profile_set_session_from_dump</a></span><span class="gtkdoc opt">(</span><span class="function">LASSO_PROFILE</span><span class="gtkdoc opt">(</span>login<span class="gtkdoc opt">),</span> session_dump<span class="gtkdoc opt">);</span>
+<span class="c1">// looks up name_identifier in local file, database, whatever and gets back</span>
+<span class="c1">// two things: identity_dump and session_dump</span>
+<span class="n">name_identifier</span> <span class="o">=</span> <span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">nameIdentifier</span>
+<span class="n">lasso_profile_set_identity_from_dump</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">),</span> <span class="n">identity_dump</span><span class="p">);</span>
+<span class="n">lasso_profile_set_session_from_dump</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">),</span> <span class="n">session_dump</span><span class="p">);</span>
 
-<span class="function"><a href="lasso-LassoLogin.html#lasso-login-accept-sso">lasso_login_accept_sso</a></span><span class="gtkdoc opt">(</span>login<span class="gtkdoc opt">);</span>
+<span class="n">lasso_login_accept_sso</span><span class="p">(</span><span class="n">login</span><span class="p">);</span>
 
-<span class="keyword">if</span> <span class="gtkdoc opt">(</span><span class="function"><a href="lasso-LassoProfile.html#lasso-profile-is-identity-dirty">lasso_profile_is_identity_dirty</a></span><span class="gtkdoc opt">(</span><span class="function">LASSO_PROFILE</span><span class="gtkdoc opt">(</span>login<span class="gtkdoc opt">))) {</span>
-        LassoIdentity <span class="gtkdoc opt">*</span>identity<span class="gtkdoc opt">;</span>
-        <span class="gtkdoc kwb">char</span> <span class="gtkdoc opt">*</span>identity_dump<span class="gtkdoc opt">;</span>
-        identity <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoProfile.html#lasso-profile-get-identity">lasso_profile_get_identity</a></span><span class="gtkdoc opt">(</span><span class="function">LASSO_PROFILE</span><span class="gtkdoc opt">(</span>login<span class="gtkdoc opt">));</span>
-        identity_dump <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoIdentity.html#lasso-identity-dump">lasso_identity_dump</a></span><span class="gtkdoc opt">(</span>identity<span class="gtkdoc opt">);</span>
-        <span class="gtkdoc slc">// record identity_dump in file, database...</span>
-<span class="gtkdoc opt">}</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">lasso_profile_is_identity_dirty</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">)))</span> <span class="p">{</span>
+        <span class="n">LassoIdentity</span> <span class="o">*</span><span class="n">identity</span><span class="p">;</span>
+        <span class="kt">char</span> <span class="o">*</span><span class="n">identity_dump</span><span class="p">;</span>
+        <span class="n">identity</span> <span class="o">=</span> <span class="n">lasso_profile_get_identity</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">));</span>
+        <span class="n">identity_dump</span> <span class="o">=</span> <span class="n">lasso_identity_dump</span><span class="p">(</span><span class="n">identity</span><span class="p">);</span>
+        <span class="c1">// record identity_dump in file, database...</span>
+<span class="p">}</span>
 
-<span class="keyword">if</span> <span class="gtkdoc opt">(</span><span class="function"><a href="lasso-LassoProfile.html#lasso-profile-is-session-dirty">lasso_profile_is_session_dirty</a></span><span class="gtkdoc opt">(</span><span class="function">LASSO_PROFILE</span><span class="gtkdoc opt">(</span>login<span class="gtkdoc opt">))) {</span>
-        LassoSession <span class="gtkdoc opt">*</span>session<span class="gtkdoc opt">;</span>
-        <span class="gtkdoc kwb">char</span> <span class="gtkdoc opt">*</span>session_dump<span class="gtkdoc opt">;</span>
-        session <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoProfile.html#lasso-profile-get-session">lasso_profile_get_session</a></span><span class="gtkdoc opt">(</span><span class="function">LASSO_PROFILE</span><span class="gtkdoc opt">(</span>login<span class="gtkdoc opt">));</span>
-        session_dump <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoSession.html#lasso-session-dump">lasso_session_dump</a></span><span class="gtkdoc opt">(</span>session<span class="gtkdoc opt">);</span>
-        <span class="gtkdoc slc">// record session_dump in file, database...</span>
-<span class="gtkdoc opt">}</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">lasso_profile_is_session_dirty</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">)))</span> <span class="p">{</span>
+        <span class="n">LassoSession</span> <span class="o">*</span><span class="n">session</span><span class="p">;</span>
+        <span class="kt">char</span> <span class="o">*</span><span class="n">session_dump</span><span class="p">;</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">lasso_profile_get_session</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">));</span>
+        <span class="n">session_dump</span> <span class="o">=</span> <span class="n">lasso_session_dump</span><span class="p">(</span><span class="n">session</span><span class="p">);</span>
+        <span class="c1">// record session_dump in file, database...</span>
+<span class="p">}</span>
 
-<span class="gtkdoc slc">// redirect user anywhere</span>
-<span class="function">printf</span><span class="gtkdoc opt">(</span><span class="string">&quot;Location: %s</span><span class="gtkdoc esc">\n\n</span><span class="string">Redirected to site root</span><span class="gtkdoc esc">\n</span><span class="string">&quot;</span><span class="gtkdoc opt">,</span> login<span class="gtkdoc opt">-&gt;</span>msg_url<span class="gtkdoc opt">);</span></pre></td>
+<span class="c1">// redirect user anywhere</span>
+<span class="n">printf</span><span class="p">(</span><span class="s">&quot;Location: %s</span><span class="se">\n\n</span><span class="s">Redirected to site root</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">login</span><span class="o">-&gt;</span><span class="n">msg_url</span><span class="p">);</span></pre></td>
       </tr>
     </tbody>
   </table>
@@ -599,25 +599,25 @@ requested protocol for the response by the service provider</p>
 17
 18
 19</pre></td>
-        <td class="listing_code"><pre class="programlisting">LassoLogin <span class="gtkdoc opt">*</span>login<span class="gtkdoc opt">;</span>
-<span class="gtkdoc kwb">char</span> <span class="gtkdoc opt">*</span>request_method <span class="gtkdoc opt">=</span> <span class="function">getenv</span><span class="gtkdoc opt">(</span><span class="string">&quot;REQUEST_METHOD&quot;</span><span class="gtkdoc opt">);</span>
-<span class="gtkdoc kwb">char</span> <span class="gtkdoc opt">*</span>artifact_msg <span class="gtkdoc opt">=</span> NULL<span class="gtkdoc opt">, *</span>lares <span class="gtkdoc opt">=</span> NULL<span class="gtkdoc opt">, *</span>lareq <span class="gtkdoc opt">=</span> NULL<span class="gtkdoc opt">;</span>
-<span class="gtkdoc kwb">char</span> <span class="gtkdoc opt">*</span>name_identifier<span class="gtkdoc opt">;</span>
-lassoHttpMethod method<span class="gtkdoc opt">;</span>
-<span class="gtkdoc kwb">int</span> rc <span class="gtkdoc opt">=</span> <span class="number">0</span><span class="gtkdoc opt">;</span>
+        <td class="listing_code"><pre class="programlisting"><span class="n">LassoLogin</span> <span class="o">*</span><span class="n">login</span><span class="p">;</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">request_method</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s">&quot;REQUEST_METHOD&quot;</span><span class="p">);</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">artifact_msg</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">*</span><span class="n">lares</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">*</span><span class="n">lareq</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">name_identifier</span><span class="p">;</span>
+<span class="n">lassoHttpMethod</span> <span class="n">method</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">rc</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
-login <span class="gtkdoc opt">=</span> <span class="function"><a href="lasso-LassoLogin.html#lasso-login-new">lasso_login_new</a></span><span class="gtkdoc opt">(</span>server<span class="gtkdoc opt">);</span>
-<span class="keyword">if</span> <span class="gtkdoc opt">(</span><span class="function">strcmp</span><span class="gtkdoc opt">(</span>request_method<span class="gtkdoc opt">,</span> <span class="string">&apos;GET&apos;</span><span class="gtkdoc opt">)) {</span> <span class="gtkdoc slc">// AuthnRequest send with the HTTP-Redirect binding</span>
-    <span class="gtkdoc slc">//</span>
-    <span class="function"><a href="lasso-LassoProfile.html#lasso-profile-set-signature-verify-hint">lasso_profile_set_signature_verify_hint</a></span><span class="gtkdoc opt">(</span><span class="function">LASSO_PROFILE</span><span class="gtkdoc opt">(</span>login<span class="gtkdoc opt">),</span>
-            LASSO_PROFILE_SIGNATURE_VERIFY_HINT_FORCE<span class="gtkdoc opt">);</span>
-    rc <span class="gtkdoc opt">=</span> <span class="function">lasso_process_authn_request_msg</span><span class="gtkdoc opt">(</span>login<span class="gtkdoc opt">,</span> <span class="function">getenv</span><span class="gtkdoc opt">(</span><span class="string">&quot;QUERY_STRING&quot;</span><span class="gtkdoc opt">));</span>
-    <span class="keyword">if</span> <span class="gtkdoc opt">(</span>rc <span class="gtkdoc opt">!=</span> <span class="number">0</span><span class="gtkdoc opt">) {</span>
-        <span class="gtkdoc slc">// handle errors</span>
-    <span class="gtkdoc opt">}</span>
+<span class="n">login</span> <span class="o">=</span> <span class="n">lasso_login_new</span><span class="p">(</span><span class="n">server</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">request_method</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">GET</span><span class="err">&#39;</span><span class="p">))</span> <span class="p">{</span> <span class="c1">// AuthnRequest send with the HTTP-Redirect binding</span>
+    <span class="c1">//</span>
+    <span class="n">lasso_profile_set_signature_verify_hint</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">),</span>
+            <span class="n">LASSO_PROFILE_SIGNATURE_VERIFY_HINT_FORCE</span><span class="p">);</span>
+    <span class="n">rc</span> <span class="o">=</span> <span class="n">lasso_process_authn_request_msg</span><span class="p">(</span><span class="n">login</span><span class="p">,</span> <span class="n">getenv</span><span class="p">(</span><span class="s">&quot;QUERY_STRING&quot;</span><span class="p">));</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// handle errors</span>
+    <span class="p">}</span>
 
 
-<span class="gtkdoc opt">}</span> <span class="keyword">else</span> <span class="gtkdoc opt">{</span></pre></td>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span></pre></td>
       </tr>
     </tbody>
   </table>
@@ -1169,7 +1169,7 @@ lasso_login_dump (<em class="parameter"><code><a class="link" href="lasso-LassoL
 <div class="refsect3">
 <a name="lasso-login-dump.returns"></a><h4>Returns</h4>
 <p>the dump string.  It must be freed by the caller. </p>
-<p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
+<p><span class="annotation">[<acronym title="The caller owns the data, and is responsible for free it."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
 </div>
 <hr>
@@ -1236,7 +1236,7 @@ federation</p>
 <tr>
 <td class="parameter_name"><p>http_method</p></td>
 <td class="parameter_description"><p>HTTP method to use for request transmission. </p></td>
-<td class="parameter_annotations"><span class="annotation">[<acronym title="Default parameter value (for in case the shadows-to function has less parameters)."><span class="acronym">default</span></acronym> LASSO_HTTP_METHOD_REDIRECT]</span></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="Default parameter value (in case a function which shadows this one via rename-to has fewer parameters)."><span class="acronym">default</span></acronym> LASSO_HTTP_METHOD_REDIRECT]</span></td>
 </tr>
 </tbody>
 </table></div>
@@ -1779,6 +1779,6 @@ request</p></td>
 </div>
 </div>
 <div class="footer">
-<hr>Generated by GTK-Doc V1.28</div>
+<hr>Generated by GTK-Doc V1.33.1</div>
 </body>
 </html>

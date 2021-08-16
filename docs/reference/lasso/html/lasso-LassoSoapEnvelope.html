@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>LassoSoapEnvelope: Lasso Reference Manual</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
-<link rel="home" href="index.html" title="Lasso Reference Manual">
+<title>LassoSoapEnvelope: lasso Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="lasso Reference Manual">
 <link rel="up" href="soap.html" title="Object from the SOAP 1.1 schemas">
 <link rel="prev" href="lasso-LassoSoapDetail.html" title="LassoSoapDetail">
 <link rel="next" href="lasso-LassoSoapFault.html" title="LassoSoapFault">
-<meta name="generator" content="GTK-Doc V1.28 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.33.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -35,8 +35,8 @@
 <a name="lasso-LassoSoapEnvelope.functions"></a><h2>Functions</h2>
 <div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
-<col width="150px" class="functions_return">
-<col class="functions_name">
+<col width="150px" class="functions_proto_type">
+<col class="functions_proto_name">
 </colgroup>
 <tbody>
 <tr>
@@ -196,8 +196,8 @@
 <a name="lasso-LassoSoapEnvelope.other"></a><h2>Types and Values</h2>
 <div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
-<col width="150px" class="name">
-<col class="description">
+<col width="150px" class="other_proto_type">
+<col class="other_proto_name">
 </colgroup>
 <tbody><tr>
 <td class="datatype_keyword">struct</td>
@@ -394,7 +394,7 @@ lasso_soap_envelope_get_message_id (<em class="parameter"><code><a class="link" 
 <tr>
 <td class="parameter_name"><p>create</p></td>
 <td class="parameter_description"><p>whether to create the node if it is not found. </p></td>
-<td class="parameter_annotations"><span class="annotation">[<acronym title="Default parameter value (for in case the shadows-to function has less parameters)."><span class="acronym">default</span></acronym> FALSE]</span></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="Default parameter value (in case a function which shadows this one via rename-to has fewer parameters)."><span class="acronym">default</span></acronym> FALSE]</span></td>
 </tr>
 </tbody>
 </table></div>
@@ -403,7 +403,7 @@ lasso_soap_envelope_get_message_id (<em class="parameter"><code><a class="link" 
 <a name="lasso-soap-envelope-get-message-id.returns"></a><h4>Returns</h4>
 <p>a <a class="link" href="lasso-LassoWsAddrAttributedURI.html#LassoWsAddrAttributedURI" title="struct LassoWsAddrAttributedURI"><span class="type">LassoWsAddrAttributedURI</span></a> object or NULL if none is found, and
 creation was not allowed. </p>
-<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+<p><span class="annotation">[<acronym title="The data is owned by the callee, which is responsible of freeing it."><span class="acronym">transfer none</span></acronym>]</span></p>
 </div>
 </div>
 <hr>
@@ -430,7 +430,7 @@ lasso_soap_envelope_get_relates_to (<em class="parameter"><code><a class="link" 
 <tr>
 <td class="parameter_name"><p>create</p></td>
 <td class="parameter_description"><p>whether to create the node if it is not found. </p></td>
-<td class="parameter_annotations"><span class="annotation">[<acronym title="Default parameter value (for in case the shadows-to function has less parameters)."><span class="acronym">default</span></acronym> FALSE]</span></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="Default parameter value (in case a function which shadows this one via rename-to has fewer parameters)."><span class="acronym">default</span></acronym> FALSE]</span></td>
 </tr>
 </tbody>
 </table></div>
@@ -438,7 +438,7 @@ lasso_soap_envelope_get_relates_to (<em class="parameter"><code><a class="link" 
 <div class="refsect3">
 <a name="lasso-soap-envelope-get-relates-to.returns"></a><h4>Returns</h4>
 <p>a <a class="link" href="lasso-LassoWsAddrAttributedURI.html#LassoWsAddrAttributedURI" title="struct LassoWsAddrAttributedURI"><span class="type">LassoWsAddrAttributedURI</span></a> object or NULL if none is found, and creation was not allowed. </p>
-<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+<p><span class="annotation">[<acronym title="The data is owned by the callee, which is responsible of freeing it."><span class="acronym">transfer none</span></acronym>]</span></p>
 </div>
 </div>
 <hr>
@@ -468,7 +468,7 @@ lasso_soap_envelope_get_saml2_security_token
 <div class="refsect3">
 <a name="lasso-soap-envelope-get-saml2-security-token.returns"></a><h4>Returns</h4>
 <p>a <a class="link" href="lasso-LassoSaml2Assertion.html#LassoSaml2Assertion" title="struct LassoSaml2Assertion"><span class="type">LassoSaml2Assertion</span></a>, or NULL if none is found. </p>
-<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+<p><span class="annotation">[<acronym title="The data is owned by the callee, which is responsible of freeing it."><span class="acronym">transfer none</span></acronym>]</span></p>
 </div>
 </div>
 <hr>
@@ -539,7 +539,7 @@ if no preexisting session with the User Agent exists</p>
 <div class="refsect3">
 <a name="lasso-soap-envelope-sb2-get-redirect-request-url.returns"></a><h4>Returns</h4>
 <p>the redirect URL string or NULL if no sb2:RedirectRequest detail is present. </p>
-<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
+<p><span class="annotation">[<acronym title="The data is owned by the callee, which is responsible of freeing it."><span class="acronym">transfer none</span></acronym>][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
 </div>
 </div>
 <hr>
@@ -569,7 +569,7 @@ lasso_soap_envelope_sb2_get_target_identity_header
 <p>the first <a class="link" href="lasso-LassoIdWsf2Sb2TargetIdentity.html#LassoIdWsf2Sb2TargetIdentity" title="struct LassoIdWsf2Sb2TargetIdentity"><span class="type">LassoIdWsf2Sb2TargetIdentity</span></a> object found in the
 headers of the <em class="parameter"><code>soap_envelope</code></em>
 , or NULL if none is found. </p>
-<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+<p><span class="annotation">[<acronym title="The data is owned by the callee, which is responsible of freeing it."><span class="acronym">transfer none</span></acronym>]</span></p>
 </div>
 </div>
 <hr>
@@ -607,7 +607,7 @@ lasso_soap_envelope_wssec_get_security_header
 <a name="lasso-soap-envelope-wssec-get-security-header.returns"></a><h4>Returns</h4>
 <p>the wsse:Security header found in the SOAP message, or NULL if
 none is found. </p>
-<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
+<p><span class="annotation">[<acronym title="The data is owned by the callee, which is responsible of freeing it."><span class="acronym">transfer none</span></acronym>]</span></p>
 </div>
 </div>
 <hr>
@@ -635,7 +635,7 @@ lasso_soap_envelope_get_soap_fault (<em class="parameter"><code><a class="link" 
 <tr>
 <td class="parameter_name"><p>create</p></td>
 <td class="parameter_description"><p>whether to create the SOAP Fault. </p></td>
-<td class="parameter_annotations"><span class="annotation">[<acronym title="Default parameter value (for in case the shadows-to function has less parameters)."><span class="acronym">default</span></acronym> FALSE]</span></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="Default parameter value (in case a function which shadows this one via rename-to has fewer parameters)."><span class="acronym">default</span></acronym> FALSE]</span></td>
 </tr>
 </tbody>
 </table></div>
@@ -643,7 +643,7 @@ lasso_soap_envelope_get_soap_fault (<em class="parameter"><code><a class="link" 
 <div class="refsect3">
 <a name="lasso-soap-envelope-get-soap-fault.returns"></a><h4>Returns</h4>
 <p>a <a class="link" href="lasso-LassoSoapFault.html#LassoSoapFault" title="struct LassoSoapFault"><span class="type">LassoSoapFault</span></a> object or NULL. </p>
-<p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
+<p><span class="annotation">[<acronym title="The data is owned by the callee, which is responsible of freeing it."><span class="acronym">transfer none</span></acronym>][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></p>
 </div>
 </div>
 <hr>
@@ -700,6 +700,6 @@ header is removed.</p>
 </div>
 </div>
 <div class="footer">
-<hr>Generated by GTK-Doc V1.28</div>
+<hr>Generated by GTK-Doc V1.33.1</div>
 </body>
 </html>

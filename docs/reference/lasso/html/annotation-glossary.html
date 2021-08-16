@@ -2,12 +2,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Annotation Glossary: Lasso Reference Manual</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
-<link rel="home" href="index.html" title="Lasso Reference Manual">
-<link rel="up" href="pt01.html" title="Part II. Appendix">
-<link rel="prev" href="api-index.html" title="API Index">
-<meta name="generator" content="GTK-Doc V1.28 (XML mode)">
+<title>Annotation Glossary: lasso Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
+<link rel="home" href="index.html" title="lasso Reference Manual">
+<link rel="up" href="index.html" title="lasso Reference Manual">
+<link rel="prev" href="api-index-2-3.html" title="Index of new API in 2.3">
+<meta name="generator" content="GTK-Doc V1.33.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -28,19 +28,19 @@
                      <span class="dim">|</span> 
                   <a class="shortcut" href="#glsU">U</a></span></td>
 <td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
-<td><a accesskey="u" href="pt01.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
-<td><a accesskey="p" href="api-index.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><img src="up-insensitive.png" width="16" height="16" border="0"></td>
+<td><a accesskey="p" href="api-index-2-3.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
 <td><img src="right-insensitive.png" width="16" height="16" border="0"></td>
 </tr></table>
 <div class="glossary">
-<div class="titlepage"><div><div><h2 class="title">
-<a name="annotation-glossary"></a>Annotation Glossary</h2></div></div></div>
+<div class="titlepage"><div><div><h1 class="title">
+<a name="annotation-glossary"></a>Annotation Glossary</h1></div></div></div>
 <a name="glsA"></a><h3 class="title">A</h3>
 <dt><span class="glossterm"><a name="annotation-glossterm-allow-none"></a>allow-none</span></dt>
 <dd class="glossdef"><p>NULL is OK, both for passing and for returning.</p></dd>
 <a name="glsD"></a><h3 class="title">D</h3>
 <dt><span class="glossterm"><a name="annotation-glossterm-default"></a>default</span></dt>
-<dd class="glossdef"><p>Default parameter value (for in case the <a href="http://foldoc.org/shadows"><span class="acronym">shadows</span></a>-to function has less parameters).</p></dd>
+<dd class="glossdef"><p>Default parameter value (in case a function which shadows this one via <a href="http://foldoc.org/rename-to"><span class="acronym">rename-to</span></a> has fewer parameters).</p></dd>
 <a name="glsE"></a><h3 class="title">E</h3>
 <dt><span class="glossterm"><a name="annotation-glossterm-element-type"></a>element-type</span></dt>
 <dd class="glossdef"><p>Generics and defining elements of containers and arrays.</p></dd>
@@ -48,7 +48,7 @@
 <dt><span class="glossterm"><a name="annotation-glossterm-optional"></a>optional</span></dt>
 <dd class="glossdef"><p>NULL may be passed instead of a pointer to a location.</p></dd>
 <dt><span class="glossterm"><a name="annotation-glossterm-out"></a>out</span></dt>
-<dd class="glossdef"><p>Parameter for returning results. Default is <acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>.</p></dd>
+<dd class="glossdef"><p>Parameter for returning results. Default is <acronym title="The caller owns the data, and is responsible for free it."><span class="acronym">transfer full</span></acronym>.</p></dd>
 <a name="glsP"></a><h3 class="title">P</h3>
 <dt><span class="glossterm"><a name="annotation-glossterm-Private"></a>Private</span></dt>
 <dd class="glossdef"><p>An interface that can be used within the GNOME stack itself, but that is not
@@ -66,11 +66,11 @@ justifications.
 </p></dd>
 <a name="glsT"></a><h3 class="title">T</h3>
 <dt><span class="glossterm"><a name="annotation-glossterm-transfer%20container"></a>transfer container</span></dt>
-<dd class="glossdef"><p>Free data container after the code is done.</p></dd>
+<dd class="glossdef"><p>The caller owns the data container, but not the data inside it.</p></dd>
 <dt><span class="glossterm"><a name="annotation-glossterm-transfer%20full"></a>transfer full</span></dt>
-<dd class="glossdef"><p>Free data after the code is done.</p></dd>
+<dd class="glossdef"><p>The caller owns the data, and is responsible for free it.</p></dd>
 <dt><span class="glossterm"><a name="annotation-glossterm-transfer%20none"></a>transfer none</span></dt>
-<dd class="glossdef"><p>Don't free data after the code is done.</p></dd>
+<dd class="glossdef"><p>The data is owned by the callee, which is responsible of freeing it.</p></dd>
 <a name="glsU"></a><h3 class="title">U</h3>
 <dt><span class="glossterm"><a name="annotation-glossterm-Unstable"></a>Unstable</span></dt>
 <dd class="glossdef"><p>Unstable interfaces are experimental or transitional. They are typically used to
@@ -89,6 +89,6 @@ mentioned in the release notes for the affected release.
 </p></dd>
 </div>
 <div class="footer">
-<hr>Generated by GTK-Doc V1.28</div>
+<hr>Generated by GTK-Doc V1.33.1</div>
 </body>
 </html>

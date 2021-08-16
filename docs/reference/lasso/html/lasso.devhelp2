@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<book xmlns="http://www.devhelp.net/book" title="Lasso Reference Manual" link="index.html" author="" name="lasso" version="2" language="c">
+<book xmlns="http://www.devhelp.net/book" title="lasso Reference Manual" link="index.html" author="" name="lasso" version="2" language="c" online="http://lasso.entrouvert.org/documentation/index.html">
   <chapters>
     <sub name="Lasso &amp; Liberty Alliance Overview" link="lasso.html"/>
     <sub name="Application Programming Interface" link="rn01.html">
@@ -372,10 +372,10 @@
         <sub name="Strings for WS-*" link="lasso-Strings-for-WS-*.html"/>
       </sub>
     </sub>
-    <sub name="Appendix" link="pt01.html">
-      <sub name="API Index" link="api-index.html"/>
-      <sub name="Annotation Glossary" link="annotation-glossary.html"/>
-    </sub>
+    <sub name="API Index" link="api-index-full.html"/>
+    <sub name="Index of deprecated API" link="deprecated-api-index.html"/>
+    <sub name="Index of new API in 2.3" link="api-index-2-3.html"/>
+    <sub name="Annotation Glossary" link="annotation-glossary.html"/>
   </chapters>
   <functions>
     <keyword type="function" name="lasso_server_new ()" link="lasso-LassoServer.html#lasso-server-new"/>
@@ -1162,7 +1162,7 @@
     <keyword type="function" name="lasso_samlp2_authn_query_new ()" link="lasso-LassoSamlp2AuthnQuery.html#lasso-samlp2-authn-query-new"/>
     <keyword type="struct" name="struct LassoSamlp2AuthnQuery" link="lasso-LassoSamlp2AuthnQuery.html#LassoSamlp2AuthnQuery"/>
     <keyword type="function" name="lasso_samlp2_authn_request_new ()" link="lasso-LassoSamlp2AuthnRequest.html#lasso-samlp2-authn-request-new"/>
-    <keyword type="struct" name="struct LassoSamlp2AuthnRequest" link="lasso-LassoSamlp2AuthnRequest.html#LassoSamlp2AuthnRequest" deprecated=""/>
+    <keyword type="struct" name="struct LassoSamlp2AuthnRequest" link="lasso-LassoSamlp2AuthnRequest.html#LassoSamlp2AuthnRequest"/>
     <keyword type="function" name="lasso_samlp2_authz_decision_query_new ()" link="lasso-LassoSamlp2AuthzDecisionQuery.html#lasso-samlp2-authz-decision-query-new"/>
     <keyword type="struct" name="struct LassoSamlp2AuthzDecisionQuery" link="lasso-LassoSamlp2AuthzDecisionQuery.html#LassoSamlp2AuthzDecisionQuery"/>
     <keyword type="function" name="lasso_samlp2_extensions_new ()" link="lasso-LassoSamlp2Extensions.html#lasso-samlp2-extensions-new"/>
@@ -1174,9 +1174,9 @@
     <keyword type="function" name="lasso_samlp2_logout_request_new ()" link="lasso-LassoSamlp2LogoutRequest.html#lasso-samlp2-logout-request-new"/>
     <keyword type="function" name="lasso_samlp2_logout_request_get_session_indexes ()" link="lasso-LassoSamlp2LogoutRequest.html#lasso-samlp2-logout-request-get-session-indexes"/>
     <keyword type="function" name="lasso_samlp2_logout_request_set_session_indexes ()" link="lasso-LassoSamlp2LogoutRequest.html#lasso-samlp2-logout-request-set-session-indexes"/>
-    <keyword type="struct" name="struct LassoSamlp2LogoutRequest" link="lasso-LassoSamlp2LogoutRequest.html#LassoSamlp2LogoutRequest" deprecated=""/>
+    <keyword type="struct" name="struct LassoSamlp2LogoutRequest" link="lasso-LassoSamlp2LogoutRequest.html#LassoSamlp2LogoutRequest"/>
     <keyword type="function" name="lasso_samlp2_logout_response_new ()" link="lasso-LassoSamlp2LogoutResponse.html#lasso-samlp2-logout-response-new"/>
-    <keyword type="struct" name="struct LassoSamlp2LogoutResponse" link="lasso-LassoSamlp2LogoutResponse.html#LassoSamlp2LogoutResponse" deprecated=""/>
+    <keyword type="struct" name="struct LassoSamlp2LogoutResponse" link="lasso-LassoSamlp2LogoutResponse.html#LassoSamlp2LogoutResponse"/>
     <keyword type="function" name="lasso_samlp2_manage_name_id_request_new ()" link="lasso-LassoSamlp2ManageNameIDRequest.html#lasso-samlp2-manage-name-id-request-new"/>
     <keyword type="struct" name="struct LassoSamlp2ManageNameIDRequest" link="lasso-LassoSamlp2ManageNameIDRequest.html#LassoSamlp2ManageNameIDRequest"/>
     <keyword type="function" name="lasso_samlp2_manage_name_id_response_new ()" link="lasso-LassoSamlp2ManageNameIDResponse.html#lasso-samlp2-manage-name-id-response-new"/>

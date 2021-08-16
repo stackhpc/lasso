@@ -28,14 +28,6 @@ typedef int Py_ssize_t;
 #define PyString_FromFormat PyUnicode_FromFormat
 #define PyString_FromString PyUnicode_FromString
 #define PyString_AsString PyUnicode_AsUTF8
-static Py_ssize_t PyString_Size(PyObject *string) {
-	Py_ssize_t size;
-	char *ret = PyUnicode_AsUTF8AndSize(string, &size);
-	if (! ret) {
-		return -1;
-	}
-	return size;
-}
 #define get_pystring PyUnicode_AsUTF8AndSize
 #define PyStringFree(string) ;
 #elif PY_MAJOR_VERSION >= 3
@@ -69,7 +61,20 @@ static char *get_pystring(PyObject *string, Py_ssize_t *size) {
 	return ret;
 }
 #define PyStringFree(string) ;
+void PyErr_WarnFormat(PyObject *category, int stacklevel, const char *format, ...) {
+
+	va_list ap;
+	char s[1024];
+
+	va_start(ap, format);
+	g_vsnprintf(s, 1024, format, ap);
+	va_end(ap);
+	PyErr_WarnEx(category, s, stacklevel);
+}
 #endif
+
+#define RETURN_IF_FAIL(op) do { if (! (op)) { return NULL; } } while(0)
+#define EXIT_IF_FAIL(op) do { if (! (op)) { ok = 0; goto failure; } } while(0)
 
 GQuark lasso_wrapper_key;
 
@@ -84,11 +89,11 @@ G_GNUC_UNUSED static xmlNode*  get_xml_node_from_pystring(PyObject *string);
 G_GNUC_UNUSED static PyObject* get_dict_from_hashtable_of_objects(GHashTable *value);
 G_GNUC_UNUSED static PyObject* get_dict_from_hashtable_of_strings(GHashTable *value);
 G_GNUC_UNUSED static PyObject* PyGObjectPtr_New(GObject *obj);
-G_GNUC_UNUSED static void set_hashtable_of_pygobject(GHashTable *a_hash, PyObject *dict);
-G_GNUC_UNUSED static void set_hashtable_of_strings(GHashTable *a_hash, PyObject *dict);
-G_GNUC_UNUSED static void set_list_of_strings(GList **a_list, PyObject *seq);
-G_GNUC_UNUSED static void set_list_of_xml_nodes(GList **a_list, PyObject *seq);
-G_GNUC_UNUSED static void set_list_of_pygobject(GList **a_list, PyObject *seq);
+G_GNUC_UNUSED static int set_hashtable_of_pygobject(GHashTable *a_hash, PyObject *dict);
+G_GNUC_UNUSED static int set_hashtable_of_strings(GHashTable *a_hash, PyObject *dict);
+G_GNUC_UNUSED static int set_list_of_strings(GList **a_list, PyObject *seq);
+G_GNUC_UNUSED static int set_list_of_xml_nodes(GList **a_list, PyObject *seq);
+G_GNUC_UNUSED static int set_list_of_pygobject(GList **a_list, PyObject *seq);
 G_GNUC_UNUSED static PyObject *get_list_of_strings(const GList *a_list);
 G_GNUC_UNUSED static PyObject *get_list_of_xml_nodes(const GList *a_list);
 G_GNUC_UNUSED static PyObject *get_list_of_pygobject(const GList *a_list);
@@ -128,7 +133,7 @@ get_dict_from_hashtable_of_objects(GHashTable *value)
 			PyDict_SetItemString(dict, (char*)keys->data, item);
 			Py_DECREF(item);
 		} else {
-			PyErr_Warn(PyExc_RuntimeWarning, "hashtable contains a null value");
+			PyErr_WarnFormat(PyExc_RuntimeWarning, 1, "hashtable contains a null value");
 		}
 	}
 	g_list_free(begin);
@@ -157,7 +162,7 @@ get_dict_from_hashtable_of_strings(GHashTable *value)
 				PyDict_SetItemString(dict, (char*)keys->data, item);
 				Py_DECREF(item);
 			} else {
-				PyErr_Warn(PyExc_RuntimeWarning, "hashtable contains a null value");
+				PyErr_WarnFormat(PyExc_RuntimeWarning, 1, "hashtable contains a null value");
 			}
 		}
 		g_list_free(begin);
@@ -210,7 +215,6 @@ get_pystring_from_xml_node(xmlNode *xmlnode)
 static gboolean
 valid_seq(PyObject *seq) {
 	if (! seq || ( seq != Py_None && ! PyTuple_Check(seq))) {
-		 PyErr_SetString(PyExc_TypeError, "value should be tuple");
 		 return 0;
 	}
 	return 1;
@@ -230,18 +234,18 @@ free_list(GList **a_list, GFunc free_help) {
  * values from the hash, so if there are somme common
  * values with RefCoun = 1 they won't be deallocated.
  * */
-static void
+static int
 set_hashtable_of_pygobject(GHashTable *a_hash, PyObject *dict) {
 	PyObject *key, *value;
 	Py_ssize_t i;
 
 	if (! a_hash) {
 		 PyErr_SetString(PyExc_TypeError, "hashtable does not exist");
-		 return;
+		 return 0;
 	}
 	if (dict != Py_None && ! PyDict_Check(dict)) {
 		 PyErr_SetString(PyExc_TypeError, "value should be a frozen dict");
-		 return;
+		 return 0;
 	}
 	i = 0;
 	// Increase ref count of common object between old and new
@@ -260,10 +264,11 @@ set_hashtable_of_pygobject(GHashTable *a_hash, PyObject *dict) {
 	g_hash_table_remove_all (a_hash);
 	i = 0;
 	while (PyDict_Next(dict, &i, &key, &value)) {
-		char *ckey = PyString_AsString(key);
-		g_hash_table_replace (a_hash, ckey, ((PyGObjectPtr*)value)->obj);
+		const char *ckey = PyString_AsString(key);
+		g_hash_table_replace (a_hash, g_strdup(ckey), ((PyGObjectPtr*)value)->obj);
+		PyStringFree(ckey);
 	}
-	return;
+	return 1;
 failure:
 	i = 0;
 	while (PyDict_Next(dict, &i, &key, &value)) {
@@ -271,9 +276,10 @@ failure:
 			break;
 		g_object_unref((PyGObjectPtr*)value);
 	}
+	return 0;
 }
 
-static void 
+static int
 set_hashtable_of_strings(GHashTable *a_hash, PyObject *dict)
 {
 	PyObject *key, *value;
@@ -281,11 +287,11 @@ set_hashtable_of_strings(GHashTable *a_hash, PyObject *dict)
 
 	if (! a_hash) {
 		 PyErr_SetString(PyExc_TypeError, "hashtable does not exist");
-		 return;
+		 return 0;
 	}
 	if (dict != Py_None && ! PyDict_Check(dict)) {
 		 PyErr_SetString(PyExc_TypeError, "value should be a frozen dict");
-		 return;
+		 return 0;
 	}
 	i = 0;
 	// Increase ref count of common object between old and new
@@ -303,51 +309,67 @@ set_hashtable_of_strings(GHashTable *a_hash, PyObject *dict)
 	g_hash_table_remove_all (a_hash);
 	i = 0;
 	while (PyDict_Next(dict, &i, &key, &value)) {
-		char *ckey = PyString_AsString(key);
-		char *cvalue = PyString_AsString(value);
+		const char *ckey = PyString_AsString(key);
+		const char *cvalue = PyString_AsString(value);
 		g_hash_table_insert (a_hash, g_strdup(ckey), g_strdup(cvalue));
+		PyStringFree(ckey);
+		PyStringFree(cvalue);
 	}
+	return 1;
 failure:
-	return;
+	return 0;
 }
 
 /** Set the GList* pointer, pointed by a_list, to a pointer on a new GList
  * created by converting the python seq into a GList of char*.
  */
-static void
+static int
 set_list_of_strings(GList **a_list, PyObject *seq) {
 	GList *list = NULL;
 	int l = 0,i;
 
-	lasso_return_if_fail(valid_seq(seq));
+	if (! valid_seq(seq)) {
+		PyErr_SetString(PyExc_TypeError,
+				"value should be a tuple of strings");
+		return 0;
+	}
 	if (seq != Py_None) {
 		l = PySequence_Length(seq);
 	}
 	for (i=0; i<l; i++) {
+		const char *astr = NULL;
+
 		PyObject *pystr = PySequence_Fast_GET_ITEM(seq, i);
 		if (! PyString_Check(pystr)) {
 			PyErr_SetString(PyExc_TypeError,
 					"value should be a tuple of strings");
 			goto failure;
 		}
-		list = g_list_append(list, g_strdup(PyString_AsString(pystr)));
+		astr = PyString_AsString(pystr);
+		list = g_list_append(list, g_strdup(astr));
+		PyStringFree(astr);
 	}
 	free_list(a_list, (GFunc)g_free);
 	*a_list = list;
-	return;
+	return 1;
 failure:
 	free_list(&list, (GFunc)g_free);
+	return 0;
 }
 
 /** Set the GList* pointer, pointed by a_list, to a pointer on a new GList
  * created by converting the python seq into a GList of xmlNode*.
  */
-static void
+static int
 set_list_of_xml_nodes(GList **a_list, PyObject *seq) {
 	GList *list = NULL;
-	int l = 0,i;
+	int l = 0, i;
 
-	lasso_return_if_fail(valid_seq(seq));
+	if (! valid_seq(seq)) {
+		PyErr_SetString(PyExc_TypeError,
+				"value should be a tuple of strings");
+		return 0;
+	}
 	if (seq != Py_None) {
 		l = PySequence_Length(seq);
 	}
@@ -360,24 +382,34 @@ set_list_of_xml_nodes(GList **a_list, PyObject *seq) {
 			goto failure;
 		}
 		item_node = get_xml_node_from_pystring(item);
+		if (! item_node) {
+			PyErr_SetString(PyExc_TypeError,
+					"values should be valid XML fragments");
+			goto failure;
+		}
 		list = g_list_append(list, item_node);
 	}
 	free_list(a_list, (GFunc)xmlFreeNode);
 	*a_list = list;
-	return;
+	return 1;
 failure:
 	free_list(&list, (GFunc)xmlFreeNode);
+	return 0;
 }
 
 /** Set the GList* pointer, pointed by a_list, to a pointer on a new GList
  * created by converting the python seq into a GList of GObject*.
  */
-static void
+static int
 set_list_of_pygobject(GList **a_list, PyObject *seq) {
 	GList *list = NULL;
 	int l = 0,i;
 
-	lasso_return_if_fail(valid_seq(seq));
+	if (!valid_seq(seq)) {
+		PyErr_SetString(PyExc_TypeError,
+				"value should be a tuple of PyGobject");
+		return 0;
+	}
 	if (seq != Py_None) {
 		l = PySequence_Length(seq);
 	}
@@ -394,14 +426,15 @@ set_list_of_pygobject(GList **a_list, PyObject *seq) {
 	}
 	free_list(a_list, (GFunc)g_object_unref);
 	*a_list = list;
-	return;
+	return 1;
 failure:
 	free_list(&list, (GFunc)g_object_unref);
+	return 0;
 }
 
 static xmlNode*
 get_xml_node_from_pystring(PyObject *string) {
-	char *utf8 = NULL;
+	const char *utf8 = NULL;
 	Py_ssize_t size;
 	xmlNode *xml_node;
 	utf8 = get_pystring(string, &size);
@@ -432,8 +465,7 @@ get_list_of_strings(const GList *a_list) {
 			PyTuple_SetItem(a_tuple, i, str);
 			i++;
 		} else {
-			PyErr_Warn(PyExc_RuntimeWarning,
-				"list contains a NULL value");
+			PyErr_WarnFormat(PyExc_RuntimeWarning, 1, "list contains a NULL value");
 		}
 		a_list = a_list->next;
 	}
@@ -443,7 +475,7 @@ get_list_of_strings(const GList *a_list) {
 failure:
 	PyErr_SetString(PyExc_TypeError, "Allocation problem in get_list_of_strings");
 	Py_XDECREF(a_tuple);
-	return noneRef();
+	return NULL;
 }
 
 static PyObject *
@@ -465,12 +497,10 @@ get_list_of_xml_nodes(const GList *a_list) {
 				PyTuple_SetItem(a_tuple, i, str);
 				i++;
 			} else {
-				PyErr_Warn(PyExc_RuntimeWarning,
-					"could not convert an xmlNode to a string");
+				PyErr_WarnFormat(PyExc_RuntimeWarning, 1, "could not convert an xmlNode to a string");
 			}
 		} else {
-			PyErr_Warn(PyExc_RuntimeWarning,
-				"list contains a NULL value");
+			PyErr_WarnFormat(PyExc_RuntimeWarning, 1, "list contains a NULL value");
 		}
 		a_list = a_list->next;
 	}
@@ -480,7 +510,7 @@ get_list_of_xml_nodes(const GList *a_list) {
 failure:
 	PyErr_SetString(PyExc_TypeError, "Allocation problem in get_list_of_strings");
 	Py_XDECREF(a_tuple);
-	return noneRef();
+	return NULL;
 }
 
 static PyObject *
@@ -503,12 +533,10 @@ get_list_of_pygobject(const GList *a_list) {
 				PyTuple_SetItem(a_tuple, i, pygobject);
 				i++;
 			} else {
-				PyErr_Warn(PyExc_RuntimeWarning,
-					"could not convert a GObject to a PyGobject");
+				PyErr_WarnFormat(PyExc_RuntimeWarning, 1, "could not convert a GObject to a PyGobject");
 			}
 		} else {
-			PyErr_Warn(PyExc_RuntimeWarning,
-				"list contains a NULL value");
+			PyErr_WarnFormat(PyExc_RuntimeWarning, 1, "list contains a NULL value");
 		}
 		a_list = a_list->next;
 	}
@@ -518,7 +546,7 @@ get_list_of_pygobject(const GList *a_list) {
 failure:
 	PyErr_SetString(PyExc_TypeError, "Allocation problem in get_list_of_strings");
 	Py_XDECREF(a_tuple);
-	return noneRef();
+	return NULL;
 }
 
 /**
@@ -676,27 +704,27 @@ set_object_field(GObject **a_gobject_ptr, PyGObjectPtr *a_pygobject) {
 
 static PyObject *get_logger_object(const char *domain) {
 	static PyObject *_logger_object = NULL;
+	PyObject *lasso_module = NULL;
+	PyObject *logging_module = NULL;
 
-	PyObject *logging_module = PyImport_ImportModule("lasso");
-
-	if (logging_module) {
-		_logger_object = PyObject_GetAttrString(logging_module, "logger");
-		Py_DECREF(logging_module);
+	lasso_module = PyImport_ImportModule("lasso");
+	if (lasso_module && PyObject_HasAttrString(lasso_module, "logger")) {
+		_logger_object = PyObject_GetAttrString(lasso_module, "logger");
 		if (_logger_object)
 			goto exit;
 	}
-	/* XXX: needed so that PyImport_ImportModule("logging") always works */
-	logging_module = PyImport_ImportModule("sys");
-	if (logging_module) {
-		Py_DECREF(logging_module);
-	}
+
 	logging_module = PyImport_ImportModule("logging");
 	if (logging_module) {
-		_logger_object = PyObject_CallMethod(logging_module, "getLogger",
-				"s#", domain, strlen(domain));
-		Py_DECREF(logging_module);
+		_logger_object = PyObject_CallMethod(logging_module, "getLogger", "s", domain);
 	}
 exit:
+	if (lasso_module) {
+		Py_DECREF(lasso_module);
+	}
+	if (logging_module) {
+		Py_DECREF(logging_module);
+	}
 	if (_logger_object == Py_None) {
 		Py_DECREF(_logger_object);
 		_logger_object = NULL;
@@ -712,8 +740,8 @@ lasso_python_log(const char *domain, GLogLevelFlags log_level, const gchar *mess
 	char *method = NULL;
 
 	if (! logger_object) {
-		PyErr_SetString(PyExc_RuntimeError, "neither lasso.logger nor "
-				"logging.getLogger('lasso') did return a logger");
+		PyErr_WarnFormat(PyExc_RuntimeWarning, 1, "neither lasso.logger nor "
+				 "logging.getLogger('lasso') did return a logger", 1);
 		return;
 	}
 	switch (log_level) {
@@ -736,12 +764,11 @@ lasso_python_log(const char *domain, GLogLevelFlags log_level, const gchar *mess
 		default:
 			return;
 	}
-	result = PyObject_CallMethod(logger_object, method, "s#s", "%s", 2, message);
+	result = PyObject_CallMethod(logger_object, method, "ss", "%s", message);
 	Py_DECREF(logger_object);
 	if (result) {
 		Py_DECREF(result);
 	} else {
-		PyErr_Format(PyExc_RuntimeError, "lasso could not call method %s on its logger",
-				method);
+		PyErr_WarnFormat(PyExc_RuntimeWarning, 1, "lasso could not call method %s on its logger", method);
 	}
 }
