@@ -53,12 +53,10 @@ config.status: configure.ac
 		cp -a bindings/python bindings/python$$v; \
 	done
 
-
-build: build-stamp
-build-stamp:  config.status
+build-arch: build-stamp
+build-stamp: config.status
 	dh_testdir
 
-	# Add here commands to compile the package.
 	$(MAKE) V=1
 	set -e; \
 	for v in $(PY3VERS); do \
@@ -82,12 +80,13 @@ clean:
 
 	rm -f config.log
 	rm -f debian/liblasso-perl.install
+	rm -f ./bindings/perl/MYMETA.json ./bindings/perl/MYMETA.yml
 	rm -rf ./bindings/perl/__pycache__ ./bindings/__pycache__ ./bindings/python/__pycache__
 
 	dh_autoreconf_clean
 	dh_clean
 
-install: build
+install-arch: build-arch
 	dh_testdir
 	dh_testroot
 	dh_clean -k
@@ -108,16 +107,19 @@ install: build
 
 	sed -e 's,$${archlib},$(ARCHLIB),g' debian/liblasso-perl.install.in > debian/liblasso-perl.install
 
-	# remove id-wsf directory if it is empty
-	-rmdir $(CURDIR)/debian/tmp/usr/include/lasso/id-wsf/
 
+build-indep:
+
+install-indep:
+
+build: build-arch build-indep
 
 # Build architecture-independent files here.
-binary-indep: build install
+binary-indep: build-indep install-indep
 	#dh_makeclilibs -L liblasso-cil -r
 
 # Build architecture-dependent files here.
-binary-arch: build install
+binary-arch: build-arch install-arch
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs
@@ -142,4 +144,4 @@ binary-arch: build install
 	dh_builddeb
 
 binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install
+.PHONY: build build-arch install-arch build-indep install-indep clean binary-indep binary-arch binary install
