@@ -1,3 +1,13 @@
+lasso (2.7.0-2) unstable; urgency=medium
+
+  * debian/rules: introduce build-arch/build-indep targets.
+  * debian/rules: clean perl META files.
+  * debian/rules: remove cleaning of id-wsf directory, it doesn't exist
+    anymore.
+  * debian/liblasso3.symbols: add lasso_log symbol introduced in 2.7.0-1.
+
+ -- Frederic Peters <fpeters@debian.org>  Sat, 06 Nov 2021 13:42:52 +0100
+
 lasso (2.7.0-1) unstable; urgency=medium
 
   * New upstream release.
