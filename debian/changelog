@@ -1,3 +1,9 @@
+lasso (2.7.0-2build1) jammy; urgency=medium
+
+  * No-change rebuild against openssl3
+
+ -- Simon Chopin <simon.chopin@canonical.com>  Wed, 01 Dec 2021 16:11:56 +0000
+
 lasso (2.7.0-2) unstable; urgency=medium
 
   * debian/rules: introduce build-arch/build-indep targets.
