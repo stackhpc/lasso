@@ -1,3 +1,9 @@
+lasso (2.7.0-2build2) jammy; urgency=medium
+
+  * No-change rebuild for the perl update.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sun, 06 Feb 2022 13:28:15 +0100
+
 lasso (2.7.0-2build1) jammy; urgency=medium
 
   * No-change rebuild against openssl3
