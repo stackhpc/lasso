@@ -187,7 +187,7 @@ dnl - interfaces removed -> AGE = 0
 # m = a
 # r = r
 current=`expr $VERSION_MAJOR + $VERSION_MINOR`
-LASSO_VERSION_INFO="16:1:13"
+LASSO_VERSION_INFO="18:0:15"
 AC_SUBST(LASSO_VERSION_INFO)
 
 dnl Compute the minimal supported ABI version for Win32 scripts and resources files.
@@ -679,18 +679,6 @@ AM_MISSING_PROG(AUTOCONF, autoconf, $missing_dir)
 AM_MISSING_PROG(AUTOMAKE, automake, $missing_dir)
 AM_MISSING_PROG(AUTOHEADER, autoheader, $missing_dir)
 
-dnl Check if wsf is explicitly disabled.
-AC_ARG_ENABLE(wsf, [  --enable-wsf            enable experimental ID-WSF],
-		enable_wsf="yes", enable_wsf="no")
-
-AM_CONDITIONAL([WSF_ENABLED],[test "x$enable_wsf" = "xyes"])
-LASSO_WSF_SUPPORT=0
-if test "x$enable_wsf" = "xyes"; then
-	AC_DEFINE(LASSO_WSF_ENABLED, [], [Define if ID-WSF support is enabled])
-	LASSO_WSF_SUPPORT=1
-fi
-AC_SUBST(LASSO_WSF_SUPPORT)
-
 
 dnl API Reference documentation support
 # gtkdocize greps for ^GTK_DOC_CHECK and parses it, so you need to have
@@ -746,21 +734,6 @@ fi
 
 AM_CONDITIONAL(WITH_TESTS, [test "x$enable_tests" = "xyes"])
 
-AC_ARG_WITH(sasl2, [  --with-sasl2[=PFX]         Use Cyrus SASL library version 2 for WSF-Auth])
-if test "x$enable_wsf" = "xyes"; then
-	if test "$with_sasl2" != "no" && test "$with_sasl2" != "yes"
-	then
-		CPPFLAGS="$CPPFLAGS -I$with_sasl2/include"
-		LDFLAGS="$LDFLAGS -L$with_sasl2/lib"
-	fi
-		
-	saved_LIBS="$LIBS"
-	AC_CHECK_LIB(sasl2, sasl_server_init,,
-		AC_MSG_ERROR([libsasl must be installed for WSF support]),)
-	LIBS="$saved_LIBS"
-	LASSO_LIBS="$LASSO_LIBS -lsasl2"
-fi
-
 AC_CHECK_PROGS(REST2HTML, rest2html rst2html)
 AM_CONDITIONAL(HAVE_REST2HTML, test -n "$ac_cv_prog_REST2HTML")
 
@@ -794,6 +767,61 @@ if test "z$enable_profiling" = "zyes" ; then
 else
     AC_MSG_RESULT(no)
 fi 
+
+AC_ARG_WITH([default-sign-algo],
+            [AS_HELP_STRING([--with-default-sign-algo=[rsa-sha1|rsa-sha256]],
+                            [Default signing algorithm (rsa-sha1)]
+                           )
+            ]
+)
+
+SIGNING_ALGO=rsa-sha1
+if test x"$with_default_sign_algo" != x; then
+    if test ! "$with_default_sign_algo" = "rsa-sha1" -a ! "$with_default_sign_algo" = "rsa-sha256"; then
+	AC_MSG_ERROR("Default signing algorithm must be either rsa-sha1 or rsa-sha256")
+    else
+	SIGNING_ALGO=$with_default_sign_algo
+    fi
+fi
+
+AC_DEFINE_UNQUOTED(DEFAULT_SIGNING_ALGO, "$SIGNING_ALGO", ["The default signing algorithm"])
+
+AC_ARG_WITH([min-hash-algo],
+            [AS_HELP_STRING([--with-min-hash-algo=[sha1|sha256|sha384|sha512]],
+                            [Minimal allowed hash algorithm (rsa-sha1)]
+                           )
+            ]
+)
+
+MIN_HASH_ALGO=sha1
+if test x"$with_min_hash_algo" != x; then
+    if test ! "$with_min_hash_algo" = "sha1" -a ! "$with_min_hash_algo" = "sha256" -a ! "$with_min_hash_algo" = "sha384" -a ! "$with_min_hash_algo" = "sha512"; then
+	AC_MSG_ERROR("Minimal allowed hash algorithm must be one of sha1, sha256, sha384 or sha512)
+    else
+	MIN_HASH_ALGO=$with_min_hash_algo
+    fi
+fi
+
+AC_DEFINE_UNQUOTED(MIN_HASH_ALGO, "$MIN_HASH_ALGO", ["The minimal hash algorithm"])
+
+AC_ARG_WITH([default-key-encryption-method],
+            [AS_HELP_STRING([--with-default-key-encryption-method=[rsa-pkcs1|rsa-oaep]],
+                            [Default key encryption method (rsa-oaep)]
+                           )
+            ]
+)
+
+KEY_ENCRYPTION_METHOD=rsa-oaep
+if test x"$with_default_" != x; then
+    if test ! "$with_default_key_encryption_method" = "rsa-pkcs1" -a ! "$with_default_key_encryption_method" = "rsa-oaep"; then
+	AC_MSG_ERROR("Default key encryption method must be either rsa-pkcs1 or rsa-oaep")
+    else
+	SIGNING_ALGO=$with_default_key_encryption_method
+    fi
+fi
+
+AC_DEFINE_UNQUOTED(DEFAULT_KEY_ENCRYPTION_METHOD, "$KEY_ENCRYPTION_METHOD", ["The default key encryption method"])
+
 
 dnl ==========================================================================
 dnl Pedantic compilation
@@ -870,33 +898,15 @@ docs/reference/lasso/version.xml
 docs/reference/lasso/Makefile
 lasso/Makefile
 lasso/id-ff/Makefile
-lasso/id-wsf/Makefile
 lasso/saml-2.0/Makefile
-lasso/id-wsf-2.0/Makefile
 lasso/xml/Makefile
 lasso/xml/ecp/Makefile
 lasso/xml/saml-2.0/Makefile
 lasso/xml/soap-1.1/Makefile
-lasso/xml/id-wsf-2.0/Makefile
-lasso/xml/ws/Makefile
 lasso/xml/dsig/Makefile
 tests/Makefile
 tests/data/Makefile
 lasso.pc
-win32/Makefile
-win32/lasso.rc
-win32/msvc/Makefile
-win32/msvc/lasso.dsp
-win32/msvc/lasso_config.h
-win32/msvc/java/Makefile
-win32/msvc/php/Makefile
-win32/msvc/python/Makefile
-win32/nsis/Makefile
-win32/nsis/jlasso-lite.nsi
-win32/nsis/lasso-deps.nsi
-win32/nsis/lasso-full.nsi
-win32/nsis/lasso-lite.nsi
-win32/nsis/python.nsi
 bindings/Makefile
 bindings/java/Makefile
 bindings/python/Makefile
@@ -924,7 +934,6 @@ Compiler:                ${CC}
 CFLAGS:                  ${AM_CFLAGS} ${CFLAGS}
 Install prefix:          ${prefix}
 Debugging:               $enable_debugging
-Experimental ID-WSF:     $enable_wsf
 
 Optionals builds
 ----------------
@@ -939,4 +948,10 @@ Python binding:         ${enable_python}
 
 C API references:       ${enable_gtk_doc}
 Tests suite:            ${enable_tests}
+
+Crypto settings
+---------------
+Default signature:      ${SIGNING_ALGO}
+Minimal accepted hash:  ${MIN_HASH_ALGO}
+Key encryption method:  ${KEY_ENCRYPTION_METHOD}
 )

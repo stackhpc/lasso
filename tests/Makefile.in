@@ -89,7 +89,6 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 target_triplet = @target@
-@WSF_ENABLED_TRUE@am__append_1 = idwsf2_tests.c
 @WITH_TESTS_TRUE@TESTS = tests$(EXEEXT) tests2$(EXEEXT)
 @WITH_TESTS_TRUE@noinst_PROGRAMS = tests$(EXEEXT) perfs$(EXEEXT) \
 @WITH_TESTS_TRUE@	tests2$(EXEEXT)
@@ -137,17 +136,14 @@ perfs_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(perfs_LDFLAGS) $(LDFLAGS) -o $@
 am__tests_SOURCES_DIST = tests.c login_tests.c basic_tests.c \
 	non_regression_tests.c random_tests.c metadata_tests.c \
-	login_tests_saml2.c assertion_query_saml2.c idwsf2_tests.c
-@WSF_ENABLED_TRUE@am__objects_1 = idwsf2_tests.$(OBJEXT)
-am__objects_2 = $(am__objects_1)
+	login_tests_saml2.c assertion_query_saml2.c
 @WITH_TESTS_TRUE@am_tests_OBJECTS = tests.$(OBJEXT) \
 @WITH_TESTS_TRUE@	login_tests.$(OBJEXT) basic_tests.$(OBJEXT) \
 @WITH_TESTS_TRUE@	non_regression_tests.$(OBJEXT) \
 @WITH_TESTS_TRUE@	random_tests.$(OBJEXT) \
 @WITH_TESTS_TRUE@	metadata_tests.$(OBJEXT) \
 @WITH_TESTS_TRUE@	login_tests_saml2.$(OBJEXT) \
-@WITH_TESTS_TRUE@	assertion_query_saml2.$(OBJEXT) \
-@WITH_TESTS_TRUE@	$(am__objects_2)
+@WITH_TESTS_TRUE@	assertion_query_saml2.$(OBJEXT)
 tests_OBJECTS = $(am_tests_OBJECTS)
 @WITH_TESTS_TRUE@tests_DEPENDENCIES =  \
 @WITH_TESTS_TRUE@	$(top_builddir)/lasso/liblasso.la \
@@ -180,9 +176,8 @@ DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir) -I$(top_builddir)/lasso
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = ./$(DEPDIR)/assertion_query_saml2.Po \
-	./$(DEPDIR)/basic_tests.Po ./$(DEPDIR)/idwsf2_tests.Po \
-	./$(DEPDIR)/login_tests.Po ./$(DEPDIR)/login_tests_saml2.Po \
-	./$(DEPDIR)/metadata_tests.Po \
+	./$(DEPDIR)/basic_tests.Po ./$(DEPDIR)/login_tests.Po \
+	./$(DEPDIR)/login_tests_saml2.Po ./$(DEPDIR)/metadata_tests.Po \
 	./$(DEPDIR)/non_regression_tests.Po ./$(DEPDIR)/perfs.Po \
 	./$(DEPDIR)/random_tests.Po ./$(DEPDIR)/tests.Po \
 	./$(DEPDIR)/tests2-tests2.Po
@@ -556,7 +551,6 @@ LASSO_LIBS = @LASSO_LIBS@
 LASSO_PUB_CFLAGS = @LASSO_PUB_CFLAGS@
 LASSO_STATIC_BINARIES = @LASSO_STATIC_BINARIES@
 LASSO_VERSION_INFO = @LASSO_VERSION_INFO@
-LASSO_WSF_SUPPORT = @LASSO_WSF_SUPPORT@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
@@ -700,7 +694,6 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 uudecode = @uudecode@
 MAINTAINERCLEANFILES = Makefile.in
-WSF_TESTS = $(am__append_1)
 @WITH_TESTS_TRUE@AM_CPPFLAGS = \
 @WITH_TESTS_TRUE@	-DPACKAGE=\"@PACKAGE@\" \
 @WITH_TESTS_TRUE@	-DTESTSDATADIR=\"$(srcdir)/data/\" \
@@ -708,7 +701,7 @@ WSF_TESTS = $(am__append_1)
 @WITH_TESTS_TRUE@	$(LASSO_CFLAGS) \
 @WITH_TESTS_TRUE@	$(CHECK_CFLAGS)
 
-@WITH_TESTS_TRUE@tests_SOURCES = tests.c login_tests.c basic_tests.c non_regression_tests.c random_tests.c metadata_tests.c login_tests_saml2.c assertion_query_saml2.c $(WSF_TESTS)
+@WITH_TESTS_TRUE@tests_SOURCES = tests.c login_tests.c basic_tests.c non_regression_tests.c random_tests.c metadata_tests.c login_tests_saml2.c assertion_query_saml2.c
 @WITH_TESTS_TRUE@tests_LDADD = \
 @WITH_TESTS_TRUE@	$(top_builddir)/lasso/liblasso.la \
 @WITH_TESTS_TRUE@	$(LASSO_LIBS) \
@@ -804,7 +797,6 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/assertion_query_saml2.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/basic_tests.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/idwsf2_tests.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/login_tests.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/login_tests_saml2.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/metadata_tests.Po@am__quote@ # am--include-marker
@@ -1237,7 +1229,6 @@ clean-am: clean-generic clean-libtool clean-noinstPROGRAMS \
 distclean: distclean-recursive
 		-rm -f ./$(DEPDIR)/assertion_query_saml2.Po
 	-rm -f ./$(DEPDIR)/basic_tests.Po
-	-rm -f ./$(DEPDIR)/idwsf2_tests.Po
 	-rm -f ./$(DEPDIR)/login_tests.Po
 	-rm -f ./$(DEPDIR)/login_tests_saml2.Po
 	-rm -f ./$(DEPDIR)/metadata_tests.Po
@@ -1293,7 +1284,6 @@ installcheck-am:
 maintainer-clean: maintainer-clean-recursive
 		-rm -f ./$(DEPDIR)/assertion_query_saml2.Po
 	-rm -f ./$(DEPDIR)/basic_tests.Po
-	-rm -f ./$(DEPDIR)/idwsf2_tests.Po
 	-rm -f ./$(DEPDIR)/login_tests.Po
 	-rm -f ./$(DEPDIR)/login_tests_saml2.Po
 	-rm -f ./$(DEPDIR)/metadata_tests.Po

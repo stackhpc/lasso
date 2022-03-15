@@ -3,6 +3,12 @@
 /* Define if check available with XML support */
 #undef CHECK_IS_XML
 
+/* "The default key encryption method" */
+#undef DEFAULT_KEY_ENCRYPTION_METHOD
+
+/* "The default signing algorithm" */
+#undef DEFAULT_SIGNING_ALGO
+
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #undef HAVE_DLFCN_H
 
@@ -11,9 +17,6 @@
 
 /* Define to 1 if you have the <jni.h> header file. */
 #undef HAVE_JNI_H
-
-/* Define to 1 if you have the `sasl2' library (-lsasl2). */
-#undef HAVE_LIBSASL2
 
 /* Have compression library */
 #undef HAVE_LIBZ
@@ -57,11 +60,11 @@
 /* Release version number */
 #undef LASSO_VERSION_SUBMINOR
 
-/* Define if ID-WSF support is enabled */
-#undef LASSO_WSF_ENABLED
-
 /* Define to the sub-directory where libtool stores uninstalled libraries. */
 #undef LT_OBJDIR
+
+/* "The minimal hash algorithm" */
+#undef MIN_HASH_ALGO
 
 /* Define to 1 if your C compiler doesn't accept -c and -o together. */
 #undef NO_MINUS_C_MINUS_O

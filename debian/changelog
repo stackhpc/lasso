@@ -1,3 +1,16 @@
+lasso (2.8.0-1) unstable; urgency=medium
+
+  * New uptream release.
+  * debian/liblasso3.symbols: add declaration for new symbols:
+    * lasso_get_default_key_encryption_method
+    * lasso_get_default_signature_method
+    * lasso_parse_key_encryption_method
+    * lasso_provider_get_key_encryption_method
+    * lasso_provider_set_key_encryption_method
+    * lasso_set_default_key_encryption_method
+
+ -- Frederic Peters <fpeters@debian.org>  Tue, 15 Mar 2022 16:07:45 +0100
+
 lasso (2.7.0-3) unstable; urgency=medium
 
   * d/control, d/compat: switch to debhelper-compat, remove compat file.

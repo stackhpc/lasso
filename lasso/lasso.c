@@ -108,6 +108,8 @@ gboolean lasso_flag_pem_public_key = FALSE;
 #define LASSO_FLAG_ENV_VAR "LASSO_FLAG"
 #endif
 
+#define LASSO_DEFAULT_KEY_ENCRYPTION_METHOD_ENV_VAR "LASSO_DEFAULT_KEY_ENCRYPTION_METHOD"
+
 #if defined _MSC_VER
 HINSTANCE g_hModule = NULL;
 
@@ -149,6 +151,72 @@ lasso_xmlsec_errors_callback(const char *file G_GNUC_UNUSED, int line G_GNUC_UNU
 	g_log("libxmlsec", G_LOG_LEVEL_DEBUG, "libxmlsec: %s:%d:%s:%s:%s:%s:%s", file, line, func, errorObject, errorSubject, xmlSecErrorsGetMsg(reason), msg);
 }
 
+static int
+set_default_signature_method()
+{
+	int rv = LASSO_ERROR_UNDEFINED;
+
+	if (lasso_strisequal(DEFAULT_SIGNING_ALGO, "rsa-sha256")) {
+		lasso_set_default_signature_method(LASSO_SIGNATURE_METHOD_RSA_SHA256);
+		rv = 0;
+	} else if (lasso_strisequal(DEFAULT_SIGNING_ALGO, "rsa-sha1")) {
+		lasso_set_default_signature_method(LASSO_SIGNATURE_METHOD_RSA_SHA1);
+		rv = 0;
+	}
+
+	return rv;
+}
+
+static int
+set_min_allowed_hash_algo()
+{
+	int rv = LASSO_ERROR_UNDEFINED;
+
+	if (lasso_strisequal(MIN_HASH_ALGO, "sha1")) {
+		lasso_set_min_signature_method(LASSO_SIGNATURE_METHOD_RSA_SHA1);
+		rv = 0;
+	} else if (lasso_strisequal(MIN_HASH_ALGO, "sha256")) {
+		lasso_set_min_signature_method(LASSO_SIGNATURE_METHOD_RSA_SHA256);
+		rv = 0;
+	} else if (lasso_strisequal(MIN_HASH_ALGO, "sha384")) {
+		lasso_set_min_signature_method(LASSO_SIGNATURE_METHOD_RSA_SHA384);
+		rv = 0;
+	} else if (lasso_strisequal(MIN_HASH_ALGO, "sha512")) {
+		lasso_set_min_signature_method(LASSO_SIGNATURE_METHOD_RSA_SHA512);
+		rv = 0;
+	}
+
+	return rv;
+}
+
+static int
+set_default_key_encryption_method()
+{
+	char *env_encryption_sym_key_encryption_algo = getenv(LASSO_DEFAULT_KEY_ENCRYPTION_METHOD_ENV_VAR);
+	if (env_encryption_sym_key_encryption_algo) {
+		LassoKeyEncryptionMethod method = lasso_parse_key_encryption_method(
+			env_encryption_sym_key_encryption_algo);
+		if (method == -1) {
+			message(G_LOG_LEVEL_CRITICAL, "Unsupported key encryption "
+				"method %s configured in environment variable " LASSO_DEFAULT_KEY_ENCRYPTION_METHOD_ENV_VAR,
+				env_encryption_sym_key_encryption_algo);
+			return LASSO_ERROR_UNDEFINED;
+		}
+		lasso_set_default_key_encryption_method(method);
+		return 0;
+	}
+
+	LassoKeyEncryptionMethod method = lasso_parse_key_encryption_method(DEFAULT_KEY_ENCRYPTION_METHOD);
+	if (method != -1) {
+		lasso_set_default_key_encryption_method(method);
+		return 0;
+	} else {
+		message(G_LOG_LEVEL_CRITICAL, "Unsupported key encryption "
+			"method "DEFAULT_KEY_ENCRYPTION_METHOD" configured");
+		return LASSO_ERROR_UNDEFINED;
+	}
+}
+
 /**
  * lasso_init:
  *
@@ -163,6 +231,22 @@ int lasso_init()
 #ifndef GLIB_VERSION_2_36
 	g_type_init();
 #endif
+
+	/* Set the default hash algo */
+	if (set_default_signature_method() != 0) {
+		message(G_LOG_LEVEL_CRITICAL, "Unsupported signature "
+			"algorithm "DEFAULT_SIGNING_ALGO" configured");
+		return LASSO_ERROR_UNDEFINED;
+	}
+	if (set_min_allowed_hash_algo() != 0) {
+		message(G_LOG_LEVEL_CRITICAL, "Unsupported hash algorithm "
+			"algorithm "MIN_HASH_ALGO" configured");
+		return LASSO_ERROR_UNDEFINED;
+	}
+
+	if (set_default_key_encryption_method() != 0) {
+		return LASSO_ERROR_UNDEFINED;
+	}
 
 	/* Init Lasso classes */
 	for (i=0; functions[i]; i++)
@@ -353,4 +437,21 @@ static void lasso_flag_parse_environment_variable() {
 			lasso_set_flag(token);
 		} while ((token = strtok_r(NULL, delim, &save_ptr)) != NULL);
 	}
+}
+
+/* Deprecated functions, kept only to maintain the ABI and the SONAME */
+void lasso_register_dst_service(const char *prefix, const char *href)
+{
+}
+
+char* lasso_get_prefix_for_dst_service_href(const char *href)
+{
+	return NULL;
+}
+void lasso_register_idwsf2_dst_service(const gchar *prefix, const gchar *href)
+{
+}
+gchar* lasso_get_prefix_for_idwsf2_dst_service_href(const gchar *href)
+{
+	return NULL;
 }

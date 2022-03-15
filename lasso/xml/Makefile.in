@@ -90,7 +90,6 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 target_triplet = @target@
-@WSF_ENABLED_TRUE@am__append_1 = id-wsf-2.0 ws
 subdir = lasso/xml
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ac_check_class.m4 \
@@ -112,8 +111,8 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/ac_check_class.m4 \
 	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
-DIST_COMMON = $(srcdir)/Makefile.am \
-	$(am__liblassoinclude_HEADERS_DIST) $(am__DIST_COMMON)
+DIST_COMMON = $(srcdir)/Makefile.am $(liblassoinclude_HEADERS) \
+	$(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h \
 	$(top_builddir)/lasso/lasso_config.h
@@ -121,96 +120,6 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 liblasso_xml_la_LIBADD =
-am__liblasso_xml_la_SOURCES_DIST = tools.c xml.c lib_assertion.c \
-	lib_authentication_statement.c lib_authn_context.c \
-	lib_authn_request.c lib_authn_request_envelope.c \
-	lib_authn_response.c lib_authn_response_envelope.c \
-	lib_federation_termination_notification.c lib_idp_entries.c \
-	lib_idp_entry.c lib_idp_list.c lib_logout_request.c \
-	lib_logout_response.c lib_name_identifier_mapping_request.c \
-	lib_name_identifier_mapping_response.c \
-	lib_register_name_identifier_request.c \
-	lib_register_name_identifier_response.c \
-	lib_request_authn_context.c lib_scoping.c \
-	lib_status_response.c lib_subject.c misc_text_node.c \
-	paos_request.c paos_response.c saml_advice.c saml_assertion.c \
-	saml_attribute.c saml_attribute_designator.c \
-	saml_attribute_statement.c saml_attribute_value.c \
-	saml_audience_restriction_condition.c \
-	saml_authentication_statement.c saml_authority_binding.c \
-	saml_condition_abstract.c saml_conditions.c \
-	saml_name_identifier.c saml_statement_abstract.c \
-	saml_subject.c saml_subject_confirmation.c \
-	saml_subject_locality.c saml_subject_statement.c \
-	saml_subject_statement_abstract.c samlp_request.c \
-	samlp_request_abstract.c samlp_response.c \
-	samlp_response_abstract.c samlp_status.c samlp_status_code.c \
-	disco_authenticate_requester.c \
-	disco_authenticate_session_context.c \
-	disco_authorize_requester.c disco_credentials.c \
-	disco_description.c disco_encrypt_resource_id.c \
-	disco_encrypted_resource_id.c disco_generate_bearer_token.c \
-	disco_insert_entry.c disco_modify.c disco_modify_response.c \
-	disco_options.c disco_query.c disco_query_response.c \
-	disco_remove_entry.c disco_requested_service_type.c \
-	disco_resource_id.c disco_resource_offering.c \
-	disco_send_single_logout.c disco_service_instance.c dst_data.c \
-	dst_modification.c dst_modify.c dst_modify_response.c \
-	dst_new_data.c dst_query.c dst_query_item.c \
-	dst_query_response.c is_help.c is_inquiry.c \
-	is_inquiry_element.c is_interaction_request.c \
-	is_interaction_response.c is_interaction_statement.c is_item.c \
-	is_parameter.c is_redirect_request.c is_select.c is_text.c \
-	is_user_interaction.c sa_credentials.c sa_parameter.c \
-	sa_password_transforms.c sa_transform.c sa_sasl_request.c \
-	sa_sasl_response.c sec_resource_access_statement.c \
-	soap_binding_consent.c soap_binding_correlation.c \
-	soap_binding_processing_context.c soap_binding_provider.c \
-	soap_binding_usage_directive.c soap_binding_ext_credential.c \
-	soap_binding_ext_credentials_context.c \
-	soap_binding_ext_service_instance_update.c \
-	soap_binding_ext_timeout.c soap_binding.c utility_status.c
-@WSF_ENABLED_TRUE@am__objects_1 = disco_authenticate_requester.lo \
-@WSF_ENABLED_TRUE@	disco_authenticate_session_context.lo \
-@WSF_ENABLED_TRUE@	disco_authorize_requester.lo \
-@WSF_ENABLED_TRUE@	disco_credentials.lo disco_description.lo \
-@WSF_ENABLED_TRUE@	disco_encrypt_resource_id.lo \
-@WSF_ENABLED_TRUE@	disco_encrypted_resource_id.lo \
-@WSF_ENABLED_TRUE@	disco_generate_bearer_token.lo \
-@WSF_ENABLED_TRUE@	disco_insert_entry.lo disco_modify.lo \
-@WSF_ENABLED_TRUE@	disco_modify_response.lo disco_options.lo \
-@WSF_ENABLED_TRUE@	disco_query.lo disco_query_response.lo \
-@WSF_ENABLED_TRUE@	disco_remove_entry.lo \
-@WSF_ENABLED_TRUE@	disco_requested_service_type.lo \
-@WSF_ENABLED_TRUE@	disco_resource_id.lo \
-@WSF_ENABLED_TRUE@	disco_resource_offering.lo \
-@WSF_ENABLED_TRUE@	disco_send_single_logout.lo \
-@WSF_ENABLED_TRUE@	disco_service_instance.lo dst_data.lo \
-@WSF_ENABLED_TRUE@	dst_modification.lo dst_modify.lo \
-@WSF_ENABLED_TRUE@	dst_modify_response.lo dst_new_data.lo \
-@WSF_ENABLED_TRUE@	dst_query.lo dst_query_item.lo \
-@WSF_ENABLED_TRUE@	dst_query_response.lo is_help.lo \
-@WSF_ENABLED_TRUE@	is_inquiry.lo is_inquiry_element.lo \
-@WSF_ENABLED_TRUE@	is_interaction_request.lo \
-@WSF_ENABLED_TRUE@	is_interaction_response.lo \
-@WSF_ENABLED_TRUE@	is_interaction_statement.lo is_item.lo \
-@WSF_ENABLED_TRUE@	is_parameter.lo is_redirect_request.lo \
-@WSF_ENABLED_TRUE@	is_select.lo is_text.lo \
-@WSF_ENABLED_TRUE@	is_user_interaction.lo sa_credentials.lo \
-@WSF_ENABLED_TRUE@	sa_parameter.lo sa_password_transforms.lo \
-@WSF_ENABLED_TRUE@	sa_transform.lo sa_sasl_request.lo \
-@WSF_ENABLED_TRUE@	sa_sasl_response.lo \
-@WSF_ENABLED_TRUE@	sec_resource_access_statement.lo \
-@WSF_ENABLED_TRUE@	soap_binding_consent.lo \
-@WSF_ENABLED_TRUE@	soap_binding_correlation.lo \
-@WSF_ENABLED_TRUE@	soap_binding_processing_context.lo \
-@WSF_ENABLED_TRUE@	soap_binding_provider.lo \
-@WSF_ENABLED_TRUE@	soap_binding_usage_directive.lo \
-@WSF_ENABLED_TRUE@	soap_binding_ext_credential.lo \
-@WSF_ENABLED_TRUE@	soap_binding_ext_credentials_context.lo \
-@WSF_ENABLED_TRUE@	soap_binding_ext_service_instance_update.lo \
-@WSF_ENABLED_TRUE@	soap_binding_ext_timeout.lo soap_binding.lo \
-@WSF_ENABLED_TRUE@	utility_status.lo
 am_liblasso_xml_la_OBJECTS = tools.lo xml.lo lib_assertion.lo \
 	lib_authentication_statement.lo lib_authn_context.lo \
 	lib_authn_request.lo lib_authn_request_envelope.lo \
@@ -235,7 +144,7 @@ am_liblasso_xml_la_OBJECTS = tools.lo xml.lo lib_assertion.lo \
 	saml_subject_statement_abstract.lo samlp_request.lo \
 	samlp_request_abstract.lo samlp_response.lo \
 	samlp_response_abstract.lo samlp_status.lo \
-	samlp_status_code.lo $(am__objects_1)
+	samlp_status_code.lo
 liblasso_xml_la_OBJECTS = $(am_liblasso_xml_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -256,38 +165,7 @@ am__v_at_1 =
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir) -I$(top_builddir)/lasso
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = ./$(DEPDIR)/disco_authenticate_requester.Plo \
-	./$(DEPDIR)/disco_authenticate_session_context.Plo \
-	./$(DEPDIR)/disco_authorize_requester.Plo \
-	./$(DEPDIR)/disco_credentials.Plo \
-	./$(DEPDIR)/disco_description.Plo \
-	./$(DEPDIR)/disco_encrypt_resource_id.Plo \
-	./$(DEPDIR)/disco_encrypted_resource_id.Plo \
-	./$(DEPDIR)/disco_generate_bearer_token.Plo \
-	./$(DEPDIR)/disco_insert_entry.Plo \
-	./$(DEPDIR)/disco_modify.Plo \
-	./$(DEPDIR)/disco_modify_response.Plo \
-	./$(DEPDIR)/disco_options.Plo ./$(DEPDIR)/disco_query.Plo \
-	./$(DEPDIR)/disco_query_response.Plo \
-	./$(DEPDIR)/disco_remove_entry.Plo \
-	./$(DEPDIR)/disco_requested_service_type.Plo \
-	./$(DEPDIR)/disco_resource_id.Plo \
-	./$(DEPDIR)/disco_resource_offering.Plo \
-	./$(DEPDIR)/disco_send_single_logout.Plo \
-	./$(DEPDIR)/disco_service_instance.Plo \
-	./$(DEPDIR)/dst_data.Plo ./$(DEPDIR)/dst_modification.Plo \
-	./$(DEPDIR)/dst_modify.Plo ./$(DEPDIR)/dst_modify_response.Plo \
-	./$(DEPDIR)/dst_new_data.Plo ./$(DEPDIR)/dst_query.Plo \
-	./$(DEPDIR)/dst_query_item.Plo \
-	./$(DEPDIR)/dst_query_response.Plo ./$(DEPDIR)/is_help.Plo \
-	./$(DEPDIR)/is_inquiry.Plo ./$(DEPDIR)/is_inquiry_element.Plo \
-	./$(DEPDIR)/is_interaction_request.Plo \
-	./$(DEPDIR)/is_interaction_response.Plo \
-	./$(DEPDIR)/is_interaction_statement.Plo \
-	./$(DEPDIR)/is_item.Plo ./$(DEPDIR)/is_parameter.Plo \
-	./$(DEPDIR)/is_redirect_request.Plo ./$(DEPDIR)/is_select.Plo \
-	./$(DEPDIR)/is_text.Plo ./$(DEPDIR)/is_user_interaction.Plo \
-	./$(DEPDIR)/lib_assertion.Plo \
+am__depfiles_remade = ./$(DEPDIR)/lib_assertion.Plo \
 	./$(DEPDIR)/lib_authentication_statement.Plo \
 	./$(DEPDIR)/lib_authn_context.Plo \
 	./$(DEPDIR)/lib_authn_request.Plo \
@@ -308,10 +186,6 @@ am__depfiles_remade = ./$(DEPDIR)/disco_authenticate_requester.Plo \
 	./$(DEPDIR)/lib_status_response.Plo \
 	./$(DEPDIR)/lib_subject.Plo ./$(DEPDIR)/misc_text_node.Plo \
 	./$(DEPDIR)/paos_request.Plo ./$(DEPDIR)/paos_response.Plo \
-	./$(DEPDIR)/sa_credentials.Plo ./$(DEPDIR)/sa_parameter.Plo \
-	./$(DEPDIR)/sa_password_transforms.Plo \
-	./$(DEPDIR)/sa_sasl_request.Plo \
-	./$(DEPDIR)/sa_sasl_response.Plo ./$(DEPDIR)/sa_transform.Plo \
 	./$(DEPDIR)/saml_advice.Plo ./$(DEPDIR)/saml_assertion.Plo \
 	./$(DEPDIR)/saml_attribute.Plo \
 	./$(DEPDIR)/saml_attribute_designator.Plo \
@@ -334,19 +208,7 @@ am__depfiles_remade = ./$(DEPDIR)/disco_authenticate_requester.Plo \
 	./$(DEPDIR)/samlp_response.Plo \
 	./$(DEPDIR)/samlp_response_abstract.Plo \
 	./$(DEPDIR)/samlp_status.Plo ./$(DEPDIR)/samlp_status_code.Plo \
-	./$(DEPDIR)/sec_resource_access_statement.Plo \
-	./$(DEPDIR)/soap_binding.Plo \
-	./$(DEPDIR)/soap_binding_consent.Plo \
-	./$(DEPDIR)/soap_binding_correlation.Plo \
-	./$(DEPDIR)/soap_binding_ext_credential.Plo \
-	./$(DEPDIR)/soap_binding_ext_credentials_context.Plo \
-	./$(DEPDIR)/soap_binding_ext_service_instance_update.Plo \
-	./$(DEPDIR)/soap_binding_ext_timeout.Plo \
-	./$(DEPDIR)/soap_binding_processing_context.Plo \
-	./$(DEPDIR)/soap_binding_provider.Plo \
-	./$(DEPDIR)/soap_binding_usage_directive.Plo \
-	./$(DEPDIR)/tools.Plo ./$(DEPDIR)/utility_status.Plo \
-	./$(DEPDIR)/xml.Plo
+	./$(DEPDIR)/tools.Plo ./$(DEPDIR)/xml.Plo
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
@@ -367,7 +229,7 @@ am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
 SOURCES = $(liblasso_xml_la_SOURCES)
-DIST_SOURCES = $(am__liblasso_xml_la_SOURCES_DIST)
+DIST_SOURCES = $(liblasso_xml_la_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive cscopelist-recursive \
 	ctags-recursive dvi-recursive html-recursive info-recursive \
 	install-data-recursive install-dvi-recursive \
@@ -381,56 +243,6 @@ am__can_run_installinfo = \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
-am__liblassoinclude_HEADERS_DIST = strings.h xml.h lib_assertion.h \
-	lib_authentication_statement.h lib_authn_context.h \
-	lib_authn_request.h lib_authn_request_envelope.h \
-	lib_authn_response.h lib_authn_response_envelope.h \
-	lib_federation_termination_notification.h lib_idp_entries.h \
-	lib_idp_entry.h lib_idp_list.h lib_logout_request.h \
-	lib_logout_response.h lib_name_identifier_mapping_request.h \
-	lib_name_identifier_mapping_response.h \
-	lib_register_name_identifier_request.h \
-	lib_register_name_identifier_response.h \
-	lib_request_authn_context.h lib_scoping.h \
-	lib_status_response.h lib_subject.h misc_text_node.h \
-	paos_request.h paos_response.h saml_advice.h saml_assertion.h \
-	saml_attribute.h saml_attribute_designator.h \
-	saml_attribute_statement.h saml_attribute_value.h \
-	saml_audience_restriction_condition.h \
-	saml_authentication_statement.h saml_authority_binding.h \
-	saml_condition_abstract.h saml_conditions.h \
-	saml_name_identifier.h saml_statement_abstract.h \
-	saml_subject.h saml_subject_confirmation.h \
-	saml_subject_locality.h saml_subject_statement.h \
-	saml_subject_statement_abstract.h samlp_request.h \
-	samlp_request_abstract.h samlp_response.h \
-	samlp_response_abstract.h samlp_status.h samlp_status_code.h \
-	xml_enc.h tools.h idwsf_strings.h \
-	disco_authenticate_requester.h \
-	disco_authenticate_session_context.h \
-	disco_authorize_requester.h disco_credentials.h \
-	disco_description.h disco_encrypt_resource_id.h \
-	disco_encrypted_resource_id.h disco_generate_bearer_token.h \
-	disco_insert_entry.h disco_modify.h disco_modify_response.h \
-	disco_options.h disco_query.h disco_query_response.h \
-	disco_remove_entry.h disco_requested_service_type.h \
-	disco_resource_id.h disco_resource_offering.h \
-	disco_send_single_logout.h disco_service_instance.h dst_data.h \
-	dst_modification.h dst_modify.h dst_modify_response.h \
-	dst_new_data.h dst_query.h dst_query_item.h \
-	dst_query_response.h is_help.h is_inquiry.h \
-	is_inquiry_element.h is_interaction_request.h \
-	is_interaction_response.h is_interaction_statement.h is_item.h \
-	is_parameter.h is_redirect_request.h is_select.h is_text.h \
-	is_user_interaction.h sa_credentials.h sa_parameter.h \
-	sa_password_transforms.h sa_transform.h sa_sasl_request.h \
-	sa_sasl_response.h sec_resource_access_statement.h \
-	soap_binding_consent.h soap_binding_correlation.h \
-	soap_binding_processing_context.h soap_binding_provider.h \
-	soap_binding_usage_directive.h soap_binding_ext_credential.h \
-	soap_binding_ext_credentials_context.h \
-	soap_binding_ext_service_instance_update.h \
-	soap_binding_ext_timeout.h soap_binding.h utility_status.h
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
     $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
@@ -487,7 +299,7 @@ am__define_uniq_tagged_files = \
   done | $(am__uniquify_input)`
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = saml-2.0 soap-1.1 dsig ecp id-wsf-2.0 ws
+DIST_SUBDIRS = $(SUBDIRS)
 am__DIST_COMMON = $(srcdir)/Makefile.in $(top_srcdir)/depcomp
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 am__relativize = \
@@ -590,7 +402,6 @@ LASSO_LIBS = @LASSO_LIBS@
 LASSO_PUB_CFLAGS = @LASSO_PUB_CFLAGS@
 LASSO_STATIC_BINARIES = @LASSO_STATIC_BINARIES@
 LASSO_VERSION_INFO = @LASSO_VERSION_INFO@
-LASSO_WSF_SUPPORT = @LASSO_WSF_SUPPORT@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
@@ -734,7 +545,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 uudecode = @uudecode@
 MAINTAINERCLEANFILES = Makefile.in
-SUBDIRS = saml-2.0 soap-1.1 dsig ecp $(am__append_1)
+SUBDIRS = saml-2.0 soap-1.1 dsig ecp
 liblassoincludedir = $(includedir)/lasso/xml
 AM_CPPFLAGS = \
 	-I$(top_builddir) \
@@ -743,127 +554,6 @@ AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"lasso\"
 
 noinst_LTLIBRARIES = liblasso-xml.la
-@WSF_ENABLED_TRUE@WSF_C_FILES = \
-@WSF_ENABLED_TRUE@	disco_authenticate_requester.c \
-@WSF_ENABLED_TRUE@	disco_authenticate_session_context.c \
-@WSF_ENABLED_TRUE@	disco_authorize_requester.c \
-@WSF_ENABLED_TRUE@	disco_credentials.c \
-@WSF_ENABLED_TRUE@	disco_description.c \
-@WSF_ENABLED_TRUE@	disco_encrypt_resource_id.c \
-@WSF_ENABLED_TRUE@	disco_encrypted_resource_id.c \
-@WSF_ENABLED_TRUE@	disco_generate_bearer_token.c \
-@WSF_ENABLED_TRUE@	disco_insert_entry.c \
-@WSF_ENABLED_TRUE@	disco_modify.c \
-@WSF_ENABLED_TRUE@	disco_modify_response.c \
-@WSF_ENABLED_TRUE@	disco_options.c \
-@WSF_ENABLED_TRUE@	disco_query.c \
-@WSF_ENABLED_TRUE@	disco_query_response.c \
-@WSF_ENABLED_TRUE@	disco_remove_entry.c \
-@WSF_ENABLED_TRUE@	disco_requested_service_type.c \
-@WSF_ENABLED_TRUE@	disco_resource_id.c \
-@WSF_ENABLED_TRUE@	disco_resource_offering.c \
-@WSF_ENABLED_TRUE@	disco_send_single_logout.c \
-@WSF_ENABLED_TRUE@	disco_service_instance.c \
-@WSF_ENABLED_TRUE@	dst_data.c \
-@WSF_ENABLED_TRUE@	dst_modification.c \
-@WSF_ENABLED_TRUE@	dst_modify.c \
-@WSF_ENABLED_TRUE@	dst_modify_response.c \
-@WSF_ENABLED_TRUE@	dst_new_data.c \
-@WSF_ENABLED_TRUE@	dst_query.c \
-@WSF_ENABLED_TRUE@	dst_query_item.c \
-@WSF_ENABLED_TRUE@	dst_query_response.c \
-@WSF_ENABLED_TRUE@	is_help.c \
-@WSF_ENABLED_TRUE@	is_inquiry.c \
-@WSF_ENABLED_TRUE@	is_inquiry_element.c \
-@WSF_ENABLED_TRUE@	is_interaction_request.c \
-@WSF_ENABLED_TRUE@	is_interaction_response.c \
-@WSF_ENABLED_TRUE@	is_interaction_statement.c \
-@WSF_ENABLED_TRUE@	is_item.c \
-@WSF_ENABLED_TRUE@	is_parameter.c \
-@WSF_ENABLED_TRUE@	is_redirect_request.c \
-@WSF_ENABLED_TRUE@	is_select.c \
-@WSF_ENABLED_TRUE@	is_text.c \
-@WSF_ENABLED_TRUE@	is_user_interaction.c \
-@WSF_ENABLED_TRUE@	sa_credentials.c \
-@WSF_ENABLED_TRUE@	sa_parameter.c \
-@WSF_ENABLED_TRUE@	sa_password_transforms.c \
-@WSF_ENABLED_TRUE@	sa_transform.c \
-@WSF_ENABLED_TRUE@	sa_sasl_request.c \
-@WSF_ENABLED_TRUE@	sa_sasl_response.c \
-@WSF_ENABLED_TRUE@	sec_resource_access_statement.c \
-@WSF_ENABLED_TRUE@	soap_binding_consent.c \
-@WSF_ENABLED_TRUE@	soap_binding_correlation.c \
-@WSF_ENABLED_TRUE@	soap_binding_processing_context.c \
-@WSF_ENABLED_TRUE@	soap_binding_provider.c \
-@WSF_ENABLED_TRUE@	soap_binding_usage_directive.c \
-@WSF_ENABLED_TRUE@	soap_binding_ext_credential.c \
-@WSF_ENABLED_TRUE@	soap_binding_ext_credentials_context.c \
-@WSF_ENABLED_TRUE@	soap_binding_ext_service_instance_update.c \
-@WSF_ENABLED_TRUE@	soap_binding_ext_timeout.c \
-@WSF_ENABLED_TRUE@	soap_binding.c \
-@WSF_ENABLED_TRUE@	utility_status.c
-
-@WSF_ENABLED_TRUE@WSF_H_FILES = \
-@WSF_ENABLED_TRUE@	idwsf_strings.h \
-@WSF_ENABLED_TRUE@	disco_authenticate_requester.h \
-@WSF_ENABLED_TRUE@	disco_authenticate_session_context.h \
-@WSF_ENABLED_TRUE@	disco_authorize_requester.h \
-@WSF_ENABLED_TRUE@	disco_credentials.h \
-@WSF_ENABLED_TRUE@	disco_description.h \
-@WSF_ENABLED_TRUE@	disco_encrypt_resource_id.h \
-@WSF_ENABLED_TRUE@	disco_encrypted_resource_id.h \
-@WSF_ENABLED_TRUE@	disco_generate_bearer_token.h \
-@WSF_ENABLED_TRUE@	disco_insert_entry.h \
-@WSF_ENABLED_TRUE@	disco_modify.h \
-@WSF_ENABLED_TRUE@	disco_modify_response.h \
-@WSF_ENABLED_TRUE@	disco_options.h \
-@WSF_ENABLED_TRUE@	disco_query.h \
-@WSF_ENABLED_TRUE@	disco_query_response.h \
-@WSF_ENABLED_TRUE@	disco_remove_entry.h \
-@WSF_ENABLED_TRUE@	disco_requested_service_type.h \
-@WSF_ENABLED_TRUE@	disco_resource_id.h \
-@WSF_ENABLED_TRUE@	disco_resource_offering.h \
-@WSF_ENABLED_TRUE@	disco_send_single_logout.h \
-@WSF_ENABLED_TRUE@	disco_service_instance.h \
-@WSF_ENABLED_TRUE@	dst_data.h \
-@WSF_ENABLED_TRUE@	dst_modification.h \
-@WSF_ENABLED_TRUE@	dst_modify.h \
-@WSF_ENABLED_TRUE@	dst_modify_response.h \
-@WSF_ENABLED_TRUE@	dst_new_data.h \
-@WSF_ENABLED_TRUE@	dst_query.h \
-@WSF_ENABLED_TRUE@	dst_query_item.h \
-@WSF_ENABLED_TRUE@	dst_query_response.h \
-@WSF_ENABLED_TRUE@	is_help.h \
-@WSF_ENABLED_TRUE@	is_inquiry.h \
-@WSF_ENABLED_TRUE@	is_inquiry_element.h \
-@WSF_ENABLED_TRUE@	is_interaction_request.h \
-@WSF_ENABLED_TRUE@	is_interaction_response.h \
-@WSF_ENABLED_TRUE@	is_interaction_statement.h \
-@WSF_ENABLED_TRUE@	is_item.h \
-@WSF_ENABLED_TRUE@	is_parameter.h \
-@WSF_ENABLED_TRUE@	is_redirect_request.h \
-@WSF_ENABLED_TRUE@	is_select.h \
-@WSF_ENABLED_TRUE@	is_text.h \
-@WSF_ENABLED_TRUE@	is_user_interaction.h \
-@WSF_ENABLED_TRUE@	sa_credentials.h \
-@WSF_ENABLED_TRUE@	sa_parameter.h \
-@WSF_ENABLED_TRUE@	sa_password_transforms.h \
-@WSF_ENABLED_TRUE@	sa_transform.h \
-@WSF_ENABLED_TRUE@	sa_sasl_request.h \
-@WSF_ENABLED_TRUE@	sa_sasl_response.h \
-@WSF_ENABLED_TRUE@	sec_resource_access_statement.h \
-@WSF_ENABLED_TRUE@	soap_binding_consent.h \
-@WSF_ENABLED_TRUE@	soap_binding_correlation.h \
-@WSF_ENABLED_TRUE@	soap_binding_processing_context.h \
-@WSF_ENABLED_TRUE@	soap_binding_provider.h \
-@WSF_ENABLED_TRUE@	soap_binding_usage_directive.h \
-@WSF_ENABLED_TRUE@	soap_binding_ext_credential.h \
-@WSF_ENABLED_TRUE@	soap_binding_ext_credentials_context.h \
-@WSF_ENABLED_TRUE@	soap_binding_ext_service_instance_update.h \
-@WSF_ENABLED_TRUE@	soap_binding_ext_timeout.h \
-@WSF_ENABLED_TRUE@	soap_binding.h \
-@WSF_ENABLED_TRUE@	utility_status.h
-
 liblasso_xml_la_SOURCES = \
 	tools.c \
 	xml.c \
@@ -914,8 +604,7 @@ liblasso_xml_la_SOURCES = \
 	samlp_response.c \
 	samlp_response_abstract.c \
 	samlp_status.c \
-	samlp_status_code.c \
-	$(WSF_C_FILES)
+	samlp_status_code.c
 
 liblassoinclude_HEADERS = \
 	strings.h \
@@ -969,13 +658,12 @@ liblassoinclude_HEADERS = \
 	samlp_status.h \
 	samlp_status_code.h \
 	xml_enc.h \
-	tools.h \
-	$(WSF_H_FILES)
+	tools.h
 
 lasso_private_h_sources = \
 	private.h
 
-EXTRA_DIST = $(lasso_private_h_sources) xml_idff.h xml_idwsf.h
+EXTRA_DIST = $(lasso_private_h_sources) xml_idff.h
 all: all-recursive
 
 .SUFFIXES:
@@ -1030,46 +718,6 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/disco_authenticate_requester.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/disco_authenticate_session_context.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/disco_authorize_requester.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/disco_credentials.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/disco_description.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/disco_encrypt_resource_id.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/disco_encrypted_resource_id.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/disco_generate_bearer_token.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/disco_insert_entry.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/disco_modify.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/disco_modify_response.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/disco_options.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/disco_query.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/disco_query_response.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/disco_remove_entry.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/disco_requested_service_type.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/disco_resource_id.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/disco_resource_offering.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/disco_send_single_logout.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/disco_service_instance.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dst_data.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dst_modification.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dst_modify.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dst_modify_response.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dst_new_data.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dst_query.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dst_query_item.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dst_query_response.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/is_help.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/is_inquiry.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/is_inquiry_element.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/is_interaction_request.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/is_interaction_response.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/is_interaction_statement.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/is_item.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/is_parameter.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/is_redirect_request.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/is_select.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/is_text.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/is_user_interaction.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lib_assertion.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lib_authentication_statement.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lib_authn_context.Plo@am__quote@ # am--include-marker
@@ -1094,12 +742,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/misc_text_node.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/paos_request.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/paos_response.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sa_credentials.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sa_parameter.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sa_password_transforms.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sa_sasl_request.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sa_sasl_response.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sa_transform.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/saml_advice.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/saml_assertion.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/saml_attribute.Plo@am__quote@ # am--include-marker
@@ -1124,19 +766,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/samlp_response_abstract.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/samlp_status.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/samlp_status_code.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sec_resource_access_statement.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/soap_binding.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/soap_binding_consent.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/soap_binding_correlation.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/soap_binding_ext_credential.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/soap_binding_ext_credentials_context.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/soap_binding_ext_service_instance_update.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/soap_binding_ext_timeout.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/soap_binding_processing_context.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/soap_binding_provider.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/soap_binding_usage_directive.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tools.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/utility_status.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xml.Plo@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
@@ -1395,47 +1025,7 @@ clean-am: clean-generic clean-libtool clean-noinstLTLIBRARIES \
 	mostlyclean-am
 
 distclean: distclean-recursive
-		-rm -f ./$(DEPDIR)/disco_authenticate_requester.Plo
-	-rm -f ./$(DEPDIR)/disco_authenticate_session_context.Plo
-	-rm -f ./$(DEPDIR)/disco_authorize_requester.Plo
-	-rm -f ./$(DEPDIR)/disco_credentials.Plo
-	-rm -f ./$(DEPDIR)/disco_description.Plo
-	-rm -f ./$(DEPDIR)/disco_encrypt_resource_id.Plo
-	-rm -f ./$(DEPDIR)/disco_encrypted_resource_id.Plo
-	-rm -f ./$(DEPDIR)/disco_generate_bearer_token.Plo
-	-rm -f ./$(DEPDIR)/disco_insert_entry.Plo
-	-rm -f ./$(DEPDIR)/disco_modify.Plo
-	-rm -f ./$(DEPDIR)/disco_modify_response.Plo
-	-rm -f ./$(DEPDIR)/disco_options.Plo
-	-rm -f ./$(DEPDIR)/disco_query.Plo
-	-rm -f ./$(DEPDIR)/disco_query_response.Plo
-	-rm -f ./$(DEPDIR)/disco_remove_entry.Plo
-	-rm -f ./$(DEPDIR)/disco_requested_service_type.Plo
-	-rm -f ./$(DEPDIR)/disco_resource_id.Plo
-	-rm -f ./$(DEPDIR)/disco_resource_offering.Plo
-	-rm -f ./$(DEPDIR)/disco_send_single_logout.Plo
-	-rm -f ./$(DEPDIR)/disco_service_instance.Plo
-	-rm -f ./$(DEPDIR)/dst_data.Plo
-	-rm -f ./$(DEPDIR)/dst_modification.Plo
-	-rm -f ./$(DEPDIR)/dst_modify.Plo
-	-rm -f ./$(DEPDIR)/dst_modify_response.Plo
-	-rm -f ./$(DEPDIR)/dst_new_data.Plo
-	-rm -f ./$(DEPDIR)/dst_query.Plo
-	-rm -f ./$(DEPDIR)/dst_query_item.Plo
-	-rm -f ./$(DEPDIR)/dst_query_response.Plo
-	-rm -f ./$(DEPDIR)/is_help.Plo
-	-rm -f ./$(DEPDIR)/is_inquiry.Plo
-	-rm -f ./$(DEPDIR)/is_inquiry_element.Plo
-	-rm -f ./$(DEPDIR)/is_interaction_request.Plo
-	-rm -f ./$(DEPDIR)/is_interaction_response.Plo
-	-rm -f ./$(DEPDIR)/is_interaction_statement.Plo
-	-rm -f ./$(DEPDIR)/is_item.Plo
-	-rm -f ./$(DEPDIR)/is_parameter.Plo
-	-rm -f ./$(DEPDIR)/is_redirect_request.Plo
-	-rm -f ./$(DEPDIR)/is_select.Plo
-	-rm -f ./$(DEPDIR)/is_text.Plo
-	-rm -f ./$(DEPDIR)/is_user_interaction.Plo
-	-rm -f ./$(DEPDIR)/lib_assertion.Plo
+		-rm -f ./$(DEPDIR)/lib_assertion.Plo
 	-rm -f ./$(DEPDIR)/lib_authentication_statement.Plo
 	-rm -f ./$(DEPDIR)/lib_authn_context.Plo
 	-rm -f ./$(DEPDIR)/lib_authn_request.Plo
@@ -1459,12 +1049,6 @@ distclean: distclean-recursive
 	-rm -f ./$(DEPDIR)/misc_text_node.Plo
 	-rm -f ./$(DEPDIR)/paos_request.Plo
 	-rm -f ./$(DEPDIR)/paos_response.Plo
-	-rm -f ./$(DEPDIR)/sa_credentials.Plo
-	-rm -f ./$(DEPDIR)/sa_parameter.Plo
-	-rm -f ./$(DEPDIR)/sa_password_transforms.Plo
-	-rm -f ./$(DEPDIR)/sa_sasl_request.Plo
-	-rm -f ./$(DEPDIR)/sa_sasl_response.Plo
-	-rm -f ./$(DEPDIR)/sa_transform.Plo
 	-rm -f ./$(DEPDIR)/saml_advice.Plo
 	-rm -f ./$(DEPDIR)/saml_assertion.Plo
 	-rm -f ./$(DEPDIR)/saml_attribute.Plo
@@ -1489,19 +1073,7 @@ distclean: distclean-recursive
 	-rm -f ./$(DEPDIR)/samlp_response_abstract.Plo
 	-rm -f ./$(DEPDIR)/samlp_status.Plo
 	-rm -f ./$(DEPDIR)/samlp_status_code.Plo
-	-rm -f ./$(DEPDIR)/sec_resource_access_statement.Plo
-	-rm -f ./$(DEPDIR)/soap_binding.Plo
-	-rm -f ./$(DEPDIR)/soap_binding_consent.Plo
-	-rm -f ./$(DEPDIR)/soap_binding_correlation.Plo
-	-rm -f ./$(DEPDIR)/soap_binding_ext_credential.Plo
-	-rm -f ./$(DEPDIR)/soap_binding_ext_credentials_context.Plo
-	-rm -f ./$(DEPDIR)/soap_binding_ext_service_instance_update.Plo
-	-rm -f ./$(DEPDIR)/soap_binding_ext_timeout.Plo
-	-rm -f ./$(DEPDIR)/soap_binding_processing_context.Plo
-	-rm -f ./$(DEPDIR)/soap_binding_provider.Plo
-	-rm -f ./$(DEPDIR)/soap_binding_usage_directive.Plo
 	-rm -f ./$(DEPDIR)/tools.Plo
-	-rm -f ./$(DEPDIR)/utility_status.Plo
 	-rm -f ./$(DEPDIR)/xml.Plo
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
@@ -1548,47 +1120,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-recursive
-		-rm -f ./$(DEPDIR)/disco_authenticate_requester.Plo
-	-rm -f ./$(DEPDIR)/disco_authenticate_session_context.Plo
-	-rm -f ./$(DEPDIR)/disco_authorize_requester.Plo
-	-rm -f ./$(DEPDIR)/disco_credentials.Plo
-	-rm -f ./$(DEPDIR)/disco_description.Plo
-	-rm -f ./$(DEPDIR)/disco_encrypt_resource_id.Plo
-	-rm -f ./$(DEPDIR)/disco_encrypted_resource_id.Plo
-	-rm -f ./$(DEPDIR)/disco_generate_bearer_token.Plo
-	-rm -f ./$(DEPDIR)/disco_insert_entry.Plo
-	-rm -f ./$(DEPDIR)/disco_modify.Plo
-	-rm -f ./$(DEPDIR)/disco_modify_response.Plo
-	-rm -f ./$(DEPDIR)/disco_options.Plo
-	-rm -f ./$(DEPDIR)/disco_query.Plo
-	-rm -f ./$(DEPDIR)/disco_query_response.Plo
-	-rm -f ./$(DEPDIR)/disco_remove_entry.Plo
-	-rm -f ./$(DEPDIR)/disco_requested_service_type.Plo
-	-rm -f ./$(DEPDIR)/disco_resource_id.Plo
-	-rm -f ./$(DEPDIR)/disco_resource_offering.Plo
-	-rm -f ./$(DEPDIR)/disco_send_single_logout.Plo
-	-rm -f ./$(DEPDIR)/disco_service_instance.Plo
-	-rm -f ./$(DEPDIR)/dst_data.Plo
-	-rm -f ./$(DEPDIR)/dst_modification.Plo
-	-rm -f ./$(DEPDIR)/dst_modify.Plo
-	-rm -f ./$(DEPDIR)/dst_modify_response.Plo
-	-rm -f ./$(DEPDIR)/dst_new_data.Plo
-	-rm -f ./$(DEPDIR)/dst_query.Plo
-	-rm -f ./$(DEPDIR)/dst_query_item.Plo
-	-rm -f ./$(DEPDIR)/dst_query_response.Plo
-	-rm -f ./$(DEPDIR)/is_help.Plo
-	-rm -f ./$(DEPDIR)/is_inquiry.Plo
-	-rm -f ./$(DEPDIR)/is_inquiry_element.Plo
-	-rm -f ./$(DEPDIR)/is_interaction_request.Plo
-	-rm -f ./$(DEPDIR)/is_interaction_response.Plo
-	-rm -f ./$(DEPDIR)/is_interaction_statement.Plo
-	-rm -f ./$(DEPDIR)/is_item.Plo
-	-rm -f ./$(DEPDIR)/is_parameter.Plo
-	-rm -f ./$(DEPDIR)/is_redirect_request.Plo
-	-rm -f ./$(DEPDIR)/is_select.Plo
-	-rm -f ./$(DEPDIR)/is_text.Plo
-	-rm -f ./$(DEPDIR)/is_user_interaction.Plo
-	-rm -f ./$(DEPDIR)/lib_assertion.Plo
+		-rm -f ./$(DEPDIR)/lib_assertion.Plo
 	-rm -f ./$(DEPDIR)/lib_authentication_statement.Plo
 	-rm -f ./$(DEPDIR)/lib_authn_context.Plo
 	-rm -f ./$(DEPDIR)/lib_authn_request.Plo
@@ -1612,12 +1144,6 @@ maintainer-clean: maintainer-clean-recursive
 	-rm -f ./$(DEPDIR)/misc_text_node.Plo
 	-rm -f ./$(DEPDIR)/paos_request.Plo
 	-rm -f ./$(DEPDIR)/paos_response.Plo
-	-rm -f ./$(DEPDIR)/sa_credentials.Plo
-	-rm -f ./$(DEPDIR)/sa_parameter.Plo
-	-rm -f ./$(DEPDIR)/sa_password_transforms.Plo
-	-rm -f ./$(DEPDIR)/sa_sasl_request.Plo
-	-rm -f ./$(DEPDIR)/sa_sasl_response.Plo
-	-rm -f ./$(DEPDIR)/sa_transform.Plo
 	-rm -f ./$(DEPDIR)/saml_advice.Plo
 	-rm -f ./$(DEPDIR)/saml_assertion.Plo
 	-rm -f ./$(DEPDIR)/saml_attribute.Plo
@@ -1642,19 +1168,7 @@ maintainer-clean: maintainer-clean-recursive
 	-rm -f ./$(DEPDIR)/samlp_response_abstract.Plo
 	-rm -f ./$(DEPDIR)/samlp_status.Plo
 	-rm -f ./$(DEPDIR)/samlp_status_code.Plo
-	-rm -f ./$(DEPDIR)/sec_resource_access_statement.Plo
-	-rm -f ./$(DEPDIR)/soap_binding.Plo
-	-rm -f ./$(DEPDIR)/soap_binding_consent.Plo
-	-rm -f ./$(DEPDIR)/soap_binding_correlation.Plo
-	-rm -f ./$(DEPDIR)/soap_binding_ext_credential.Plo
-	-rm -f ./$(DEPDIR)/soap_binding_ext_credentials_context.Plo
-	-rm -f ./$(DEPDIR)/soap_binding_ext_service_instance_update.Plo
-	-rm -f ./$(DEPDIR)/soap_binding_ext_timeout.Plo
-	-rm -f ./$(DEPDIR)/soap_binding_processing_context.Plo
-	-rm -f ./$(DEPDIR)/soap_binding_provider.Plo
-	-rm -f ./$(DEPDIR)/soap_binding_usage_directive.Plo
 	-rm -f ./$(DEPDIR)/tools.Plo
-	-rm -f ./$(DEPDIR)/utility_status.Plo
 	-rm -f ./$(DEPDIR)/xml.Plo
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic

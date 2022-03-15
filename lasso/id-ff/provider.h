@@ -143,7 +143,7 @@ typedef enum {
  * LassoProtocolConformance:
  * @LASSO_PROTOCOL_LIBERTY_1_0: Liberty ID-FF 1.0
  * @LASSO_PROTOCOL_LIBERTY_1_1: Liberty ID-FF 1.1
- * @LASSO_PROTOCOL_LIBERTY_1_2: Liberty ID-FF 1.2 / ID-WSF 1.0
+ * @LASSO_PROTOCOL_LIBERTY_1_2: Liberty ID-FF 1.2
  * @LASSO_PROTOCOL_SAML_2_0: SAML 2.0
  *
  * Provider protocol conformance.
@@ -280,6 +280,12 @@ LASSO_EXPORT lasso_error_t lasso_provider_add_key(LassoProvider *provider, Lasso
 
 LASSO_EXPORT int lasso_provider_verify_signature(LassoProvider *provider,
 		const char *message, const char *id_attr_name, LassoMessageFormat format);
+
+LASSO_EXPORT void lasso_provider_set_key_encryption_method(
+		LassoProvider *provider, LassoKeyEncryptionMethod method);
+
+LASSO_EXPORT LassoKeyEncryptionMethod lasso_provider_get_key_encryption_method();
+
 
 #ifdef __cplusplus
 }

@@ -15,7 +15,8 @@
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="5"><tr valign="middle">
 <td width="100%" align="left" class="shortcuts">
 <a href="#" class="shortcut">Top</a><span id="nav_description">  <span class="dim">|</span> 
-                  <a href="#lasso-node.description" class="shortcut">Description</a></span>
+                  <a href="#lasso-node.description" class="shortcut">Description</a></span><span id="nav_hierarchy">  <span class="dim">|</span> 
+                  <a href="#lasso-node.object-hierarchy" class="shortcut">Object Hierarchy</a></span>
 </td>
 <td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
 <td><a accesskey="u" href="architecture.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
@@ -41,7 +42,7 @@
 <tbody>
 <tr>
 <td class="function_type">
-<a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="returnvalue">LassoNode</span></a> *
+<a class="link" href="lasso-node.html#LassoNode"><span class="returnvalue">LassoNode</span></a> *
 </td>
 <td class="function_name">
 <a class="link" href="lasso-node.html#lasso-node-new" title="lasso_node_new ()">lasso_node_new</a> <span class="c_punctuation">()</span>
@@ -49,7 +50,7 @@
 </tr>
 <tr>
 <td class="function_type">
-<a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="returnvalue">LassoNode</span></a> *
+<a class="link" href="lasso-node.html#LassoNode"><span class="returnvalue">LassoNode</span></a> *
 </td>
 <td class="function_name">
 <a class="link" href="lasso-node.html#lasso-node-new-from-dump" title="lasso_node_new_from_dump ()">lasso_node_new_from_dump</a> <span class="c_punctuation">()</span>
@@ -57,7 +58,7 @@
 </tr>
 <tr>
 <td class="function_type">
-<a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="returnvalue">LassoNode</span></a> *
+<a class="link" href="lasso-node.html#LassoNode"><span class="returnvalue">LassoNode</span></a> *
 </td>
 <td class="function_name">
 <a class="link" href="lasso-node.html#lasso-node-new-from-soap" title="lasso_node_new_from_soap ()">lasso_node_new_from_soap</a> <span class="c_punctuation">()</span>
@@ -65,7 +66,7 @@
 </tr>
 <tr>
 <td class="function_type">
-<a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="returnvalue">LassoNode</span></a> *
+<a class="link" href="lasso-node.html#LassoNode"><span class="returnvalue">LassoNode</span></a> *
 </td>
 <td class="function_name">
 <a class="link" href="lasso-node.html#lasso-node-new-from-xmlNode" title="lasso_node_new_from_xmlNode ()">lasso_node_new_from_xmlNode</a> <span class="c_punctuation">()</span>
@@ -263,7 +264,7 @@
 </tbody>
 </table></div>
 </div>
-<div class="refsect1">
+<a name="LassoNode"></a><div class="refsect1">
 <a name="lasso-node.other"></a><h2>Types and Values</h2>
 <div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
@@ -289,35 +290,109 @@
 </tr>
 <tr>
 <td class="datatype_keyword">struct</td>
-<td class="function_name"><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode">LassoNode</a></td>
+<td class="function_name"><a class="link" href="lasso-node.html#LassoNode-struct" title="struct LassoNode">LassoNode</a></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect1">
+<a name="lasso-node.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="screen">    GObject
+    <span class="lineart">╰──</span> LassoNode
+        <span class="lineart">├──</span> <a class="link" href="LassoProfile.html" title="LassoProfile">LassoProfile</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoDsKeyInfo.html" title="LassoDsKeyInfo">LassoDsKeyInfo</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoDsKeyValue.html" title="LassoDsKeyValue">LassoDsKeyValue</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoDsRsaKeyValue.html" title="LassoDsRsaKeyValue">LassoDsRsaKeyValue</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoFederation.html" title="LassoFederation">LassoFederation</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoIdentity.html" title="LassoIdentity">LassoIdentity</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlAssertion.html" title="LassoSamlAssertion">LassoSamlAssertion</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlStatementAbstract.html" title="LassoSamlStatementAbstract">LassoSamlStatementAbstract</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoLibAuthnContext.html" title="LassoLibAuthnContext">LassoLibAuthnContext</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoLibAuthnRequestEnvelope.html" title="LassoLibAuthnRequestEnvelope">LassoLibAuthnRequestEnvelope</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlpRequestAbstract.html" title="LassoSamlpRequestAbstract">LassoSamlpRequestAbstract</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoLibAuthnResponseEnvelope.html" title="LassoLibAuthnResponseEnvelope">LassoLibAuthnResponseEnvelope</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlpResponseAbstract.html" title="LassoSamlpResponseAbstract">LassoSamlpResponseAbstract</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoLibIDPEntries.html" title="LassoLibIDPEntries">LassoLibIDPEntries</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoLibIDPEntry.html" title="LassoLibIDPEntry">LassoLibIDPEntry</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoLibIDPList.html" title="LassoLibIDPList">LassoLibIDPList</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoLibRequestAuthnContext.html" title="LassoLibRequestAuthnContext">LassoLibRequestAuthnContext</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoLibScoping.html" title="LassoLibScoping">LassoLibScoping</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlSubject.html" title="LassoSamlSubject">LassoSamlSubject</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoMiscTextNode.html" title="LassoMiscTextNode">LassoMiscTextNode</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoProvider.html" title="LassoProvider">LassoProvider</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSaml2Action.html" title="LassoSaml2Action">LassoSaml2Action</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSaml2Advice.html" title="LassoSaml2Advice">LassoSaml2Advice</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSaml2Assertion.html" title="LassoSaml2Assertion">LassoSaml2Assertion</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSaml2Attribute.html" title="LassoSaml2Attribute">LassoSaml2Attribute</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSaml2StatementAbstract.html" title="LassoSaml2StatementAbstract">LassoSaml2StatementAbstract</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSaml2AttributeValue.html" title="LassoSaml2AttributeValue">LassoSaml2AttributeValue</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSaml2ConditionAbstract.html" title="LassoSaml2ConditionAbstract">LassoSaml2ConditionAbstract</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSaml2AuthnContext.html" title="LassoSaml2AuthnContext">LassoSaml2AuthnContext</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSaml2BaseIDAbstract.html" title="LassoSaml2BaseIDAbstract">LassoSaml2BaseIDAbstract</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSaml2Conditions.html" title="LassoSaml2Conditions">LassoSaml2Conditions</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSaml2EncryptedElement.html" title="LassoSaml2EncryptedElement">LassoSaml2EncryptedElement</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSaml2Evidence.html" title="LassoSaml2Evidence">LassoSaml2Evidence</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSaml2KeyInfoConfirmationData.html" title="LassoSaml2KeyInfoConfirmationData">LassoSaml2KeyInfoConfirmationData</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSaml2NameID.html" title="LassoSaml2NameID">LassoSaml2NameID</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSaml2SubjectConfirmationData.html" title="LassoSaml2SubjectConfirmationData">LassoSaml2SubjectConfirmationData</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSaml2SubjectConfirmation.html" title="LassoSaml2SubjectConfirmation">LassoSaml2SubjectConfirmation</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSaml2Subject.html" title="LassoSaml2Subject">LassoSaml2Subject</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSaml2SubjectLocality.html" title="LassoSaml2SubjectLocality">LassoSaml2SubjectLocality</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlAdvice.html" title="LassoSamlAdvice">LassoSamlAdvice</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlAttributeDesignator.html" title="LassoSamlAttributeDesignator">LassoSamlAttributeDesignator</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlAttributeValue.html" title="LassoSamlAttributeValue">LassoSamlAttributeValue</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlConditionAbstract.html" title="LassoSamlConditionAbstract">LassoSamlConditionAbstract</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlAuthorityBinding.html" title="LassoSamlAuthorityBinding">LassoSamlAuthorityBinding</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlConditions.html" title="LassoSamlConditions">LassoSamlConditions</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlNameIdentifier.html" title="LassoSamlNameIdentifier">LassoSamlNameIdentifier</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlp2RequestAbstract.html" title="LassoSamlp2RequestAbstract">LassoSamlp2RequestAbstract</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlp2StatusResponse.html" title="LassoSamlp2StatusResponse">LassoSamlp2StatusResponse</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlp2Extensions.html" title="LassoSamlp2Extensions">LassoSamlp2Extensions</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlp2IDPEntry.html" title="LassoSamlp2IDPEntry">LassoSamlp2IDPEntry</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlp2IDPList.html" title="LassoSamlp2IDPList">LassoSamlp2IDPList</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlp2NameIDPolicy.html" title="LassoSamlp2NameIDPolicy">LassoSamlp2NameIDPolicy</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlp2RequestedAuthnContext.html" title="LassoSamlp2RequestedAuthnContext">LassoSamlp2RequestedAuthnContext</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlp2Scoping.html" title="LassoSamlp2Scoping">LassoSamlp2Scoping</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlp2StatusCode.html" title="LassoSamlp2StatusCode">LassoSamlp2StatusCode</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlp2StatusDetail.html" title="LassoSamlp2StatusDetail">LassoSamlp2StatusDetail</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlp2Status.html" title="LassoSamlp2Status">LassoSamlp2Status</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlp2Terminate.html" title="LassoSamlp2Terminate">LassoSamlp2Terminate</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlpStatusCode.html" title="LassoSamlpStatusCode">LassoSamlpStatusCode</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlpStatus.html" title="LassoSamlpStatus">LassoSamlpStatus</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlSubjectConfirmation.html" title="LassoSamlSubjectConfirmation">LassoSamlSubjectConfirmation</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSamlSubjectLocality.html" title="LassoSamlSubjectLocality">LassoSamlSubjectLocality</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSession.html" title="LassoSession">LassoSession</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSoapBody.html" title="LassoSoapBody">LassoSoapBody</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSoapDetail.html" title="LassoSoapDetail">LassoSoapDetail</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSoapEnvelope.html" title="LassoSoapEnvelope">LassoSoapEnvelope</a>
+        <span class="lineart">├──</span> <a class="link" href="LassoSoapFault.html" title="LassoSoapFault">LassoSoapFault</a>
+        <span class="lineart">╰──</span> <a class="link" href="LassoSoapHeader.html" title="LassoSoapHeader">LassoSoapHeader</a>
+</pre>
+</div>
+<div class="refsect1">
 <a name="lasso-node.description"></a><h2>Description</h2>
-<p><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> is the base class for Lasso objects; just a step over GObject as
+<p><a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> is the base class for Lasso objects; just a step over GObject as
 defined in glib.</p>
 </div>
 <div class="refsect1">
 <a name="lasso-node.functions_details"></a><h2>Functions</h2>
 <div class="refsect2">
 <a name="lasso-node-new"></a><h3>lasso_node_new ()</h3>
-<pre class="programlisting"><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="returnvalue">LassoNode</span></a> *
+<pre class="programlisting"><a class="link" href="lasso-node.html#LassoNode"><span class="returnvalue">LassoNode</span></a> *
 lasso_node_new (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
-<p>Creates a new <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a>.</p>
+<p>Creates a new <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a>.</p>
 <div class="refsect3">
 <a name="lasso-node-new.returns"></a><h4>Returns</h4>
-<p> a newly created <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> object</p>
+<p> a newly created <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> object</p>
 </div>
 </div>
 <hr>
 <div class="refsect2">
 <a name="lasso-node-new-from-dump"></a><h3>lasso_node_new_from_dump ()</h3>
-<pre class="programlisting"><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="returnvalue">LassoNode</span></a> *
+<pre class="programlisting"><a class="link" href="lasso-node.html#LassoNode"><span class="returnvalue">LassoNode</span></a> *
 lasso_node_new_from_dump (<em class="parameter"><code>const <span class="type">char</span> *dump</code></em>);</pre>
 <p>Restores the <em class="parameter"><code>dump</code></em>
- to a new <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> subclass.</p>
+ to a new <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> subclass.</p>
 <div class="refsect3">
 <a name="lasso-node-new-from-dump.parameters"></a><h4>Parameters</h4>
 <div class="informaltable"><table class="informaltable" width="100%" border="0">
@@ -341,7 +416,7 @@ lasso_node_new_from_dump (<em class="parameter"><code>const <span class="type">c
 <hr>
 <div class="refsect2">
 <a name="lasso-node-new-from-soap"></a><h3>lasso_node_new_from_soap ()</h3>
-<pre class="programlisting"><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="returnvalue">LassoNode</span></a> *
+<pre class="programlisting"><a class="link" href="lasso-node.html#LassoNode"><span class="returnvalue">LassoNode</span></a> *
 lasso_node_new_from_soap (<em class="parameter"><code>const <span class="type">char</span> *soap</code></em>);</pre>
 <p>Parses SOAP message and creates a new Lasso object with the right class.</p>
 <div class="refsect3">
@@ -367,9 +442,9 @@ lasso_node_new_from_soap (<em class="parameter"><code>const <span class="type">c
 <hr>
 <div class="refsect2">
 <a name="lasso-node-new-from-xmlNode"></a><h3>lasso_node_new_from_xmlNode ()</h3>
-<pre class="programlisting"><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="returnvalue">LassoNode</span></a> *
+<pre class="programlisting"><a class="link" href="lasso-node.html#LassoNode"><span class="returnvalue">LassoNode</span></a> *
 lasso_node_new_from_xmlNode (<em class="parameter"><code><span class="type">xmlNode</span> *node</code></em>);</pre>
-<p>Builds a new <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> from an xmlNode.</p>
+<p>Builds a new <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> from an xmlNode.</p>
 <div class="refsect3">
 <a name="lasso-node-new-from-xmlNode.parameters"></a><h4>Parameters</h4>
 <div class="informaltable"><table class="informaltable" width="100%" border="0">
@@ -394,10 +469,10 @@ lasso_node_new_from_xmlNode (<em class="parameter"><code><span class="type">xmlN
 <div class="refsect2">
 <a name="lasso-node-cleanup-original-xmlnodes"></a><h3>lasso_node_cleanup_original_xmlnodes ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>
-lasso_node_cleanup_original_xmlnodes (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>);</pre>
+lasso_node_cleanup_original_xmlnodes (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> *node</code></em>);</pre>
 <p><em class="parameter"><code>node</code></em>
-: a <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a></p>
-<p>Traverse the <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> tree starting at Node and remove keeped xmlNode if one is found.</p>
+: a <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a></p>
+<p>Traverse the <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> tree starting at Node and remove keeped xmlNode if one is found.</p>
 <div class="refsect3">
 <a name="lasso-node-cleanup-original-xmlnodes.returns"></a><h4>Returns</h4>
 <p> None</p>
@@ -407,8 +482,8 @@ lasso_node_cleanup_original_xmlnodes (<em class="parameter"><code><a class="link
 <div class="refsect2">
 <a name="lasso-node-destroy"></a><h3>lasso_node_destroy ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>
-lasso_node_destroy (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>);</pre>
-<p>Destroys the <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a>.</p>
+lasso_node_destroy (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> *node</code></em>);</pre>
+<p>Destroys the <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a>.</p>
 <div class="refsect3">
 <a name="lasso-node-destroy.parameters"></a><h4>Parameters</h4>
 <div class="informaltable"><table class="informaltable" width="100%" border="0">
@@ -419,7 +494,7 @@ lasso_node_destroy (<em class="parameter"><code><a class="link" href="lasso-node
 </colgroup>
 <tbody><tr>
 <td class="parameter_name"><p>node</p></td>
-<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a></p></td>
+<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a></p></td>
 <td class="parameter_annotations"> </td>
 </tr></tbody>
 </table></div>
@@ -429,7 +504,7 @@ lasso_node_destroy (<em class="parameter"><code><a class="link" href="lasso-node
 <div class="refsect2">
 <a name="lasso-node-dump"></a><h3>lasso_node_dump ()</h3>
 <pre class="programlisting"><span class="returnvalue">char</span> *
-lasso_node_dump (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>);</pre>
+lasso_node_dump (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> *node</code></em>);</pre>
 <p>Dumps <em class="parameter"><code>node</code></em>
 .  All datas in object are dumped in an XML format.</p>
 <div class="refsect3">
@@ -442,7 +517,7 @@ lasso_node_dump (<em class="parameter"><code><a class="link" href="lasso-node.ht
 </colgroup>
 <tbody><tr>
 <td class="parameter_name"><p>node</p></td>
-<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a></p></td>
+<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a></p></td>
 <td class="parameter_annotations"> </td>
 </tr></tbody>
 </table></div>
@@ -459,7 +534,7 @@ caller. </p>
 <div class="refsect2">
 <a name="lasso-node-debug"></a><h3>lasso_node_debug ()</h3>
 <pre class="programlisting"><span class="returnvalue">char</span> *
-lasso_node_debug (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
+lasso_node_debug (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
                   <em class="parameter"><code><span class="type">int</span> level</code></em>);</pre>
 <p>Create a debug dump for <em class="parameter"><code>node</code></em>
 , it is pretty printed so any contained signature will be
@@ -475,7 +550,7 @@ uncheckable.</p>
 <tbody>
 <tr>
 <td class="parameter_name"><p>node</p></td>
-<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a></p></td>
+<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a></p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -498,7 +573,7 @@ the caller. </p>
 <div class="refsect2">
 <a name="lasso-node-export-to-base64"></a><h3>lasso_node_export_to_base64 ()</h3>
 <pre class="programlisting"><span class="returnvalue">char</span> *
-lasso_node_export_to_base64 (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>);</pre>
+lasso_node_export_to_base64 (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> *node</code></em>);</pre>
 <p>Exports <em class="parameter"><code>node</code></em>
  to a base64-encoded message.</p>
 <div class="refsect3">
@@ -511,7 +586,7 @@ lasso_node_export_to_base64 (<em class="parameter"><code><a class="link" href="l
 </colgroup>
 <tbody><tr>
 <td class="parameter_name"><p>node</p></td>
-<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a></p></td>
+<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a></p></td>
 <td class="parameter_annotations"> </td>
 </tr></tbody>
 </table></div>
@@ -527,7 +602,7 @@ the caller.</p>
 <div class="refsect2">
 <a name="lasso-node-export-to-query"></a><h3>lasso_node_export_to_query ()</h3>
 <pre class="programlisting"><span class="returnvalue">char</span> *
-lasso_node_export_to_query (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
+lasso_node_export_to_query (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
                             <em class="parameter"><code><a class="link" href="lasso-node.html#LassoSignatureMethod" title="enum LassoSignatureMethod"><span class="type">LassoSignatureMethod</span></a> sign_method</code></em>,
                             <em class="parameter"><code>const <span class="type">char</span> *private_key_file</code></em>);</pre>
 <p>Exports <em class="parameter"><code>node</code></em>
@@ -545,7 +620,7 @@ query won't be signed.</p>
 <tbody>
 <tr>
 <td class="parameter_name"><p>node</p></td>
-<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a></p></td>
+<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a></p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -573,7 +648,7 @@ caller.</p>
 <a name="lasso-node-export-to-query-with-password"></a><h3>lasso_node_export_to_query_with_password ()</h3>
 <pre class="programlisting"><span class="returnvalue">char</span> *
 lasso_node_export_to_query_with_password
-                               (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
+                               (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
                                 <em class="parameter"><code><a class="link" href="lasso-node.html#LassoSignatureMethod" title="enum LassoSignatureMethod"><span class="type">LassoSignatureMethod</span></a> sign_method</code></em>,
                                 <em class="parameter"><code>const <span class="type">char</span> *private_key_file</code></em>,
                                 <em class="parameter"><code>const <span class="type">char</span> *private_key_file_password</code></em>);</pre>
@@ -592,7 +667,7 @@ query won't be signed.</p>
 <tbody>
 <tr>
 <td class="parameter_name"><p>node</p></td>
-<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a></p></td>
+<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a></p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -624,7 +699,7 @@ caller.</p>
 <div class="refsect2">
 <a name="lasso-node-export-to-soap"></a><h3>lasso_node_export_to_soap ()</h3>
 <pre class="programlisting"><span class="returnvalue">char</span> *
-lasso_node_export_to_soap (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>);</pre>
+lasso_node_export_to_soap (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> *node</code></em>);</pre>
 <p>Exports <em class="parameter"><code>node</code></em>
  to a SOAP message.</p>
 <div class="refsect3">
@@ -637,7 +712,7 @@ lasso_node_export_to_soap (<em class="parameter"><code><a class="link" href="las
 </colgroup>
 <tbody><tr>
 <td class="parameter_name"><p>node</p></td>
-<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a></p></td>
+<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a></p></td>
 <td class="parameter_annotations"> </td>
 </tr></tbody>
 </table></div>
@@ -654,7 +729,7 @@ caller.</p>
 <a name="lasso-node-export-to-soap-with-headers"></a><h3>lasso_node_export_to_soap_with_headers ()</h3>
 <pre class="programlisting"><span class="returnvalue">char</span> *
 lasso_node_export_to_soap_with_headers
-                               (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
+                               (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
                                 <em class="parameter"><code><span class="type">GList</span> *headers</code></em>);</pre>
 <p>Exports <em class="parameter"><code>node</code></em>
  to a SOAP message. The <em class="parameter"><code>node</code></em>
@@ -663,7 +738,7 @@ each header in the <span class="type">headers</span> list is added to the SOAP h
 <em class="parameter"><code>headers</code></em>
  is permitted to be an empty list (e.g. NULL).</p>
 <div class="example">
-<a name="id-1.3.2.12.6.14.5"></a><p class="title"><b>Example 1. Create SOAP envelope with variable number of header nodes</b></p>
+<a name="id-1.3.2.12.8.14.5"></a><p class="title"><b>Example 1. Create SOAP envelope with variable number of header nodes</b></p>
 <div class="example-contents">
 <p>You need to form a SOAP message with authn_request as the body and
 paos_request, ecp_request and ecp_relaystate as SOAP header elements.
@@ -699,7 +774,7 @@ lasso_release_list_of_gobjects(headers);
 <tbody>
 <tr>
 <td class="parameter_name"><p>node</p></td>
-<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a>, becomes the SOAP body</p></td>
+<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a>, becomes the SOAP body</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -721,7 +796,7 @@ caller.</p>
 <div class="refsect2">
 <a name="lasso-node-export-to-xml"></a><h3>lasso_node_export_to_xml ()</h3>
 <pre class="programlisting"><span class="returnvalue">gchar</span> *
-lasso_node_export_to_xml (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>);</pre>
+lasso_node_export_to_xml (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> *node</code></em>);</pre>
 <p>Exports <em class="parameter"><code>node</code></em>
  to an xml message.</p>
 <div class="refsect3">
@@ -734,7 +809,7 @@ lasso_node_export_to_xml (<em class="parameter"><code><a class="link" href="lass
 </colgroup>
 <tbody><tr>
 <td class="parameter_name"><p>node</p></td>
-<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a></p></td>
+<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a></p></td>
 <td class="parameter_annotations"> </td>
 </tr></tbody>
 </table></div>
@@ -750,7 +825,7 @@ caller.</p>
 <div class="refsect2">
 <a name="lasso-node-export-to-paos-request"></a><h3>lasso_node_export_to_paos_request ()</h3>
 <pre class="programlisting"><span class="returnvalue">char</span> *
-lasso_node_export_to_paos_request (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
+lasso_node_export_to_paos_request (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
                                    <em class="parameter"><code>const <span class="type">char</span> *issuer</code></em>,
                                    <em class="parameter"><code>const <span class="type">char</span> *responseConsumerURL</code></em>,
                                    <em class="parameter"><code>const <span class="type">char</span> *relay_state</code></em>);</pre>
@@ -767,7 +842,7 @@ lasso_node_export_to_paos_request (<em class="parameter"><code><a class="link" h
 </colgroup>
 <tbody><tr>
 <td class="parameter_name"><p>node</p></td>
-<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a></p></td>
+<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a></p></td>
 <td class="parameter_annotations"> </td>
 </tr></tbody>
 </table></div>
@@ -784,14 +859,14 @@ caller.</p>
 <a name="lasso-node-export-to-paos-request-full"></a><h3>lasso_node_export_to_paos_request_full ()</h3>
 <pre class="programlisting"><span class="returnvalue">char</span> *
 lasso_node_export_to_paos_request_full
-                               (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
+                               (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
                                 <em class="parameter"><code>const <span class="type">char</span> *issuer</code></em>,
                                 <em class="parameter"><code>const <span class="type">char</span> *responseConsumerURL</code></em>,
                                 <em class="parameter"><code>const <span class="type">char</span> *message_id</code></em>,
                                 <em class="parameter"><code>const <span class="type">char</span> *relay_state</code></em>,
                                 <em class="parameter"><code><span class="type">gboolean</span> is_passive</code></em>,
                                 <em class="parameter"><code><span class="type">gchar</span> *provider_name</code></em>,
-                                <em class="parameter"><code><a class="link" href="lasso-LassoSamlp2IDPList.html#LassoSamlp2IDPList" title="struct LassoSamlp2IDPList"><span class="type">LassoSamlp2IDPList</span></a> *idp_list</code></em>);</pre>
+                                <em class="parameter"><code><a class="link" href="LassoSamlp2IDPList.html" title="LassoSamlp2IDPList"><span class="type">LassoSamlp2IDPList</span></a> *idp_list</code></em>);</pre>
 <p>Creates a new SOAP message. The SOAP headers include a PaosRequst,
 a EcpRequest and optionally a EcpRelayState. The SOAP body contains
 the <em class="parameter"><code>node</code></em>
@@ -839,7 +914,7 @@ by the caller.</p>
 <a name="lasso-node-export-to-ecp-soap-response"></a><h3>lasso_node_export_to_ecp_soap_response ()</h3>
 <pre class="programlisting"><span class="returnvalue">char</span> *
 lasso_node_export_to_ecp_soap_response
-                               (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
+                               (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
                                 <em class="parameter"><code>const <span class="type">char</span> *assertionConsumerURL</code></em>);</pre>
 <p>Exports <em class="parameter"><code>node</code></em>
  to a ECP SOAP message.</p>
@@ -853,7 +928,7 @@ lasso_node_export_to_ecp_soap_response
 </colgroup>
 <tbody><tr>
 <td class="parameter_name"><p>node</p></td>
-<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a></p></td>
+<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a></p></td>
 <td class="parameter_annotations"> </td>
 </tr></tbody>
 </table></div>
@@ -869,7 +944,7 @@ caller.</p>
 <div class="refsect2">
 <a name="lasso-node-get-xmlNode"></a><h3>lasso_node_get_xmlNode ()</h3>
 <pre class="programlisting"><span class="returnvalue">xmlNode</span> *
-lasso_node_get_xmlNode (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
+lasso_node_get_xmlNode (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
                         <em class="parameter"><code><span class="type">gboolean</span> lasso_dump</code></em>);</pre>
 <p>Builds an XML representation of <em class="parameter"><code>node</code></em>
 .</p>
@@ -884,7 +959,7 @@ lasso_node_get_xmlNode (<em class="parameter"><code><a class="link" href="lasso-
 <tbody>
 <tr>
 <td class="parameter_name"><p>node</p></td>
-<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a></p></td>
+<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a></p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -904,7 +979,7 @@ lasso_node_get_xmlNode (<em class="parameter"><code><a class="link" href="lasso-
 <div class="refsect2">
 <a name="lasso-node-get-name"></a><h3>lasso_node_get_name ()</h3>
 <pre class="programlisting">const <span class="returnvalue">char</span> *
-lasso_node_get_name (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>);</pre>
+lasso_node_get_name (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> *node</code></em>);</pre>
 <p>Return the XML element name for this object, the one that would be used in the XML dump of this
 object.</p>
 <div class="refsect3">
@@ -917,7 +992,7 @@ object.</p>
 </colgroup>
 <tbody><tr>
 <td class="parameter_name"><p>node</p></td>
-<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a></p></td>
+<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a></p></td>
 <td class="parameter_annotations"> </td>
 </tr></tbody>
 </table></div>
@@ -931,8 +1006,8 @@ object.</p>
 <div class="refsect2">
 <a name="lasso-node-get-original-xmlnode"></a><h3>lasso_node_get_original_xmlnode ()</h3>
 <pre class="programlisting"><span class="returnvalue">xmlNode</span> *
-lasso_node_get_original_xmlnode (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>);</pre>
-<p>Retrieve the original xmlNode eventually associated to this <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a>.</p>
+lasso_node_get_original_xmlnode (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> *node</code></em>);</pre>
+<p>Retrieve the original xmlNode eventually associated to this <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a>.</p>
 <div class="refsect3">
 <a name="lasso-node-get-original-xmlnode.parameters"></a><h4>Parameters</h4>
 <div class="informaltable"><table class="informaltable" width="100%" border="0">
@@ -943,7 +1018,7 @@ lasso_node_get_original_xmlnode (<em class="parameter"><code><a class="link" hre
 </colgroup>
 <tbody><tr>
 <td class="parameter_name"><p>node</p></td>
-<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a></p></td>
+<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a></p></td>
 <td class="parameter_annotations"> </td>
 </tr></tbody>
 </table></div>
@@ -958,7 +1033,7 @@ lasso_node_get_original_xmlnode (<em class="parameter"><code><a class="link" hre
 <div class="refsect2">
 <a name="lasso-node-set-original-xmlnode"></a><h3>lasso_node_set_original_xmlnode ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>
-lasso_node_set_original_xmlnode (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
+lasso_node_set_original_xmlnode (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
                                  <em class="parameter"><code><span class="type">xmlNode</span> *xmlnode</code></em>);</pre>
 <p>Set the underlying XML representation of the object.</p>
 <div class="refsect3">
@@ -972,7 +1047,7 @@ lasso_node_set_original_xmlnode (<em class="parameter"><code><a class="link" hre
 <tbody>
 <tr>
 <td class="parameter_name"><p>node</p></td>
-<td class="parameter_description"><p>the <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> object</p></td>
+<td class="parameter_description"><p>the <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> object</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -988,7 +1063,7 @@ lasso_node_set_original_xmlnode (<em class="parameter"><code><a class="link" hre
 <div class="refsect2">
 <a name="lasso-node-set-custom-namespace"></a><h3>lasso_node_set_custom_namespace ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>
-lasso_node_set_custom_namespace (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
+lasso_node_set_custom_namespace (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
                                  <em class="parameter"><code>const <span class="type">char</span> *prefix</code></em>,
                                  <em class="parameter"><code>const <span class="type">char</span> *href</code></em>);</pre>
 <p>Set a custom namespace for an object instance, use it with object existing a lot of revision of
@@ -1004,7 +1079,7 @@ the nearly same namespace.</p>
 <tbody>
 <tr>
 <td class="parameter_name"><p>node</p></td>
-<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> object</p></td>
+<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> object</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -1025,7 +1100,7 @@ the nearly same namespace.</p>
 <div class="refsect2">
 <a name="lasso-node-set-custom-nodename"></a><h3>lasso_node_set_custom_nodename ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>
-lasso_node_set_custom_nodename (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
+lasso_node_set_custom_nodename (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
                                 <em class="parameter"><code>const <span class="type">char</span> *nodename</code></em>);</pre>
 <p>Set a custom nodename for an object instance, use it with object implement a schema type and not
 a real element.</p>
@@ -1040,7 +1115,7 @@ a real element.</p>
 <tbody>
 <tr>
 <td class="parameter_name"><p>node</p></td>
-<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> object</p></td>
+<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> object</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -1056,13 +1131,13 @@ a real element.</p>
 <div class="refsect2">
 <a name="lasso-node-get-namespace"></a><h3>lasso_node_get_namespace ()</h3>
 <pre class="programlisting">const <span class="returnvalue">char</span> *
-lasso_node_get_namespace (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>);</pre>
+lasso_node_get_namespace (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> *node</code></em>);</pre>
 </div>
 <hr>
 <div class="refsect2">
 <a name="lasso-node-init-from-message"></a><h3>lasso_node_init_from_message ()</h3>
 <pre class="programlisting"><a class="link" href="lasso-node.html#LassoMessageFormat" title="enum LassoMessageFormat"><span class="returnvalue">LassoMessageFormat</span></a>
-lasso_node_init_from_message (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
+lasso_node_init_from_message (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
                               <em class="parameter"><code>const <span class="type">char</span> *message</code></em>);</pre>
 <p>Parses <em class="parameter"><code>message</code></em>
  and initialiazes <em class="parameter"><code>node</code></em>
@@ -1080,7 +1155,7 @@ automatically.</p>
 <tbody>
 <tr>
 <td class="parameter_name"><p>node</p></td>
-<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> (or derived class)</p></td>
+<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> (or derived class)</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -1100,7 +1175,7 @@ automatically.</p>
 <div class="refsect2">
 <a name="lasso-node-init-from-query"></a><h3>lasso_node_init_from_query ()</h3>
 <pre class="programlisting"><span class="returnvalue">gboolean</span>
-lasso_node_init_from_query (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
+lasso_node_init_from_query (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
                             <em class="parameter"><code>const <span class="type">char</span> *query</code></em>);</pre>
 <p>Initialiazes <em class="parameter"><code>node</code></em>
  fields with data from <em class="parameter"><code>query</code></em>
@@ -1116,7 +1191,7 @@ lasso_node_init_from_query (<em class="parameter"><code><a class="link" href="la
 <tbody>
 <tr>
 <td class="parameter_name"><p>node</p></td>
-<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> (or derived class)</p></td>
+<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> (or derived class)</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -1136,7 +1211,7 @@ lasso_node_init_from_query (<em class="parameter"><code><a class="link" href="la
 <div class="refsect2">
 <a name="lasso-node-init-from-xml"></a><h3>lasso_node_init_from_xml ()</h3>
 <pre class="programlisting"><span class="returnvalue">lasso_error_t</span>
-lasso_node_init_from_xml (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
+lasso_node_init_from_xml (<em class="parameter"><code><a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> *node</code></em>,
                           <em class="parameter"><code><span class="type">xmlNode</span> *xmlnode</code></em>);</pre>
 <p>Initialiazes <em class="parameter"><code>node</code></em>
  fields with data from <em class="parameter"><code>xmlnode</code></em>
@@ -1152,7 +1227,7 @@ lasso_node_init_from_xml (<em class="parameter"><code><a class="link" href="lass
 <tbody>
 <tr>
 <td class="parameter_name"><p>node</p></td>
-<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode" title="struct LassoNode"><span class="type">LassoNode</span></a> (or derived class)</p></td>
+<td class="parameter_description"><p>a <a class="link" href="lasso-node.html#LassoNode"><span class="type">LassoNode</span></a> (or derived class)</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -1402,11 +1477,8 @@ signature.</p>
 </div>
 <hr>
 <div class="refsect2">
-<a name="LassoNode"></a><h3>struct LassoNode</h3>
-<pre class="programlisting">struct LassoNode {
-	GObject parent;
-};
-</pre>
+<a name="LassoNode-struct"></a><h3>struct LassoNode</h3>
+<pre class="programlisting">struct LassoNode;</pre>
 <p>Base type for all XML contents, or for object using serialization to XML.</p>
 </div>
 </div>

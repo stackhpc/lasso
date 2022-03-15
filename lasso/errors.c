@@ -44,40 +44,8 @@ lasso_strerror(int error_code)
 			return "Tried to add the same attribute request a second time.";
 		case LASSO_ASSERTION_QUERY_ERROR_NOT_AN_ATTRIBUTE_QUERY:
 			return "The current assertion query does not contain an attribute query.";
-		case LASSO_DATA_SERVICE_ERROR_CANNOT_ADD_ITEM:
-			return "LASSO_DATA_SERVICE_ERROR_CANNOT_ADD_ITEM";
-		case LASSO_DATA_SERVICE_ERROR_UNREGISTERED_DST:
-			return "LASSO_DATA_SERVICE_ERROR_UNREGISTERED_DST";
 		case LASSO_DEFEDERATION_ERROR_MISSING_NAME_IDENTIFIER:
 			return "Name identifier not found in request";
-		case LASSO_DISCOVERY_ERROR_FAILED_TO_BUILD_ENDPOINT_REFERENCE:
-			return "Failed to build Endpoint Reference";
-		case LASSO_DISCOVERY_ERROR_MISSING_REQUESTED_SERVICE:
-			return "Missing requested service";
-		case LASSO_DISCOVERY_ERROR_SVC_METADATA_ASSOCIATION_ADD_FAILED:
-			return "Service metadata association failed";
-		case LASSO_DISCOVERY_ERROR_SVC_METADATA_REGISTER_FAILED:
-			return "Service metadata registration failed";
-		case LASSO_DST_ERROR_EMPTY_REQUEST:
-			return "Request is empty.";
-		case LASSO_DST_ERROR_MALFORMED_QUERY:
-			return "QueryObject is malformed";
-		case LASSO_DST_ERROR_MISSING_SERVICE_DATA:
-			return "Missing service data";
-		case LASSO_DST_ERROR_MODIFY_FAILED:
-			return "Modify failed";
-		case LASSO_DST_ERROR_MODIFY_PARTIALLY_FAILED:
-			return "Modify partially failed : some items were correctly processed";
-		case LASSO_DST_ERROR_NEW_DATA_MISSING:
-			return "Missing new data";
-		case LASSO_DST_ERROR_NO_DATA:
-			return "No data or no data for the designated query item in the query response";
-		case LASSO_DST_ERROR_QUERY_FAILED:
-			return "Query failed";
-		case LASSO_DST_ERROR_QUERY_NOT_FOUND:
-			return "Looked query is not found";
-		case LASSO_DST_ERROR_QUERY_PARTIALLY_FAILED:
-			return "Query partially failed : some items were correctly processed";
 		case LASSO_DS_ERROR_CA_CERT_CHAIN_LOAD_FAILED:
 			return "LASSO_DS_ERROR_CA_CERT_CHAIN_LOAD_FAILED";
 		case LASSO_DS_ERROR_CERTIFICATE_LOAD_FAILED:
@@ -138,26 +106,6 @@ lasso_strerror(int error_code)
 			return "Undefined error.";
 		case LASSO_ERROR_UNIMPLEMENTED:
 			return "Unimplemented part of Lasso.";
-		case LASSO_IDWSF2_DISCOVERY_ERROR_DUPLICATE:
-			return "Last discovery request was denied because it would result in duplicate data in the service";
-		case LASSO_IDWSF2_DISCOVERY_ERROR_FAILED:
-			return "Last discovery request failed.";
-		case LASSO_IDWSF2_DISCOVERY_ERROR_FORBIDDEN:
-			return "Last discovery request is forbidden by policy.";
-		case LASSO_IDWSF2_DISCOVERY_ERROR_LOGICAL_DUPLICATE:
-			return "Last discovery request was denied because it would result in logically duplicate data in the service";
-		case LASSO_IDWSF2_DISCOVERY_ERROR_NOT_FOUND:
-			return "The specified item(s) were not found.";
-		case LASSO_IDWSF2_DISCOVERY_ERROR_NO_RESULTS:
-			return "The discovery query had no matching results.";
-		case LASSO_IDWSF2_DST_ERROR_DUPLICATE_ITEM:
-			return "A call to add a new item would result in duplicate items.";
-		case LASSO_IDWSF2_DST_ERROR_ITEM_NOT_FOUND:
-			return "The item_id was not found in the current query request.";
-		case LASSO_IDWSF2_DST_ERROR_PARTIAL_FAILURE:
-			return "Server responded with a partial failure status code.";
-		case LASSO_IDWSF2_DST_ERROR_UNKNOWN_STATUS_CODE:
-			return "Server response with an unknown status code.";
 		case LASSO_LOGIN_ERROR_ASSERTION_DOES_NOT_MATCH_REQUEST_ID:
 			return "If inResponseTo attribute is present, a matching request must be present too in the LassoLogin object";
 		case LASSO_LOGIN_ERROR_ASSERTION_REPLAY:
@@ -342,44 +290,6 @@ lasso_strerror(int error_code)
 			return "Missing SOAP fault detail";
 		case LASSO_SOAP_ERROR_REDIRECT_REQUEST_FAULT:
 			return "A SOAP Fault containing a Redirect Request was received";
-		case LASSO_WSF_PROFILE_ERROR_INVALID_OR_MISSING_REFERENCE_TO_MESSAGE_ID:
-			return "refToMessageID attribute of the Corrrelation header does not match the SOAP request";
-		case LASSO_WSF_PROFILE_ERROR_MISSING_ASSERTION_ID:
-			return "AssertionID attribute is missing";
-		case LASSO_WSF_PROFILE_ERROR_MISSING_CORRELATION:
-			return "Correlation SOAP Header is missing";
-		case LASSO_WSF_PROFILE_ERROR_MISSING_CREDENTIAL_REF:
-			return "WS-Security SAML Token secmech needs a CredentialRef";
-		case LASSO_WSF_PROFILE_ERROR_MISSING_DESCRIPTION:
-			return "No ID-WSF web Service description could be found for the current security mechanism";
-		case LASSO_WSF_PROFILE_ERROR_MISSING_ENDPOINT:
-			return "Cannot find an WSP endpoint for the ID-WSF service";
-		case LASSO_WSF_PROFILE_ERROR_MISSING_RESOURCE_ID:
-			return "The necessary ResourceID or EncryptedResourceID for calling an ID-WSF service is missing.";
-		case LASSO_WSF_PROFILE_ERROR_MISSING_SECURITY:
-			return "Security SOAP Header is missing";
-		case LASSO_WSF_PROFILE_ERROR_MISSING_SENDER_ID:
-			return "The received ID-WSF request miss a Sender id.";
-		case LASSO_WSF_PROFILE_ERROR_REDIRECT_REQUEST:
-			return "The last parsed response contained a SOAP fault with a RedirectRequest element.";
-		case LASSO_WSF_PROFILE_ERROR_REDIRECT_REQUEST_UNSUPPORTED_BY_REQUESTER:
-			return "The requester does not support SOAP Fault containing RedirectRequest elements. So it is not possible to use lasso_idwsf2_profile_redirect_user_for_interaction().";
-		case LASSO_WSF_PROFILE_ERROR_SECURITY_MECHANISM_CHECK_FAILED:
-			return "Check for a security mechanism upon a received request failed.";
-		case LASSO_WSF_PROFILE_ERROR_SERVER_INTERACTION_REQUIRED:
-			return "A interaction is required but the sender did not allow use to make interact redirect requests.";
-		case LASSO_WSF_PROFILE_ERROR_SERVER_INTERACTION_REQUIRED_FOR_DATA:
-			return "A interaction is required to get fresh datas but the sender did not allow use to make interact redirect requests.";
-		case LASSO_WSF_PROFILE_ERROR_SOAP_FAULT:
-			return "SOAP ID-WSF binding returned a SOAP fault";
-		case LASSO_WSF_PROFILE_ERROR_UNKNOWN_STATUS_CODE:
-			return "A response contained an unknown status code.";
-		case LASSO_WSF_PROFILE_ERROR_UNSUPPORTED_SECURITY_MECHANISM:
-			return "The specified security mechanism is not supported by lasso ID-WSF library";
-		case LASSO_WSSEC_ERROR_BAD_PASSWORD:
-			return "The known password does not match the UsernameToken";
-		case LASSO_WSSEC_ERROR_MISSING_SECURITY_TOKEN:
-			return "The request miss a WS-Security token.";
 		case LASSO_XMLENC_ERROR_INVALID_ENCRYPTED_DATA:
 			return "The EncryptedData node is invalid, look at the logs.";
 		case LASSO_XML_ERROR_ATTR_NOT_FOUND:

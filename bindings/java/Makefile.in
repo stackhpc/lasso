@@ -482,7 +482,6 @@ LASSO_LIBS = @LASSO_LIBS@
 LASSO_PUB_CFLAGS = @LASSO_PUB_CFLAGS@
 LASSO_STATIC_BINARIES = @LASSO_STATIC_BINARIES@
 LASSO_VERSION_INFO = @LASSO_VERSION_INFO@
-LASSO_WSF_SUPPORT = @LASSO_WSF_SUPPORT@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
@@ -645,7 +644,6 @@ MOSTLYCLEANFILES = com_entrouvert_lasso_LassoJNI.c  com_entrouvert_lasso_LassoJN
 @HAVE_AM_SILENT_RULES_TRUE@@JAVA_ENABLED_TRUE@am__v_JAR_0 = @echo "  JAR    " $@;
 @JAVA_ENABLED_TRUE@java_extension_LTLIBRARIES = libjnilasso.la
 @JAVA_ENABLED_TRUE@java_extensiondir = ${libdir}/java
-@JAVA_ENABLED_TRUE@@WSF_ENABLED_TRUE@EXTRA_ARGS = --enable-id-wsf
 @JAVA_ENABLED_TRUE@java_lasso_source_files := $(shell $(PYTHON) $(top_srcdir)/bindings/bindings.py -l java-list --src-dir=$(top_srcdir)/lasso/ $(EXTRA_ARGS) )
 @JAVA_ENABLED_TRUE@lasso_jardir = $(prefix)/share/java
 @JAVA_ENABLED_TRUE@lasso_jar_DATA = lasso.jar

@@ -499,7 +499,7 @@ lasso_query_sign(char *query, LassoSignatureContext context)
         lasso_error_t rc = 0;
 
 	g_return_val_if_fail(query != NULL, NULL);
-	g_return_val_if_fail(lasso_validate_signature_method(context.signature_method), NULL);
+	g_return_val_if_fail(lasso_ok_signature_method(context.signature_method), NULL);
 
 	key = context.signature_key;
 	sign_method = context.signature_method;
@@ -594,22 +594,20 @@ lasso_query_sign(char *query, LassoSignatureContext context)
 			sigret_size = DSA_size(dsa);
 			break;
 		case LASSO_SIGNATURE_METHOD_HMAC_SHA1:
-		case LASSO_SIGNATURE_METHOD_HMAC_SHA256:
-		case LASSO_SIGNATURE_METHOD_HMAC_SHA384:
-		case LASSO_SIGNATURE_METHOD_HMAC_SHA512:
-			if ((rc = lasso_get_hmac_key(key, (void**)&hmac_key,
-										 &hmac_key_length))) {
-				message(G_LOG_LEVEL_CRITICAL, "Failed to get hmac key (%s)", lasso_strerror(rc));
-				goto done;
-			}
-			g_assert(hmac_key);
 			md = EVP_sha1();
 			sigret_size = EVP_MD_size(md);
-			/* key should be at least 128 bits long */
-			if (hmac_key_length < 16) {
-				critical("HMAC key should be at least 128 bits long");
-				goto done;
-			}
+			break;
+		case LASSO_SIGNATURE_METHOD_HMAC_SHA256:
+			md = EVP_sha256();
+			sigret_size = EVP_MD_size(md);
+			break;
+		case LASSO_SIGNATURE_METHOD_HMAC_SHA384:
+			md = EVP_sha384();
+			sigret_size = EVP_MD_size(md);
+			break;
+		case LASSO_SIGNATURE_METHOD_HMAC_SHA512:
+			md = EVP_sha512();
+			sigret_size = EVP_MD_size(md);
 			break;
 		default:
 			g_assert_not_reached();
@@ -645,6 +643,19 @@ lasso_query_sign(char *query, LassoSignatureContext context)
 		case LASSO_SIGNATURE_METHOD_HMAC_SHA256:
 		case LASSO_SIGNATURE_METHOD_HMAC_SHA384:
 		case LASSO_SIGNATURE_METHOD_HMAC_SHA512:
+			if ((rc = lasso_get_hmac_key(key, (void**)&hmac_key,
+										 &hmac_key_length))) {
+				message(G_LOG_LEVEL_CRITICAL, "Failed to get hmac key (%s)", lasso_strerror(rc));
+				goto done;
+			}
+			g_assert(hmac_key);
+
+			/* key should be at least 128 bits long */
+			if (hmac_key_length < 16) {
+				critical("HMAC key should be at least 128 bits long");
+				goto done;
+			}
+
 			HMAC(md, hmac_key, hmac_key_length, (unsigned char *)new_query,
 					strlen(new_query), sigret, &siglen);
 			status = 1;
@@ -698,17 +709,18 @@ LassoNode*
 lasso_assertion_encrypt(LassoSaml2Assertion *assertion, char *recipient)
 {
 	xmlSecKey *encryption_public_key = NULL;
-	LassoEncryptionSymKeyType encryption_sym_key_type = 0;
+	LassoEncryptionSymKeyType encryption_sym_key_type;
+	LassoKeyEncryptionMethod key_encryption_method;
 	LassoNode *ret = NULL;
 
 	lasso_node_get_encryption((LassoNode*)assertion, &encryption_public_key,
-			&encryption_sym_key_type);
+			&encryption_sym_key_type, &key_encryption_method);
 	if (! encryption_public_key) {
 		return NULL;
 	}
 
 	ret = LASSO_NODE(lasso_node_encrypt(LASSO_NODE(assertion),
-		encryption_public_key, encryption_sym_key_type, recipient));
+		encryption_public_key, encryption_sym_key_type, key_encryption_method, recipient));
 	lasso_release_sec_key(encryption_public_key);
 	return ret;
 
@@ -793,6 +805,12 @@ lasso_query_verify_helper(const char *signed_content, const char *b64_signature,
 	} else {
 		goto_cleanup_with_rc(LASSO_DS_ERROR_INVALID_SIGALG);
 	}
+
+	/* is the signature algo allowed */
+	goto_cleanup_if_fail_with_rc(
+                lasso_allowed_signature_method(method),
+                LASSO_DS_ERROR_INVALID_SIGALG);
+
 	/* decode signature */
 	signature = g_malloc(key_size+1);
 	goto_cleanup_if_fail_with_rc(
@@ -1494,16 +1512,6 @@ lasso_saml_constrain_dsigctxt(xmlSecDSigCtxPtr dsigCtx) {
 			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformExclC14NWithCommentsId) < 0) ||
 			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformInclC14N11Id) < 0) ||
 			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformInclC14N11WithCommentsId) < 0) ||
-			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformSha1Id) < 0) ||
-			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformHmacSha1Id) < 0) ||
-			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformDsaSha1Id) < 0) ||
-			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformRsaSha1Id) < 0) ||
-			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformSha256Id) < 0) ||
-			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformHmacSha256Id) < 0) ||
-			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformRsaSha256Id) < 0) ||
-			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformSha384Id) < 0) ||
-			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformHmacSha384Id) < 0) ||
-			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformRsaSha384Id) < 0) ||
 			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformSha512Id) < 0) ||
 			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformHmacSha512Id) < 0) ||
 			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformRsaSha512Id) < 0)
@@ -1512,15 +1520,62 @@ lasso_saml_constrain_dsigctxt(xmlSecDSigCtxPtr dsigCtx) {
 		message(G_LOG_LEVEL_CRITICAL, "Error: failed to limit allowed signature transforms");
 		return FALSE;
 	}
+
+	if (lasso_get_min_signature_method() <= LASSO_SIGNATURE_METHOD_RSA_SHA384) {
+		if ((xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformSha384Id) < 0) ||
+			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformHmacSha384Id) < 0) ||
+			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformRsaSha384Id) < 0)) {
+
+			message(G_LOG_LEVEL_CRITICAL, "Error: failed to limit allowed sha384 signature transforms");
+			return FALSE;
+		}
+
+		if (xmlSecDSigCtxEnableReferenceTransform(dsigCtx, xmlSecTransformSha384Id) < 0) {
+
+			message(G_LOG_LEVEL_CRITICAL, "Error: failed to limit allowed sha384 reference transforms");
+			return FALSE;
+		}
+	}
+
+	if (lasso_get_min_signature_method() <= LASSO_SIGNATURE_METHOD_RSA_SHA256) {
+		if ((xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformSha256Id) < 0) ||
+			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformHmacSha256Id) < 0) ||
+			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformRsaSha256Id) < 0)) {
+
+			message(G_LOG_LEVEL_CRITICAL, "Error: failed to limit allowed sha256 signature transforms");
+			return FALSE;
+		}
+
+		if (xmlSecDSigCtxEnableReferenceTransform(dsigCtx, xmlSecTransformSha256Id) < 0) {
+
+			message(G_LOG_LEVEL_CRITICAL, "Error: failed to limit allowed sha256 reference transforms");
+			return FALSE;
+		}
+	}
+
+	if (lasso_get_min_signature_method() <= LASSO_SIGNATURE_METHOD_RSA_SHA1) {
+		if ((xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformSha1Id) < 0) ||
+			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformHmacSha1Id) < 0) ||
+			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformDsaSha1Id) < 0) ||
+			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformRsaSha1Id) < 0)) {
+
+			message(G_LOG_LEVEL_CRITICAL, "Error: failed to limit allowed sha1 signature transforms");
+			return FALSE;
+		}
+
+		if (xmlSecDSigCtxEnableReferenceTransform(dsigCtx, xmlSecTransformSha1Id) < 0) {
+
+			message(G_LOG_LEVEL_CRITICAL, "Error: failed to limit allowed sha1 reference transforms");
+			return FALSE;
+		}
+	}
+
 	if((xmlSecDSigCtxEnableReferenceTransform(dsigCtx, xmlSecTransformInclC14NId) < 0) ||
 			(xmlSecDSigCtxEnableReferenceTransform(dsigCtx, xmlSecTransformExclC14NId) < 0) ||
 			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformInclC14NWithCommentsId) < 0) ||
 			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformExclC14NWithCommentsId) < 0) ||
 			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformInclC14N11Id) < 0) ||
 			(xmlSecDSigCtxEnableSignatureTransform(dsigCtx, xmlSecTransformInclC14N11WithCommentsId) < 0) ||
-			(xmlSecDSigCtxEnableReferenceTransform(dsigCtx, xmlSecTransformSha1Id) < 0) ||
-			(xmlSecDSigCtxEnableReferenceTransform(dsigCtx, xmlSecTransformSha256Id) < 0) ||
-			(xmlSecDSigCtxEnableReferenceTransform(dsigCtx, xmlSecTransformSha384Id) < 0) ||
 			(xmlSecDSigCtxEnableReferenceTransform(dsigCtx, xmlSecTransformSha512Id) < 0) ||
 			(xmlSecDSigCtxEnableReferenceTransform(dsigCtx, xmlSecTransformEnvelopedId) < 0)) {
 
@@ -2386,6 +2441,9 @@ _lasso_xmlsec_load_key_from_buffer(const char *buffer, size_t length, const char
 	};
 	xmlSecKey *private_key = NULL;
 
+	/* is the signature algo allowed */
+	goto_cleanup_if_fail(lasso_allowed_signature_method(signature_method));
+
 	xmlSecErrorsDefaultCallbackEnableOutput(FALSE);
 	switch (signature_method) {
 		case LASSO_SIGNATURE_METHOD_RSA_SHA1:
@@ -2698,7 +2756,7 @@ next:
 		content = xmlNodeGetContent(key_value);
 		if (content) {
 			result = lasso_xmlsec_load_private_key_from_buffer((char*)content,
-					strlen((char*)content), NULL, LASSO_SIGNATURE_METHOD_RSA_SHA1, NULL);
+					strlen((char*)content), NULL, lasso_get_default_signature_method(), NULL);
 			xmlFree(content);
 		}
 	}
