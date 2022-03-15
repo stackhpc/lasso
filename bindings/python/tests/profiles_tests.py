@@ -45,16 +45,19 @@ except NameError:
     srcdir = os.environ.get('TOP_SRCDIR', '.')
     dataDir = '%s/tests/data' % srcdir
 
+
 def server(local_name, remote_role, remote_name):
     pwd = os.path.join(dataDir, local_name, 'password')
     password = None
     if os.path.exists(pwd):
         password = open(pwd).read()
-    s = lasso.Server(os.path.join(dataDir, local_name, 'metadata.xml'),
-            os.path.join(dataDir, local_name, 'private-key.pem'),
-            password)
+    s = lasso.Server(
+        os.path.join(dataDir, local_name, 'metadata.xml'),
+        os.path.join(dataDir, local_name, 'private-key.pem'),
+        password)
     s.addProvider(remote_role, os.path.join(dataDir, remote_name, 'metadata.xml'))
     return s
+
 
 class ServerTestCase(unittest.TestCase):
     def test01(self):
@@ -73,7 +76,7 @@ class ServerTestCase(unittest.TestCase):
         dump = lassoServer.dump()
         lassoServer2 = lassoServer.newFromDump(dump)
         dump2 = lassoServer2.dump()
-        self.failUnlessEqual(dump, dump2)
+        self.assertEqual(dump, dump2)
 
     def test02(self):
         """Server construction without argument, dump & newFromDump."""
@@ -87,7 +90,7 @@ class ServerTestCase(unittest.TestCase):
         dump = lassoServer.dump()
         lassoServer2 = lassoServer.newFromDump(dump)
         dump2 = lassoServer2.dump()
-        self.failUnlessEqual(dump, dump2)
+        self.assertEqual(dump, dump2)
 
 
 class LoginTestCase(unittest.TestCase):
@@ -108,7 +111,7 @@ class LoginTestCase(unittest.TestCase):
         login.initAuthnRequest()
         login.request
         login.request.protocolProfile = lasso.LIB_PROTOCOL_PROFILE_BRWS_ART
-        self.failUnlessEqual(login.request.protocolProfile, lasso.LIB_PROTOCOL_PROFILE_BRWS_ART)
+        self.assertEqual(login.request.protocolProfile, lasso.LIB_PROTOCOL_PROFILE_BRWS_ART)
 
     def test02(self):
         """SP login; testing processing of an empty Response."""
@@ -153,7 +156,6 @@ class LoginTestCase(unittest.TestCase):
         spLogin.request.requestAuthnContext = requestAuthnContext
         spLogin.request.protocolProfile = lasso.LIB_PROTOCOL_PROFILE_BRWS_ART
         spLogin.buildAuthnRequestMsg()
-        authnRequestUrl = spLogin.msgUrl
         authnRequestQuery = spLogin.msgUrl[spLogin.msgUrl.index('?') + 1:]
         idp = lasso.Server(
             os.path.join(dataDir, 'idp1-la/metadata.xml'),
@@ -167,11 +169,10 @@ class LoginTestCase(unittest.TestCase):
             os.path.join(dataDir, 'sp1-la/certificate.pem'))
         idpLogin = lasso.Login(idp)
         idpLogin.processAuthnRequestMsg(authnRequestQuery)
-        self.failUnless(idpLogin.request.requestAuthnContext)
+        self.assertTrue(idpLogin.request.requestAuthnContext)
         authnContextClassRefsList = idpLogin.request.requestAuthnContext.authnContextClassRef
-        self.failUnlessEqual(len(authnContextClassRefsList), 1)
-        self.failUnlessEqual(authnContextClassRefsList[0],
-                             lasso.LIB_AUTHN_CONTEXT_CLASS_REF_PASSWORD)
+        self.assertEqual(len(authnContextClassRefsList), 1)
+        self.assertEqual(authnContextClassRefsList[0], lasso.LIB_AUTHN_CONTEXT_CLASS_REF_PASSWORD)
 
     def test04(self):
         """Conversion of a lib:AuthnRequest with extensions into a query and back."""
@@ -188,7 +189,6 @@ class LoginTestCase(unittest.TestCase):
             os.path.join(dataDir, 'idp1-la/certificate.pem'))
         spLogin = lasso.Login(sp)
         spLogin.initAuthnRequest()
-        requestAuthnContext = lasso.LibRequestAuthnContext()
         extensionList = []
         for extension in (
                 '<action>do</action>',
@@ -199,7 +199,6 @@ class LoginTestCase(unittest.TestCase):
         spLogin.request.extension = tuple(extensionList)
         spLogin.request.protocolProfile = lasso.LIB_PROTOCOL_PROFILE_BRWS_ART
         spLogin.buildAuthnRequestMsg()
-        authnRequestUrl = spLogin.msgUrl
         authnRequestQuery = spLogin.msgUrl[spLogin.msgUrl.index('?') + 1:]
         idp = lasso.Server(
             os.path.join(dataDir, 'idp1-la/metadata.xml'),
@@ -213,12 +212,12 @@ class LoginTestCase(unittest.TestCase):
             os.path.join(dataDir, 'sp1-la/certificate.pem'))
         idpLogin = lasso.Login(idp)
         idpLogin.processAuthnRequestMsg(authnRequestQuery)
-        self.failUnless(idpLogin.request.extension)
+        self.assertTrue(idpLogin.request.extension)
         extensionsList = idpLogin.request.extension
-        self.failUnlessEqual(len(extensionsList), 1)
-        self.failUnless('<action>do</action>' in extensionsList[0])
-        self.failUnless('<action2>do action 2</action2>' in extensionsList[0])
-        self.failUnless('<action3>do action 3</action3>' in extensionsList[0])
+        self.assertEqual(len(extensionsList), 1)
+        self.assertTrue('<action>do</action>' in extensionsList[0])
+        self.assertTrue('<action2>do action 2</action2>' in extensionsList[0])
+        self.assertTrue('<action3>do action 3</action3>' in extensionsList[0])
 
     def test05(self):
         '''SAMLv2 Authn request emitted and received using Artifact binding'''
@@ -251,7 +250,7 @@ class LoginTestCase(unittest.TestCase):
         assert sp_login2.msgBody
         try:
             idp_login.processResponseMsg(sp_login2.msgBody)
-        except:
+        except Exception:
             raise
         assert isinstance(idp_login.request, lasso.Samlp2AuthnRequest)
 
@@ -262,7 +261,7 @@ class LoginTestCase(unittest.TestCase):
 
         sp_login = lasso.Login(sp_server)
         sp_login.initAuthnRequest()
-        sp_login.request.protocolBinding = lasso.SAML2_METADATA_BINDING_POST;
+        sp_login.request.protocolBinding = lasso.SAML2_METADATA_BINDING_POST
         sp_login.buildAuthnRequestMsg()
         idp_login = lasso.Login(idp_server)
         idp_login.setSignatureVerifyHint(lasso.PROFILE_SIGNATURE_VERIFY_HINT_FORCE)
@@ -276,6 +275,10 @@ class LoginTestCase(unittest.TestCase):
 
     def test07(self):
         '''SAMLv2 SSO with DSA key for the IdP'''
+        default_sign_meth = lasso.getDefaultSignatureMethod()
+        if default_sign_meth != lasso.SIGNATURE_METHOD_RSA_SHA1:
+            self.skipTest("This test requires that lasso is compiled with SHA1 as the default signature method")
+
         sp = lasso.Server(
             os.path.join(dataDir, 'sp5-saml2/metadata.xml'),
             os.path.join(dataDir, 'sp5-saml2/private-key.pem'))
@@ -296,10 +299,63 @@ class LoginTestCase(unittest.TestCase):
             os.path.join(dataDir, 'sp5-saml2/metadata.xml'))
         idp_login = lasso.Login(idp)
         idp_login.processAuthnRequestMsg(sp_login.msgUrl.split('?')[1])
-        idp_login.protocolProfile = lasso.LOGIN_PROTOCOL_PROFILE_BRWS_POST;
+        idp_login.protocolProfile = lasso.LOGIN_PROTOCOL_PROFILE_BRWS_POST
         idp_login.validateRequestMsg(True, True)
         idp_login.buildAssertion("None", "None", "None", "None", "None")
         idp_login.buildAuthnResponseMsg()
+
+    def test08(self):
+        '''Verify KeyEncryptionMethod support'''
+        sp_server = server('sp5-saml2', lasso.PROVIDER_ROLE_IDP, 'idp5-saml2')
+        idp_server = server('idp5-saml2', lasso.PROVIDER_ROLE_SP, 'sp5-saml2')
+
+        def run(key_encryption_method=None):
+            sp_login = lasso.Login(sp_server)
+            sp_login.initAuthnRequest(None, lasso.HTTP_METHOD_REDIRECT)
+            sp_login.buildAuthnRequestMsg()
+
+            provider = idp_server.getProvider('http://sp5/metadata')
+            provider.setEncryptionMode(lasso.ENCRYPTION_MODE_ASSERTION)
+
+            if key_encryption_method:
+                provider.setKeyEncryptionMethod(key_encryption_method)
+
+            idp_login = lasso.Login(idp_server)
+            idp_login.processAuthnRequestMsg(sp_login.msgUrl.split('?')[1])
+            idp_login.protocolProfile = lasso.LOGIN_PROTOCOL_PROFILE_BRWS_POST
+            idp_login.validateRequestMsg(True, True)
+            idp_login.buildAssertion("None", "None", "None", "None", "None")
+            idp_login.buildAuthnResponseMsg()
+
+            sp_login.setSignatureVerifyHint(lasso.PROFILE_SIGNATURE_VERIFY_HINT_FORCE)
+            sp_login.processAuthnResponseMsg(idp_login.msgBody)
+            sp_login.acceptSso()
+            return sp_login.response.debug()
+
+        os.environ['LASSO_DEFAULT_KEY_ENCRYPTION_METHOD'] = 'rsa-pkcs1'
+        lasso.init()
+        assert 'xmlenc#rsa-1_5' in run()
+        assert 'xmlenc#rsa-oaep-mgf1p' not in run()
+
+        os.environ['LASSO_DEFAULT_KEY_ENCRYPTION_METHOD'] = 'rsa-oaep'
+        lasso.init()
+        assert 'xmlenc#rsa-1_5' not in run()
+        assert 'xmlenc#rsa-oaep-mgf1p' in run()
+
+        lasso.setDefaultKeyEncryptionMethod(lasso.KEY_ENCRYPTION_METHOD_PKCS1)
+        assert 'xmlenc#rsa-1_5' in run()
+        assert 'xmlenc#rsa-oaep-mgf1p' not in run()
+
+        lasso.setDefaultKeyEncryptionMethod(lasso.KEY_ENCRYPTION_METHOD_OAEP)
+        assert 'xmlenc#rsa-1_5' not in run()
+        assert 'xmlenc#rsa-oaep-mgf1p' in run()
+
+        assert 'xmlenc#rsa-1_5' in run(key_encryption_method=lasso.KEY_ENCRYPTION_METHOD_PKCS1)
+        assert 'xmlenc#rsa-oaep-mgf1p' not in run(key_encryption_method=lasso.KEY_ENCRYPTION_METHOD_PKCS1)
+
+        assert 'xmlenc#rsa-1_5' not in run(key_encryption_method=lasso.KEY_ENCRYPTION_METHOD_OAEP)
+        assert 'xmlenc#rsa-oaep-mgf1p' in run(key_encryption_method=lasso.KEY_ENCRYPTION_METHOD_OAEP)
+
 
 class LogoutTestCase(unittest.TestCase):
     def test01(self):
@@ -338,7 +394,7 @@ class LogoutTestCase(unittest.TestCase):
             os.path.join(dataDir, 'sp1-la/public-key.pem'),
             os.path.join(dataDir, 'sp1-la/certificate.pem'))
         logout = lasso.Logout(lassoServer)
-        self.failIf(logout.getNextProviderId())
+        self.assertFalse(logout.getNextProviderId())
 
     def test03(self):
         """IDP logout; testing processRequestMsg with non Liberty query."""
@@ -388,7 +444,8 @@ class LogoutTestCase(unittest.TestCase):
 
     def test05(self):
         '''Test parsing of a logout request with more than one session index'''
-        content = '''<samlp:LogoutRequest xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" ID="xxxx" Version="2.0" IssueInstant="2010-06-14T22:00:00">
+        content = '''<samlp:LogoutRequest xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" \
+xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" ID="xxxx" Version="2.0" IssueInstant="2010-06-14T22:00:00">
         <saml:Issuer>me</saml:Issuer>
         <saml:NameID>coin</saml:NameID>
         <samlp:SessionIndex>id1</samlp:SessionIndex>
@@ -400,6 +457,7 @@ class LogoutTestCase(unittest.TestCase):
         assert isinstance(node, lasso.Samlp2LogoutRequest)
         assert node.sessionIndex == 'id1'
         assert node.sessionIndexes == ('id1', 'id2', 'id3')
+
 
 class DefederationTestCase(unittest.TestCase):
     def test01(self):
@@ -434,37 +492,31 @@ class IdentityTestCase(unittest.TestCase):
         identityDump = """<Identity xmlns="http://www.entrouvert.org/namespaces/lasso/0.0" Version="1"><Federations><Federation xmlns="http://www.entrouvert.org/namespaces/lasso/0.0" Version="1" RemoteProviderID="https://sp1.entrouvert.lan/metadata"><LocalNameIdentifier><saml:NameIdentifier xmlns:saml="urn:oasis:names:tc:SAML:1.0:assertion" NameQualifier="https://proxy2.entrouvert.lan/metadata" Format="urn:liberty:iff:nameid:federated">_CD739B41C602EAEA93626EBD1751CB46</saml:NameIdentifier></LocalNameIdentifier></Federation><Federation xmlns="http://www.entrouvert.org/namespaces/lasso/0.0" Version="1" RemoteProviderID="https://idp1.entrouvert.lan/metadata"><RemoteNameIdentifier><saml:NameIdentifier xmlns:saml="urn:oasis:names:tc:SAML:1.0:assertion" NameQualifier="https://idp1.entrouvert.lan/metadata" Format="urn:liberty:iff:nameid:federated">_11EA77A4FED32C41824AC5DE87298E65</saml:NameIdentifier></RemoteNameIdentifier></Federation></Federations></Identity>"""
         identity = lasso.Identity.newFromDump(identityDump)
         newIdentityDump = identity.dump()
-        self.failUnlessEqual(identityDump, newIdentityDump)
+        self.assertEqual(identityDump, newIdentityDump)
 
 class AttributeAuthorityTestCase(unittest.TestCase):
     def test01(self):
         '''Attribute request and response test between sp5 and idp6'''
         s = lasso.Server(
-                os.path.join(dataDir, 'sp5-saml2/metadata.xml'),
-                os.path.join(dataDir, 'sp5-saml2/private-key.pem'))
-        s.addProvider(lasso.PROVIDER_ROLE_ATTRIBUTE_AUTHORITY,
-                os.path.join(dataDir, 'idp6-saml2/metadata.xml'))
+            os.path.join(dataDir, 'sp5-saml2/metadata.xml'),
+            os.path.join(dataDir, 'sp5-saml2/private-key.pem'))
+        s.addProvider(lasso.PROVIDER_ROLE_ATTRIBUTE_AUTHORITY, os.path.join(dataDir, 'idp6-saml2/metadata.xml'))
 
         s2 = lasso.Server(
-                os.path.join(dataDir, 'idp6-saml2/metadata.xml'),
-                os.path.join(dataDir, 'idp6-saml2/private-key.pem'))
-        s2.addProvider(lasso.PROVIDER_ROLE_SP,
-                os.path.join(dataDir, 'sp5-saml2/metadata.xml'))
+            os.path.join(dataDir, 'idp6-saml2/metadata.xml'),
+            os.path.join(dataDir, 'idp6-saml2/private-key.pem'))
+        s2.addProvider(lasso.PROVIDER_ROLE_SP, os.path.join(dataDir, 'sp5-saml2/metadata.xml'))
 
         aq = lasso.AssertionQuery(s)
         rpid = list(s.providers.keys())[0]
-        aq.initRequest(rpid,
-                lasso.HTTP_METHOD_SOAP,
-                lasso.ASSERTION_QUERY_REQUEST_TYPE_ATTRIBUTE)
+        aq.initRequest(rpid, lasso.HTTP_METHOD_SOAP, lasso.ASSERTION_QUERY_REQUEST_TYPE_ATTRIBUTE)
         assert aq.request
         assert aq.remoteProviderId == rpid
         nid = lasso.Saml2NameID.newWithPersistentFormat(
-                lasso.buildUniqueId(32),
-                s.providerId, s2.providerId)
+            lasso.buildUniqueId(32),
+            s.providerId, s2.providerId)
         aq.nameIdentifier = nid
-        aq.addAttributeRequest(
-                lasso.SAML2_ATTRIBUTE_NAME_FORMAT_BASIC,
-                'testAttribute')
+        aq.addAttributeRequest(lasso.SAML2_ATTRIBUTE_NAME_FORMAT_BASIC, 'testAttribute')
         aq.buildRequestMsg()
         assert aq.msgUrl
         assert aq.msgBody
@@ -479,10 +531,8 @@ class AttributeAuthorityTestCase(unittest.TestCase):
         for attribute in aq2.request.attribute:
             content = lasso.MiscTextNode.newWithString("xxx")
             content.textChild = True
-            assertion.addAttributeWithNode(attribute.name, attribute.nameFormat,
-                    content)
-            assertion.addAttributeWithNode(attribute.name, attribute.nameFormat,
-                    content)
+            assertion.addAttributeWithNode(attribute.name, attribute.nameFormat, content)
+            assertion.addAttributeWithNode(attribute.name, attribute.nameFormat, content)
         assertion.subject = aq.request.subject
         s2.saml2AssertionSetupSignature(assertion)
         aq2.buildResponseMsg()
@@ -504,5 +554,5 @@ allTests = unittest.TestSuite((serverSuite, loginSuite, logoutSuite, defederatio
                                identitySuite, attributeSuite))
 
 if __name__ == '__main__':
-    sys.exit(not unittest.TextTestRunner(verbosity = 2).run(allTests).wasSuccessful())
+    sys.exit(not unittest.TextTestRunner(verbosity=2).run(allTests).wasSuccessful())
 

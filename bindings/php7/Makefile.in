@@ -340,7 +340,6 @@ LASSO_LIBS = @LASSO_LIBS@
 LASSO_PUB_CFLAGS = @LASSO_PUB_CFLAGS@
 LASSO_STATIC_BINARIES = @LASSO_STATIC_BINARIES@
 LASSO_VERSION_INFO = @LASSO_VERSION_INFO@
-LASSO_WSF_SUPPORT = @LASSO_WSF_SUPPORT@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
@@ -505,7 +504,6 @@ lasso_la_LDFLAGS = -export-dynamic -prefer-pic -module -avoid-version
 lasso_la_LIBADD = $(top_builddir)/lasso/liblasso.la $(LASSO_LIBS) $(PHP7_LDFLAGS)
 nodist_lasso_la_SOURCES = _lasso.c
 BUILT_SOURCES = _lasso.c
-@WSF_ENABLED_TRUE@EXTRA_ARGS = --enable-id-wsf
 EXTRA_DIST = lasso.ini lang.py php_code.py wrapper_header.py wrapper_source.py __init__.py wrapper_source_top.c
 all: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive

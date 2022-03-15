@@ -54,10 +54,6 @@
 #include "soap-1.1/soap_body.h"
 #include "misc_text_node.h"
 #include "../lasso_config.h"
-#ifdef LASSO_WSF_ENABLED
-#include "idwsf_strings.h"
-#include "id-wsf-2.0/idwsf2_strings.h"
-#endif
 
 /* Needed for ECP */
 #include "saml-2.0/samlp2_idp_list.h"
@@ -85,67 +81,9 @@ static void lasso_node_traversal(LassoNode *node, void (*do_to_node)(LassoNode *
 static LassoNode* lasso_node_new_from_xmlNode_with_type(xmlNode *xmlnode, char *typename);
 static void lasso_node_remove_original_xmlnode(LassoNode *node, SnippetType type);
 
-GHashTable *dst_services_by_href = NULL; /* ID-WSF 1 extra DST services, indexed on href */
-GHashTable *dst_services_by_prefix = NULL; /* ID-WSF 1 extra DST services, indexed on prefix */
-
-GHashTable *idwsf2_dst_services_by_href = NULL; /* ID-WSF 2 DST services, indexed on href */
-GHashTable *idwsf2_dst_services_by_prefix = NULL; /* ID-WSF 2 DST services, indexed on prefix */
-
-/*****************************************************************************/
-/* global methods                                                            */
-/*****************************************************************************/
-
-/**
- * lasso_register_dst_service:
- * @prefix: prefix of DST service
- * @href: href of DST service
- *
- * Registers prefix and href of a custom data service template service.
- **/
-void
-lasso_register_dst_service(const gchar *prefix, const gchar *href)
-{
-	if (dst_services_by_href == NULL) {
-		dst_services_by_href = g_hash_table_new_full(
-				g_str_hash, g_str_equal, g_free, g_free);
-		dst_services_by_prefix = g_hash_table_new_full(
-				g_str_hash, g_str_equal, g_free, g_free);
-	}
-	g_hash_table_insert(dst_services_by_prefix, g_strdup(prefix), g_strdup(href));
-	g_hash_table_insert(dst_services_by_href, g_strdup(href), g_strdup(prefix));
-}
-
-void
-lasso_register_idwsf2_dst_service(const gchar *prefix, const gchar *href)
-{
-	if (idwsf2_dst_services_by_href == NULL) {
-		idwsf2_dst_services_by_href = g_hash_table_new_full(
-				g_str_hash, g_str_equal, g_free, g_free);
-		idwsf2_dst_services_by_prefix = g_hash_table_new_full(
-				g_str_hash, g_str_equal, g_free, g_free);
-	}
-	g_hash_table_insert(idwsf2_dst_services_by_prefix, g_strdup(prefix), g_strdup(href));
-	g_hash_table_insert(idwsf2_dst_services_by_href, g_strdup(href), g_strdup(prefix));
-}
-
-gchar*
-lasso_get_prefix_for_dst_service_href(const gchar *href)
-{
-	if (dst_services_by_href == NULL)
-		return NULL;
-
-	return g_strdup(g_hash_table_lookup(dst_services_by_href, href));
-}
-
-gchar*
-lasso_get_prefix_for_idwsf2_dst_service_href(const gchar *href)
-{
-	if (idwsf2_dst_services_by_href == NULL)
-		return NULL;
-
-	return g_strdup(g_hash_table_lookup(idwsf2_dst_services_by_href, href));
-}
-
+static LassoSignatureMethod default_signature_method = LASSO_SIGNATURE_METHOD_RSA_SHA1;
+static LassoSignatureMethod min_signature_method = LASSO_SIGNATURE_METHOD_RSA_SHA1;
+static LassoKeyEncryptionMethod default_encryption_key_encryption_method = LASSO_KEY_ENCRYPTION_METHOD_OAEP;
 
 /*****************************************************************************/
 /* virtual public methods                                                    */
@@ -535,7 +473,9 @@ lasso_node_export_to_soap_with_headers(LassoNode *node, GList *headers)
  **/
 LassoSaml2EncryptedElement*
 lasso_node_encrypt(LassoNode *lasso_node, xmlSecKey *encryption_public_key,
-		LassoEncryptionSymKeyType encryption_sym_key_type, const char *recipient)
+		LassoEncryptionSymKeyType encryption_sym_key_type,
+		LassoKeyEncryptionMethod key_encryption_method,
+		const char *recipient)
 {
 	xmlDocPtr doc = NULL;
 	xmlNodePtr orig_node = NULL;
@@ -547,6 +487,7 @@ lasso_node_encrypt(LassoNode *lasso_node, xmlSecKey *encryption_public_key,
 	xmlNodePtr key_info_node2 = NULL;
 	xmlSecEncCtxPtr enc_ctx = NULL;
 	xmlSecTransformId xmlsec_encryption_sym_key_type;
+	xmlSecTransformId xmlsec_key_encryption_method;
 	xmlSecKey *duplicate = NULL;
 
 	if (encryption_public_key == NULL || !xmlSecKeyIsValid(encryption_public_key)) {
@@ -570,6 +511,17 @@ lasso_node_encrypt(LassoNode *lasso_node, xmlSecKey *encryption_public_key,
 		case LASSO_ENCRYPTION_SYM_KEY_TYPE_AES_128:
 		default:
 			xmlsec_encryption_sym_key_type = xmlSecTransformAes128CbcId;
+			break;
+	}
+
+	/* Get the symetric key encryption type */
+	switch(key_encryption_method) {
+		case LASSO_KEY_ENCRYPTION_METHOD_PKCS1:
+			xmlsec_key_encryption_method = xmlSecTransformRsaPkcs1Id;
+			break;
+		case LASSO_KEY_ENCRYPTION_METHOD_OAEP:
+		default:
+			xmlsec_key_encryption_method = xmlSecTransformRsaOaepId;
 			break;
 	}
 
@@ -623,7 +575,8 @@ lasso_node_encrypt(LassoNode *lasso_node, xmlSecKey *encryption_public_key,
 
 	/* add <enc:EncryptedKey/> to store the encrypted session key */
 	encrypted_key_node = xmlSecTmplKeyInfoAddEncryptedKey(key_info_node,
-			xmlSecTransformRsaPkcs1Id, NULL, NULL, (xmlChar*)recipient);
+			xmlsec_key_encryption_method,
+			NULL, NULL, (xmlChar*)recipient);
 	if (encrypted_key_node == NULL) {
 		message(G_LOG_LEVEL_WARNING, "Failed to add encrypted key");
 		goto cleanup;
@@ -820,7 +773,7 @@ lasso_legacy_extract_and_copy_signature_parameters(LassoNode *node, LassoNodeCla
 			node_data->sign_method_offset);
 	private_key_file = G_STRUCT_MEMBER(char *, node, node_data->private_key_file_offset);
 	certificate_file = G_STRUCT_MEMBER(char *, node, node_data->certificate_file_offset);
-	if (! lasso_validate_signature_method(signature_method)) {
+	if (! lasso_ok_signature_method(signature_method)) {
 		return FALSE;
 	}
 	if (lasso_node_set_signature(node,
@@ -978,6 +931,7 @@ struct _CustomElement {
 	LassoSignatureContext signature_context;
 	xmlSecKey *encryption_public_key;
 	LassoEncryptionSymKeyType encryption_sym_key_type;
+	LassoKeyEncryptionMethod key_encryption_method;
 };
 
 static struct _CustomElement *
@@ -1124,7 +1078,8 @@ lasso_node_get_signature(LassoNode *node)
  */
 void
 lasso_node_set_encryption(LassoNode *node, xmlSecKey *encryption_public_key,
-		LassoEncryptionSymKeyType encryption_sym_key_type)
+		LassoEncryptionSymKeyType encryption_sym_key_type,
+		LassoKeyEncryptionMethod key_encryption_method)
 {
 	struct _CustomElement *custom_element;
 
@@ -1149,6 +1104,12 @@ lasso_node_set_encryption(LassoNode *node, xmlSecKey *encryption_public_key,
 	} else {
 		custom_element->encryption_sym_key_type = LASSO_ENCRYPTION_SYM_KEY_TYPE_DEFAULT;
 	}
+	if (LASSO_KEY_ENCRYPTION_METHOD_DEFAULT < key_encryption_method
+			&& key_encryption_method < LASSO_KEY_ENCRYPTION_METHOD_LAST) {
+		custom_element->key_encryption_method = key_encryption_method;
+	} else {
+		custom_element->key_encryption_method = lasso_get_default_key_encryption_method();
+	}
 }
 
 /**
@@ -1162,7 +1123,8 @@ lasso_node_set_encryption(LassoNode *node, xmlSecKey *encryption_public_key,
  */
 void
 lasso_node_get_encryption(LassoNode *node, xmlSecKey **encryption_public_key,
-		LassoEncryptionSymKeyType *encryption_sym_key_type)
+		LassoEncryptionSymKeyType *encryption_sym_key_type,
+		LassoKeyEncryptionMethod *key_encryption_method)
 {
 	struct _CustomElement *custom_element;
 
@@ -1172,6 +1134,7 @@ lasso_node_get_encryption(LassoNode *node, xmlSecKey **encryption_public_key,
 		lasso_assign_sec_key(*encryption_public_key,
 				custom_element->encryption_public_key);
 		*encryption_sym_key_type = custom_element->encryption_sym_key_type;
+		*key_encryption_method = custom_element->key_encryption_method;
 	}
 }
 
@@ -1869,10 +1832,11 @@ lasso_node_impl_init_from_xml(LassoNode *node, xmlNode *xmlnode)
 			int what;
 			if (! lasso_get_integer_attribute(xmlnode, LASSO_SIGNATURE_METHOD_ATTRIBUTE,
 						BAD_CAST LASSO_LIB_HREF, &what,
-						LASSO_SIGNATURE_METHOD_RSA_SHA1,
+						lasso_get_min_signature_method(),
 						LASSO_SIGNATURE_METHOD_LAST))
 				break;
 			method = what;
+
 			if (! lasso_get_integer_attribute(xmlnode, LASSO_SIGNATURE_METHOD_ATTRIBUTE,
 					BAD_CAST LASSO_LIB_HREF, &what, LASSO_SIGNATURE_TYPE_NONE+1,
 					LASSO_SIGNATURE_TYPE_LAST))
@@ -2334,9 +2298,6 @@ lasso_node_new_from_soap(const char *soap)
 static const char *
 prefix_from_href_and_nodename(const xmlChar *href, G_GNUC_UNUSED const xmlChar *nodename) {
 	char *prefix = NULL;
-#ifdef LASSO_WSF_ENABLED
-	char *tmp = NULL;
-#endif
 
 	if (strcmp((char*)href, LASSO_LASSO_HREF) == 0)
 		prefix = "";
@@ -2358,63 +2319,6 @@ prefix_from_href_and_nodename(const xmlChar *href, G_GNUC_UNUSED const xmlChar *
 		prefix = "Soap";
 	else if (strcmp((char*)href, LASSO_DS_HREF) == 0)
 		prefix = "Ds";
-#ifdef LASSO_WSF_ENABLED
-	else if (strcmp((char*)href, LASSO_SOAP_BINDING_HREF) == 0)
-		prefix = "SoapBinding";
-	else if (strcmp((char*)href, LASSO_SOAP_BINDING_EXT_HREF) == 0)
-		prefix = "SoapBindingExt";
-	else if (strcmp((char*)href, LASSO_DISCO_HREF) == 0)
-		prefix = "Disco";
-	else if (strcmp((char*)href, LASSO_IS_HREF) == 0)
-		prefix = "Is";
-	else if (strcmp((char*)href, LASSO_SA_HREF) == 0)
-		prefix = "Sa";
-	else if (strcmp((char*)href, LASSO_WSSE_HREF) == 0)
-		prefix = "WsSec1";
-	else if (strcmp((char*)href, LASSO_WSSE1_HREF) == 0)
-		prefix = "WsSec1";
-	else if (strcmp((char*)href, LASSO_IDWSF2_DISCOVERY_HREF) == 0)
-		prefix = "IdWsf2Disco";
-	else if (strcmp((char*)href, LASSO_IDWSF2_SBF_HREF) == 0)
-		prefix = "IdWsf2Sbf";
-	else if (strcmp((char*)href, LASSO_IDWSF2_SB2_HREF) == 0)
-		prefix = "IdWsf2Sb2";
-	else if (strcmp((char*)href, LASSO_IDWSF2_UTIL_HREF) == 0)
-		prefix = "IdWsf2Util";
-	else if (strcmp((char*)href, LASSO_IDWSF2_SEC_HREF) == 0)
-		prefix = "IdWsf2Sec";
-	else if (strcmp((char*)href, LASSO_IDWSF2_IMS_HREF) == 0)
-		prefix = "IdWsf2Ims";
-	else if (strcmp((char*)href, LASSO_IDWSF2_IS_HREF) == 0)
-		prefix = "IdWsf2Is";
-	else if (strcmp((char*)href, LASSO_IDWSF2_PS_HREF) == 0)
-		prefix = "IdWsf2Ps";
-	else if (strcmp((char*)href, LASSO_IDWSF2_SUBS_HREF) == 0)
-		prefix = "IdWsf2Subs";
-	else if (strcmp((char*)href, LASSO_IDWSF2_SUBSREF_HREF) == 0)
-		prefix = "IdWsf2SubsRef";
-	else if (strcmp((char*)href, LASSO_WSA_HREF) == 0)
-		prefix = "WsAddr";
-	else if ((tmp = lasso_get_prefix_for_idwsf2_dst_service_href((char*)href))
-			!= NULL) {
-		/* ID-WSF 2 Profile */
-		prefix = "IdWsf2DstRef";
-		lasso_release_string(tmp);
-	} else if ((tmp = lasso_get_prefix_for_dst_service_href((char*)href))
-			!= NULL) {
-		/* ID-WSF 1 Profile */
-		prefix = "Dst";
-		lasso_release_string(tmp);
-	}
-
-	if (prefix != NULL && strcmp(prefix, "Dst") == 0 && strcmp((char*)nodename, "Status") == 0)
-		prefix = "Utility";
-	else if (prefix != NULL && strcmp(prefix, "Disco") == 0 && strcmp((char*)nodename, "Status") == 0)
-		prefix = "Utility";
-	else if (prefix != NULL && strcmp(prefix, "Sa") == 0 && strcmp((char*)nodename, "Status") == 0)
-		prefix = "Utility";
-#endif
-
 	return prefix;
 }
 
@@ -2434,13 +2338,7 @@ _type_name_from_href_and_nodename(char *href, char *nodename) {
 		return NULL;
 
 	/* FIXME: hardcoded mappings */
-	if (strcmp(nodename, "SvcMD") == 0) {
-		typename = g_strdup("LassoIdWsf2DiscoSvcMetadata");
-	} else if (prefix != NULL && strcmp(prefix, "IdWsf2DstRef") == 0 && strcmp(nodename, "Status") == 0) {
-		typename = g_strdup("LassoIdWsf2UtilStatus");
-	} else if (prefix != NULL && strcmp(prefix, "WsSec1") == 0 && strcmp(nodename, "Security") == 0) {
-		typename = g_strdup("LassoWsSec1SecurityHeader");
-	} else if (prefix != NULL && strcmp(prefix, "Soap") == 0 && strcmp(nodename, "detail") == 0) {
+	if (prefix != NULL && strcmp(prefix, "Soap") == 0 && strcmp(nodename, "detail") == 0) {
 		typename = g_strdup("LassoSoapDetail");
 	} else {
 		/* first try with registered mappings */
@@ -3688,4 +3586,46 @@ lasso_node_new_from_saml2_query(const char *url_or_qs, const char *param_name, L
 	}
 cleanup:
 	return result;
+}
+
+LassoSignatureMethod
+lasso_get_default_signature_method() {
+	return default_signature_method;
+}
+
+void
+lasso_set_default_signature_method(LassoSignatureMethod meth) {
+	default_signature_method = meth;
+}
+
+LassoSignatureMethod
+lasso_get_min_signature_method() {
+	return min_signature_method;
+}
+
+void
+lasso_set_min_signature_method(LassoSignatureMethod meth) {
+	min_signature_method = meth;
+}
+
+LassoKeyEncryptionMethod
+lasso_parse_key_encryption_method(char *str) {
+
+	if (lasso_strisequal(str, "rsa-pkcs1")) {
+		return LASSO_KEY_ENCRYPTION_METHOD_PKCS1;
+	} else if (lasso_strisequal(str, "rsa-oaep")) {
+		return LASSO_KEY_ENCRYPTION_METHOD_OAEP;
+	}
+	return LASSO_KEY_ENCRYPTION_METHOD_INVALID;
+}
+
+LassoKeyEncryptionMethod
+lasso_get_default_key_encryption_method() {
+	return default_encryption_key_encryption_method;
+}
+
+void
+lasso_set_default_key_encryption_method(LassoKeyEncryptionMethod method)
+{
+	default_encryption_key_encryption_method = method;
 }

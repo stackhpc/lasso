@@ -7,6 +7,8 @@
 #include "../../lasso/utils.h"
 #include "../utils.c"
 
+#define PY_SSIZE_T_CLEAN
+
 #if PY_VERSION_HEX < 0x02050000 && !defined(PY_SSIZE_T_MIN)
 typedef int Py_ssize_t;
 #define PY_SSIZE_T_MAX INT_MAX
@@ -737,6 +739,13 @@ lasso_python_log(const char *domain, GLogLevelFlags log_level, const gchar *mess
 		G_GNUC_UNUSED gpointer user_data)
 {
 	PyObject *logger_object = get_logger_object(domain), *result;
+
+	if (PyErr_Occurred()) {
+		PyErr_Print();
+		PyErr_Clear();
+		return;
+	}
+
 	char *method = NULL;
 
 	if (! logger_object) {
@@ -771,4 +780,9 @@ lasso_python_log(const char *domain, GLogLevelFlags log_level, const gchar *mess
 	} else {
 		PyErr_WarnFormat(PyExc_RuntimeWarning, 1, "lasso could not call method %s on its logger", method);
 	}
+	/* clear any exception emitted during log call */
+	if (PyErr_Occurred()) {
+		PyErr_Print();
+	}
+	PyErr_Clear();
 }

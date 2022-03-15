@@ -417,7 +417,6 @@ LASSO_LIBS = @LASSO_LIBS@
 LASSO_PUB_CFLAGS = @LASSO_PUB_CFLAGS@
 LASSO_STATIC_BINARIES = @LASSO_STATIC_BINARIES@
 LASSO_VERSION_INFO = @LASSO_VERSION_INFO@
-LASSO_WSF_SUPPORT = @LASSO_WSF_SUPPORT@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
@@ -581,7 +580,6 @@ TESTS = test.sh
 @PERL_ENABLED_TRUE@	LassoNode.xs test.pl t
 
 @PERL_ENABLED_TRUE@EXTRA_DIST = $(TOCOPY) typemap-in typemap-out lang.py __init__.py test.sh
-@PERL_ENABLED_TRUE@@WSF_ENABLED_TRUE@EXTRA_ARGS = --enable-id-wsf
 all: all-am
 
 .SUFFIXES:
@@ -866,9 +864,9 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 	-test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
 @PERL_ENABLED_FALSE@uninstall-local:
-@PERL_ENABLED_FALSE@distclean-local:
-@PERL_ENABLED_FALSE@clean-local:
 @PERL_ENABLED_FALSE@install-exec-local:
+@PERL_ENABLED_FALSE@clean-local:
+@PERL_ENABLED_FALSE@distclean-local:
 clean: clean-am
 
 clean-am: clean-generic clean-libtool clean-local mostlyclean-am

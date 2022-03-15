@@ -90,7 +90,6 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 target_triplet = @target@
-@WSF_ENABLED_TRUE@am__append_1 = id-wsf-2.0 id-wsf
 subdir = lasso
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ac_check_class.m4 \
@@ -157,7 +156,6 @@ am__DEPENDENCIES_1 =
 @MINGW_FALSE@	$(top_builddir)/lasso/xml/dsig/liblasso-xml-dsig.la \
 @MINGW_FALSE@	$(top_builddir)/lasso/id-ff/liblasso-id-ff.la \
 @MINGW_FALSE@	$(top_builddir)/lasso/saml-2.0/liblasso-saml-20.la \
-@MINGW_FALSE@	$(WSF_LIB_FILE) $(WSF2_LIB_FILES) \
 @MINGW_FALSE@	$(am__DEPENDENCIES_1)
 @MINGW_TRUE@liblasso_la_DEPENDENCIES =  \
 @MINGW_TRUE@	$(top_builddir)/lasso/xml/liblasso-xml.la \
@@ -167,7 +165,6 @@ am__DEPENDENCIES_1 =
 @MINGW_TRUE@	$(top_builddir)/lasso/xml/dsig/liblasso-xml-dsig.la \
 @MINGW_TRUE@	$(top_builddir)/lasso/id-ff/liblasso-id-ff.la \
 @MINGW_TRUE@	$(top_builddir)/lasso/saml-2.0/liblasso-saml-20.la \
-@MINGW_TRUE@	$(WSF_LIB_FILE) $(WSF2_LIB_FILES) \
 @MINGW_TRUE@	$(am__DEPENDENCIES_1) lasso.rc.lo
 am_liblasso_la_OBJECTS = lasso.lo errors.lo registry.lo utils.lo \
 	logging.lo key.lo
@@ -260,7 +257,7 @@ am__define_uniq_tagged_files = \
   done | $(am__uniquify_input)`
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = xml id-ff saml-2.0 id-wsf-2.0 id-wsf
+DIST_SUBDIRS = $(SUBDIRS)
 am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/lasso_config.h.in \
 	$(top_srcdir)/depcomp
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -364,7 +361,6 @@ LASSO_LIBS = @LASSO_LIBS@
 LASSO_PUB_CFLAGS = @LASSO_PUB_CFLAGS@
 LASSO_STATIC_BINARIES = @LASSO_STATIC_BINARIES@
 LASSO_VERSION_INFO = @LASSO_VERSION_INFO@
-LASSO_WSF_SUPPORT = @LASSO_WSF_SUPPORT@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
@@ -507,7 +503,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 uudecode = @uudecode@
-SUBDIRS = xml id-ff saml-2.0 $(am__append_1)
+SUBDIRS = xml id-ff saml-2.0
 liblassoincludedir = $(includedir)/lasso
 AM_CPPFLAGS = -I$(top_builddir) -I$(top_srcdir) $(LASSO_CORE_CFLAGS)
 LTRCCOMPILE = $(LIBTOOL) --tag=RC --mode=compile $(RC) \
@@ -521,18 +517,12 @@ liblassoinclude_HEADERS = export.h lasso.h lasso_config.h errors.h \
 nodist_liblassoinclude_HEADERS = debug.h utils.h registry-private.h logging.h backward_comp.h keyprivate.h
 BUILT_SOURCES = types.c errors.c symbols.sym
 liblasso_la_SOURCES = lasso.c errors.c registry.c utils.c logging.c key.c
-@WSF_ENABLED_TRUE@SYMBOLS_ARGS = -wsf
 MAINTAINERCLEANFILES = \
 	Makefile.in \
 	lasso_config.h.in
 
 EXTRA_DIST = $(nodist_liblassoinclude_HEADERS) extract_types.py extract_symbols.py build_strerror.py \
 	     errors.c.in extract_sections.py errors.c
-
-@WSF_ENABLED_TRUE@WSF_LIB_FILE = $(top_builddir)/lasso/id-wsf/liblasso-id-wsf.la
-@WSF_ENABLED_TRUE@WSF2_LIB_FILES = $(top_builddir)/lasso/id-wsf-2.0/liblasso-id-wsf2.la \
-@WSF_ENABLED_TRUE@	$(top_builddir)/lasso/xml/id-wsf-2.0/liblasso-xml-id-wsf-2.la \
-@WSF_ENABLED_TRUE@	$(top_builddir)/lasso/xml/ws/liblasso-xml-ws.la
 
 @MINGW_FALSE@liblasso_la_LIBADD = \
 @MINGW_FALSE@	$(top_builddir)/lasso/xml/ecp/liblasso-xml-ecp.la \
@@ -542,8 +532,6 @@ EXTRA_DIST = $(nodist_liblassoinclude_HEADERS) extract_types.py extract_symbols.
 @MINGW_FALSE@	$(top_builddir)/lasso/xml/dsig/liblasso-xml-dsig.la \
 @MINGW_FALSE@	$(top_builddir)/lasso/id-ff/liblasso-id-ff.la \
 @MINGW_FALSE@	$(top_builddir)/lasso/saml-2.0/liblasso-saml-20.la \
-@MINGW_FALSE@	$(WSF_LIB_FILE) \
-@MINGW_FALSE@	$(WSF2_LIB_FILES) \
 @MINGW_FALSE@	$(LASSO_LIBS)
 
 @MINGW_TRUE@liblasso_la_LIBADD = \
@@ -554,8 +542,6 @@ EXTRA_DIST = $(nodist_liblassoinclude_HEADERS) extract_types.py extract_symbols.
 @MINGW_TRUE@	$(top_builddir)/lasso/xml/dsig/liblasso-xml-dsig.la \
 @MINGW_TRUE@	$(top_builddir)/lasso/id-ff/liblasso-id-ff.la \
 @MINGW_TRUE@	$(top_builddir)/lasso/saml-2.0/liblasso-saml-20.la \
-@MINGW_TRUE@	$(WSF_LIB_FILE) \
-@MINGW_TRUE@	$(WSF2_LIB_FILES) \
 @MINGW_TRUE@	$(LASSO_LIBS) \
 @MINGW_TRUE@	lasso.rc.lo
 

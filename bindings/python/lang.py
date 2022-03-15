@@ -270,8 +270,6 @@ import lasso
 
 # backward compatibility with the SWIG binding
 
-WSF_SUPPORT = WSF_ENABLED
-
 Profile.isIdentityDirty = property(Profile.hasDirtyIdentity)
 Profile.isSessionDirty = property(Profile.hasDirtySession)
 
@@ -303,15 +301,6 @@ MiscTextNode.text_child = MiscTextNode.textChild
 NodeList = list
 StringList = list
 StringDict = dict
-registerIdWsf2DstService = registerIdwsf2DstService
-
-if WSF_SUPPORT:
-    DiscoDescription_newWithBriefSoapHttpDescription = DiscoDescription.newWithBriefSoapHttpDescription
-    Discovery.buildRequestMsg = Discovery.buildSoapRequestMsg
-    InteractionProfileService.buildRequestMsg = InteractionProfileService.buildSoapRequestMsg
-    InteractionProfileService.buildResponseMsg = InteractionProfileService.buildSoapResponseMsg
-    DataService.buildRequestMsg = DataService.buildSoapRequestMsg
-    DiscoModifyResponse.newEntryIds = DiscoModifyResponse.newEntryIDs
 ''', file=fd)
 
     def generate_constants(self, fd):
@@ -739,7 +728,8 @@ register_constants(PyObject *d)
             else:
                 print_('E: unknown constant type: %r' % c[0], file=sys.stderr)
             print_('    PyDict_SetItemString(d, "%s", obj);' % c[1][6:], file=fd)
-            print_('    Py_DECREF(obj);', file=fd)
+            if c[0] != 'b':  # refcount of Py_True/False should not be changed
+                print_('    Py_DECREF(obj);', file=fd)
         print_('}', file=fd)
         print_('', file=fd)
 

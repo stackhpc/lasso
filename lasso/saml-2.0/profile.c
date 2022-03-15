@@ -1181,7 +1181,7 @@ lasso_saml20_profile_export_to_query(LassoProfile *profile, LassoNode *msg, char
 					"see #3.4.3 of saml-bindings-2.0-os");
 		}
 	}
-	if (lasso_validate_signature_method(context.signature_method)) {
+	if (lasso_ok_signature_method(context.signature_method)) {
 		result = lasso_query_sign(unsigned_query, context);
 		goto_cleanup_if_fail_with_rc(result != NULL,
 				LASSO_PROFILE_ERROR_BUILDING_QUERY_FAILED);
@@ -1219,7 +1219,7 @@ lasso_saml20_profile_build_http_redirect(LassoProfile *profile,
 	goto_cleanup_if_fail_with_rc (url != NULL, LASSO_PROFILE_ERROR_UNKNOWN_PROFILE_URL);
 	/* if message is signed, remove XML signature, add query signature */
 	lasso_assign_signature_context(context, lasso_node_get_signature(msg));
-	if (lasso_validate_signature_method(context.signature_method)) {
+	if (lasso_ok_signature_method(context.signature_method)) {
 		lasso_node_remove_signature(msg);
 	}
 	lasso_check_good_rc(lasso_saml20_profile_export_to_query(profile, msg, &query, context));
@@ -1684,6 +1684,7 @@ lasso_saml20_profile_setup_encrypted_node(LassoProvider *provider,
 	encrypted_node = (LassoNode*)lasso_node_encrypt(*node_to_encrypt,
 			lasso_provider_get_encryption_public_key(provider),
 			lasso_provider_get_encryption_sym_key_type(provider),
+			lasso_provider_get_key_encryption_method(provider),
 			provider->ProviderID);
 	if (! encrypted_node) {
 		return LASSO_DS_ERROR_ENCRYPTION_FAILED;

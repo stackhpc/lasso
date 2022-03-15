@@ -41,10 +41,6 @@
 #include "../utils.h"
 #include "../debug.h"
 #include "../lasso_config.h"
-#ifdef LASSO_WSF_ENABLED
-#include "../id-wsf/id_ff_extensions_private.h"
-#include "../id-wsf-2.0/serverprivate.h"
-#endif
 
 #define RSA_SHA1 "RSA_SHA1"
 #define DSA_SHA1 "DSA_SHA1"
@@ -297,11 +293,6 @@ static struct XmlSnippet schema_snippets[] = {
 	{ "SignatureMethod", SNIPPET_ATTRIBUTE, 0, NULL, NULL, NULL },
 	{ "Providers", SNIPPET_LIST_NODES, 0, NULL, NULL, NULL },
 	{ "ServerDumpVersion", SNIPPET_ATTRIBUTE, 0, NULL, NULL, NULL },
-#ifdef LASSO_WSF_ENABLED
-	{ "Services", SNIPPET_LIST_NODES, 0, NULL, NULL, NULL },
-	{ "SvcMDs", SNIPPET_LIST_NODES, 0, NULL, NULL, NULL },
-#endif
-
 	{NULL, 0, 0, NULL, NULL, NULL}
 };
 
@@ -340,11 +331,6 @@ get_xmlNode(LassoNode *node, gboolean lasso_dump)
 		g_hash_table_foreach(server->providers,
 				(GHFunc)add_provider_childnode, t);
 	}
-
-#ifdef LASSO_WSF_ENABLED
-	lasso_server_dump_id_wsf_services(server, xmlnode);
-	lasso_server_dump_id_wsf20_svcmds(server, xmlnode);
-#endif
 
 	xmlCleanNs(xmlnode);
 	lasso_transfer_xml_node(ret_xmlnode, xmlnode);
@@ -422,12 +408,6 @@ init_from_xml(LassoNode *node, xmlNode *xmlnode)
 				t2 = xmlSecGetNextElementNode(t2->next);
 			}
 		}
-
-#ifdef LASSO_WSF_ENABLED
-		lasso_server_init_id_wsf_services(server, t);
-		lasso_server_init_id_wsf20_svcmds(server, t);
-#endif
-
 		t = xmlSecGetNextElementNode(t->next);
 	}
 
@@ -682,7 +662,7 @@ instance_init(LassoServer *server)
 	server->private_key = NULL;
 	server->private_key_password = NULL;
 	server->certificate = NULL;
-	server->signature_method = LASSO_SIGNATURE_METHOD_RSA_SHA1;
+	server->signature_method = lasso_get_default_signature_method();
 
 	server->services = g_hash_table_new_full(g_str_hash, g_str_equal,
 			(GDestroyNotify)g_free,
@@ -909,7 +889,7 @@ lasso_server_get_signature_context_for_provider(LassoServer *server,
 		private_context = &provider->private_data->signature_context;
 	}
 
-	if (private_context && lasso_validate_signature_method(private_context->signature_method)) {
+	if (private_context && lasso_ok_signature_method(private_context->signature_method)) {
 		lasso_assign_signature_context(*signature_context, *private_context);
 	} else {
 		rc = lasso_server_get_signature_context(server, signature_context);
@@ -1014,7 +994,7 @@ lasso_server_export_to_query_for_provider_by_name(LassoServer *server, const cha
 				provider_id, &context));
 	query = lasso_node_build_query(node);
 	goto_cleanup_if_fail_with_rc(query, LASSO_PROFILE_ERROR_BUILDING_QUERY_FAILED);
-	if (lasso_validate_signature_method(context.signature_method)) {
+	if (lasso_ok_signature_method(context.signature_method)) {
 		lasso_assign_new_string(query, lasso_query_sign(query, context));
 	}
 	goto_cleanup_if_fail_with_rc(query,

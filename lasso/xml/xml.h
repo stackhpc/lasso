@@ -40,6 +40,7 @@ extern "C" {
 #include "../export.h"
 #include "../errors.h"
 #include "strings.h"
+#include "xml_enc.h"
 
 #define LASSO_TYPE_NODE (lasso_node_get_type())
 #define LASSO_NODE(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), LASSO_TYPE_NODE, LassoNode))
@@ -116,11 +117,33 @@ typedef enum {
 	LASSO_SIGNATURE_METHOD_LAST
 } LassoSignatureMethod;
 
+/* signature method and hash strength */
+LassoSignatureMethod lasso_get_default_signature_method();
+
+void lasso_set_default_signature_method(LassoSignatureMethod meth);
+
+LassoSignatureMethod lasso_get_min_signature_method();
+
+void lasso_set_min_signature_method(LassoSignatureMethod meth);
+
 static inline gboolean
 lasso_validate_signature_method(LassoSignatureMethod signature_method)
 {
 	return signature_method > (LassoSignatureMethod)LASSO_SIGNATURE_TYPE_NONE \
 		&& signature_method < (LassoSignatureMethod)LASSO_SIGNATURE_METHOD_LAST;
+}
+
+static inline gboolean
+lasso_allowed_signature_method(LassoSignatureMethod signature_method)
+{
+	return signature_method >= lasso_get_min_signature_method();
+}
+
+static inline gboolean
+lasso_ok_signature_method(LassoSignatureMethod signature_method)
+{
+	return lasso_validate_signature_method(signature_method) \
+	    && lasso_allowed_signature_method(signature_method);
 }
 
 typedef struct _LassoNode LassoNode;
@@ -206,20 +229,18 @@ LASSO_EXPORT LassoMessageFormat lasso_node_init_from_message(LassoNode *node, co
 LASSO_EXPORT gboolean lasso_node_init_from_query(LassoNode *node, const char *query);
 LASSO_EXPORT lasso_error_t lasso_node_init_from_xml(LassoNode *node, xmlNode *xmlnode);
 
-LASSO_EXPORT void lasso_register_dst_service(const char *prefix, const char *href);
-
-LASSO_EXPORT char* lasso_get_prefix_for_dst_service_href(const char *href);
-
-LASSO_EXPORT void lasso_register_idwsf2_dst_service(const gchar *prefix, const gchar *href);
-
-LASSO_EXPORT gchar* lasso_get_prefix_for_idwsf2_dst_service_href(const gchar *href);
-
 LASSO_EXPORT char* lasso_node_debug(LassoNode *node, int level);
 
 struct _LassoKey;
 
 LASSO_EXPORT char* lasso_node_export_to_saml2_query(LassoNode *node, const char *param_name, const
 		char *url, struct _LassoKey *key);
+
+LASSO_EXPORT LassoKeyEncryptionMethod lasso_parse_key_encryption_method(char *str);
+
+LASSO_EXPORT LassoKeyEncryptionMethod lasso_get_default_key_encryption_method();
+
+LASSO_EXPORT void lasso_set_default_key_encryption_method(LassoKeyEncryptionMethod method);
 
 #ifdef __cplusplus
 }

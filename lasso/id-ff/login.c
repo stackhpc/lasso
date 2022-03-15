@@ -270,10 +270,6 @@
 #include "../saml-2.0/loginprivate.h"
 #include "../lasso_config.h"
 
-#ifdef LASSO_WSF_ENABLED
-#include "../id-wsf/id_ff_extensions_private.h"
-#endif
-
 #define LASSO_LOGIN_GET_PRIVATE(o) \
 	   (G_TYPE_INSTANCE_GET_PRIVATE ((o), LASSO_TYPE_LOGIN, LassoLoginPrivate))
 
@@ -394,6 +390,7 @@ lasso_login_build_assertion(LassoLogin *login,
 					LASSO_NODE(ss->Subject->NameIdentifier),
 					lasso_provider_get_encryption_public_key(provider),
 					lasso_provider_get_encryption_sym_key_type(provider),
+					lasso_provider_get_key_encryption_method(provider),
 					provider->ProviderID));
 		if (encrypted_element != NULL) {
 			lasso_assign_new_gobject(ss->Subject->EncryptedNameIdentifier, encrypted_element);
@@ -415,10 +412,6 @@ lasso_login_build_assertion(LassoLogin *login,
 
 	lasso_list_add_gobject(LASSO_SAMLP_RESPONSE(profile->response)->Assertion,
 			assertion);
-
-#ifdef LASSO_WSF_ENABLED
-	lasso_login_assertion_add_discovery(login, assertion);
-#endif
 
 	/* store assertion in session object */
 	if (profile->session == NULL) {
@@ -2445,11 +2438,6 @@ dispose(GObject *object)
 
 	lasso_release_string(login->private_data->soap_request_msg);
 	lasso_release_gobject(login->private_data->saml2_assertion);
-
-#ifdef LASSO_WSF_ENABLED
-	lasso_release_gobject(login->private_data->resourceId);
-	lasso_release_gobject(login->private_data->encryptedResourceId);
-#endif
 	lasso_release_string(login->private_data->request_id);
 	G_OBJECT_CLASS(parent_class)->dispose(object);
 }
