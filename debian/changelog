@@ -1,3 +1,9 @@
+lasso (2.7.0-2build3) jammy; urgency=medium
+
+  * No-change rebuild with Python 3.10 only
+
+ -- Graham Inggs <ginggs@ubuntu.com>  Wed, 16 Mar 2022 22:44:25 +0000
+
 lasso (2.7.0-2build2) jammy; urgency=medium
 
   * No-change rebuild for the perl update.
