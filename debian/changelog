@@ -1,3 +1,10 @@
+lasso (2.8.0-2) unstable; urgency=medium
+
+  * debian/patches/use-openssl-evp-api.diff: import upstream WIP patch for
+    compatibility with latest xmlsec (closes: 1024138)
+
+ -- Frederic Peters <fpeters@debian.org>  Wed, 16 Nov 2022 19:12:02 +0100
+
 lasso (2.8.0-1) unstable; urgency=medium
 
   * New uptream release.
