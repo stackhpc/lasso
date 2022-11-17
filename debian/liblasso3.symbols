@@ -151,7 +151,7 @@ liblasso.so.3 liblasso3 #MINVER#
  lasso_lib_status_response_new@Base 2.3.5
  lasso_lib_subject_get_type@Base 2.3.5
  lasso_lib_subject_new@Base 2.3.5
- lasso_log@Base 2.7.0-2
+ lasso_log@Base 2.7.0
  lasso_log_remove_handler@Base 2.3.5
  lasso_log_set_handler@Base 2.3.5
  lasso_login_accept_sso@Base 2.3.5
