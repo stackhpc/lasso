@@ -1,3 +1,10 @@
+lasso (2.8.0-4) unstable; urgency=medium
+
+  * d/tests/control: introduce autopkgtests, checking that the Python binding
+    runs basic methods correctly and the Perl module loads properly.
+
+ -- Frederic Peters <fpeters@debian.org>  Thu, 09 Feb 2023 10:59:58 +0100
+
 lasso (2.8.0-3) unstable; urgency=medium
 
   * d/changelog: fix typo in old changelog entry (s/uptream/upstream/).
