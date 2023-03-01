@@ -667,7 +667,7 @@ LassoProfileSignatureVerifyHint
 lasso_profile_get_signature_verify_hint(LassoProfile *profile)
 {
 	if (! LASSO_IS_PROFILE(profile) || ! profile->private_data)
-		return LASSO_PROFILE_SIGNATURE_HINT_MAYBE;
+		return LASSO_PROFILE_SIGNATURE_VERIFY_HINT_MAYBE;
 	return profile->private_data->signature_verify_hint;
 }
 
@@ -929,7 +929,7 @@ dispose(GObject *object)
 /*****************************************************************************/
 
 static void
-instance_init(LassoProfile *profile)
+instance_init(LassoProfile *profile, G_GNUC_UNUSED void *unused)
 {
 	profile->private_data = LASSO_PROFILE_GET_PRIVATE(profile);
 	profile->private_data->dispose_has_run = FALSE;
