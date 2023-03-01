@@ -63,8 +63,8 @@ lasso_new_nid_and_session_index(LassoNode *name_id, const char *assertion_id, co
 	return nid_and_session_index;
 }
 
-void
-lasso_release_nid_and_session_index(struct _NidAndSessionIndex *nid_and_session_index)
+static void
+lasso_release_nid_and_session_index(struct _NidAndSessionIndex *nid_and_session_index, G_GNUC_UNUSED void *unused)
 {
 	lasso_release_gobject(nid_and_session_index->name_id);
 	lasso_release_string(nid_and_session_index->session_index);
@@ -97,7 +97,7 @@ lasso_session_add_nid_and_session_index(LassoSession *session,
 		/* do some sharing and limit doublons */
 		if (lasso_match_name_id(other_nid_and_sid->name_id, nid_and_session_index->name_id)) {
 			if (lasso_strisequal(other_nid_and_sid->session_index, nid_and_session_index->session_index)) {
-				lasso_release_nid_and_session_index(nid_and_session_index);
+				lasso_release_nid_and_session_index(nid_and_session_index, NULL);
 				return;
 			}
 			// lasso_assign_gobject(nid_and_session_index->name_id, other_nid_and_sid->name_id);
@@ -797,25 +797,22 @@ get_xmlNode(LassoNode *node, G_GNUC_UNUSED gboolean lasso_dump)
 
 xmlNode*
 base64_to_xmlNode(xmlChar *buffer) {
-	xmlChar *decoded = NULL;
+	char *decoded = NULL;
+	int decoded_len = 0;
 	xmlDoc *doc = NULL;
 	xmlNode *ret = NULL;
-	int l1,l2;
 
-	l1 = 4*strlen((char*)buffer)+2;
-	decoded = g_malloc(l1);
-	l2 = xmlSecBase64Decode(buffer, decoded, l1);
-	if (l2 < 0)
+	if (! lasso_base64_decode((char*)buffer, &decoded, &decoded_len))
 		goto cleanup;
-	doc = xmlParseMemory((char*)decoded, l2);
+	doc = xmlParseMemory(decoded, decoded_len);
 	if (doc == NULL)
 		goto cleanup;
 	ret = xmlDocGetRootElement(doc);
 	if (ret) {
-	ret = xmlCopyNode(ret, 1);
+		ret = xmlCopyNode(ret, 1);
 	}
 cleanup:
-	lasso_release(decoded);
+	lasso_release_string(decoded);
 	lasso_release_doc(doc);
 
 	return ret;
@@ -955,7 +952,7 @@ dispose(GObject *object)
 /*****************************************************************************/
 
 static void
-instance_init(LassoSession *session)
+instance_init(LassoSession *session, G_GNUC_UNUSED void *unused)
 {
 	session->private_data = LASSO_SESSION_GET_PRIVATE(session);
 	session->private_data->dispose_has_run = FALSE;

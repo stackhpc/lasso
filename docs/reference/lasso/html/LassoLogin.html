@@ -346,58 +346,58 @@ the targetted IdP with the method <a class="link" href="LassoServer.html#lasso-s
 50
 51
 52</pre></td>
-        <td class="listing_code"><pre class="programlisting"><span class="n">LassoLogin</span><span class="w"> </span><span class="o">*</span><span class="n">login</span><span class="p">;</span><span class="w"></span>
+        <td class="listing_code"><pre class="programlisting"><span class="n">LassoLogin</span><span class="w"> </span><span class="o">*</span><span class="n">login</span><span class="p">;</span>
 <span class="kt">int</span><span class="w"> </span><span class="n">rc</span><span class="p">;</span><span class="w"> </span><span class="c1">// hold return codes</span>
 
-<span class="n">login</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasso_login_new</span><span class="p">(</span><span class="n">server</span><span class="p">);</span><span class="w"></span>
-<span class="n">rc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasso_login_init_authn_request</span><span class="p">(</span><span class="n">login</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;http://identity-provider-id/&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">                </span><span class="n">LASSO_HTTP_METHOD_REDIRECT</span><span class="p">);</span><span class="w"></span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rc</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="n">login</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasso_login_new</span><span class="p">(</span><span class="n">server</span><span class="p">);</span>
+<span class="n">rc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasso_login_init_authn_request</span><span class="p">(</span><span class="n">login</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;http://identity-provider-id/&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="n">LASSO_HTTP_METHOD_REDIRECT</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rc</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="p">...</span><span class="w"> </span><span class="c1">// handle errors, most of them are related to bad initialization</span>
-<span class="p">}</span><span class="w"></span>
+<span class="p">}</span>
 
 <span class="c1">// customize AuthnRequest</span>
 <span class="c1">// protocolProfile is the protocolProfile of the provider http://identity-provider-id/</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">protocolProfile</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">LASSO_LIBERTY_1_2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">LassoLibAuthnRequest</span><span class="w"> </span><span class="o">*</span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LASSO_LIB_AUTHN_REQUEST</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">request</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="n">request</span><span class="o">-&gt;</span><span class="n">NameIDPolicy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">strdup</span><span class="p">(</span><span class="n">LASSO_LIB_NAMEID_POLICY_TYPE_FEDERATED</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="n">request</span><span class="o">-&gt;</span><span class="n">ForceAuthn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TRUE</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="n">request</span><span class="o">-&gt;</span><span class="n">IsPassive</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FALSE</span><span class="p">;</span><span class="w"></span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">protocolProfile</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">LASSO_LIBERTY_1_2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">LassoLibAuthnRequest</span><span class="w"> </span><span class="o">*</span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LASSO_LIB_AUTHN_REQUEST</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">request</span><span class="p">);</span>
+<span class="w">        </span><span class="n">request</span><span class="o">-&gt;</span><span class="n">NameIDPolicy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">strdup</span><span class="p">(</span><span class="n">LASSO_LIB_NAMEID_POLICY_TYPE_FEDERATED</span><span class="p">);</span>
+<span class="w">        </span><span class="n">request</span><span class="o">-&gt;</span><span class="n">ForceAuthn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TRUE</span><span class="p">;</span>
+<span class="w">        </span><span class="n">request</span><span class="o">-&gt;</span><span class="n">IsPassive</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FALSE</span><span class="p">;</span>
 <span class="w">        </span><span class="c1">// tell the IdP how to return the response</span>
-<span class="w">        </span><span class="n">request</span><span class="o">-&gt;</span><span class="n">ProtocolProfile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">strdup</span><span class="p">(</span><span class="n">LASSO_LIB_PROTOCOL_PROFILE_BRWS_ART</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">protocolProfile</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">LASSO_SAML_2_0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">LassoSamlp2AuthnRequest</span><span class="w"> </span><span class="o">*</span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LASSO_SAMLP2_AUTHN_REQUEST</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">request</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">request</span><span class="o">-&gt;</span><span class="n">NameIDPolicy</span><span class="o">-&gt;</span><span class="n">Format</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                </span><span class="n">g_free</span><span class="p">(</span><span class="n">request</span><span class="o">-&gt;</span><span class="n">NameIDPolicy</span><span class="o">-&gt;</span><span class="n">Format</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
-<span class="w">        </span><span class="n">request</span><span class="o">-&gt;</span><span class="n">NameIDPolicy</span><span class="o">-&gt;</span><span class="n">Format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">g_strdup</span><span class="p">(</span><span class="n">LASSO_NAME_IDENTIFIER_FORMAT_PERSISTENT</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">request</span><span class="o">-&gt;</span><span class="n">ProtocolProfile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">strdup</span><span class="p">(</span><span class="n">LASSO_LIB_PROTOCOL_PROFILE_BRWS_ART</span><span class="p">);</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">protocolProfile</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">LASSO_SAML_2_0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">LassoSamlp2AuthnRequest</span><span class="w"> </span><span class="o">*</span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LASSO_SAMLP2_AUTHN_REQUEST</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">request</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">request</span><span class="o">-&gt;</span><span class="n">NameIDPolicy</span><span class="o">-&gt;</span><span class="n">Format</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">g_free</span><span class="p">(</span><span class="n">request</span><span class="o">-&gt;</span><span class="n">NameIDPolicy</span><span class="o">-&gt;</span><span class="n">Format</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">request</span><span class="o">-&gt;</span><span class="n">NameIDPolicy</span><span class="o">-&gt;</span><span class="n">Format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">g_strdup</span><span class="p">(</span><span class="n">LASSO_NAME_IDENTIFIER_FORMAT_PERSISTENT</span><span class="p">);</span>
 <span class="w">        </span><span class="c1">// Allow creation of new federation</span>
 <span class="w">        </span><span class="c1">// </span>
-<span class="w">        </span><span class="n">request</span><span class="o">-&gt;</span><span class="n">NameIDPolicy</span><span class="o">-&gt;</span><span class="n">AllowCreate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="n">request</span><span class="o">-&gt;</span><span class="n">ForceAuthn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TRUE</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="n">request</span><span class="o">-&gt;</span><span class="n">IsPassive</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FALSE</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">request</span><span class="o">-&gt;</span><span class="n">NameIDPolicy</span><span class="o">-&gt;</span><span class="n">AllowCreate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">        </span><span class="n">request</span><span class="o">-&gt;</span><span class="n">ForceAuthn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TRUE</span><span class="p">;</span>
+<span class="w">        </span><span class="n">request</span><span class="o">-&gt;</span><span class="n">IsPassive</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FALSE</span><span class="p">;</span>
 <span class="w">        </span><span class="c1">// tell the IdP how to return the response</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">request</span><span class="o">-&gt;</span><span class="n">ProtocolBinding</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                 </span><span class="n">g_free</span><span class="p">(</span><span class="n">request</span><span class="o">-&gt;</span><span class="n">ProtocolBinding</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">request</span><span class="o">-&gt;</span><span class="n">ProtocolBinding</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                 </span><span class="n">g_free</span><span class="p">(</span><span class="n">request</span><span class="o">-&gt;</span><span class="n">ProtocolBinding</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
 <span class="w">        </span><span class="c1">// here we expect an artifact response, it could be post, redirect or PAOS.</span>
-<span class="w">        </span><span class="n">request</span><span class="o">-&gt;</span><span class="n">ProtocolBinding</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">g_strdup</span><span class="p">(</span><span class="n">LASSO_SAML2_METADATA_BINDING_ARTIFACT</span><span class="p">);</span><span class="w"></span>
-<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="n">request</span><span class="o">-&gt;</span><span class="n">ProtocolBinding</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">g_strdup</span><span class="p">(</span><span class="n">LASSO_SAML2_METADATA_BINDING_ARTIFACT</span><span class="p">);</span>
+<span class="w">   </span><span class="p">}</span>
 <span class="c1">// Lasso will choose whether to sign the request by looking at the IdP</span>
 <span class="c1">// metadatas and at our metadatas, but you can always force him to sign or to</span>
 <span class="c1">// not sign using the method lasso_profile_set_signature_hint() on the</span>
 <span class="c1">// LassoLogin object.</span>
 
-<span class="n">rc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasso_login_build_authn_request_msg</span><span class="p">(</span><span class="n">login</span><span class="p">);</span><span class="w"></span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rc</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="n">rc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasso_login_build_authn_request_msg</span><span class="p">(</span><span class="n">login</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rc</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">      </span><span class="p">....</span><span class="w"> </span><span class="c1">// handle errors</span>
 <span class="w">      </span><span class="c1">// could be that the requested binding (POST, Redirect, etc..) is not supported (LASSO_PROFILE_ERROR_UNSUPPORTED_PROFILE)</span>
 <span class="w">      </span><span class="c1">// or that we could not sign the request (LASSO_PROFILE_ERROR_BUILDING_QUERY_FAILED).</span>
-<span class="p">}</span><span class="w"></span>
+<span class="p">}</span>
 
 <span class="c1">// redirect user to identity provider</span>
 <span class="w">   </span><span class="c1">// we chose the Redirect binding, so we have to generate a redirect HTTP response to the URL returned by Lasso</span>
-<span class="n">printf</span><span class="p">(</span><span class="s">&quot;Location: %s</span><span class="se">\n\n</span><span class="s">Redirected to IdP</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">msg_url</span><span class="p">);</span><span class="w"></span></pre></td>
+<span class="n">printf</span><span class="p">(</span><span class="s">&quot;Location: %s</span><span class="se">\n\n</span><span class="s">Redirected to IdP</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">msg_url</span><span class="p">);</span></pre></td>
       </tr>
     </tbody>
   </table>
@@ -492,86 +492,86 @@ provider for ID-FF 1.2.</p>
 78
 79
 80</pre></td>
-        <td class="listing_code"><pre class="programlisting"><span class="n">LassoLogin</span><span class="w"> </span><span class="o">*</span><span class="n">login</span><span class="p">;</span><span class="w"></span>
-<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">request_method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getenv</span><span class="p">(</span><span class="s">&quot;REQUEST_METHOD&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">artifact_msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">lares</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">lareq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span><span class="w"></span>
-<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">name_identifier</span><span class="p">;</span><span class="w"></span>
-<span class="n">lassoHttpMethod</span><span class="w"> </span><span class="n">method</span><span class="p">;</span><span class="w"></span>
-<span class="kt">int</span><span class="w"> </span><span class="n">rc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+        <td class="listing_code"><pre class="programlisting"><span class="n">LassoLogin</span><span class="w"> </span><span class="o">*</span><span class="n">login</span><span class="p">;</span>
+<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">request_method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getenv</span><span class="p">(</span><span class="s">&quot;REQUEST_METHOD&quot;</span><span class="p">);</span>
+<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">artifact_msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">lares</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">lareq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">name_identifier</span><span class="p">;</span>
+<span class="n">lassoHttpMethod</span><span class="w"> </span><span class="n">method</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">rc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 
-<span class="n">login</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasso_login_new</span><span class="p">(</span><span class="n">server</span><span class="p">);</span><span class="w"></span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">request_method</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GET&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">artifact_msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getenv</span><span class="p">(</span><span class="s">&quot;QUERY_STRING&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LASSO_HTTP_METHOD_REDIRECT</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="n">login</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasso_login_new</span><span class="p">(</span><span class="n">server</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">request_method</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;GET&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">artifact_msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getenv</span><span class="p">(</span><span class="s">&quot;QUERY_STRING&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LASSO_HTTP_METHOD_REDIRECT</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="c1">// read submitted form; if it has a LAREQ field, put it in lareq,</span>
 <span class="w">        </span><span class="c1">// if it has a LARES field, put it in lares</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">lareq</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                </span><span class="n">artifact_msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lareq</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">lares</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                </span><span class="n">response_msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lares</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">lareq</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">artifact_msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lareq</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">lares</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">response_msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lares</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                </span><span class="c1">// bail out</span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
-<span class="w">        </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LASSO_HTTP_METHOD_POST</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LASSO_HTTP_METHOD_POST</span><span class="p">;</span>
+<span class="p">}</span>
 
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">artifact_msg</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">artifact_msg</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="c1">// we received an artifact response,</span>
 <span class="w">        </span><span class="c1">// it means we did not really receive the response,</span>
 <span class="w">        </span><span class="c1">// only a token to redeem the real response from the identity</span>
 <span class="w">        </span><span class="c1">// provider through a SOAP resolution call</span>
-<span class="w">        </span><span class="n">rc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasso_login_init_request</span><span class="p">(</span><span class="n">login</span><span class="p">,</span><span class="w"> </span><span class="n">artifact_msg</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rc</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">rc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasso_login_init_request</span><span class="p">(</span><span class="n">login</span><span class="p">,</span><span class="w"> </span><span class="n">artifact_msg</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rc</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                  </span><span class="p">...</span><span class="w"> </span><span class="c1">// handle errors</span>
 <span class="w">                  </span><span class="c1">// there is usually no error at this step, only</span>
 <span class="w">                  </span><span class="c1">// if the IdP response is malformed</span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
-<span class="w">        </span><span class="n">rc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasso_login_build_request_msg</span><span class="p">(</span><span class="n">login</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rc</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">rc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasso_login_build_request_msg</span><span class="p">(</span><span class="n">login</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rc</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                  </span><span class="p">...</span><span class="w"> </span><span class="c1">// handle errors</span>
 <span class="w">                  </span><span class="c1">// as for AuthnRequest generation, it generally is caused</span>
 <span class="w">                  </span><span class="c1">// by a bad initialization like an impossibility to load</span>
 <span class="w">                  </span><span class="c1">// the private key.</span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span>
 <span class="w">        </span><span class="c1">// makes a SOAP call, soap_call is NOT a Lasso function</span>
-<span class="w">        </span><span class="n">soap_answer_msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">soap_call</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">msg_url</span><span class="p">,</span><span class="w"></span>
-<span class="w">                        </span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">msg_body</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="n">rc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasso_login_process_response_msg</span><span class="p">(</span><span class="n">login</span><span class="p">,</span><span class="w"> </span><span class="n">soap_answer_msg</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rc</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">soap_answer_msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">soap_call</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">msg_url</span><span class="p">,</span>
+<span class="w">                        </span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">msg_body</span><span class="p">);</span>
+<span class="w">        </span><span class="n">rc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasso_login_process_response_msg</span><span class="p">(</span><span class="n">login</span><span class="p">,</span><span class="w"> </span><span class="n">soap_answer_msg</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rc</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                  </span><span class="p">...</span><span class="w"> </span><span class="c1">// handle errors</span>
 <span class="w">                  </span><span class="c1">// here you can know if the IdP refused the request, </span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">response_msg</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">lasso_login_process_authn_response_msg</span><span class="p">(</span><span class="n">login</span><span class="p">,</span><span class="w"> </span><span class="n">response_msg</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">response_msg</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">lasso_login_process_authn_response_msg</span><span class="p">(</span><span class="n">login</span><span class="p">,</span><span class="w"> </span><span class="n">response_msg</span><span class="p">);</span>
+<span class="p">}</span>
 
 <span class="c1">// looks up name_identifier in local file, database, whatever and gets back</span>
 <span class="c1">// two things: identity_dump and session_dump</span>
-<span class="n">name_identifier</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">nameIdentifier</span><span class="w"></span>
-<span class="n">lasso_profile_set_identity_from_dump</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">),</span><span class="w"> </span><span class="n">identity_dump</span><span class="p">);</span><span class="w"></span>
-<span class="n">lasso_profile_set_session_from_dump</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">),</span><span class="w"> </span><span class="n">session_dump</span><span class="p">);</span><span class="w"></span>
+<span class="n">name_identifier</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">nameIdentifier</span>
+<span class="n">lasso_profile_set_identity_from_dump</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">),</span><span class="w"> </span><span class="n">identity_dump</span><span class="p">);</span>
+<span class="n">lasso_profile_set_session_from_dump</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">),</span><span class="w"> </span><span class="n">session_dump</span><span class="p">);</span>
 
-<span class="n">lasso_login_accept_sso</span><span class="p">(</span><span class="n">login</span><span class="p">);</span><span class="w"></span>
+<span class="n">lasso_login_accept_sso</span><span class="p">(</span><span class="n">login</span><span class="p">);</span>
 
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">lasso_profile_is_identity_dirty</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">LassoIdentity</span><span class="w"> </span><span class="o">*</span><span class="n">identity</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">identity_dump</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="n">identity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasso_profile_get_identity</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">));</span><span class="w"></span>
-<span class="w">        </span><span class="n">identity_dump</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasso_identity_dump</span><span class="p">(</span><span class="n">identity</span><span class="p">);</span><span class="w"></span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">lasso_profile_is_identity_dirty</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">LassoIdentity</span><span class="w"> </span><span class="o">*</span><span class="n">identity</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">identity_dump</span><span class="p">;</span>
+<span class="w">        </span><span class="n">identity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasso_profile_get_identity</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">));</span>
+<span class="w">        </span><span class="n">identity_dump</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasso_identity_dump</span><span class="p">(</span><span class="n">identity</span><span class="p">);</span>
 <span class="w">        </span><span class="c1">// record identity_dump in file, database...</span>
-<span class="p">}</span><span class="w"></span>
+<span class="p">}</span>
 
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">lasso_profile_is_session_dirty</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">LassoSession</span><span class="w"> </span><span class="o">*</span><span class="n">session</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">session_dump</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasso_profile_get_session</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">));</span><span class="w"></span>
-<span class="w">        </span><span class="n">session_dump</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasso_session_dump</span><span class="p">(</span><span class="n">session</span><span class="p">);</span><span class="w"></span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">lasso_profile_is_session_dirty</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">LassoSession</span><span class="w"> </span><span class="o">*</span><span class="n">session</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">session_dump</span><span class="p">;</span>
+<span class="w">        </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasso_profile_get_session</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">));</span>
+<span class="w">        </span><span class="n">session_dump</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasso_session_dump</span><span class="p">(</span><span class="n">session</span><span class="p">);</span>
 <span class="w">        </span><span class="c1">// record session_dump in file, database...</span>
-<span class="p">}</span><span class="w"></span>
+<span class="p">}</span>
 
 <span class="c1">// redirect user anywhere</span>
-<span class="n">printf</span><span class="p">(</span><span class="s">&quot;Location: %s</span><span class="se">\n\n</span><span class="s">Redirected to site root</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">login</span><span class="o">-&gt;</span><span class="n">msg_url</span><span class="p">);</span><span class="w"></span></pre></td>
+<span class="n">printf</span><span class="p">(</span><span class="s">&quot;Location: %s</span><span class="se">\n\n</span><span class="s">Redirected to site root</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">login</span><span class="o">-&gt;</span><span class="n">msg_url</span><span class="p">);</span></pre></td>
       </tr>
     </tbody>
   </table>
@@ -609,25 +609,25 @@ requested protocol for the response by the service provider</p>
 17
 18
 19</pre></td>
-        <td class="listing_code"><pre class="programlisting"><span class="n">LassoLogin</span><span class="w"> </span><span class="o">*</span><span class="n">login</span><span class="p">;</span><span class="w"></span>
-<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">request_method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getenv</span><span class="p">(</span><span class="s">&quot;REQUEST_METHOD&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">artifact_msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">lares</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">lareq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span><span class="w"></span>
-<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">name_identifier</span><span class="p">;</span><span class="w"></span>
-<span class="n">lassoHttpMethod</span><span class="w"> </span><span class="n">method</span><span class="p">;</span><span class="w"></span>
-<span class="kt">int</span><span class="w"> </span><span class="n">rc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+        <td class="listing_code"><pre class="programlisting"><span class="n">LassoLogin</span><span class="w"> </span><span class="o">*</span><span class="n">login</span><span class="p">;</span>
+<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">request_method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getenv</span><span class="p">(</span><span class="s">&quot;REQUEST_METHOD&quot;</span><span class="p">);</span>
+<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">artifact_msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">lares</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">lareq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">name_identifier</span><span class="p">;</span>
+<span class="n">lassoHttpMethod</span><span class="w"> </span><span class="n">method</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">rc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 
-<span class="n">login</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasso_login_new</span><span class="p">(</span><span class="n">server</span><span class="p">);</span><span class="w"></span>
+<span class="n">login</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasso_login_new</span><span class="p">(</span><span class="n">server</span><span class="p">);</span>
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">request_method</span><span class="p">,</span><span class="w"> </span><span class="err">&#39;</span><span class="n">GET</span><span class="err">&#39;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// AuthnRequest send with the HTTP-Redirect binding</span>
 <span class="w">    </span><span class="c1">//</span>
-<span class="w">    </span><span class="n">lasso_profile_set_signature_verify_hint</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">),</span><span class="w"></span>
-<span class="w">            </span><span class="n">LASSO_PROFILE_SIGNATURE_VERIFY_HINT_FORCE</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">rc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasso_process_authn_request_msg</span><span class="p">(</span><span class="n">login</span><span class="p">,</span><span class="w"> </span><span class="n">getenv</span><span class="p">(</span><span class="s">&quot;QUERY_STRING&quot;</span><span class="p">));</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rc</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">lasso_profile_set_signature_verify_hint</span><span class="p">(</span><span class="n">LASSO_PROFILE</span><span class="p">(</span><span class="n">login</span><span class="p">),</span>
+<span class="w">            </span><span class="n">LASSO_PROFILE_SIGNATURE_VERIFY_HINT_FORCE</span><span class="p">);</span>
+<span class="w">    </span><span class="n">rc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lasso_process_authn_request_msg</span><span class="p">(</span><span class="n">login</span><span class="p">,</span><span class="w"> </span><span class="n">getenv</span><span class="p">(</span><span class="s">&quot;QUERY_STRING&quot;</span><span class="p">));</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rc</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="c1">// handle errors</span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span>
 
 
-<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span></pre></td>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span></pre></td>
       </tr>
     </tbody>
   </table>
